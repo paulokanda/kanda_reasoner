@@ -1,0 +1,53 @@
+{
+  "box_id": "brain_region_mapping",
+  "box_name": "Brain Region Mapping",
+  "box_type": "data",
+  "box_size": "module",
+  "version": "0.1.0",
+  "contract_version": "0.1",
+  "health_state": "draft",
+  "responsibility": "Map stable brain-region identifiers to stable tab identifiers, human labels, tooltip text, and Remember Box analogy text.",
+  "owner_paths": [
+    "kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/"
+  ],
+  "public_contract": {
+    "interface_file": "contract.py",
+    "provides_functions": [
+      "list_brain_region_targets",
+      "list_brain_region_ids",
+      "is_known_brain_region",
+      "resolve_brain_region",
+      "get_brain_region_mapping_summary"
+    ],
+    "emits_events": [],
+    "accepts_commands": []
+  },
+  "private_internals": [
+    "_mapping_data.py"
+  ],
+  "allowed_dependencies": [],
+  "forbidden_dependencies": [
+    "PySide6",
+    "QWebEngineView",
+    "main_window",
+    "tool_specs",
+    "brain_navigator",
+    "remember_box",
+    "tab_navigation_controller",
+    "engineering_safety",
+    "prompt_library",
+    "other_tab_internals"
+  ],
+  "communication_route": "direct_call_via_public_contract",
+  "fallback_behavior": "Unknown region returns a safe unmapped BrainRegionTarget and never switches tabs.",
+  "removal_policy": "optional",
+  "disable_safe": true,
+  "validation": {
+    "focused_tests": [
+      "tests/test_brain_region_mapping_contract.py"
+    ],
+    "boundary_tests": [
+      "tests/test_brain_region_mapping_contract.py"
+    ]
+  }
+}

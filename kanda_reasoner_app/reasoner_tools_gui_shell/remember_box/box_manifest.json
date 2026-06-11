@@ -1,0 +1,48 @@
+{
+  "box_id": "remember_box",
+  "box_name": "Remember Box",
+  "box_type": "gui_view",
+  "box_size": "module",
+  "version": "0.1.0",
+  "contract_version": "0.1",
+  "health_state": "draft",
+  "responsibility": "Own the Brain Navigator explanation-card display state without owning brain rendering, tab switching, registry metadata, or mapping logic.",
+  "owner_paths": [
+    "kanda_reasoner_app/reasoner_tools_gui_shell/remember_box/"
+  ],
+  "public_contract": {
+    "interface_file": "contract.py",
+    "provides_functions": [
+      "create_empty_remember_box_state",
+      "clear_remember_box_state",
+      "build_remember_box_state",
+      "get_remember_box_summary"
+    ],
+    "emits_events": [],
+    "accepts_commands": []
+  },
+  "private_internals": [],
+  "allowed_dependencies": [],
+  "forbidden_dependencies": [
+    "PySide6",
+    "main_window",
+    "brain_navigator",
+    "tab_navigation_controller",
+    "tool_specs",
+    "engineering_safety",
+    "prompt_library",
+    "other_tab_internals"
+  ],
+  "communication_route": "display_state_via_public_contract",
+  "fallback_behavior": "Unknown, missing, or cleared targets return a safe placeholder or unmapped display state without opening tabs.",
+  "removal_policy": "optional",
+  "disable_safe": true,
+  "validation": {
+    "focused_tests": [
+      "tests/test_remember_box_contract.py"
+    ],
+    "boundary_tests": [
+      "tests/test_remember_box_contract.py"
+    ]
+  }
+}

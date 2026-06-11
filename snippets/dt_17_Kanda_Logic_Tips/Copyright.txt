@@ -1,0 +1,21 @@
+# Copyright (c) Paulo Afonso Medeiros Kanda
+# Neurologist, Neurophysiologist, PhD - Hospital das Clínicas da Universidade de São Paulo (FMUSP)
+#
+# Rafael Guimarães Kanda
+# Neurologist, Neurophysiologist
+# Faculdade de Medicina de Botucatu, Universidade Estadual Paulista "Júlio de Mesquita Filho" (UNESP-Botucatu)
+# Universidade Estadual de Campinas (UNICAMP)
+#
+# Felipe Guimarães Kanda
+# Faculdade de Medicina da Universidade de Taubaté (UNITAU)
+#
+# License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+# This software is free to use for academic and non-commercial purposes, provided that all original authors are properly credited.
+# Modification and distribution of modified versions are NOT allowed without prior written authorization from the authors.
+# Any use or redistribution must include this copyright notice.
+#
+# This application/script uses code and incorporates components from the MNE-Python EEG processing library (BSD-3-Clause License).
+#
+# For more information, contact the corresponding author.
+# pkanda@alumni.usp.br    paulokanda@gmail.com  kanda@unicamp.br
+

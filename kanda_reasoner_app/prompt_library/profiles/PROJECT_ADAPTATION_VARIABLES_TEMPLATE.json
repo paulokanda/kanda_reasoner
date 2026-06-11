@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "<PROJECT_PROFILE_ID>",
+  "project_name": "<PROJECT_NAME>",
+  "project_root": "<PROJECT_ROOT>",
+  "product_package": "<PRODUCT_PACKAGE>",
+  "source_roots": [
+    "<SOURCE_ROOT_1>"
+  ],
+  "non_canonical_folders": [
+    "<NON_CANONICAL_FOLDER_1>"
+  ],
+  "reference_or_generated_folders": [
+    "<REFERENCE_OR_GENERATED_FOLDER_1>"
+  ],
+  "governance_folder": "<GOVERNANCE_FOLDER>",
+  "runtime_entry_points": [
+    "<RUNTIME_ENTRY_POINT>"
+  ],
+  "validation_commands": [
+    "<VALIDATION_COMMAND_1>"
+  ],
+  "test_commands": [
+    "<TEST_COMMAND_1>"
+  ],
+  "package_manager": "<PACKAGE_MANAGER_OR_NONE>",
+  "python_version": "<PYTHON_VERSION>",
+  "operating_system": "<OPERATING_SYSTEM>",
+  "gui_framework": "<GUI_FRAMEWORK_OR_NONE>",
+  "domain_safety_rules": [
+    "<DOMAIN_SAFETY_RULE_OR_NONE>"
+  ],
+  "project_specific_placeholders": {
+    "<PROJECT_ROOT>": "Replace with the active project root.",
+    "<PROJECT_NAME>": "Replace with the project display name.",
+    "<PRODUCT_PACKAGE>": "Replace with the product package or source folder.",
+    "<TASK_DESCRIPTION>": "Replace with the current task."
+  },
+  "notes": [
+    "This file stores project-specific values for prompt assembly only.",
+    "This file does not change source code, runtime behavior, or active governance."
+  ]
+}

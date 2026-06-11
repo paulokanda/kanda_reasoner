@@ -1,0 +1,18 @@
+============================================================
+                    HighPass Filter Flow                    
+============================================================
+ [UI]                 â†’           [Dropdown]
+ [Dropdown]           â†’       [FilterEngine]
+ [FilterEngine]       â†’         [Visualizer]
+ [Visualizer]         â†’            [Display]
+============================================================
+
+============================================================
+                   k01_core_eeg Data Flow                   
+============================================================
+ [File Loader]        â†’       [Preprocessor]
+ [Preprocessor]       â†’   [Signal Processor]
+ [Signal Processor]   â†’         [Visualizer]
+ [Visualizer]         â†’      [UI Components]
+============================================================
+

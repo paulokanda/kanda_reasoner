@@ -1,0 +1,108 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab.py",
+  "entry_point": "kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab.py",
+  "help_folder": "kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab_help",
+  "refactor_date": "2026-05-26",
+  "refactor_goal": "Split IgnoreRulesTab helper responsibilities while preserving the public class.",
+  "pattern": "mixin_helper_folder",
+  "generated_by": "pass_040_ignore_rules_tab_refactor",
+  "summary": {
+    "public_origin_exports": [
+      "IgnoreRulesTab"
+    ],
+    "total_helpers": 6,
+    "public_helpers": 5,
+    "high_level_flow": "IgnoreRulesTab composes mixins from ignore_rules_tab_help."
+  },
+  "helpers": {
+    "__init__.py": {
+      "purpose": "Expose ignore-rules helper mixins.",
+      "exports": [
+        "IgnoreRulesBrowseStateMixin",
+        "IgnoreRulesDefaultsMixin",
+        "IgnoreRulesListActionsMixin",
+        "IgnoreRulesPrefsMixin",
+        "IgnoreRulesUiMixin"
+      ],
+      "depends_on": [
+        "browse_state.py",
+        "list_actions.py",
+        "prefs_io.py",
+        "rule_defaults.py",
+        "ui_builders.py"
+      ],
+      "consumed_by": []
+    },
+    "browse_state.py": {
+      "purpose": "Persist last browse directory.",
+      "exports": [
+        "IgnoreRulesBrowseStateMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "ignore_rules_tab.py"
+      ]
+    },
+    "rule_defaults.py": {
+      "purpose": "Own default ignore-rule decisions.",
+      "exports": [
+        "IgnoreRulesDefaultsMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "ignore_rules_tab.py"
+      ]
+    },
+    "prefs_io.py": {
+      "purpose": "Load and save ignore rules from prefs.",
+      "exports": [
+        "IgnoreRulesPrefsMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "ignore_rules_tab.py"
+      ]
+    },
+    "ui_builders.py": {
+      "purpose": "Build and wire ignore-rules UI groups.",
+      "exports": [
+        "IgnoreRulesUiMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "ignore_rules_tab.py"
+      ]
+    },
+    "list_actions.py": {
+      "purpose": "Own ignore-rule list item actions.",
+      "exports": [
+        "IgnoreRulesListActionsMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "ignore_rules_tab.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "ignore_rules_tab.py": {
+      "browse_state.py": "imports mixin",
+      "list_actions.py": "imports mixin",
+      "prefs_io.py": "imports mixin",
+      "rule_defaults.py": "imports mixin",
+      "ui_builders.py": "imports mixin"
+    },
+    "__init__.py": {
+      "browse_state.py": "reexports",
+      "list_actions.py": "reexports",
+      "prefs_io.py": "reexports",
+      "rule_defaults.py": "reexports",
+      "ui_builders.py": "reexports"
+    }
+  }
+}

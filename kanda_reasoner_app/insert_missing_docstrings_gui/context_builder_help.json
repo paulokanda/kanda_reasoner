@@ -1,0 +1,18 @@
+{
+  "exports": [],
+  "helper_folder": "kanda_reasoner_app/insert_missing_docstrings_gui/context_builder_help",
+  "helpers": [
+    {
+      "exports": [],
+      "path": "context_builder_help/__init__.py",
+      "public": false
+    },
+    {
+      "exports": [],
+      "path": "context_builder_help/inference_private_impl.py",
+      "public": false
+    }
+  ],
+  "origin": "kanda_reasoner_app/insert_missing_docstrings_gui/context_builder.py",
+  "purpose": "Private helper extraction for evidence-backed docstring context inference."
+}

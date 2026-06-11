@@ -1,0 +1,85 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.env
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+.git_old_broken_history/
+kanda_reasoner/
+nulcls
+
+runtime_scenarios/
+workbench/
+outputs/
+*.sqlite
+*.db
+# Clean Git reset safety ignores
+.git_old_broken_history/
+kanda_reasoner/
+nulcls
+.docstring_cache.json
+.project_reference/
+kanda_reasoner_app/insert_missing_docstrings_gui/.docstring_cache.json
+
+# Generated/runtime outputs
+runtime_scenarios/
+workbench/
+outputs/
+*.sqlite
+*.db
+*.log
+*.tmp
+*.bak
+
+# Python/IDE
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.env
+
+# Local cleanup reports
+cleanup_cache_report_*.txt
+
+# Local GUI/user preferences
+.reasoner_tools_gui_prefs.json
+
+# Local secret notes / credentials
+/snippets/dt_17_Kanda_Logic_Tips/huggn face senha e tolken.txt
+/secrets/
+*.key
+*.pem
+*.token
+
+# Local runtime/config preference files
+kanda_reasoner_app/insert_missing_docstrings_gui/ai_config.json
+kanda_reasoner_app/insert_missing_docstrings_gui/.missing_docstrings_gui_prefs.json
+kanda_reasoner_app/reasoner_context_collector/.collector_runner_prefs.json
+kanda_reasoner_app/reasoner_runtime_collector/.runtime_runner_prefs.json
+kanda_reasoner_app/reasoner_tools_shell/.collector_runner_prefs.json
+kanda_reasoner_app/reasoner_tools_shell/runner_help/.zip_json_export_prefs.json
+
+# Microsoft Office temporary lock files
+~$*.docx
+~$*.doc
+~$*.xlsx
+~$*.pptx
+
+# Microsoft Office temporary lock files
+~$*.docx
+~$*.doc
+~$*.xlsx
+~$*.pptx

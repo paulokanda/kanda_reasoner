@@ -1,0 +1,42 @@
+
+Safe Mode actual GUI manual smoke checklist
+
+Purpose:
+- Confirm the Safe Mode panel is visible in the real Tab 3 GUI.
+- Confirm the existing Tab 3 controls still work.
+- Confirm the Safe Mode panel does not break normal docstring generation, review, or insertion flows.
+
+Preconditions:
+- Run from E:\developer_tools.
+- T4Q024_SAFE_MODE_ACTUAL_TAB3_WIRING_FROZEN_OK is the current baseline.
+- Focused Safe Mode tests pass.
+- Tab 1 architecture validation has Errors 0.
+- Tab 2 workflow validation has fail=0.
+
+Manual smoke steps:
+1. Launch the existing Reasoner Tools GUI using your normal command.
+2. Open the docstring insertion / Tab 3 workflow.
+3. Confirm the window opens with no traceback.
+4. Confirm the existing controls remain visible and clickable.
+5. Look for a Safe Mode panel or Safe Mode area in Tab 3.
+6. Confirm the Safe Mode panel does not cover or remove existing controls.
+7. Start with a tiny fake project or a disposable folder.
+8. Confirm normal Tab 3 mode can still run as before.
+9. Confirm Safe Mode appears idle when no folder session is active.
+10. Start or load a Safe Mode folder session only on a disposable project.
+11. Confirm the panel shows current folder/progress/pending counts.
+12. Confirm Accept/Edit/Regenerate/Fallback/Skip/Reject/Clear controls are visible or disabled safely.
+13. Do not apply to a real production project until the disposable-folder smoke passes.
+14. After closing the GUI, rerun Tab 1 and Tab 2 validation.
+
+Expected result:
+- No traceback.
+- Existing controls remain usable.
+- Safe Mode panel appears or no-ops safely.
+- Normal Tab 3 flow is preserved.
+- Tab 1 remains Errors 0.
+- Tab 2 remains pass=8 fail=0 warn=0 skip=3.
+
+Failure action:
+- If the GUI crashes or normal Tab 3 controls disappear, stop immediately.
+- Restore from the T4Q024 workbench backup or request a rollback patch.

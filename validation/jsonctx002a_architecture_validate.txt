@@ -1,0 +1,12 @@
+ARCHITECTURE VALIDATION SUMMARY
+Total issues: 3 | Errors: 0 | Warnings: 3 | Other: 0
+Issue counts by code:
+  MISPLACED_TEST: 2 (errors=0, warnings=2)
+  MISSING_PUBLIC_SURFACE_CONTROL: 1 (errors=0, warnings=1)
+Top issue path groups:
+  workbench: 2
+  <LEGACY_PRODUCT_PACKAGE>: 1
+DETAILS
+WARNING MISPLACED_TEST               workbench/_bundle_temp/pa023b_sources/test_pa023_json_canonical_atlas_output_quality.py :: Test-like file is outside a canonical test folder. Expected tests under tests/, test/, or step12_checks/. Risk: tooling may treat this as production-like source or miss its relationship to the module it protects.
+WARNING MISPLACED_TEST               workbench/_bundle_temp/pa023b_sources/test_pa023b_atlas_output_policy_active_scope.py :: Test-like file is outside a canonical test folder. Expected tests under tests/, test/, or step12_checks/. Risk: tooling may treat this as production-like source or miss its relationship to the module it protects.
+WARNING MISSING_PUBLIC_SURFACE_CONTROL <LEGACY_PRODUCT_PACKAGE>/reasoner_symbol_atlas/output_policy.py :: Likely public-facing module exposes 9 top-level public names but does not define __all__. Use __all__ to declare the canonical public API, reduce duplicate-symbol noise, and make architecture-box ownership explicit. Public names: IMPORTANT_TEST_TERMS, INACTIVE_PATH_MARKERS, LOW_VALUE_TEST_MARKERS, MAX_RELATED_FILES, MAX_TESTS_TO_RUN, is_active_atlas_path, is_active_test_command, normalize_atlas_path, ... (+1 more).

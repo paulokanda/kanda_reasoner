@@ -1,0 +1,196 @@
+{
+    "churn": {
+        "added_count": 0,
+        "delta": 0,
+        "note": "Initial run",
+        "removed_count": 0
+    },
+    "instability": {
+        "available": true,
+        "modules": [
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "__init__"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_05"
+            }
+        ],
+        "stats": {
+            "cyclic_component_count": 0,
+            "cyclic_module_count": 0,
+            "internal_edge_count": 0,
+            "internal_module_count": 8
+        },
+        "top_stable": [
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "__init__"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_05"
+            }
+        ],
+        "top_unstable": [
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "__init__"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_02_errors_tst_corrected_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_03_errors_tst_corrected"
+            },
+            {
+                "ca": 0,
+                "ce": 0,
+                "instability": 0.0,
+                "module": "ad_writer_05"
+            }
+        ]
+    },
+    "layer": "stability_analyzer_v1",
+    "ok": true,
+    "snapshot": {
+        "available": true,
+        "keys": [
+            "ast_node_count_total",
+            "avg_ast_nodes_per_module",
+            "avg_lines_per_module",
+            "domain_prefix",
+            "domain_root",
+            "max_module_size_lines",
+            "module_count",
+            "parse_error_count",
+            "python_file_count",
+            "read_error_count",
+            "snapshot_version",
+            "timestamp",
+            "total_lines"
+        ]
+    },
+    "summary": {
+        "combined_risk_level": "low",
+        "combined_risk_score": 0,
+        "notes": []
+    },
+    "symbol_index": {
+        "available": true,
+        "symbol_count": 55
+    }
+}

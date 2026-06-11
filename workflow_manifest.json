@@ -1,0 +1,129 @@
+﻿{
+  "generated_at_utc": "2026-05-26T02:25:09.573725+00:00",
+  "managed_by": "manage_workflows.py",
+  "notes": [
+    "Canonical active-scope workflow manifest for Project Reasoner.",
+    "Legacy archives, migrated tests, temp files, backups, and reference folders are excluded from import probing.",
+    "Tests are intentionally not used as active project source for Tab 1 or Tab 2 scans.",
+    "T10P004: Import probing now targets kanda_reasoner_app as the canonical package while legacy kanda_reasoner_app remains available for compatibility during staged migration."
+  ],
+  "project_root": "E:\\kanda_reasoner",
+  "version": 1,
+  "workflows": {
+    "business_checks": {
+      "commands": [
+        {
+          "args": [
+            "{python}",
+            "kanda_reasoner_app/manage_architecture/manage_architecture.py",
+            "--root",
+            "{root}",
+            "--validate"
+          ],
+          "cwd": "{root}",
+          "expect_exit_code": 0,
+          "name": "architecture_validation_smoke",
+          "timeout_seconds": 120
+        }
+      ],
+      "enabled": true
+    },
+    "gui_workflows": {
+      "commands": [
+        {
+          "args": [
+            "{python}",
+            "-c",
+            "import reasoner_tools_gui; print('gui import smoke ok')"
+          ],
+          "cwd": "{root}",
+          "expect_exit_code": 0,
+          "name": "reasoner_tools_gui_import_smoke",
+          "timeout_seconds": 30
+        }
+      ],
+      "enabled": true,
+      "headless_env": {
+        "QT_QPA_PLATFORM": "offscreen"
+      },
+      "note": "Headless import smoke only. This validates that the GUI entry module can be imported without launching the application."
+    },
+    "imports": {
+      "enabled": true,
+      "exclude_patterns": [
+        "DEVELOPER_TOOLS_older*",
+        "DEVELOPER_TOOLS_older.*",
+        "*.DEVELOPER_TOOLS_older*",
+        "*deprecated*",
+        "*older_deprecated*",
+        "*daily_refactor_report_deprecated*",
+        "tests*",
+        "tests.*",
+        "*.tests*",
+        "*.test*",
+        "temp*",
+        "temp.*",
+        "_patch_backups*",
+        "_patch_backups.*",
+        "_project_reference*",
+        "_project_reference.*"
+      ],
+      "include_modules": [
+        "kanda_reasoner_app",
+        "reasoner_tools_gui",
+        "_inject_missing_module_docstrings",
+        "profiling"
+      ],
+      "module_limit": 200,
+      "timeout_seconds": 15
+    },
+    "integration": {
+      "commands": [],
+      "enabled": false,
+      "note": "Integration checks are intentionally disabled until active external contracts are defined."
+    },
+    "performance": {
+      "commands": [],
+      "enabled": false,
+      "note": "Performance budgets are intentionally disabled until explicit thresholds are defined."
+    },
+    "runtime_smoke": {
+      "commands": [
+        {
+          "args": [
+            "{python}",
+            "kanda_reasoner_app/manage_architecture/manage_architecture.py",
+            "--help"
+          ],
+          "cwd": "{root}",
+          "expect_exit_code": 0,
+          "name": "architecture_help_smoke",
+          "timeout_seconds": 30
+        },
+        {
+          "args": [
+            "{python}",
+            "kanda_reasoner_app/manage_workflows/manage_workflows.py",
+            "--help"
+          ],
+          "cwd": "{root}",
+          "expect_exit_code": 0,
+          "name": "workflow_help_smoke",
+          "timeout_seconds": 30
+        }
+      ],
+      "enabled": true
+    },
+    "tests": {
+      "enabled": false,
+      "note": "Migrated tests are archived under root tests and are not part of active Tab 2 validation.",
+      "pytest_args": [
+        "-q",
+        "tests"
+      ],
+      "runner": "auto",
+      "timeout_seconds": 120
+    }
+  }
+}
+

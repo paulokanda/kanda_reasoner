@@ -1,0 +1,88 @@
+{
+  "helper_folder": "daily_refactor_report_help",
+  "helpers": [
+    {
+      "exports": [],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help",
+      "path": "daily_refactor_report_help/__init__.py"
+    },
+    {
+      "exports": [
+        "load_daily_refactor_report_source"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.source_loader_private_impl",
+      "path": "daily_refactor_report_help/source_loader_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_1"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_1_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_1_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_2"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_2_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_2_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_3"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_3_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_3_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_4"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_4_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_4_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_5"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_5_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_5_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_6"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_6_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_6_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_7"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_7_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_7_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_8"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_8_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_8_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_9"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_9_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_9_private_impl.py"
+    },
+    {
+      "exports": [
+        "DAILY_REFACTOR_REPORT_SOURCE_PART_10"
+      ],
+      "module": "kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_10_private_impl",
+      "path": "daily_refactor_report_help/daily_refactor_report_source_part_10_private_impl.py"
+    }
+  ],
+  "origin": "daily_refactor_report.py"
+}

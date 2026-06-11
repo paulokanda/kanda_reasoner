@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "active",
+  "category": "prompt_library_release",
+  "subcategory": "text_only_release",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\kanda_reasoner_app\\prompt_library\\release",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "risks": [],
+  "mitigations": [],
+  "validation_requirements": [
+    "must_remain_text_only",
+    "must_not_modify_source_code",
+    "must_not_write_governance",
+    "must_use_project_agnostic_paths"
+  ],
+  "files_created": [],
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial text-only Prompt Library release documentation."
+    }
+  ],
+  "prompt_id": "text_library_scope_freeze",
+  "display_name": "Text-Only Prompt Library Scope Freeze",
+  "explainer": "Defines the frozen boundaries of the text-only Prompt Engineering Library.",
+  "how_it_works": "This document records what the library may contain and what it must not do until a later approved phase."
+}

@@ -1,0 +1,83 @@
+{
+  "generated_by": "pass_045_collector_widget_ui_action_bridge_split",
+  "help_folder": "kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge_help",
+  "helpers": {
+    "__init__.py": {
+      "consumed_by": [
+        "collector_widget_ui_action_bridge.py"
+      ],
+      "depends_on": [
+        "indexing.py",
+        "matching.py",
+        "normalization.py"
+      ],
+      "exports": [
+        "_safe_str",
+        "_list_or_empty",
+        "_normalize_qt_signal_records",
+        "_find_matching_signal_record",
+        "_match_widget_for_action",
+        "_match_widget_by_hint",
+        "_match_widget_by_signal_name",
+        "_prefer_interactive_widget",
+        "_match_confidence",
+        "_append_widget_action_index",
+        "_append_action_widget_index",
+        "_build_bridge_summary"
+      ],
+      "purpose": "Expose bridge helper functions for the root module."
+    },
+    "indexing.py": {
+      "consumed_by": [
+        "__init__.py",
+        "collector_widget_ui_action_bridge.py"
+      ],
+      "depends_on": [
+        "normalization.py"
+      ],
+      "exports": [
+        "_append_widget_action_index",
+        "_append_action_widget_index",
+        "_build_bridge_summary"
+      ],
+      "purpose": "Append bridge indexes and build bridge summary."
+    },
+    "matching.py": {
+      "consumed_by": [
+        "__init__.py",
+        "collector_widget_ui_action_bridge.py"
+      ],
+      "depends_on": [
+        "normalization.py"
+      ],
+      "exports": [
+        "_find_matching_signal_record",
+        "_match_widget_for_action",
+        "_match_widget_by_hint",
+        "_match_widget_by_signal_name",
+        "_prefer_interactive_widget",
+        "_match_confidence"
+      ],
+      "purpose": "Match UI actions to widget registry and signal records."
+    },
+    "normalization.py": {
+      "consumed_by": [
+        "__init__.py",
+        "collector_widget_ui_action_bridge.py"
+      ],
+      "depends_on": [],
+      "exports": [
+        "_safe_str",
+        "_list_or_empty",
+        "_normalize_qt_signal_records"
+      ],
+      "purpose": "Normalize Qt signal and list/string payloads."
+    }
+  },
+  "origin": "kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge.py",
+  "pattern": "private_helper_extraction",
+  "public_origin_exports": [
+    "build_widget_ui_action_bridge",
+    "build_widget_ui_action_hotspots"
+  ]
+}

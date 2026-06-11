@@ -1,0 +1,12 @@
+{
+  "helper_directory": "snippet_retrieval_help",
+  "helper_files": [
+    "snippet_retrieval_part_1_private_impl.py",
+    "snippet_retrieval_part_2_private_impl.py",
+    "snippet_retrieval_part_3_private_impl.py",
+    "__init__.py"
+  ],
+  "origin": "snippet_retrieval.py",
+  "private_implementation": true,
+  "public_owner": "snippet_retrieval.py"
+}

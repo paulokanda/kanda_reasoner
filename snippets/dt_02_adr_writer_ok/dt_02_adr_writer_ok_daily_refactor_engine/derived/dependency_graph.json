@@ -1,0 +1,217 @@
+{
+    "cycles_detected": [],
+    "cyclic_components": [],
+    "edges": [
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "datetime"
+        },
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "os"
+        },
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "pathlib"
+        },
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "re"
+        },
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "requests"
+        },
+        {
+            "from": "ad_writer_02",
+            "kind": "import",
+            "to": "typing"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "datetime"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "os"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "pathlib"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "re"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "requests"
+        },
+        {
+            "from": "ad_writer_02_errors_tst",
+            "kind": "import",
+            "to": "typing"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "datetime"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "os"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "pathlib"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "re"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "requests"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected",
+            "kind": "import",
+            "to": "typing"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "datetime"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "os"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "pathlib"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "re"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "requests"
+        },
+        {
+            "from": "ad_writer_02_errors_tst_corrected_corrected",
+            "kind": "import",
+            "to": "typing"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "datetime"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "os"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "pathlib"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "re"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "requests"
+        },
+        {
+            "from": "ad_writer_03_errors_tst_corrected",
+            "kind": "import",
+            "to": "typing"
+        }
+    ],
+    "nodes": [
+        "__init__",
+        "ad_writer_02",
+        "ad_writer_02_errors_tst",
+        "ad_writer_02_errors_tst_corrected",
+        "ad_writer_02_errors_tst_corrected_corrected",
+        "ad_writer_03_errors_tst",
+        "ad_writer_03_errors_tst_corrected",
+        "ad_writer_05"
+    ],
+    "root": "E:\\pykanda\\dt_02_adr_writer_ok",
+    "stats": {
+        "cycle_count": 0,
+        "cyclic_component_count": 0,
+        "edge_count": 30,
+        "node_count": 8
+    },
+    "strongly_connected_components": [
+        [
+            "pathlib"
+        ],
+        [
+            "typing"
+        ],
+        [
+            "datetime"
+        ],
+        [
+            "os"
+        ],
+        [
+            "re"
+        ],
+        [
+            "requests"
+        ],
+        [
+            "ad_writer_02"
+        ],
+        [
+            "ad_writer_02_errors_tst"
+        ],
+        [
+            "ad_writer_02_errors_tst_corrected"
+        ],
+        [
+            "ad_writer_02_errors_tst_corrected_corrected"
+        ],
+        [
+            "ad_writer_03_errors_tst"
+        ],
+        [
+            "ad_writer_03_errors_tst_corrected"
+        ],
+        [
+            "ad_writer_05"
+        ],
+        [
+            "__init__"
+        ]
+    ]
+}

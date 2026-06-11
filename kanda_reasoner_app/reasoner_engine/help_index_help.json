@@ -1,0 +1,82 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_engine/help_index.py",
+  "entry_point": "kanda_reasoner_app/reasoner_engine/help_index.py",
+  "help_folder": "kanda_reasoner_app/reasoner_engine/help_index_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with actual helper __all__ exports.",
+  "pattern": "mixed",
+  "pattern_note": "__init__.py package reexports are intentionally excluded from helper entries.",
+  "generated_by": "reasoner_correction_pass_014b_helper_manifest_all_alignment",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "exports": [
+    "HELP_INDEX",
+    "RAW_HELP_INDEX",
+    "normalize_help_payload",
+    "normalize_help_text"
+  ],
+  "summary": {
+    "total_helpers": 3,
+    "public_helpers": 3,
+    "internal_helpers": 0,
+    "entry_exports": [
+      "HELP_INDEX"
+    ],
+    "exported_symbols": [
+      "HELP_INDEX",
+      "RAW_HELP_INDEX",
+      "normalize_help_payload",
+      "normalize_help_text"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "help_index_data.py": {
+      "purpose": "Normalized help payload for Reasoner Engine.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "HELP_INDEX"
+      ],
+      "depends_on": [
+        "help_index_normalization.py",
+        "help_index_raw.py"
+      ],
+      "consumed_by": []
+    },
+    "help_index_normalization.py": {
+      "purpose": "Text normalization helpers for the Reasoner Engine help index.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "normalize_help_text",
+        "normalize_help_payload"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "help_index_data.py"
+      ]
+    },
+    "help_index_raw.py": {
+      "purpose": "Raw static help payload for Reasoner Engine.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "RAW_HELP_INDEX"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "help_index_data.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "help_index_data.py": {
+      "help_index_normalization.py": "imports",
+      "help_index_raw.py": "imports"
+    },
+    "help_index_normalization.py": {},
+    "help_index_raw.py": {}
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

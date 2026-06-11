@@ -1,0 +1,728 @@
+import ast
+import graphviz
+from pathlib import Path
+import sys
+from typing import Dict, List, Set, Tuple, Any, Optional, DefaultDict
+from collections import defaultdict
+from datetime import datetime
+import re
+import json
+import os
+import textwrap
+import inspect
+import unicodedata
+
+
+class ProjectAnalyzer:
+    def __init__(self, project_root: str = None, output_dir: str = None):
+        """Initialize analyzer with configurable paths"""
+        self.module_dir = Path(__file__).parent
+        default_project_root = str(self.module_dir.parent.parent.parent)
+
+        self.project_root = project_root if project_root is not None else default_project_root
+        self.output_dir = output_dir if output_dir is not None else os.path.join(self.project_root, "dev_tools")
+        Path(self.output_dir).mkdir(parents=True, exist_ok=True)
+
+        # Enhanced data structures with better error handling
+        self.file_dependencies = defaultdict(dict)
+        self.all_files = set()
+        self.module_purposes = {}
+        self.class_roles = {}
+        self.class_methods = defaultdict(dict)
+        self.function_details = defaultdict(dict)
+        self.entry_points = set()
+        self.test_files = set()
+        self.resource_files = set()
+        self.signal_chains = defaultdict(list)
+        self.import_graph = defaultdict(set)
+        self.atlas_data = {}
+        self.dot = graphviz.Digraph(engine='fdp')
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+        self.signals = defaultdict(list)
+        self.method_calls = defaultdict(list)
+        self.skipped_files = defaultdict(list)  # Track skipped files and reasons
+
+    def scan_project_structure(self):
+        """Completely scan the project directory structure with enhanced filtering"""
+        print(f"\nScanning project structure at: {self.project_root}")
+
+        # First pass: collect all relevant files with more sophisticated filtering
+        for root, dirs, files in os.walk(self.project_root):
+            # Skip hidden directories and common excluded dirs
+            dirs[:] = [d for d in dirs if not (d.startswith('.') or d in ('__pycache__', 'build', 'dist'))]
+
+            for file in files:
+                file_path = Path(root) / file
+                try:
+                    relative_path = str(file_path.relative_to(self.project_root))
+
+                    # Enhanced file categorization with normalization
+                    if file.endswith('.py'):
+                        self.all_files.add(relative_path)
+                        if self._is_entry_point(file):
+                            self.entry_points.add(relative_path)
+                    elif any(file.endswith(ext) for ext in ('.json', '.csv', '.edf', '.txt', '.md')):
+                        self.resource_files.add(relative_path)
+                    elif self._is_test_file(file) or 'test' in root.lower():
+                        self.test_files.add(relative_path)
+                except Exception as e:
+                    self.skipped_files[str(file_path)] = f"Path error: {str(e)}"
+                    continue
+
+        print(
+            f"Found {len(self.all_files)} Python files, {len(self.resource_files)} resources, {len(self.test_files)} tests")
+        if self.skipped_files:
+            print(f"Skipped {len(self.skipped_files)} files due to errors")
+
+    def _is_entry_point(self, filename: str) -> bool:
+        """Check if file is likely an entry point"""
+        entry_patterns = ['main', 'app', 'start', 'run', 'manage']
+        return (any(pattern in filename.lower() for pattern in entry_patterns) and
+                not filename.startswith('test_'))
+
+    def _is_test_file(self, filename: str) -> bool:
+        """Check if file is a test file"""
+        test_patterns = ['test_', '_test', 'tests']
+        return (any(pattern in filename.lower() for pattern in test_patterns))
+
+    def analyze_file(self, file_path: Path):
+        """Enhanced analysis of a single Python file with better error handling"""
+        try:
+            relative_path = str(file_path.relative_to(self.project_root))
+
+            with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
+                content = f.read()
+
+                try:
+                    tree = ast.parse(content, filename=str(file_path))
+                except SyntaxError as e:
+                    self.skipped_files[relative_path] = f"Syntax error: {str(e)}"
+                    return
+
+                # Initialize file data structure
+                self.file_dependencies[relative_path] = {
+                    'imports': set(),
+                    'classes': {},
+                    'functions': {},
+                    'docstring': self._clean_docstring(ast.get_docstring(tree)),
+                    'signals': set(),
+                    'method_calls': set()
+                }
+
+                # Extract additional information from AST
+                for node in ast.walk(tree):
+                    try:
+                        if isinstance(node, ast.ClassDef):
+                            self._process_class(node, relative_path)
+                        elif isinstance(node, ast.FunctionDef):
+                            self._process_function(node, relative_path)
+                        elif isinstance(node, ast.ImportFrom) or isinstance(node, ast.Import):
+                            self._process_import(node, relative_path)
+                        elif isinstance(node, ast.Call):
+                            self._process_method_call(node, relative_path)
+                        elif isinstance(node, ast.Assign):
+                            self._process_signal_assignment(node, relative_path)
+                    except Exception as e:
+                        print(f"Error processing node in {file_path}: {str(e)}")
+                        continue
+
+        except Exception as e:
+            error_msg = f"Error analyzing {file_path}: {str(e)}"
+            print(error_msg)
+            self.skipped_files[str(file_path)] = error_msg
+
+    def _clean_docstring(self, docstring: Optional[str]) -> str:
+        """Clean and standardize docstrings"""
+        if not docstring:
+            return "No docstring"
+        return inspect.cleandoc(docstring).replace('\n', ' ').strip()
+
+    def _process_class(self, node: ast.ClassDef, file_path: str):
+        """Process a class definition node"""
+        try:
+            class_info = {
+                'methods': {},
+                'bases': [self._get_base_name(base) for base in node.bases],
+                'docstring': self._clean_docstring(ast.get_docstring(node)) or "No class docstring",
+                'signals': set(),
+                'decorators': [d.id for d in node.decorator_list if isinstance(d, ast.Name)]
+            }
+
+            for item in node.body:
+                if isinstance(item, ast.FunctionDef):
+                    method_info = self._create_method_info(item)
+                    class_info['methods'][item.name] = method_info
+                    self.class_methods[node.name][item.name] = method_info
+
+            self.file_dependencies[file_path]['classes'][node.name] = class_info
+            self.class_roles[node.name] = {
+                'file': file_path,
+                'purpose': class_info['docstring'],
+                'is_abstract': any(d == 'abstractmethod' for d in class_info['decorators'])
+            }
+        except Exception as e:
+            print(f"Error processing class {node.name} in {file_path}: {str(e)}")
+
+    def _get_base_name(self, base_node: ast.AST) -> str:
+        """Extract base class name from AST node"""
+        try:
+            if isinstance(base_node, ast.Name):
+                return base_node.id
+            elif isinstance(base_node, ast.Attribute):
+                return base_node.attr
+            elif isinstance(base_node, ast.Subscript):
+                return self._get_base_name(base_node.value)
+            return "UnknownBase"
+        except Exception:
+            return "UnknownBase"
+
+    def _create_method_info(self, node: ast.FunctionDef) -> dict:
+        """Create detailed method information dictionary"""
+        try:
+            return {
+                'docstring': self._clean_docstring(ast.get_docstring(node)) or "No method docstring",
+                'args': [arg.arg for arg in node.args.args],
+                'returns': self._get_return_annotation(node),
+                'decorators': [d.id for d in node.decorator_list if isinstance(d, ast.Name)],
+                'is_async': isinstance(node, ast.AsyncFunctionDef)
+            }
+        except Exception as e:
+            print(f"Error creating method info: {str(e)}")
+            return {
+                'docstring': "Error extracting method info",
+                'args': [],
+                'returns': "Unknown",
+                'decorators': [],
+                'is_async': False
+            }
+
+    def _get_return_annotation(self, node: ast.FunctionDef) -> str:
+        """Extract return annotation from function node"""
+        try:
+            if node.returns:
+                if isinstance(node.returns, ast.Name):
+                    return node.returns.id
+                elif isinstance(node.returns, ast.Subscript):
+                    return node.returns.value.id
+                elif isinstance(node.returns, ast.Str):
+                    return node.returns.s
+            return "None"
+        except Exception:
+            return "Unknown"
+
+    def _process_function(self, node: ast.FunctionDef, file_path: str):
+        """Process a function definition node"""
+        try:
+            func_info = self._create_method_info(node)
+            self.file_dependencies[file_path]['functions'][node.name] = func_info
+            self.function_details[node.name] = {
+                'file': file_path,
+                'info': func_info
+            }
+
+            if node.name.startswith('test_'):
+                self.test_files.add(file_path)
+        except Exception as e:
+            print(f"Error processing function {node.name} in {file_path}: {str(e)}")
+
+    def _process_import(self, node: ast.AST, file_path: str):
+        """Process import statements"""
+        try:
+            imports = set()
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    imported = alias.name.split('.')[0]
+                    imports.add(imported)
+                    self.import_graph[file_path].add(imported)
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    imported = node.module.split('.')[0]
+                    imports.add(imported)
+                    self.import_graph[file_path].add(imported)
+                    for alias in node.names:
+                        self.import_graph[file_path].add(f"{imported}.{alias.name}")
+
+            self.file_dependencies[file_path]['imports'].update(imports)
+        except Exception as e:
+            print(f"Error processing import in {file_path}: {str(e)}")
+
+    def _process_method_call(self, node: ast.Call, file_path: str):
+        """Track method calls within the code"""
+        try:
+            if isinstance(node.func, ast.Attribute):
+                method_name = node.func.attr
+                if isinstance(node.func.value, ast.Name):
+                    class_name = node.func.value.id
+                    self.method_calls[file_path].append(f"{class_name}.{method_name}")
+            elif isinstance(node.func, ast.Name):
+                self.method_calls[file_path].append(node.func.id)
+        except Exception as e:
+            print(f"Error processing method call in {file_path}: {str(e)}")
+
+    def _process_signal_assignment(self, node: ast.Assign, file_path: str):
+        """Track signal assignments (PyQt/PySide signals)"""
+        try:
+            if (isinstance(node.value, ast.Call) and
+                    isinstance(node.value.func, ast.Attribute) and
+                    node.value.func.attr in ('Signal', 'pyqtSignal')):
+                signal_name = node.targets[0].id
+                self.signals[file_path].append(signal_name)
+                self.file_dependencies[file_path]['signals'].add(signal_name)
+        except Exception as e:
+            print(f"Error processing signal assignment in {file_path}: {str(e)}")
+
+    def generate_architecture_docs(self):
+        """Generate comprehensive project documentation with error handling"""
+        try:
+            self.scan_project_structure()
+
+            # Analyze all Python files
+            for py_file in [Path(self.project_root) / f for f in self.all_files]:
+                self.analyze_file(py_file)
+
+            self._generate_text_atlas()
+            self._generate_ascii_diagrams()
+            self._generate_dependency_graph()
+            self._generate_class_method_report()
+            print(f"\nDocumentation generated at: {self.output_dir}")
+        except Exception as e:
+            print(f"Fatal error during documentation generation: {str(e)}")
+            raise
+
+    def _generate_text_atlas(self):
+        """Generate complete text documentation with error reporting"""
+        try:
+            sections = [
+                "=" * 80,
+                " KANDA PROJECT ARCHITECTURE",
+                "=" * 80,
+                f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n",
+                self._generate_structure_section(),
+                self._generate_skipped_files_section(),
+                self._generate_component_section(),
+                self._generate_signal_flow_section(),
+                self._generate_method_call_section(),
+                self._generate_testing_section(),
+                self._generate_file_listing()
+            ]
+
+            # Safely join sections
+            content = []
+            for section in sections:
+                if isinstance(section, str):
+                    content.append(section)
+                elif isinstance(section, list):
+                    content.extend(section)
+                else:
+                    content.append(str(section))
+
+            filename = f"project_architecture_{self.timestamp}.txt"
+            atlas_path = os.path.join(self.output_dir, filename)
+            with open(atlas_path, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(content))
+            print(f"Created architecture file: {filename}")
+        except Exception as e:
+            print(f"Error generating text atlas: {str(e)}")
+            raise
+
+    def _generate_structure_section(self):
+        """Generate directory structure section"""
+        try:
+            structure = ["[PROJECT STRUCTURE]", "=" * 80]
+            dir_tree = defaultdict(lambda: defaultdict(list))
+
+            for file in sorted(self.all_files.union(self.resource_files).union(self.test_files)):
+                dir_path = str(Path(file).parent)
+                file_type = self._get_file_type(file)
+                dir_tree[dir_path][file_type].append(Path(file).name)
+
+            for dir_path in sorted(dir_tree.keys()):
+                structure.append(f"\n📂 {dir_path}/")
+                for file_type in sorted(dir_tree[dir_path].keys()):
+                    for file in sorted(dir_tree[dir_path][file_type]):
+                        structure.append(f" ├─ {self._get_file_icon(file, file_type)} {file}")
+
+            return '\n'.join(structure)
+        except Exception as e:
+            print(f"Error generating structure section: {str(e)}")
+            return "[Error generating project structure]"
+
+    def _get_file_type(self, filepath: str) -> str:
+        """Categorize files into types"""
+        filename = Path(filepath).name
+        if filename in [Path(f).name for f in self.entry_points]:
+            return 'entry_point'
+        if 'test' in filename.lower() or 'test' in Path(filepath).parent.name.lower():
+            return 'test'
+        if any(filename.endswith(ext) for ext in ('.json', '.csv', '.edf')):
+            return 'data'
+        return 'code'
+
+    def _get_file_icon(self, filename: str, file_type: str) -> str:
+        """Return appropriate icon based on file type"""
+        icons = {
+            'entry_point': '🚀',
+            'test': '🧪',
+            'data': '📊',
+            'code': '📄'
+        }
+        return icons.get(file_type, '📄')
+
+    def _generate_skipped_files_section(self):
+        """Generate section listing skipped files and reasons"""
+        if not self.skipped_files:
+            return ""
+
+        skipped = ["\n[SKIPPED FILES]", "=" * 80]
+        skipped.append("\nThe following files were skipped during analysis:")
+
+        for file, reason in sorted(self.skipped_files.items()):
+            skipped.append(f"\n- {file}: {reason}")
+
+        return '\n'.join(skipped)
+
+    def _generate_component_section(self):
+        """Generate component documentation section"""
+        try:
+            components = ["[KEY COMPONENTS]", "=" * 80]
+            important_classes = sorted(
+                self.class_roles.items(),
+                key=lambda x: (len(self.class_methods.get(x[0], {})),
+                               len(self._get_class_dependencies(x[0]))),
+                reverse=True
+            )[:15]
+
+            for class_name, class_data in important_classes:
+                components.append(f"\n{class_name}:")
+                components.append(f"  - Location: {class_data.get('file', 'unknown')}")
+                components.append(
+                    f"  - Purpose: {textwrap.shorten(class_data.get('purpose', 'No description'), width=80)}")
+                components.append(f"  - Methods: {len(self.class_methods.get(class_name, {}))}")
+
+                methods = list(self.class_methods.get(class_name, {}).keys())
+                if methods:
+                    components.append(f"  - Key Methods: {', '.join(methods[:5])}" +
+                                      ("..." if len(methods) > 5 else ""))
+
+            return '\n'.join(components)
+        except Exception as e:
+            print(f"Error generating component section: {str(e)}")
+            return "[Error generating component documentation]"
+
+    def _get_class_dependencies(self, class_name: str) -> Set[str]:
+        """Get all dependencies for a class"""
+        dependencies = set()
+        for file, data in self.file_dependencies.items():
+            if class_name in data.get('classes', {}):
+                dependencies.update(data['imports'])
+        return dependencies
+
+    def _generate_signal_flow_section(self):
+        """Generate enhanced signal flow documentation with connections and visualization"""
+        try:
+            signal_flow = ["[SIGNAL FLOW ANALYSIS]", "=" * 80]
+
+            # Find all files with signals and their connections
+            signal_data = defaultdict(dict)
+            for file, data in self.file_dependencies.items():
+                if data.get('signals'):
+                    signal_data[file]['signals'] = data['signals']
+                    signal_data[file]['connections'] = self._find_signal_connections(file, data['signals'])
+
+            if not signal_data:
+                return "\n".join(signal_flow + ["\nNo PyQt/PySide signals detected in the project"])
+
+            # Generate signal documentation
+            signal_flow.append("\nSIGNAL DEFINITIONS:")
+            for file in sorted(signal_data.keys()):
+                signal_flow.append(f"\n📄 {file}:")
+                for signal in sorted(signal_data[file]['signals']):
+                    signal_flow.append(f"  - {signal}")
+
+                    # Show connections if they exist
+                    if signal in signal_data[file]['connections']:
+                        connections = signal_data[file]['connections'][signal]
+                        signal_flow.append(f"    ↳ Connected to: {', '.join(connections)}")
+
+            # Generate signal flow diagram
+            signal_flow.append("\n\nSIGNAL FLOW DIAGRAM:")
+            signal_flow.append("=" * 40)
+            signal_flow.append(self._generate_signal_flow_diagram(signal_data))
+
+            return '\n'.join(signal_flow)
+        except Exception as e:
+            print(f"Error generating signal flow section: {str(e)}")
+            return "[Error generating signal flow documentation]"
+
+
+    def _find_signal_connections(self, file_path: str, signals: Set[str]) -> Dict[str, List[str]]:
+        """Find where signals are connected to slots in the code"""
+        connections = defaultdict(list)
+        file_content = Path(self.project_root, file_path).read_text(encoding='utf-8', errors='replace')
+
+        # Look for signal.connect() patterns
+        for signal in signals:
+            # Pattern for signal.connect(slot)
+            connect_pattern = re.compile(rf"{signal}\.connect\(([^\)]+)\)")
+            matches = connect_pattern.findall(file_content)
+            for match in matches:
+                connections[signal].append(match.strip())
+
+            # Pattern for @pyqtSlot() decorated functions
+            slot_pattern = re.compile(rf"@pyqtSlot\(.*?\)\s*def\s+([^\(]+)")
+            slots = slot_pattern.findall(file_content)
+            if slots:
+                connections[signal].extend(slots)
+
+        return connections
+
+    def _generate_signal_flow_diagram(self, signal_data: Dict) -> str:
+        """Generate ASCII diagram of signal connections"""
+        diagram = []
+
+        # Group signals by their origin file
+        for file in sorted(signal_data.keys()):
+            diagram.append(f"\n[{Path(file).name}]")
+
+            for signal in sorted(signal_data[file]['signals']):
+                diagram.append(f"  {signal}")
+
+                # Show connections
+                if signal in signal_data[file]['connections']:
+                    for connection in signal_data[file]['connections'][signal]:
+                        diagram.append(f"    → {connection}")
+                else:
+                    diagram.append("    → (no connections found)")
+
+        return '\n'.join(diagram)
+
+
+    def _generate_method_call_section(self):
+        """Generate documentation of method call relationships"""
+        try:
+            method_calls = ["[METHOD CALLS]", "=" * 80]
+
+            if not self.method_calls:
+                return "\n".join(method_calls + ["No method call data collected"])
+
+            # Group method calls by frequency
+            call_counter = defaultdict(int)
+            for calls in self.method_calls.values():
+                for call in calls:
+                    call_counter[call] += 1
+
+            method_calls.append("\nMost frequently called methods:")
+            for method, count in sorted(call_counter.items(), key=lambda x: x[1], reverse=True)[:20]:
+                method_calls.append(f"  - {method} (called {count} times)")
+
+            return '\n'.join(method_calls)
+        except Exception as e:
+            print(f"Error generating method call section: {str(e)}")
+            return "[Error generating method call documentation]"
+
+    def _generate_testing_section(self):
+        """Generate enhanced testing documentation"""
+        try:
+            testing = ["[TESTING]", "=" * 80]
+
+            if not self.test_files:
+                return "\n".join(testing + ["No test files detected"])
+
+            testing.append("\nTest Files Structure:")
+
+            # Group test files by type/area
+            test_categories = defaultdict(list)
+            for test_file in sorted(self.test_files):
+                category = Path(test_file).parent.name
+                test_categories[category].append(Path(test_file).name)
+
+            for category, files in sorted(test_categories.items()):
+                testing.append(f"\n{category}/")
+                for file in sorted(files):
+                    testing.append(f"  - {file}")
+
+            testing.append("\nTest Coverage Summary:")
+            testing.append(f"  - Total test files: {len(self.test_files)}")
+
+            # Count tested components
+            tested_components = set()
+            for test_file in self.test_files:
+                filename = Path(test_file).name
+                if '_' in filename:
+                    component = filename.split('_')[1]
+                    tested_components.add(component)
+            testing.append(f"  - Tested components: {len(tested_components)}")
+
+            return '\n'.join(testing)
+        except Exception as e:
+            print(f"Error generating testing section: {str(e)}")
+            return "[Error generating testing documentation]"
+
+    def _generate_file_listing(self):
+        """Generate enhanced file listing with more metadata"""
+        try:
+            listing = ["\n[COMPLETE FILE LISTING]", "=" * 80]
+
+            for file in sorted(self.all_files):
+                file_data = self.file_dependencies.get(file, {})
+                purpose = file_data.get('docstring', "No description available")
+
+                # Enhanced file info
+                classes = list(file_data.get('classes', {}).keys())
+                functions = list(file_data.get('functions', {}).keys())
+
+                listing.append(f"\n{file}:")
+                listing.append(f"  - Purpose: {textwrap.shorten(purpose, width=100)}")
+                if classes:
+                    listing.append(f"  - Classes: {', '.join(classes)}")
+                if functions:
+                    listing.append(f"  - Functions: {', '.join(functions[:5])}" +
+                                   ("..." if len(functions) > 5 else ""))
+                if file_data.get('signals'):
+                    listing.append(f"  - Signals: {', '.join(file_data['signals'])}")
+
+            return '\n'.join(listing)
+        except Exception as e:
+            print(f"Error generating file listing: {str(e)}")
+            return "[Error generating file listing]"
+
+    def _generate_dependency_graph(self):
+        """Generate visual dependency graph using Graphviz"""
+        try:
+            # Create a new directed graph
+            self.dot = graphviz.Digraph(engine='fdp',
+                                        name='Project Dependencies',
+                                        format='png',
+                                        graph_attr={'rankdir': 'LR', 'splines': 'ortho'})
+
+            # Add nodes (files/modules)
+            for file in self.all_files:
+                self.dot.node(file, shape='box', style='filled',
+                              fillcolor='lightblue' if file in self.entry_points else 'white')
+
+            # Add edges (import relationships)
+            for source, targets in self.import_graph.items():
+                for target in targets:
+                    if any(target in f for f in self.all_files):  # Only show internal dependencies
+                        self.dot.edge(source, target)
+
+            # Save the graph
+            graph_path = os.path.join(self.output_dir, f'dependency_graph_{self.timestamp}')
+            self.dot.render(graph_path, cleanup=True)
+            print(f"Created dependency graph: {graph_path}.png")
+        except Exception as e:
+            print(f"Error generating dependency graph: {str(e)}")
+
+    def _generate_class_method_report(self):
+        """Generate detailed class and method report"""
+        try:
+            report = ["[CLASS AND METHOD DETAILS]", "=" * 80]
+
+            for class_name, methods in sorted(self.class_methods.items()):
+                class_info = self.class_roles.get(class_name, {})
+                report.append(f"\n🔹 {class_name} (in {class_info.get('file', 'unknown')})")
+                report.append(f"   Purpose: {class_info.get('purpose', 'No description')}")
+                report.append(f"   Base Classes: {', '.join(class_info.get('bases', []))}")
+
+                for method_name, method_info in methods.items():
+                    report.append(f"\n   ▪ {method_name}()")
+                    report.append(f"     - Args: {', '.join(method_info.get('args', []))}")
+                    report.append(f"     - Returns: {method_info.get('returns', 'None')}")
+                    report.append(f"     - Doc: {method_info.get('docstring', 'No docstring')}")
+                    if method_info.get('decorators'):
+                        report.append(f"     - Decorators: {', '.join(method_info['decorators'])}")
+
+            # Add standalone functions
+            report.append("\n\n[STANDALONE FUNCTIONS]", "=" * 80)
+            for func_name, func_data in sorted(self.function_details.items()):
+                report.append(f"\n🔹 {func_name} (in {func_data.get('file', 'unknown')})")
+                report.append(f"   Doc: {func_data.get('info', {}).get('docstring', 'No docstring')}")
+                report.append(f"   Args: {', '.join(func_data.get('info', {}).get('args', []))}")
+
+            filename = f"method_details_{self.timestamp}.txt"
+            report_path = os.path.join(self.output_dir, filename)
+            with open(report_path, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(report))
+            print(f"Created method details file: {filename}")
+        except Exception as e:
+            print(f"Error generating class method report: {str(e)}")
+
+    def _generate_ascii_diagrams(self):
+        """Generate ASCII diagrams with Unicode handling"""
+        try:
+            diagrams = [
+                self._create_ascii_diagram(
+                    "HighPass Filter Flow",
+                    ["[UI] --> [Dropdown]",
+                     "[Dropdown] --> [FilterEngine]",
+                     "[FilterEngine] --> [Visualizer]",
+                     "[Visualizer] --> [Display]"]
+                ),
+                self._create_ascii_diagram(
+                    "k01_core_eeg Data Flow",
+                    ["[File Loader] --> [Preprocessor]",
+                     "[Preprocessor] --> [Signal Processor]",
+                     "[Signal Processor] --> [Visualizer]",
+                     "[Visualizer] --> [UI Components]"]
+                )
+            ]
+
+            filename = f"component_diagrams_{self.timestamp}.txt"
+            diagrams_path = os.path.join(self.output_dir, filename)
+
+            # Write with explicit UTF-8 encoding
+            with open(diagrams_path, 'w', encoding='utf-8') as f:
+                f.write("\n\n".join(diagrams))
+            print(f"Created diagram file: {filename}")
+        except UnicodeEncodeError:
+            # Fallback to ASCII-only diagrams
+            print("Warning: Falling back to ASCII-only diagrams due to encoding issues")
+            self._generate_ascii_only_diagrams()
+
+    def _generate_ascii_only_diagrams(self):
+        """Generate diagrams using only ASCII characters"""
+        diagrams = [
+            self._create_ascii_diagram(
+                "HighPass Filter Flow",
+                ["[UI] -> [Dropdown]",
+                 "[Dropdown] -> [FilterEngine]",
+                 "[FilterEngine] -> [Visualizer]",
+                 "[Visualizer] -> [Display]"]
+            ),
+            self._create_ascii_diagram(
+                "k01_core_eeg Data Flow",
+                ["[File Loader] -> [Preprocessor]",
+                 "[Preprocessor] -> [Signal Processor]",
+                 "[Signal Processor] -> [Visualizer]",
+                 "[Visualizer] -> [UI Components]"]
+            )
+        ]
+
+        filename = f"ascii_diagrams_{self.timestamp}.txt"
+        diagrams_path = os.path.join(self.output_dir, filename)
+        with open(diagrams_path, 'w', encoding='ascii', errors='replace') as f:
+            f.write("\n\n".join(diagrams))
+        print(f"Created ASCII-only diagram file: {filename}")
+
+    def _create_ascii_diagram(self, title: str, elements: List[str]) -> str:
+        """Generate formatted ASCII diagram with enhanced styling"""
+        border = "=" * 60
+        header = f" {title.center(58)} "
+        diagram = [border, header, border]
+        for element in elements:
+            if "-->" in element:
+                parts = element.split("-->")
+                diagram.append(f" {parts[0].strip():<20} → {parts[1].strip():>20}")
+            else:
+                diagram.append(f" {element}")
+        diagram.append(border)
+        return "\n".join(diagram)
+
+if __name__ == "__main__":
+    try:
+        analyzer = ProjectAnalyzer(r"E:\EEG_KANDA")
+        analyzer.generate_architecture_docs()
+    except Exception as e:
+        print(f"Fatal error during analysis: {str(e)}")
+        sys.exit(1)
+

@@ -1,0 +1,129 @@
+[
+    {
+        "function": "plot_stat_heatmap",
+        "title": "Statistical Heatmap",
+        "example": "Like a school report card showing different scores for each subject, this heatmap displays multiple EEG metrics for each electrode channel.",
+        "interpretation": "The heatmap uses color intensity to represent values of different statistics (mean, SD, etc.) across EEG channels.",
+        "meaning": "Allows comparison of descriptive features between electrodes.",
+        "clinical_application": "Helps detect abnormal amplitudes or variability in specific scalp regions, useful for screening focal abnormalities."
+    },
+    {
+        "function": "plot_radar_for_selected",
+        "title": "Radar Plot",
+        "example": "Like a radar chart used in athlete performance profiles, this shows how a single EEG channel compares across various statistical metrics.",
+        "interpretation": "Each axis represents a metric; the shape formed shows balance or dominance.",
+        "meaning": "Gives a holistic picture of a channel's characteristics.",
+        "clinical_application": "Identify outliers or dominant features in one region\u2014potential marker for pathology."
+    },
+    {
+        "function": "plot_stat_pairplot",
+        "title": "Pairplot",
+        "example": "Like a scatterplot matrix in finance showing correlations between market variables.",
+        "interpretation": "Each scatterplot compares two metrics; diagonal shows their distributions.",
+        "meaning": "Reveals potential correlations between EEG statistical measures.",
+        "clinical_application": "Understanding metric interdependencies helps in feature selection for ML or clinical diagnostics."
+    },
+    {
+        "function": "plot_boxplot_stats",
+        "title": "Boxplot of Stats",
+        "example": "Similar to boxplots used in quality control for products.",
+        "interpretation": "Shows the distribution, outliers, and spread of EEG metrics.",
+        "meaning": "Visualizes variance and extreme values.",
+        "clinical_application": "Outlier detection may indicate artifacts or pathological activity in specific channels."
+    },
+    {
+        "function": "plot_cluster_heatmap",
+        "title": "Clustered Heatmap",
+        "example": "Like clustering customer behavior in marketing data.",
+        "interpretation": "Rearranges EEG channels based on statistical similarity.",
+        "meaning": "Groups channels with similar activity patterns.",
+        "clinical_application": "Useful for data-driven spatial analysis or electrode grouping."
+    },
+    {
+        "function": "plot_interactive_heatmap",
+        "title": "Interactive Heatmap",
+        "example": "A clickable weather map showing temperature by region.",
+        "interpretation": "Dynamic exploration of metrics with hoverable values.",
+        "meaning": "Same info as static heatmap with enhanced exploration.",
+        "clinical_application": "Improves usability in exploratory EEG analytics."
+    },
+    {
+        "function": "plot_topography",
+        "title": "Topographic Map",
+        "example": "Like a weather map showing temperature or pressure gradients on a geographic map.",
+        "interpretation": "Spatial map of EEG metric intensity over the scalp.",
+        "meaning": "Displays regional strengths of a chosen metric.",
+        "clinical_application": "Common in ERP analysis; localizes abnormalities like epileptiform zones."
+    },
+    {
+        "function": "plot_3d_head",
+        "title": "3D Head Map",
+        "example": "Like a 3D brain imaging scan showing hot zones of activity.",
+        "interpretation": "3D projection of EEG values across electrode locations.",
+        "meaning": "Provides spatial depth and perception to EEG metrics.",
+        "clinical_application": "Useful for intuitive demonstrations and presentations."
+    },
+    {
+        "function": "plot_connectivity_matrix",
+        "title": "Connectivity Matrix",
+        "example": "Like a social network showing who talks to whom.",
+        "interpretation": "Shows statistical correlations between EEG channels.",
+        "meaning": "Highlights functional relationships.",
+        "clinical_application": "Useful for network-based EEG analysis, e.g., in epilepsy or dementia."
+    },
+    {
+        "name": "plot_stat_heatmap",
+        "label": "Descriptive Heatmap",
+        "example": "Imagine a classroom where each student's test scores in six subjects are displayed in a color-coded table. The brighter the color, the higher the score. This gives a clear overview of performance.",
+        "description": "This heatmap visualizes descriptive EEG statistics (e.g., mean, SD, RMS) across all channels. It allows quick identification of channels with unusually high or low activity. Clinically, it can highlight regions of interest and statistically can support outlier detection or normalization checks."
+    },
+    {
+        "name": "plot_radar_for_selected",
+        "label": "Radar Plot",
+        "example": "Think of a spider chart comparing a car\u2019s attributes\u2014speed, fuel economy, safety\u2014forming a shape unique to each model.",
+        "description": "Radar plots illustrate the statistical profile of a single EEG channel across metrics like Mean, RMS, Skewness. It\u2019s useful for understanding the overall 'shape' of activity from one electrode. Clinically, it may help to characterize abnormalities. Statistically, it\u2019s good for feature comparison."
+    },
+    {
+        "name": "plot_stat_pairplot",
+        "label": "Pairplot",
+        "example": "Like plotting all pairwise combinations of student scores to see if students who do well in Math also excel in Science.",
+        "description": "Pairplot of EEG statistics reveals relationships between different metrics, such as how RMS correlates with PtP. Helps identify redundant or predictive features. Clinically, it may guide biomarker selection. Statistically, useful for feature reduction."
+    },
+    {
+        "name": "plot_boxplot_stats",
+        "label": "Boxplot of Statistics",
+        "example": "Visualize salary ranges across professions\u2014some distributions are wide (CEO), others tight (teacher).",
+        "description": "Displays the spread, median and outliers of each EEG statistic across all channels. Clinically relevant to assess signal consistency. Statistically essential to examine distribution shapes and identify anomalies."
+    },
+    {
+        "name": "plot_cluster_heatmap",
+        "label": "Clustered Heatmap",
+        "example": "Grouping students by similar answer patterns on a test shows clusters of learning styles.",
+        "description": "Clusters EEG channels based on statistical similarity, providing insights into regional synchrony or common artifacts. Clinically, it can suggest functional grouping. Statistically, it aids exploratory data analysis."
+    },
+    {
+        "name": "plot_interactive_heatmap",
+        "label": "Interactive Heatmap",
+        "example": "A touchscreen world map where you tap a country to get live data about its population or GDP.",
+        "description": "Interactive version of the stat heatmap with zoom and hover. Enhances exploration of EEG stats across channels. Useful for teaching and dynamic data review in clinical dashboards."
+    },
+    {
+        "name": "plot_topography",
+        "label": "Topographic Map",
+        "example": "Like a weather map showing temperatures across a country\u2014hot zones and cool spots emerge clearly.",
+        "description": "Shows scalp distribution of one statistic (e.g., Mean amplitude). Reveals spatial EEG patterns. Clinically valuable for lateralization or detecting regional dysfunction. Statistically, can validate electrode consistency."
+    },
+    {
+        "name": "plot_time_series",
+        "label": "Time Series Plot",
+        "example": "Like a stock market chart, showing the rise and fall of values over time.",
+        "description": "Plots amplitude of each EEG channel over time. Clinically used to monitor trends or seizure events. Statistically useful for time-domain analysis and temporal smoothing methods."
+    },
+    {
+        "name": "plot_3d_head",
+        "label": "3D Head Plot",
+        "example": "Imagine a 3D model of a stadium where each seat lights up based on how loud the fan is.",
+        "description": "A 3D spatial view of EEG activity over the head. Helps visualize depth and distribution. Clinically enhances understanding of spatial distribution. Statistically, it supports exploratory data visualization."
+    }
+]
+

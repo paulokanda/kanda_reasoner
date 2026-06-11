@@ -1,0 +1,72 @@
+{
+  "category": "prompt_library_index",
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "summary": "Initial text-only prompt-library index asset.",
+      "version": "1.0.0"
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-02",
+      "summary": "Recorded Kanda Bundle-Gated Development as current methodology parent prompt."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Recorded current Teach AI Prompt Authoring complete lifecycle state."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Recorded Python Clean Code overlay as active prompt-library asset."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Recorded Kanda Prompt Router as active beginning-of-day prompt."
+    },
+    {
+      "version": "1.0.2",
+      "date": "2026-06-07",
+      "summary": "Recorded current Kanda Reasoner prompt-library state and lowercase bundle_manifest folder."
+    }
+  ],
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library",
+  "depends_on": [
+    "kanda_bundle_gated_development_workflow",
+    "teach_ai_tab9_prompt_authoring_guide"
+  ],
+  "display_name": "Prompt Library Current State",
+  "edit_policy": "draft_only",
+  "explainer": "Text-only state note recording installed Prompt Library bundle sequence and current safe next step.",
+  "files_created": [],
+  "governance_linked": false,
+  "how_it_works": "The state note records what is installed, what was validated by Test-Path checks, and what remains next.",
+  "load_type": "on_request",
+  "mitigations": [],
+  "modifies_governance": false,
+  "project_agnostic": true,
+  "promotion_policy": "manual_only",
+  "prompt_id": "prompt_library_current_state",
+  "required_before": [],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "risks": [],
+  "safe_to_copy": true,
+  "safe_usage": "Use as a text-only reference for locating and understanding the prompt library.",
+  "schema_version": "1.0.0",
+  "status": "active",
+  "subcategory": "text_only_reference",
+  "validation_requirements": [
+    "must_be_ascii",
+    "must_be_utf8_without_bom",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "version": "1.0.2"
+}

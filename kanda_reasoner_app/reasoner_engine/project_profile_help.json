@@ -1,0 +1,140 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_engine/project_profile.py",
+  "entry_point": "kanda_reasoner_app/reasoner_engine/project_profile.py",
+  "help_folder": "kanda_reasoner_app/reasoner_engine/project_profile_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with actual helper __all__ exports.",
+  "pattern": "mixed",
+  "pattern_note": "__init__.py package reexports are intentionally excluded from helper entries.",
+  "generated_by": "reasoner_engine_project_profile_canonical_migration",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "exports": [
+    "ARCHITECTURE_HEAVY_PYTHON_PROJECT_PROFILE",
+    "EEG_PROJECT_PROFILE",
+    "GENERIC_PROJECT_PROFILE",
+    "GENERIC_PYTHON_PROJECT_PROFILE",
+    "PROJECT_PROFILES",
+    "ProjectProfile",
+    "QT_PYTHON_PROJECT_PROFILE",
+    "get_project_profile",
+    "infer_project_profile",
+    "infer_project_profile_name_from_metadata",
+    "iter_project_profiles"
+  ],
+  "summary": {
+    "total_helpers": 4,
+    "public_helpers": 4,
+    "internal_helpers": 0,
+    "entry_exports": [
+      "ProjectProfile",
+      "GENERIC_PROJECT_PROFILE",
+      "GENERIC_PYTHON_PROJECT_PROFILE",
+      "ARCHITECTURE_HEAVY_PYTHON_PROJECT_PROFILE",
+      "QT_PYTHON_PROJECT_PROFILE",
+      "EEG_PROJECT_PROFILE",
+      "PROJECT_PROFILES",
+      "get_project_profile",
+      "iter_project_profiles",
+      "infer_project_profile_name_from_metadata",
+      "infer_project_profile"
+    ],
+    "exported_symbols": [
+      "ARCHITECTURE_HEAVY_PYTHON_PROJECT_PROFILE",
+      "EEG_PROJECT_PROFILE",
+      "GENERIC_PROJECT_PROFILE",
+      "GENERIC_PYTHON_PROJECT_PROFILE",
+      "PROJECT_PROFILES",
+      "ProjectProfile",
+      "QT_PYTHON_PROJECT_PROFILE",
+      "get_project_profile",
+      "infer_project_profile",
+      "infer_project_profile_name_from_metadata",
+      "iter_project_profiles"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "built_in_profiles.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "GENERIC_PROJECT_PROFILE",
+        "GENERIC_PYTHON_PROJECT_PROFILE",
+        "ARCHITECTURE_HEAVY_PYTHON_PROJECT_PROFILE",
+        "QT_PYTHON_PROJECT_PROFILE",
+        "EEG_PROJECT_PROFILE"
+      ],
+      "depends_on": [
+        "profile_types.py"
+      ],
+      "consumed_by": [
+        "inference.py",
+        "registry.py"
+      ]
+    },
+    "inference.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "infer_project_profile_name_from_metadata",
+        "infer_project_profile"
+      ],
+      "depends_on": [
+        "built_in_profiles.py",
+        "profile_types.py",
+        "registry.py"
+      ],
+      "consumed_by": []
+    },
+    "profile_types.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "ProjectProfile"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "built_in_profiles.py",
+        "inference.py",
+        "registry.py"
+      ]
+    },
+    "registry.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "PROJECT_PROFILES",
+        "get_project_profile",
+        "iter_project_profiles"
+      ],
+      "depends_on": [
+        "built_in_profiles.py",
+        "profile_types.py"
+      ],
+      "consumed_by": [
+        "inference.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "built_in_profiles.py": {
+      "profile_types.py": "imports"
+    },
+    "inference.py": {
+      "built_in_profiles.py": "imports",
+      "profile_types.py": "imports",
+      "registry.py": "imports"
+    },
+    "profile_types.py": {},
+    "registry.py": {
+      "built_in_profiles.py": "imports",
+      "profile_types.py": "imports"
+    }
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

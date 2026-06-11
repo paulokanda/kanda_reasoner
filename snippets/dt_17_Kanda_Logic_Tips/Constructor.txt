@@ -1,0 +1,44 @@
+Constructor
+Right now it’s still ~200 lines of one big __init__. It’s fully functional, but if you want to push SOLID even further you could split it into a few private methods:
+
+class EEGVisualizerCore(QObject):
+    def __init__(self, ...):
+        super().__init__()
+        self._init_signals()
+        self._init_memory_monitor()
+        self._init_folders()
+        self._init_state()
+        self._init_canvas()
+        self._init_loader()
+        self._init_amplitude_map_hooks()      
+        self._init_ui_builders()
+        # …
+
+then move each block down into _init_* methods. This is purely stylistic but
+
+    gives each chunk a name
+
+    makes __init__ a clear orchestration of steps
+
+    helps with future unit-testing (you can test _init_memory_monitor() in isolation, etc.)
+
+Ampli­tude-Map setup
+You still have two initialize_mcrvlt_snapshot_map methods in the class. You can collapse those two definitions into one, and/or move that whole sequence into a dedicated AmplitudeMapService class that the visualizer just calls.
+
+Montage Switching
+Your on_montage_changed still lives here. You might extract that into a small help_montage.py with:
+
+def help01_on_montage_changed(viz, montage_value):
+    # logic, side-effects
+
+and let your class simply do:
+
+def on_montage_changed(self, m):
+    help01_on_montage_changed(self, m)
+
+Splash / Focus
+You could move show_kanda_splash and force_canvas_focus into their own SplashManager or FocusManager, but that’s more optional.
+
+Remove leftover prints
+Once you’re happy, you can sweep out most of the print("[DEBUG] …") calls and either replace them with proper logging.debug(...) or remove them altogether. That’ll slim the class further and let you lean on a central logging configuration.
+

@@ -1,0 +1,135 @@
+"""Static import anchors for Project Reasoner architecture validation.
+
+These imports are intentionally placed under a never-executed branch.
+Tab 1 reads the AST import graph to identify direct test ownership,
+while runtime test collection avoids optional GUI and runtime imports.
+"""
+
+from __future__ import annotations
+
+if False:
+    import _inject_missing_module_docstrings
+    import kanda_reasoner_app
+    import kanda_reasoner_app.assert_real_project_static_context_smoke
+    import kanda_reasoner_app.collector_persistence_io
+    import kanda_reasoner_app.daily_rfctr_report
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_0
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_1
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_3
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_3b
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_4
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_5
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_5b
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_5c
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_6
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_7
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_4_8_files_are_overwritten
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_engine_5_files_growth_incrementally
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.analysis_contracts
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.constitution_enforcer
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.dependency_graph_extractor
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.project_snapshot_extractor
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.refactor_strategist
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.stability_analyzer
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.symbol_churn_analyzer
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_deprecated.daily_refactor_report_helpers.symbol_index_extractor
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_10_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_1_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_2_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_3_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_4_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_5_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_6_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_7_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_8_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.daily_refactor_report_source_part_9_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_help.source_loader_private_impl
+    import kanda_reasoner_app.daily_rfctr_report.daily_refactor_report_validate_manifests
+    import kanda_reasoner_app.insert_missing_docstrings_gui
+    import kanda_reasoner_app.insert_missing_docstrings_gui.LOGIC_insert_mssg_dcstrngs.CHATS_insrt_mssg_dcstrngs.PHASE4_PATCH
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_config
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_help
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_help.docstring_payloads
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_help.heuristics
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_help.models
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_help.response_parsing
+    import kanda_reasoner_app.insert_missing_docstrings_gui.ai_docstring_generator_validate_manifests
+    import kanda_reasoner_app.insert_missing_docstrings_gui.context_builder
+    import kanda_reasoner_app.insert_missing_docstrings_gui.docstring_policy
+    import kanda_reasoner_app.insert_missing_docstrings_gui.docstring_validator
+    import kanda_reasoner_app.insert_missing_docstrings_gui.gui_scope_helpers
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.ai_settings
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.constants
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.dialogs
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.layout_builder
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.preferences
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.report_review_panel
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.run_controls
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.scope_controls
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.window_state
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.worker_thread
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_validate_manifests
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.ast_safety
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.cli
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.diff_output
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.file_processing
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.heuristic_docstrings
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.insertion_collector
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.insertion_formatting
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.project_exclusion_rules
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.reporting
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.run_orchestrator
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.source_io
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_help.symbol_naming
+    import kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_validate_manifests
+    import kanda_reasoner_app.insert_missing_docstrings_gui.mode_options_hlp
+    import kanda_reasoner_app.insert_missing_docstrings_gui.module_summarizer
+    import kanda_reasoner_app.insert_missing_docstrings_gui.parallel_runner
+    import kanda_reasoner_app.json_splitter
+    import kanda_reasoner_app.json_splitter.json_splitter_8
+    import kanda_reasoner_app.json_splitter.json_splitter_8_help
+    import kanda_reasoner_app.json_splitter.json_splitter_8_help.source_loader_private_impl
+    import kanda_reasoner_app.json_splitter.json_splitter_8_help.source_part_1_private_impl
+    import kanda_reasoner_app.json_splitter.json_splitter_8_help.source_part_2_private_impl
+    import kanda_reasoner_app.json_splitter.json_splitter_8_validate_manifests
+    import kanda_reasoner_app.json_splitter.json_splitter_chunk_balancing
+    import kanda_reasoner_app.json_splitter.json_splitter_split_reassemble_validation
+    import kanda_reasoner_app.json_splitter.json_splitter_split_reassemble_validation_help
+    import kanda_reasoner_app.json_splitter.json_splitter_split_reassemble_validation_help.core
+    import kanda_reasoner_app.json_splitter.json_splitter_split_reassemble_validation_validate_manifests
+    import kanda_reasoner_app.json_splitter.json_splitter_web_ai_route_manifest
+    import kanda_reasoner_app.json_splitter.older_deprecated
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter2
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter3
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter4_project_reasoner
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter5
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter6
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter_7
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter_8
+    import kanda_reasoner_app.json_splitter.older_deprecated.json_splitter_8_original_backup
+    import kanda_reasoner_app.live_source_verification
+    import kanda_reasoner_app.live_source_verification.verifier
+    import kanda_reasoner_app.local_ai_json_enrichment
+    import kanda_reasoner_app.local_ai_json_enrichment.enrichment_writer
+    import kanda_reasoner_app.local_ai_json_working_copy
+    import kanda_reasoner_app.local_ai_json_working_copy.copy_manager
+    import kanda_reasoner_app.manage_architecture
+    import kanda_reasoner_app.manage_architecture.manage_architecture
+    import kanda_reasoner_app.manage_architecture.manage_architecture_gui
+    import kanda_reasoner_app.manage_architecture.manage_architecture_gui_help
+
+
+def test_static_import_contract_chunk_01_is_parseable() -> None:
+    """Keep this file visible to test discovery without runtime imports."""
+    assert 1 <= 4

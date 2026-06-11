@@ -1,0 +1,6 @@
+radon  Ctrl+Shift+Q
+
+flake8 Ctrl+Shift+Comma
+
+pylint Ctrl+Shift+;
+

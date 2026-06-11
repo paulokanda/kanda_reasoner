@@ -1,0 +1,1113 @@
+
+-------------------------------------------------------------------
+
+wait, first lets have a global understanding of bigger logic, we already have this other  project that we integrate in dev_tools/dev_tools_pro_gui.py:
+1. Fist ask me if you need files of the project to complete know dev_tools/dt_ai_docstring_creator/ai_code_dcstrngs_creator.py
+2.make ai aware of structure of both projects to avoid duplicated logic or creation of similar functions with same use or logic.
+3.I want to use same connector (select the better)
+4. integrate functionning to avoit code repetition
+make ai aware of structure of both projects to avoid duplicated logic or creation of similar functions with same use or logic.
+5. tranfer comum logic modules to  dev_tools/ folder
+
+do it step by step in details , ask for autorization to next step , only after that integration of logic we will update  dev_tools/dt_formator_py_tool/format_my_pys_pro.py
+-------------------------------------------------------------------
+
+this is my local Ai , for now brotherhood is static, suggest clever uses of ai to improve  the use of brotherhood , teach me some amazing uses of ai here. My final goal is a complete understant of project , so that it I try to implement a feature, ai can tell me , hey it is already implemented in module x , in function y and it is reusabel , don't create it again ,  I want develop a project that makes ai aware of all the project to avoid repetition , duplications fo code allowing best quality app
+-----------------------------------------------------------------------------------
+create a txt table "usefull tools" from the code uploades,  showing the tool name  what is it for.
+-------------------------------------------------------------
+Here are the primary causes of memory leaks in Python:
+Circular References: This is a common cause where two or more objects reference each other, forming a cycle. Even if no other part of the program references these objects, their mutual references prevent their reference count from dropping to zero, thus preventing the garbage collector from reclaiming them. Python's garbage collector can detect and break these cycles, but this process is not always instantaneous and can be delayed, especially in long-running applications.
+Global Variables and Caches: Storing objects in global variables or caches without proper management can lead to memory leaks. If objects are added to a global list or dictionary and never removed, they will persist in memory even if their data is no longer relevant.
+C Extensions with Poor Memory Management: When using C extensions in Python, if the C code directly allocates memory and fails to deallocate it properly, it can lead to memory leaks that are outside the scope of Python's garbage collector.
+Event Listeners or Callbacks Not Properly Removed: In applications with event-driven architectures, if event listeners or callbacks are registered but never unregistered, they can maintain references to objects, preventing their garbage collection.
+Unintended References in Long-Running Applications: In applications that run for extended periods, such as daemons or servers, even subtle, forgotten references to objects can accumulate over time, leading to significant memory consumption.
+Consequences of Memory Leaks:
+Degraded Performance: As more memory is consumed, the system may slow down due to increased paging and swapping.
+Resource Exhaustion: The application may eventually run out of available memory, leading to crashes or instability.
+System Instability: In severe cases, a memory leak can impact other applications running on the same system.
+Diagnosing and Fixing Memory Leaks:
+Tools like tracemalloc (standard library), objgraph, and memory_profiler can assist in identifying the source of memory leaks by tracking memory allocations and object references. Addressing leaks often involves breaking circular references (e.g., using weakref), carefully managing global variables and caches, and ensuring proper resource deallocation in C extensions or event-driven components.
+
+
+------------------------------------------------------------------------------
+
+one more think while building this new logic after each step build a ai friendly map ( it is up to you if json, txt, md) saying to ai in "ai language" now we builded this and that module that do this and are connected to ... in those modules we have those functions connecte to ...  whose task is ... like a complete diary, next time you will complete aware of what is going on , after each step update diary
+
+
+and I will run code from pycharm green button
+------------------------------------------------------------------------------
+
+
+
+lets start step 1 and dont just say  insert this in that module , instead say : open mdule x and  substitute this for that or betwee these lines insert that ,  substiturte complete function or module ,  show me exact place to insert code to avoid time waste.
+------------------------------------------------------------------------------
+now that we discussed all that above I want a detailed best way hybrid road map (fist just a skeleton roadmap) of how dinamically:
+
+go step by step:
+
+1.get any  file.py with a gui
+2. keep and respect all 
+
+no code text (except docstrings  and comments) and keep it as they are
+
+| Category                                           | Example                                                                | Description / Use                                                           |
+| -------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Encoding declaration**                           | `# -*- coding: utf-8 -*-`                                              | Special comment at top of file telling Python which encoding to use.        |
+| **Shebang line**                                   | `#!/usr/bin/env python3`                                               | First line on Unix systems; tells OS how to run the file.                   |
+| **Type hints comments**                            | `# type: ignore` or `# type: int`                                      | Used by `mypy` or linters to guide type checking.                           |
+| **Linting directives**                             | `# noqa`, `# pylint: disable=E1101`                                    | Used by tools like flake8 or pylint to suppress warnings.                   |
+| **Region markers**                                 | `# region Setup\n ... \n# endregion`                                   | IDE-friendly markers for collapsible sections (PyCharm, VSCode).            |
+| **TODO / FIXME markers**                           | `# TODO: add error handling`                                           | Conventional developer notes recognized by IDEs.                            |
+| **License / copyright header**                     | `# MIT License ...`                                                    | Legal or informational text at top of file.                                 |
+| **Metadata / authorship info**                     | `__author__ = "Jane Doe"`<br>`__version__ = "1.2.3"`                   | String constants with metadata, often at top of modules.                    |
+| **Module-level docstring with rich formatting**    | `"""Module for managing DB connections.\n\nUsage:\n    import db\n"""` | Often includes usage examples, parameters, or markdown.                     |
+| **Triple-quoted multiline strings (not assigned)** | `"""Notes:\nThis section is experimental."""`                          | Sometimes used as in-code comments or disabled code — not a real docstring. |
+| **Raw strings for regex / examples**               | `r"^\w+$"`                                                             | String literals that aren’t code but describe patterns or examples.         |
+| **Doctests**                                       | `python<br>>>> add(2,3)<br>5`                                          | Embedded examples inside docstrings.                                        |
+| **String constants used as metadata**              | `_DESCRIPTION = "Main training pipeline"`                              | Constants that describe, not execute.                                       |
+| **Logging format templates**                       | `LOG_TEMPLATE = "User {name} logged in"`                               | Human-readable text stored in code.                                         |
+| **F-string / template literals**                   | `f"Processed {count} records"`                                         | Often human-facing messages, not logic.                                     |
+| **Embedded JSON / YAML text**                      | `CONFIG_YAML = """\nmodel:\n  name: resnet\n"""`                       | Configuration text stored in code as literal.                               |
+| **SQL or HTML snippets**                           | `SQL_QUERY = """SELECT * FROM users;"""`                               | Literal text, not Python logic.                                             |
+| **Data docstrings in data classes**                | `__doc__ = "Simple model class"`                                       | Dynamically assigned descriptions.                                          |
+
+3. remove docstring already in file.py
+
+4. understant  each method and function firts and after that do the same with classes  
+5.recriate docstrings
+6. check syntax with at least 2 of the best syntax tools( black? ruff?)
+7. compare with original file if something is missing 
+8. give me back the full corrected file.py
+
+important details:
+a. do it hybrid best tool to each specific task above
+b. ask ai to do its tasks in hybrid form whe possible code and prompt 
+c. ai will understand one function or class logic , create a docstring or comment and after that ask to itself did  I understood the code and created the adequate comment or docstring , check , if yes go next , if not start working on that chunk of code again , until it is correct , only then go to next step.
+
+give me a detailed  comprehensive roadmap
+
+ 
+----------------------------------------------------------------
+after validation
+if not exists , dinamically criate in original file folder a sub folder backs, if folder exist just use it.  creation dependes of original folder , if original folder is my_folder , back is created in my_folder/backs/
+
+in our case it will be dev_tools/dt_ai_docstring_creator/tests/backs/
+then transfer original module to backs as <original_module>_back.py, in our case 
+ dev_tools/dt_ai_docstring_creator/tests/refactorer_test.py will become 
+dev_tools/dt_ai_docstring_creator/tests/backs/refactorer_test_back.py
+then delete 
+
+
+When generating or modifying Python files:
+
+1. Code Compatibility:
+   - Always produce plain, standard Python 3.10+ code that runs on Windows.
+   - Ensure compatibility with PyCharm and standard CPython interpreters.
+   - Use only ASCII characters — no emojis, Unicode symbols, or non-ASCII punctuation.
+   - Use standard quotation marks (" and '), hyphens (-), and indentation with spaces only.
+
+2. Safety and Stability:
+   - Never include terminal control sequences, emojis, or colored output codes.
+   - Avoid shell-specific commands (like bash syntax or UNIX-only paths).
+   - Use only Windows-compatible paths and escaping (\\ for paths).
+   - All print statements must output plain text only.
+
+3. Style and Cleanliness:
+   - Follow standard Python conventions (PEP 8).
+   - Use docstrings and inline comments for clarity.
+   - Keep imports minimal and standard (no platform-specific modules).
+   - Prefer explicit exception handling with clear error messages.
+   - Test code should run with pytest or unittest without modification.
+
+4. Encoding and File Safety:
+   - Always save files as UTF-8 without BOM.
+   - Ensure all strings and comments use only printable ASCII.
+   - Handle decoding explicitly when reading external data (use `errors="ignore"` or `errors="replace"` as needed).
+
+5. General Rules:
+   - Code must be portable, robust, and safe to run on Windows 10/11.
+   - Avoid dependencies that may require UNIX utilities or non-Windows shells.
+   - All output, logs, and errors must be readable in PyCharm’s terminal and Windows console.
+
+In summary: 
+Generate clean, plain Python code — free of emojis, Unicode icons, terminal styling, or special symbols — that will build, run, and display correctly in Windows and PyCharm without crashes or encoding errors.
+
+
+----------------------------------------------------------------
+
+Do it step by step to me build the code here , finish one step ask if can proceed to next
+----------------------------------------------------------------
+Add this AIIncrementalSyntaxHealer class to a real helper file (helpers/incremental_healer_hlp.py), yes 
+
+Show exactly where to import and call it in _autoformat_code(),
+and 3. Add a debug log integration for healing stats? yes 
+
+and one more thing: we are not correcting logic or modifying code  , or modifying syntax.  We are just  reading the code and saying, for example, let me see what this func is doing ... ok it is adding 1 plus 2, I 'm going to create its docstring, let me check identation of function ...ok., now identation of docstrings and  cotes ... ok now I know how to do  """ This code is a mathematical func that adds one to two""".
+Inclusive you will receive files in general with indent correct but without docstring and comment , you can use the indent of  functions and classes as references for docstrings and comment indent. For example , here is a class and I will insert a docstring here , oh , if it is a dockstring of a class and indent of class is x spaces  , I know that indent of dockstring is  x+4 spacess. Hey... i see here just """ isolated, let me see if what comes before or next is a dockstring, ok it is ...so I wil create a """ to correct.  Hey, another """ isolated but I'm in doubt if it belongs to a docstring, or if is an erro... I will check with original func (or class) , oh no, is just an error I'm removing it or    triple cotes are correct but docstring was not created , I will stop here create it, and continue after that. do you understand what I mean? 
+
+To do this work I suggest an hibrid approach with code and prompts to 
+
+my ai 
+
+07:58:31-766552 INFO     Loaded "Qwen2.5-Coder-14B-Instruct-GGUF\qwen2.5-coder-14b-instruct-q5_k_m-00001-of-00002.gguf"
+                         in 30.08 seconds.
+07:58:31-767887 INFO     LOADER: "llama.cpp"
+07:58:31-767887 INFO     TRUNCATION LENGTH: 8192
+07:58:31-768892 INFO     INSTRUCTION TEMPLATE: "Custom (obtained from model metadata)"
+07:58:31-769898 INFO     Loading the extension "openai"
+07:58:32-084081 INFO     OpenAI-compatible API URL:
+
+wait , code can also monitor the refactor of py file and when an error occur instead of saying hey error here ...cant continue , instead of that code can sent a prompt to ai wait for answer , correct refactoring and go to next step. How ? create one prompt for each error we have seen here and send to Ai when apropriated. What you think about it?
+
+-------------------------------------------------
+Yes Ai knows where the errors are, it must check what kind of error it is  facing and instead of saying I can't save file because  """ is missing(for example) = check if it is really is a docstring , check necessary indent an correct it
+
+ the idea is this while building python file  code must build a line , evaluate what is comming next and instead of an error  message use black or other corrector or AI itself to correct , for instance , AI is building teh file and asks , what is comming next , hum... is a docstring so it must have """  and """, let me see, hum... it doesnot have indent , ok lets create indent as pep says 
+
+another example, what comes next is a function , let me see , oh.. it is not in a class , it is a module function so no indent before "def func_name"
+
+hey  this part  is nested in a nested function so I need create it with  for example 8 or 12 or 16 indent spaces
+
+uau this have a # at begining so it is a comment in a function I will check the indent necessaries 
+
+if you have some doubt of how proceed in specific cases ask me 
+
+
+
+----------------------------------------------------------------------
+give me a prompt saying to AI when creating a module do not use any emoji or control char — to avoid crashes from strange Unicode.
+
+
+----------------------------------------------------------------
+the proposal of project is to 
+1. analise module
+2. create docstrings for all classes and functions 
+3. if docstring already exists update
+4. check for errors in docstring and indentation  and correct them,
+5. make this creation bullet prof for errors in indentation and docstrings
+6.update original module  check agains por identetion errors and save original file corrected.  
+----------------------------------------------------------------
+_autoformat_code func was duplicated in gui and reader modules , we change name in reader go autoformat_code_core func and they are fitting well.
+look in project files uploaded and audit if there are function names duplicated in same module or in different modules , if so,  list modules and respective duplicated funcs
+
+---------------------------------------------------------------
+lets update code bellow to work with ai_coding_assistant and ai_local_connector_to_py_files:
+--------------------------------------------------------------------------------
+
+I will send to you a python file , you will analize the file , and create docstrings for all classes and functions, you will return a my_docstrings.txt with a list of name of class and respective docstring, name of func and respective docstring . py uploaded
+---------------------------------------------------------------------------------
+You are refactoring this project with a DELETION-FIRST approach.
+
+GOAL
+Remove legacy behavior at its source so that ONLY ONE dated backup is created NEXT TO the original file, e.g. <stem>_backup_DD_MM_YYYY.py. Absolutely NO files named *_pre_* (e.g., _pre_docstring_backup.py, _pre_path_header_backup.py). The GUI must verify the backup next to the original (not in _ai_temp).
+
+NON-NEGOTIABLE CONSTRAINTS
+1) Do NOT add new functions, classes, flags, wrappers, or “blockers”.
+2) Edit in place and delete the legacy code that creates extra backups.
+3) Keep code as simple as possible (DRY/SOLID where it simplifies).
+4) Only if ABSOLUTELY necessary, propose a minimal new file/change — but ASK FIRST before adding anything.
+
+IF YOU LACK CONTEXT — ASK FIRST
+ALWAYS request the exact files you must inspect before making changes. If you are not sure about call sites or project layout, STOP and ask:
+- “I need FILE PATHS for: LIST OF FILES to confirm usage/side effects.”
+Do NOT guess.
+
+WHAT TO DELIVER (STRICT ORDER)
+A) MISSING FILES (IF ANY)
+List the filenames/paths you still need to inspect. If you have everything, say “No additional files needed.”
+
+B) GREP TARGETS
+Show ripgrep searches I can run to validate we’ve found all backup creators and their callers. Include both precise and broad patterns, e.g.:
+rg -n "pre_.*backup" PROJECT_ROOT
+rg -n "_pre_.*backup" PROJECT_ROOT
+rg -n "(copy2|rename|write_text)\\(" PROJECT_ROOT
+rg -n "(create_file_backup|create_backup)" PROJECT_ROOT
+
+C) PLAN (DELETION-FIRST)
+Very short. Name each file to change and the lines/blocks to delete or edit. No new symbols unless explicitly approved.
+
+D) MINIMAL GIT DIFF
+Provide a unified diff with ONLY deletions/edits (no added functions/flags/wrappers). Use correct paths from the repo root. Keep hunks as small as possible while compiling cleanly.
+
+E) CALLER IMPACT MAP
+List every caller you touched (file:line → symbol). For each, one concise sentence on why the change is safe (e.g., “now calls no-backup path; return type unchanged”).
+
+F) ACCEPTANCE CRITERIA (MUST PASS)
+1. Exactly one backup per run: <stem>_backup_DD_MM_YYYY.py next to the original.
+2. No files matching *_pre_* anywhere.
+3. GUI checks for the backup next to the original file and reports success.
+4. Existing behavior otherwise unchanged; code compiles; CLI/GUI flow still runs:
+   backup → analysis → header insertion → docstring update.
+5. Grep checks return zero matches for legacy patterns:
+   rg -n "pre_.*backup|_pre_.*backup" PROJECT_ROOT
+
+G) POST-CHANGE SMOKE TEST (SCRIPTED STEPS)
+1. Run the analyzer on SAMPLE_FILE.py.
+2. Verify backup exists next to SAMPLE_FILE.py with today’s date.
+3. Verify _ai_temp contains analysis outputs but NO backups.
+4. Open GUI and confirm it reports the side-by-side backup.
+
+IMPORTANT REMINDERS TO YOURSELF
+- If you’re NOT SURE about a function’s usage, ASK for the file(s) first.
+- Prefer deletion of dead/duplicated code over adding layers.
+- Keep diffs tight. No unrelated formatting changes.
+- No silent behavior changes beyond removing extra backups.
+
+PROJECT-SPECIFIC TARGET (FOR THIS TASK)
+• Remove all creation of:
+  *_pre_docstring_backup.py
+  *_pre_path_header_backup.py
+• Ensure only: <stem>_backup_DD_MM_YYYY.py (adjacent to original).
+• GUI verifier must check the adjacent backup path.
+
+BEGIN BY LISTING: (A) the files you still need to inspect (if any). If none, proceed with (B) GREP TARGETS, then (C) PLAN, then (D) DIFF, then (E) CALLER IMPACT, (F) ACCEPTANCE, (G) SMOKE TEST.
+
+
+---------------------------------------------------------------------------------
+you didn't removed _extract_json_map from module do it and update imports 
+
+----------------------------------------------------------------------------------
+I want to konw of dev_tools/dt_43_ai_refactorer/refactor_main.py what it does , where it is called pytest to check its use
+
+---------------------------------------------------------------------------------
+
+     lets focus in main subject , logic is running files are created but :
+correct step by step:
+
+
+
+1. one big  help file is created identical to main file , correction: instead  help files must have between 300- 600 lines aproximatelly
+
+2. main file (orquestrator) is not updated , it keeps all the old code in it 
+correction:  instead, for compatibility with the rest of the project, orquestrator <original_name>.py must keep the same functions, classes , methods = just names as place holders for the real  respective codes that are in  each respective  help file.
+
+3 main file orquestrator <original_name>.py must also be listed in preview left panel before save for editing as do the help files 
+    
+think in just one step at time, do it,  create a pytest for it, only then, ask if can  go to next step
+
+----------------------------------------------------------------------------------
+dummy code in  # MAIN ENTRY POINT is only garbage , lets refactore to, step by step:
+
+1. completely remove it dummy code in  # MAIN ENTRY POINT
+before callling Ai
+2. refactore to insteade of creation of <original_module_name>_core.py to:
+a. create an <original_module_name>_back.py in same folder copy of original file 
+b. always make <original_module_name>.py as the app’s entry point of the app or pipeline
+3. Now after pressing button "get Ai..."  presents selected  original_module_name>.py to Ai start working
+3. start getting code from  <original_module_name>.py to create new files preview 
+4. <original_module_name>.py  is the entry point with same name to be compatible with rest of logic outside its own logic.
+5. other files created are inserted in folder <original_module_name>_help
+6. name of new files are <original_module_name>_new_name_hlp.py 
+
+think in in just one step at time, do it,  create a pytest for it, only then, ask if can  go to next step
+
+
+-----------------------------------------------------------
+
+
+I'm in programming phase of project adn using green button of Pycharm to run scripts , in the future , I wi'll pyinstall  , which is best to keep coherence in project run as package or script?
+------------------------------------------------------------------------------------
+
+are changes here necessary?
+if so :
+update complete module , divide answer in  as many parts as you needs and before starting and finishing each part of answuer remember how many classes and methods rest to be writen and don't forget to write then all.
+-------------------------------------------------------------------------------------
+when I ask for ai plan it crashes:
+
+E:\mne_py3.10\python.exe E:\EEG_KANDA\dev_tools\dt_43_ai_refactorer\gui_ai_refactorer_v3_10_studio_tabs.py 
+✅ Loaded config from E:\EEG_KANDA\dev_tools\dt_43_ai_refactorer\config.json
+DEBUG: display_plan called with 0 items
+
+look at my scripts uploaded an lets logging debug in details to app ready file inserted , send to ai and ai return correct json of new modules implemented related to selected file . It seems that Ai is not exporting adequate json or it is not creating suggestions of correct modules.  Do your thinking slow , no hurry, lets do the ultimate debugg
+-------------------------------------------------------------------------------
+
+
+dont open automatically visual diff insert a button  to show it if necessary
+----------------------------------
+
+
+I want  this over classe:
+
+# ──────────────────────────────────
+#  class Foo whose objective is...
+# ──────────────────────────────────
+
+and 
+inside methods and functions:
+
+separate clunches of logic code by 
+
+#------------1. this code do that
+
+# ----------2. this code do this      etc 
+
+# -----------3 
+
+#------------3.1
+
+
+
+Problem:  when refactoring a file, there are  blank lines after each line of code , an above classes there are 4 blank lines , it means that code that create blank lines is  duplicated  in some funct or functions, lets isolate exclusively this problem and solve it . try debugging format_my_psy_pro.py line by line while wrrtting a log when necessary . if you can  do it internally and return to me corrections and explanations. lets focus on blank lines excess. Try debugg line by line and you will find how many times blank lines are created for the same slice of code 
+
+------------------------------------------------------------
+
+
+it is ok  , lets change subject.
+
+we have all these great tools  and  A .py file with incorrect formatting, logic errors. need of comment , corrections to fit pep8 , etc
+
+| Category  | Tool                                              | Purpose                           | Needs AI? | Works with your local AI?        |
+| --------- | ------------------------------------------------- | --------------------------------- | --------: | -------------------------------- |
+| Formatter | Ruff / Black / autopep8 / YAPF                    | Style & layout                    |        No | Coexists (run before/after AI)   |
+| Lint      | Ruff / Flake8 / Pylint / pydocstyle / pycodestyle | Quality checks                    |        No | Coexists                         |
+| Types     | mypy                                              | Static typing                     |        No | Coexists                         |
+| Imports   | isort / Ruff                                      | Sort & prune imports              |        No | Coexists                         |
+| Structure | Enhanced structure / Compact spacing              | Blank lines, sections             |        No | Coexists                         |
+| GUI       | PySide6 app                                       | Orchestrate runs & show AI status |         — | **Yes (auto-detects & enables)** |
+| AI        | AIIntegration (OpenAI-compatible)                 | Docstrings/quickfix/refactor      |   **Yes** | **Yes**                          |
+| AI diag   | test_ai_connection.py                             | Probe `/v1/models`                |   **Yes** | **Yes**                          |
+| Bootstrap | compat installer / requirements                   | Install tools                     |        No | N/A                              |
+
+what is best approach , present file to ai correct and them to black  and Ruff or contrary or use just one tool
+
+I want a roadmap to integrate all possible tools (those which do not conflict) to refactor the .py in  to  state of art  
+
+which is the more clever way to do so? What tool comes first? what tool do not use when integrating all?
+
+give me first a description with roadmap instructions explainning why concatenate tools in the way you suggest
+
+
+--------------------------------------------
+I will run from green button Pycharm
+
+------------------------------------------------
+analize layout and formating of file generated by dev_tools/format_py_tool/format_my_pys_pro.py critizise , comment errors and suggest solutions
+-----------------------------------------------------------
+
+the previous file create roadmap that I sent to you  is an example of the incorrect  result of use  of dev_tools/format_py_tool/format_my_pys_pro.py
+
+what I want is a correction of dev_tools/format_py_tool/format_my_pys_pro.py to create files really correct with adequate indentation . 
+so update and shield script format_my_pys_pro.py agains indentation  errors,  strong code implementationto avoiding indent errors and any kind of error,  generate corrected files  like you did in last answer . Get it? If is interesting create a log on work of  dev_tools/format_py_tool/format_my_pys_pro.py and  dev_tools/format_py_tool/gui_formatter_pro.py
+
+check and re check before delivering the download lik of files 
+
+
+
+
+_what_is_it_for.md  explain  in details what is it for and how it works, gimme link to download both files , don't send zip send  links of  the 2 files always separated and ready to use
+
+
+give me a  rmat_my_pys_pro_what_is_it_for.md with a complete explanation of  what it is, how and when use int 
+
+ give me this explanatory file with all info 1. what is  it for 2. how it works 3 how connect to ai to make it run
+
+--------------------------------------------
+first review my project (I will send you more files)
+--------------------------------------------
+
+we know that middle taba bar is instantiated here
+# Correct instance that was already created in DrpdwnPanelMiddleBar
+self.filter_toolbar = self.filters_toolbar.filters_toolbar
+
+-----------------------------------------
+from k05_combobox_forge.k05_7_eeg_middle_tab_bar.combobox_middle_tab_bar import MiddleTabBarFilters
+
+
+
+------------------------------------
+there are 2 tooltips  logic 1. simple tooltip related to buttons and 2. gorgeous hover_card related to lane dropdwons. explain separately the two logics to me files related to each one , where tooltips windows are created and where they connect respectively to buttons core and pro  and lane comboboxes .at end give me a chart and a table showing me the architecture of  those logics 
+------------------------------------
+learn my project focus on dropdwons comboboxes button middle tab bar , just read , understand, memorize  and ask for more files
+
+-------------------------------------
+structure or .py that I want 
+
+at beginning summary """ this module is relatade to 1. this 2. That and creation of ... or instantiation of... are main features """
+
+
+imports example
+
+# -----------------------------------------------------------------------------
+# 3) Qt imports
+# -----------------------------------------------------------------------------
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QCoreApplication, Qt
+
+# -----------------------------------------------------------------------------
+# 4) Project imports
+# -----------------------------------------------------------------------------
+from k11_graph_stat.hdf5.hdf5_folder_file_creator import ensure_eeg_folders
+from k10_fonts.kanda_font_loader import load_custom_fonts
+
+
+
+
+
+insert all docstrings that are not criated yet
+
+separate blocks of methods  by logic or action with  
+
+
+# ───────────────────────────────────────────
+# - 1 this block  OF METHODS do ...
+# ───────────────────────────────────────────
+
+def fo1
+def fo2
+def fo3
+
+#### -2 this other block do ... ####
+# ───────────────────────────────────────────
+#  -2 this other block  OF METHODS do ...
+# ───────────────────────────────────────────
+
+def fo4
+def fo5
+def fo6
+
+etc,
+
+inside methods and functions:
+
+separate clunches of logic code by 
+
+#------------1. this code do that
+
+# ----------2. this code do this      etc 
+
+# -----------3 
+
+#------------3.1
+
+
+
+
+ class BB
+
+
+
+
+
+
+-------------------------------------
+
+lets focus on comboboxes in middle_tab and  tool tips. we have 2 types of tooltips a simple one in core filters dropdows and  hover_card gorgeous in lane. simple tooltips are connected to a button system, gorgeous tooltip is conected direct to combobox header. explain the files I will show to you with focus on these to tooltips logics.
+
+after that give me a transcription of answer in a gorgeous  downloadable
+
+-------------------------------------------
+
+You see the chat and my problem: I cant make hover_card plot in core_filters combobox header , can you , but hover_card is working in lane . Can you implement and refactor hover_card logic connection to core_filter independently , without messing with lane logic, dont'change lane-hover_card logic, refactor core_filter logic (or correct the already implemented) to  plot hover_card in header of core lane associated with respective label 
+
+------------------------------------------------------
+
+update class_ui_layout_cmbbx_template_helper.py based on code uploaded , dont miss any function . divide answer in 5 parts , do one at time wait to yes to proceed to next part 
+
+----------------------------------------------------
+explaining what is it for , what it does, how use it
+---------------------------------------------------------
+continue studying focus in hover_card connections to combobox because we will deprecate and remove this logic to create a new logic to connect then later, first cleaning, but for now just study code 
+--------------------------------------------------------------------------------------
+
+at moment no matter the option in dropdown heads, the hover card connected to header combobox is always the same in each dropdown, I want that when the option change in combobox header , the respective hover card follow plotting when header combobox is touched by mouse. But very important: each time I try to do it , dropdowns and lane are shinked to left. I want that implementation avoind shrink of dropdonws. what is the best and DRY alernative to that make hover card follow te logic of dropdown header update 
+
+I want to change the hover card logic to each time the dropdown head is update with a new option, the respective hover card plots if the mouse is over the dropdown hover . because at moment, no matter the option in dropdwon header,  hover card always plots with initial option. Keep hovercard bckground white and  the main feature is : don't let dropdowns and lanes shrink to left during this update , in each step of creation of new logic  ensure that dropdown and lane do not shrink to left . 
+
+-------------------------------------------------------------------------------
+
+python docs/project_anaysis/project_analizer_2_runner.py group-report SimpleTestGroup  
+
+
+part 11 , first check for logic, consistency and completeness
+--------------------------------------------------------------------------
+CHECK UPDATE improve  for HOVER CARD
+
+--------------------------------------------------------------------------
+I want to pass over dropdowns and when over each of them have a tooltip window.But  inside that window a link to bigger windowwith detailed information on the subject of the dropdown. The problem is that in pyside6 the actual tool tip window dont allow that .  I need a window that mimic the tooltip widget and that allow a link inside it to open a bigger window. give me some alternatives  with pros and cons , to a gorgeous window that allow link to gorgeus big window.
+
+
+---------------------------------------------------------------------
+insert all docstrings
+separate blocks of methods  by logic or function with   #### - 1 this block do ... ####
+
+inside methods and functions:
+separate clunches of logic code by 
+
+#------------1. this code do that
+
+# -------------2. this code do this      etc 
+
+all numerated
+
+
+---------------------------------------------------------------------
+
+insert docstrings for all functions divide sectors by #------------------------. and number them
+for example: 
+#------------------1. Pulls dependency-masked params (if available) to inform gating.
+#------------------2. Computes the active lane's label→items pairs.  etc
+
+
+example:
+def my_function(self) -> None:
+    """
+    Rebuild the dropdown lane (Core/Pro) from the current maps/selection.
+
+    This method:
+      1) Pulls dependency-masked params (if available) to inform gating.
+      2) Computes the active lane's label→items pairs.
+      3) Clears the existing lane and rebuilds every dropdown widget.
+      4) Sizes each combo (fast char-length or precise pixel width).
+      5) Populates items, applies defaults, connects signals.
+      6) Attaches caption adapters and rich tooltips.
+      7) Adds symmetric spacers to keep the lane centered.
+      8) Recomputes dependency-enabled states and emits an initial snapshot.
+
+    Notes
+    -----
+    • Uses `self._dropdown_width_scale` to scale each combo width.
+    • Uses `ComboCaptionAdapter` (if present) to render closed captions.
+    • Uses `enabled_if` / `disabled_if` from harvested tipcfg to gate combos.
+    • Keeps a key index (`_rebuild_key_index`) for fast dep checks.
+    """
+    #------------------------ lifecycle flags & dependency inputs ------------------------
+
+be thorough
+
+
+be thorough and at end insert a ascii schematic of all the process and files involved in it 
+
+
+doctrings   be thorough
+---------------------------------------------------------------
+ok perfect, tell me if you can refactor k05_combobox_forge/k05_4_cmbbx_constructor/cmbbox_forge.py to insert it in middle tab bar, left to close button, just when eeg traces is ploted atention read the codes bellow and see if you can find some logic or logic commented used in deprecated comboboxes logic to help you . do it step by step , ask for next step, dont need to show "before" code just updated code. If you need other files t ask for it and I will show it to you # k05_combobox_forge/k05_4_cmbbx_constructor/cmbbox_loader.py import json, os
+---------------------------------------------------------------
+[A]: Add keyboard shortcut (Ctrl+E) to trigger the middle close
+[B]: Flash a toast “EEG traces closed” when pressed
+[C]: Persist the toolbar open/hidden state across sessions
+[D]: Explain the code step by step
+
+------------------------------------------------------------------
+
+from typing import Optional, Tuple, List
+
+----------------------------------------------------------------
+refactor without  k05_eeg_filters logic without cracking app 
+---------------------------------------------------------------------
+  before cleaning check if it will not break  or bug the  app,  
+never clean if modification will bug app
+
+update app , it is better instead of cleaning with app, make app just report  the modules that must be cleaned one at time. and I will show 
+------------------------------------------------------------------
+
+see code and correct using DRY (Don't Repeat Yourself) principle 
+
+-----------------------------------------------------
+understant all the logic of core filters option,
+how it plots dropdowns in lane  when needed and remove dropdowns when change option, 
+Figure out its logic and teach me how to recriate a SOLID same logic for other option in same dropdownd list, I want to know  where option in created, how dropdowns group are created, how connect each other, etc
+dont use fir/iir logic because will step by step change its logic to core filters logic,
+use a minimum of code creation to not insuflate the code,
+if You need other files, ask me.
+
+----------------------------------------------------
+C:\Users\paulo\old\Downloads\Star.Trek.Strange.New.Worlds.S03E07.1080p.WEB-DL.DUAL.5.1
+
+rules :
+1. go slow , step by step.
+2. always check logic in code to make similar structure to similar jobs
+3. if you dont  know where to insert a code, dont guess (as you did before): if needed always ask for files avoiding errors, I will give them to you. 
+always check logic in code to make similar structure to similar jobs
+4. check, test  if it is working, running app, or pytesting.
+5. ask for correction, doubt or next step
+-----------------------------------------------------
+
+Python Copilot (v2) said:
+
+Sure! In plain English, I was asking:
+
+Do you want me to lock in the technical “contract” now, i.e.:
+
+the exact internal names the code will use (like filter_window, filter_phase, transition_bandwidth, iir_design_type);
+
+the normalization rules (how dropdown choices turn into values the pipeline expects—e.g., "Auto" → "auto", numbers as int vs float, single values turned into lists when needed, etc.);
+
+the mapping from each dropdown to the pipeline parameters (what we pass to SignalPipeline.set_param(...));
+
+how defaults are applied and shown in tooltips (and consistent tooltip wording).
+
+Or do you want to tweak the human-facing bits first, i.e.:
+
+the labels and option lists users see in the dropdowns for FIR and for IIR (wording, which options appear, which one is marked as default), before we freeze the technical names and rules?
+
+Pick one:
+
+Lock the technical contract now (names, normalization, mapping, defaults, tooltip standards), or
+
+Adjust the visible labels/options first, then I’ll map them into the contract.
+
+
+-----------------------------------------------------
+
+Proceed to Step 2?
+Do you want FIR and IIR selections to:
+
+A) just store the chosen sub-option (no UI changes), or
+
+B) dynamically show different dropdowns on the lane depending on FIR vs IIR (e.g., FIR taps/window vs IIR order/Q)? ❓
+
+----------------------------------------------------
+do it step by step slowly asking next step
+----------------------------------------------------
+
+
+Hotkeys
+
+[A]: Add a show/hide toggle button on the right to collapse the bar without destroying widgets
+[B]: Emit a custom core_value_changed(name, value) signal for telemetry/logging
+[C]: Add a small “Reset to defaults” button that calls kernel.restore(default_snapshot)
+[D]: Persist snapshot_dropdowns() to disk (JSON) on close; restore on session start
+[E]: Explain the code step by step
+
+[A]: Add a tiny “Core Live/Paused” toggle button in this bar that calls set_core_lane_live() / set_core_lane_inert()
+[B]: Persist snapshot_dropdowns() to JSON on close; restore_dropdowns() on open for session continuity
+[C]: Add a colored LED (green=live, gray=paused) bound to the lane state in DropdownKernel
+[D]: Log every value_selected to a telemetry bus for later analysis
+[E]: Explain the code step by step
+
+[A]: Add a create_montage_stage → create_mntg_stge alias everywhere to keep API stable
+[B]: Centralize create_notch_filter (delete duplicates; keep in EEGVisualizerCore)
+[C]: Add unit tests for LP/HP/Notch parameter validators and order invariants
+[D]: Toggle a DEBUG_PIPELINE env flag to route print → logger.debug
+[E]: Explain the code step by step
+
+[A]: Add a tiny toggle button to this bar that calls set_core_lane_live() / set_core_lane_inert()
+[B]: Persist snapshot_dropdowns() to %APPDATA%/kanda/core_defaults.json on close; restore_dropdowns() on open
+[C]: Add a green/gray LED label bound to lane state from DropdownKernel
+[D]: Log every selection to a telemetry bus for later debugging
+
+
+[A]: Add a one-liner log in UnifiedParamBridge.push to trace (lane, name, value)
+[B]: If your pro schema uses short IDs (e.g. "lp"), insert a _PARAM_NAME_MAP in FilterToolbar._emit_param_for_node before pushing
+[C]: Connect integrator.params.parameter_changed to tint active combos (green border) in both lanes
+[D]: Add a single “Save/Load filters” action that snapshots integrator.params._vals and replays it via set(...)
+
+[A]: Add _PARAM_NAME_MAP entries in the toolbar for any pro IDs that differ from core names
+[B]: Connect integrator.params.parameter_changed to tint active combos across both lanes
+[C]: Add a “Save/Load filters” action that snapshots integrator.params.get(...) values and restores via .set(...)
+[D]: Emit a filters_changed(dict) signal from the bridge if you want external panels to mirror state
+[E]: Explain the code step by step
+
+[A]: Add setToolTip on individual Core/Pro menu subitems if you want richer guidance
+[B]: Add a one-line status-bar message when switching options (pure UX)
+[C]: Add i18n wrappers around labels if you plan localization
+[D]: Explain the code step by step
+
+[A]: Add setToolTip on individual Core/Pro menu subitems if you want richer guidance
+[B]: Add a one-line status-bar message when switching options (pure UX)
+[C]: Add i18n wrappers around labels if you plan localization
+[D]: Explain the code step by step
+
+[A]: Add logger.setLevel(logging.DEBUG) for eeg_filter_controls_toolbar to see the render logs
+[B]: Temporarily call self.set_filter_option("Y"); self.set_filter_nested_option("FIR") at end of __init__ to force-verify UI
+[C]: Tint the FIR dropdown when active: set stylesheet on wrapper.combo to green border on create
+[D]: Next step: add FIR-only “Filter Phase” using the same pattern
+
+[A]: Add signal forwarding (e.g. hp_changed.connect(...))
+[B]: Enable dynamic tooltips for kernel/add selector
+[C]: Add test GUI panel for dropdown previews
+[D]: Explain the code step by step
+
+
+template of dropdowns
+[A]: Also remove the demo “10 dropdowns” rule entirely for a cleaner UX
+
+[B]: Add a dict to map Pro keys to friendly names too
+
+[C]: Persist last chosen main/caret to a JSON and auto-restore on launch
+
+[D]: Explain the code step by step
+
+----------------------------
+I want a text called 14.0 .Complete understand of filters , the name is auto explicative. The text will substitute everything that I showed  with all corrections you suggested. Next time AI reads it Ai will master all filters logic from creation to instantiation, to connect , etc , all the knowledge to make filter work without error. Make it comprehensive , Ai friendly . If you think you need show modules explict: ask modules to me. If answer too long divide in many answer chunks. I want this enough to build a working filter from scratch.  
+
+
+-----------------------filters
+To claim “complete mastery” with zero unknowns, I only need:
+
+The Visualizer methods’ contracts (how they reach the pipeline + trigger redraw), and
+
+The two schema loader helpers in k05_eeg_filters.__init__, and
+
+Signal/emit types for the widget classes in WIDGET_REGISTRY.
+-----------------------
+f you want me to lock in the montage rename or clean up those two tiny bugs, paste the exact two files you prefer as source of truth for:
+
+visualizer_core_helpers/__init__.py (so I can wire the alias cleanly), and
+
+the final drpdwn_integrator_eeg.py you want (resource loader vs relative path).
+-----------------------
+
+now explain all the logic of creating , installing, conecting , sloting , selecting dropdonw creating comboboxes and applying and updating filters without destroying the choices of other filter , I mean , the correct is applying a filter , modifying or removing the filters values keeping the optiosn of other filters working. Build a complete explanation of full logic work to after That when I present to Ai , it can build a functioning filter
+
+----------------------------------
+
+I went back restoring a backup because it is not working. first show me which are the drop downs you intend do create in lane for fir and iir
+
+----------------------------------
+lets structure new comboboxes
+you will ask me questions and after answers you create the logic 
+ 
+1. gime dropdown: I answer-> core filters or core caret or pro filters or pro caret, etc
+2. gime name of option (dropdown option) (a): I answer a name for example ->  Filter Type
+3. create lane combobox dropdown(b) or connect to respective caret (c) where new options will be created and finally create the  combobox dropdown
+
+4. if create lane combobox dropdown (b), ask:  
+
+name of option: I insert name of option connected to (a) 
+ask for new option name for new option in dropdown until I say stop
+then this list of options go plot to lane
+ask for module name and localization of module connected
+to (a).  We will then create and discuss logic through pytest
+
+5. if connect to caret (c)
+
+connnect to respective caret where:
+ask for new option name for new option in dropdown until I say stop
+then this list of options go plot to lane
+ask for module name and localization of module connected
+to (c).  We will then create and discuss logic through pytest
+  
+
+
+
+
+----------------------------------
+
+implement b as a tutorial  in one .txt file with intuitive name to: when i decide in future to build this impIementation, I can show this tutorial to AI so Ai have the total understanding of how implement the feature. indcate all files, folders implicated 
+-----------------------------------
+
+firts explain what item do, ask if I want to implement item
+them if yes, make item step by step and go to next  and ask if can do next 
+
+-----------------------------------
+
+core_filters  pro_filters
+----------------------------
+improve refine update detail this explanation AI friendly (for AI understand and replicate)
+-----------------------------
+I down have this structure for while . just make an individual file that imports and check if correct import , make it independent of other files , at this time I just want to know if logic is correct and import right.
+
+-----------------------------
+now create a tutorial teaching to Ai how build time line, insert it and use it with all logic related with all that corrections  youve done here
+
+
+-----------------------------
+
+
+[Kanda_prompts]
+
+warning erros - prompt_kanda.txt:"PREFIX"
+conda: conda install -c conda-forge pyside6 qt-webengine
+
+--------------------
+
+describe everything we have ultimate done to build helpers files including layout (which working now) to ai know all the process and logic, where we are and fully understand working of files inside E:\EEG_KANDA\k08_help_files an take from there next time 
+
+-------------------------
+what I want: reformat to use same logic of core_filters (JSON lane) to build also  schema lane to centralize logic in one block, to keep coherence, to make it SOLID,  without bracking the logic in use WHICH is working. give me a complete detailed numered tutorial for Ai build it in furture session. be compreensive
+
+--------------------------
+
+dropdonw combobox
+
+[A]: Emit lane_changed in your tab and flip the UI hint (e.g., “EEG lane” vs “pro_filters lane”)
+[B]: Add apply_defaults() to push schema defaults through ParameterManager on EEG load
+[C]: Cache last JSON selections per session and restore when you come back from pro_filters
+[D]: Add debounce to high-traffic widgets (Speed/Sensitivity) to avoid rapid re-plots
+[E]: Explain the code step by step
+
+[A]: Add a tiny status badge on TopInTabBarInNotebook showing Lane: EEG/pro_filters and active profile
+[B]: Debounce JSON redraws (Speed/Sensitivity) via your plot timer to ~75 ms for smoother UI
+[C]: Persist last lane in self.visualizer._last_lane and restore on _on_data_ready
+[D]: Add unit tests: assert only one lane visible after each trigger, and that JSON is default on load
+
+If you want, I can also add minimal “pro_filters → pipeline” wiring (e.g., when a schema combo changes, call visualizer.create_hp_filter(...) etc.) — right now the schema UI is pure UI; the JSON lane is the one actually driving the visualize
+
+Shout if you want me to also wire pro_filters → visualizer (e.g., when a schema combo changes, call your create_hp_filter(...), etc.). Right now, JSON drives the pipeline, and the pro_filters lane is cleanly shown/hidden at the UI level as requested.
+
+########################################
+Grab it here: /mnt/data/help_pack_kanda_dropdowns.zip
+(If your UI doesn’t show a download button, copy that path from the file browser.)
+how copy from browser ? give me complete https adress , not only mnt/data/help_pack_kanda_dropdowns.zip
+
+########################################
+
+I'm building a huge python app . what is the best python protram in GTPs to help me to create the best strategy to build a help for this app. Atenttion , best GTP to hemp me  to choose the strategy or model of help , not build the hel itself , but  help me to choose  best strategy?
+#######################################
+# Python Module Refactoring Prompt
+
+## Module Update Request
+Please refactor the Python module according to these key improvements:
+
+### Core Improvements
+- ✓ Proper Logging: Replace print statements with logging
+- ✓ Modular Methods: Split functionality into focused, single-purpose methods
+- ✓ Constants: Centralize configuration at class level
+- ✓ Error Handling: Implement more robust validation and error reporting
+- ✓ Type Hints: Add return type annotations
+- ✓ Docstrings: Create comprehensive documentation for all methods
+- ✓ Encapsulation: Protect helper methods with clear purposes
+- ✓ Consistency: Apply uniform code style and naming conventions
+
+### Implementation Requirements
+- Maintain all original functionality
+- Implement better error handling and logging
+- Create more maintainable structure
+- Ensure clear separation of concerns
+
+### Pythonic Principles to Apply
+- Explicit is better than implicit
+  - Define default scale as class constant
+  - Use explicit type conversion
+- Errors should never pass silently
+  - Implement proper exception handling
+  - Add input validation for scale values
+- Simple is better than complex
+  - Create single obvious scaling operation
+  - Ensure clean separation of concerns
+- Readability counts
+  - Write clear docstrings
+  - Use meaningful variable names
+- Practicality beats purity
+  - Set reasonable scale limits (0.1-5.0)
+  - Implement graceful attribute checking
+- In the face of ambiguity, refuse the temptation to guess
+  - Apply strict input validation
+  - Eliminate magic numbers
+
+### Expected Outcomes
+- Maintain backward compatibility
+- Add minimal complexity
+- Provide clear control
+- Follow Python's core design philosophies
+
+### Structure Requirements
+- Organize code clearly by sections (numbered 0-13)
+- Implement detailed and safe logging (avoid loops or crashes from excessive exc_info)
+- Design for future maintenance with clear section organization
+
+### Key Highlights to Implement
+1. Replace all print calls with logging (logger.info, logger.error, and logger.debug)
+2. Create modular sections (numbered 0–13) to isolate responsibilities
+3. Centralize patterns, thresholds, and templates as class-level constants
+4. Implement robust error handling (try/except with logger.exception)
+5. Add type hints to all public methods
+6. Write comprehensive docstrings explaining every method's purpose
+7. Use encapsulation: mark helper methods (_…) as "protected"
+8. Apply Pythonic style: explicit defaults, no silent failures, meaningful names
+
+This refactoring should preserve all original functionality—scanning, AST analysis, scaffolding, metrics, graphs, and new AI-friendly context export—while making the code clearer, safer, and easier to maintain.
+
+##################################
+
+
+now that the dropdonw and filter notch working create a comprehensive tutorial to ai create other similar filters when needed
+
+##############################
+explain in details:
+1. what  module do
+2. from where receives input
+3. to where it sends output
+4 . module logic in details 
+5.  complete ascii pipeline of module with imputs and outputs
+6. create a .py help file with all that detailed information 
+
+############################
+
+I want this method as a template for reuse many times. 
+refactor its logic for that structure, 
+update, clean, improve performance
+ad steps this way dividing blocks of code by use:
+add #### - step:1  explaining comments - ####
+at end create pytest to check it
+
+#############################
+check logic of module 
+update, clean, improve performance and memory use  and avoid memory leak
+ad steps this way dividing blocks of code by use comprehensive comments and numering
+add #### - step:1  explaining comments - ####
+add inside methods #### - step:1.1  explaining comments - ####, #### - step:1.2  explaining comments - ####, etc
+at end create pytest to check it
+
+############################
+
+eeg_visualizer_render_core previously was plottin eeg and black labels simetrically dsitributed and using complete  high espace of canvas , new code dont do it , it plots the channels near each other ath the top of canvas , compare two scripts and try to figure out how make labels and EEG traces plot side by side respecting correspondence between channel and label and using maximun adequate vertical amplitude of canvas area
+
+########################
+now for me to remember give me an detailed ascii pipeline showing the integration of eeg visualizer 
+from from k01_core_eeg.k01_3_eeg_visualizer.start_snapshot.py
+k01_core_eeg/help_eeg_visualizer.py
+k01_core_eeg/visualizer_render_core.py
+k01_core_eeg/K01_1_3_eeg_main_win_builderpy
+KandaDropDowns/manager/drpdwn_integrator_eeg.py
+
+###########################
+now I want a comprehensive review of complete structure of app to show to you (ai) if I have to restart, for you to understand  and do not have to start from begining . A full structure in a python file ,  for me to show to you and say thats  kanda app lets continue with that structure 
+
+###########################
+I want a dinamic expansion of eeg traces as I said before : if 1 channels, it  plots at central of canvas horizontal  space, if two they are simetrically horizontally dsitribuited , if 10 or 21 channels distances between channels is simetric and so on, as distance adjust in conformity with number of channels it is dinamic. All make the set of eeg channels use the full vertical canvas space.
+
+Com interação sempre em inglês, quero uma revisão minuciosa e profissional do módulo. Divido em 9 partes: (1) críticas e sugestões, (2) problemas conceituais, (3) ajustes de estilo, e (4) proposta de versão revisada consolidada (5) improvement of memory handling (6) prevent memory leak (7) secure cleaning after use (8) performance (9) sempre que possível implemente usando mne EEG methods
+
+###################
+**SOLID-compliant incremental refactoring prompt**, emphasizing **progressive relocation** while keeping the monolithic script functional at every step:  
+
+special attention dont mess with logic
+
+### **Incremental SOLID Refactoring of Monolithic `.py`**  
+**Goal**: Gradually relocate parts of the monolithic script into new modules *without breaking functionality*, adhering to **SOLID principles**. The monolith should shrink progressively while remaining fully operational after every change.  
+
+#### **Strict Workflow**:  
+1. **Start from Working Monolith**  
+   - The monolithic `.py` is the **source of truth**. Changes must not break it.  
+   - New modules are created *only* to extract logic from the monolith—no premature abstractions.  
+
+2. **Single-Responsibility Relocation** (SOLID’s *Single Responsibility Principle*)  
+   - **One method/class at a time** (ask for confirmation before each step).  
+   - Document:  
+     - Why the extracted code belongs in a new module (e.g., *"This method handles [X], so it fits in `io_utils.py`"*).  
+     - Dependencies (imports, variables, or external calls).  
+
+3. **Dependency Checks with SOLID in Mind**  
+   - Before extracting:  
+     - Identify if the code violates **Dependency Inversion** (e.g., hardcoded dependencies).  
+     - If a method relies on monolith internals:  
+       - *"Method `process_eeg()` uses `self.raw_data`. Should this be passed as an argument to follow Dependency Inversion?"*  
+   - **Never assume**—always ask before modifying dependencies.  
+
+4. **Test-First Migration**  
+   - For each relocated method:  
+     1. Write a `pytest` for it in the new module.  
+     2. Update the monolith to use the new module’s version.  
+     3. **Verify the monolith still runs**.  
+   - Only then delete the original code from `.py`.  
+
+5. **Monolith Cleanup**  
+   - After passing tests:  
+     - Remove the migrated code from `.py`.  
+     - Check for **Open/Closed Principle** compliance (e.g., *"Could this be extended without modifying the monolith?"*).  
+
+6. **SOLID Progress Tracking**  
+   - After each step:  
+     - Summarize changes (e.g., *"Extracted `load_eeg()` to `file_io.py`. Monolith now imports it. No hardcoded dependencies left."*).  
+     - Note SOLID improvements made (e.g., *"Separated concerns: data loading vs. visualization"*).  
+   - Save this log for future sessions.  
+
+7. **Controlled Iteration**  
+   - After successful migration:  
+     - *"Next method to relocate? I suggest [Y] due to its low coupling."*  
+
+#### **Critical Rules**:  
+- **Preserve Monolith Functionality**: No change is final until the monolith works with the new module.  
+- **SOLID Over Speed**: Prefer small, verifiable steps over large rewrites.  
+- **Ask Before Acting**: No silent assumptions about dependencies or logic.  
+
+
+---  
+
+This ensures:  
+✅ **SOLID adherence** (especially Single Responsibility and Dependency Inversion).  
+✅ **Zero downtime** for the monolith.  
+✅ **Explicit approval** for every dependency change.  
+
+####################
+
+🧠 Minha sugestão (balanceada e profissional):
+
+    Mantenha o eeg_amplitude_map.h5 durante a sessão.
+
+    Ao final, ofereça 3 opções ao usuário:
+
+        Exportar os dados (.xlsx/.docx).
+
+        Salvar o arquivo .h5 para reuso.
+
+        Fechar e descartar o arquivo.
+
+    Crie uma lógica de nomeação automática com timestamp e nome do paciente (ex: amplitude_map_Joao_2025-05-13.h5) para fácil rastreamento.
+
+    Caso o usuário não escolha salvar, delete automaticamente ao fechar.
+
+
+ao abrir o app check se existe uma pasta eeg_weaver_files no drive c , se não existir crie , se existir ok,
+ok vamos implementar por etapas 1 de cada vez , não coloque tudo em uma resposta só, vamos dividir assim(uma implementa
+
+
+
+
+Recomendação Consolidada
+
+1. Durante a sessão:
+Use eeg_amplitude_map.h5 como um cache ativo de trabalho, sem perguntar nada ainda.
+
+2. Quando o usuário:
+
+    Fecha a janela do app, ou
+
+    Fecha a tabela, ou
+
+    Desativa a red line,
+
+→ Não pergunte nada ainda. Esses eventos são reversíveis e não necessariamente significam que ele quer sair ou encerrar.
+
+3. Quando o usuário tenta FECHAR o app (main_window.closeEvent ou QApplication.aboutToQuit):
+Mostre um diálogo modal com três opções:
+
+You've made changes to your EEG measurements.
+What would you like to do before exiting?
+
+[💾 Export to Excel/Word]  [📁 Save .h5 for later]  [🗑️ Discard]
+
+
+#######################
+
+I have a large, monolithic Python module (for example, `visualizer.py`) that handles EEG data loading, plotting, user input, UI wiring, and more—all in one file. Please:
+
+1. **Analyze** the script for adherence to the SOLID principles:
+   - Identify any violations of Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.
+2. **Determine** whether it’s beneficial to split this module into smaller, more focused modules or classes.
+3. **Propose** a high-level refactoring plan:
+   - Outline a suggested directory/file layout.
+   - Name new modules and classes (e.g. `loader.py`, `renderer.py`, `input_handler.py`, etc.).
+   - Describe each new component’s responsibility and API surface (methods, key attributes).
+4. **Provide** a concise template or skeleton of the refactored implementation, showing:
+   - File paths and class/function signatures.
+   - Example import statements linking the new modules.
+   - How the main orchestration layer would wire them together.
+
+Use the SOLID principles as your guiding framework, and justify each proposed split or extraction.  
+
+########################
+
+greate everything is working lets continue step by step . when working ask me if I have the necessary files as in case before whe I showed  to you k03_tabs/kanda_notebook_area.py
+# kanda_notebook_area.py   because use of existing code can avoid problems, so if you are in doubt, ask: we will need module (or method or function ) , do you (me) have it , and I will tell to you
+
+
+
+###################
+
+ok lets implement your tutorial step by step 
+slowly 
+dont mess with other functions logic, mainly k07_mcrvlt_snapshot_map among all,
+after each step pytest.
+before each implementation explain what you will do . ask if you need a module or function 
+
+##########################
+before doing that tell me if you inderstand what I want:
+when eeg plots 
+hangs (plot)  core_filters frame and its dropdown,  pro_filters and its dropdown, and down arrows from them.  and  right to the the canvas or frame where dropdowns are plotted when called by the dropdowns in core_filters and pro_filters. I open core_filters and when choose first dropdown  option , plot the filters in json, let other dropdown dummy for while. If you dont understant ask your doubts, if you understand create first a complete correction and update of logic for that. if you need some modules , ask for them.
+
+##########################
+

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "teach_ai_tab9_prompt_authoring_guide",
+  "display_name": "Teach AI Tab 9 Prompt Authoring Guide",
+  "version": "1.4.0",
+  "status": "active",
+  "category": "prompt_library_teaching",
+  "subcategory": "authoring_guide",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library\\teaching",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [
+    "kanda_bundle_gated_development_workflow",
+    "tab9_prompt_asset_placement_rules",
+    "python_clean_code_overlay",
+    "kanda_prompt_router"
+  ],
+  "required_before": [],
+  "explainer": "Teaches an AI the complete Tab 9 prompt-library logic for creating or updating prompts.",
+  "how_it_works": "The guide explains folder placement, metadata, group boxes, prompt structure, safety boundaries, and delivery rules.",
+  "files_created": [],
+  "risks": [
+    "An AI may try to edit code when only prompt-library text assets are requested."
+  ],
+  "mitigations": [
+    "The guide explicitly states that text-only prompt-library tasks must not change source code or active governance."
+  ],
+  "safe_usage": "Copy this guide when asking an AI to create or update prompts for Tab 9.",
+  "validation_requirements": [
+    "json_parse",
+    "utf8_no_bom",
+    "ascii",
+    "no_hardcoded_absolute_paths"
+  ],
+  "example_usage": "Open the Teach AI Prompt Authoring group and copy this guide before requesting a new prompt-library asset.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial Tab 9 prompt-authoring teaching guide."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added complete prompt asset lifecycle, cross-prompt awareness rules, manifest fields, validation scope, and rollback notes."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added awareness of Python Clean Code overlay for Python prompt authoring."
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-06-02",
+      "summary": "Added prompt routing requirement for new Tab 9 assets."
+    },
+    {
+      "version": "1.4.0",
+      "date": "2026-06-07",
+      "summary": "Added complete lifecycle sections, cross-prompt awareness, dashboard visibility, and lowercase workbench\\bundle_manifest contract."
+    }
+  ]
+}

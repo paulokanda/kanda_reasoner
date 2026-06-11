@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "project_agnostic_prompt_library_profile_example",
+  "display_name": "Project-Agnostic Prompt Library Profile Example",
+  "status": "example",
+  "project_agnostic": true,
+  "description": "Example profile showing how to group reusable prompts for manual copy and AI presentation.",
+  "active_prompt_ids": [],
+  "recommended_prompt_stack_ids": [],
+  "suppressed_prompt_ids": [],
+  "project_variables": {
+    "PROJECT_ROOT": "<PROJECT_ROOT>",
+    "PROJECT_NAME": "<PROJECT_NAME>",
+    "PRODUCT_PACKAGE": "<PRODUCT_PACKAGE>",
+    "TASK_DESCRIPTION": "<TASK_DESCRIPTION>",
+    "VALIDATION_COMMANDS": "<VALIDATION_COMMANDS>"
+  },
+  "rules": [
+    "This profile is advisory only.",
+    "It does not modify source code.",
+    "It does not update active governance.",
+    "It does not auto-load prompts into runtime behavior."
+  ]
+}

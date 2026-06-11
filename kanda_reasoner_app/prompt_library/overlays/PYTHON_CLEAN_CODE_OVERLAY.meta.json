@@ -1,0 +1,52 @@
+{
+  "prompt_id": "python_clean_code_overlay",
+  "display_name": "Python Clean Code Overlay",
+  "category": "code_quality_overlay",
+  "version": "1.0.1",
+  "status": "active",
+  "load_type": "optional_overlay",
+  "project_agnostic": true,
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\workbench\\bundle_manifest",
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "depends_on": [
+    "kanda_bundle_gated_development_workflow"
+  ],
+  "recommended_with": [
+    "kanda_bundle_gated_development_workflow",
+    "high_risk_engineering",
+    "large_module_refactor"
+  ],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<PRODUCT_PACKAGE>",
+    "<TASK_DESCRIPTION>",
+    "<TASK_SLUG>"
+  ],
+  "files_created": [],
+  "explainer": "Optional Python code-quality overlay for clean, maintainable, box-safe Python code.",
+  "how_it_works": "It adapts Clean Code and Python best practices to Kanda bundle-gated implementation work.",
+  "mitigations": [
+    "Reduces noisy code generation.",
+    "Encourages focused functions and useful docstrings.",
+    "Reinforces GUI/service boundary separation.",
+    "Encourages focused tests and explicit file IO behavior."
+  ],
+  "example_usage": "Load after Kanda Bundle-Gated Development when the bundle changes Python source code.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-02",
+      "summary": "Initial Python Clean Code overlay adapted for Kanda Reasoner."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-07",
+      "summary": "Updated default output folder to lowercase workbench\\bundle_manifest."
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Após criar o QApplication no seu script principal:
+from roboto_font_loader import apply_global_qt_font
+apply_global_qt_font()
+

@@ -1,0 +1,3 @@
+API_URL = "http://127.0.0.1:4433/v1/chat/completions"
+MODEL = "WizardCoder-Python-13B-GGUF"
+API_KEY = "local-anything"

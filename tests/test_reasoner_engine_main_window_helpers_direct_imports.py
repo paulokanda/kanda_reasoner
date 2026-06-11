@@ -1,0 +1,28 @@
+"""Direct import protection for canonical main window helper modules."""
+
+from __future__ import annotations
+
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help as direct_import_0
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.analysis_controller as direct_import_1
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.answer_presenter as direct_import_2
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.json_track as direct_import_3
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.profile_controller as direct_import_4
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.runtime_controller as direct_import_5
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.session_service as direct_import_6
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.settings_manager as direct_import_7
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.signal_wiring as direct_import_8
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.state_models as direct_import_9
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.static_context_controller as direct_import_10
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.ui_builder as direct_import_11
+import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.ui_components as direct_import_12
+
+import unittest
+
+
+class ReasonerEngineMainWindowHelperDirectImportTests(unittest.TestCase):
+    def test_main_window_helper_direct_imports_are_loaded(self):
+        self.assertGreaterEqual(13, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()

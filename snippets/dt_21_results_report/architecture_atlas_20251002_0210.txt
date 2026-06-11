@@ -1,0 +1,1113 @@
+================================================================================
+ EEG_KANDA â€” ARCHITECTURE ATLAS
+================================================================================
+Generated: 2025-10-02 02:13
+
+[PROJECT STRUCTURE]
+================================================================================
+
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\_virtualenv.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\__pip-runner__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\build_env.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\autocompletion.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\base_command.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\cmdoptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\command_context.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_internal\cli\main.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\main_parser.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\parser.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\progress_bars.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\req_command.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\spinners.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\cli\status_codes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\check.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\completion.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\configuration.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\debug.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\download.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\freeze.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\hash.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\help.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\index.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\inspect.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\install.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\list.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\search.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\show.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\uninstall.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\commands\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\configuration.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\distributions\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\distributions\base.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\distributions\installed.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\distributions\sdist.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\distributions\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\exceptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\index\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\index\collector.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\index\package_finder.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\index\sources.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\locations\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\locations\_distutils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\locations\_sysconfig.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\locations\base.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_internal\main.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\_json.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\base.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\importlib\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\importlib\_compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\importlib\_dists.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\importlib\_envs.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\metadata\pkg_resources.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\candidate.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\direct_url.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\format_control.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\index.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\installation_report.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\link.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\scheme.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\search_scope.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\selection_prefs.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\target_python.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\models\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\auth.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\download.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\lazy_wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\session.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\utils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\network\xmlrpc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\build_tracker.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\metadata.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\metadata_editable.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\metadata_legacy.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\wheel_editable.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\build\wheel_legacy.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\check.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\freeze.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\install\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\install\editable_legacy.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\install\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\operations\prepare.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\pyproject.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\constructors.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\req_file.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\req_install.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\req_set.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\req\req_uninstall.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\base.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\legacy\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\legacy\resolver.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\base.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\candidates.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\factory.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\found_candidates.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\provider.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\reporter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\requirements.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\resolution\resolvelib\resolver.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\self_outdated_check.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\_jaraco_text.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\_log.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\appdirs.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\compatibility_tags.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\datetime.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\deprecation.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\direct_url_helpers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\egg_link.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\encoding.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\entrypoints.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\filesystem.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\filetypes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\glibc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\hashes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\inject_securetransport.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\logging.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\misc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\models.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\packaging.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\setuptools_build.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\subprocess.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\temp_dir.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\unpacking.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\urls.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\virtualenv.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\utils\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\bazaar.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\git.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\mercurial.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\subversion.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\vcs\versioncontrol.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_internal\wheel_builder.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\_cmd.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\adapter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\caches\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\caches\file_cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\caches\redis_cache.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\controller.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\filewrapper.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\heuristics.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\serialize.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\cachecontrol\wrapper.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\certifi\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_vendor\certifi\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\certifi\core.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\big5freq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\big5prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\chardistribution.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\charsetgroupprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\charsetprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\cli\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\cli\chardetect.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\codingstatemachine.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\codingstatemachinedict.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\cp949prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\enums.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\escprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\escsm.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\eucjpprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\euckrfreq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\euckrprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\euctwfreq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\euctwprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\gb2312freq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\gb2312prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\hebrewprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\jisfreq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\johabfreq.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\johabprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\jpcntx.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langbulgarianmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langgreekmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langhebrewmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langhungarianmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langrussianmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langthaimodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\langturkishmodel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\latin1prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\macromanprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\mbcharsetprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\mbcsgroupprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\mbcssm.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\metadata\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\metadata\languages.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\resultdict.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\sbcharsetprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\sbcsgroupprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\sjisprober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\universaldetector.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\utf1632prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\utf8prober.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\chardet\version.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\ansi.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\ansitowin32.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\initialise.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\tests\__init__.py
+ â”œâ”€ ðŸ§ª .venv\Lib\site-packages\pip\_vendor\colorama\tests\ansi_test.py
+ â”œâ”€ ðŸ§ª .venv\Lib\site-packages\pip\_vendor\colorama\tests\ansitowin32_test.py
+ â”œâ”€ ðŸ§ª .venv\Lib\site-packages\pip\_vendor\colorama\tests\initialise_test.py
+ â”œâ”€ ðŸ§ª .venv\Lib\site-packages\pip\_vendor\colorama\tests\isatty_test.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\tests\utils.py
+ â”œâ”€ ðŸ§ª .venv\Lib\site-packages\pip\_vendor\colorama\tests\winterm_test.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\win32.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\colorama\winterm.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\database.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\index.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\locators.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\manifest.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\markers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\metadata.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\resources.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\scripts.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\util.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\version.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distlib\wheel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distro\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_vendor\distro\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\distro\distro.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\codec.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\core.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\idnadata.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\intranges.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\package_data.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\idna\uts46data.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\msgpack\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\msgpack\exceptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\msgpack\ext.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\__about__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\_manylinux.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\_musllinux.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\_structures.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\markers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\requirements.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\specifiers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\tags.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\utils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\packaging\version.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pkg_resources\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_vendor\platformdirs\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\android.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\api.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\macos.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\unix.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\version.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\platformdirs\windows.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_vendor\pygments\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\cmdline.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\console.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\filter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\filters\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\_mapping.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\bbcode.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\groff.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\html.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\img.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\irc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\latex.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\other.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\pangomarkup.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\rtf.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\svg.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\terminal.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\formatters\terminal256.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\lexer.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\lexers\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\lexers\_mapping.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\lexers\python.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\modeline.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\plugin.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\regexopt.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\scanner.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\sphinxext.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\style.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\styles\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\token.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\unistring.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pygments\util.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\actions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\common.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\core.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\diagram\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\exceptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\helpers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\results.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\testing.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\unicode.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyparsing\util.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyproject_hooks\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_impl.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\__version__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\_internal_utils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\adapters.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\api.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\auth.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\certs.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\compat.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\cookies.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\exceptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\help.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\hooks.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\models.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\packages.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\sessions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\status_codes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\structures.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\requests\utils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\compat\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\compat\collections_abc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\providers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\reporters.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\resolvers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\resolvelib\structs.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\__init__.py
+ â”œâ”€ ðŸš€ .venv\Lib\site-packages\pip\_vendor\rich\__main__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_cell_widths.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_emoji_codes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_emoji_replace.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_export_format.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_extension.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_fileno.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_inspect.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_log_render.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_loop.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_null_file.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_palettes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_pick.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_ratio.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_spinners.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_stack.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_timer.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_win32_console.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_windows.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_windows_renderer.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\_wrap.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\abc.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\align.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\ansi.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\bar.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\box.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\cells.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\color.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\color_triplet.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\columns.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\console.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\constrain.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\containers.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\control.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\default_styles.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\diagnose.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\emoji.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\errors.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\file_proxy.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\filesize.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\highlighter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\json.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\jupyter.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\layout.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\live.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\live_render.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\logging.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\markup.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\measure.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\padding.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\pager.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\palette.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\panel.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\pretty.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\progress.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\progress_bar.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\prompt.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\protocol.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\region.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\repr.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\rule.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\scope.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\screen.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\segment.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\spinner.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\status.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\style.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\styled.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\syntax.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\table.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\terminal_theme.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\text.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\theme.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\themes.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\rich\tree.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\six.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\_asyncio.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\_utils.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\after.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\before.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\before_sleep.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\nap.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\retry.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\stop.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\tornadoweb.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tenacity\wait.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tomli\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tomli\_parser.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tomli\_re.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\tomli\_types.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\typing_extensions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\_collections.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\_version.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\connection.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\connectionpool.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\_appengine_environ.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\_securetransport\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\_securetransport\bindings.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\_securetransport\low_level.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\appengine.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\ntlmpool.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\pyopenssl.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\securetransport.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\contrib\socks.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\exceptions.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\fields.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\filepost.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\packages\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\packages\six.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\poolmanager.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\request.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\response.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\connection.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\proxy.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\queue.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\request.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\response.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\retry.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\ssl_.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\ssl_match_hostname.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\ssltransport.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\timeout.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\url.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\urllib3\util\wait.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\webencodings\__init__.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\webencodings\labels.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\webencodings\mklabels.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\webencodings\tests.py
+ â”œâ”€ ðŸ“„ .venv\Lib\site-packages\pip\_vendor\webencodings\x_user_defined.py
+ â”œâ”€ ðŸ“„ .venv\Scripts\activate_this.py
+ â”œâ”€ ðŸ“„ Kanda_Help\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Help\eeg_graph_descriptions_full.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\dependency_validator_05_2.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\artifact_handling_03.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\core_signal_structure_01.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\dependencies_handling_02.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\filtering_denoising_02.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\json_2.1_file.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\json_2.2_file.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\loader_class_example_02.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\normalization_04.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\passo_a_passo.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\shared_configuration_05.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\spatial_processing_05.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\summary_json_implementation.py
+ â”œâ”€ ðŸ§ª Kanda_Json_05\jsons_to_implement\test_dropdown_schema.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\ui_layout_configuration.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\jsons_to_implement\visualization_controls_04.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\artifact_handling_03.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\core_signal_structure_01.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\dependencies_handling_02.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\filtering_denoising_02.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\json_2.1_file.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\json_2.2_file.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\loader_class_example_02.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\normalization_04.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\passo_a_passo.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\shared_configuration_05.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\spatial_processing_05.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\summary_json_implementation.py
+ â”œâ”€ ðŸ§ª Kanda_Json_05\tests_json\test_dropdown_schema.py
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\ui_layout_configuration.json
+ â”œâ”€ ðŸ“„ Kanda_Json_05\tests_json\visualization_controls_04.json
+ â”œâ”€ ðŸ“„ Kanda_Montage_Diag_Editor_03\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Montage_Diag_Editor_03\channel_diagnostic_table.py
+ â”œâ”€ ðŸ“„ Kanda_Montage_Diag_Editor_03\montage_diag_editor_03_2.py
+ â”œâ”€ ðŸ§ª Kanda_Montage_Diag_Editor_03\test_Kanda_Montage_Diag_Editor\test_montage_diag_editor.py
+ â”œâ”€ ðŸ“„ Kanda_Montage_Diag_Editor_03\warning_popup_03_1.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\Nav_Bar_Upper_02_1\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\Nav_Bar_Upper_02_1\upper_bar_controls_02_1_1.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\Nav_Bar_Upper_02_1\upper_bar_factory_02_1_3.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\Nav_Bar_Upper_02_1\upper_bar_layout_02_1_2.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\bars_min_max_close\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\kanda_nav_bar_middle.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\kanda_nav_bar_top.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\kanda_nav_bar_upper.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\kanda_status_bar.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\nav_bar_builder.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\space_between_bars_tools.py
+ â”œâ”€ ðŸ§ª Kanda_Nav_Bars_02\test_kandabars\test_top_nav_bar.py
+ â”œâ”€ ðŸ§ª Kanda_Nav_Bars_02\test_kandabars\test_top_nav_bar_click.py
+ â”œâ”€ ðŸ“„ Kanda_Nav_Bars_02\top_nav_bar_min_max_close_controls.py
+ â”œâ”€ ðŸ“„ Kanda_Notebook\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Notebook\notebook_area.py
+ â”œâ”€ ðŸ“„ Kanda_Notebook\notebook_builder.py
+ â”œâ”€ ðŸ“„ Kanda_Plot\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Plot\kanda_plot_templates.py
+ â”œâ”€ ðŸ“„ Kanda_Plugins\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Plugins\eeg_custom_notebook.py
+ â”œâ”€ ðŸ“„ Kanda_Plugins\notebook3Dbar.py
+ â”œâ”€ ðŸ“„ Kanda_Splash\__init__.py
+ â”œâ”€ ðŸ“„ Kanda_Splash\kanda_splash_roboto.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Module_Pro_Revision\__init__.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Module_Pro_Revision\script_pro_revision.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Project_Anaysis\__init__.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Project_Anaysis\create_Road_map.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Project_Anaysis\docs\Project_Anaysis\road_map_2025-07-26.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Project_Anaysis\project_analizer.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\Project_Anaysis\project_analizer_2.py
+ â”œâ”€ ðŸ“„ Project_Anaysis\__init__.py
+ â”œâ”€ ðŸ“„ __init__.py
+ â”œâ”€ ðŸ“„ _cache\mpl\fontlist-v390.json
+ â”œâ”€ ðŸ“„ k00_main\__init__.py
+ â”œâ”€ ðŸš€ k00_main\kanda_main.py
+ â”œâ”€ ðŸ“„ k00_main\kanda_runner.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_1_main_win_builder\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_1_main_win_builder\clear_layout.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_1_main_win_builder\main_win_builder.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_1_main_win_builder\plot_largest_canvas.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_1_main_win_builder\tests\__init__.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_1_main_win_builder\tests\test_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\data_window.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\help_graph_selection.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\help_input_handlers.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\help_plot_timer.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\help_timeline.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\plotting_pipeline\help_update_plot_view.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\__init__.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_amplitude_scale_shim.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help01_key.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help02_draw.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help02_wheel.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help03_postplot.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help03_warning.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help04_canvas.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_graph_selection.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_plot_timer.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_timeline.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_update_plot_view.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_input_rate.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_montage_switch.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_raw_ops.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_2_visualizer\test_visualizer\test_set_current_raw.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\visualizer_data\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\visualizer_data\amplitude_scale_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\visualizer_data\input_rate.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_2_visualizer\visualizer_data\raw_ops.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\eeg_visualizer_core.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\tests\__init__.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_channel_manager_0_5_7.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_data_extraction.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_data_state.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_dataframe_utils.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_display_pyside6_eeg_visualizer.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_eeg_session_initializer.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_filter_pipeline.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_graph_selection_handler.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_mcrvlt_snapshot_map_initializer.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_memory_manager_0_5_6.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_montage_handler.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_pipeline_reset.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_manager_0_5_4.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_timer_manager_0_5_10.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_view_updater.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_sensitivity_handler.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_signal_manager_0_5_8.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_splash_manager_0_5_5.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_ui_helpers.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_visualizer_reseter.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_3_eeg_visualizer\tests\test_window_manager_0_5_11.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\channel_core_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\core_data_bootstrapper.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\core_input_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\core_memory_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\core_plot_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\create_montage_stage_help.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\data_extraction.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\data_state.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\dataframe_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\diagnostics_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\display_pyside6_eeg_visualizer.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\eeg_session_initializer.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\eeg_state.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\graph_selection_handler.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\mcrvlt_snapshot_map_initializer.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\null_signal_pipeline.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\pipeline_reset.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\plot_core_timer_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\plot_view_updater.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\sensitivity_handler.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\signal_core_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\splash_core_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\start_snapshot.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\timeline_manager_core.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\ui_core_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\ui_helpers.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\visualizer_reset_snpsht.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\window_core_manager.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_3_eeg_visualizer\visualizer_core_helpers\window_core_setup.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\tests\__init__.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_4_visualizer_render\tests\test_initialize_main_plot.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\k01_4_visualizer_render\tests\test_plot_mode_factory.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visu_plot_default.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visu_plot_minimalist.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_core.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\time_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_axis_config.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_initialize_main_plot.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_layout_utils.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_offsets.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_plot_colored.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_plot_mode_factory.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_4_visualizer_render\visualizer_render_helpers\visu_renderer.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_5_start_snapshot\__init__.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\k01_5_start_snapshot\start_snpsht.py
+ â”œâ”€ ðŸ“„ k01_core_eeg\tests_modules\__init__.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\tests_modules\test_amplitude_map.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\tests_modules\test_amplitude_map_signal_order.py
+ â”œâ”€ ðŸ§ª k01_core_eeg\tests_modules\test_open_eeg_dialog.py
+ â”œâ”€ ðŸ“„ k02_eeg_input\__init__.py
+ â”œâ”€ ðŸ“„ k02_eeg_input\eeg_visualizer_header.py
+ â”œâ”€ ðŸ“„ k02_eeg_input\eeg_visualizer_loader_logic.py
+ â”œâ”€ ðŸ“„ k02_eeg_input\eeg_visualizer_raw_preprocessor.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_bipolar_montage_builder.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_channel_integrity.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_ecg_emg_photo_detection.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_eeg_preprocessor.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_load_eeg_data.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_montage_mismatch.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_preprocessing_rename_sensors.py
+ â”œâ”€ ðŸ§ª k02_eeg_input\test_loader_header\test_preprocessing_utils.py
+ â”œâ”€ ðŸ“„ k03_tabs\__init__.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_1_tabs_buttons\__init__.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_1_tabs_buttons\eeg_traces_close_btn.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_2_tabs_bars\__init__.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_2_tabs_bars\botton_tab_bar_ntbook.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_2_tabs_bars\middle_tab_bar_ntbook.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_2_tabs_bars\top_tab_bar_ntbook.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_3_content\__init__.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_3_content\k03_3_connectivity_tab.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_3_content\k03_3_eeg_traces_tab.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_3_content\k03_3_heatmap_tab.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_3_content\k_03_3_spectrogram_tab.py
+ â”œâ”€ ðŸ“„ k03_tabs\k03_tab_tools\__init__.py
+ â”œâ”€ ðŸ“„ k03_tabs\tab_base.py
+ â”œâ”€ ðŸ“„ k03_tabs\tab_factory.py
+ â”œâ”€ ðŸ“„ k03_tabs\tab_manager.py
+ â”œâ”€ ðŸ“„ k03_tabs\tab_template.py
+ â”œâ”€ ðŸ“„ k04_timeline_eeg\__init__.py
+ â”œâ”€ ðŸ§ª k04_timeline_eeg\tests_eeg_timeline\test_eeg_traces_timeline_sync.py
+ â”œâ”€ ðŸ“„ k04_timeline_eeg\timeline_attachment.py
+ â”œâ”€ ðŸ“„ k04_timeline_eeg\timeline_canvas_bar.py
+ â”œâ”€ ðŸ“„ k04_timeline_eeg\timeline_manager.py
+ â”œâ”€ ðŸ“„ k04_timeline_eeg\timeline_widget.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\drpdwn_nested_template_tutorial\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\drpdwn_nested_template_tutorial\dropdown_nested_template_main_09_08_25.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_0_tests\__init__.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_captionChanged.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_debounce.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_elide.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_elide_decider_patterns.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_elide_heuristic.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_padding.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_pixels.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_ratio.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_tooltip_on_elide.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_combo_caption_trim_suffixes.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_exports.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_filter_toolbar_step1.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_filter_toolbar_step1_schema.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_instantiate_toolbar.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_lane_pairs.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_package_exports.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_0_tests\test_public_api_all.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_1_cmbbx_buttons\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_1_cmbbx_buttons\arrows_lane_template.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_1_cmbbx_buttons\cmbbx_close_btn.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_1_cmbbx_buttons\default_custom_buttons_lane.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_2_cmbbx_widgts\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_2_cmbbx_widgts\time_window_cmbbx.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_3_montage_logic\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_3_montage_logic\bipolar_montage_builder.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_forge_helpers\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_forge_helpers\lane_pairs.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_lane_json_loader.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\caption_format_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_caption_adapter_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_debug_helpers_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_dependency_engine_iface_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_dependency_helpers_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_emission_and_change_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_key_index_and_values_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_menus_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_option_loading_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_selection_handlers_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_sizing_headers_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_style_helpers_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_ui_layout_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\delegate_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\dependencies_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\dependency_eval_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\dual_arrow_button_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\lane_items_lookup_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\map_harvest_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\map_queries_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\menu_build_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\metadata_harvest_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\qss_styles_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\reload_frm_maps_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\sizing_policy_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\updat_wavlt_depend_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\updat_wavlt_on_off_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\update_dropdown_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\value_text_utils_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\widgets_cmbbx_template_helper.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\__init__.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_caption_format.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_dependencies_engine.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_map_queries.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_menu_build.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_metadata_harvest.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_sizing_policy.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_value_text_utils.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\combobox_template.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\dropdown_caption_formatter.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_4_cmbbx_constructor\filters_controller.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_5_utils\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_5_utils\combo_caption_adapter.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_5_utils\combo_caption_rules.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_5_utils\eeg_param_bridge.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_5_utils\inject_core_head_x.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\core_filters.json
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\dropdown_nested_template_main_09_08_25.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template10.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template2.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template3.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template4.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template5.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template6.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template7.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\k9_lane_config_loader.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_dev_notes\pro_filters.json
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_7_dev_notes\test_dropdown_nested_template_main_22_08_25.py
+ â”œâ”€ ðŸ§ª k05_combobox_forge\k05_7_dev_notes\test_k9_combobox_forge_template.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_eeg_middle_tab_bar\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_7_eeg_middle_tab_bar\combobox_middle_tab_bar.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_8_eeg_middle_tab_bar_cmbbx_lane\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_8_eeg_middle_tab_bar_cmbbx_lane\cmbbx_lane_middle_bar.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_8_eeg_middle_tab_bar_cmbbx_lane\cmbbx_lane_tooltips.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_9_eeg_middle_tab_bar_json\__init__.py
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_9_eeg_middle_tab_bar_json\core_filters.json
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_9_eeg_middle_tab_bar_json\filtering_config.json
+ â”œâ”€ ðŸ“„ k05_combobox_forge\k05_9_eeg_middle_tab_bar_json\pro_filters.json
+ â”œâ”€ ðŸ“„ k06_templates\Safe Drag _Update_for_Heavy_GUIs_tool.py
+ â”œâ”€ ðŸ“„ k06_templates\__init__.py
+ â”œâ”€ ðŸ“„ k06_templates\buttons_layout_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\close_button_template.py
+ â”œâ”€ ðŸ“„ k06_templates\dropdown_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_analysis_gui_drpdws_template.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_bar_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_config.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_graph_selector_dropdown.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_help.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_modal_template.py
+ â”œâ”€ ðŸ“„ k06_templates\eeg_table_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\tooltip_lane_tmplt\__init__.py
+ â”œâ”€ ðŸ“„ k06_templates\tooltip_lane_tmplt\hvr_card_widget.py
+ â”œâ”€ ðŸ“„ k06_templates\tooltip_lane_tmplt\tooltip_help_center.py
+ â”œâ”€ ðŸ“„ k06_templates\kanda_color_palette.py
+ â”œâ”€ ðŸ“„ k06_templates\kanda_layout_stye_01.py
+ â”œâ”€ ðŸ“„ k06_templates\pandas_model.py
+ â”œâ”€ ðŸ“„ k06_templates\popup_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\roboto_font_loader.py
+ â”œâ”€ ðŸ“„ k06_templates\style_svg_icon_templates.py
+ â”œâ”€ ðŸ§ª k06_templates\test_EEGTEmplates\smoke_test_hover_card.py
+ â”œâ”€ ðŸ§ª k06_templates\test_EEGTEmplates\test_eeg_modal_template.py
+ â”œâ”€ ðŸ“„ k06_templates\threed_button_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\toggle_on_off.py
+ â”œâ”€ ðŸ“„ k06_templates\tooltip_templates.py
+ â”œâ”€ ðŸ“„ k06_templates\universal_dropdown.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\__init__.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\controller\__init__.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\controller\drag.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\controller\floating.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\controller\toggle.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\core_mv\__init__.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\core_mv\amplitude_computer.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\mcrvlt_snapshot_map.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\renderer\__init__.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\renderer\interfaces.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\renderer\label_renderer.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\renderer\topomap_renderer.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\tests_amplitude\__init__.py
+ â”œâ”€ ðŸ§ª k07_mcrvlt_snapshot_map\tests_amplitude\test_amplitude_map.py
+ â”œâ”€ ðŸ§ª k07_mcrvlt_snapshot_map\tests_amplitude\test_input_rate_shim.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\utils\__init__.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\utils\artist.py
+ â”œâ”€ ðŸ“„ k07_mcrvlt_snapshot_map\utils\timing.py
+ â”œâ”€ ðŸ“„ k09_tools\__init__.py
+ â”œâ”€ ðŸ“„ k09_tools\adjust_font_size.py
+ â”œâ”€ ðŸ“„ k09_tools\confirm_close_yes_no_popup.py
+ â”œâ”€ ðŸ“„ k09_tools\decorative_border_frame.py
+ â”œâ”€ ðŸ“„ k09_tools\eeg_amplitude_ruler.py
+ â”œâ”€ ðŸ“„ k09_tools\eeg_load_emsa.py
+ â”œâ”€ ðŸ“„ k09_tools\find_k05.py
+ â”œâ”€ ðŸ“„ k09_tools\k09_1_file_renamer\__init__.py
+ â”œâ”€ ðŸ“„ k09_tools\k09_1_file_renamer\file_renamer.py
+ â”œâ”€ ðŸ“„ k09_tools\kanda_call_when_ready.py
+ â”œâ”€ ðŸ“„ k09_tools\kanda_file_renamer_gui.py
+ â”œâ”€ ðŸ“„ k09_tools\kanda_show_widget_if_object_loaded.py
+ â”œâ”€ ðŸ“„ k09_tools\matplotlib_cleanup_tools.py
+ â”œâ”€ ðŸ“„ k09_tools\matplotlib_toolbar_suppressor.py
+ â”œâ”€ ðŸ“„ k09_tools\memory_leak_performance.py
+ â”œâ”€ ðŸ“„ k09_tools\performance_profiler.py
+ â”œâ”€ ðŸ§ª k09_tools\test_Kanda_Tools\__init__.py
+ â”œâ”€ ðŸ§ª k09_tools\test_Kanda_Tools\test_eeg_visualizer_timeline.py
+ â”œâ”€ ðŸ“„ k09_tools\ui_state_controller.py
+ â”œâ”€ ðŸ“„ k0_help_files\mkdocs_opener\__init__.py
+ â”œâ”€ ðŸ“„ k0_help_files\mkdocs_opener\mk_opener.py
+ â”œâ”€ ðŸ“„ k10_fonts\__init__.py
+ â”œâ”€ ðŸ“„ k10_fonts\kanda_font_loader.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\__init__.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\eeg_graphs.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\eeg_graphs_6.5.25.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\eeg_stat_functions.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\hdf5\__init__.py
+ â”œâ”€ ðŸ“„ k11_graph_stat\hdf5\hdf5_manager.py
+ â”œâ”€ ðŸ§ª k11_graph_stat\test_eeg_stat_functions.py
+ â””â”€ ðŸ“„ k12_images\__init__.py
+
+[SKIPPED FILES]
+================================================================================
+
+k05_combobox_forge\k05_4_cmbbx_constructor\combobox_template.py: Syntax error: invalid non-printable character U+FEFF (combobox_template.py, line 1)
+k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_dependency_engine_iface_cmbbx_template_helper.py: Syntax error: invalid non-printable character U+FEFF (class_dependency_engine_iface_cmbbx_template_helper.py, line 1)
+k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\class_dependency_helpers_cmbbx_template_helper.py: Syntax error: invalid non-printable character U+FEFF (class_dependency_helpers_cmbbx_template_helper.py, line 1)
+k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_helpers\update_dropdown_cmbbx_template_helper.py: Syntax error: invalid non-printable character U+FEFF (update_dropdown_cmbbx_template_helper.py, line 1)
+k06_templates\Safe Drag _Update_for_Heavy_GUIs_tool.py: Syntax error: invalid syntax (Safe Drag _Update_for_Heavy_GUIs_tool.py, line 2)
+Kanda_Json_05\jsons_to_implement\passo_a_passo.py: Syntax error: invalid syntax (passo_a_passo.py, line 57)
+Kanda_Json_05\jsons_to_implement\summary_json_implementation.py: Syntax error: invalid character '→' (U+2192) (summary_json_implementation.py, line 28)
+Kanda_Json_05\jsons_to_implement\test_dropdown_schema.py: Syntax error: invalid syntax (test_dropdown_schema.py, line 13)
+Kanda_Json_05\tests_json\passo_a_passo.py: Syntax error: invalid syntax (passo_a_passo.py, line 57)
+Kanda_Json_05\tests_json\summary_json_implementation.py: Syntax error: invalid character '→' (U+2192) (summary_json_implementation.py, line 28)
+Kanda_Json_05\tests_json\test_dropdown_schema.py: Syntax error: invalid syntax (test_dropdown_schema.py, line 14)
+
+[KEY COMPONENTS]
+================================================================================
+
+ParserElement:
+  - Location: .venv\Lib\site-packages\pip\_vendor\pyparsing\core.py
+  - Purpose: Abstract base level parser element class.
+  - Methods: 94
+  - Key Methods: set_default_whitespace_chars, inline_literals_using, using_each, __init__, suppress_warning, visit_all, copy, set_results_name, _setResultsName, set_break...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template10.py
+  - Purpose: Preserves layout/styling, unified logic for direct vs nested (Core + Pro),
+  - Methods: 71
+  - Key Methods: __init__, _init_state, _on_any_dropdown_changed, _dummy_pairs, _setup_option_data, reload_from_json, _apply_defaults, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons...
+
+Console:
+  - Location: .venv\Lib\site-packages\pip\_vendor\rich\console.py
+  - Purpose: A high level console interface.
+  - Methods: 69
+  - Key Methods: __init__, __repr__, file, file, _buffer, _buffer_index, _buffer_index, _theme_stack, _detect_color_system, _enter_buffer...
+
+Text:
+  - Location: .venv\Lib\site-packages\pip\_vendor\rich\text.py
+  - Purpose: Text with color / style.
+  - Methods: 54
+  - Key Methods: __init__, __len__, __bool__, __str__, __repr__, __add__, __eq__, __contains__, __getitem__, cell_len...
+
+ComboCaptionAdapter:
+  - Location: k05_combobox_forge\k05_5_utils\combo_caption_adapter.py
+  - Purpose: Attachable behavior for any QComboBox:
+  - Methods: 48
+  - Key Methods: attach, __init__, set_fast_mode, get_fast_mode, detach, set_prefix_suffix, set_formatter, set_ceiling_ratio, get_ceiling_ratio, set_width_ceiling_pixels...
+
+EEGPlotPanel:
+  - Location: k11_graph_stat\eeg_graphs.py
+  - Purpose: Main visualization and analysis panel for EEG data.
+  - Methods: 47
+  - Key Methods: __init__, _init_ui, _initialize_default_plot, add_buttons_with_collapsibles, show_matplotlib_window, clean_memory, safe_check_data, add_collapsible_group, plot_stat_heatmap, plot_interactive_heatmap...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template7.py
+  - Purpose: No docstring
+  - Methods: 44
+  - Key Methods: __init__, _init_state, _dummy_pairs, _setup_option_data, reload_from_json, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons, _nav_btn_css, _caret_css...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template6.py
+  - Purpose: No docstring
+  - Methods: 44
+  - Key Methods: __init__, _init_state, _dummy_pairs, _setup_option_data, reload_from_json, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons, _nav_btn_css, _caret_css...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template5.py
+  - Purpose: No docstring
+  - Methods: 44
+  - Key Methods: __init__, _init_state, _dummy_pairs, _setup_option_data, reload_from_json, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons, _setup_action_buttons, _nav_btn_css...
+
+BaseDistribution:
+  - Location: .venv\Lib\site-packages\pip\_internal\metadata\base.py
+  - Purpose: No docstring
+  - Methods: 43
+  - Key Methods: from_directory, from_metadata_file_contents, from_wheel, __repr__, __str__, location, editable_project_location, installed_location, info_location, installed_by_distutils...
+
+EEGVisualizerCore:
+  - Location: k01_core_eeg\k01_3_eeg_visualizer\eeg_visualizer_core.py
+  - Purpose: No docstring
+  - Methods: 41
+  - Key Methods: __init__, install_key_handler, _extract_and_store_eeg_data, load_eeg, window_size, window_size, reset_processing_pipeline, create_hp_filter, create_speed_scaler, create_montage_stage...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template3.py
+  - Purpose: Drop-in replacement that preserves the layout/styling but unifies
+  - Methods: 40
+  - Key Methods: __init__, _init_state, _dummy_pairs, _setup_option_data, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons, _nav_btn_css, _caret_btn_css, _caret_css...
+
+ParseResults:
+  - Location: .venv\Lib\site-packages\pip\_vendor\pyparsing\results.py
+  - Purpose: Structured parse results, to provide multiple means of access to
+  - Methods: 39
+  - Key Methods: __new__, __init__, __getitem__, __setitem__, __delitem__, __contains__, __len__, __bool__, __iter__, __reversed__...
+
+Distribution:
+  - Location: .venv\Lib\site-packages\pip\_vendor\pkg_resources\__init__.py
+  - Purpose: Wrap an actual or potential sys.path entry w/metadata
+  - Methods: 38
+  - Key Methods: __init__, from_location, _reload_version, hashcmp, __hash__, __lt__, __le__, __gt__, __ge__, __eq__...
+
+FilterToolbar:
+  - Location: k05_combobox_forge\k05_7_dev_notes\k9_combobox_forge_template4.py
+  - Purpose: Preserves layout/styling, unified logic for direct vs nested (Core + Pro),
+  - Methods: 37
+  - Key Methods: __init__, _init_state, _dummy_pairs, _setup_option_data, reload_from_json, _setup_ui, _setup_dropdown_area, _setup_navigation_buttons, _nav_btn_css, _caret_css...
+
+
+[TESTING]
+================================================================================
+
+Test Files:
+
+  - .venv\Lib\site-packages\pip\_vendor\colorama\tests\ansi_test.py
+  - .venv\Lib\site-packages\pip\_vendor\colorama\tests\isatty_test.py
+  - .venv\Lib\site-packages\pip\_vendor\colorama\tests\initialise_test.py
+  - .venv\Lib\site-packages\pip\_vendor\colorama\tests\winterm_test.py
+  - .venv\Lib\site-packages\pip\_vendor\colorama\tests\ansitowin32_test.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_amplitude_scale_shim.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help03_warning.py
+  - k01_core_eeg\k01_1_main_win_builder\tests\test_utils.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\__init__.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_montage_switch.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help01_key.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_input_rate.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help02_wheel.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help02_draw.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_timeline.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_update_plot_view.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_plot_timer.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_data_state.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help_graph_selection.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_raw_ops.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_channel_manager_0_5_7.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_set_current_raw.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_display_pyside6_eeg_visualizer.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_eeg_session_initializer.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help04_canvas.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_montage_handler.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_graph_selection_handler.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_filter_pipeline.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_mcrvlt_snapshot_map_initializer.py
+  - k01_core_eeg\k01_2_visualizer\test_visualizer\test_help03_postplot.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_memory_manager_0_5_6.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_data_extraction.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_manager_0_5_4.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_signal_manager_0_5_8.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_ui_helpers.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_pipeline_reset.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_timer_manager_0_5_10.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_dataframe_utils.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_sensitivity_handler.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_splash_manager_0_5_5.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_visualizer_reseter.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_window_manager_0_5_11.py
+  - k01_core_eeg\k01_3_eeg_visualizer\tests\test_plot_view_updater.py
+  - k01_core_eeg\k01_4_visualizer_render\tests\test_initialize_main_plot.py
+  - k01_core_eeg\k01_4_visualizer_render\tests\test_plot_mode_factory.py
+  - k01_core_eeg\tests_modules\test_amplitude_map.py
+  - k02_eeg_input\test_loader_header\test_eeg_preprocessor.py
+  - k01_core_eeg\tests_modules\test_amplitude_map_signal_order.py
+  - k01_core_eeg\tests_modules\test_open_eeg_dialog.py
+  - k02_eeg_input\test_loader_header\test_ecg_emg_photo_detection.py
+  - k02_eeg_input\test_loader_header\test_montage_mismatch.py
+  - k02_eeg_input\test_loader_header\test_channel_integrity.py
+  - k02_eeg_input\test_loader_header\test_bipolar_montage_builder.py
+  - k02_eeg_input\test_loader_header\test_load_eeg_data.py
+  - k02_eeg_input\test_loader_header\test_preprocessing_rename_sensors.py
+  - k02_eeg_input\test_loader_header\test_preprocessing_utils.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_captionChanged.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_debounce.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_elide_heuristic.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_elide.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_elide_decider_patterns.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_pixels.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_padding.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_ratio.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_tooltip_on_elide.py
+  - k04_timeline_eeg\tests_eeg_timeline\test_eeg_traces_timeline_sync.py
+  - k05_combobox_forge\k05_0_tests\test_combo_caption_trim_suffixes.py
+  - k05_combobox_forge\k05_0_tests\test_filter_toolbar_step1.py
+  - k05_combobox_forge\k05_0_tests\test_instantiate_toolbar.py
+  - k05_combobox_forge\k05_0_tests\test_exports.py
+  - k05_combobox_forge\k05_0_tests\test_package_exports.py
+  - k05_combobox_forge\k05_0_tests\test_lane_pairs.py
+  - k05_combobox_forge\k05_0_tests\test_public_api_all.py
+  - k05_combobox_forge\k05_0_tests\test_filter_toolbar_step1_schema.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_dependencies_engine.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_sizing_policy.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_metadata_harvest.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_value_text_utils.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_map_queries.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_menu_build.py
+  - k05_combobox_forge\k05_4_cmbbx_constructor\cmbbx_template_tests\test_caption_format.py
+  - k05_combobox_forge\k05_7_dev_notes\test_k9_combobox_forge_template.py
+  - k05_combobox_forge\k05_7_dev_notes\test_dropdown_nested_template_main_22_08_25.py
+  - k06_templates\test_EEGTEmplates\smoke_test_hover_card.py
+  - k06_templates\test_EEGTEmplates\test_eeg_modal_template.py
+  - k07_mcrvlt_snapshot_map\tests_amplitude\test_input_rate_shim.py
+  - k09_tools\test_Kanda_Tools\__init__.py
+  - Kanda_Json_05\jsons_to_implement\test_dropdown_schema.py
+  - Kanda_Json_05\tests_json\test_dropdown_schema.py
+  - k07_mcrvlt_snapshot_map\tests_amplitude\test_amplitude_map.py
+  - k11_graph_stat\test_eeg_stat_functions.py
+  - k09_tools\test_Kanda_Tools\test_eeg_visualizer_timeline.py
+  - Kanda_Montage_Diag_Editor_03\test_Kanda_Montage_Diag_Editor\test_montage_diag_editor.py
+  - Kanda_Nav_Bars_02\test_kandabars\test_top_nav_bar_click.py
+  - Kanda_Nav_Bars_02\test_kandabars\test_top_nav_bar.py
+

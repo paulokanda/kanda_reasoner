@@ -1,0 +1,246 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_engine/reasoner_retriever.py",
+  "entry_point": "kanda_reasoner_app/reasoner_engine/reasoner_retriever.py",
+  "help_folder": "kanda_reasoner_app/reasoner_engine/reasoner_retriever_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with actual helper __all__ exports.",
+  "pattern": "mixed",
+  "pattern_note": "__init__.py package reexports are intentionally excluded from helper entries.",
+  "generated_by": "reasoner_correction_pass_014b_helper_manifest_all_alignment",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "exports": [],
+  "summary": {
+    "total_helpers": 11,
+    "public_helpers": 11,
+    "internal_helpers": 0,
+    "entry_exports": [
+      "ProjectRetriever",
+      "norm_text",
+      "tokenize_query",
+      "safe_read_text",
+      "file_name_from_path",
+      "is_allowed_project_path",
+      "is_auxiliary_ui_path",
+      "is_startup_question",
+      "is_explicit_call_chain_question",
+      "is_main_window_show_responsibility_question",
+      "is_qtimer_showmaximized_question",
+      "is_where_is_called_question",
+      "is_where_is_question",
+      "is_explain_chain_question",
+      "is_code_localized_explanation_question",
+      "is_topomap_explanation_question",
+      "is_topomap_implementation_question",
+      "is_runtime_heavy_question",
+      "is_packaging_metadata_question",
+      "is_documentation_intent_question",
+      "detect_query_intents",
+      "last_part_match_in_query"
+    ],
+    "exported_symbols": [
+      "augment_bundle_with_live_source_fallback",
+      "build_compact_file_evidence",
+      "build_runtime_anchor_snippets",
+      "build_symbol_evidence",
+      "collect_file_context_blobs",
+      "detect_query_intents",
+      "extract_live_identifier_terms",
+      "extract_runtime_anchors_from_detail",
+      "file_name_from_path",
+      "find_anchor_line_in_file",
+      "find_live_source_candidates",
+      "get_profile_alias_terms",
+      "get_profile_owner_paths",
+      "get_runtime_anchor_summary",
+      "is_allowed_project_path",
+      "is_auxiliary_ui_path",
+      "is_code_localized_explanation_question",
+      "is_documentation_intent_question",
+      "is_explain_chain_question",
+      "is_explanatory_question",
+      "is_explicit_call_chain_question",
+      "is_main_window_show_responsibility_question",
+      "is_packaging_metadata_question",
+      "is_qtimer_showmaximized_question",
+      "is_runtime_heavy_question",
+      "is_startup_question",
+      "is_topomap_explanation_question",
+      "is_topomap_implementation_question",
+      "is_where_is_called_question",
+      "is_where_is_question",
+      "is_which_method_calls_question",
+      "last_part_match_in_query",
+      "merge_retrieval_bundles",
+      "norm_text",
+      "question_has_profile_alias",
+      "read_snippet",
+      "resolve_existing_project_file_path",
+      "resolve_project_profile",
+      "retrieve_documentation_intent",
+      "retrieve_files",
+      "retrieve_packaging_metadata",
+      "retrieve_snippets",
+      "retrieve_symbols",
+      "safe_read_text",
+      "score_advanced_file_context",
+      "score_file_snippet_candidate",
+      "score_runtime_anchor_for_question",
+      "score_runtime_signal_matches",
+      "score_symbol_snippet_candidate",
+      "snippet_radius_for_symbol",
+      "text_has_profile_alias",
+      "tokenize_query"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "bundle_merge.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "merge_retrieval_bundles"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_context_scoring.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "get_runtime_anchor_summary",
+        "collect_file_context_blobs",
+        "score_advanced_file_context",
+        "score_runtime_signal_matches"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval.py": {
+      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "retrieve_files",
+        "build_compact_file_evidence"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "live_source_fallback.py": {
+      "purpose": "Live-source fallback helpers for ProjectRetriever.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "augment_bundle_with_live_source_fallback",
+        "extract_live_identifier_terms",
+        "find_live_source_candidates"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "profile_support.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "resolve_project_profile",
+        "get_profile_alias_terms",
+        "question_has_profile_alias",
+        "text_has_profile_alias",
+        "get_profile_owner_paths"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "query_intents.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "query_text.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "norm_text",
+        "tokenize_query",
+        "safe_read_text",
+        "file_name_from_path",
+        "is_allowed_project_path",
+        "is_auxiliary_ui_path",
+        "last_part_match_in_query"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "section_retrieval.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "retrieve_packaging_metadata",
+        "retrieve_documentation_intent"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "snippet_expansion.py": {
+      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "snippet_retrieval.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "score_runtime_anchor_for_question",
+        "find_anchor_line_in_file",
+        "resolve_existing_project_file_path",
+        "build_runtime_anchor_snippets",
+        "extract_runtime_anchors_from_detail",
+        "retrieve_snippets",
+        "score_symbol_snippet_candidate",
+        "score_file_snippet_candidate",
+        "snippet_radius_for_symbol",
+        "read_snippet"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "symbol_retrieval.py": {
+      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "retrieve_symbols",
+        "build_symbol_evidence"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    }
+  },
+  "dependency_graph": {
+    "bundle_merge.py": {},
+    "file_context_scoring.py": {},
+    "file_retrieval.py": {},
+    "live_source_fallback.py": {},
+    "profile_support.py": {},
+    "query_intents.py": {},
+    "query_text.py": {},
+    "section_retrieval.py": {},
+    "snippet_expansion.py": {},
+    "snippet_retrieval.py": {},
+    "symbol_retrieval.py": {}
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

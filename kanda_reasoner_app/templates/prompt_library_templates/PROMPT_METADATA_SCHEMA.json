@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "title": "Prompt Metadata Schema",
+  "description": "Project-agnostic metadata contract for Tab 9 prompt-library items.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "prompt_id",
+    "display_name",
+    "filename",
+    "version",
+    "status",
+    "category",
+    "load_type",
+    "project_agnostic",
+    "safe_to_copy",
+    "edit_policy",
+    "promotion_policy",
+    "governance_linked",
+    "modifies_governance",
+    "creates_files",
+    "required_placeholders",
+    "explainer",
+    "how_it_works",
+    "files_created",
+    "risks",
+    "mitigations",
+    "safe_usage",
+    "validation_requirements",
+    "change_log"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "prompt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "filename": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "template",
+        "active",
+        "draft",
+        "archived",
+        "deprecated"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "load_type": {
+      "type": "string",
+      "enum": [
+        "always",
+        "always_first",
+        "on_request",
+        "conditional",
+        "special_use"
+      ]
+    },
+    "project_agnostic": {
+      "type": "boolean",
+      "const": true
+    },
+    "safe_to_copy": {
+      "type": "boolean"
+    },
+    "edit_policy": {
+      "type": "string",
+      "enum": [
+        "read_only",
+        "draft_only",
+        "manual_only"
+      ]
+    },
+    "promotion_policy": {
+      "type": "string",
+      "enum": [
+        "none",
+        "manual_only",
+        "validate_then_explicit_approve"
+      ]
+    },
+    "protected": {
+      "type": "boolean"
+    },
+    "governance_linked": {
+      "type": "boolean"
+    },
+    "modifies_governance": {
+      "type": "boolean"
+    },
+    "creates_files": {
+      "type": "boolean"
+    },
+    "default_output_folder": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "required_placeholders": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_before": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "explainer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "how_it_works": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files_created": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "purpose"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mitigations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "safe_usage": {
+      "type": "string"
+    },
+    "validation_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "example_usage": {
+      "type": "string"
+    },
+    "last_validated": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_validated_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "change_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "date",
+          "summary"
+        ],
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "project_agnostic_rules": [
+    "Reusable prompts must use <PROJECT_ROOT> instead of absolute paths.",
+    "Reusable prompts must not require one fixed project name.",
+    "Project-specific examples must be placed under an Example Usage section.",
+    "Tab 9 text templates must not modify source code, runtime files, or active governance."
+  ]
+}

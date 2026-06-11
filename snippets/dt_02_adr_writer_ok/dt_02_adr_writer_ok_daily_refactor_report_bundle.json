@@ -1,0 +1,1940 @@
+{
+    "current_state": {
+        "_analysis_skipped": false,
+        "architectural_snapshot": {
+            "async_changes": {
+                "async_functions_added": [],
+                "async_functions_removed": []
+            },
+            "constants_added": [],
+            "dependencies_introduced": [],
+            "dependencies_removed": [],
+            "docstrings_added": 5,
+            "exception_handling_changes": {
+                "new_exceptions_caught": [],
+                "new_exceptions_raised": [],
+                "try_blocks_added": 9
+            },
+            "global_state_mutations": [],
+            "imports_added": [
+                "datetime",
+                "os",
+                "pathlib",
+                "re",
+                "requests",
+                "typing"
+            ],
+            "integration_points_touched": {
+                "concurrency": false,
+                "database": false,
+                "env_access": false,
+                "file_io": false,
+                "logging": false,
+                "network": false,
+                "serialisation": false,
+                "subprocess": false
+            },
+            "layer_distribution": {
+                "cortex": 0,
+                "dev_tools": 0,
+                "tab1": 0,
+                "tab3": 0
+            },
+            "localization_changes": {
+                "hardcoded_urls_added": [],
+                "strings_added": 0,
+                "translation_calls_added": 0
+            },
+            "node_count": 2111,
+            "side_effects_introduced": [],
+            "summary_narrative": "Auto-generated from 6 .py file(s) in 'dt_02_adr_writer_ok'. Found 5 function(s), 0 class(es). Establishes baseline state vector; increment on next compile.",
+            "type_hints_added": 0
+        },
+        "complexity_state": {
+            "coupling_degree": "low",
+            "cyclomatic_complexity_delta": 0,
+            "nesting_depth_max": 0,
+            "risk_level": "medium",
+            "stability_trajectory": "stable",
+            "volatility": 0.0
+        },
+        "constitution_state": {
+            "compliance": "pass",
+            "violation_count": 0,
+            "violations": []
+        },
+        "dependency_state": {
+            "cycles_detected": [],
+            "cyclic_components": [],
+            "edges": [
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                }
+            ],
+            "nodes": [
+                "__init__",
+                "ad_writer_02",
+                "ad_writer_02_errors_tst",
+                "ad_writer_02_errors_tst_corrected",
+                "ad_writer_02_errors_tst_corrected_corrected",
+                "ad_writer_03_errors_tst",
+                "ad_writer_03_errors_tst_corrected",
+                "ad_writer_05"
+            ],
+            "root": "E:\\pykanda\\dt_02_adr_writer_ok",
+            "stats": {
+                "cycle_count": 0,
+                "cyclic_component_count": 0,
+                "edge_count": 30,
+                "node_count": 8
+            },
+            "strongly_connected_components": [
+                [
+                    "pathlib"
+                ],
+                [
+                    "typing"
+                ],
+                [
+                    "datetime"
+                ],
+                [
+                    "os"
+                ],
+                [
+                    "re"
+                ],
+                [
+                    "requests"
+                ],
+                [
+                    "ad_writer_02"
+                ],
+                [
+                    "ad_writer_02_errors_tst"
+                ],
+                [
+                    "ad_writer_02_errors_tst_corrected"
+                ],
+                [
+                    "ad_writer_02_errors_tst_corrected_corrected"
+                ],
+                [
+                    "ad_writer_03_errors_tst"
+                ],
+                [
+                    "ad_writer_03_errors_tst_corrected"
+                ],
+                [
+                    "ad_writer_05"
+                ],
+                [
+                    "__init__"
+                ]
+            ]
+        },
+        "forward_projection": {
+            "expected_next_stress": "low",
+            "next_likely_hotspot": "ad_writer_02_errors_tst",
+            "regression_risk_probability": 0.0,
+            "suggested_next_action": "Review auto-generated baseline for 'dt_02_adr_writer_ok' and compile to persist."
+        },
+        "governance_state": {
+            "backward_compatible": true,
+            "breaking_changes": false,
+            "mode_impact": "none",
+            "score": 100,
+            "test_coverage_impact": "unknown"
+        },
+        "incremental": true,
+        "pattern_dynamics": {
+            "anti_patterns_detected": [],
+            "deprecated_patterns": [],
+            "design_patterns_detected": [],
+            "dominant_patterns": [],
+            "new_patterns": []
+        },
+        "refactor_pressure": {
+            "debt_index": 0,
+            "duplication_factor": 0.0,
+            "hotspots": 0,
+            "refactor_inevitability_horizon": null,
+            "technical_debt_notes": []
+        },
+        "stability_state": {
+            "churn": {
+                "added_count": 0,
+                "delta": 0,
+                "note": "Initial run",
+                "removed_count": 0
+            },
+            "instability": {
+                "available": true,
+                "modules": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ],
+                "stats": {
+                    "cyclic_component_count": 0,
+                    "cyclic_module_count": 0,
+                    "internal_edge_count": 0,
+                    "internal_module_count": 8
+                },
+                "top_stable": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ],
+                "top_unstable": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ]
+            },
+            "layer": "stability_analyzer_v1",
+            "ok": true,
+            "snapshot": {
+                "available": true,
+                "keys": [
+                    "ast_node_count_total",
+                    "avg_ast_nodes_per_module",
+                    "avg_lines_per_module",
+                    "domain_prefix",
+                    "domain_root",
+                    "max_module_size_lines",
+                    "module_count",
+                    "parse_error_count",
+                    "python_file_count",
+                    "read_error_count",
+                    "snapshot_version",
+                    "timestamp",
+                    "total_lines"
+                ]
+            },
+            "summary": {
+                "combined_risk_level": "low",
+                "combined_risk_score": 0,
+                "notes": []
+            },
+            "symbol_index": {
+                "available": true,
+                "symbol_count": 55
+            }
+        },
+        "state_vector_version": "2.0",
+        "strategy_state": {
+            "metrics_used": {
+                "centrality_threshold": 5,
+                "churn_threshold": 5,
+                "symbol_density_threshold": 50
+            },
+            "optimization_priority": "low",
+            "overloaded_modules": [],
+            "unstable_central_modules": []
+        },
+        "structural_change": {
+            "acceleration": 1,
+            "classes_added": [],
+            "classes_modified": [],
+            "files_modified": [
+                "__init__.py",
+                "ad_writer_02.py",
+                "ad_writer_02_errors_tst.py",
+                "ad_writer_02_errors_tst_corrected.py",
+                "ad_writer_02_errors_tst_corrected_corrected.py",
+                "ad_writer_03_errors_tst_corrected.py"
+            ],
+            "functions_added": [
+                "_post_chat_completion",
+                "call_llm",
+                "get_user_input",
+                "main",
+                "sanitize_filename"
+            ],
+            "functions_modified": [],
+            "functions_removed": [],
+            "lines_added": 797,
+            "lines_removed": 0,
+            "magnitude": 6,
+            "modules_touched": 6,
+            "surface_area": 6
+        },
+        "timestamp": "2026-03-08T18:31:00"
+    },
+    "derived": {
+        "dependency_graph": {
+            "cycles_detected": [],
+            "cyclic_components": [],
+            "edges": [
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_02_errors_tst_corrected_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "datetime"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "os"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "pathlib"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "re"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "requests"
+                },
+                {
+                    "from": "ad_writer_03_errors_tst_corrected",
+                    "kind": "import",
+                    "to": "typing"
+                }
+            ],
+            "nodes": [
+                "__init__",
+                "ad_writer_02",
+                "ad_writer_02_errors_tst",
+                "ad_writer_02_errors_tst_corrected",
+                "ad_writer_02_errors_tst_corrected_corrected",
+                "ad_writer_03_errors_tst",
+                "ad_writer_03_errors_tst_corrected",
+                "ad_writer_05"
+            ],
+            "root": "E:\\pykanda\\dt_02_adr_writer_ok",
+            "stats": {
+                "cycle_count": 0,
+                "cyclic_component_count": 0,
+                "edge_count": 30,
+                "node_count": 8
+            },
+            "strongly_connected_components": [
+                [
+                    "pathlib"
+                ],
+                [
+                    "typing"
+                ],
+                [
+                    "datetime"
+                ],
+                [
+                    "os"
+                ],
+                [
+                    "re"
+                ],
+                [
+                    "requests"
+                ],
+                [
+                    "ad_writer_02"
+                ],
+                [
+                    "ad_writer_02_errors_tst"
+                ],
+                [
+                    "ad_writer_02_errors_tst_corrected"
+                ],
+                [
+                    "ad_writer_02_errors_tst_corrected_corrected"
+                ],
+                [
+                    "ad_writer_03_errors_tst"
+                ],
+                [
+                    "ad_writer_03_errors_tst_corrected"
+                ],
+                [
+                    "ad_writer_05"
+                ],
+                [
+                    "__init__"
+                ]
+            ]
+        },
+        "project_snapshot": {
+            "ast_node_count_total": 2111,
+            "avg_ast_nodes_per_module": 263.88,
+            "avg_lines_per_module": 132.38,
+            "domain_prefix": "dt_02_adr_writer_ok",
+            "domain_root": "E:\\pykanda\\dt_02_adr_writer_ok",
+            "max_module_size_lines": 239,
+            "module_count": 8,
+            "parse_error_count": 2,
+            "python_file_count": 8,
+            "read_error_count": 0,
+            "snapshot_version": "1.1",
+            "timestamp": "2026-03-08T18:30:59",
+            "total_lines": 1059
+        },
+        "stability_analysis": {
+            "churn": {
+                "added_count": 0,
+                "delta": 0,
+                "note": "Initial run",
+                "removed_count": 0
+            },
+            "instability": {
+                "available": true,
+                "modules": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ],
+                "stats": {
+                    "cyclic_component_count": 0,
+                    "cyclic_module_count": 0,
+                    "internal_edge_count": 0,
+                    "internal_module_count": 8
+                },
+                "top_stable": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ],
+                "top_unstable": [
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "__init__"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_02_errors_tst_corrected_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_03_errors_tst_corrected"
+                    },
+                    {
+                        "ca": 0,
+                        "ce": 0,
+                        "instability": 0.0,
+                        "module": "ad_writer_05"
+                    }
+                ]
+            },
+            "layer": "stability_analyzer_v1",
+            "ok": true,
+            "snapshot": {
+                "available": true,
+                "keys": [
+                    "ast_node_count_total",
+                    "avg_ast_nodes_per_module",
+                    "avg_lines_per_module",
+                    "domain_prefix",
+                    "domain_root",
+                    "max_module_size_lines",
+                    "module_count",
+                    "parse_error_count",
+                    "python_file_count",
+                    "read_error_count",
+                    "snapshot_version",
+                    "timestamp",
+                    "total_lines"
+                ]
+            },
+            "summary": {
+                "combined_risk_level": "low",
+                "combined_risk_score": 0,
+                "notes": []
+            },
+            "symbol_index": {
+                "available": true,
+                "symbol_count": 55
+            }
+        },
+        "symbol_churn": {
+            "added": [],
+            "note": "Initial run",
+            "removed": []
+        },
+        "symbol_index": {
+            "domain_prefix": "dt_02_adr_writer_ok",
+            "index_version": "1.0",
+            "symbol_count": 55,
+            "symbols": [
+                {
+                    "line_end": 37,
+                    "line_start": 37,
+                    "module": "ad_writer_02.py",
+                    "name": "API_KEY",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 29,
+                    "line_start": 26,
+                    "module": "ad_writer_02.py",
+                    "name": "FALLBACK_API_URLS",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 33,
+                    "line_start": 33,
+                    "module": "ad_writer_02.py",
+                    "name": "MODEL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 45,
+                    "line_start": 45,
+                    "module": "ad_writer_02.py",
+                    "name": "OUTPUT_DIR",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 22,
+                    "line_start": 22,
+                    "module": "ad_writer_02.py",
+                    "name": "PRIMARY_API_URL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 41,
+                    "line_start": 41,
+                    "module": "ad_writer_02.py",
+                    "name": "REQUEST_TIMEOUT",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 128,
+                    "line_start": 86,
+                    "module": "ad_writer_02.py",
+                    "name": "_post_chat_completion",
+                    "type": "function"
+                },
+                {
+                    "line_end": 185,
+                    "line_start": 137,
+                    "module": "ad_writer_02.py",
+                    "name": "call_llm",
+                    "type": "function"
+                },
+                {
+                    "line_end": 62,
+                    "line_start": 53,
+                    "module": "ad_writer_02.py",
+                    "name": "get_user_input",
+                    "type": "function"
+                },
+                {
+                    "line_end": 231,
+                    "line_start": 194,
+                    "module": "ad_writer_02.py",
+                    "name": "main",
+                    "type": "function"
+                },
+                {
+                    "line_end": 77,
+                    "line_start": 71,
+                    "module": "ad_writer_02.py",
+                    "name": "sanitize_filename",
+                    "type": "function"
+                },
+                {
+                    "line_end": 18,
+                    "line_start": 18,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "API_KEY",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 16,
+                    "line_start": 13,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "FALLBACK_API_URLS",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 17,
+                    "line_start": 17,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "MODEL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 20,
+                    "line_start": 20,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "OUTPUT_DIR",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 12,
+                    "line_start": 11,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "PRIMARY_API_URL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 19,
+                    "line_start": 19,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "REQUEST_TIMEOUT",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 82,
+                    "line_start": 53,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "_post_chat_completion",
+                    "type": "function"
+                },
+                {
+                    "line_end": 112,
+                    "line_start": 92,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "call_llm",
+                    "type": "function"
+                },
+                {
+                    "line_end": 33,
+                    "line_start": 28,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "get_user_input",
+                    "type": "function"
+                },
+                {
+                    "line_end": 134,
+                    "line_start": 122,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "main",
+                    "type": "function"
+                },
+                {
+                    "line_end": 43,
+                    "line_start": 41,
+                    "module": "ad_writer_02_errors_tst.py",
+                    "name": "sanitize_filename",
+                    "type": "function"
+                },
+                {
+                    "line_end": 18,
+                    "line_start": 18,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "API_KEY",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 16,
+                    "line_start": 13,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "FALLBACK_API_URLS",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 17,
+                    "line_start": 17,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "MODEL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 20,
+                    "line_start": 20,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "OUTPUT_DIR",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 12,
+                    "line_start": 11,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "PRIMARY_API_URL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 19,
+                    "line_start": 19,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "REQUEST_TIMEOUT",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 82,
+                    "line_start": 53,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "_post_chat_completion",
+                    "type": "function"
+                },
+                {
+                    "line_end": 112,
+                    "line_start": 92,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "call_llm",
+                    "type": "function"
+                },
+                {
+                    "line_end": 33,
+                    "line_start": 28,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "get_user_input",
+                    "type": "function"
+                },
+                {
+                    "line_end": 134,
+                    "line_start": 122,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "main",
+                    "type": "function"
+                },
+                {
+                    "line_end": 43,
+                    "line_start": 41,
+                    "module": "ad_writer_02_errors_tst_corrected.py",
+                    "name": "sanitize_filename",
+                    "type": "function"
+                },
+                {
+                    "line_end": 18,
+                    "line_start": 18,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "API_KEY",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 16,
+                    "line_start": 13,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "FALLBACK_API_URLS",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 17,
+                    "line_start": 17,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "MODEL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 20,
+                    "line_start": 20,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "OUTPUT_DIR",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 12,
+                    "line_start": 11,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "PRIMARY_API_URL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 19,
+                    "line_start": 19,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "REQUEST_TIMEOUT",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 82,
+                    "line_start": 53,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "_post_chat_completion",
+                    "type": "function"
+                },
+                {
+                    "line_end": 112,
+                    "line_start": 92,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "call_llm",
+                    "type": "function"
+                },
+                {
+                    "line_end": 33,
+                    "line_start": 28,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "get_user_input",
+                    "type": "function"
+                },
+                {
+                    "line_end": 134,
+                    "line_start": 122,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "main",
+                    "type": "function"
+                },
+                {
+                    "line_end": 43,
+                    "line_start": 41,
+                    "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "name": "sanitize_filename",
+                    "type": "function"
+                },
+                {
+                    "line_end": 19,
+                    "line_start": 19,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "API_KEY",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 17,
+                    "line_start": 14,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "FALLBACK_API_URLS",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 18,
+                    "line_start": 18,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "MODEL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 21,
+                    "line_start": 21,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "OUTPUT_DIR",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 13,
+                    "line_start": 12,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "PRIMARY_API_URL",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 20,
+                    "line_start": 20,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "REQUEST_TIMEOUT",
+                    "type": "constant"
+                },
+                {
+                    "line_end": 82,
+                    "line_start": 52,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "_post_chat_completion",
+                    "type": "function"
+                },
+                {
+                    "line_end": 112,
+                    "line_start": 91,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "call_llm",
+                    "type": "function"
+                },
+                {
+                    "line_end": 34,
+                    "line_start": 28,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "get_user_input",
+                    "type": "function"
+                },
+                {
+                    "line_end": 134,
+                    "line_start": 121,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "main",
+                    "type": "function"
+                },
+                {
+                    "line_end": 43,
+                    "line_start": 40,
+                    "module": "ad_writer_03_errors_tst_corrected.py",
+                    "name": "sanitize_filename",
+                    "type": "function"
+                }
+            ],
+            "timestamp": "2026-03-08T18:30:59"
+        }
+    },
+    "metadata": {
+        "bundle_path": "E:\\pykanda\\dt_02_adr_writer_ok\\dt_02_adr_writer_ok_daily_refactor_report_bundle.json",
+        "bundle_type": "ai_upload",
+        "domain": "dt_02_adr_writer_ok",
+        "engine_version": "v12.6",
+        "generated_at": "2026-03-08T18:31:00",
+        "integrity_hash": "f9303efe5434475f09a68e97ade8f93efb8e88e75503d7ed0d85dc905a53a745",
+        "load_status": {
+            "current_state": "ok",
+            "dependency_graph": "ok",
+            "project_snapshot": "ok",
+            "stability_analysis": "ok",
+            "state_history": "ok",
+            "symbol_churn": "ok",
+            "symbol_index": "ok"
+        },
+        "report_folder": "E:\\pykanda\\dt_02_adr_writer_ok\\dt_02_adr_writer_ok_daily_refactor_engine"
+    },
+    "state_history": [
+        {
+            "_analysis_skipped": false,
+            "architectural_snapshot": {
+                "async_changes": {
+                    "async_functions_added": [],
+                    "async_functions_removed": []
+                },
+                "constants_added": [],
+                "dependencies_introduced": [],
+                "dependencies_removed": [],
+                "docstrings_added": 5,
+                "exception_handling_changes": {
+                    "new_exceptions_caught": [],
+                    "new_exceptions_raised": [],
+                    "try_blocks_added": 9
+                },
+                "global_state_mutations": [],
+                "imports_added": [
+                    "datetime",
+                    "os",
+                    "pathlib",
+                    "re",
+                    "requests",
+                    "typing"
+                ],
+                "integration_points_touched": {
+                    "concurrency": false,
+                    "database": false,
+                    "env_access": false,
+                    "file_io": false,
+                    "logging": false,
+                    "network": false,
+                    "serialisation": false,
+                    "subprocess": false
+                },
+                "layer_distribution": {
+                    "cortex": 0,
+                    "dev_tools": 0,
+                    "tab1": 0,
+                    "tab3": 0
+                },
+                "localization_changes": {
+                    "hardcoded_urls_added": [],
+                    "strings_added": 0,
+                    "translation_calls_added": 0
+                },
+                "node_count": 2111,
+                "side_effects_introduced": [],
+                "summary_narrative": "Auto-generated from 6 .py file(s) in 'dt_02_adr_writer_ok'. Found 5 function(s), 0 class(es). Establishes baseline state vector; increment on next compile.",
+                "type_hints_added": 0
+            },
+            "complexity_state": {
+                "coupling_degree": "low",
+                "cyclomatic_complexity_delta": 0,
+                "nesting_depth_max": 0,
+                "risk_level": "medium",
+                "stability_trajectory": "stable",
+                "volatility": 0.0
+            },
+            "constitution_state": {
+                "compliance": "pass",
+                "violation_count": 0,
+                "violations": []
+            },
+            "dependency_state": {
+                "cycles_detected": [],
+                "cyclic_components": [],
+                "edges": [
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "datetime"
+                    },
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "os"
+                    },
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "pathlib"
+                    },
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "re"
+                    },
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "requests"
+                    },
+                    {
+                        "from": "ad_writer_02",
+                        "kind": "import",
+                        "to": "typing"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "datetime"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "os"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "pathlib"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "re"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "requests"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst",
+                        "kind": "import",
+                        "to": "typing"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "datetime"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "os"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "pathlib"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "re"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "requests"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "typing"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "datetime"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "os"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "pathlib"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "re"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "requests"
+                    },
+                    {
+                        "from": "ad_writer_02_errors_tst_corrected_corrected",
+                        "kind": "import",
+                        "to": "typing"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "datetime"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "os"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "pathlib"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "re"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "requests"
+                    },
+                    {
+                        "from": "ad_writer_03_errors_tst_corrected",
+                        "kind": "import",
+                        "to": "typing"
+                    }
+                ],
+                "nodes": [
+                    "__init__",
+                    "ad_writer_02",
+                    "ad_writer_02_errors_tst",
+                    "ad_writer_02_errors_tst_corrected",
+                    "ad_writer_02_errors_tst_corrected_corrected",
+                    "ad_writer_03_errors_tst",
+                    "ad_writer_03_errors_tst_corrected",
+                    "ad_writer_05"
+                ],
+                "root": "E:\\pykanda\\dt_02_adr_writer_ok",
+                "stats": {
+                    "cycle_count": 0,
+                    "cyclic_component_count": 0,
+                    "edge_count": 30,
+                    "node_count": 8
+                },
+                "strongly_connected_components": [
+                    [
+                        "pathlib"
+                    ],
+                    [
+                        "typing"
+                    ],
+                    [
+                        "datetime"
+                    ],
+                    [
+                        "os"
+                    ],
+                    [
+                        "re"
+                    ],
+                    [
+                        "requests"
+                    ],
+                    [
+                        "ad_writer_02"
+                    ],
+                    [
+                        "ad_writer_02_errors_tst"
+                    ],
+                    [
+                        "ad_writer_02_errors_tst_corrected"
+                    ],
+                    [
+                        "ad_writer_02_errors_tst_corrected_corrected"
+                    ],
+                    [
+                        "ad_writer_03_errors_tst"
+                    ],
+                    [
+                        "ad_writer_03_errors_tst_corrected"
+                    ],
+                    [
+                        "ad_writer_05"
+                    ],
+                    [
+                        "__init__"
+                    ]
+                ]
+            },
+            "forward_projection": {
+                "expected_next_stress": "low",
+                "next_likely_hotspot": "ad_writer_02_errors_tst",
+                "regression_risk_probability": 0.0,
+                "suggested_next_action": "Review auto-generated baseline for 'dt_02_adr_writer_ok' and compile to persist."
+            },
+            "governance_state": {
+                "backward_compatible": true,
+                "breaking_changes": false,
+                "mode_impact": "none",
+                "score": 100,
+                "test_coverage_impact": "unknown"
+            },
+            "incremental": true,
+            "pattern_dynamics": {
+                "anti_patterns_detected": [],
+                "deprecated_patterns": [],
+                "design_patterns_detected": [],
+                "dominant_patterns": [],
+                "new_patterns": []
+            },
+            "refactor_pressure": {
+                "debt_index": 0,
+                "duplication_factor": 0.0,
+                "hotspots": 0,
+                "refactor_inevitability_horizon": null,
+                "technical_debt_notes": []
+            },
+            "stability_state": {
+                "churn": {
+                    "added_count": 0,
+                    "delta": 0,
+                    "note": "Initial run",
+                    "removed_count": 0
+                },
+                "instability": {
+                    "available": true,
+                    "modules": [
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "__init__"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_05"
+                        }
+                    ],
+                    "stats": {
+                        "cyclic_component_count": 0,
+                        "cyclic_module_count": 0,
+                        "internal_edge_count": 0,
+                        "internal_module_count": 8
+                    },
+                    "top_stable": [
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "__init__"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_05"
+                        }
+                    ],
+                    "top_unstable": [
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "__init__"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_02_errors_tst_corrected_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_03_errors_tst_corrected"
+                        },
+                        {
+                            "ca": 0,
+                            "ce": 0,
+                            "instability": 0.0,
+                            "module": "ad_writer_05"
+                        }
+                    ]
+                },
+                "layer": "stability_analyzer_v1",
+                "ok": true,
+                "snapshot": {
+                    "available": true,
+                    "keys": [
+                        "ast_node_count_total",
+                        "avg_ast_nodes_per_module",
+                        "avg_lines_per_module",
+                        "domain_prefix",
+                        "domain_root",
+                        "max_module_size_lines",
+                        "module_count",
+                        "parse_error_count",
+                        "python_file_count",
+                        "read_error_count",
+                        "snapshot_version",
+                        "timestamp",
+                        "total_lines"
+                    ]
+                },
+                "summary": {
+                    "combined_risk_level": "low",
+                    "combined_risk_score": 0,
+                    "notes": []
+                },
+                "symbol_index": {
+                    "available": true,
+                    "symbol_count": 55
+                }
+            },
+            "state_vector_version": "2.0",
+            "strategy_state": {
+                "metrics_used": {
+                    "centrality_threshold": 5,
+                    "churn_threshold": 5,
+                    "symbol_density_threshold": 50
+                },
+                "optimization_priority": "low",
+                "overloaded_modules": [],
+                "unstable_central_modules": []
+            },
+            "structural_change": {
+                "acceleration": 1,
+                "classes_added": [],
+                "classes_modified": [],
+                "files_modified": [
+                    "__init__.py",
+                    "ad_writer_02.py",
+                    "ad_writer_02_errors_tst.py",
+                    "ad_writer_02_errors_tst_corrected.py",
+                    "ad_writer_02_errors_tst_corrected_corrected.py",
+                    "ad_writer_03_errors_tst_corrected.py"
+                ],
+                "functions_added": [
+                    "_post_chat_completion",
+                    "call_llm",
+                    "get_user_input",
+                    "main",
+                    "sanitize_filename"
+                ],
+                "functions_modified": [],
+                "functions_removed": [],
+                "lines_added": 797,
+                "lines_removed": 0,
+                "magnitude": 6,
+                "modules_touched": 6,
+                "surface_area": 6
+            },
+            "timestamp": "2026-03-08T18:31:00"
+        }
+    ]
+}

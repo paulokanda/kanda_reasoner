@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "tab9_prompt_asset_placement_rules",
+  "display_name": "Tab 9 Prompt Asset Placement Rules",
+  "version": "1.3.0",
+  "status": "active",
+  "category": "prompt_library_teaching",
+  "subcategory": "placement_rules",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library\\teaching",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [
+    "teach_ai_tab9_prompt_authoring_guide",
+    "kanda_prompt_router"
+  ],
+  "required_before": [],
+  "explainer": "Defines correct package-owned locations for Tab 9 prompt-library assets.",
+  "how_it_works": "The rules prevent an AI from placing Tab 9 package assets under excluded reference folders or unrelated source boxes.",
+  "files_created": [],
+  "risks": [
+    "Assets may be placed under .project_reference or _project_reference and become invisible to the package-owned Tab 9 library."
+  ],
+  "mitigations": [
+    "The rules name the correct package-owned folders and the incorrect legacy folders."
+  ],
+  "safe_usage": "Use when asking an AI to place or relocate prompt-library assets.",
+  "validation_requirements": [
+    "json_parse",
+    "utf8_no_bom",
+    "ascii",
+    "no_hardcoded_absolute_paths"
+  ],
+  "example_usage": "Copy this file with the authoring guide when asking another AI to create prompt-library assets.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial placement rules for Tab 9 prompt-library assets."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added dashboard visibility contract and prompt_id matching rules."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added prompt router contract for Tab 9 assets."
+    },
+    {
+      "version": "1.3.0",
+      "date": "2026-06-07",
+      "summary": "Added lowercase workbench\\bundle_manifest placement contract and stricter dashboard visibility rules."
+    }
+  ]
+}

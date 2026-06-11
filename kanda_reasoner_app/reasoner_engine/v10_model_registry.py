@@ -1,0 +1,112 @@
+"""Discover local Ollama models for the Project Reasoner V10 GUI."""
+
+from __future__ import annotations
+
+import json
+import subprocess
+from collections.abc import Iterable
+from typing import Any
+
+import requests
+
+OLLAMA_TAGS_URL = "http://127.0.0.1:11434/api/tags"
+OLLAMA_MODELS_URL = "http://127.0.0.1:11434/v1/models"
+TIMEOUT = 20
+
+
+class LocalModelRegistry:
+    """Return the currently installed Ollama models without persistent caching."""
+
+    def list_models(self) -> list[str]:
+        """Return every model currently visible through supported Ollama APIs."""
+        models: list[str] = []
+        models.extend(self._from_tags())
+        models.extend(self._from_v1_models())
+        models.extend(self._from_ollama_cli())
+        return _unique_sorted_model_names(models)
+
+    def _from_tags(self) -> list[str]:
+        try:
+            response = requests.get(OLLAMA_TAGS_URL, timeout=TIMEOUT)
+            response.raise_for_status()
+            data = response.json()
+
+            items = data.get("models", [])
+            out: list[str] = []
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                name = _first_text_value(item, ("name", "model", "id"))
+                if name:
+                    out.append(name)
+            return _unique_sorted_model_names(out)
+        except (requests.RequestException, json.JSONDecodeError, ValueError):
+            return []
+
+    def _from_v1_models(self) -> list[str]:
+        try:
+            response = requests.get(OLLAMA_MODELS_URL, timeout=TIMEOUT)
+            response.raise_for_status()
+            data = response.json()
+            items = data.get("data", [])
+            out: list[str] = []
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                model_id = _first_text_value(item, ("id", "name", "model"))
+                if model_id:
+                    out.append(model_id)
+            return _unique_sorted_model_names(out)
+        except (requests.RequestException, json.JSONDecodeError, ValueError):
+            return []
+
+    def _from_ollama_cli(self) -> list[str]:
+        try:
+            result = subprocess.run(
+                ["ollama", "list"],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=TIMEOUT,
+                check=False,
+            )
+        except (OSError, subprocess.SubprocessError, ValueError):
+            return []
+
+        if result.returncode != 0:
+            return []
+
+        return _parse_ollama_list_output(result.stdout)
+
+
+def _first_text_value(item: dict[str, Any], keys: Iterable[str]) -> str:
+    """Return the first non-empty text value for the supplied keys."""
+    for key in keys:
+        value = str(item.get(key, "")).strip()
+        if value:
+            return value
+    return ""
+
+
+def _parse_ollama_list_output(output: str) -> list[str]:
+    """Parse model names from the tabular output of ``ollama list``."""
+    names: list[str] = []
+    for raw_line in output.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        first_column = line.split(maxsplit=1)[0].strip()
+        if not first_column or first_column.upper() == "NAME":
+            continue
+
+        names.append(first_column)
+
+    return _unique_sorted_model_names(names)
+
+
+def _unique_sorted_model_names(names: Iterable[str]) -> list[str]:
+    """Normalize, deduplicate, and sort model names for stable GUI display."""
+    unique = {str(name).strip() for name in names if str(name).strip()}
+    return sorted(unique, key=str.casefold)

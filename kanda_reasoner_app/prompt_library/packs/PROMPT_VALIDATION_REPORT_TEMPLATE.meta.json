@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "template",
+  "category": "prompt_pack",
+  "subcategory": "export_import",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "risks": [
+    "A prompt pack may accidentally include project-specific paths or runtime artifacts."
+  ],
+  "mitigations": [
+    "Use the export and import checklists before moving prompts between projects."
+  ],
+  "validation_requirements": [
+    "metadata_json_parse",
+    "hardcoded_path_scan",
+    "project_agnostic_review"
+  ],
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial text-only prompt pack template."
+    }
+  ],
+  "prompt_id": "prompt_validation_report_template",
+  "display_name": "Prompt Validation Report Template",
+  "explainer": "Template for recording prompt or prompt-pack validation results.",
+  "how_it_works": "The report records structural checks, project-agnostic checks, safety checks, findings, and final decision.",
+  "files_created": [],
+  "example_usage": "Copy PROMPT_VALIDATION_REPORT_TEMPLATE.md, fill placeholders, and store the completed copy with the relevant prompt pack."
+}

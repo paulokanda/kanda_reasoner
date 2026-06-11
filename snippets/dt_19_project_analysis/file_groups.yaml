@@ -1,0 +1,45 @@
+# file_groups.yaml
+#
+# This file defines named groups of source code files for generating
+# targeted analysis reports and dependency graphs.
+#
+# Use wildcards (*) to include all files in a directory.
+# All paths are relative to the project root (EEG_KANDA).
+
+groups:
+  CoreVisualizer:
+    auto: true  # Set to true to auto-generate this report after `generate-dev_tools`
+    tags: [core, visualizer, rendering]
+    description: "The central rendering engine and main window builder."
+    files:
+      - k00_main/kanda_main.py
+      - k01_core_eeg/k01_1_main_win_builder/*
+      - k01_core_eeg/k01_3_eeg_visualizer/eeg_visualizer_core.py
+      - k01_core_eeg/k01_4_visualizer_render/*
+
+  UI_Filters:
+    auto: true
+    tags: [ui, filters, combobox]
+    description: "All components related to the filter selection dropdowns and toolbars."
+    files:
+      - k05_combobox_forge/k05_4_cmbbx_constructor/combobox_template.py
+      - k05_combobox_forge/k05_8_eeg_middle_tab_bar_cmbbx_lane/cmbbx_lane_middle_bar.py
+      - k05_combobox_forge/k05_8_eeg_middle_tab_bar_cmbbx_lane/cmbbx_lane_tooltips.py
+      - combobox_middle_tab_bar.py
+
+  tooltip_cmbbx:
+    auto: true
+    tags: [new, flow, ui, core]
+    description: "A custom flow combining tooltips, combobox construction, and core visualizer display."
+    files:
+      - k06_templates/hover_card_tmplt/tooltip_help_center.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/combobox_template.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/cmbbx_lane_json_loader.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/dropdown_caption_formatter.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/filters_controller.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/cmbbx_template_helpers/update_dropdown_cmbbx_template_helper.py
+      - k05_combobox_forge/k05_4_cmbbx_constructor/cmbbx_template_helpers/class_option_loading_cmbbx_template_helper.py
+      - k03_tabs/k03_3_content/k03_3_eeg_traces_tab.py
+      - k01_core_eeg/k01_3_eeg_visualizer/visualizer_core_helpers/display_pyside6_eeg_visualizer.py
+      - k01_core_eeg/k01_3_eeg_visualizer/eeg_visualizer_core.py
+

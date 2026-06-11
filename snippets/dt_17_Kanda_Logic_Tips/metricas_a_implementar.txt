@@ -1,0 +1,219 @@
+Sim, você está correto ao observar que muitas das métricas mencionadas são geralmente aplicadas após a aplicação de alguma forma de transformação nos dados de EEG. A transformação dos dados pode ajudar a revelar características que não são imediatamente evidentes no sinal bruto, permitindo uma análise mais detalhada e significativa. Vamos explorar algumas das transformações comuns e como elas se relacionam com as métricas que discutimos:
+1. Transformada de Fourier e Análise de Frequência
+
+    Aplicação: A transformada de Fourier é usada para decompor o sinal de EEG em suas componentes de frequência, permitindo a análise do conteúdo espectral do sinal.
+    Métricas Associadas:
+        Potência Espectral: Calcula a distribuição de potência em diferentes bandas de frequência (delta, teta, alfa, beta, gama).
+        Coerência Espectral: Avalia a sincronização entre diferentes canais em frequências específicas.
+        Índice de Potência Relativa: Calcula a proporção da potência total em uma banda de frequência específica.
+
+2. Transformada de Hilbert e Análise de Fase
+
+    Aplicação: A transformada de Hilbert é usada para calcular a envoltória e a fase instantânea de um sinal, o que é útil para análise de sincronização e conectividade.
+    Métricas Associadas:
+        Índice de Sincronização de Fase: Mede a sincronização de fase entre dois sinais.
+        Coerência de Fase: Avalia a consistência da diferença de fase entre dois sinais ao longo do tempo.
+        Entropia de Fase: Mede a complexidade da distribuição de fase.
+
+3. Transformada Wavelet
+
+    Aplicação: A transformada wavelet é usada para analisar o sinal em termos de tempo e frequência, permitindo a identificação de padrões transitórios e mudanças na frequência ao longo do tempo.
+    Métricas Associadas:
+        Espectrograma de Wavelet: Visualiza a distribuição de energia do sinal ao longo do tempo e da frequência.
+        Potência de Wavelet: Calcula a potência do sinal em diferentes escalas de tempo e frequência.
+        Entropia de Wavelet: Mede a complexidade do sinal em diferentes escalas de tempo.
+
+4. Filtragem e Remoção de Artefatos
+
+    Aplicação: A filtragem é usada para remover ruído e artefatos indesejados do sinal de EEG, como ruído de linha de 50/60 Hz ou artefatos de movimento.
+    Métricas Associadas:
+        Detecção de Artefatos: Identifica e quantifica a presença de artefatos no sinal.
+        Índice de Qualidade do Sinal: Avalia a qualidade do sinal após a filtragem.
+
+5. Análise de Componentes Independentes (ICA)
+
+    Aplicação: A ICA é usada para separar o sinal de EEG em componentes independentes, o que é útil para remover artefatos e identificar fontes de sinal.
+    Métricas Associadas:
+        Componentes Principais: Identifica as direções de máxima variância nos dados.
+        Componentes Independentes: Separa o sinal em componentes independentes.
+
+6. Análise de Tempo-Frequência
+
+    Aplicação: Combina análise de tempo e frequência para capturar mudanças dinâmicas no conteúdo espectral do sinal.
+    Métricas Associadas:
+        Transformada de Gabor: Analisa o sinal em termos de tempo e frequência.
+        Espectrograma de Gabor: Visualiza a distribuição de energia do sinal ao longo do tempo e da frequência.
+
+Implementação Prática
+
+Aqui está um exemplo de como você pode aplicar algumas dessas transformações e calcular as métricas associadas:
+
+python
+
+from scipy.signal import welch, hilbert
+from scipy.fft import fft, fftfreq
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from mne.time_frequency import psd_welch
+
+def apply_fourier_transform(signal, sfreq):
+    fft_vals = fft(signal)
+    freqs = fftfreq(len(signal), 1/sfreq)
+    return freqs, fft_vals
+
+def calculate_relative_power(signal, sfreq, freq_bands):
+    freqs, Pxx = welch(signal, fs=sfreq, nperseg=1024)
+    relative_power = {}
+    for band, (fmin, fmax) in freq_bands.items():
+        idx = np.logical_and(freqs >= fmin, freqs <= fmax)
+        relative_power[band] = np.sum(Pxx[idx]) / np.sum(Pxx)
+    return relative_power
+
+def apply_hilbert_transform(signal):
+    analytic_signal = hilbert(signal)
+    amplitude_envelope = np.abs(analytic_signal)
+    instantaneous_phase = np.angle(analytic_signal)
+    return amplitude_envelope, instantaneous_phase
+
+# Exemplo de uso
+freq_bands = {
+    'Delta': (0.5, 4),
+    'Theta': (4, 8),
+    'Alpha': (8, 13),
+    'Beta': (13, 30),
+    'Gamma': (30, 45)
+}
+
+# Supondo que você tenha um sinal de EEG em um DataFrame
+signal = df['Fz'].values
+sfreq = 256  # Frequência de amostragem
+
+# Aplicar transformada de Fourier
+freqs, fft_vals = apply_fourier_transform(signal, sfreq)
+
+# Calcular potência relativa
+relative_power = calculate_relative_power(signal, sfreq, freq_bands)
+
+# Aplicar transformada de Hilbert
+amplitude_envelope, instantaneous_phase = apply_hilbert_transform(signal)
+
+# Calcular índice de sincronização de fase entre dois canais
+ch1 = 'Fz'
+ch2 = 'Cz'
+analytic_signal1 = hilbert(df[ch1].values)
+analytic_signal2 = hilbert(df[ch2].values)
+phase1 = np.angle(analytic_signal1)
+phase2 = np.angle(analytic_signal2)
+phase_synchronization_index = np.abs(np.mean(np.exp(1j * (phase1 - phase2))))
+
+print(f"Potência Relativa: {relative_power}")
+print(f"Índice de Sincronização de Fase: {phase_synchronization_index}")
+
+
+#############################
+1. Métricas para Análise de Amplitudes
+1.1. Medidas de Tendência Central
+
+    Média (Mean µV): Já mencionada, é a soma de todas as amplitudes dividida pelo número de amostras.
+    Mediana (Median µV): Já mencionada, é o valor central quando os dados são ordenados.
+    Moda (Mode µV): O valor que aparece com mais frequência nos dados.
+
+1.2. Medidas de Dispersão
+
+    Desvio Padrão (SD µV): Já mencionada, mede a quantidade de variação ou dispersão dos dados.
+    Variância (Variance µV): O quadrado do desvio padrão, mede a dispersão dos dados em relação à média.
+    Amplitude Interquartil (IQR µV): Já mencionada, a diferença entre o terceiro e o primeiro quartil, uma medida robusta de dispersão.
+    Alcance (Range µV): Já mencionada, a diferença entre a amplitude máxima e mínima.
+
+1.3. Medidas de Forma
+
+    Assimetria (Skewness): Já mencionada, mede a assimetria da distribuição dos dados.
+    Curtose (Kurtosis): Já mencionada, mede o quão "pontiaguda" ou "achatada" é a distribuição dos dados.
+
+1.4. Medidas de Localização
+
+    Percentis (Percentiles): Valores abaixo dos quais uma determinada porcentagem dos dados cai. Por exemplo, o 25º percentil, 50º percentil (mediana), 75º percentil.
+    Intervalo Interquartil (IQR µV): Já mencionada, a diferença entre o terceiro e o primeiro quartil.
+
+1.5. Medidas de Forma Avançadas
+
+    Coeficiente de Variação (CV µV): A razão entre o desvio padrão e a média, útil para comparar a variabilidade entre diferentes conjuntos de dados.
+    Desvio Médio Absoluto (MAD µV): Já mencionada, a média dos valores absolutos das diferenças entre cada ponto de dados e a média.
+
+1.6. Medidas de Regularidade
+
+    Entropia (Entropy): Já mencionada, mede a desordem ou a imprevisibilidade dos dados.
+    Entropia Amostral (Sample Entropy): Já mencionada, uma medida da complexidade dos dados.
+
+2. Lista Completa de Métricas por Grupo
+
+Aqui está a lista completa de métricas organizadas por grupo, incluindo as que você sugeriu e as que já foram implementadas:
+2.1. Amplitude Measures
+
+    Min µV: Mínimo
+    Max µV: Máximo
+    Mean µV: Média
+    Median µV: Mediana
+    Mode µV: Moda
+    START µV: Amplitude inicial
+    END µV: Amplitude final
+    EN-ST µV: Diferença final-inicial
+    Variance µV: Variância
+    CV µV: Coeficiente de variação
+    MAD µV: Desvio médio absoluto
+
+2.2. Variability Measures
+
+    SD µV: Desvio padrão
+    IQR µV: Amplitude interquartil
+    Range µV: Alcance
+    RMS µV: RMS (Root Mean Square)
+
+2.3. Distribution Shape
+
+    Skew: Assimetria
+    Kurt: Curtose
+
+2.4. Frequency/Rate Measures
+
+    Zcross: Cruzamentos de zero
+    Zcross/s: Taxa de cruzamentos de zero
+    Phase Entropy: Entropia de fase
+    Power Spectral Density: Densidade espectral de potência
+    Relative Power: Potência relativa
+
+2.5. Complexity Measures
+
+    Entropy: Entropia
+    S.Entropy: Entropia amostral
+    Lempel-Ziv %: Complexidade de Lempel-Ziv
+    Hjorth Mob: Mobilidade de Hjorth
+    Hjorth Comp: Complexidade de Hjorth
+    Wavelet Entropy: Entropia de wavelet
+
+2.6. Energy/Slope Measures
+
+    SpikeEnergy: Energia de pico
+    Slope: Inclinação
+
+2.7. Regularity Measures
+
+    ApEn: Entropia aproximada
+    P.Entropy: Entropia de permutação
+
+2.8. Synchronization Measures
+
+    PhaseSyncIdx: Índice de sincronização de fase
+    PhaseCoherence: Coerência de fase
+
+2.9. Artifact Detection
+
+    Artifact Detection: Detecção de artefatos
+    Signal Quality: Qualidade do sinal
+
+2.10. Advanced Analysis
+
+    PCA Components: Componentes principais
+    ICA Components: Componentes independentes
+

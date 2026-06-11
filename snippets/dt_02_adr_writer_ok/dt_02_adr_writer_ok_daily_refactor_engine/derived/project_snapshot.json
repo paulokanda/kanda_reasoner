@@ -1,0 +1,15 @@
+{
+    "ast_node_count_total": 2111,
+    "avg_ast_nodes_per_module": 263.88,
+    "avg_lines_per_module": 132.38,
+    "domain_prefix": "dt_02_adr_writer_ok",
+    "domain_root": "E:\\pykanda\\dt_02_adr_writer_ok",
+    "max_module_size_lines": 239,
+    "module_count": 8,
+    "parse_error_count": 2,
+    "python_file_count": 8,
+    "read_error_count": 0,
+    "snapshot_version": "1.1",
+    "timestamp": "2026-03-08T18:30:59",
+    "total_lines": 1059
+}

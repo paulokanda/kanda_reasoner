@@ -1,0 +1,393 @@
+{
+    "domain_prefix": "dt_02_adr_writer_ok",
+    "index_version": "1.0",
+    "symbol_count": 55,
+    "symbols": [
+        {
+            "line_end": 37,
+            "line_start": 37,
+            "module": "ad_writer_02.py",
+            "name": "API_KEY",
+            "type": "constant"
+        },
+        {
+            "line_end": 29,
+            "line_start": 26,
+            "module": "ad_writer_02.py",
+            "name": "FALLBACK_API_URLS",
+            "type": "constant"
+        },
+        {
+            "line_end": 33,
+            "line_start": 33,
+            "module": "ad_writer_02.py",
+            "name": "MODEL",
+            "type": "constant"
+        },
+        {
+            "line_end": 45,
+            "line_start": 45,
+            "module": "ad_writer_02.py",
+            "name": "OUTPUT_DIR",
+            "type": "constant"
+        },
+        {
+            "line_end": 22,
+            "line_start": 22,
+            "module": "ad_writer_02.py",
+            "name": "PRIMARY_API_URL",
+            "type": "constant"
+        },
+        {
+            "line_end": 41,
+            "line_start": 41,
+            "module": "ad_writer_02.py",
+            "name": "REQUEST_TIMEOUT",
+            "type": "constant"
+        },
+        {
+            "line_end": 128,
+            "line_start": 86,
+            "module": "ad_writer_02.py",
+            "name": "_post_chat_completion",
+            "type": "function"
+        },
+        {
+            "line_end": 185,
+            "line_start": 137,
+            "module": "ad_writer_02.py",
+            "name": "call_llm",
+            "type": "function"
+        },
+        {
+            "line_end": 62,
+            "line_start": 53,
+            "module": "ad_writer_02.py",
+            "name": "get_user_input",
+            "type": "function"
+        },
+        {
+            "line_end": 231,
+            "line_start": 194,
+            "module": "ad_writer_02.py",
+            "name": "main",
+            "type": "function"
+        },
+        {
+            "line_end": 77,
+            "line_start": 71,
+            "module": "ad_writer_02.py",
+            "name": "sanitize_filename",
+            "type": "function"
+        },
+        {
+            "line_end": 18,
+            "line_start": 18,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "API_KEY",
+            "type": "constant"
+        },
+        {
+            "line_end": 16,
+            "line_start": 13,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "FALLBACK_API_URLS",
+            "type": "constant"
+        },
+        {
+            "line_end": 17,
+            "line_start": 17,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "MODEL",
+            "type": "constant"
+        },
+        {
+            "line_end": 20,
+            "line_start": 20,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "OUTPUT_DIR",
+            "type": "constant"
+        },
+        {
+            "line_end": 12,
+            "line_start": 11,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "PRIMARY_API_URL",
+            "type": "constant"
+        },
+        {
+            "line_end": 19,
+            "line_start": 19,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "REQUEST_TIMEOUT",
+            "type": "constant"
+        },
+        {
+            "line_end": 82,
+            "line_start": 53,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "_post_chat_completion",
+            "type": "function"
+        },
+        {
+            "line_end": 112,
+            "line_start": 92,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "call_llm",
+            "type": "function"
+        },
+        {
+            "line_end": 33,
+            "line_start": 28,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "get_user_input",
+            "type": "function"
+        },
+        {
+            "line_end": 134,
+            "line_start": 122,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "main",
+            "type": "function"
+        },
+        {
+            "line_end": 43,
+            "line_start": 41,
+            "module": "ad_writer_02_errors_tst.py",
+            "name": "sanitize_filename",
+            "type": "function"
+        },
+        {
+            "line_end": 18,
+            "line_start": 18,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "API_KEY",
+            "type": "constant"
+        },
+        {
+            "line_end": 16,
+            "line_start": 13,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "FALLBACK_API_URLS",
+            "type": "constant"
+        },
+        {
+            "line_end": 17,
+            "line_start": 17,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "MODEL",
+            "type": "constant"
+        },
+        {
+            "line_end": 20,
+            "line_start": 20,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "OUTPUT_DIR",
+            "type": "constant"
+        },
+        {
+            "line_end": 12,
+            "line_start": 11,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "PRIMARY_API_URL",
+            "type": "constant"
+        },
+        {
+            "line_end": 19,
+            "line_start": 19,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "REQUEST_TIMEOUT",
+            "type": "constant"
+        },
+        {
+            "line_end": 82,
+            "line_start": 53,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "_post_chat_completion",
+            "type": "function"
+        },
+        {
+            "line_end": 112,
+            "line_start": 92,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "call_llm",
+            "type": "function"
+        },
+        {
+            "line_end": 33,
+            "line_start": 28,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "get_user_input",
+            "type": "function"
+        },
+        {
+            "line_end": 134,
+            "line_start": 122,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "main",
+            "type": "function"
+        },
+        {
+            "line_end": 43,
+            "line_start": 41,
+            "module": "ad_writer_02_errors_tst_corrected.py",
+            "name": "sanitize_filename",
+            "type": "function"
+        },
+        {
+            "line_end": 18,
+            "line_start": 18,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "API_KEY",
+            "type": "constant"
+        },
+        {
+            "line_end": 16,
+            "line_start": 13,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "FALLBACK_API_URLS",
+            "type": "constant"
+        },
+        {
+            "line_end": 17,
+            "line_start": 17,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "MODEL",
+            "type": "constant"
+        },
+        {
+            "line_end": 20,
+            "line_start": 20,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "OUTPUT_DIR",
+            "type": "constant"
+        },
+        {
+            "line_end": 12,
+            "line_start": 11,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "PRIMARY_API_URL",
+            "type": "constant"
+        },
+        {
+            "line_end": 19,
+            "line_start": 19,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "REQUEST_TIMEOUT",
+            "type": "constant"
+        },
+        {
+            "line_end": 82,
+            "line_start": 53,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "_post_chat_completion",
+            "type": "function"
+        },
+        {
+            "line_end": 112,
+            "line_start": 92,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "call_llm",
+            "type": "function"
+        },
+        {
+            "line_end": 33,
+            "line_start": 28,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "get_user_input",
+            "type": "function"
+        },
+        {
+            "line_end": 134,
+            "line_start": 122,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "main",
+            "type": "function"
+        },
+        {
+            "line_end": 43,
+            "line_start": 41,
+            "module": "ad_writer_02_errors_tst_corrected_corrected.py",
+            "name": "sanitize_filename",
+            "type": "function"
+        },
+        {
+            "line_end": 19,
+            "line_start": 19,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "API_KEY",
+            "type": "constant"
+        },
+        {
+            "line_end": 17,
+            "line_start": 14,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "FALLBACK_API_URLS",
+            "type": "constant"
+        },
+        {
+            "line_end": 18,
+            "line_start": 18,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "MODEL",
+            "type": "constant"
+        },
+        {
+            "line_end": 21,
+            "line_start": 21,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "OUTPUT_DIR",
+            "type": "constant"
+        },
+        {
+            "line_end": 13,
+            "line_start": 12,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "PRIMARY_API_URL",
+            "type": "constant"
+        },
+        {
+            "line_end": 20,
+            "line_start": 20,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "REQUEST_TIMEOUT",
+            "type": "constant"
+        },
+        {
+            "line_end": 82,
+            "line_start": 52,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "_post_chat_completion",
+            "type": "function"
+        },
+        {
+            "line_end": 112,
+            "line_start": 91,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "call_llm",
+            "type": "function"
+        },
+        {
+            "line_end": 34,
+            "line_start": 28,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "get_user_input",
+            "type": "function"
+        },
+        {
+            "line_end": 134,
+            "line_start": 121,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "main",
+            "type": "function"
+        },
+        {
+            "line_end": 43,
+            "line_start": 40,
+            "module": "ad_writer_03_errors_tst_corrected.py",
+            "name": "sanitize_filename",
+            "type": "function"
+        }
+    ],
+    "timestamp": "2026-03-08T18:30:59"
+}

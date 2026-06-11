@@ -1,0 +1,165 @@
+{
+  "helper_folder": "manage_architecture_help",
+  "helpers": [
+    {
+      "exports": [],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help",
+      "path": "manage_architecture_help/__init__.py"
+    },
+    {
+      "exports": [
+        "load_manage_architecture_source"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.source_loader_private_impl",
+      "path": "manage_architecture_help/source_loader_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_1"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_1_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_1_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_2"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_2_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_2_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_3"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_3_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_3_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_4"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_4_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_4_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_5"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_5_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_5_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_6"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_6_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_6_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_7"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_7_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_7_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_8"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_8_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_8_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_9"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_9_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_9_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_10"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_10_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_10_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_11"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_11_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_11_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_12"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_12_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_12_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_13"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_13_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_13_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_14"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_14_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_14_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_15"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_15_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_15_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_16"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_16_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_16_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_17"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_17_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_17_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_18"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_18_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_18_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_19"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_19_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_19_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_20"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_20_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_20_private_impl.py"
+    },
+    {
+      "exports": [
+        "MANAGE_ARCHITECTURE_SOURCE_PART_21"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_21_private_impl",
+      "path": "manage_architecture_help/manage_architecture_source_part_21_private_impl.py"
+    }
+  ],
+  "origin": "manage_architecture.py"
+}

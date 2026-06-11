@@ -1,0 +1,173 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window.py",
+  "entry_point": "kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window.py",
+  "help_folder": "kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help",
+  "refactor_date": "2026-06-09",
+  "refactor_goal": "Provide canonical helper manifest contract for the reasoner_engine main window facade helper group.",
+  "pattern": "canonical_facade_with_legacy_gui",
+  "pattern_note": "The canonical facade file exists to satisfy architecture ownership while the active GUI implementation remains available through project_reasoner_v10 during migration.",
+  "generated_by": "reasoner_engine_main_window_manifest_contract_repair",
+  "ai_instruction": "Keep this manifest aligned with the canonical ai_reasoner_main_window_help folder while the GUI migration remains staged.",
+  "summary": {
+    "total_helpers": 13,
+    "public_helpers": 12,
+    "internal_helpers": 1,
+    "entry_exports": [
+      "JsonProjectReasonerV10",
+      "main"
+    ],
+    "high_level_flow": "canonical facade and helper folder coexist while legacy GUI implementation remains the runtime source"
+  },
+  "helpers": {
+    "__init__.py": {
+      "purpose": "",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "analysis_controller.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "AnalysisController"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "answer_presenter.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "ConfidenceStatus",
+        "AnswerPresenter"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "json_track.py": {
+      "purpose": "Classify the currently loaded Project Reasoner JSON file.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "CANONICAL_COMPLETE_JSON_NAME",
+        "LOCAL_AI_COMPLETE_JSON_NAME",
+        "classify_loaded_json_track"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "profile_controller.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "runtime_controller.py": {
+      "purpose": "Runtime controls and JSON loading for the Project Reasoner main window.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "session_service.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "SessionExecutionError",
+        "SessionExecutionResult",
+        "SessionService"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "settings_manager.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "WindowSettingsManager"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "signal_wiring.py": {
+      "purpose": "Signal wiring for the Project Reasoner main window.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "connect_main_window_signals"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "state_models.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "WindowSessionState",
+        "ProfileSelectionState",
+        "AnalysisState"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "static_context_controller.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "StaticContextController"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "ui_builder.py": {
+      "purpose": "Build the Project Reasoner tab-7 main window layout.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "build_main_window_ui"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "ui_components.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
+      "stability": "stable",
+      "exports": [
+        "shorten_path",
+        "CopyableListWidget",
+        "HelpDialog"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    }
+  },
+  "dependency_graph": {
+    "__init__.py": {},
+    "analysis_controller.py": {},
+    "answer_presenter.py": {},
+    "json_track.py": {},
+    "profile_controller.py": {},
+    "runtime_controller.py": {},
+    "session_service.py": {},
+    "settings_manager.py": {},
+    "signal_wiring.py": {},
+    "state_models.py": {},
+    "static_context_controller.py": {},
+    "ui_builder.py": {},
+    "ui_components.py": {}
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

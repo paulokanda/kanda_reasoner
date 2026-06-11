@@ -1,0 +1,9 @@
+
+📌 PATCH INSTRUCTION FOR: `update_dropdown_cmbbx_template_helper.py`
+
+1. ✅ Import the module at the top of the file:
+from k06_templates.lane_width.lane_wdth_tmplt import adjust_combobox_width
+
+2. ✅ In `_build_all_combos(ctx, combined)`, after the combo is created and items are added:
+# Adjust combobox width to match longest item
+adjust_combobox_width(combo)

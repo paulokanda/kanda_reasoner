@@ -1,0 +1,112 @@
+SKIP  tests           tests                                 - :: Workflow disabled.
+PASS  runtime_smoke   architecture_help_smoke           2.14s :: Exit code 0.
+      command: /opt/pyvenv/bin/python kanda_reasoner_app/manage_architecture/manage_architecture.py --help
+      stdout:
+        usage: manage_architecture.py [-h] [--root PATH] [--use-root N]
+                                      [--exclude-file FILENAME]
+                                      [--no-remembered-exclusions] [--history]
+                                      [--clear-history] [--scan | --validate |
+                                      --diff | --write]
+        
+        Manage architecture manifest, minimal __init__ facades, and ARCHITECTURE.md.
+        
+        options:
+          -h, --help            show this help message and exit
+          --scan                Print manifest JSON.
+          --validate            Validate the source tree.
+          --diff                Show diffs for generated outputs.
+          --write               Write manifest, __init__.py, and ARCHITECTURE.md.
+        
+        root selection:
+          --root PATH           Project root path (default: last used root or hard-
+                                coded fallback). Currently defaults to:
+                                /mnt/data/devtools_extract/developer_tools
+          --use-root N          Use the Nth entry from history instead of --root
+                                (1-based index).
+        
+        exclusions:
+          --exclude-file FILENAME
+                                Add FILENAME to the session exclusion list (remembered
+                                for future runs). Can be repeated: --exclude-file a.py
+                                --exclude-file b.py
+          --no-remembered-exclusions
+                                Ignore previously remembered excluded files for this
+                                run.
+        
+        history:
+          --history             Print remembered roots and excluded files, then exit.
+          --clear-history       Clear all history and exit.
+        
+        History is stored in: /home/oai/.manage_architecture_history.json
+        
+        Examples:
+          manage_architecture.py --validate                        # uses last-used root
+          manage_architecture.py --root path/to/project --write   # sets a new root (remembered)
+          manage_architecture.py --history                        # show remembered roots
+          manage_architecture.py --use-root 2 --validate          # pick root #2 from history
+          manage_architecture.py --exclude-file foo.py --write    # add a file to exclusions
+          manage_architecture.py --clear-history                  # wipe all history
+PASS  runtime_smoke   workflow_help_smoke               1.97s :: Exit code 0.
+      command: /opt/pyvenv/bin/python kanda_reasoner_app/manage_workflows/manage_workflows.py --help
+      stdout:
+        usage: manage_workflows.py [-h] [--root PATH] [--use-root N] [--history]
+                                   [--clear-history] [--scan | --validate | --diff |
+                                   --write]
+        
+        Manage runtime/business/gui/integration/test/performance/import validation workflows.
+        
+        options:
+          -h, --help       show this help message and exit
+          --scan           Print the generated workflow manifest template.
+          --validate       Execute configured workflows.
+          --diff           Show diffs for generated outputs.
+          --write          Write workflow_manifest.json and WORKFLOWS.md.
+        
+        root selection:
+          --root PATH      Project root path. Defaults to the last used root,
+                           currently: /mnt/data/devtools_extract/developer_tools
+          --use-root N     Use the Nth entry from history (1-based) instead of --root.
+        
+        history:
+          --history        Print remembered roots, then exit.
+          --clear-history  Clear all history and exit.
+        
+        History is stored in: /home/oai/.manage_workflows_history.json
+        
+        Examples:
+          manage_workflows.py --validate                        # uses last-used root
+          manage_workflows.py --root path/to/project --write   # sets a new root (remembered)
+          manage_workflows.py --history                        # show remembered roots
+          manage_workflows.py --use-root 2 --validate          # pick root #2 from history
+          manage_workflows.py --clear-history                  # wipe all history
+PASS  business_checks architecture_validation_smoke    12.49s :: Exit code 0.
+      command: /opt/pyvenv/bin/python kanda_reasoner_app/manage_architecture/manage_architecture.py --root /mnt/data/devtools_extract/developer_tools --validate
+      stdout:
+        ARCHITECTURE VALIDATION SUMMARY
+        Total issues: 3 | Errors: 0 | Warnings: 3 | Other: 0
+        Issue counts by code:
+          MISPLACED_TEST: 2 (errors=0, warnings=2)
+          MISSING_PUBLIC_SURFACE_CONTROL: 1 (errors=0, warnings=1)
+        Top issue path groups:
+          workbench: 2
+          <LEGACY_PRODUCT_PACKAGE>: 1
+        DETAILS
+        WARNING MISPLACED_TEST               workbench/_bundle_temp/pa023b_sources/test_pa023_json_canonical_atlas_output_quality.py :: Test-like file is outside a canonical test folder. Expected tests under tests/, test/, or step12_checks/. Risk: tooling may treat this as production-like source or miss its relationship to the module it protects.
+        WARNING MISPLACED_TEST               workbench/_bundle_temp/pa023b_sources/test_pa023b_atlas_output_policy_active_scope.py :: Test-like file is outside a canonical test folder. Expected tests under tests/, test/, or step12_checks/. Risk: tooling may treat this as production-like source or miss its relationship to the module it protects.
+        WARNING MISSING_PUBLIC_SURFACE_CONTROL <LEGACY_PRODUCT_PACKAGE>/reasoner_symbol_atlas/output_policy.py :: Likely public-facing module exposes 9 top-level public names but does not define __all__. Use __all__ to declare the canonical public API, reduce duplicate-symbol noise, and make architecture-box ownership explicit. Public names: IMPORTANT_TEST_TERMS, INACTIVE_PATH_MARKERS, LOW_VALUE_TEST_MARKERS, MAX_RELATED_FILES, MAX_TESTS_TO_RUN, is_active_atlas_path, is_active_test_command, normalize_atlas_path, ... (+1 more).
+PASS  gui_workflows   reasoner_tools_gui_import_smoke    2.03s :: Exit code 0.
+      command: /opt/pyvenv/bin/python -c import reasoner_tools_gui; print('gui import smoke ok')
+      stdout:
+        gui import smoke ok
+SKIP  integration     integration                           - :: Workflow disabled.
+SKIP  performance     performance                           - :: Workflow disabled.
+PASS  imports         kanda_reasoner_app           0.00s :: Import probe passed with no visible side effects.
+      command: /opt/pyvenv/bin/python -I -c <probe> kanda_reasoner_app
+PASS  imports         reasoner_tools_gui                0.00s :: Import probe passed with no visible side effects.
+      command: /opt/pyvenv/bin/python -I -c <probe> reasoner_tools_gui
+PASS  imports         _inject_missing_module_docstrings    0.00s :: Import probe passed with no visible side effects.
+      command: /opt/pyvenv/bin/python -I -c <probe> _inject_missing_module_docstrings
+PASS  imports         profiling                         0.00s :: Import probe passed with no visible side effects.
+      command: /opt/pyvenv/bin/python -I -c <probe> profiling
+
+Summary: pass=8 fail=0 warn=0 skip=3

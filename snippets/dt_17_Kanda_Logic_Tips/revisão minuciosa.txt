@@ -1,0 +1,53 @@
+Com interação sempre em inglês, quero uma revisão minuciosa e profissional do módulo. Divido em 9 partes: (1) críticas e sugestões, (2) problemas conceituais, (3) ajustes de estilo, e (4) proposta de versão revisada consolidada (5) improvement of memory handling (6) prevent memory leak (7) secure cleaning after use (8) performance (9) sempre que possível implemente usando mne EEG methods
+
+
+
+
+
+🧠 Minha sugestão (balanceada e profissional):
+
+    Mantenha o eeg_amplitude_map.h5 durante a sessão.
+
+    Ao final, ofereça 3 opções ao usuário:
+
+        Exportar os dados (.xlsx/.docx).
+
+        Salvar o arquivo .h5 para reuso.
+
+        Fechar e descartar o arquivo.
+
+    Crie uma lógica de nomeação automática com timestamp e nome do paciente (ex: amplitude_map_Joao_2025-05-13.h5) para fácil rastreamento.
+
+    Caso o usuário não escolha salvar, delete automaticamente ao fechar.
+
+
+ao abrir o app check se existe uma pasta eeg_weaver_files no drive c , se não existir crie , se existir ok,
+ok vamos implementar por etapas 1 de cada vez , não coloque tudo em uma resposta só, vamos dividir assim(uma implementa
+
+
+
+
+Recomendação Consolidada
+
+1. Durante a sessão:
+Use eeg_amplitude_map.h5 como um cache ativo de trabalho, sem perguntar nada ainda.
+
+2. Quando o usuário:
+
+    Fecha a janela do app, ou
+
+    Fecha a tabela, ou
+
+    Desativa a red line,
+
+→ Não pergunte nada ainda. Esses eventos são reversíveis e não necessariamente significam que ele quer sair ou encerrar.
+
+3. Quando o usuário tenta FECHAR o app (main_window.closeEvent ou QApplication.aboutToQuit):
+Mostre um diálogo modal com três opções:
+
+You've made changes to your EEG measurements.
+What would you like to do before exiting?
+
+[💾 Export to Excel/Word]  [📁 Save .h5 for later]  [🗑️ Discard]
+
+

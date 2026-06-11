@@ -1,0 +1,44 @@
+{
+  "category": "prompt_library_index",
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "summary": "Initial text-only prompt-library index asset.",
+      "version": "1.0.0"
+    }
+  ],
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library",
+  "depends_on": [],
+  "display_name": "Prompt Library Quick Start",
+  "edit_policy": "draft_only",
+  "explainer": "Short user guide for copying prompt stacks and creating new prompt drafts.",
+  "files_created": [],
+  "governance_linked": false,
+  "how_it_works": "The quick start points users to the general stack and blueprint, then explains placeholder replacement and draft creation.",
+  "load_type": "on_request",
+  "mitigations": [],
+  "modifies_governance": false,
+  "project_agnostic": true,
+  "promotion_policy": "manual_only",
+  "prompt_id": "prompt_library_quick_start",
+  "required_before": [],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "risks": [],
+  "safe_to_copy": true,
+  "safe_usage": "Use as a text-only reference for locating and understanding the prompt library.",
+  "schema_version": "1.0.0",
+  "status": "active",
+  "subcategory": "text_only_reference",
+  "validation_requirements": [
+    "must_be_ascii",
+    "must_be_utf8_without_bom",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "version": "1.0.0"
+}

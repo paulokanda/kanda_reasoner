@@ -1,0 +1,106 @@
+              ╔══════════════════════════════════════════════════════════════╗
+              ║                  EEG-GUI ― High-level Data-Flow             ║
+              ║        (modules clipped to the ones you asked for)          ║
+              ╚══════════════════════════════════════════════════════════════╝
+
+
+ ╭───────────────────────────────────────────────────────────────────────────╮
+ │ 1.  Startup snapshot & utilities                                          │
+ │                                                                           │
+ │   from from k01_core_eeg.k01_3_eeg_visualizer.start_snapshot.py                                    │
+ │   ─ capture_initial_eeg_state()            ← called first thing in        │
+ │                                             EEGVisualizerCore.__init__()      │
+ │                                                                           │
+ │   KandaModules/help_eeg_visualizer.py                                     │
+ │   ─ misc helpers  (safe_remove_artist, toast helpers …) – used later by   │
+ │     the render-core and the visualizer proper.                            │
+ ╰───────────────────────────────────────────────────────────────────────────╯
+                              │
+                              ▼
+ ╭───────────────────────────────────────────────────────────────────────────╮
+ │ 2.  Core controller                                                       │
+ │                                                                           │
+ │   EEGVisualizerCore  (KandaModules/eeg_visualizer_core.py)                         │
+ │   ─ holds run-time state (.data, .canvas …)                               │
+ │   ─ emits Qt signals (eeg_loaded_signal, timeline_moved …)                │
+ │   ─ delegates UI assembly to the *builder*                                │
+ │                                                                           │
+ │   Important public hooks consumed later:                                  │
+ │         on_sensitivity_changed(µV)                                        │
+ │         on_montage_changed(mode)                                          │
+ │         update_plot_view()                                                │
+ ╰───────────────────────────────────────────────────────────────────────────╯
+                              │  display_in_pyside6()
+                              ▼
+ ╭───────────────────────────────────────────────────────────────────────────╮
+ │ 3.  Interface builder - tabs, bars, layouts                               │
+ │                                                                           │
+ │   KandaModules/K01_1_3_eeg_main_win_builderpy                        │
+ │       →  EEGMainWindowBuilder.build_and_show()                            │
+ │           • creates MainWindow + notebook tabs                            │
+ │           • inside “EEG Traces” tab creates *middle_bar.layout* ←─────────┐
+ │           • exposes it as:  visualizer.middle_in_tab_bar_layout           │
+ │           • installs timeline widget & other chrome                       │
+ ╰───────────────────────────────────────────────────────────────────────────╯
+                              │                                              │
+      (after builder returns) │                                              │
+                              ▼                                              │
+ ╭───────────────────────────────────────────────────────────────────────────╮
+ │ 4.  Dropdown-orchestration package                                        │
+ │                                                                           │
+ │   KandaDropDowns/manager/drpdwn_integrator_eeg.py                           │
+ │       class **DropdownIntegrator**                                        │
+ │                                                                           │
+ │     • lazy-loads *json_files/core_filters_json_schema.json*                   │
+ │     • for each entry:                                                     │
+ │          ┌──────────────┐  uses widgets/__init__.py                       │
+ │          │WIDGET_REGISTRY│───► { "Sensitivity": SensitivityDropdown, … }  │
+ │          └──────────────┘                                                 │
+ │     • drops widget into proper Qt-layout (e.g. “middle”)                  │
+ │     • connects the widget’s  value-changed signal to:                     │
+ │           – EEGVisualizerCore.on_*_changed      (Montage, etc.)               │
+ │           – EEGParameterManager.set_parameter (all others)                │
+ │     • EEGParameterManager handles dependency / validation                 │
+ │                                                                           │
+ │   Internal dicts you probably access in tests:                            │
+ │         integrator.widgets_by_name["Montage"] → MontagesDropdown          │
+ │         integrator.params                 → EEGParameterManager           │
+ ╰───────────────────────────────────────────────────────────────────────────╯
+                              │   signals (Qt)                               │
+                              ▼                                              │
+ ╭───────────────────────────────────────────────────────────────────────────╮
+ │ 5.  Plot render pipeline                                                  │
+ │                                                                           │
+ │   KandaModules/visualizer_render_core.py                              │
+ │       initialize_main_plot()        ← run in EEGVisualizerCore.__init__       │
+ │       prepare_plot_window()         ← called each update_plot_view()      │
+ │       plot_default() / plot_*()     ← draw the traces                     │
+ │                                                                           │
+ │   These helpers call back to *help_eeg_visualizer.py* for low-level       │
+ │   utilities (clear artists, etc.).                                        │
+ ╰───────────────────────────────────────────────────────────────────────────╯
+
+
+
+ ASCII-flow with arrows (signals / calls)
+ ─────────────────────────────────────────────────────────────────────────────
+ capture_initial_eeg_state ─┐
+ help_eeg_visualizer.py  ────┴──→  EEGVisualizerCore  ───build_and_show()──→  EEGMainWindowBuilder
+                                                                      │
+                                                                      └─►  middle_in_tab_bar_layout
+                                                                                   │
+                                   DropdownIntegrator(…middle_in_tab_bar_layout…)──┬─▶ builds   SensitivityDropdown
+                                                                                   │             MontagesDropdown
+                                                                                   │
+                                                      SensitivityDropdown.sensitivity_changed ──► EEGVisualizerCore.on_sensitivity_changed
+                                                      MontagesDropdown.montage_changed        ──► EEGVisualizerCore.on_montage_changed
+                                                                                               ▼
+                                                                              EEGVisualizerCore.update_plot_view()
+                                                                                               │
+                                                                                               ▼
+                                                                       eeg_visualizer_render_core.prepare_plot_window
+                                                                       eeg_visualizer_render_core.plot_default
+                                                                                               │
+                                                                                               ▼
+                                                                          FigureCanvas.draw_idle / timeline refresh
+

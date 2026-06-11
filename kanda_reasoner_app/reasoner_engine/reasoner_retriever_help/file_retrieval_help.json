@@ -1,0 +1,47 @@
+{
+  "dependency_graph": {
+    "__init__.py": [],
+    "file_retrieval_impl_private_impl.py": [
+      "file_retrieval_source_part_1_private_impl.py",
+      "file_retrieval_source_part_2_private_impl.py",
+      "file_retrieval_source_part_3_private_impl.py"
+    ],
+    "file_retrieval_source_part_1_private_impl.py": [],
+    "file_retrieval_source_part_2_private_impl.py": [],
+    "file_retrieval_source_part_3_private_impl.py": []
+  },
+  "help_folder": "kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_retrieval_help",
+  "helpers": {
+    "__init__.py": {
+      "depends_on": [],
+      "exports": [],
+      "purpose": "Private helper package marker."
+    },
+    "file_retrieval_impl_private_impl.py": {
+      "depends_on": [
+        "file_retrieval_source_part_1_private_impl.py",
+        "file_retrieval_source_part_2_private_impl.py",
+        "file_retrieval_source_part_3_private_impl.py"
+      ],
+      "exports": [],
+      "purpose": "Reconstruct source-preserved file_retrieval implementation privately."
+    },
+    "file_retrieval_source_part_1_private_impl.py": {
+      "depends_on": [],
+      "exports": [],
+      "purpose": "Encoded source segment for private file_retrieval implementation."
+    },
+    "file_retrieval_source_part_2_private_impl.py": {
+      "depends_on": [],
+      "exports": [],
+      "purpose": "Encoded source segment for private file_retrieval implementation."
+    },
+    "file_retrieval_source_part_3_private_impl.py": {
+      "depends_on": [],
+      "exports": [],
+      "purpose": "Encoded source segment for private file_retrieval implementation."
+    }
+  },
+  "origin": "kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_retrieval.py",
+  "purpose": "Private source-preserving split for the large file_retrieval implementation."
+}

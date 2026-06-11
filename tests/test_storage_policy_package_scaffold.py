@@ -1,0 +1,306 @@
+"""Tests for the storage policy package scaffold."""
+
+from __future__ import annotations
+
+import importlib
+from pathlib import Path
+import unittest
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PACKAGE_INIT = PROJECT_ROOT / "kanda_reasoner_app" / "storage_policy" / "__init__.py"
+
+
+class StoragePolicyPackageScaffoldTests(unittest.TestCase):
+    """Validate that the storage policy owner box exists safely."""
+
+    def test_package_import_is_side_effect_free_scaffold(self) -> None:
+        module = importlib.import_module("kanda_reasoner_app.storage_policy")
+
+        self.assertEqual(
+            module.STORAGE_POLICY_OWNER_BOX,
+            "kanda_reasoner_app.storage_policy",
+        )
+        self.assertEqual(module.STORAGE_POLICY_PACKAGE_NAME, "storage_policy")
+        self.assertIn("storage policy", module.STORAGE_POLICY_SCOPE)
+
+    def test_package_declares_stable_public_surface(self) -> None:
+        module = importlib.import_module("kanda_reasoner_app.storage_policy")
+        expected = {
+
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_ACTION",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_RISK_AUDIT_JSON_COUNT_LOW",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_RISK_AUDIT_JSON_MISSING",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_RISK_RESOLVER_INSIDE_SOURCE",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_RISK_SOURCE_EVIDENCE_RECREATED",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_RISK_SOURCE_JSON_RECREATED",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_SCHEMA_VERSION",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_STATUS_BLOCKED",
+    "EVIDENCE_OUTPUT_ROUTE_GUARD_STATUS_CLEAN",
+    "EvidenceOutputRouteGuardFinding",
+    "EvidenceOutputRouteGuardReport",
+    "build_evidence_output_route_guard",
+    "evidence_output_route_guard_to_dict",
+    "render_evidence_output_route_guard_json",
+    "render_evidence_output_route_guard_text",
+    "write_evidence_output_route_guard_json",
+    "write_evidence_output_route_guard_text",
+
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_ACTION",
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_RISK_LIKELY_WRITER",
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_RISK_NEEDS_REVIEW",
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_SCHEMA_VERSION",
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_STATUS_CANDIDATES_FOUND",
+            "EVIDENCE_OUTPUT_WRITER_SHORTLIST_STATUS_CLEAN",
+            "EvidenceOutputWriterShortlistItem",
+            "EvidenceOutputWriterShortlistReport",
+            "build_evidence_output_writer_shortlist",
+            "build_evidence_output_writer_shortlist_from_audit",
+            "render_evidence_output_writer_shortlist_json",
+            "render_evidence_output_writer_shortlist_text",
+            "write_evidence_output_writer_shortlist_json",
+            "write_evidence_output_writer_shortlist_text",
+            "EVIDENCE_OUTPUT_INTEGRATION_AUDIT_ACTION",
+            "EVIDENCE_OUTPUT_INTEGRATION_AUDIT_SCHEMA_VERSION",
+            "EVIDENCE_OUTPUT_RISK_POLICY_REFERENCE",
+            "EVIDENCE_OUTPUT_RISK_REFERENCE_ONLY",
+            "EVIDENCE_OUTPUT_RISK_TEST_REFERENCE",
+            "EVIDENCE_OUTPUT_RISK_WRITER_CANDIDATE",
+            "EVIDENCE_OUTPUT_STATUS_CLEAN",
+            "EVIDENCE_OUTPUT_STATUS_REVIEW_REQUIRED",
+            "EVIDENCE_OUTPUT_STATUS_WRITERS_FOUND",
+            "EvidenceOutputIntegrationAuditReport",
+            "EvidenceOutputReference",
+            "render_evidence_output_integration_audit_json",
+            "render_evidence_output_integration_audit_text",
+            "scan_evidence_output_integration_references",
+            "write_evidence_output_integration_audit_json",
+            "write_evidence_output_integration_audit_text",
+            "ARCHITECTURE_AUDIT_ARTIFACT_SUBFOLDER",
+            "ARCHITECTURE_AUDIT_ARTIFACT_SUFFIXES",
+            "ARCHITECTURE_AUDIT_CURRENT_FOLDER",
+            "ARCHITECTURE_AUDIT_DOMAIN",
+            "ARCHITECTURE_AUDIT_RUNS_FOLDER",
+            "ARCHITECTURE_AUDIT_SUBFOLDER_NAMES",
+            "ARCHITECTURE_AUDIT_TIMESTAMP_FORMAT",
+            "assert_architecture_audit_root_outside_project",
+            "build_architecture_audit_root_from_drive_or_anchor",
+            "build_architecture_audit_run_id",
+            "ensure_architecture_audit_current_structure",
+            "get_architecture_audit_artifact_path",
+            "get_architecture_audit_current_root",
+            "get_architecture_audit_current_subfolders",
+            "get_architecture_audit_root",
+            "get_architecture_audit_run_root",
+            "get_architecture_audit_subfolder",
+            "get_project_slug",
+            "EVIDENCE_CURRENT_LABEL",
+            "EVIDENCE_DEFAULT_APP_VERSION",
+            "EVIDENCE_GENERATOR_APP_NAME",
+            "EVIDENCE_MANIFEST_FILENAME",
+            "EVIDENCE_MANIFEST_SCHEMA_VERSION",
+            "EVIDENCE_README_FILENAME",
+            "EVIDENCE_RUN_LABEL",
+            "EvidenceManifest",
+            "build_evidence_manifest",
+            "evidence_manifest_to_dict",
+            "get_default_evidence_artifact_names",
+            "get_evidence_manifest_path",
+            "get_evidence_readme_path",
+            "render_evidence_manifest_json",
+            "render_evidence_readme",
+            "write_evidence_manifest",
+            "write_evidence_readme",
+    "SOURCE_DEBRIS_DESTINATION_ARCHITECTURE_AUDIT",
+    "SOURCE_DEBRIS_DESTINATION_MAINTENANCE_QUARANTINE",
+    "SOURCE_DEBRIS_DESTINATION_PACKAGING_EXCLUSION",
+    "SOURCE_DEBRIS_REPORT_ACTION",
+    "SOURCE_DEBRIS_REPORT_SCHEMA_VERSION",
+    "SourceDebrisExportPlan",
+    "SourceDebrisReportItem",
+    "build_source_debris_report_export",
+    "render_source_debris_report_json",
+    "render_source_debris_report_text",
+    "write_source_debris_report_json",
+    "write_source_debris_report_text",
+            "EVIDENCE_RELOCATION_CATEGORY_JSON",
+            "EVIDENCE_RELOCATION_CATEGORY_REVIEW",
+            "EVIDENCE_RELOCATION_DRY_RUN_ACTION",
+            "EVIDENCE_RELOCATION_STATUS_ABSENT",
+            "EVIDENCE_RELOCATION_STATUS_READY",
+            "EVIDENCE_RELOCATION_STATUS_REVIEW_REQUIRED",
+            "EvidenceRelocationItem",
+            "EvidenceRelocationPlan",
+            "IN_SOURCE_EVIDENCE_FOLDER_NAME",
+            "get_in_source_evidence_root",
+            "plan_evidence_relocation_dry_run",
+            "summarize_evidence_relocation_dry_run",
+    "COMPILATION_READINESS_ACTION",
+    "COMPILATION_READINESS_STATUS_BLOCKED",
+    "COMPILATION_READINESS_STATUS_READY",
+    "COMPILATION_READINESS_STATUS_WARNINGS_ONLY",
+    "CompilationReadinessReport",
+    "summarize_compilation_readiness",
+    "validate_compilation_readiness",
+            "APP_PACKAGE_NAME",
+            "DEFAULT_SLUG_FALLBACK",
+            "BuildPolicyBaseline",
+            "DEVELOPMENT_ONLY_WARN_PATTERNS",
+            "FAIL_BEFORE_COMPILATION_PATTERNS",
+            "GENERATED_INTENTIONAL_SOURCE_ALLOWLIST",
+            "PACKAGING_EXCLUDE_PATTERNS",
+            "POLICY_MODE_COMPILATION",
+            "POLICY_MODE_DEV",
+            "SECRET_EXCLUDE_HINT_PATTERNS",
+            "describe_build_policy_baseline",
+            "get_build_policy_baseline",
+            "render_buildignore_baseline",
+            "render_gitignore_baseline",
+            "SECRET_SCAN_ACTION",
+            "SECRET_SCAN_EXCLUDED_DIR_NAMES",
+            "SECRET_SCAN_PATTERNS",
+            "SECRET_SCAN_SEVERITY_HIGH",
+            "SECRET_SCAN_SEVERITY_HINT",
+            "SECRET_SCAN_SEVERITY_MEDIUM",
+            "SECRET_SCAN_TEXT_SUFFIXES",
+            "SENSITIVE_FILENAME_HINTS",
+            "SecretPattern",
+            "SecretScanFinding",
+            "SecretScanReport",
+            "scan_path_for_secrets",
+            "scan_text_for_secrets",
+            "summarize_secret_scan",
+            "HIGH_CONFIDENCE_SECRET_INSPECTION_ACTION",
+            "HIGH_CONFIDENCE_SECRET_INSPECTION_SCHEMA_VERSION",
+            "HIGH_CONFIDENCE_SECRET_RISK_ADVISORY",
+            "HIGH_CONFIDENCE_SECRET_RISK_BLOCKING",
+            "HIGH_CONFIDENCE_SECRET_STATUS_CLEAN",
+            "HIGH_CONFIDENCE_SECRET_STATUS_REVIEW_REQUIRED",
+            "HighConfidenceSecretInspectionItem",
+            "HighConfidenceSecretInspectionReport",
+            "build_high_confidence_secret_inspection",
+            "build_high_confidence_secret_inspection_from_report",
+            "render_high_confidence_secret_inspection_json",
+            "render_high_confidence_secret_inspection_text",
+            "write_high_confidence_secret_inspection_json",
+            "write_high_confidence_secret_inspection_text",
+            "EVIDENCE_RELOCATOR_ACTION",
+            "EVIDENCE_RELOCATOR_CONFIRMATION_TOKEN",
+            "EVIDENCE_RELOCATOR_ITEM_STATUS_COPIED",
+            "EVIDENCE_RELOCATOR_ITEM_STATUS_FAILED",
+            "EVIDENCE_RELOCATOR_ITEM_STATUS_MOVED",
+            "EVIDENCE_RELOCATOR_ITEM_STATUS_SKIPPED",
+            "EVIDENCE_RELOCATOR_MODE_COPY_ONLY",
+            "EVIDENCE_RELOCATOR_MODE_MOVE_VERIFIED",
+            "EVIDENCE_RELOCATOR_STATUS_COMPLETED",
+            "EVIDENCE_RELOCATOR_STATUS_CONFIRMATION_REQUIRED",
+            "EVIDENCE_RELOCATOR_STATUS_FAILED",
+            "EVIDENCE_RELOCATOR_STATUS_REVIEW_REQUIRED",
+            "EVIDENCE_RELOCATOR_STATUS_SKIPPED_ABSENT",
+            "EvidenceRelocationExecutionItem",
+            "EvidenceRelocationExecutionResult",
+            "calculate_file_sha256",
+            "execute_evidence_relocation",
+            "execute_evidence_relocation_plan",
+            "render_evidence_relocation_result_json",
+            "render_evidence_relocation_result_text",
+            "write_evidence_relocation_result_json",
+            "write_evidence_relocation_result_text",
+            "SOURCE_CLEANLINESS_ACTION",
+            "SOURCE_CLEANLINESS_CATEGORY_FAILURE",
+            "SOURCE_CLEANLINESS_CATEGORY_WARNING",
+            "SourceCleanlinessFinding",
+            "SourceCleanlinessReport",
+            "scan_source_cleanliness",
+            "summarize_source_cleanliness",
+            "BACKUP_RESTORE_SEARCH_SUBFOLDERS",
+            "PATCH_BACKUP_TIMESTAMP_FORMAT",
+            "PatchBackupCandidate",
+            "build_patch_backup_folder_name",
+            "ensure_patch_backup_path",
+            "find_latest_patch_backup",
+            "get_backup_restore_search_roots",
+            "get_patch_backup_path",
+            "LEGACY_DEBRIS_DESTINATION_NAMES",
+            "LEGACY_DEBRIS_FOLDER_NAMES",
+            "LEGACY_DEBRIS_REPORT_ACTION",
+            "LegacyDebrisFolderReport",
+            "build_legacy_debris_path",
+            "describe_legacy_debris_policy",
+            "get_legacy_debris_destination",
+            "report_one_legacy_debris_folder",
+            "scan_legacy_debris_folders",
+            "summarize_historical_debris_reports",
+            "MAINTENANCE_ROOT_ENV_VARS",
+            "MAINTENANCE_ROOT_FOLDER_NAME",
+            "MAINTENANCE_SUBFOLDER_NAMES",
+            "MAINTENANCE_SUBFOLDER_PARTS",
+            "STORAGE_POLICY_OWNER_BOX",
+            "STORAGE_POLICY_PACKAGE_NAME",
+            "STORAGE_POLICY_SCOPE",
+            "assert_maintenance_root_outside_app",
+            "build_maintenance_root_from_drive_or_anchor",
+            "describe_maintenance_subfolder_policy",
+            "ensure_maintenance_structure",
+            "ensure_maintenance_subfolder",
+            "find_parent_named",
+            "get_all_maintenance_subfolders",
+            "get_app_drive_or_anchor",
+            "get_app_package_root",
+            "get_app_root",
+            "get_app_slug",
+            "get_default_maintenance_root",
+            "get_maintenance_root",
+            "get_maintenance_subfolder",
+            "get_storage_policy_package_root",
+            "is_maintenance_root_inside_app",
+            "is_path_inside",
+            "is_path_same_or_inside",
+            "make_safe_slug",
+            "normalize_path",
+            "relative_maintenance_subfolder_parts",
+        }
+
+        self.assertEqual(set(module.__all__), expected)
+        for name in expected:
+            self.assertTrue(hasattr(module, name))
+
+    def test_scaffold_source_has_no_hardcoded_project_paths(self) -> None:
+        text = PACKAGE_INIT.read_text(encoding="utf-8")
+
+        forbidden_fragments = [
+            "E:\\",
+            "E:/",
+            "_kanda_reasoner_temp",
+            "kanda_reasoner_architecture_audit",
+            "project_analysis_evidence",
+        ]
+        for fragment in forbidden_fragments:
+            self.assertNotIn(fragment, text)
+
+    def test_scaffold_exposes_step1_through_later_patch_h_behavior_modules(self) -> None:
+        package_dir = PACKAGE_INIT.parent
+
+        self.assertTrue((package_dir / "path_resolver.py").exists())
+        self.assertTrue((package_dir / "maintenance_root_resolver.py").exists())
+        self.assertTrue((package_dir / "maintenance_subfolder_policy.py").exists())
+        self.assertTrue((package_dir / "build_policy_baseline.py").exists())
+        self.assertTrue((package_dir / "historical_debris_report.py").exists())
+        self.assertTrue((package_dir / "patch_restore_resolver.py").exists())
+        self.assertTrue((package_dir / "source_cleanliness_validator.py").exists())
+        self.assertTrue((package_dir / "secret_scan_gate.py").exists())
+        self.assertTrue((package_dir / "architecture_audit_resolver.py").exists())
+        self.assertTrue((package_dir / "evidence_manifest_writer.py").exists())
+
+        self.assertTrue((package_dir / "compilation_readiness_validator.py").exists())
+        self.assertTrue((package_dir / "evidence_relocation_dry_run.py").exists())
+        self.assertTrue((package_dir / "source_debris_report_export.py").exists())
+        self.assertTrue((package_dir / "high_confidence_secret_inspector.py").exists())
+        self.assertTrue((package_dir / "evidence_relocator.py").exists())
+        self.assertTrue((package_dir / "evidence_output_integration_audit.py").exists())
+        self.assertTrue((package_dir / "evidence_output_writer_shortlist.py").exists())
+        self.assertTrue((package_dir / "evidence_output_route_guard.py").exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

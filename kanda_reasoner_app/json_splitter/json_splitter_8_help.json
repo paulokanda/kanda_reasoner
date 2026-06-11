@@ -1,0 +1,11 @@
+{
+  "files": [
+    "source_loader_private_impl.py",
+    "source_part_1_private_impl.py",
+    "source_part_2_private_impl.py"
+  ],
+  "helper_folder": "json_splitter_8_help",
+  "origin": "json_splitter_8.py",
+  "public_surface_preserved_by": "json_splitter_8.py",
+  "strategy": "source_preserving_facade_split"
+}

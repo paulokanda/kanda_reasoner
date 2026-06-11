@@ -1,0 +1,11 @@
+{
+  "complexity_max": 49,
+  "functions_analyzed": 2448,
+  "architecture_violations": 1542,
+  "dependency_warnings": 0,
+  "tech_debt_items": 3,
+  "similar_code_pairs": 0,
+  "perf_flags": 0,
+  "output_dir": "E:\\EEG_KANDA\\dev_tools\\results_report"
+}
+

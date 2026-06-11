@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "prompt_metadata_consistency_checklist",
+  "display_name": "Prompt Metadata Consistency Checklist",
+  "version": "1.0.0",
+  "status": "template",
+  "category": "prompt_library_qa",
+  "subcategory": "metadata_review",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\kanda_reasoner_app\\prompt_library\\qa",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "explainer": "Manual checklist for checking prompt metadata sidecars against prompt files.",
+  "how_it_works": "Use this checklist as a manual review guide before copying, exporting, importing, or releasing prompt-library material.",
+  "files_created": [],
+  "risks": [
+    "A prompt library can drift if prompts, metadata, and stacks are not reviewed together."
+  ],
+  "mitigations": [
+    "Run this checklist before treating prompt-library material as ready for reuse."
+  ],
+  "safe_usage": "Use as a text-only QA checklist. It does not modify source code, runtime behavior, or governance.",
+  "validation_requirements": [
+    "manual_review",
+    "project_agnostic_review",
+    "metadata_consistency_review"
+  ],
+  "example_usage": "Review each checklist item and mark pass, fail, or not applicable before a prompt pack is copied to another project.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial text-only Prompt Library QA checklist metadata."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "category": "prompt_library_index",
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "summary": "Initial text-only prompt-library index asset.",
+      "version": "1.0.0"
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-06-02",
+      "summary": "Added T9T012 Kanda Bundle-Gated Development Workflow."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Added T9T013 Teach AI Prompt Authoring complete lifecycle."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Added T9T014 Python Clean Code overlay."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Added T9T015 Kanda Prompt Router."
+    },
+    {
+      "version": "1.0.2",
+      "date": "2026-06-07",
+      "summary": "Recorded T9T013 complete lifecycle and lowercase workbench bundle manifest convention."
+    }
+  ],
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library",
+  "depends_on": [
+    "kanda_bundle_gated_development_workflow",
+    "teach_ai_tab9_prompt_authoring_guide"
+  ],
+  "display_name": "Prompt Library Roadmap",
+  "edit_policy": "draft_only",
+  "explainer": "Text-only roadmap for safe evolution of the Prompt Library and future Tab 9 viewer.",
+  "files_created": [],
+  "governance_linked": false,
+  "how_it_works": "The roadmap separates completed text bundles, next text-only steps, and future optional code steps requiring approval.",
+  "load_type": "on_request",
+  "mitigations": [],
+  "modifies_governance": false,
+  "project_agnostic": true,
+  "promotion_policy": "manual_only",
+  "prompt_id": "prompt_library_roadmap",
+  "required_before": [],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "risks": [],
+  "safe_to_copy": true,
+  "safe_usage": "Use as a text-only reference for locating and understanding the prompt library.",
+  "schema_version": "1.0.0",
+  "status": "active",
+  "subcategory": "text_only_reference",
+  "validation_requirements": [
+    "must_be_ascii",
+    "must_be_utf8_without_bom",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "version": "1.0.2"
+}
