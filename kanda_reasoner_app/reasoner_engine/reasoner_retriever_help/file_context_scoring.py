@@ -1,9 +1,9 @@
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
-# MODULE ORIGIN : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
-# MANIFEST      : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
+# MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
+# MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
+# HELP FOLDER   : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
 # PURPOSE       : Provide advanced file-context and runtime scoring helpers for retriever ranking.
 # EXPORTS       : get_runtime_anchor_summary, collect_file_context_blobs, score_advanced_file_context, score_runtime_signal_matches
 # DEPENDS ON    : query_text.py

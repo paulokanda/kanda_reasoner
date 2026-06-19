@@ -32,6 +32,7 @@ FORBIDDEN_IMPORT_ROOTS = (
 
 EXPECTED_REGION_TO_TAB = {
     "frontal_lobe": "architecture_review",
+    "broca_area": "project_qa",
     "parietal_lobe": "workflow_review",
     "brainstem_midbrain": "engineering_safety",
     "cerebellar_folia": "docstring_assistant",
@@ -39,6 +40,7 @@ EXPECTED_REGION_TO_TAB = {
     "central_sulcus": "ai_import_builder",
     "cerebellum": "refactor_report",
     "temporal_lobe": "project_qa",
+    "hippocampus": "freeze_feature_after_update",
     "lateral_sulcus": "exclusion_rules",
     "longitudinal_fissure": "prompt_library",
 }
@@ -88,7 +90,7 @@ class BrainRegionMappingContractTests(unittest.TestCase):
         self.assertEqual("brain_region_mapping", summary.box_id)
         self.assertEqual("0.1", summary.contract_version)
         self.assertEqual("pure_mapping_box", summary.implementation_state)
-        self.assertEqual(10, summary.target_count)
+        self.assertEqual(12, summary.target_count)
         self.assertIn("resolve_brain_region", summary.public_functions)
         self.assertIn(
             "kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/",

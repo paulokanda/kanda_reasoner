@@ -30,7 +30,7 @@ class DocstringInjectorCanonicalPathTests(unittest.TestCase):
         module = importlib.import_module("_inject_missing_module_docstrings")
         backup_path = module.BACKUP_ROOT.as_posix()
 
-        self.assertIn(".project_reference/docstring_injection_backups", backup_path)
+        self.assertIn("workbench/docstring_injection_backups", backup_path)
         self.assertNotIn("_project_reference/docstring_injection_backups", backup_path)
 
     def test_role_prefixes_support_canonical_and_legacy_package_names(self) -> None:

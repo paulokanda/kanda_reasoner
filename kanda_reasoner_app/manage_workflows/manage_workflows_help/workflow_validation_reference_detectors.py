@@ -26,7 +26,7 @@ OUTDATED_VALIDATION_REFERENCES: tuple[tuple[str, str], ...] = (
     ),
     (
         "active_project_governance",
-        "Use .project_reference/ACTIVE_PROJECT_GOVERNANCE for reference-only governance artifacts.",
+        "Use project_freeze_ledger for reference-only governance artifacts.",
     ),
     (
         "developer_tools_older",

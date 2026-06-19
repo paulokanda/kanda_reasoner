@@ -1,7 +1,7 @@
 # -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
-# MODULE ORIGIN : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
-# MANIFEST      : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
+# MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
+# MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
+# HELP FOLDER   : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
 # PURPOSE       : Expand snippet-derived callee names for retrieval refinement.
 # EXPORTS       : _extract_named_callees
 # DEPENDS ON    : none
@@ -11,11 +11,11 @@
 """
 
 
-MODULE ORIGIN: E:/developer_toolssk_ai_project_reasoner/project_reasoner_v10
+MODULE ORIGIN: <PROJECT_ROOT>sk_ai_project_reasoner/project_reasoner_v10
 easoner_retriever.py
-MANIFEST: E:/developer_toolssk_ai_project_reasoner/project_reasoner_v10
+MANIFEST: <PROJECT_ROOT>sk_ai_project_reasoner/project_reasoner_v10
 easoner_retriever_help.json
-HELP FOLDER: E:/developer_toolssk_ai_project_reasoner/project_reasoner_v10
+HELP FOLDER: <PROJECT_ROOT>sk_ai_project_reasoner/project_reasoner_v10
 easoner_retriever_help
 PURPOSE: Own snippet callee extraction helpers.
 DEPENDS ON:
@@ -27,9 +27,9 @@ __all__ = [
 ]
 __all__ = ["_extract_named_callees"]
 # a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-a--,-
-# MODULE ORIGIN : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
-# MANIFEST      : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
+# MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
+# MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
+# HELP FOLDER   : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
 # PURPOSE       : Extract named callees and imported symbols from snippet text for query expansion.
 # EXPORTS       : none
 # DEPENDS ON    : none

@@ -25,6 +25,20 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "category": "Core Review",
     },
     {
+        "region_id": "broca_area",
+        "region_name": "Broca Area (language area)",
+        "target_tab_id": "project_qa",
+        "target_tab_label": "Project Q&A",
+        "analogy_title": "Language production and clear answers",
+        "analogy_text": (
+            "Broca Area is associated with expressive language, like Project "
+            "Q&A turns project context into clear explanations, answers, and "
+            "implementation guidance."
+        ),
+        "tooltip_text": "Broca Area -> Project Q&A",
+        "category": "Project Tools",
+    },
+    {
         "region_id": "parietal_lobe",
         "region_name": "Parietal lobe",
         "target_tab_id": "workflow_review",
@@ -119,6 +133,21 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         ),
         "tooltip_text": "Temporal lobe -> Project Q&A",
         "category": "Project Tools",
+    },
+    {
+        "region_id": "hippocampus",
+        "region_name": "Hippocampus",
+        "target_tab_id": "freeze_feature_after_update",
+        "target_tab_label": "Freeze Feature After Update",
+        "analogy_title": "Memory consolidation and protected recall",
+        "analogy_text": (
+            "The hippocampus helps consolidate experiences into durable memory, "
+            "like Freeze Feature After Update records validated features into "
+            "project-local freeze memory so future AI sessions can remember and "
+            "protect them."
+        ),
+        "tooltip_text": "Hippocampus -> Freeze Feature After Update",
+        "category": "Project Memory",
     },
     {
         "region_id": "lateral_sulcus",

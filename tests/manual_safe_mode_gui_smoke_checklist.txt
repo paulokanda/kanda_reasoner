@@ -7,7 +7,7 @@ Purpose:
 - Confirm the Safe Mode panel does not break normal docstring generation, review, or insertion flows.
 
 Preconditions:
-- Run from E:\developer_tools.
+- Run from <PROJECT_ROOT>.
 - T4Q024_SAFE_MODE_ACTUAL_TAB3_WIRING_FROZEN_OK is the current baseline.
 - Focused Safe Mode tests pass.
 - Tab 1 architecture validation has Errors 0.

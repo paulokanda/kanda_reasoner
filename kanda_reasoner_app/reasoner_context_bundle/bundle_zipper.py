@@ -11,7 +11,10 @@ from typing import Any
 from .bundle_checker import check_ai_context_bundle
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
-from .path_normalization import relative_posix_path, safe_resolve
+from .path_normalization import (
+    artifact_logical_posix_path,
+    resolve_logical_artifact_path,
+)
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
 
@@ -37,13 +40,7 @@ def _load_json_object(path: Path) -> dict[str, Any]:
 
 
 def _resolve_project_artifact(context: ProjectContext, relative_path: str) -> Path:
-    artifact = safe_resolve(context.root / relative_path)
-    root = safe_resolve(context.root)
-    try:
-        artifact.relative_to(root)
-    except ValueError as exc:
-        raise ValueError("Artifact path escapes project root: " + relative_path) from exc
-    return artifact
+    return resolve_logical_artifact_path(context, relative_path)
 
 
 def _manifest_artifact_paths(context: ProjectContext) -> list[Path]:
@@ -94,7 +91,7 @@ def _artifact_records(paths: list[Path], context: ProjectContext) -> list[dict[s
     for path in paths:
         records.append(
             {
-                "path": relative_posix_path(path, context.root),
+                "path": artifact_logical_posix_path(path, context),
                 "size_bytes": path.stat().st_size,
                 "sha256": sha256_file(path),
             }
@@ -103,9 +100,9 @@ def _artifact_records(paths: list[Path], context: ProjectContext) -> list[dict[s
 
 
 def _safe_zip_member_name(base_folder: str, path: Path, context: ProjectContext) -> str:
-    relative = relative_posix_path(path, context.root)
+    relative = artifact_logical_posix_path(path, context)
     if relative.startswith("../") or relative == "..":
-        raise ValueError("ZIP artifact path escapes project root: " + str(path))
+        raise ValueError("ZIP artifact path escapes allowed roots: " + str(path))
     return base_folder + "/" + relative
 
 

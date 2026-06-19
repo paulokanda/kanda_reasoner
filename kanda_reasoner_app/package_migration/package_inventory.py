@@ -24,6 +24,7 @@ EXCLUDED_DIR_NAMES = {
     ".ruff_cache",
     ".venv",
     "__pycache__",
+    "project_freeze_ledger",
     ".project_reference",
     "_project_reference",
     "workbench",

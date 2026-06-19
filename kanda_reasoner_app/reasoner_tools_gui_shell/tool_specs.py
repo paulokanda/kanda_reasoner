@@ -107,6 +107,15 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="project_qa",
     ),
     ToolSpec(
+        step_title="Freeze Feature After Update",
+        module_candidates=(
+            _module_path("freeze_after_update_gui", "freeze_after_update_tab"),
+        ),
+        class_candidates=("FreezeAfterUpdateTab",),
+        source_hint=_source_path("freeze_after_update_gui", "freeze_after_update_tab.py"),
+        tab_id="freeze_feature_after_update",
+    ),
+    ToolSpec(
         step_title="Exclusion Rules",
         source_hint=_source_path("reasoner_tools_gui_shell", "ignore_rules_tab.py"),
         tab_id="exclusion_rules",

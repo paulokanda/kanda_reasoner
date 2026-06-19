@@ -32,7 +32,7 @@ def test_controller_builds_read_only_check_request() -> None:
     request = build_tab2_ai_review_request(
         review_kind="check",
         check_output_text="PASS workflow",
-        project_root=r"E:\developer_tools",
+        project_root=r"<PROJECT_ROOT>",
         model_name="qwen2.5-coder:7b",
         mode_label="validate",
     )

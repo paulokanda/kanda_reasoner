@@ -43,7 +43,7 @@ def test_pa027_project_exclusion_policy_excludes_dot_reference_folder() -> None:
         root = Path(temp_dir)
         active = root / 'ask_' 'ai_project_reasoner' / "active.py"
         old_ref = root / "_project_reference" / "memo.py"
-        dot_ref = root / ".project_reference" / "memo.py"
+        dot_ref = root / "project_freeze_ledger" / "memo.py"
         for path in (active, old_ref, dot_ref):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("print('x')\n", encoding="utf-8")
@@ -56,7 +56,7 @@ def test_pa027_project_exclusion_policy_excludes_dot_reference_folder() -> None:
             [
                 'ask_' 'ai_project_reasoner' '/active.py',
                 "_project_reference/memo.py",
-                ".project_reference/memo.py",
+                "project_freeze_ledger/memo.py",
             ],
             root,
         )
@@ -67,15 +67,15 @@ def test_pa027_atlas_output_policy_excludes_reference_folders() -> None:
     """Atlas active-scope policy must reject memo/reference paths."""
     assert PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS == (
         "_project_reference",
-        ".project_reference",
+        "project_freeze_ledger",
     )
     assert is_reasoner_symbol_atlas_reference_path("_project_reference/CANNON/a.py")
-    assert is_reasoner_symbol_atlas_reference_path(".project_reference/memos/a.py")
+    assert is_reasoner_symbol_atlas_reference_path("project_freeze_ledger/memos/a.py")
     assert not is_reasoner_symbol_atlas_reference_path(
         'ask_' 'ai_project_reasoner' '/reasoner_symbol_atlas/output_policy.py'
     )
     assert not is_active_atlas_path("_project_reference/CANNON/a.py")
-    assert not is_active_atlas_path(".project_reference/memos/a.py")
+    assert not is_active_atlas_path("project_freeze_ledger/memos/a.py")
     assert is_active_atlas_path(
         'ask_' 'ai_project_reasoner' '/reasoner_symbol_atlas/output_policy.py'
     )
@@ -88,17 +88,17 @@ def test_pa027_sanitizer_removes_dot_reference_recommendations() -> None:
             "# Project Symbol Atlas Report",
             "## Decision Details",
             '- target_path=ask_' 'ai_project_reasoner' '/reasoner_symbol_atlas/output_policy.py',
-            "- primary_edit_target=.project_reference/memos/old_owner.py",
+            "- primary_edit_target=project_freeze_ledger/memos/old_owner.py",
             "- main_path=_project_reference/CANNON/old_main.py",
-            "- helper_path=.project_reference/memos/old_helper.py",
-            "- related_file=.project_reference/memos/old_helper.py",
-            "- test_to_run=python .project_reference/memos/test_old.py",
+            "- helper_path=project_freeze_ledger/memos/old_helper.py",
+            "- related_file=project_freeze_ledger/memos/old_helper.py",
+            "- test_to_run=python project_freeze_ledger/memos/test_old.py",
             '- related_file=ask_' 'ai_project_reasoner' '/reasoner_symbol_atlas/output_policy.py',
         ]
     )
     rendered = sanitize_atlas_markdown_text(raw)
     assert "_project_reference" not in rendered
-    assert ".project_reference" not in rendered
+    assert "project_freeze_ledger" not in rendered
     assert (
         'active_target_path=ask_' 'ai_project_reasoner' '/reasoner_symbol_atlas/output_policy.py'
         in rendered
@@ -110,7 +110,7 @@ def test_pa027_evidence_paths_report_both_reference_evidence_dirs() -> None:
     """Evidence path resolver must know old and dot reference memo folders."""
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
-        dot_evidence = root / ".project_reference" / "project_analysis_evidence"
+        dot_evidence = root / "project_freeze_ledger" / "project_analysis_evidence"
         dot_evidence.mkdir(parents=True)
         paths = resolve_project_analysis_evidence_paths(root)
         reference_dirs = get_reasoner_symbol_atlas_reference_evidence_dirs(root)
@@ -121,21 +121,21 @@ def test_pa027_evidence_paths_report_both_reference_evidence_dirs() -> None:
         assert len(reference_dirs) == 2
         joined = "\n".join(paths.reference_evidence_dirs + paths.notes)
         assert "_project_reference" in joined
-        assert ".project_reference" in joined
+        assert "project_freeze_ledger" in joined
 
 
 def test_pa027_migration_can_plan_from_dot_reference_evidence() -> None:
     """Migration helper should support the dot reference folder as a source."""
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
-        source = root / ".project_reference" / "project_analysis_evidence" / "x.json"
+        source = root / "project_freeze_ledger" / "project_analysis_evidence" / "x.json"
         source.parent.mkdir(parents=True)
         source.write_text('{"ok": true}\n', encoding="utf-8")
 
         report = plan_project_analysis_evidence_migration(root)
         assert report.status == "migration_available"
         assert report.planned_copy_count == 1
-        assert ".project_reference" in report.legacy_evidence_root
+        assert "project_freeze_ledger" in report.legacy_evidence_root
         assert report.files[0].relative_path == "x.json"
 
 
@@ -144,7 +144,7 @@ def test_pa027_freshness_ignores_reference_folder_files() -> None:
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
         active = root / 'ask_' 'ai_project_reasoner' / "active.py"
-        memo = root / ".project_reference" / "memos" / "ignored.py"
+        memo = root / "project_freeze_ledger" / "memos" / "ignored.py"
         json_path = root / "project_analysis_evidence" / "json_complete" / "project__complete.json"
         for path in (active, memo, json_path):
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -167,7 +167,7 @@ def test_pa027_freshness_ignores_reference_folder_files() -> None:
                 json_path=str(json_path),
             )
         )
-        assert ".project_reference/memos/ignored.py" not in summary.new_source_files
+        assert "project_freeze_ledger/memos/ignored.py" not in summary.new_source_files
         assert 'ask_' 'ai_project_reasoner' '/active.py' not in summary.new_source_files
 
 

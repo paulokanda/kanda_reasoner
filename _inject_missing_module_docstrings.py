@@ -31,7 +31,7 @@ MANAGE_ARCHITECTURE = (
 
 BACKUP_ROOT = (
     PROJECT_ROOT
-    / ".project_reference"
+    / "project_freeze_ledger"
     / "docstring_injection_backups"
     / time.strftime("%Y%m%d_%H%M%S")
 )

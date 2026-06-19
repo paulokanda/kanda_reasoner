@@ -22,7 +22,7 @@ Tab 9 does not change project source code, runtime behavior, active governance, 
 Project root: E:\kanda_reasoner
 Canonical package facade: kanda_reasoner_app
 Current physical prompt-library path: kanda_reasoner_app\prompt_library
-Canonical reference-only folder: .project_reference
+Canonical reference-only folder: project_freeze_ledger
 Canonical bundle-manifest folder: workbench\bundle_manifest
 ```
 

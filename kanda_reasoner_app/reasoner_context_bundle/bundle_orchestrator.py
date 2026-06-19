@@ -13,7 +13,7 @@ from .file_manifest_builder import write_file_manifest_json
 from .reconstruction_payload_builder import write_reconstruction_payload_json
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
-from .path_normalization import relative_posix_path
+from .path_normalization import artifact_logical_posix_path
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
 from .validation_state_builder import write_validation_state_json
@@ -38,7 +38,7 @@ def _hash_if_file(path: Path) -> str:
 def _artifact_record(path: Path, context: ProjectContext) -> dict[str, Any]:
     exists = path.exists() and path.is_file()
     return {
-        "path": relative_posix_path(path, context.root),
+        "path": artifact_logical_posix_path(path, context),
         "exists": exists,
         "sha256": sha256_file(path) if exists else "",
         "size_bytes": path.stat().st_size if exists else 0,
@@ -131,7 +131,7 @@ def generate_ai_context_bundle(
             "hash_after": complete_hash_after,
             "preserved": complete_json_preserved,
         },
-        "written_artifacts": [relative_posix_path(path, context.root) for path in written_paths],
+        "written_artifacts": [artifact_logical_posix_path(path, context) for path in written_paths],
         "generated_artifacts": _generated_records(generated_paths, context),
         "check_result": check_result,
         "failures": failures,

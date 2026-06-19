@@ -24,6 +24,7 @@ from kanda_reasoner_app.reasoner_context_bundle import (
     write_bundle_manifest_json,
     write_exclusion_rules_json,
     write_file_manifest_json,
+    write_reconstruction_payload_json,
     write_validation_state_json,
 )
 from kanda_reasoner_app.reasoner_context_bundle.output_paths import bundle_artifact_paths
@@ -82,6 +83,7 @@ def _write_required_companion_jsons(root: Path) -> None:
             },
         },
     )
+    write_reconstruction_payload_json(root)
 
 
 def test_bundle_manifest_records_required_artifacts_without_absolute_root() -> None:

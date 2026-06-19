@@ -70,8 +70,9 @@ class IgnoreRulesDefaultsMixin:
             "build",
             "dist",
             "node_modules",
-            "_project_reference",
             ".project_reference",
+    "_project_reference",
+            "project_freeze_ledger",
         ]
         folders.extend(self._reasoner_project_folder_defaults())
 

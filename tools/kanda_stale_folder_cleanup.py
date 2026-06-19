@@ -1,7 +1,7 @@
 """Remove stale active-tree folders left after Kanda Reasoner renames.
 
 This tool is intentionally narrow. It only targets exact stale folder paths in the
-active project tree and never deletes .project_reference archives.
+active project tree and never deletes project_freeze_ledger archives.
 """
 
 from __future__ import annotations
@@ -58,7 +58,7 @@ def _safe_relative_path(relative_path: str) -> Path:
     if any(part == ".." for part in path.parts):
         raise ValueError(f"Parent traversal is not allowed: {relative_path}")
 
-    if path.parts and path.parts[0] == ".project_reference":
+    if path.parts and path.parts[0] == "project_freeze_ledger":
         raise ValueError(f"Reference archive path is not allowed: {relative_path}")
 
     return path

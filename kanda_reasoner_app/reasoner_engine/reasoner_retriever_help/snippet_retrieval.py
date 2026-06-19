@@ -1,9 +1,9 @@
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------------------------
-# MODULE ORIGIN : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
-# MANIFEST      : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
+# MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
+# MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
+# HELP FOLDER   : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
 # PURPOSE       : Own snippet retrieval, snippet scoring, snippet file resolution, and snippet reading helpers for ProjectRetriever.
 # EXPORTS       : score_runtime_anchor_for_question, find_anchor_line_in_file, resolve_existing_project_file_path, build_runtime_anchor_snippets, extract_runtime_anchors_from_detail, retrieve_snippets, score_symbol_snippet_candidate, score_file_snippet_candidate, snippet_radius_for_symbol, read_snippet
 # DEPENDS ON    : query_intents.py, query_text.py

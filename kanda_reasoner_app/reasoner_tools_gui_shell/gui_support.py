@@ -128,6 +128,14 @@ def _docstring_worker_script_path() -> Path:
 
 
 def _help_catalog_path(filename: str) -> Path:
+    canonical_path = (
+        _PROJECT_ROOT
+        / CANONICAL_PACKAGE_NAME
+        / "reasoner_tools_gui_help"
+        / filename
+    )
+    if canonical_path.exists():
+        return canonical_path
     return (
         _PROJECT_ROOT
         / LEGACY_PACKAGE_NAME

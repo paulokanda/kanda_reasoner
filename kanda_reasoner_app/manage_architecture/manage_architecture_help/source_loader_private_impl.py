@@ -271,7 +271,22 @@ def _apply_project_analysis_evidence_path_policy(source: str) -> str:
 
     source = source.replace(
         '    "tests", "test",\n}\n\nDEFAULT_EXCLUDE_DIR_PATTERNS',
-        '    "tests", "test",\n    "_project_reference",\n}\n\nDEFAULT_EXCLUDE_DIR_PATTERNS',
+        '    "tests", "test",\n    ".project_reference",\n    "_project_reference",\n}\n\nDEFAULT_EXCLUDE_DIR_PATTERNS',
+    )
+    source = source.replace(
+        '    "dev_tools_docs",\n    "_project_reference",\n',
+        '    "dev_tools_docs",\n    ".project_reference",\n    "_project_reference",\n',
+    )
+    source = source.replace(
+        '    for zip_path in zip_paths:\n'
+        '        rel = _artifact_issue_path(root, zip_path)\n',
+        '    ignore_folders, _, _ = load_ignore_rules(root)\n'
+        '    zip_paths = [\n'
+        '        zip_path for zip_path in zip_paths\n'
+        '        if not _path_has_ignored_folder(zip_path.parent, root, ignore_folders)\n'
+        '    ]\n\n'
+        '    for zip_path in zip_paths:\n'
+        '        rel = _artifact_issue_path(root, zip_path)\n',
     )
     source = source.replace(
         '    canonical_path = json_complete_dir / CANONICAL_COMPLETE_JSON_FILENAME\n'

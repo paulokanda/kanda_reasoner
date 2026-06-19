@@ -310,7 +310,7 @@ def _backup_source_file(owner: object, path: Path) -> Path:
     stamp = _datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_root = (
         project_root
-        / ".project_reference"
+        / "project_freeze_ledger"
         / "manual_docstring_review_backups"
         / stamp
     )
@@ -408,7 +408,7 @@ def _manual_review_state_path(owner: object) -> Path:
     """Return the manual review state sidecar path."""
     return (
         _project_root_for_owner(owner)
-        / ".project_reference"
+        / "project_freeze_ledger"
         / "manual_docstring_review_state.json"
     )
 

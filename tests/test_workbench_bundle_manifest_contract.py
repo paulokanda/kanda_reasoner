@@ -38,7 +38,7 @@ class WorkbenchBundleManifestContractTests(unittest.TestCase):
         source = load_manage_architecture_source()
 
         self.assertNotIn(
-            'BUNDLE_SAFETY_HIDDEN_REFERENCE_MANIFEST_PREFIX = ".project_reference/BUNDLE_MANIFEST/"',
+            'BUNDLE_SAFETY_HIDDEN_REFERENCE_MANIFEST_PREFIX = "workbench/bundle_manifest/"',
             source,
         )
 

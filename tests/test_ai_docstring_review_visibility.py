@@ -17,8 +17,8 @@ from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_
 class ReviewVisibilityReportFieldTests(unittest.TestCase):
     def test_insert_report_row_marks_clean_ai_output_for_review(self) -> None:
         row = build_report_row(
-            Path("E:/developer_tools"),
-            Path("E:/developer_tools/pkg/sample.py"),
+            Path("<PROJECT_ROOT>"),
+            Path("<PROJECT_ROOT>/pkg/sample.py"),
             target_kind="function",
             target_name="build_sample",
             line=10,
@@ -34,8 +34,8 @@ class ReviewVisibilityReportFieldTests(unittest.TestCase):
 
     def test_insert_report_row_marks_fallback_for_careful_review(self) -> None:
         row = build_report_row(
-            Path("E:/developer_tools"),
-            Path("E:/developer_tools/pkg/sample.py"),
+            Path("<PROJECT_ROOT>"),
+            Path("<PROJECT_ROOT>/pkg/sample.py"),
             target_kind="function",
             target_name="build_sample",
             line=10,

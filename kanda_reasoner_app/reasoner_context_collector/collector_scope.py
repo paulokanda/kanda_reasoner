@@ -6,7 +6,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any, Iterable, Iterator
-HARD_EXCLUDED_PARTS = {"_patch_backups", "snippets", "deprecated", "backup", "backups", "archive", "oldies", "older", "legacy_cleanup", "$recycle.bin", "envs", "site-packages", ".venv", "venv", "env", "__pycache__", "mne_py3.10", "developer_tools_older", "dev_tools_docs", "_project_reference", ".project_reference", ".git", ".idea", ".vscode", ".pytest_cache", ".mypy_cache", ".ruff_cache", "htmlcov", "build", "dist", "node_modules"}
+HARD_EXCLUDED_PARTS = {"_patch_backups", "snippets", "deprecated", "backup", "backups", "archive", "oldies", "older", "legacy_cleanup", "$recycle.bin", "envs", "site-packages", ".venv", "venv", "env", "__pycache__", "mne_py3.10", "developer_tools_older", "dev_tools_docs", "_project_reference", "project_freeze_ledger", ".git", ".idea", ".vscode", ".pytest_cache", ".mypy_cache", ".ruff_cache", "htmlcov", "build", "dist", "node_modules"}
 FORBIDDEN_TEXT_FRAGMENTS = ("$RECYCLE.BIN", "site-packages", "legacy_cleanup", "DEVELOPER_TOOLS_older", "eeg_kernel_ai_neural_data_analysis", "mne_py3.10")
 FORBIDDEN_ROOT_RELATIVE_PARTS = ("snippets", "_patch_backups")
 DOC_SUFFIXES = {".md", ".rst", ".txt"}

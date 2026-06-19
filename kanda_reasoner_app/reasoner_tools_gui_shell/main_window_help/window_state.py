@@ -45,6 +45,36 @@ class _WindowStateMixin:
         except Exception:
             pass
 
+    @staticmethod
+    def _accept_close_event_safely(event) -> None:
+        """Accept a Qt close event without letting shutdown cleanup block exit."""
+        try:
+            event.accept()
+        except Exception:
+            pass
+
     def closeEvent(self, event) -> None:
-        self._save_prefs()
-        super().closeEvent(event)
+        """Persist lightweight window state while keeping shutdown non-blocking.
+
+        PyCharm/Qt can surface a noisy KeyboardInterrupt traceback if the
+        process is interrupted while Python is inside this close hook.  Closing
+        the main window should never be blocked by preference-write failures or
+        late shutdown interruptions, so this handler saves preferences on a
+        best-effort basis and then accepts the close event if anything goes
+        wrong during shutdown.
+        """
+        try:
+            self._save_prefs()
+        except KeyboardInterrupt:
+            self._accept_close_event_safely(event)
+            return
+        except Exception:
+            # Preference persistence is best-effort only; never block closing.
+            pass
+
+        try:
+            super().closeEvent(event)
+        except KeyboardInterrupt:
+            self._accept_close_event_safely(event)
+        except Exception:
+            self._accept_close_event_safely(event)

@@ -37,7 +37,7 @@ class WorkflowDetectorInfrastructureTests(unittest.TestCase):
         self.assertEqual(result["details"]["issue_id"], "WORKFLOW_TEST")
 
     def test_context_resolves_paths_from_project_root(self) -> None:
-        context = WorkflowDetectorContext(project_root=Path("E:/developer_tools"))
+        context = WorkflowDetectorContext(project_root=Path("<PROJECT_ROOT>"))
         resolved = context.resolve_project_path("kanda_reasoner_app")
 
         self.assertTrue(str(resolved).endswith("kanda_reasoner_app"))

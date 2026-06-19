@@ -153,7 +153,7 @@ class StoragePolicyEvidenceOutputRouteGuardTests(unittest.TestCase):
         self.assertNotIn("E:\\kanda_reasoner", source)
         self.assertNotIn("E:/kanda_reasoner", source)
         self.assertNotIn("E:\\developer_tools", source)
-        self.assertNotIn("E:/developer_tools", source)
+        self.assertNotIn("<PROJECT_ROOT>", source)
 
 
 if __name__ == "__main__":

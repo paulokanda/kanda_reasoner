@@ -41,8 +41,8 @@ def _build_payload() -> dict:
             "_project_reference/memo.py": {
                 "path": "_project_reference/memo.py",
             },
-            ".project_reference/memo.py": {
-                "path": ".project_reference/memo.py",
+            "project_freeze_ledger/memo.py": {
+                "path": "project_freeze_ledger/memo.py",
             },
         },
         "symbol_index": {
@@ -55,7 +55,7 @@ def _build_payload() -> dict:
                 "kind": "function",
             },
             "dot_memo_symbol": {
-                "file": ".project_reference/memo.py",
+                "file": "project_freeze_ledger/memo.py",
                 "kind": "function",
             },
         },
@@ -70,7 +70,7 @@ def _build_payload() -> dict:
         "primary_definition_index": {
             "active_symbol": 'ask_' 'ai_project_reasoner' '/active.py',
             "memo_symbol": "_project_reference/memo.py",
-            "dot_memo_symbol": ".project_reference/memo.py",
+            "dot_memo_symbol": "project_freeze_ledger/memo.py",
         },
         "web_ai_file_responsibility_index": {
             'ask_' 'ai_project_reasoner' '/active.py': {"path": 'ask_' 'ai_project_reasoner' '/active.py'},
@@ -79,7 +79,7 @@ def _build_payload() -> dict:
         "notes": [
             'ask_' 'ai_project_reasoner' '/active.py',
             "_project_reference/memo.py",
-            ".project_reference/memo.py",
+            "project_freeze_ledger/memo.py",
             "plain non-path note",
         ],
     }
@@ -99,7 +99,7 @@ def test_scope_filter_removes_reference_paths_from_project_analysis_payload() ->
 
         serialized = json.dumps(filtered, sort_keys=True)
         assert "_project_reference" not in serialized
-        assert ".project_reference" not in serialized
+        assert "project_freeze_ledger" not in serialized
         assert 'ask_' 'ai_project_reasoner' '/active.py' in serialized
         assert "plain non-path note" in serialized
         assert summary["applied"] is True
@@ -123,7 +123,7 @@ def test_safe_json_dump_filters_reference_paths_before_writing_complete_json() -
 
         text = output_path.read_text(encoding="utf-8")
         assert "_project_reference" not in text
-        assert ".project_reference" not in text
+        assert "project_freeze_ledger" not in text
         assert 'ask_' 'ai_project_reasoner' '/active.py' in text
         assert "plain non-path note" in text
 
@@ -133,7 +133,7 @@ def test_safe_json_dump_does_not_filter_non_project_analysis_payloads() -> None:
         output_path = Path(temp_dir) / "plain.json"
         payload = {
             "note": "_project_reference/memo.py",
-            "other": ".project_reference/memo.py",
+            "other": "project_freeze_ledger/memo.py",
         }
 
         safe_json_dump(payload, output_path)
@@ -147,7 +147,7 @@ def test_collector_walker_excludes_reference_folders_from_json_creation_input() 
         project_root = Path(temp_dir)
         _write_text(project_root / 'ask_' 'ai_project_reasoner' / "active.py", "x = 1\n")
         _write_text(project_root / "_project_reference" / "memo.py", "x = 2\n")
-        _write_text(project_root / ".project_reference" / "memo.py", "x = 3\n")
+        _write_text(project_root / "project_freeze_ledger" / "memo.py", "x = 3\n")
 
         files = walk_python_files_filtered(project_root, CollectorConfig())
         relative_files = sorted(

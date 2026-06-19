@@ -39,7 +39,7 @@ class Tab2WorkflowWorkerScriptResolutionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             history_file = Path(temp_dir) / ".manage_gui_history.json"
             legacy_path = (
-                r"E:\developer_tools\ask_ai_project_reasoner"
+                r"<PROJECT_ROOT>\ask_ai_project_reasoner"
                 r"\manage_workflows.py"
             )
             payload = {"scripts": [legacy_path]}

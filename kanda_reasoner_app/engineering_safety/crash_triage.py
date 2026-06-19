@@ -79,7 +79,7 @@ def _project_relative_path(path_text: str, project_root: str) -> str:
         "reasoner_tools_gui/",
         "tests/",
         "workbench/",
-        ".project_reference/",
+        "project_freeze_ledger/",
     ):
         marker_index = normalized_input.find(marker)
         if marker_index >= 0:

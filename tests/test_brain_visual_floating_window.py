@@ -21,11 +21,13 @@ class BrainVisualFloatingWindowDirectTests(unittest.TestCase):
         summary = get_neural_architecture_floating_window_summary()
         payload = build_neural_architecture_floating_window_data_js()
 
-        self.assertEqual(10, len(windows))
-        self.assertEqual(10, summary.window_count)
+        self.assertEqual(12, len(windows))
+        self.assertEqual(12, summary.window_count)
         self.assertEqual(windows[0].region_id, summary.region_ids[0])
         self.assertIn("const NEURAL_ARCHITECTURE_FLOATING_WINDOWS", payload)
         self.assertIn("Architecture Review", payload)
+        self.assertIn("Broca Area", payload)
+        self.assertIn("Hippocampus", payload)
         self.assertIn("Open module", payload)
         self.assertIn("floating_fancy_index_with_controlled_open_module_action", summary.implementation_state)
 

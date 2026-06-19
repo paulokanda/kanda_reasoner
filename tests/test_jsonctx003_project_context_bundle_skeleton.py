@@ -46,18 +46,23 @@ from kanda_reasoner_app.reasoner_context_bundle.schema_models import (  # noqa: 
 )
 
 
-def test_resolve_project_context_uses_dynamic_project_owned_evidence_path() -> None:
-    root = Path("D:/alpha project")
+def test_resolve_project_context_uses_dynamic_external_architecture_audit_path() -> None:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        root = Path(temp_dir) / "alpha project"
+        root.mkdir()
 
-    context = resolve_project_context(root)
+        context = resolve_project_context(root)
 
-    assert context.root == root
-    assert context.project_slug == "alpha_project"
-    assert context.evidence_root == root / "project_analysis_evidence"
-    assert context.json_complete_dir == (
-        root / "project_analysis_evidence" / "json_complete"
-    )
-    assert "_project_reference" not in str(context.evidence_root)
+        assert context.root == root
+        assert context.project_slug == "alpha_project"
+        assert context.evidence_root.name == "current"
+        assert context.evidence_root.parent.name == "alpha_project_architecture_audit"
+        assert context.json_complete_dir == context.evidence_root / "json_complete"
+        assert str(context.evidence_root).replace("\\", "/").endswith(
+            "alpha_project_architecture_audit/current"
+        )
+        assert "_project_reference" not in str(context.evidence_root)
+        assert "project_analysis_evidence" not in str(context.evidence_root)
 
 
 def test_bundle_artifact_paths_are_additive_and_do_not_change_complete_json() -> None:
@@ -66,7 +71,7 @@ def test_bundle_artifact_paths_are_additive_and_do_not_change_complete_json() ->
     paths = bundle_artifact_paths(root)
 
     assert paths.complete_json.as_posix().endswith(
-        "project_analysis_evidence/json_complete/demo_project__complete.json"
+        "demo_project_architecture_audit/current/json_complete/demo_project__complete.json"
     )
     assert paths.active_snapshot_json.name == "demo_project__active_snapshot.json"
     assert paths.file_manifest_json.name == "demo_project__file_manifest.json"
@@ -153,7 +158,7 @@ def test_project_context_bundle_sources_do_not_hardcode_current_project_root() -
 
 
 if __name__ == "__main__":
-    test_resolve_project_context_uses_dynamic_project_owned_evidence_path()
+    test_resolve_project_context_uses_dynamic_external_architecture_audit_path()
     test_bundle_artifact_paths_are_additive_and_do_not_change_complete_json()
     test_relative_posix_path_rejects_paths_outside_project_root()
     test_write_json_atomic_creates_valid_json_without_partial_file()

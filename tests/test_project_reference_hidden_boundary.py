@@ -20,15 +20,15 @@ from kanda_reasoner_app.reasoner_context_collector.collector_scope import (
 
 
 class ProjectReferenceHiddenBoundaryTests(unittest.TestCase):
-    """Cover the canonical .project_reference non-source boundary."""
+    """Cover the canonical project_freeze_ledger non-source boundary."""
 
     def test_canonical_reference_folder_name_is_hidden_dot_folder(self) -> None:
-        self.assertEqual(".project_reference", PROJECT_REFERENCE_DIR)
+        self.assertEqual("project_freeze_ledger", PROJECT_REFERENCE_DIR)
 
     def test_unified_exclusion_policy_excludes_canonical_and_legacy_reference(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            for folder_name in (".project_reference", "_project_reference"):
+            for folder_name in ("project_freeze_ledger", "_project_reference"):
                 path = root / folder_name / "notes.py"
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("VALUE = 1\n", encoding="utf-8")
@@ -39,14 +39,14 @@ class ProjectReferenceHiddenBoundaryTests(unittest.TestCase):
                 )
 
             rules = load_reasoner_project_exclusion_rules(root)
-            self.assertIn(".project_reference", rules["folders"])
+            self.assertIn("project_freeze_ledger", rules["folders"])
             self.assertIn("_project_reference", rules["folders"])
 
     def test_docstring_scanner_excludes_canonical_reference_folder_by_default(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             active_file = root / "app.py"
-            reference_file = root / ".project_reference" / "memo.py"
+            reference_file = root / "project_freeze_ledger" / "memo.py"
             legacy_reference_file = root / "_project_reference" / "memo.py"
 
             active_file.write_text("VALUE = 1\n", encoding="utf-8")
@@ -63,7 +63,7 @@ class ProjectReferenceHiddenBoundaryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             active_file = root / "app.py"
-            reference_file = root / ".project_reference" / "memo.py"
+            reference_file = root / "project_freeze_ledger" / "memo.py"
             legacy_reference_file = root / "_project_reference" / "memo.py"
 
             active_file.write_text("VALUE = 1\n", encoding="utf-8")

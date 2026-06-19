@@ -18,10 +18,10 @@ def test_project_root_is_marked_in_audit_text() -> None:
     """Absolute project roots are replaced with the project root marker."""
     text = 'ERROR PATH E:\\developer_tools\\ask_' 'ai_project_reasoner' '\\file.py'
 
-    marked = mark_project_root(text, r"E:\developer_tools")
+    marked = mark_project_root(text, r"<PROJECT_ROOT>")
 
     assert "<PROJECT_ROOT>" in marked
-    assert r"E:\developer_tools" not in marked
+    assert r"<PROJECT_ROOT>" not in marked
 
 
 def test_long_audit_text_is_bounded_with_visible_note() -> None:
@@ -37,7 +37,7 @@ def test_prompt_includes_advisory_authority_contract() -> None:
     """Prompt messages preserve advisory-only authority rules."""
     request = Tab1AIReviewRequest(
         audit_text="WARNING TEST_CODE path.py :: example warning",
-        project_root=r"E:\developer_tools",
+        project_root=r"<PROJECT_ROOT>",
         max_audit_chars=4000,
     )
 

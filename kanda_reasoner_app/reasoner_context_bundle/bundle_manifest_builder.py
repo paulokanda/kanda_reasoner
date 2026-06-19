@@ -9,7 +9,7 @@ from typing import Any
 from .hashing import sha256_file
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
-from .path_normalization import relative_posix_path
+from .path_normalization import artifact_logical_posix_path
 from .project_context import resolve_project_context
 from .schema_models import BundleArtifactPaths, ProjectContext
 
@@ -62,7 +62,7 @@ def _context(project: str | Path | ProjectContext) -> ProjectContext:
 
 
 def _relative_artifact_path(path: Path, context: ProjectContext) -> str:
-    return relative_posix_path(path, context.root)
+    return artifact_logical_posix_path(path, context)
 
 
 def _artifact_record(

@@ -27,7 +27,7 @@ outputs/
 kanda_reasoner/
 nulcls
 .docstring_cache.json
-.project_reference/
+project_freeze_ledger/
 kanda_reasoner_app/insert_missing_docstrings_gui/.docstring_cache.json
 
 # Generated/runtime outputs

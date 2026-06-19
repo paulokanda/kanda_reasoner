@@ -106,7 +106,7 @@ def test_pa007a_module_has_no_project_specific_root_literal() -> None:
     source = module_path.read_text(encoding="utf-8")
 
     assert "E:\\developer_tools" not in source
-    assert "E:/developer_tools" not in source
+    assert "<PROJECT_ROOT>" not in source
 
 
 if __name__ == "__main__":

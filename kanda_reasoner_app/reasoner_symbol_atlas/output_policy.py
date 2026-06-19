@@ -230,8 +230,8 @@ def sanitize_atlas_markdown_text(text: str) -> str:
             stripped = line.strip()
 
         if (
-            "_project_reference" in line
-            or ".project_reference" in line
+            ".project_reference" in line or "_project_reference" in line
+            or "project_freeze_ledger" in line
             or "tests_archive" in line
             or "remaining_misplaced_tests" in line
         ):

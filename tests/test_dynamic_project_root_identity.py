@@ -76,14 +76,14 @@ class DynamicProjectRootIdentityTests(unittest.TestCase):
         root = Path(r"E:\kanda_reasoner")
         args = build_engineering_safety_panel_cli_args("evidence-freshness", root)
         self.assertEqual(args, ["evidence-freshness", "--root", str(root)])
-        self.assertNotIn(r"E:\developer_tools", " ".join(args))
+        self.assertNotIn(r"<PROJECT_ROOT>", " ".join(args))
 
     def test_smoke_output_path_uses_active_project_root(self) -> None:
         root = Path(r"E:\kanda_reasoner")
         path = default_smoke_output_json_path(root)
         self.assertEqual(path.name, "real_project_static_context_smoke.json")
         self.assertIn('ask_' 'ai_project_reasoner', str(path))
-        self.assertNotIn(r"E:\developer_tools", str(path))
+        self.assertNotIn(r"<PROJECT_ROOT>", str(path))
 
 
 if __name__ == "__main__":

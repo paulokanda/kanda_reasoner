@@ -40,7 +40,7 @@ class LegacyPackageReferenceInventoryTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            reference_dir = root / ".project_reference"
+            reference_dir = root / "project_freeze_ledger"
             reference_dir.mkdir()
             (reference_dir / "note.py").write_text(
                 'import ask_' 'ai_project_reasoner' '\n',

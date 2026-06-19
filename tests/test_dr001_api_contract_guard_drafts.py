@@ -38,7 +38,7 @@ def test_api_contract_guard_draft_renders_markdown() -> None:
 
 
 def test_default_output_dir_uses_workbench_drafts() -> None:
-    output_dir = default_api_contract_output_dir(Path("E:/developer_tools"))
+    output_dir = default_api_contract_output_dir(Path("<PROJECT_ROOT>"))
 
     assert output_dir.as_posix().endswith("workbench/drafts/api_contracts")
 

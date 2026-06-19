@@ -75,7 +75,12 @@ class BrainPulseMarkerLayerSummary:
 # landmark guide curves and are snapped to the rendered surface at runtime.
 _PULSE_MARKERS: tuple[BrainPulseMarker, ...] = (
     # Frontal marker refined to a frontopolar position at the most anterior tip.
-    BrainPulseMarker("frontal_lobe", "Frontal lobe", 68.0, 40.0, 0.70, 0.24, 0.54),
+    # Frontal lobe moved anteriorly. The anterior depth offset equals the
+    # original frontal-lobe to lateral-sulcus anterior-posterior distance:
+    # 0.54 - 0.18 = 0.36, therefore 0.54 + 0.36 = 0.90.
+    BrainPulseMarker("frontal_lobe", "Frontal lobe", 79.0, 40.0, 0.70, 0.24, 0.90),
+    # Broca Area keeps the former frontal-lobe marker position.
+    BrainPulseMarker("broca_area", "Broca Area (language area)", 68.0, 40.0, 0.70, 0.24, 0.54),
     # Parietal marker lowered from the crown into a more central superior cerebrum position.
     BrainPulseMarker("parietal_lobe", "Parietal lobe", 54.0, 42.0, 0.34, 0.26, -0.10),
     # Brainstem remains centered but is lowered into the middle of the trunk-like structure.
@@ -119,7 +124,13 @@ _PULSE_MARKERS: tuple[BrainPulseMarker, ...] = (
         preferred_side=0,
         anchor_lift=1.020,
     ),
-    BrainPulseMarker("temporal_lobe", "Temporal lobe", 58.0, 52.5, 0.54, -0.18, 0.06),
+    # Temporal lobe marker moved below the lateral sulcus. The fallback
+    # vertical distance from lateral sulcus to temporal lobe matches the
+    # distance from frontal lobe to lateral sulcus: 46.5 - 40.0 = 6.5,
+    # therefore 46.5 + 6.5 = 53.0.
+    BrainPulseMarker("temporal_lobe", "Temporal lobe", 66.0, 53.0, 0.86, -0.30, 0.24),
+    # Hippocampus keeps the former temporal-lobe marker position.
+    BrainPulseMarker("hippocampus", "Hippocampus", 58.0, 52.5, 0.54, -0.18, 0.06),
     BrainPulseMarker(
         "lateral_sulcus",
         "Lateral sulcus / Sylvian fissure",

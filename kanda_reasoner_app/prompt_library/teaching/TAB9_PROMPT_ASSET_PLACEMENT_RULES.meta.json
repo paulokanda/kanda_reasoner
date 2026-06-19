@@ -29,7 +29,7 @@
   "how_it_works": "The rules prevent an AI from placing Tab 9 package assets under excluded reference folders or unrelated source boxes.",
   "files_created": [],
   "risks": [
-    "Assets may be placed under .project_reference or _project_reference and become invisible to the package-owned Tab 9 library."
+    "Assets may be placed under project_freeze_ledger or _project_reference and become invisible to the package-owned Tab 9 library."
   ],
   "mitigations": [
     "The rules name the correct package-owned folders and the incorrect legacy folders."

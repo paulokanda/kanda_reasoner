@@ -1,9 +1,9 @@
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
-# MODULE ORIGIN : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
-# MANIFEST      : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : E:\developer_tools\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
+# MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
+# MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
+# HELP FOLDER   : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help
 # PURPOSE       : Resolve the active project profile and expose normalized alias helpers.
 # EXPORTS       : resolve_project_profile, get_profile_alias_terms, question_has_profile_alias, text_has_profile_alias, get_profile_owner_paths
 # DEPENDS ON    : query_text.py

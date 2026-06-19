@@ -396,8 +396,8 @@ Write-Host "Governance bundle installed."
 
 cd <PROJECT_ROOT>
 
-python ".project_reference\ACTIVE_PROJECT_GOVERNANCE\check_reasoner_project_canon.py" --project-root <PROJECT_ROOT>
-python ".project_reference\ACTIVE_PROJECT_GOVERNANCE\test_reasoner_project_canon.py"
+python "project_freeze_ledger\check_reasoner_project_canon.py" --project-root <PROJECT_ROOT>
+python "project_freeze_ledger\test_reasoner_project_canon.py"
 
 python kanda_reasoner_app\manage_architecture\manage_architecture.py --root <PROJECT_ROOT> --validate
 python kanda_reasoner_app\manage_workflows\manage_workflows.py --root <PROJECT_ROOT> --validate

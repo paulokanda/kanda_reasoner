@@ -45,7 +45,7 @@ __all__ = [
     "normalize_evidence_artifact_path",
 ]
 
-PROJECT_REFERENCE_DIR = ".project_reference"
+PROJECT_REFERENCE_DIR = "project_freeze_ledger"
 PROJECT_ANALYSIS_EVIDENCE_DIR = "project_analysis_evidence"
 JSON_COMPLETE_DIR = "json_complete"
 JSON_PARTS_DIR = "json_splitted"

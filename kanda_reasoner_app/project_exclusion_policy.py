@@ -19,7 +19,7 @@ DEFAULT_PROJECT_EXCLUDED_FOLDERS = (
     "__pycache__", ".git", ".hg", ".svn", ".idea", ".vscode",
     ".pytest_cache", ".mypy_cache", ".ruff_cache", ".coverage",
     "htmlcov", ".venv", "venv", "env", "build", "dist",
-    "node_modules", "site-packages", "_project_reference", ".project_reference",
+    "node_modules", "site-packages", ".project_reference", "_project_reference", "project_freeze_ledger",
 )
 DEFAULT_PROJECT_EXCLUDED_FILES = ("*.log", "*.tmp")
 DEFAULT_PROJECT_EXCLUDED_EXTENSIONS = (
@@ -52,6 +52,12 @@ REASONER_PROJECT_EXCLUDED_FOLDERS = (
     "*scratch*",
     "workbench",
 )
+
+# Dot-prefixed directories at project root are human/tooling/reference space,
+# not active project source. Keep common VCS/IDE/cache names explicit above,
+# and also protect user-maintained dot folders such as .project_reference.
+PROJECT_ROOT_HIDDEN_REFERENCE_DIR_PREFIX = "."
+
 
 __all__ = [
     "filter_reasoner_path_strings", "iter_reasoner_project_files", "load_reasoner_project_exclusion_rules",
@@ -235,6 +241,16 @@ def _relative_posix(path: Path, project_root: Path) -> str:
         return str(path).replace("\\", "/")
 
 
+def _is_project_root_hidden_reference_path(rel_path: str) -> bool:
+    """Return True for dot-prefixed root folders that are not active project source."""
+
+    rel_low = rel_path.lower().replace("\\", "/").strip("/")
+    if not rel_low:
+        return False
+    first_part = rel_low.split("/", 1)[0]
+    return first_part.startswith(PROJECT_ROOT_HIDDEN_REFERENCE_DIR_PREFIX)
+
+
 def _folder_rule_matches(rel_path: str, rule: str) -> bool:
     rule_text = rule.strip().lower().replace("\\", "/").strip("/")
     if not rule_text:
@@ -261,6 +277,8 @@ def should_exclude_reasoner_project_path(
         return True
     active_rules = rules if rules is not None else load_reasoner_project_exclusion_rules(root)
     rel_path = _relative_posix(resolved, root)
+    if _is_project_root_hidden_reference_path(rel_path):
+        return True
     name_low = resolved.name.lower()
     suffix_low = resolved.suffix.lower()
     for folder in active_rules.get("folders", []):

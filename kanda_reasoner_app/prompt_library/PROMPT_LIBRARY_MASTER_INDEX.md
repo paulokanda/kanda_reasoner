@@ -48,7 +48,7 @@ teaching\
 Do not place package-owned Tab 9 prompt assets under:
 
 ```text
-.project_reference\
+project_freeze_ledger\
 _project_reference\
 ```
 

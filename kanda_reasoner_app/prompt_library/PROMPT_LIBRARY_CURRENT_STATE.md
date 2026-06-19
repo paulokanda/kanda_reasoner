@@ -31,7 +31,7 @@ The physical package folder has not yet been renamed. Prompt-library assets rema
 Canonical reference-only folder:
 
 ```text
-.project_reference
+project_freeze_ledger
 ```
 
 Legacy reference-only folder:
@@ -55,7 +55,7 @@ Do not create new bundle manifests under:
 ```text
 workbench\_bundle_temp
 workbench\BUNDLE_MANIFEST
-.project_reference\BUNDLE_MANIFEST
+workbench\bundle_manifest
 _project_reference\BUNDLE_MANIFEST
 ```
 

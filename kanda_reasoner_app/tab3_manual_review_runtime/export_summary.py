@@ -21,7 +21,7 @@ from .review_support import _manual_review_state_summary_text
 def _export_manual_review_summary(owner: object, locations: list[dict]) -> Path:
     """Write a JSON summary of current manual review locations."""
     root = _project_root_for_export(owner)
-    export_dir = root / ".project_reference" / "manual_docstring_review_exports"
+    export_dir = root / "project_freeze_ledger" / "manual_docstring_review_exports"
     export_dir.mkdir(parents=True, exist_ok=True)
     path = export_dir / "manual_docstring_review_summary.json"
     payload = {

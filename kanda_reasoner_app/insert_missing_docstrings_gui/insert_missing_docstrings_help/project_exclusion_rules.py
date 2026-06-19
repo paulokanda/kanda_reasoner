@@ -40,8 +40,9 @@ DEFAULT_EXCLUDE_DIRS = {
     "env",
     "tests",
     "test",
-    "_project_reference",
     ".project_reference",
+    "_project_reference",
+    "project_freeze_ledger",
 }
 
 RELAXED_PATH_PREFIXES = (

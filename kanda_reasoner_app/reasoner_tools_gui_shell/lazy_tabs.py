@@ -184,6 +184,20 @@ class LazyToolTab(QWidget):
         if not self.spec.help_catalog:
             return
 
+        try:
+            from .help_docs.renderer import open_help_document_for_legacy_catalog
+
+            rich_dialog = open_help_document_for_legacy_catalog(
+                self,
+                self.spec.help_catalog,
+                window_title=f"Help - {self.spec.step_title}",
+            )
+        except Exception:
+            rich_dialog = None
+        if rich_dialog is not None:
+            self._help_dialog = rich_dialog
+            return
+
         path = _help_catalog_path(self.spec.help_catalog)
         if not path.exists():
             QMessageBox.warning(

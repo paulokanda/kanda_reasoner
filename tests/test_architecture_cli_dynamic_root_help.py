@@ -19,7 +19,7 @@ class ArchitectureCliDynamicRootHelpTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_home, tempfile.TemporaryDirectory() as temp_project:
             history_path = Path(temp_home) / ".manage_architecture_history.json"
             history_path.write_text(
-                json.dumps({"roots": [r"E:\developer_tools"], "excluded_files": []}),
+                json.dumps({"roots": [r"<PROJECT_ROOT>"], "excluded_files": []}),
                 encoding="utf-8",
             )
 
@@ -52,7 +52,7 @@ class ArchitectureCliDynamicRootHelpTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, output)
         self.assertIn("Currently defaults to:", output)
         self.assertIn(temp_project, output)
-        self.assertNotIn(r"Currently defaults to: E:\developer_tools", output)
+        self.assertNotIn(r"Currently defaults to: <PROJECT_ROOT>", output)
         self.assertNotIn("hard-coded fallback", output)
 
 

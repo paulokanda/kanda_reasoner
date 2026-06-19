@@ -10,7 +10,7 @@ from .exclusion_engine import decide_path_exclusion
 from .exclusion_provider import load_bundle_exclusion_rules
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
-from .path_normalization import safe_resolve
+from .path_normalization import resolve_logical_artifact_path
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
 
@@ -35,13 +35,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _artifact_path(context: ProjectContext, relative_path: str) -> Path:
-    path = safe_resolve(context.root / relative_path)
-    root = safe_resolve(context.root)
-    try:
-        path.relative_to(root)
-    except ValueError as exc:
-        raise ValueError("Artifact path escapes project root: " + relative_path) from exc
-    return path
+    return resolve_logical_artifact_path(context, relative_path)
 
 
 def _check_manifest_artifacts(

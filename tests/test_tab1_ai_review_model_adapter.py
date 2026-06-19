@@ -51,7 +51,7 @@ def test_adapter_uses_available_model_and_forces_advisory_banner() -> None:
     )
     request = Tab1AIReviewRequest(
         audit_text="WARNING MIXED_RESPONSIBILITY_FILE path.py :: warning",
-        project_root=r"E:\developer_tools",
+        project_root=r"<PROJECT_ROOT>",
     )
 
     result = adapter.review(request)

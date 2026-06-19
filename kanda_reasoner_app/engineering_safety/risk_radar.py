@@ -23,7 +23,7 @@ ENGINEERING_SAFETY_RISK_BOX_HINTS = (
     (LEGACY_PACKAGE_PATH + "tab3_manual_review_runtime", "tab_3_manual_review_runtime"),
     ("reasoner_tools_gui", "gui_shell"),
     ("tests/", "tests"),
-    (".project_reference/ACTIVE_PROJECT_ GOVERNANCE", "active_governance"),
+    ("project_freeze_ledger/ACTIVE_PROJECT_ GOVERNANCE", "active_governance"),
 )
 
 ENGINEERING_SAFETY_HIGH_RISK_TOKENS = (

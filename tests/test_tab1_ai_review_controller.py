@@ -24,11 +24,11 @@ def test_build_request_preserves_audit_and_root() -> None:
     """Request builder preserves caller-provided audit context."""
     request = build_tab1_ai_review_request(
         audit_text="WARNING CODE file.py :: warning",
-        project_root=r"E:\developer_tools",
+        project_root=r"<PROJECT_ROOT>",
     )
 
     assert request.audit_text.startswith("WARNING CODE")
-    assert request.project_root == r"E:\developer_tools"
+    assert request.project_root == r"<PROJECT_ROOT>"
 
 
 def test_run_review_uses_supplied_adapter() -> None:

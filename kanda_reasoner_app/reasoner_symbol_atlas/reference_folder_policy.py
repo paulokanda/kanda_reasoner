@@ -12,8 +12,9 @@ from pathlib import Path
 from typing import Iterable
 
 PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS = (
-    "_project_reference",
     ".project_reference",
+    "_project_reference",
+    "project_freeze_ledger",
 )
 _CANONICAL_EVIDENCE_FOLDER_NAME = "project_analysis_evidence"
 

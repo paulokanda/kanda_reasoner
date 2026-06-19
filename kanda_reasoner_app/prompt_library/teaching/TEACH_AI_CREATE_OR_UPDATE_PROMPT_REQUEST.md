@@ -52,7 +52,7 @@ Mandatory lifecycle:
 Safety boundaries:
 - Tab 9 prompt-library authoring is text-library work only.
 - Do not edit Python source, GUI code, runtime collectors, AI bridge internals, validators, active governance, or Tabs 1 through 8 unless I explicitly request a separate code/governance gate.
-- Do not place prompt-library assets under .project_reference or _project_reference.
+- Do not place prompt-library assets under project_freeze_ledger or _project_reference.
 - Do not hardcode one local project root in reusable prompts.
 - Use placeholders such as <PROJECT_ROOT>, <PROJECT_NAME>, <PRODUCT_PACKAGE>, <TASK_DESCRIPTION>, and <TASK_SLUG>.
 - Keep project-specific examples under clearly marked Example sections.

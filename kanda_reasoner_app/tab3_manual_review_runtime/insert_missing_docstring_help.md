@@ -28,7 +28,7 @@ A scan creates or loads a report. Generate Draft creates a draft correction for 
 
 This field shows the root folder of the project that will be scanned. It should be the top-level project folder, for example:
 
-E:\developer_tools
+<PROJECT_ROOT>
 
 Use a real project root, not a subfolder unless you intentionally want to scan only that subfolder.
 

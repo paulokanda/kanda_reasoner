@@ -58,7 +58,7 @@ def test_release_notes_public_contract_is_directly_imported() -> None:
     exported = set(release_notes_generator.__all__)
     assert "build_release_notes_report" in exported
     assert "render_release_notes_markdown" in exported
-    output_dir = default_release_notes_dir("E:/developer_tools")
+    output_dir = default_release_notes_dir("<PROJECT_ROOT>")
     assert output_dir.as_posix().endswith("workbench/release_notes")
 
 

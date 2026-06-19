@@ -102,8 +102,9 @@ TRUTH_TEXT_FIELD_NAMES = frozenset(
 # this module are normalized to forward slashes before comparison, so one slash
 # form per marker is enough.
 INACTIVE_TEXT_MARKERS = (
-    "_project_reference/",
     ".project_reference/",
+    "_project_reference/",
+    "project_freeze_ledger/",
     "tests_archive/",
     "remaining_misplaced_tests/",
 )

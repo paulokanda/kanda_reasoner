@@ -50,7 +50,7 @@ def test_sc001_markdown_and_output_dir() -> None:
     markdown = render_stack_compatibility_markdown(report)
     assert "# Stack Compatibility Brief" in markdown
     assert "Risk level:" in markdown
-    assert default_stack_compatibility_output_dir("E:/developer_tools").as_posix().endswith(
+    assert default_stack_compatibility_output_dir("<PROJECT_ROOT>").as_posix().endswith(
         "workbench/stack_compatibility_reports"
     )
 

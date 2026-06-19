@@ -41,7 +41,7 @@ def test_on_every_push_report_uses_explicit_evidence() -> None:
         'python ask_' 'ai_project_reasoner' '\\manage_workflows\\manage_workflows.py --validate',
         "Summary: pass=8 fail=0 warn=0 skip=3",
     )
-    report = build_on_every_push_report("E:/developer_tools", [arch, workflow], ["Local gate."])
+    report = build_on_every_push_report("<PROJECT_ROOT>", [arch, workflow], ["Local gate."])
     data = report.to_dict()
 
     assert data["overall_status"] == GA_PUSH_STATUS_PASS
@@ -58,9 +58,9 @@ def test_on_every_push_public_contract_is_directly_imported() -> None:
     exported = set(on_every_push_validator.__all__)
     assert "build_on_every_push_report" in exported
     assert "render_on_every_push_markdown" in exported
-    commands = build_default_push_commands("E:/developer_tools")
+    commands = build_default_push_commands("<PROJECT_ROOT>")
     assert any("manage_architecture" in command for command in commands)
-    output_dir = default_on_every_push_report_dir("E:/developer_tools")
+    output_dir = default_on_every_push_report_dir("<PROJECT_ROOT>")
     assert output_dir.as_posix().endswith("workbench/on_every_push_reports")
     result = OnEveryPushCheckResult(name="x", status="bad")
     assert result.normalized_status() == "unknown"

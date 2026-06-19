@@ -101,7 +101,9 @@ class BrainNavigatorFancyIndexOpenModuleActionTests(unittest.TestCase):
         )
 
         windows = list_neural_architecture_floating_windows()
-        self.assertEqual(10, len(windows))
+        self.assertEqual(12, len(windows))
+        self.assertTrue(any(window.region_id == "hippocampus" for window in windows))
+        self.assertTrue(any(window.region_id == "broca_area" for window in windows))
         for window in windows:
             self.assertEqual("Open module", window.action_label)
             self.assertIn("injected Tab Navigation Controller", window.action_state)

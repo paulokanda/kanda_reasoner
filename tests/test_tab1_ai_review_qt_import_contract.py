@@ -325,7 +325,7 @@ def test_gui_integration_imports_and_installs_button() -> None:
 
 def test_qt_worker_imports_with_expected_class_name() -> None:
     """Qt worker public contract can be imported with Qt stubs."""
-    worker = Tab1AIReviewWorker("audit", r"E:\developer_tools", "qwen3-coder:30b")
+    worker = Tab1AIReviewWorker("audit", r"<PROJECT_ROOT>", "qwen3-coder:30b")
 
     assert worker.__class__.__name__ == "Tab1AIReviewWorker"
     assert getattr(worker, "_model_name") == "qwen3-coder:30b"

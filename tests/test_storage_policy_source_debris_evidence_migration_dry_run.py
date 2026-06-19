@@ -112,7 +112,7 @@ class StoragePolicySourceDebrisEvidenceMigrationDryRunTests(unittest.TestCase):
             root = Path(temp_dir) / "sample_project"
             evidence = (
                 root
-                / ".project_reference"
+                / "project_freeze_ledger"
                 / "legacy"
                 / "project_analysis_evidence"
                 / "json_complete"
