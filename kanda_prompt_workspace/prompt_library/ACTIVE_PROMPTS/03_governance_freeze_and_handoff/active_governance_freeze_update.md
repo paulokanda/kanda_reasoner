@@ -1,0 +1,548 @@
+---
+audit_id: A038
+audit_decision: UPDATE
+audit_classification: ACTIVE_KANDA_GOVERNANCE_UPDATE_PROTOCOL
+audit_batch: prompt_audit_chunk_003
+review_status: sandbox_checked
+---
+
+> Audit note: This file was reviewed in batch mode. The content below is the real updated file for this audit decision.
+
+# Active Governance Freeze Update
+
+## Box Logic Requirement
+
+Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+
+- Identify the active box before implementation.
+- State owner paths.
+- State files allowed to change.
+- State files explicitly out of scope.
+- Declare cross-box touches.
+- Preserve public contracts.
+- Validate the active box and any touched external box.
+
+
+Version: 3.0
+Status: Project-agnostic active governance update prompt
+Use: Only after validated work and explicit user approval to update
+     official active governance. Generates exactly five governance
+     files in one ZIP. If no validated freeze occurred, outputs
+     "No governance update required." and stops.
+
+This prompt is governance-only.
+Do not change runtime source. Do not change prompt stack files.
+Do not touch _bundle_temp. Do not touch unrelated manifests.
+
+---
+
+## [NEW] PRE-GENERATION EVIDENCE AUDIT (MANDATORY FIRST STEP)
+
+Before generating any file, the AI must produce and show to the user
+a concise Evidence Audit block in this exact format:
+
+  EVIDENCE AUDIT
+  ==============
+  Uploaded baseline files     : [list filenames or "none"]
+  Uploaded source files       : [list filenames or "none"]
+  Uploaded validation output  : [list or "none"]
+  Uploaded runtime logs       : [list or "none"]
+  Validated decisions found   : [list each one in one line, or "none"]
+  User-approved freeze found  : [YES / NO]
+  accepted_warning_baseline   : [present / missing / not changed this chat]
+  Boxes touched this chat     : [list box names or "none"]
+  What I will NOT invent      : [list any area where evidence is absent]
+
+If User-approved freeze found = NO, output:
+
+  No governance update required.
+
+and stop. Do not generate any file.
+
+If User-approved freeze found = YES, continue to generation.
+
+This audit block is shown to the user before any file is written.
+If the user disputes the audit, stop and ask for clarification.
+Do not proceed past a disputed audit.
+
+---
+
+## [NEW] ANTI-HALLUCINATION CONTRACT
+
+The AI must follow these rules without exception throughout generation:
+
+1. Write only what is supported by uploaded files, runtime logs,
+   or explicit user statements in the current chat.
+2. If a fact is uncertain, write:
+      # UNCERTAIN: [describe what is unknown]
+   Do not silently fill in a plausible-sounding value.
+3. If a box name, file path, module name, or symbol name was not
+   seen in uploaded evidence, do not invent it.
+4. If a validation result was not in uploaded output, do not claim
+   it passed or failed.
+5. Do not promote a proposal, suggestion, or "could be" statement
+   into frozen canon.
+6. Do not reproduce canon from memory if baseline files were uploaded.
+   Always derive from the uploaded baseline, not from training memory.
+7. If memory and uploaded baseline conflict, the uploaded baseline wins.
+8. If two uploaded files conflict, flag the conflict and ask the user
+   to resolve it before generating.
+
+---
+
+## GOAL
+
+Use the latest uploaded baseline copies of the five active governance
+files, update them in place based only on validated and user-approved
+decisions from the current chat, validate them, and return one
+replacement ZIP.
+
+The replacement ZIP must be safe to extract into the active project root.
+Do not hardcode any local project root in generated Python logic.
+Validation command examples may mention a local root, but checker and
+tests must use dynamic paths.
+
+---
+
+## CANONICAL ACTIVE GOVERNANCE FOLDER
+
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE
+
+Windows equivalent:
+  _project_reference\ACTIVE_PROJECT_ GOVERNANCE
+
+Important path rule:
+- Preserve _project_reference/ACTIVE_PROJECT_ GOVERNANCE exactly inside ZIPs.
+- The folder name contains a space between the underscore and GOVERNANCE.
+- Do not normalize it to ACTIVE_PROJECT_GOVERNANCE.
+- Do not place files at ZIP root.
+- Do not place files under tools/architecture.
+- Do not place files under _project_reference/PROMPTS.
+- Do not include runtime/source files.
+- Do not include prompt stack files.
+- Do not include _bundle_temp.
+- Do not include unrelated manifests.
+
+---
+
+## ACTIVE GOVERNANCE FILE SET
+
+The active governance bundle contains exactly five files:
+
+1. Human-readable project canon Markdown.
+2. Machine-readable project canon JSON.
+3. Command-line canon checker Python file.
+4. Pytest-compatible canon regression test Python file.
+5. accepted_warning_baseline.json.
+
+Filename rule:
+- If baseline files are provided, preserve their exact filenames.
+- Do not rename project-specific canon files during update.
+- If no baseline exists and first-principles generation is explicitly
+  allowed, use:
+    PROJECT_CANON.md
+    PROJECT_CANON.json
+    check_project_canon.py
+    test_project_canon.py
+    accepted_warning_baseline.json
+
+Examples of valid project-specific names:
+- REASONER_PROJECT_CANON.md / PYKANDA_PROJECT_CANON.md
+- check_reasoner_project_canon.py / check_pykanda_project_canon.py
+
+---
+
+## BASELINE REQUIREMENT
+
+Before updating governance, the current latest copies of all five
+governance files should be uploaded or otherwise available.
+
+If the four canon/checker/test files plus accepted_warning_baseline.json are missing, state:
+  No baseline provided - writing from first principles only,
+  no regression guarantee possible.
+
+If accepted_warning_baseline.json is missing, state:
+  No accepted warning baseline provided - will not invent or
+  recreate accepted warnings from memory.
+
+When baseline files are available:
+- derive all content from the uploaded baseline, not from memory;
+- preserve existing content and exact filenames;
+- update only what the current chat validated and the user approved;
+- do not rewrite from scratch;
+- do not weaken prior canon;
+- do not remove accepted warning history unless pruning was
+  explicitly approved;
+- preserve accepted_warning_baseline.json unless the current chat
+  explicitly changed the accepted-warning policy or baseline entries.
+
+---
+
+## UPDATE POLICY
+
+Only update governance with decisions, freezes, validations, or rules
+explicitly established in the current chat.
+
+Do not:
+- invent product behavior;
+- promote proposals into frozen canon;
+- weaken existing tests;
+- rewrite from scratch when baseline exists;
+- change runtime/source code;
+- generate accepted warnings from memory;
+- change accepted_warning_baseline.json unless the current chat
+  explicitly approved baseline changes;
+- silently delete accepted warning entries because code later changed;
+- canonize unfinished handoff items;
+- canonize sandbox-only checks as local runtime truth.
+
+---
+
+## [STRENGTHENED] REQUIRED CANON CONTENT (MARKDOWN AND JSON)
+
+Both the Markdown and JSON canon must explicitly cover all of these
+sections. If a section has no evidence from the current chat, carry
+it forward unchanged from the baseline. If no baseline exists,
+write UNCERTAIN with a note.
+
+Required sections:
+  1.  project_identity
+      - project name, workspace root policy, package path,
+        dynamic PROJECT_ROOT rule (must not be hardcoded in source).
+  2.  canon_version
+      - semver string, incremented on every approved freeze.
+  3.  governance_file_roles
+      - all five files listed with their role.
+  4.  governing_hierarchy
+      - ordered list of what takes precedence when rules conflict.
+  5.  box_registry
+      - all known boxes with: name, owner path, responsibility,
+        forbidden responsibilities, last validated state.
+  6.  box_handoff_contract_rule
+      - typed boundary rule, cross-box declaration requirements.
+  7.  no_regression_policy
+      - explicit list of what must never be weakened.
+  8.  active_governance_delivery_path
+      - exact folder path including the space.
+  9.  current_chat_frozen_decisions
+      - numbered list; each entry: decision, validation performed,
+        user approval statement, files affected.
+  10. governance_change_workflow
+      - the six-step process (proposal → approval → summary →
+        version increment → consistent update → no silent change).
+  11. accepted_warning_baseline_policy
+      - ledger rules, preservation policy, new-warning rules.
+  12. what_remains_not_frozen
+      - explicit list of open items, proposals not yet approved,
+        handoff items.
+  13. next_safe_step
+      - one concrete recommended action.
+  14. validation_gates_performed
+      - list: gate name, result, evidence source.
+  15. [NEW] source_evidence_inventory
+      - list of every uploaded file the AI used as evidence.
+        Format: filename | role | key facts extracted.
+  16. [NEW] known_unknowns
+      - explicit list of things the AI did not have evidence for
+        and therefore did not update. Prevents silent gaps from
+        looking like intentional omissions.
+  17. [NEW] active_box_touch_summary
+      - for each box touched this chat: files changed, validation
+        performed, result, open risks.
+
+JSON schema rule:
+Every section above must have a matching top-level key in the JSON.
+The JSON must be valid and parseable by json.loads() with no comments.
+String values must not contain trailing whitespace.
+Lists must not be null; use [] for empty lists.
+
+Markdown rule:
+Every section above must have a matching H2 heading.
+The Markdown must render without broken tables or unclosed code fences.
+
+---
+
+## [STRENGTHENED] CHECKER REQUIREMENTS
+
+The checker Python file must:
+
+Core behavior:
+- exit 0 on success;
+- exit 1 on failure;
+- print human-readable failure reason for every failed check;
+- accept --project-root <path> argument;
+- be runnable from the governance folder without arguments;
+- use only Python standard library (no third-party imports);
+- use dynamic paths via Path(__file__).resolve().parent or
+  project_root / "_project_reference" / "ACTIVE_PROJECT_ GOVERNANCE";
+- print a PASS/FAIL summary line at the end.
+
+Validation gates the checker must include:
+  G01  All five governance files exist.
+  G02  canon_version is valid semver (MAJOR.MINOR.PATCH).
+  G03  Active governance delivery path string is present and correct,
+       including the space before GOVERNANCE.
+  G04  governance_file_roles includes accepted_warning_baseline.json.
+  G05  accepted_warning_baseline.json is valid JSON.
+  G06  accepted_warning_baseline.json has schema_version key.
+  G07  accepted_warning_baseline.json has accepted_warnings as a list.
+  G08  Each accepted warning entry has: code, path, decision,
+       classification, rationale, and message_sha256 or an explicit
+       stable matcher field.
+  G09  No accepted warning entry has a blank decision field.
+  G10  PROJECT_CANON.json (or equivalent) is valid JSON.
+  G11  JSON canon_version matches Markdown canon_version.
+  G12  governing_hierarchy is present and non-empty in JSON.
+  G13  box_registry is present and non-empty in JSON.
+  G14  current_chat_frozen_decisions is a list (may be empty if
+       no freeze this chat).
+  G15  what_remains_not_frozen is present (may be empty list).
+  G16  next_safe_step is a non-empty string.
+  G17  [NEW] source_evidence_inventory is present in JSON.
+  G18  [NEW] known_unknowns is present in JSON.
+  G19  [NEW] active_box_touch_summary is present in JSON.
+  G20  [NEW] Markdown contains all 17 required H2 sections.
+  G21  [NEW] No governance file contains the literal string
+       "UNCERTAIN" unless it appears inside the known_unknowns
+       section or key.
+       (Catches accidental placeholder leakage into canon body.
+       JSON has no comments — this rule applies to all five files.)
+  G22  [NEW] checker file itself compiles: py_compile self-check.
+  G23  [NEW] test file compiles: py_compile check on test file path.
+
+Output format for each gate:
+  [PASS] G01 All five governance files exist.
+  [FAIL] G11 JSON canon_version (1.4.2) != Markdown canon_version (1.4.1).
+
+---
+
+## [STRENGTHENED] TEST REQUIREMENTS
+
+The pytest test file must:
+
+- use only pytest and Python standard library;
+- import the checker module and call its individual check functions
+  where possible, or validate files directly;
+- use a fixture that points to the governance folder dynamically;
+- not hardcode any absolute path;
+
+Required test functions:
+  T01  test_all_five_files_exist
+  T02  test_canon_version_is_semver
+  T03  test_json_is_valid
+  T04  test_markdown_has_required_sections
+  T05  test_json_and_markdown_canon_version_match
+  T06  test_governing_hierarchy_is_nonempty
+  T07  test_box_registry_is_nonempty
+  T08  test_accepted_warning_baseline_is_valid_json
+  T09  test_accepted_warning_baseline_has_schema_version
+  T10  test_accepted_warning_baseline_has_accepted_warnings_list
+  T11  test_each_warning_entry_has_required_fields
+  T12  test_no_blank_warning_decisions
+  T13  test_governance_delivery_path_string_is_correct
+  T14  test_governance_file_roles_includes_baseline
+  T15  test_next_safe_step_is_nonempty_string
+  T16  [NEW] test_source_evidence_inventory_is_present
+  T17  [NEW] test_known_unknowns_is_present
+  T18  [NEW] test_active_box_touch_summary_is_present
+  T19  [NEW] test_checker_exits_zero_on_valid_governance
+       (calls checker as subprocess, asserts returncode == 0)
+  T20  [NEW] test_no_loose_uncertain_placeholders_in_canon_body
+       (reads Markdown, asserts UNCERTAIN only appears in the
+        known_unknowns section or comment lines)
+
+Each test must have a one-line docstring stating what it verifies.
+
+---
+
+## ACCEPTED WARNING BASELINE POLICY
+
+- Treat accepted_warning_baseline.json as a governed ledger.
+- Preserve it across chats.
+- Do not recreate it from scratch.
+- Do not recreate it from memory.
+- Append or narrowly update only after explicit user approval.
+- Do not use it as a trash bin for new warnings.
+- New unaccepted warnings must remain visible.
+- Any new accepted warning requires: explicit rationale,
+  classification, stable path, warning code, message_sha256 or
+  equivalent stable matcher, and user-approved freeze.
+- If a warning was later fixed, keep the historical entry by default.
+- Optional pruning requires an explicit baseline-pruning task and
+  consistent updates to Markdown, JSON, checker, tests, and baseline.
+
+schema_version in accepted_warning_baseline.json must be incremented
+whenever an entry is added, removed, or modified.
+
+---
+
+## GOVERNING HIERARCHY
+
+1. Current user instruction, if safe and explicit.
+2. Current source files, runtime logs, GUI observations,
+   and validation output.
+3. Current active governance files (uploaded baseline).
+4. Latest handoff output.
+5. Active project prompt stack or startup canon.
+6. Universal delivery protocol or project delivery protocol.
+7. Special prompts requested for the current task.
+8. Older prompts and historical examples.
+9. [NEW] AI training memory — lowest priority; always overridden
+   by uploaded evidence.
+
+---
+
+## BOX LOGIC SUMMARY
+
+A box is one isolated responsibility area. Each box owns only its own
+product. Before changing behavior, identify the owning box. One patch
+or bundle should touch one concern. If a change crosses boxes, define
+the handoff contract instead of mixing responsibilities.
+
+Box handoff contract rule:
+When Box A must pass data to Box B, the handoff must be typed,
+validated at the boundary, and owned by an explicit neutral contract
+or by the correct owning box.
+
+Cross-box work must declare:
+- current box;
+- external owner box;
+- why external touch is required now;
+- exact files touched;
+- validation for current box;
+- validation for the external box.
+
+If the external error can be corrected later, document it as a future
+error note or handoff item. Do not patch it in the current pass.
+
+---
+
+## NO-REGRESSION POLICY
+
+Do not:
+- weaken frozen tests;
+- silently roll back validated behavior;
+- hardcode a target project path into production source;
+- freeze a pass when focused validation failed, even if a broad
+  gate passed;
+- use broad pre-existing parse errors to justify unrelated box edits;
+- treat workbench, quarantine, demos, archived, or copied files as
+  production truth unless explicitly promoted and validated.
+
+---
+
+## GOVERNANCE CHANGE WORKFLOW
+
+1. An explicit proposal must be made in the current chat.
+2. The user must explicitly approve the governance change.
+3. The approval statement must be summarized in
+   current_chat_frozen_decisions.
+4. canon_version must be incremented (patch for small fixes,
+   minor for new rules, major for structural redesign).
+5. Markdown, JSON, checker, tests, and accepted_warning_baseline.json
+   must be updated consistently when relevant.
+6. No governance file may be updated silently.
+7. Do not update governance when work is unfinished; use a handoff.
+
+---
+
+## [NEW] POST-GENERATION SELF-CHECK (MANDATORY BEFORE DELIVERING ZIP)
+
+After generating all five files and before packaging the ZIP, the AI
+must perform and show this self-check block:
+
+  POST-GENERATION SELF-CHECK
+  ==========================
+  G01 All five files present in ZIP         : [YES / NO]
+  G02 canon_version incremented             : [YES / NO / N/A]
+  G11 JSON and Markdown versions match      : [YES / NO]
+  G20 All 17 Markdown H2 sections present  : [YES / NO]
+  G21 No loose UNCERTAIN in canon body      : [YES / NO]
+  G22 Checker file py_compile clean         : [YES / NO]
+  G23 Test file py_compile clean            : [YES / NO]
+  Baseline filenames preserved              : [YES / NO]
+  ZIP path structure correct (space in dir) : [YES / NO]
+  No runtime/source files in ZIP            : [YES / NO]
+  No prompt stack files in ZIP              : [YES / NO]
+  Evidence audit confirmed by user          : [YES / NO]
+
+If any item is NO, fix it before delivering the ZIP.
+Do not deliver a ZIP with a known NO in the self-check.
+
+---
+
+## REQUIRED OUTPUT
+
+Return one ZIP containing exactly the five updated replacement files:
+
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE/<CANON>.md
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE/<CANON>.json
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE/<CHECKER>.py
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE/<TEST>.py
+  _project_reference/ACTIVE_PROJECT_ GOVERNANCE/accepted_warning_baseline.json
+
+No other files.
+
+---
+
+## INSTALL INSTRUCTION FOR THE USER
+
+Extract the ZIP into the active project root to replace:
+
+  <PROJECT_ROOT>/_project_reference/ACTIVE_PROJECT_ GOVERNANCE/
+
+The project root is dynamic. Generated checker and test logic must
+not assume a specific absolute path.
+
+---
+
+## VALIDATION COMMANDS TEMPLATE
+
+Replace <PROJECT_ROOT>, <CHECKER_FILE>, and <TEST_FILE> with actual
+project paths and preserved baseline filenames.
+
+Windows PowerShell:
+
+  cd <PROJECT_ROOT>
+
+  python.exe -m py_compile `
+    "_project_reference\ACTIVE_PROJECT_ GOVERNANCE\<CHECKER_FILE>"
+
+  python.exe -m py_compile `
+    "_project_reference\ACTIVE_PROJECT_ GOVERNANCE\<TEST_FILE>"
+
+  python.exe `
+    "_project_reference\ACTIVE_PROJECT_ GOVERNANCE\<CHECKER_FILE>" `
+    --project-root .
+
+  $env:PYTHONPATH = "<PROJECT_ROOT>"
+  python.exe -m pytest `
+    "_project_reference\ACTIVE_PROJECT_ GOVERNANCE\<TEST_FILE>" -v
+
+Expected results:
+  Checker: all gates [PASS], final line PASS, exit code 0.
+  Pytest:  all T01–T20 green, no warnings about missing fixtures.
+
+---
+
+## FINAL RULE
+
+If no validated user-approved freeze occurred:
+  Output: No governance update required.
+  Stop. Generate nothing.
+
+If a freeze occurred:
+  1. Show Evidence Audit.
+     Wait for explicit user confirmation before writing any file.
+     Exception: if the user's message that triggered this prompt
+     already contains explicit pre-approval of the audit
+     (e.g. "run the full governance update, I approve the audit"),
+     proceed directly to generation without a second wait.
+     This makes the workflow two-step by default and one-step
+     only when the user explicitly collapses it.
+  2. Generate all five files from uploaded baseline.
+  3. Show Post-Generation Self-Check.
+  4. Fix any NO items.
+  5. Deliver one ZIP under _project_reference/ACTIVE_PROJECT_ GOVERNANCE.
+  6. Provide validation commands.
+  7. Do not canonize anything beyond what the Evidence Audit listed.

@@ -1,0 +1,26 @@
+{
+  "prompt_id": "prompt_canon_reconciliation_protocol",
+  "display_name": "Prompt Canon Reconciliation Protocol",
+  "filename": "prompt_canon_reconciliation_protocol.md",
+  "category": "07_prompt_authoring_and_audit",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Reconciles overlapping prompt canons and updates the active prompt set.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 35,
+  "trigger_phrases": [
+    "reconcile prompts",
+    "deduplicate prompts",
+    "clean prompt folder",
+    "rename prompts",
+    "prompt canon reconciliation"
+  ],
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_router",
+    "prompt_substitution_map"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "bundle_name": "kanda_context_routing_layer_phase2_folder_cards_v1",
+  "changed_box": "Folder Assimilation Cards Box",
+  "task_class": "prompt_routing_metadata_implementation",
+  "risk_level": "medium_low",
+  "files_changed": [
+    "prompt_library\\ACTIVE_PROMPTS\\01_session_start_and_navigation\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_01_session_start_and_navigation.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\02_prompt_routing_and_indexing\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_02_prompt_routing_and_indexing.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\03_governance_freeze_and_handoff\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_03_governance_freeze_and_handoff.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\04_box_architecture_and_boundaries\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_04_box_architecture_and_boundaries.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\05_patch_delivery_and_validation\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_05_patch_delivery_and_validation.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\06_refactor_and_architecture_hardening\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_06_refactor_and_architecture_hardening.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\07_prompt_authoring_and_audit\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_07_prompt_authoring_and_audit.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\08_python_engineering_core\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_08_python_engineering_core.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\09_python_quality_security_observability\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_09_python_quality_security_observability.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\10_python_api_data_async_config\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_10_python_api_data_async_config.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\11_productization_and_release_readiness\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_11_productization_and_release_readiness.meta.json",
+    "prompt_library\\ACTIVE_PROMPTS\\12_generalized_project_canons\\_FOLDER_ASSIMILATION.md",
+    "prompt_library\\METADATA\\folder_assimilation_12_generalized_project_canons.meta.json",
+    "prompt_library\\ROUTING\\folder_assimilation_cards_index.json",
+    "prompt_library\\ROUTING\\FOLDER_ASSIMILATION_CARDS_INDEX.md",
+    "prompt_library\\RECONCILIATION_REPORTS\\context_routing_phase2_folder_cards_report.md",
+    "prompt_library\\_bundle_temp\\BUNDLE_MANIFEST_kanda_context_routing_layer_phase2_folder_cards_v1.json"
+  ],
+  "what_changed": "Added 12 selected-when-needed folder assimilation cards, metadata files, and card indexes.",
+  "what_did_not_change": [
+    "runtime app code",
+    "kanda_reasoner_app",
+    "prompt_library_gui",
+    "live prompt library integration"
+  ],
+  "safety_boundaries_preserved": [
+    "cards are metadata only",
+    "not daily-loaded",
+    "selected only when needed"
+  ],
+  "validation_performed": [
+    "sandbox file creation",
+    "json parse",
+    "12-folder coverage",
+    "forbidden path absence"
+  ],
+  "user_validation_commands": "Use provided PowerShell validation script.",
+  "next_recommended_step": "Validate locally, then proceed to Phase 3 routing tests if clean."
+}

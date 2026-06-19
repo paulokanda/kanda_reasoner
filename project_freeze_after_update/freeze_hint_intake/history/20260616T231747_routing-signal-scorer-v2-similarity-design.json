@@ -1,0 +1,49 @@
+{
+  "form_inputs": {
+    "box_type": "Design-Only Similarity Planning / Prompt-Call Accuracy Support",
+    "do_not_regress_rules": "This milestone is design-only and must not implement runtime similarity.\nDo not add TF-IDF, embeddings, vector stores, sklearn, numpy, torch, faiss, sentence-transformers, or self-learning behavior in this milestone.\nDo not modify deterministic router behavior.\nDo not let similarity output decide May proceed now.\nDo not let similarity output override the router canon.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nPreserve v1 diagnostic, manual-pilot, and advisory behavior.\nFast Path simple explanation protection remains mandatory.\nHigh-risk patch, terminal, freeze JSON, freeze sidecar, freeze memory, and external-project-root scenarios must continue to recommend pre_output_contract_gates through the existing advisory/diagnostic chain.\nThe canon decides final route, required prompts, missing context, and whether work may proceed.\nProject-specific freeze-intake state must remain under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific freeze-intake state or frozen memory inside project_freeze_ledger.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v2 Similarity Design",
+    "generated_files": "",
+    "known_warnings": "This patch intentionally does not implement runtime similarity. It adds a design/spec document and tests only. The next safe milestone is a fixed similarity test corpus, not TF-IDF or embeddings runtime.",
+    "notes": "This patch creates a design-only safety boundary for possible future similarity support. It preserves the rule: the scorer may suggest, the canon decides. Source patch ZIP: routing_signal_scorer_v2_similarity_design_patch.zip.",
+    "planned_next_step": "After installing, validating, and freezing this design, consider routing_signal_scorer_v2_similarity_test_corpus before any runtime similarity implementation.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer/design + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_design.md\ntests/test_routing_signal_scorer_v2_similarity_design.py\nkanda_reasoner_app/routing_signal_scorer/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_design.md\ntests/test_routing_signal_scorer_v2_similarity_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_design\nCONTRACT_TEST_OK: design-only similarity spec, no-runtime-similarity boundary, conservative thresholds, Fast Path protection, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_DESIGN_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "Design-Only Similarity Planning / Prompt-Call Accuracy Support",
+    "do_not_regress_rules": "This milestone is design-only and must not implement runtime similarity.\nDo not add TF-IDF, embeddings, vector stores, sklearn, numpy, torch, faiss, sentence-transformers, or self-learning behavior in this milestone.\nDo not modify deterministic router behavior.\nDo not let similarity output decide May proceed now.\nDo not let similarity output override the router canon.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nPreserve v1 diagnostic, manual-pilot, and advisory behavior.\nFast Path simple explanation protection remains mandatory.\nHigh-risk patch, terminal, freeze JSON, freeze sidecar, freeze memory, and external-project-root scenarios must continue to recommend pre_output_contract_gates through the existing advisory/diagnostic chain.\nThe canon decides final route, required prompts, missing context, and whether work may proceed.\nProject-specific freeze-intake state must remain under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific freeze-intake state or frozen memory inside project_freeze_ledger.",
+    "feature_id": "routing-signal-scorer-v2-similarity-design",
+    "feature_title": "Routing Signal Scorer v2 Similarity Design",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This patch intentionally does not implement runtime similarity. It adds a design/spec document and tests only. The next safe milestone is a fixed similarity test corpus, not TF-IDF or embeddings runtime.",
+    "notes": "This patch creates a design-only safety boundary for possible future similarity support. It preserves the rule: the scorer may suggest, the canon decides. Source patch ZIP: routing_signal_scorer_v2_similarity_design_patch.zip.",
+    "patch_name": "routing_signal_scorer_v2_similarity_design_patch",
+    "planned_next_step": "After installing, validating, and freezing this design, consider routing_signal_scorer_v2_similarity_test_corpus before any runtime similarity implementation.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer/design + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_design.md\ntests/test_routing_signal_scorer_v2_similarity_design.py\nkanda_reasoner_app/routing_signal_scorer/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781651737930474200,
+      "source_name": "routing_signal_scorer_v2_similarity_design_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_design_patch.zip",
+      "source_size_bytes": 5725
+    },
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_design.md\ntests/test_routing_signal_scorer_v2_similarity_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_design\nCONTRACT_TEST_OK: design-only similarity spec, no-runtime-similarity boundary, conservative thresholds, Fast Path protection, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_DESIGN_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-16T23:17:47Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781651737930474200,
+    "source_name": "routing_signal_scorer_v2_similarity_design_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_design_patch.zip",
+    "source_size_bytes": 5725
+  },
+  "used_at_utc": null
+}

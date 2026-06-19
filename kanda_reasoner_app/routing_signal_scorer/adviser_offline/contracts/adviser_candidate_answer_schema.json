@@ -1,0 +1,141 @@
+{
+  "schema_name": "adviser_candidate_answer_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "case_id",
+    "candidate_id",
+    "candidate_version",
+    "run_id",
+    "input_hash",
+    "governance_domain",
+    "path_recommendation",
+    "required_prompt_groups",
+    "required_specialist_prompts",
+    "recommended_prompt_groups",
+    "recommended_specialist_prompts",
+    "context_requirements",
+    "risk_assessment",
+    "governance_flags",
+    "advisory_proceed_recommendation",
+    "requires_human_confirmation",
+    "authority_statement",
+    "rationale"
+  ],
+  "enums": {
+    "governance_domain": [
+      "freeze",
+      "patch",
+      "box",
+      "shield",
+      "startup",
+      "prompt_library",
+      "coding",
+      "explanation",
+      "ambiguous",
+      "out_of_scope",
+      "unknown"
+    ],
+    "path_recommendation": [
+      "routed_work",
+      "fast_path",
+      "reject",
+      "ambiguous",
+      "abstain",
+      "unknown"
+    ],
+    "advisory_proceed_recommendation": [
+      "NO",
+      "CONDITIONAL",
+      "ABSTAIN",
+      "UNKNOWN"
+    ],
+    "requires_human_confirmation": [
+      "true",
+      "false",
+      "unknown"
+    ],
+    "authority_statement": [
+      "advisory_only"
+    ],
+    "severity": [
+      "none",
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ]
+  },
+  "explicitly_forbidden_values": {
+    "advisory_proceed_recommendation": [
+      "YES",
+      "YES_UNCONDITIONAL",
+      "PROCEED",
+      "AUTO_PROCEED"
+    ],
+    "authority_statement": [
+      "router_authority",
+      "final_route",
+      "may_proceed_authority",
+      "prompt_loader"
+    ]
+  },
+  "field_definitions": {
+    "context_requirements": {
+      "required": [],
+      "recommended": [],
+      "optional": [],
+      "missing_required": [],
+      "missing_recommended": []
+    },
+    "risk_assessment": {
+      "severity": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "flags": [],
+      "critical_risks": []
+    },
+    "governance_flags": {
+      "freeze": [],
+      "box": [],
+      "startup": [],
+      "prompt_library": [],
+      "patch_delivery": [],
+      "authority": [],
+      "adversarial": []
+    },
+    "rationale": {
+      "short": "bounded string; advisory evidence only",
+      "evidence": []
+    }
+  },
+  "safety_rules": [
+    "candidate output is evidence not authority",
+    "unconditional YES is not part of Adviser v0 schema",
+    "ABSTAIN AMBIGUOUS OUT_OF_SCOPE UNKNOWN must never permit action",
+    "candidate output must not contain executable instructions or action fields"
+  ]
+}

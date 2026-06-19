@@ -1,0 +1,37 @@
+{
+  "bundle_name": "kanda_context_routing_layer_phase6_repair_folder_card_word_limits_v1",
+  "created_at": "2026-06-12T03:23:45Z",
+  "changed_box": "Folder Card Word Limit Repair Box",
+  "task_class": "prompt_metadata_repair",
+  "risk_level": "low",
+  "files_changed": [
+    "ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md",
+    "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/_FOLDER_ASSIMILATION.md",
+    "ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md",
+    "METADATA/folder_card_word_limit_repair.meta.json",
+    "RECONCILIATION_REPORTS/context_routing_phase6_repair_folder_card_word_limits_report.md"
+  ],
+  "what_changed": [
+    "Shortened the three folder assimilation cards that exceeded the validator hard word limit",
+    "Added repair report",
+    "Added repair metadata"
+  ],
+  "what_did_not_change": [
+    "No live app files",
+    "No prompt_library_gui files",
+    "No Python validator changes",
+    "No routing JSON changes",
+    "No folder count changes"
+  ],
+  "expected_validation": [
+    "folder_card_under_hard_word_limit should pass for 01, 06, and 08",
+    "Phase 6 validation should then pass if no other local issue exists"
+  ],
+  "terminal_behavior_canon": {
+    "install_success": "clear_terminal_after_5_seconds",
+    "install_error": "do_not_clear_terminal",
+    "validation_success": "clear_only_after_enter_enter",
+    "validation_error": "do_not_clear_terminal",
+    "powershell_finally_blocks": "forbidden"
+  }
+}

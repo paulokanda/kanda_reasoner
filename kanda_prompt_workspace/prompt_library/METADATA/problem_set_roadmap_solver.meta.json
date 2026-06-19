@@ -1,0 +1,26 @@
+{
+  "prompt_id": "problem_set_roadmap_solver",
+  "display_name": "Problem-Set Roadmap Solver",
+  "filename": "problem_set_roadmap_solver.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Turns a set of project problems into a staged roadmap.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 30,
+  "trigger_phrases": [
+    "problem set roadmap",
+    "many problems",
+    "solve roadmap",
+    "batch issues",
+    "prioritize problems"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "bundle_gated_development_workflow",
+    "python_refactoring"
+  ]
+}

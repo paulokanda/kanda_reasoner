@@ -1,0 +1,11 @@
+﻿T9T013_kanda_prompt_workspace_prompt_authoring_routing_bridge_v2_repair
+Installed: 2026-06-13T23:22:09.6035496-03:00
+ProjectRoot: E:\kanda_reasoner
+Workspace: E:\kanda_reasoner\kanda_prompt_workspace
+Purpose: Repair routing bridge v1 by removing deprecated literal project-root path from active startup routing prompts while preserving the root-regression guard in generic wording.
+Changed files:
+E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\01_session_start_and_navigation\ai_prompt_request_canon.md
+E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\02_prompt_routing_and_indexing\prompt_navigation_index.md
+E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ROUTING\GROUP_ASSIMILATION_INDEX.md
+Backups:
+E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\_bundle_temp\backup_T9T013_kanda_prompt_workspace_prompt_authoring_routing_bridge_v2_repair_20260613_232209

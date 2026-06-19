@@ -1,0 +1,25 @@
+{
+  "prompt_id": "folder_assimilation_12_generalized_project_canons",
+  "display_name": "Folder Assimilation - Generalized Project Canons",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "12_generalized_project_canons",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Provide reusable domain-specific canons for plugins, visual rendering, transform resolvers, data pipelines, and decision tables.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "plugin",
+    "visual render",
+    "transform resolver",
+    "pipeline invariant",
+    "decision table"
+  ],
+  "card_path": "ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md"
+}

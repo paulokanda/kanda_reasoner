@@ -1,0 +1,26 @@
+{
+  "prompt_id": "prompt_audit_canon",
+  "display_name": "Prompt Audit Canon",
+  "filename": "prompt_audit_canon.md",
+  "category": "07_prompt_authoring_and_audit",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Rules for auditing, updating, generalizing, and deprecating prompt files.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 35,
+  "trigger_phrases": [
+    "audit prompts",
+    "prompt batch audit",
+    "review prompt files",
+    "prompt canon audit",
+    "prompt quality"
+  ],
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_router",
+    "prompt_substitution_map"
+  ]
+}

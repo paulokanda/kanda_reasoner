@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="360" viewBox="0 0 780 360" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture Review pipeline</title>
+  <desc id="desc">A local project snapshot flows through architecture detectors, issue evidence, human review, and validation gates.</desc>
+  <rect width="780" height="360" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+  </defs>
+  <rect x="34" y="42" width="150" height="78" rx="6" fill="#dbeafe" stroke="#0d0d1a" stroke-width="2"/>
+  <text x="109" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f3460">Project</text>
+  <text x="109" y="96" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1a1a2e">source and manifests</text>
+
+  <rect x="238" y="42" width="150" height="78" rx="6" fill="#fef3c7" stroke="#0d0d1a" stroke-width="2"/>
+  <text x="313" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f3460">Detectors</text>
+  <text x="313" y="96" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1a1a2e">25 issue families</text>
+
+  <rect x="442" y="42" width="150" height="78" rx="6" fill="#dbeafe" stroke="#0d0d1a" stroke-width="2"/>
+  <text x="517" y="74" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f3460">Evidence</text>
+  <text x="517" y="96" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1a1a2e">paths, codes, risk</text>
+
+  <rect x="596" y="192" width="150" height="78" rx="6" fill="#fef3c7" stroke="#0d0d1a" stroke-width="2"/>
+  <text x="671" y="224" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f3460">Human</text>
+  <text x="671" y="246" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1a1a2e">review and action</text>
+
+  <rect x="238" y="228" width="150" height="78" rx="6" fill="#dbeafe" stroke="#0d0d1a" stroke-width="2"/>
+  <text x="313" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f3460">Validation</text>
+  <text x="313" y="282" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1a1a2e">tests protect fixes</text>
+
+  <path d="M184 81h48" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M388 81h48" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M592 102c56 18 86 46 86 84" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M596 244c-73 35-132 46-202 37" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M238 266c-88-10-134-55-126-140" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+
+  <text x="390" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#0f3460">Architecture Review does not fix silently.</text>
+  <text x="390" y="192" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#475569">It names risks, shows evidence, and supports validated repair.</text>
+</svg>

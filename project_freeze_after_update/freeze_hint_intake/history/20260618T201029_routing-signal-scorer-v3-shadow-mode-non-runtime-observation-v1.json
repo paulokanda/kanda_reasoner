@@ -1,0 +1,88 @@
+{
+  "form_inputs": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_non_runtime_shadow_observation_sub_box",
+    "do_not_regress_rules": "M23 remains non-runtime and in-memory only.\nM23 may build a shadow observation dictionary only from caller-supplied JSON-safe primitive input.\nM23 must fail closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values.\nM23 must not integrate with runtime routing modules or prompt loaders.\nM23 must not activate shadow mode or start Auxiliar/Assistant behavior.\nM23 must not read or write files, persist observations, write reports, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or grant router authority.\nM23 output remains non-authoritative evidence requiring separate human review.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Non Runtime Shadow Observation Implementation v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "known_warnings": "['M23 is the first implementation milestone after the design-only chain, but remains non-runtime and isolated.', 'The observation helper returns in-memory evidence only and does not persist observations.', 'The helper does not compare routes in v1; route_path_difference_observed is fixed false until a later governed milestone approves comparison semantics.', 'Any review evidence persistence or report writing belongs to M24 or later, not M23.']",
+    "notes": "M23 implements the first narrow non-runtime shadow observation helper. It builds a single in-memory observation dictionary from caller-supplied JSON-safe primitive input and fails closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values. It adds no runtime router integration, prompt loading, file IO, persistence, report writing, gold mutation, registry mutation, provider/model calls, embeddings, candidate promotion, shadow-mode activation, or Auxiliar/Assistant behavior.",
+    "planned_next_step": "After freeze confirmation, proceed only to M24: Routing Signal Scorer v3 Shadow Observation Review Evidence Design v1.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_implementation_gate_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_observation_skeleton_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_contract_validator_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_io_contract_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_boundary_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_transition_design.py\ntests/test_routing_signal_scorer_v3_adviser_promotion_criteria_gate.py\ntests/test_routing_signal_scorer_v3_adviser_gold_set_expansion_plan.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_registry.py\ntests/test_routing_signal_scorer_v3_adviser_active_review_queue.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_evaluation_runner.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_design.py\ntests/test_routing_signal_scorer_v3_adviser_contract_validator_output_guard.py\ntests/test_routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_boundary_design.py\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1\nCONTRACT_TEST_OK: non-runtime shadow observation implementation, standard-library-only fail-closed in-memory observation builder over caller-supplied JSON-safe primitive input, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_MODE_NON_RUNTIME_OBSERVATION_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_non_runtime_shadow_observation_sub_box",
+    "created_utc": "2026-06-18T20:00:00Z",
+    "do_not_regress_rules": "M23 remains non-runtime and in-memory only.\nM23 may build a shadow observation dictionary only from caller-supplied JSON-safe primitive input.\nM23 must fail closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values.\nM23 must not integrate with runtime routing modules or prompt loaders.\nM23 must not activate shadow mode or start Auxiliar/Assistant behavior.\nM23 must not read or write files, persist observations, write reports, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or grant router authority.\nM23 output remains non-authoritative evidence requiring separate human review.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.",
+    "do_not_touch_summary": [
+      "M23 remains non-runtime and in-memory only.",
+      "M23 may build a shadow observation dictionary only from caller-supplied JSON-safe primitive input.",
+      "M23 must fail closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values.",
+      "M23 must not integrate with runtime routing modules or prompt loaders.",
+      "M23 must not activate shadow mode or start Auxiliar/Assistant behavior.",
+      "M23 must not read or write files, persist observations, write reports, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or grant router authority.",
+      "M23 output remains non-authoritative evidence requiring separate human review.",
+      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+      "Do not store project-specific frozen memory inside project_freeze_ledger.",
+      "After a local freeze write, the AI startup freeze context must be refreshed."
+    ],
+    "feature_id": "routing-signal-scorer-v3-shadow-mode-non-runtime-observation-v1",
+    "feature_title": "Routing Signal Scorer v3 Non Runtime Shadow Observation Implementation v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['M23 is the first implementation milestone after the design-only chain, but remains non-runtime and isolated.', 'The observation helper returns in-memory evidence only and does not persist observations.', 'The helper does not compare routes in v1; route_path_difference_observed is fixed false until a later governed milestone approves comparison semantics.', 'Any review evidence persistence or report writing belongs to M24 or later, not M23.']",
+    "milestone": "M23",
+    "notes": "M23 implements the first narrow non-runtime shadow observation helper. It builds a single in-memory observation dictionary from caller-supplied JSON-safe primitive input and fails closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values. It adds no runtime router integration, prompt loading, file IO, persistence, report writing, gold mutation, registry mutation, provider/model calls, embeddings, candidate promotion, shadow-mode activation, or Auxiliar/Assistant behavior.",
+    "patch_name": "routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch",
+    "planned_next_step": "After freeze confirmation, proceed only to M24: Routing Signal Scorer v3 Shadow Observation Review Evidence Design v1.",
+    "previous_milestones_required": [
+      "M17 Shadow Mode / Assistant Transition Design v1 frozen as design-only",
+      "M18 Shadow Mode Boundary Design v1 frozen as design-only",
+      "M19 Shadow Mode Input Output Contract Design v1 frozen as design-only",
+      "M20 Shadow Mode Contract Validator Design v1 frozen as design-only",
+      "M21 Shadow Mode Observation Skeleton Design v1 frozen as design-only",
+      "M22 Shadow Mode Implementation Gate Design v1 frozen as design-only"
+    ],
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory",
+    "schema_version": "1.0",
+    "sha256": {
+      "box_manifest.json": "5d593c20e0dec4aa82b94d14f53bac6f952dabee7ced80d31947932e9ca334fb",
+      "shadow_mode_non_runtime_observation.py": "2bf878da1afbd270ca956ab16d9d7322101b31dd8bd3e035097d13940b0c8572",
+      "test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py": "67f379d861393541464fd96a3640d8ff6ad8ce35c4ed13ab50ca792f3ae94f39"
+    },
+    "source": {
+      "source_mtime_ns": 1781813342906023500,
+      "source_name": "routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+      "source_size_bytes": 36016
+    },
+    "source_phase": "post_adviser_transition_toward_auxiliar_assistant_not_assistant_phase",
+    "status": "freeze_ready_after_local_validation",
+    "summary": "M23 implements the first narrow non-runtime shadow observation helper. It builds a single in-memory observation dictionary from caller-supplied JSON-safe primitive input and fails closed on unknown fields, forbidden authority fields, missing required fields, and non-primitive values. It adds no runtime router integration, prompt loading, file IO, persistence, report writing, gold mutation, registry mutation, provider/model calls, embeddings, candidate promotion, shadow-mode activation, or Auxiliar/Assistant behavior.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_implementation_gate_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_observation_skeleton_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_contract_validator_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_io_contract_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_boundary_design.py\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_transition_design.py\ntests/test_routing_signal_scorer_v3_adviser_promotion_criteria_gate.py\ntests/test_routing_signal_scorer_v3_adviser_gold_set_expansion_plan.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_registry.py\ntests/test_routing_signal_scorer_v3_adviser_active_review_queue.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_evaluation_runner.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer.py\ntests/test_routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_design.py\ntests/test_routing_signal_scorer_v3_adviser_contract_validator_output_guard.py\ntests/test_routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_boundary_design.py\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_commands": [
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_non_runtime_observation.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_implementation_gate_design.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_observation_skeleton_design.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_contract_validator_design.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_io_contract_design.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_boundary_design.py",
+      "python tests/test_routing_signal_scorer_v3_shadow_mode_assistant_transition_design.py"
+    ],
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1\nCONTRACT_TEST_OK: non-runtime shadow observation implementation, standard-library-only fail-closed in-memory observation builder over caller-supplied JSON-safe primitive input, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_MODE_NON_RUNTIME_OBSERVATION_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-18T20:10:29Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781813342906023500,
+    "source_name": "routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+    "source_size_bytes": 36016
+  },
+  "used_at_utc": null
+}

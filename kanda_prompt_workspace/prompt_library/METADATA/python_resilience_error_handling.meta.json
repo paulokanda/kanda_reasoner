@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_resilience_error_handling",
+  "display_name": "Python Resilience and Error Handling",
+  "filename": "python_resilience_error_handling.md",
+  "category": "09_python_quality_security_observability",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Designs resilient error handling, retries, and recovery behavior.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 45,
+  "trigger_phrases": [
+    "error handling",
+    "retries",
+    "circuit breaker",
+    "resilience",
+    "failure recovery"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "bundle_gated_development_workflow",
+    "python_testing_pytest",
+    "implementation_and_delivery_protocol"
+  ]
+}

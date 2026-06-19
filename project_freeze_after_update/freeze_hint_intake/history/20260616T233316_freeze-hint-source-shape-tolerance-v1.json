@@ -1,0 +1,48 @@
+{
+  "form_inputs": {
+    "box_type": "Intake / Contract / Legacy Record Tolerance",
+    "do_not_regress_rules": "Freeze hint intake must tolerate legacy scalar source metadata without crashing.\nbuild_freeze_form_inputs_from_latest_hint must not crash when latest_freeze_hint.json has source as a string.\nFormulary data ZIPs must remain project-local under project_freeze_after_update/freeze_hint_intake.\nKANDA_FREEZE_HINT.json must remain patch ZIP root metadata and must not be installed into project root.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Source Shape Tolerance v1",
+    "generated_files": "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_source_shape_tolerance_v1.txt",
+    "known_warnings": "This patch fixes a compatibility crash caused by legacy/data-only freeze hint records whose source field is a scalar string instead of an object.",
+    "notes": "This is a narrow contract-level tolerance repair. It does not change GUI write behavior or project freeze-memory ownership.",
+    "planned_next_step": "Re-run the formulary data v2 validation and open New Local Freeze Entry.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_source_shape_tolerance.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_source_shape_tolerance_v1\nCONTRACT_TEST_OK: freeze_hint_intake tolerates legacy scalar source metadata in latest_freeze_hint.json\nSTATUS: FREEZE_HINT_SOURCE_SHAPE_TOLERANCE_ACTIVE"
+  },
+  "hint": {
+    "box_type": "Intake / Contract / Legacy Record Tolerance",
+    "do_not_regress_rules": "Freeze hint intake must tolerate legacy scalar source metadata without crashing.\nbuild_freeze_form_inputs_from_latest_hint must not crash when latest_freeze_hint.json has source as a string.\nFormulary data ZIPs must remain project-local under project_freeze_after_update/freeze_hint_intake.\nKANDA_FREEZE_HINT.json must remain patch ZIP root metadata and must not be installed into project root.\nDo not store project-specific frozen memory inside project_freeze_ledger.",
+    "feature_id": "freeze-hint-source-shape-tolerance-v1",
+    "feature_title": "Freeze Hint Source Shape Tolerance v1",
+    "generated_files": "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_source_shape_tolerance_v1.txt",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This patch fixes a compatibility crash caused by legacy/data-only freeze hint records whose source field is a scalar string instead of an object.",
+    "notes": "This is a narrow contract-level tolerance repair. It does not change GUI write behavior or project freeze-memory ownership.",
+    "planned_next_step": "Re-run the formulary data v2 validation and open New Local Freeze Entry.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781622256157812700,
+      "source_name": "freeze_hint_source_shape_tolerance_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_source_shape_tolerance_v1_patch.zip",
+      "source_size_bytes": 14077
+    },
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_source_shape_tolerance.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_source_shape_tolerance_v1\nCONTRACT_TEST_OK: freeze_hint_intake tolerates legacy scalar source metadata in latest_freeze_hint.json\nSTATUS: FREEZE_HINT_SOURCE_SHAPE_TOLERANCE_ACTIVE"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-16T23:33:16Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781622256157812700,
+    "source_name": "freeze_hint_source_shape_tolerance_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_source_shape_tolerance_v1_patch.zip",
+    "source_size_bytes": 14077
+  },
+  "used_at_utc": null
+}

@@ -1,0 +1,22 @@
+{
+  "prompt_id": "group_assimilation_index",
+  "display_name": "Group Assimilation Index",
+  "filename": "GROUP_ASSIMILATION_INDEX.md",
+  "category": "ROUTING",
+  "status": "active_candidate",
+  "load_type": "tier_1_group_routing",
+  "source_stage": "kanda_context_routing_layer_phase1",
+  "description": "Group-level routing map for the 12 use-based prompt folders; selects prompt neighborhoods before individual specialist prompts.",
+  "priority": 15,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "ai_prompt_request_canon"
+  ],
+  "trigger_phrases": [
+    "group route",
+    "which folder",
+    "prompt group",
+    "context routing",
+    "assimilation index"
+  ]
+}

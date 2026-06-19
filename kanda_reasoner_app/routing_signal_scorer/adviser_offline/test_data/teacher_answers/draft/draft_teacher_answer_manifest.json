@@ -1,0 +1,37 @@
+{
+  "authority_statement": "advisory_only_evidence_not_authority",
+  "case_count": 50,
+  "contains_artifact_io": false,
+  "contains_candidate_outputs": false,
+  "contains_candidate_scorer": false,
+  "contains_gold_cases": false,
+  "contains_ml_execution": false,
+  "contains_runtime_integration": false,
+  "dataset_kind": "draft_teacher_answers",
+  "family_counts": {
+    "adversarial_bypass": 8,
+    "ambiguous": 4,
+    "box_boundary": 5,
+    "false_positive": 5,
+    "freeze_workflow": 5,
+    "out_of_scope": 5,
+    "patch_delivery": 5,
+    "prompt_library": 4,
+    "routing_signal_scorer": 5,
+    "startup_delivery": 4
+  },
+  "feature_id": "routing_signal_scorer_v3_adviser_human_review_draft_teacher_answers_v1",
+  "human_review_required_before_gold": true,
+  "is_gold_set": false,
+  "record_count": 50,
+  "review_status": "draft_unreviewed",
+  "schema_version": "3.47-adviser-human-review-draft-teacher-answers",
+  "severity_counts": {
+    "P0_CRITICAL": 22,
+    "P1_HIGH": 15,
+    "P2_MEDIUM": 2,
+    "P3_LOW": 11
+  },
+  "source_seed_case_manifest": "kanda_reasoner_app/routing_signal_scorer/adviser_offline/test_data/input_cases/seed_case_corpus_manifest.json",
+  "teacher_answer_file": "draft_teacher_answers_v1.jsonl"
+}

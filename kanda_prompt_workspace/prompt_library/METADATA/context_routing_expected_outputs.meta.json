@@ -1,0 +1,11 @@
+{
+  "prompt_id": "context_routing_expected_outputs",
+  "file_path": "ROUTING_TESTS/context_routing_expected_outputs.json",
+  "status": "audited_candidate",
+  "scope": "project_agnostic_routing_test",
+  "owner_box": "routing_test_box",
+  "load_mode": "manual_or_validation_only",
+  "phase": "phase3_routing_tests",
+  "purpose": "Machine-readable expected routing outputs.",
+  "version": "1.0"
+}

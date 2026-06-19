@@ -1,0 +1,48 @@
+{
+  "form_inputs": {
+    "box_type": "Freeze Hint Intake / Autofill State Machine Contract Repair",
+    "do_not_regress_rules": "Consumed or already-frozen staged sidecars must not hide the next current unconsumed patch ZIP.\nOlder stale sidecars without recognizer-friendly validation evidence must remain blocked after a consumed/frozen sidecar is skipped.\nThe freeze form must not fall back to starter placeholders when a valid current unconsumed freeze hint exists behind a consumed newer sidecar.\nPreserve stale sidecar fall-through blocking, current validated latest hint preservation, and prior freeze-hint intake regressions.\nPreview Freeze Entry remains read-only and Confirm and Write remains explicitly human-confirmed.\nProject-specific freeze-intake state remains under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory remains under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Consumed Newer Scan Continuation v1",
+    "generated_files": "",
+    "known_warnings": "This is a narrow repair for a post-shielding edge case: a newer consumed/frozen sidecar could block scanning before the current unconsumed runtime-lite patch ZIP was reached. The repair keeps stale pending older sidecars blocked.",
+    "notes": "KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into the project root.",
+    "planned_next_step": "After validation, freeze this repair before freezing Routing Signal Scorer v2 Similarity Runtime Lite.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/\nproject_freeze_ledger/",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_consumed_newer_scan_continuation_v1\nCONTRACT_TEST_OK: consumed/frozen newer sidecars skipped without hiding current unconsumed validated patch, stale pending older sidecars remain blocked, freeze-hint state-machine regressions preserved, and routing runtime-lite validation preserved\nSANDBOX_FREEZE_HINT_CONSUMED_NEWER_SCAN_CONTINUATION_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "Freeze Hint Intake / Autofill State Machine Contract Repair",
+    "do_not_regress_rules": "Consumed or already-frozen staged sidecars must not hide the next current unconsumed patch ZIP.\nOlder stale sidecars without recognizer-friendly validation evidence must remain blocked after a consumed/frozen sidecar is skipped.\nThe freeze form must not fall back to starter placeholders when a valid current unconsumed freeze hint exists behind a consumed newer sidecar.\nPreserve stale sidecar fall-through blocking, current validated latest hint preservation, and prior freeze-hint intake regressions.\nPreview Freeze Entry remains read-only and Confirm and Write remains explicitly human-confirmed.\nProject-specific freeze-intake state remains under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory remains under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.",
+    "feature_id": "freeze-hint-consumed-newer-scan-continuation-v1",
+    "feature_title": "Freeze Hint Consumed Newer Scan Continuation v1",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This is a narrow repair for a post-shielding edge case: a newer consumed/frozen sidecar could block scanning before the current unconsumed runtime-lite patch ZIP was reached. The repair keeps stale pending older sidecars blocked.",
+    "notes": "KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into the project root.",
+    "planned_next_step": "After validation, freeze this repair before freezing Routing Signal Scorer v2 Similarity Runtime Lite.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/\nproject_freeze_ledger/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781656027935436800,
+      "source_name": "freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+      "source_size_bytes": 16537
+    },
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_consumed_newer_scan_continuation_v1\nCONTRACT_TEST_OK: consumed/frozen newer sidecars skipped without hiding current unconsumed validated patch, stale pending older sidecars remain blocked, freeze-hint state-machine regressions preserved, and routing runtime-lite validation preserved\nSANDBOX_FREEZE_HINT_CONSUMED_NEWER_SCAN_CONTINUATION_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T00:28:14Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781656027935436800,
+    "source_name": "freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+    "source_size_bytes": 16537
+  },
+  "used_at_utc": null
+}

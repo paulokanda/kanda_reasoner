@@ -1,0 +1,63 @@
+{
+  "schema_name": "disagreement_report_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "report_id",
+    "run_id",
+    "case_id",
+    "teacher_answer_ref",
+    "candidate_answer_ref",
+    "disagreements",
+    "aggregate_severity",
+    "promotion_blocker",
+    "review_status"
+  ],
+  "enums": {
+    "aggregate_severity": [
+      "none",
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ],
+    "review_status": [
+      "pending",
+      "reviewed",
+      "resolved",
+      "deferred"
+    ]
+  },
+  "disagreement_fields": [
+    "field",
+    "teacher_value",
+    "candidate_value",
+    "severity",
+    "impact",
+    "recommendation"
+  ],
+  "safety_rules": [
+    "critical disagreements block promotion",
+    "unsafe proceed mismatch is critical",
+    "missing required prompt in governed work is high or critical depending on bug bar"
+  ]
+}

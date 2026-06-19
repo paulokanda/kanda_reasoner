@@ -1,0 +1,41 @@
+{
+  "box_id": "freeze_hint_intake",
+  "box_name": "Freeze Hint Intake",
+  "box_type": "domain_state_bridge",
+  "box_size": "small",
+  "version": "1.2.0",
+  "contract_version": "1.2",
+  "health_state": "draft",
+  "responsibility": "Read KANDA_FREEZE_HINT.json sidecars from staged patch ZIPs, normalize both flat and nested patch-boundary metadata into complete freeze-form inputs, repair legacy saved form records from the raw hint when needed, merge post-validation evidence after local validation passes, and provide mandatory-field-safe freeze-form inputs to the Freeze Feature After Update tab before heuristic fallback.",
+  "owner_paths": [
+    "kanda_reasoner_app/freeze_hint_intake/"
+  ],
+  "public_contract": {
+    "interface_file": "contract.py",
+    "provides_functions": [
+      "read_freeze_hint_from_patch_zip",
+      "scan_and_save_latest_freeze_hint",
+      "load_latest_freeze_hint_record",
+      "build_freeze_form_inputs_from_latest_hint",
+      "merge_validation_evidence_into_latest_hint",
+      "mark_latest_freeze_hint_used"
+    ]
+  },
+  "state_owner": "The selected project's project_freeze_after_update/freeze_hint_intake folder",
+  "forbidden_dependencies": [
+    "project_freeze_ledger as project-specific state owner",
+    "GUI private internals",
+    "global cross-project freeze hint registry"
+  ],
+  "fallback_behavior": "If no valid KANDA_FREEZE_HINT.json is available, the Freeze Feature After Update tab keeps its deterministic heuristic baseline. If a valid hint exists but saved form_inputs are stale, blank, or placeholder-filled, the intake contract re-derives mandatory form fields from the raw hint instead of leaking starter placeholders.",
+  "protected_behaviors": [
+    "nested_patch_boundary_allowed_paths_populate_validated_files",
+    "owning_box_populates_primary_box",
+    "feature_type_populates_box_type",
+    "summary_populates_notes",
+    "freeze_warning_populates_known_warnings",
+    "protected_architecture_characteristics_populate_do_not_regress_rules",
+    "legacy_saved_records_are_repaired_from_raw_hint",
+    "confirm_write_enabled_requires_mandatory_non_placeholder_fields"
+  ]
+}

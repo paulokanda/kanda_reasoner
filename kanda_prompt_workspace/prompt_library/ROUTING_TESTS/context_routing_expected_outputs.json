@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0",
+  "patch_name": "kanda_context_routing_layer_phase3_routing_tests_v1",
+  "owner_box": "routing_test_box",
+  "test_count": 10,
+  "tests": [
+    {
+      "id": "T001_START_DAY",
+      "input": "Start the working day and prepare context.",
+      "task_intent": "START_DAY",
+      "required_groups": [
+        "01_session_start_and_navigation",
+        "02_prompt_routing_and_indexing"
+      ],
+      "optional_groups": [
+        "03_governance_freeze_and_handoff"
+      ],
+      "minimum_viable_context": [
+        "start_of_day_master_stack",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index",
+        "GROUP_ASSIMILATION_INDEX"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false,
+      "box_architecture_required": false,
+      "delivery_protocol_required": false,
+      "validation_required": false,
+      "expected_ai_action": "Ask for active overlay, latest handoff if continuing work, and task description."
+    },
+    {
+      "id": "T002_EXPLAIN_PROMPT",
+      "input": "Explain what this prompt does.",
+      "task_intent": "EXPLAIN_OR_READ",
+      "required_groups": [
+        "02_prompt_routing_and_indexing"
+      ],
+      "optional_groups": [],
+      "minimum_viable_context": [
+        "prompt_navigation_index"
+      ],
+      "missing_behavior": "DEGRADED_WARNING",
+      "fast_path_allowed": true,
+      "box_architecture_required": false,
+      "delivery_protocol_required": false,
+      "validation_required": false,
+      "expected_ai_action": "Proceed with explanation using provided context; do not over-request specialist prompts."
+    },
+    {
+      "id": "T003_CREATE_CODE_PATCH",
+      "input": "Create a new feature in the app.",
+      "task_intent": "CREATE_OR_UPDATE_CODE",
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation",
+        "08_python_engineering_core"
+      ],
+      "optional_groups": [
+        "09_python_quality_security_observability"
+      ],
+      "minimum_viable_context": [
+        "box_architecture_canon",
+        "delivery_protocol",
+        "validation_protocol"
+      ],
+      "missing_behavior": "HARD_STOP",
+      "fast_path_allowed": false,
+      "box_architecture_required": true,
+      "delivery_protocol_required": true,
+      "validation_required": true,
+      "expected_ai_action": "Request Box Architecture, delivery, and validation prompts before implementation."
+    },
+    {
+      "id": "T004_LARGE_MODULE_REFACTOR",
+      "input": "This Python file has more than 500 lines. Refactor it safely.",
+      "task_intent": "LARGE_MODULE_REFACTOR",
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation",
+        "06_refactor_and_architecture_hardening"
+      ],
+      "optional_groups": [
+        "08_python_engineering_core"
+      ],
+      "minimum_viable_context": [
+        "large_module_refactor_protocol",
+        "box_architecture_canon",
+        "validation_protocol"
+      ],
+      "missing_behavior": "HARD_STOP",
+      "fast_path_allowed": false,
+      "box_architecture_required": true,
+      "delivery_protocol_required": true,
+      "validation_required": true,
+      "expected_ai_action": "Request large-module refactor protocol before touching the file."
+    },
+    {
+      "id": "T005_FREEZE_AFTER_VALIDATION",
+      "input": "Validation passed. Freeze this step.",
+      "task_intent": "FREEZE_REVIEW",
+      "required_groups": [
+        "03_governance_freeze_and_handoff",
+        "05_patch_delivery_and_validation"
+      ],
+      "optional_groups": [
+        "02_prompt_routing_and_indexing"
+      ],
+      "minimum_viable_context": [
+        "validation_output",
+        "freeze_or_handoff_protocol"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false,
+      "box_architecture_required": false,
+      "delivery_protocol_required": false,
+      "validation_required": true,
+      "expected_ai_action": "Review validation evidence; freeze only if output is complete and clean."
+    },
+    {
+      "id": "T006_PROMPT_AUDIT",
+      "input": "Audit this prompt and decide if it is updated, deprecated, or split.",
+      "task_intent": "PROMPT_AUDIT",
+      "required_groups": [
+        "02_prompt_routing_and_indexing",
+        "07_prompt_authoring_and_audit"
+      ],
+      "optional_groups": [
+        "03_governance_freeze_and_handoff"
+      ],
+      "minimum_viable_context": [
+        "prompt_audit_canon",
+        "prompt_navigation_index",
+        "related_prompt_files_when_needed"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false,
+      "box_architecture_required": false,
+      "delivery_protocol_required": false,
+      "validation_required": false,
+      "expected_ai_action": "Request related previously audited prompt files before final overlap decisions."
+    },
+    {
+      "id": "T007_GOVERNANCE_UPDATE",
+      "input": "Update governance after a validated freeze.",
+      "task_intent": "GOVERNANCE_UPDATE",
+      "required_groups": [
+        "03_governance_freeze_and_handoff",
+        "05_patch_delivery_and_validation"
+      ],
+      "optional_groups": [
+        "02_prompt_routing_and_indexing"
+      ],
+      "minimum_viable_context": [
+        "governance_update_protocol",
+        "validation_output",
+        "latest_handoff"
+      ],
+      "missing_behavior": "HARD_STOP",
+      "fast_path_allowed": false,
+      "box_architecture_required": false,
+      "delivery_protocol_required": true,
+      "validation_required": true,
+      "expected_ai_action": "Do not update governance without validation evidence and the relevant governance prompt."
+    },
+    {
+      "id": "T008_PRODUCTIZATION_REVIEW",
+      "input": "Check whether this project is ready for release.",
+      "task_intent": "PRODUCTIZATION_READINESS",
+      "required_groups": [
+        "11_productization_and_release_readiness"
+      ],
+      "optional_groups": [
+        "09_python_quality_security_observability",
+        "10_python_api_data_async_config"
+      ],
+      "minimum_viable_context": [
+        "productization_readiness_roadmap"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false,
+      "box_architecture_required": false,
+      "delivery_protocol_required": false,
+      "validation_required": false,
+      "expected_ai_action": "Route to productization readiness prompts before giving release advice."
+    },
+    {
+      "id": "T009_BRAINSTORM_ARCHITECTURE",
+      "input": "Brainstorm architecture options only; do not implement.",
+      "task_intent": "ARCHITECTURE_DISCUSSION",
+      "required_groups": [
+        "04_box_architecture_and_boundaries"
+      ],
+      "optional_groups": [
+        "12_generalized_project_canons"
+      ],
+      "minimum_viable_context": [
+        "box_architecture_canon"
+      ],
+      "missing_behavior": "DEGRADED_WARNING",
+      "fast_path_allowed": true,
+      "box_architecture_required": true,
+      "delivery_protocol_required": false,
+      "validation_required": false,
+      "expected_ai_action": "Discuss options; do not request delivery prompts unless implementation begins."
+    },
+    {
+      "id": "T010_FIX_IMPORT_ERROR",
+      "input": "Fix this Python import error.",
+      "task_intent": "BUG_FIX_CODE",
+      "required_groups": [
+        "05_patch_delivery_and_validation",
+        "08_python_engineering_core"
+      ],
+      "optional_groups": [
+        "04_box_architecture_and_boundaries",
+        "09_python_quality_security_observability"
+      ],
+      "minimum_viable_context": [
+        "delivery_protocol",
+        "validation_protocol",
+        "relevant_source_files_and_traceback"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false,
+      "box_architecture_required": true,
+      "delivery_protocol_required": true,
+      "validation_required": true,
+      "expected_ai_action": "Request source files and traceback; identify owner box before patching."
+    }
+  ]
+}

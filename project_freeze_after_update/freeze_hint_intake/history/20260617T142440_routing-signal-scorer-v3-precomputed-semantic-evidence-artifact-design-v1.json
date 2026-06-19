@@ -1,0 +1,97 @@
+{
+  "form_inputs": {
+    "box_type": "standard-library-only precomputed semantic evidence artifact design contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve precomputed semantic evidence artifact design.\nPreserve precomputed artifact design schema only.\nPreserve no precomputed artifact generator added.\nPreserve no precomputed artifact generated.\nPreserve no embedding values in artifact.\nPreserve no vector values in artifact.\nPreserve no vector index in artifact.\nPreserve precomputed artifact identifiers only.\nPreserve precomputed artifact no raw text.\nPreserve precomputed artifact review evidence only.\nPreserve precomputed artifact no runtime enablement.\nPreserve precomputed artifact no threshold auto tuning.\nPreserve precomputed artifact requires frozen manifest and gold set.\nPreserve precomputed artifact requires separate governed generation patch.\nPreserve no embeddings added.\nPreserve no provider implementation added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Precomputed Semantic Evidence Artifact Design v1",
+    "generated_files": "",
+    "known_warnings": "['This is a precomputed semantic evidence artifact design/validation contract only and intentionally does not implement artifact generation, artifact writing, embeddings, vector values, vector indexes, providers, evaluation execution, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual precomputed artifact generation remains a future governed phase and must remain review-evidence-only, manually gated, schema-validated, and separately frozen.']",
+    "notes": "",
+    "planned_next_step": "After freeze, continue with advisory precomputed artifact UI preview design or a disabled artifact reader boundary; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1\nCONTRACT_TEST_OK: precomputed semantic evidence artifact design validates schema-only artifact contract, frozen manifest/gold-set source requirements, required/forbidden artifact sections, validation gates, disabled generation/provider/evaluation/runtime flags, forbidden raw/private text/vector/provider/runtime/authority fields, activation-request denial, stdlib-only dependency ceiling, manifest registration, and v3 provider/runner/gold-set/evaluation/governance/manifest/mock/design/v2 shield regressions without artifact generator, embeddings, vector values, vector indexes, provider execution, evaluation execution, runtime loading, threshold tuning, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_PRECOMPUTED_SEMANTIC_EVIDENCE_ARTIFACT_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "standard-library-only precomputed semantic evidence artifact design contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve precomputed semantic evidence artifact design.\nPreserve precomputed artifact design schema only.\nPreserve no precomputed artifact generator added.\nPreserve no precomputed artifact generated.\nPreserve no embedding values in artifact.\nPreserve no vector values in artifact.\nPreserve no vector index in artifact.\nPreserve precomputed artifact identifiers only.\nPreserve precomputed artifact no raw text.\nPreserve precomputed artifact review evidence only.\nPreserve precomputed artifact no runtime enablement.\nPreserve precomputed artifact no threshold auto tuning.\nPreserve precomputed artifact requires frozen manifest and gold set.\nPreserve precomputed artifact requires separate governed generation patch.\nPreserve no embeddings added.\nPreserve no provider implementation added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.",
+    "feature_id": "routing-signal-scorer-v3-precomputed-semantic-evidence-artifact-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Precomputed Semantic Evidence Artifact Design v1",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['This is a precomputed semantic evidence artifact design/validation contract only and intentionally does not implement artifact generation, artifact writing, embeddings, vector values, vector indexes, providers, evaluation execution, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual precomputed artifact generation remains a future governed phase and must remain review-evidence-only, manually gated, schema-validated, and separately frozen.']",
+    "notes": "",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py",
+        "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.md",
+        "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+        "tests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py",
+        "tests/test_routing_signal_scorer_v3_provider_boundary_design.py",
+        "tests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py",
+        "tests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/__init__.py",
+        "kanda_reasoner_app/routing_signal_scorer/providers",
+        "kanda_reasoner_app/routing_signal_scorer/indices",
+        "kanda_reasoner_app/routing_signal_scorer/precomputed_artifact_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/evaluation_runner.py",
+        "kanda_reasoner_app/routing_signal_scorer/corpus_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/semantic_provider.py",
+        "kanda_reasoner_app/routing_signal_scorer/vector_index.py",
+        "kanda_prompt_workspace",
+        "project_freeze_after_update",
+        "project_freeze_ledger"
+      ]
+    },
+    "planned_next_step": "After freeze, continue with advisory precomputed artifact UI preview design or a disabled artifact reader boundary; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_architecture_characteristics": [
+      "advisory_only",
+      "standard_library_only",
+      "precomputed_semantic_evidence_artifact_design",
+      "precomputed_artifact_design_schema_only",
+      "no_precomputed_artifact_generator_added",
+      "no_precomputed_artifact_generated",
+      "no_embedding_values_in_artifact",
+      "no_vector_values_in_artifact",
+      "no_vector_index_in_artifact",
+      "precomputed_artifact_identifiers_only",
+      "precomputed_artifact_no_raw_text",
+      "precomputed_artifact_review_evidence_only",
+      "precomputed_artifact_no_runtime_enablement",
+      "precomputed_artifact_no_threshold_auto_tuning",
+      "precomputed_artifact_requires_frozen_manifest_and_gold_set",
+      "precomputed_artifact_requires_separate_governed_generation_patch",
+      "no_embeddings_added",
+      "no_provider_implementation_added",
+      "no_runtime_behavior_change",
+      "no_cross_box_mutation"
+    ],
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781706236325816800,
+      "source_name": "routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+      "source_size_bytes": 27303
+    },
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1\nCONTRACT_TEST_OK: precomputed semantic evidence artifact design validates schema-only artifact contract, frozen manifest/gold-set source requirements, required/forbidden artifact sections, validation gates, disabled generation/provider/evaluation/runtime flags, forbidden raw/private text/vector/provider/runtime/authority fields, activation-request denial, stdlib-only dependency ceiling, manifest registration, and v3 provider/runner/gold-set/evaluation/governance/manifest/mock/design/v2 shield regressions without artifact generator, embeddings, vector values, vector indexes, provider execution, evaluation execution, runtime loading, threshold tuning, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_PRECOMPUTED_SEMANTIC_EVIDENCE_ARTIFACT_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T14:24:40Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781706236325816800,
+    "source_name": "routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+    "source_size_bytes": 27303
+  },
+  "used_at_utc": null
+}

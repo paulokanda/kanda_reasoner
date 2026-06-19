@@ -1,0 +1,80 @@
+# Daily Startup Loader Template
+
+## Box Logic Requirement
+
+Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+
+- Identify the active box before implementation.
+- State owner paths.
+- State files allowed to change.
+- State files explicitly out of scope.
+- Declare cross-box touches.
+- Preserve public contracts.
+- Validate the active box and any touched external box.
+
+
+Version: 1.0.0
+Status: Reusable daily startup loader template
+Use: Send after the load-order prompt and project startup canon at the beginning of a work session.
+
+## Purpose
+
+Tell the AI what to request at the beginning of a work session and how to decide which special prompts are required.
+
+
+## Project-Agnostic Contract
+
+This prompt must work for any software project. Replace variables before use.
+
+Required variables:
+
+```text
+<PROJECT_ROOT>
+<PROJECT_NAME>
+<PRODUCT_PACKAGE>
+<TASK_DESCRIPTION>
+<TASK_SLUG>
+<GOVERNANCE_FOLDER>
+<VALIDATION_COMMANDS>
+<OUTPUT_FOLDER>
+<SOURCE_FILES>
+<LOG_FILES>
+```
+
+Rules:
+- Do not hardcode one project root.
+- Do not assume one product package.
+- Do not treat examples as active project truth.
+- Use current source files, logs, and validation output as evidence.
+- If evidence is missing, request it before implementation.
+
+## Required First Action
+
+The AI must not implement immediately. First, it must state which prompt files and source evidence are needed for the current task.
+
+## Daily Startup Checklist
+
+Collect:
+
+1. Current task description.
+2. Active governance files or ZIP, if the project uses governance.
+3. Latest workflow handoff output, if any.
+4. Relevant source files or targeted source ZIP.
+5. Current error log, validation output, or observed behavior.
+6. Target outcome.
+7. Confirmation of loaded protocols.
+
+## Daily Implementation Flow
+
+1. Confirm loaded prompts.
+2. Ask for missing special prompts.
+3. Read active governance and handoff if available.
+4. Audit request against frozen rules.
+5. Request current files if needed.
+6. Classify complexity.
+7. Roadmap first for complex updates.
+8. Implement one focused bundle.
+9. Validate internally.
+10. Deliver ZIP.
+11. Wait for user validation.
+12. Freeze/canonize only if explicitly approved.

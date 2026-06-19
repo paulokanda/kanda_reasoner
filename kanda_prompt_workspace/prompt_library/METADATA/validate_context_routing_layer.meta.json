@@ -1,0 +1,13 @@
+{
+  "prompt_id": "validate_context_routing_layer",
+  "file_name": "TOOLS/validate_context_routing_layer.py",
+  "phase": "phase4_validator",
+  "owner_box": "Context Routing Validator Box",
+  "type": "UTILITY",
+  "status": "draft",
+  "scope": "staged_prompt_laboratory",
+  "project_agnostic": false,
+  "read_only": true,
+  "created_for": "KANDA Context Routing Layer Phase 4",
+  "validation_role": "structural validator for prompt_library context routing files"
+}

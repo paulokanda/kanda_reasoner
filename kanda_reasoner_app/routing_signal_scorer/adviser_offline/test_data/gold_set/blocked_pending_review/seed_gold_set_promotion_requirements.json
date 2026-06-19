@@ -1,0 +1,23 @@
+{
+  "authority_statement": "requirements_only_no_gold_creation",
+  "blocked_now_because": [
+    "M8 review records are pending.",
+    "M8 teacher answers are draft evidence only.",
+    "No human approval records were supplied for this milestone.",
+    "Creating a gold set now would violate the Teacher-is-not-ground-truth rule."
+  ],
+  "feature_id": "routing_signal_scorer_v3_adviser_seed_gold_set_gate_v1",
+  "gold_case_count_created_by_this_patch": 0,
+  "minimum_requirements_before_seed_gold_set": [
+    "Each seed case selected for gold must have an explicit human review record.",
+    "Each human review record must identify reviewer_id and reviewed_at.",
+    "Each human review decision must explicitly permit future gold use.",
+    "Each teacher answer must be reviewed or corrected before inclusion.",
+    "The gold manifest must include hashes and provenance for each reviewed case.",
+    "A separate governed patch must create any future gold case files.",
+    "The future gold patch must preserve no runtime router imports and no router authority."
+  ],
+  "next_safe_milestone": "Routing Signal Scorer v3 Adviser Human Reviewed Seed Gold Approval Records v1",
+  "requires_explicit_human_review_before_gold": true,
+  "schema_version": "3.48-adviser-seed-gold-set-gate"
+}

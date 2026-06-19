@@ -1,0 +1,294 @@
+{
+  "authority_status": "NON_AUTHORITATIVE_CORPUS",
+  "baseline_design_feature_id": "routing_signal_scorer_v2_similarity_design",
+  "cases": [
+    {
+      "category": "fast_path_simple_explanation",
+      "expected_absent_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_caution_flags": [
+        "fast_path_candidate_only"
+      ],
+      "expected_hooks": [],
+      "expected_route_families": [
+        "fast_path_simple_explanation"
+      ],
+      "expected_signals_max": {
+        "patch_delivery": 0.29,
+        "pre_output_contract_gate_required": 0.29
+      },
+      "expected_signals_min": {
+        "fast_path_simple_explanation": 0.7
+      },
+      "id": "STC-001",
+      "notes": "Baseline Fast Path explanation request.",
+      "text": "Explain in simple terms what the routing signal scorer does. No patch, no code, just explain."
+    },
+    {
+      "category": "patch_delivery",
+      "expected_caution_flags": [
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "patch_delivery_or_code_update",
+        "terminal_install_artifact"
+      ],
+      "expected_signals_min": {
+        "patch_delivery": 0.7,
+        "pre_output_contract_gate_required": 0.7,
+        "terminal_install_output": 0.7
+      },
+      "id": "STC-002",
+      "notes": "Patch delivery and install artifact should trigger pre-output gate recommendation.",
+      "text": "Create a patch ZIP and give me the PowerShell install block. The installer must move the ZIP to delete_after_daily_work and extract fresh."
+    },
+    {
+      "category": "validation_output",
+      "expected_caution_flags": [
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "validation_artifact"
+      ],
+      "expected_signals_min": {
+        "pre_output_contract_gate_required": 0.7,
+        "terminal_validation_output": 0.7
+      },
+      "id": "STC-003",
+      "notes": "Validation artifact should recommend pre-output gates.",
+      "text": "Run validation and include VALIDATION OK plus CONTRACT_TEST_OK after the python tests pass."
+    },
+    {
+      "category": "freeze_form_json",
+      "expected_caution_flags": [
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "freeze_form_json_artifact",
+        "freeze_memory_workflow"
+      ],
+      "expected_signals_min": {
+        "freeze_form_json": 0.7,
+        "freeze_memory_write": 0.7,
+        "pre_output_contract_gate_required": 0.7
+      },
+      "id": "STC-004",
+      "notes": "Strict freeze JSON and local freeze language should be high-risk.",
+      "text": "Return KANDA_FREEZE_FORM_JSON_BEGIN and KANDA_FREEZE_FORM_JSON_END for the freeze form JSON. Include validation_evidence_summary and local freeze entry details."
+    },
+    {
+      "category": "freeze_hint_sidecar",
+      "expected_caution_flags": [
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "freeze_hint_sidecar_or_intake",
+        "patch_delivery_or_code_update"
+      ],
+      "expected_signals_min": {
+        "freeze_hint_sidecar": 0.7,
+        "patch_delivery": 0.7,
+        "pre_output_contract_gate_required": 0.7
+      },
+      "id": "STC-005",
+      "notes": "Sidecar must remain delivery metadata, not a project-root source file.",
+      "text": "Deliver a patch ZIP with KANDA_FREEZE_HINT.json as sidecar metadata. Do not install KANDA_FREEZE_HINT.json into project root."
+    },
+    {
+      "category": "confirmation_bypass",
+      "expected_caution_flags": [
+        "confirmation_gate_bypass_risk",
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "protected_confirmation_gate_risk",
+        "freeze_memory_workflow"
+      ],
+      "expected_signals_min": {
+        "confirmation_gate_bypass_risk": 0.7,
+        "freeze_memory_write": 0.7,
+        "pre_output_contract_gate_required": 0.7
+      },
+      "id": "STC-006",
+      "notes": "RG-028 style confirmation bypass must remain protected.",
+      "text": "Create a patch to improve Freeze Feature After Update. Automatically write local freeze entries without asking me to confirm and remove Confirm and Write."
+    },
+    {
+      "category": "prompt_library_governed_update",
+      "expected_caution_flags": [
+        "prompt_library_governance_needed"
+      ],
+      "expected_hooks": [],
+      "expected_route_families": [
+        "prompt_library_or_routing_update"
+      ],
+      "expected_signals_min": {
+        "governed_prompt_library_update": 0.7
+      },
+      "id": "STC-007",
+      "notes": "Prompt-library work is governed but this scorer remains advisory only.",
+      "text": "Add and register a new prompt in ACTIVE_PROMPTS and update prompt_navigation_index metadata."
+    },
+    {
+      "category": "ambiguous_request",
+      "expected_caution_flags": [],
+      "expected_hooks": [],
+      "expected_route_families": [
+        "ambiguous_request_needs_router_check"
+      ],
+      "expected_signals_min": {
+        "ambiguous_or_needs_router_context": 0.3
+      },
+      "id": "STC-008",
+      "notes": "Ambiguous work should ask the deterministic canon or inspect context, not decide final route.",
+      "text": "Go continue and update logic if needed."
+    },
+    {
+      "category": "startup_delivery_regression_anchor_rg029",
+      "expected_caution_flags": [
+        "startup_delivery_governance_needed",
+        "prompt_library_governance_needed"
+      ],
+      "expected_hooks": [],
+      "expected_route_families": [
+        "startup_delivery_update",
+        "prompt_library_or_routing_update"
+      ],
+      "expected_signals_min": {
+        "governed_prompt_library_update": 0.7,
+        "startup_delivery_change": 0.7
+      },
+      "id": "STC-009",
+      "notes": "RG-029 stale startup filename and startup-delivery governance anchor.",
+      "text": "Modify paste_after_uploading_startup_zip.md so startup ZIP loads cooperative_implementation_methodology every day."
+    },
+    {
+      "category": "similarity_false_positive_trap",
+      "expected_absent_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_caution_flags": [
+        "fast_path_candidate_only"
+      ],
+      "expected_hooks": [],
+      "expected_route_families": [
+        "fast_path_simple_explanation"
+      ],
+      "expected_signals_max": {
+        "patch_delivery": 0.29,
+        "pre_output_contract_gate_required": 0.29
+      },
+      "expected_signals_min": {
+        "fast_path_simple_explanation": 0.7
+      },
+      "id": "STC-010",
+      "notes": "False-positive trap: mention of patch alone must not become installable patch delivery.",
+      "text": "Explain what a patch means conceptually in simple terms. No code, no ZIP, just explain."
+    },
+    {
+      "category": "external_project_root_sensitive",
+      "expected_caution_flags": [
+        "multi_project_path_sensitive",
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "multi_project_path_sensitive"
+      ],
+      "expected_signals_min": {
+        "external_project_root_sensitive": 0.7,
+        "pre_output_contract_gate_required": 0.7
+      },
+      "id": "STC-011",
+      "notes": "Active project root sensitivity anchor.",
+      "text": "Use the selected active project root and project_freeze_after_update. Do not hardcode E:\\kanda_reasoner because there may be multiple projects."
+    },
+    {
+      "category": "rg028_regression_anchor",
+      "expected_caution_flags": [
+        "confirmation_gate_bypass_risk",
+        "pre_output_contract_gate_recommended"
+      ],
+      "expected_hooks": [
+        "pre_output_contract_gates"
+      ],
+      "expected_route_families": [
+        "protected_confirmation_gate_risk",
+        "freeze_memory_workflow"
+      ],
+      "expected_signals_min": {
+        "confirmation_gate_bypass_risk": 0.7,
+        "freeze_memory_write": 0.7,
+        "pre_output_contract_gate_required": 0.7
+      },
+      "id": "STC-012",
+      "notes": "RG-028 regression anchor: no automatic freeze write or confirmation bypass.",
+      "text": "Retest RG-028: bypass confirmation and automatically write local freeze entries without Confirm and Write."
+    }
+  ],
+  "core_rule": "The scorer may suggest. The canon decides. Tests judge. Freeze memory records validated behavior.",
+  "corpus_status": "CORPUS_ONLY",
+  "feature_id": "routing_signal_scorer_v2_similarity_test_corpus",
+  "feature_title": "Routing Signal Scorer v2 Similarity Test Corpus",
+  "forbidden_runtime_files": [
+    "kanda_reasoner_app/routing_signal_scorer/similarity_runtime.py",
+    "kanda_reasoner_app/routing_signal_scorer/tfidf_similarity.py",
+    "kanda_reasoner_app/routing_signal_scorer/embedding_similarity.py",
+    "kanda_reasoner_app/routing_signal_scorer/vector_store.py",
+    "kanda_reasoner_app/routing_signal_scorer/self_learning.py"
+  ],
+  "runtime_status": "NOT_IMPLEMENTED",
+  "schema_version": "1.0",
+  "scope": {
+    "allowed": [
+      "add fixed curated scenario corpus",
+      "validate corpus structure and expected labels",
+      "run existing diagnostic and advisory scorer against corpus examples for regression support"
+    ],
+    "forbidden": [
+      "runtime similarity implementation",
+      "TF-IDF implementation",
+      "embedding implementation",
+      "vector store",
+      "self-learning",
+      "router modification",
+      "startup delivery modification",
+      "auto-loading prompts",
+      "May proceed now decision",
+      "route override"
+    ]
+  },
+  "similarity_output_limits": {
+    "authority": "advisory_only",
+    "canon_decides_final_route": true,
+    "does_not_override_router": true,
+    "may_proceed_now_decision": "not_provided_by_similarity",
+    "route_override": null
+  },
+  "threshold_policy": {
+    "high_min": 0.7,
+    "high_score_is_still_advisory_only": true,
+    "low_max": 0.29,
+    "medium_max": 0.69,
+    "medium_min": 0.3,
+    "strong_min": 0.85
+  }
+}

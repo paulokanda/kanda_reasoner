@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Architecture Review</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help - Tab 1</p>
+        <span class="chapter-number">01</span>
+        <h1>Architecture Review</h1>
+        <p class="subtitle">A local, evidence-backed safety lens for finding architecture risks before a human or AI edits the wrong part of the project.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/architecture_review_opener.svg" alt="Colorful moving-day cartoon where Architecture Review stops a GUI box from entering the Router room">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Problem This Solves</h2>
+      <p><strong>Technical:</strong> Architecture Review reads project structure, import evidence, symbol ownership, boundary metadata, test links, and generated artifact contracts. It turns that evidence into named issue families that can be validated before any patch is accepted.</p>
+      <p><strong>In plain English:</strong> The tool is a map reader. It helps you see when the project has two roads with the same name, a file living in the wrong neighborhood, or a test that protects the wrong thing.</p>
+    </section>
+
+    <figure class="technical-diagram">
+      <img src="../assets/diagrams/architecture_review_pipeline.svg" alt="Architecture Review pipeline from project snapshot to validation">
+      <figcaption>Figure 1-1. Architecture Review names risks, exposes evidence, and keeps fixes behind human review and validation.</figcaption>
+    </figure>
+
+    <section>
+      <h2>Workflow</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/architecture_review_workflow_cafe.svg" alt="Colorful cafe cartoon where the Architecture Review workflow checks an order ticket before serving a patch">
+        <figcaption>Figure 1-2. The workflow checks the order before serving the patch.</figcaption>
+      </figure>
+      <ol>
+        <li>Open <strong>Architecture Review</strong> from the KANDA Reasoner desktop GUI.</li>
+        <li>Confirm the active project root and worker script.</li>
+        <li>Run the architecture review and inspect the issue families.</li>
+        <li>Use the evidence paths and issue codes to find the responsible owner box.</li>
+        <li>Patch narrowly, validate locally, and freeze only after clean evidence exists.</li>
+      </ol>
+    </section>
+
+    <div class="callout callout-warning">
+      <div class="callout-icon">!</div>
+      <div>
+        <p><strong>Authority boundary.</strong> Architecture Review reports risks. It does not change files, approve patches, select prompts, freeze features, or override routing logic.</p>
+      </div>
+    </div>
+
+    <section>
+      <h2>Fast Reading Table</h2>
+      <table>
+        <caption>Table 1-1. The issue families are review signals. They are not automatic permission to rewrite code.</caption>
+        <thead>
+          <tr>
+            <th>Issue</th>
+            <th>What It Means</th>
+            <th>Why It Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Duplicate public symbols</td><td>Two or more files define or export the same public name.</td><td>The wrong file can be imported, edited, or trusted.</td></tr>
+          <tr><td>Symbol shadowing</td><td>A local name hides another name with the same spelling.</td><td>Code may call a variable or helper different from the intended one.</td></tr>
+          <tr><td>Wrong owner box</td><td>Code lives in the wrong part of the system.</td><td>Future fixes may land outside the true owner boundary.</td></tr>
+          <tr><td>Cross-box boundary violations</td><td>One app area reaches directly into another area it should not control.</td><td>Boxes become tightly coupled and fragile.</td></tr>
+          <tr><td>Circular imports</td><td>Two modules depend on each other in a loop.</td><td>Startup can fail or behave differently by import order.</td></tr>
+          <tr><td>Side effect on import</td><td>A module performs visible work just by being imported.</td><td>Inspection can unexpectedly write files, launch tools, or mutate state.</td></tr>
+          <tr><td>Mixed responsibility files</td><td>One file tries to own unrelated jobs.</td><td>The file becomes hard to reason about, test, and safely refactor.</td></tr>
+          <tr><td>Stale or deprecated variants</td><td>Old versions or backups still look active.</td><td>Human or AI repair may target a dead path.</td></tr>
+          <tr><td>Misplaced tests</td><td>A test exists but lives in the wrong place or tests the wrong target.</td><td>The project may look protected while active code is uncovered.</td></tr>
+          <tr><td>Test protection gap</td><td>Important active code has no meaningful test protection.</td><td>Critical behavior can break silently during later work.</td></tr>
+          <tr><td>Unsafe path and platform assumptions</td><td>Code assumes a path, OS, or encoding that may not hold.</td><td>The tool can work on one machine and fail on another.</td></tr>
+          <tr><td>Canonical vs working-copy boundary errors</td><td>The app confuses protected canonical data with local AI working copies.</td><td>Experiments can contaminate the source of truth.</td></tr>
+          <tr><td>Generated artifact contract errors</td><td>Generated files violate expected names, locations, or sections.</td><td>Downstream tools may consume incomplete or stale output.</td></tr>
+          <tr><td>Public API instability</td><td>A public function, class, or export changes without compatibility planning.</td><td>Other callers may still use the old public surface.</td></tr>
+          <tr><td>Dead code and unreachable files</td><td>Files or functions exist but nothing active uses them.</td><td>Noise increases and AI attention is wasted.</td></tr>
+          <tr><td>Inconsistent source of truth</td><td>Docs or code disagree about what is active.</td><td>Developers may follow stale instructions.</td></tr>
+          <tr><td>Test asserts internal detail</td><td>A test depends on private implementation details instead of public behavior.</td><td>Safe refactors look broken while real behavior bugs may be missed.</td></tr>
+          <tr><td>Import heaviness and slow startup risk</td><td>A lightweight path imports heavy modules too early.</td><td>Startup becomes slow, fragile, or dependent on optional packages.</td></tr>
+          <tr><td>Bundle safety issues</td><td>A delivered patch changes too much or lacks safe boundaries.</td><td>A small bug fix can become a broad accidental rewrite.</td></tr>
+          <tr><td>Project-wide AI confusion risks</td><td>Project layout makes AI likely to pick the wrong owner, symbol, or file.</td><td>AI help becomes less reliable even when files are syntactically valid.</td></tr>
+          <tr><td>Cross-box public symbol collision</td><td>Different boxes expose the same public name.</td><td>Import order can decide behavior instead of a clear owner contract.</td></tr>
+          <tr><td>Shared mutable state coupling</td><td>Multiple boxes quietly read and write the same mutable state.</td><td>A change in one box can silently affect another.</td></tr>
+          <tr><td>Inconsistent error contract at boundaries</td><td>One box raises, another swallows, and another returns unclear results.</td><td>Failures disappear or surface in the wrong place.</td></tr>
+          <tr><td>Tests assert implementation internals instead of public contracts</td><td>A test checks private details instead of what users or APIs observe.</td><td>Tests become brittle and miss user-visible failures.</td></tr>
+          <tr><td>Missing __all__ or uncontrolled public surface</td><td>A module does not clearly define its public names.</td><td>Private helpers can become accidental public API.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Issue Family Details</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/architecture_review_issue_catalog_library.svg" alt="Colorful library cartoon where duplicate and misplaced books represent architecture issue families">
+        <figcaption>Figure 1-3. The issue catalog is a library shelf for risks, duplicates, and wrong owners.</figcaption>
+      </figure>
+      <div class="issue-list">
+        <section class="issue-card" id="issue-01">
+          <h3><span class="issue-number">1.</span> Duplicate public symbols</h3>
+          <p class="technical-line"><strong>Technical:</strong> Two or more files define or export the same public class, function, or constant. Check <code>symbol_index</code>, <code>web_ai_symbol_index</code>, <code>primary_definition_index</code>, and <span class="issue-code">DUPLICATE_PUBLIC_SYMBOL</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two active files wear the same public name. A developer or AI can edit the old one and believe the app was fixed.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-python-public-api">Python public names</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-02">
+          <h3><span class="issue-number">2.</span> Symbol shadowing</h3>
+          <p class="technical-line"><strong>Technical:</strong> A local name hides another name with the same spelling. Check <code>files</code>, <code>source_file_index</code>, <code>symbol_index</code>, <code>imports</code>, and <span class="issue-code">SYMBOL_SHADOWING</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A new label is placed over an old label, so the code may call a variable when it meant to call an imported helper.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-python-public-api">Python public names</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-03">
+          <h3><span class="issue-number">3.</span> Wrong owner box</h3>
+          <p class="technical-line"><strong>Technical:</strong> A file or symbol appears in a system box that should not own that responsibility. Check <code>web_ai_file_responsibility_index</code>, <code>boundary_index</code>, <code>semantic_roles</code>, and <span class="issue-code">WRONG_OWNER_BOX</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The right code exists, but it lives in the wrong drawer. Future fixes become guesses instead of owner-based repairs.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-04">
+          <h3><span class="issue-number">4.</span> Cross-box boundary violations</h3>
+          <p class="technical-line"><strong>Technical:</strong> One box reaches through another box's private implementation instead of using a public contract. Check <code>import_graph</code>, <code>call_edges</code>, <code>boundary_violation_index</code>, and <span class="issue-code">CROSS_BOX_BOUNDARY_VIOLATION</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> One area of the app is touching controls that belong to another area. A small fix can break a distant workflow.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-samm">secure architecture</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-05">
+          <h3><span class="issue-number">5.</span> Circular imports</h3>
+          <p class="technical-line"><strong>Technical:</strong> Two or more modules import each other in a cycle. Check <code>import_graph</code>, <code>module_summary_index</code>, and <span class="issue-code">CIRCULAR_IMPORT</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> File A waits for File B while File B waits for File A. Startup can fail depending on which file is loaded first.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-06">
+          <h3><span class="issue-number">6.</span> Side effect on import</h3>
+          <p class="technical-line"><strong>Technical:</strong> A module performs visible work merely because it is imported. Check <code>source_file_index</code>, <code>call_edges</code>, <code>entry_points_detail</code>, and <span class="issue-code">SIDE_EFFECT_ON_IMPORT</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Looking at a file should not start the GUI, write files, launch tools, or mutate settings.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-07">
+          <h3><span class="issue-number">7.</span> Mixed responsibility files</h3>
+          <p class="technical-line"><strong>Technical:</strong> One file owns unrelated roles, such as UI layout, persistence, prompt policy, and validation. Check <code>web_ai_file_responsibility_index</code>, <code>semantic_roles</code>, <code>symbol_index</code>, and <span class="issue-code">MIXED_RESPONSIBILITY_FILE</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The file has too many jobs. It becomes hard to test because nobody can say which behavior it owns.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-08">
+          <h3><span class="issue-number">8.</span> Stale or deprecated variants</h3>
+          <p class="technical-line"><strong>Technical:</strong> Old versions, backup files, or deprecated variants still look active. Check <code>canonical_conflict_index</code>, <code>legacy_shadow_hotspots</code>, <span class="issue-code">STALE_VARIANT_SOURCE_OF_TRUTH</span>, and <span class="issue-code">DEPRECATED_VARIANT_STILL_REFERENCED</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The project has old signs still pointing to closed roads. AI can follow the stale sign and patch the wrong path.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-09">
+          <h3><span class="issue-number">9.</span> Misplaced tests</h3>
+          <p class="technical-line"><strong>Technical:</strong> A test exists but is stored in the wrong location or imports the wrong target. Check <code>test_links</code>, <code>web_ai_test_protection_index</code>, and <span class="issue-code">MISPLACED_TEST</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The project looks protected, but the test may be checking a retired file instead of active behavior.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-import">Python import system</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-10">
+          <h3><span class="issue-number">10.</span> Test protection gap</h3>
+          <p class="technical-line"><strong>Technical:</strong> Important active code has no direct or indirect test protection. Check <code>web_ai_test_protection_index</code>, <code>test_links</code>, and <span class="issue-code">TEST_PROTECTION_GAP</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A central behavior can break and nothing will complain until a user sees the failure.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-11">
+          <h3><span class="issue-number">11.</span> Unsafe path and platform assumptions</h3>
+          <p class="technical-line"><strong>Technical:</strong> Code assumes a path style, operating system, working directory, or encoding that may not hold. Check <code>collection_config</code>, <code>packaging_metadata</code>, and <span class="issue-code">UNSAFE_PATH_PLATFORM_ASSUMPTION</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The tool may work on one machine and fail on another because the file path or platform rule was hardcoded.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-12">
+          <h3><span class="issue-number">12.</span> Canonical vs working-copy boundary errors</h3>
+          <p class="technical-line"><strong>Technical:</strong> The app confuses protected canonical JSON with local AI working-copy data. Check <code>persistence_io_index</code>, <code>call_edges</code>, and <span class="issue-code">CANONICAL_WORKING_COPY_BOUNDARY</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> An experiment can accidentally write into the source of truth, turning a temporary AI note into official project data.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-owasp-sbd">secure design reviews</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-13">
+          <h3><span class="issue-number">13.</span> Generated artifact contract errors</h3>
+          <p class="technical-line"><strong>Technical:</strong> Generated files do not match required names, locations, sections, or manifests. Check route manifests, split manifests, and <span class="issue-code">GENERATED_ARTIFACT_CONTRACT</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A generated file may look present but be incomplete, stale, or shaped differently than downstream tools expect.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-14">
+          <h3><span class="issue-number">14.</span> Public API instability</h3>
+          <p class="technical-line"><strong>Technical:</strong> A public function, class, or export changes without compatibility planning. Check <code>__all__</code>, <code>symbol_index</code>, <code>call_edges</code>, and <span class="issue-code">PUBLIC_API_INSTABILITY</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Other files may still call the old public name. Renaming a public door without signs breaks callers.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-15">
+          <h3><span class="issue-number">15.</span> Dead code and unreachable files</h3>
+          <p class="technical-line"><strong>Technical:</strong> Files or functions exist but no active entry point, import, or call uses them. Check <code>import_graph</code>, <code>call_edges</code>, <code>entry_points_detail</code>, and <span class="issue-code">DEAD_CODE_UNREACHABLE_FILE</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Old machinery is still on the floor. It adds noise and can mislead future edits.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-16">
+          <h3><span class="issue-number">16.</span> Inconsistent source of truth</h3>
+          <p class="technical-line"><strong>Technical:</strong> Documentation, code, or manifests disagree about what is active or correct. Check documentation intent, <code>web_ai_file_responsibility_index</code>, <code>source_file_index</code>, and <span class="issue-code">STALE_VARIANT_SOURCE_OF_TRUTH</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two official-looking instructions disagree. A person or AI cannot know which one to trust without evidence.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-17">
+          <h3><span class="issue-number">17.</span> Test asserts internal detail</h3>
+          <p class="technical-line"><strong>Technical:</strong> A test depends on private implementation details instead of public behavior. Check <code>control_flow</code>, <code>runtime_trace_raw</code>, and <span class="issue-code">TEST_ASSERTS_INTERNAL_DETAIL</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The test cares about how the app is built inside, not what the user or public API can observe.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-public-api">Python public names</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-18">
+          <h3><span class="issue-number">18.</span> Import heaviness and slow startup risk</h3>
+          <p class="technical-line"><strong>Technical:</strong> A lightweight path imports heavy modules, optional UI stacks, or slow dependencies too early. Check <code>import_graph</code>, <code>module_centrality_index</code>, and <span class="issue-code">IMPORT_HEAVINESS_STARTUP</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Opening a small drawer pulls in the whole workshop, making startup slow and fragile.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-19">
+          <h3><span class="issue-number">19.</span> Bundle safety issues</h3>
+          <p class="technical-line"><strong>Technical:</strong> A delivered patch changes too much, lacks a manifest, or edits files outside the intended boundary. Check bundle manifest text, changed-file lists, and <span class="issue-code">BUNDLE_SAFETY</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A small fix arrives with extra unrelated edits. That makes review harder and regression risk higher.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-20">
+          <h3><span class="issue-number">20.</span> Project-wide AI confusion risks</h3>
+          <p class="technical-line"><strong>Technical:</strong> Project structure makes AI likely to choose the wrong owner, symbol, or file. Check <code>canonical_conflict_index</code>, <code>responsibility_overlap_index</code>, <code>primary_definition_index</code>, and <span class="issue-code">PROJECT_WIDE_AI_CONFUSION</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The project contains too many convincing wrong answers, so AI help becomes less dependable.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-python-public-api">Python public names</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-21">
+          <h3><span class="issue-number">21.</span> Cross-box public symbol collision</h3>
+          <p class="technical-line"><strong>Technical:</strong> Different architecture boxes expose the same public name. Check <code>symbol_index</code>, <code>boundary_index</code>, <code>web_ai_file_responsibility_index</code>, and <span class="issue-code">CROSS_BOX_PUBLIC_SYMBOL_COLLISION</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two boxes put the same label on different public doors. Import order can decide behavior instead of design.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-22">
+          <h3><span class="issue-number">22.</span> Shared mutable state coupling</h3>
+          <p class="technical-line"><strong>Technical:</strong> Multiple boxes read and mutate the same runtime state without an explicit owner or adapter. Check <code>attribute_state_map</code>, <code>object_ownership</code>, <code>state_mutation_index</code>, and <span class="issue-code">SHARED_MUTABLE_STATE_COUPLING</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> One area can quietly change the conditions another area depends on, so bugs appear far away from the edit.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-samm">secure architecture</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-23">
+          <h3><span class="issue-number">23.</span> Inconsistent error contract at boundaries</h3>
+          <p class="technical-line"><strong>Technical:</strong> Boundary calls report failure in incompatible ways, such as raising, swallowing, or returning <code>None</code>. Check <code>call_edges</code>, <code>control_flow</code>, <code>runtime_trace_raw</code>, and <span class="issue-code">BOUNDARY_ERROR_CONTRACT</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> One box shouts, another whispers, and another says nothing. Failures become hard to locate.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-owasp-sbd">secure design reviews</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-24">
+          <h3><span class="issue-number">24.</span> Tests assert implementation internals instead of public contracts</h3>
+          <p class="technical-line"><strong>Technical:</strong> A test checks private details instead of observable user behavior or public API behavior. Check <code>test_links</code>, <code>source_file_index</code>, <code>symbol_index</code>, and <span class="issue-code">TEST_ASSERTS_INTERNAL_DETAIL</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A safe refactor can break the test, while a real user-visible failure may pass unnoticed.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-public-api">Python public names</a>.</p>
+        </section>
+        <section class="issue-card" id="issue-25">
+          <h3><span class="issue-number">25.</span> Missing __all__ or uncontrolled public surface</h3>
+          <p class="technical-line"><strong>Technical:</strong> A module exposes names without a clear public-surface contract. Check <code>source_file_index</code>, <code>__all__</code>, <code>symbol_index</code>, <span class="issue-code">MISSING___ALL___FOR_EXPOSES</span>, and <span class="issue-code">MISSING_PUBLIC_SURFACE_CONTROL</span>.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Private helpers can look public. Other files may start depending on code that was never meant to be shared.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-python-import">Python import system</a>.</p>
+        </section>
+      </div>
+    </section>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">i</div>
+      <div>
+        <p><strong>Operating rule.</strong> Use Architecture Review to find the owner and risk class. Then patch narrowly, validate, and freeze only after clean evidence exists.</p>
+      </div>
+    </div>
+
+    <section>
+      <h2>Further Reading Map</h2>
+      <div class="reading-map">
+        <p id="source-fowler-architecture"><strong>Architecture boundaries:</strong> Martin Fowler, Software Architecture Guide, used for the idea that architecture is shared system understanding and component organization.</p>
+        <p id="source-python-import"><strong>Python import system:</strong> Python language reference, The import system, used for import search, module creation, and name binding behavior.</p>
+        <p id="source-python-public-api"><strong>Python public names:</strong> Python language reference, Simple statements, used for <code>__all__</code> and public-name rules.</p>
+        <p id="source-google-sre-testing"><strong>Testing reliability:</strong> Google SRE, Testing for Reliability, used for test coverage as evidence that reduces change uncertainty.</p>
+        <p id="source-owasp-sbd"><strong>Secure design reviews:</strong> OWASP Secure by Design Framework, used for design-time review, trust boundaries, and evidence-based design checks.</p>
+        <p id="source-owasp-samm"><strong>Secure architecture:</strong> OWASP SAMM Secure Architecture, used for architecture design attention to components, supporting technologies, and security properties.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Operational Checklist</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/architecture_review_checklist_airport.svg" alt="Colorful airport check-in cartoon where a patch suitcase cannot board until tests and freeze evidence are stamped">
+        <figcaption>Figure 1-4. The checklist is airport security for patches: test, stamp, then freeze.</figcaption>
+      </figure>
+      <ul>
+        <li>Confirm the project root and source label before loading the tool.</li>
+        <li>Read the issue code and evidence before deciding what owns the fix.</li>
+        <li>Do not treat an issue report as permission for broad refactoring.</li>
+        <li>Run focused tests after any architecture repair.</li>
+        <li>Freeze only after validation evidence is clean and current.</li>
+      </ul>
+    </section>
+
+    <footer class="running-footer">
+      <span>Architecture Review Help</span>
+      <span>1</span>
+    </footer>
+  </article>
+</body>
+</html>

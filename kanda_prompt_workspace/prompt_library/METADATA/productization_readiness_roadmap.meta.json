@@ -1,0 +1,25 @@
+{
+  "prompt_id": "productization_readiness_roadmap",
+  "display_name": "Productization Readiness Roadmap",
+  "filename": "productization_readiness_roadmap.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Roadmap for turning the project into a release-ready product.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 55,
+  "trigger_phrases": [
+    "productization",
+    "release readiness",
+    "make production ready",
+    "ship this app",
+    "professionalize app"
+  ],
+  "required_companion_prompts": [
+    "professional_ai_assisted_engineering_framework",
+    "evidence_freshness_gate"
+  ]
+}

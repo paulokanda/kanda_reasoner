@@ -1,0 +1,25 @@
+{
+  "prompt_id": "transform_resolver_architecture_contract",
+  "display_name": "Transform Resolver Architecture Contract",
+  "filename": "transform_resolver_architecture_contract.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Defines base identity plus active transform resolver behavior.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 40,
+  "trigger_phrases": [
+    "transform resolver",
+    "base identity plus transform",
+    "resolver architecture",
+    "active transform",
+    "identity resolver"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "project_specific_prompt_generalization"
+  ]
+}

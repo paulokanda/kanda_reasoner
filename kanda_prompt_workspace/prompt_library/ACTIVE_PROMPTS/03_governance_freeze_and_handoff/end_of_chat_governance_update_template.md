@@ -1,0 +1,105 @@
+# End-of-Chat Governance Update Template
+
+## Box Logic Requirement
+
+Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+
+- Identify the active box before implementation.
+- State owner paths.
+- State files allowed to change.
+- State files explicitly out of scope.
+- Declare cross-box touches.
+- Preserve public contracts.
+- Validate the active box and any touched external box.
+
+
+Version: 1.0.0
+Status: Reusable governance-only update template
+Use: Only after validated work and explicit user approval to update official active governance.
+
+## Purpose
+
+Update active governance files using only uploaded baseline governance files, validation evidence, and explicit user-approved frozen decisions.
+
+
+## Project-Agnostic Contract
+
+This prompt must work for any software project. Replace variables before use.
+
+Required variables:
+
+```text
+<PROJECT_ROOT>
+<PROJECT_NAME>
+<PRODUCT_PACKAGE>
+<TASK_DESCRIPTION>
+<TASK_SLUG>
+<GOVERNANCE_FOLDER>
+<VALIDATION_COMMANDS>
+<OUTPUT_FOLDER>
+<SOURCE_FILES>
+<LOG_FILES>
+```
+
+Rules:
+- Do not hardcode one project root.
+- Do not assume one product package.
+- Do not treat examples as active project truth.
+- Use current source files, logs, and validation output as evidence.
+- If evidence is missing, request it before implementation.
+
+
+## Bundle-Gated Freeze Boundary
+
+Governance update is the final freeze phase of Kanda Bundle-Gated Development.
+
+Before generating governance files, verify:
+
+```text
+plan was completed
+bundle was installed locally
+focused validation passed
+architecture validation passed
+workflow validation passed
+manual validation passed when applicable
+user explicitly approved freeze/canon update
+```
+
+If these conditions are not met, output:
+
+```text
+No governance update required.
+```
+
+Do not use sandbox-only validation as final local freeze evidence unless the user
+explicitly accepts that limitation.
+
+## Governance Preconditions
+
+Do not generate governance files unless:
+
+1. Validated work occurred.
+2. The user explicitly approved a freeze or canon update.
+3. Current baseline governance files are available or the user explicitly accepts first-principles generation.
+
+## Evidence Audit
+
+Before generation, list uploaded baseline files, source files, validation output, runtime logs, validated decisions, user-approved freeze, boxes touched, and what will not be invented.
+
+## File Set
+
+A robust governance model should include:
+
+1. Human-readable canon Markdown.
+2. Machine-readable canon JSON.
+3. Command-line checker.
+4. Pytest-compatible regression test.
+5. accepted_warning_baseline.json or equivalent accepted-warning ledger when the project uses warning baselines.
+
+## Output Contract
+
+Governance-only ZIPs must contain only governance files in the active governance folder. Do not include runtime/source files. Do not include prompt stack files.
+
+## Final Rule
+
+If no validated user-approved freeze occurred, output: No governance update required.

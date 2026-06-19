@@ -1,0 +1,27 @@
+{
+  "prompt_id": "folder_assimilation_09_python_quality_security_observability",
+  "display_name": "Folder Assimilation - Python Quality, Security, and Observability",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "09_python_quality_security_observability",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Guide testing, documentation, resilience, logging, metrics, security, type safety, and validation quality.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "pytest",
+    "security",
+    "logging",
+    "observability",
+    "resilience",
+    "docstrings",
+    "validation"
+  ],
+  "card_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md"
+}

@@ -1,0 +1,27 @@
+{
+  "prompt_id": "folder_assimilation_11_productization_and_release_readiness",
+  "display_name": "Folder Assimilation - Productization and Release Readiness",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Guide release maturity, lifecycle, versioning, deprecation, infrastructure, Kubernetes, SRE, and operational readiness.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "release",
+    "production",
+    "deprecation",
+    "versioning",
+    "SRE",
+    "Kubernetes",
+    "infrastructure"
+  ],
+  "card_path": "ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md"
+}

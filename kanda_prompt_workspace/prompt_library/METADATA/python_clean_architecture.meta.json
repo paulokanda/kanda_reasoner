@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_clean_architecture",
+  "display_name": "Python Clean Architecture",
+  "filename": "python_clean_architecture.md",
+  "category": "08_python_engineering_core",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Applies clean architecture boundaries to Python systems.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "clean architecture",
+    "dependency rule",
+    "entities use cases adapters",
+    "architecture layers",
+    "decouple python"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "implementation_roadmap_builder",
+    "python_testing_pytest",
+    "implementation_and_delivery_protocol"
+  ]
+}

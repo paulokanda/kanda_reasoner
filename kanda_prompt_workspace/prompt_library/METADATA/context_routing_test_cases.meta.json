@@ -1,0 +1,11 @@
+{
+  "prompt_id": "context_routing_test_cases",
+  "file_path": "ROUTING_TESTS/context_routing_test_cases.md",
+  "status": "audited_candidate",
+  "scope": "project_agnostic_routing_test",
+  "owner_box": "routing_test_box",
+  "load_mode": "manual_or_validation_only",
+  "phase": "phase3_routing_tests",
+  "purpose": "Human-readable context routing test cases.",
+  "version": "1.0"
+}

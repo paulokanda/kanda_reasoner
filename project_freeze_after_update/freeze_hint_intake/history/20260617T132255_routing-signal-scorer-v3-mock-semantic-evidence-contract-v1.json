@@ -1,0 +1,89 @@
+{
+  "form_inputs": {
+    "box_type": "standard-library-only mock semantic evidence contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve semantic evidence only not authority.\nPreserve standard library only.\nPreserve no embeddings added.\nPreserve no ml dependency added.\nPreserve no vector index added.\nPreserve no corpus generator added.\nPreserve disabled null provider default.\nPreserve metadata eligibility before ambiguity.\nPreserve forbidden authority fields rejected.\nPreserve input text not persisted.\nPreserve lexical fallback primary.\nPreserve no cross box mutation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Mock Semantic Evidence Contract v1",
+    "generated_files": "",
+    "known_warnings": "['This is a mock contract only and intentionally does not implement real embeddings, providers, vector indexes, corpus generation, semantic UI display, or prompt-router behavior.', 'contract.py and __init__.py are intentionally untouched; future export/API promotion requires a separate governed patch.']",
+    "notes": "Adds a standard-library-only mock semantic evidence contract inside routing_signal_scorer so future semantic providers must fit metadata eligibility, ambiguity, advisory-only, no-authority, no-query-persistence, and lexical-fallback boundaries before any real ML implementation.",
+    "planned_next_step": "After freeze, continue with Metadata Vector Manifest Schema v1 or Offline Corpus Governance Design v1; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_mock_semantic_evidence_contract.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_mock_semantic_evidence_contract.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_mock_semantic_evidence_contract.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_mock_semantic_evidence_contract.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_mock_semantic_evidence_contract_v1\nCONTRACT_TEST_OK: mock semantic evidence contract provides disabled provider and mock candidate evidence shapes with metadata eligibility, ambiguity, advisory-only guard, forbidden-authority rejection, no-query-persistence, stdlib-only dependency ceiling, lexical fallback, and no runtime ML/vector/corpus artifacts while preserving v2 shield and v3 design regressions.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_MOCK_SEMANTIC_EVIDENCE_CONTRACT_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "standard-library-only mock semantic evidence contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve semantic evidence only not authority.\nPreserve standard library only.\nPreserve no embeddings added.\nPreserve no ml dependency added.\nPreserve no vector index added.\nPreserve no corpus generator added.\nPreserve disabled null provider default.\nPreserve metadata eligibility before ambiguity.\nPreserve forbidden authority fields rejected.\nPreserve input text not persisted.\nPreserve lexical fallback primary.\nPreserve no cross box mutation.",
+    "feature_id": "routing-signal-scorer-v3-mock-semantic-evidence-contract-v1",
+    "feature_title": "Routing Signal Scorer v3 Mock Semantic Evidence Contract v1",
+    "feature_type": "standard-library-only mock semantic evidence contract",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['This is a mock contract only and intentionally does not implement real embeddings, providers, vector indexes, corpus generation, semantic UI display, or prompt-router behavior.', 'contract.py and __init__.py are intentionally untouched; future export/API promotion requires a separate governed patch.']",
+    "notes": "Adds a standard-library-only mock semantic evidence contract inside routing_signal_scorer so future semantic providers must fit metadata eligibility, ambiguity, advisory-only, no-authority, no-query-persistence, and lexical-fallback boundaries before any real ML implementation.",
+    "owning_box": "kanda_reasoner_app/routing_signal_scorer",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_mock_semantic_evidence_contract.md",
+        "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+        "tests/test_routing_signal_scorer_v3_mock_semantic_evidence_contract.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/__init__.py",
+        "kanda_reasoner_app/routing_signal_scorer/providers",
+        "kanda_reasoner_app/routing_signal_scorer/indices",
+        "kanda_reasoner_app/routing_signal_scorer/corpus_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/semantic_provider.py",
+        "kanda_reasoner_app/routing_signal_scorer/vector_index.py",
+        "kanda_prompt_workspace",
+        "kanda_reasoner_app/freeze_hint_intake",
+        "kanda_reasoner_app/freeze_after_update",
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ]
+    },
+    "planned_next_step": "After freeze, continue with Metadata Vector Manifest Schema v1 or Offline Corpus Governance Design v1; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_architecture_characteristics": [
+      "advisory_only",
+      "semantic_evidence_only_not_authority",
+      "standard_library_only",
+      "no_embeddings_added",
+      "no_ml_dependency_added",
+      "no_vector_index_added",
+      "no_corpus_generator_added",
+      "disabled_null_provider_default",
+      "metadata_eligibility_before_ambiguity",
+      "forbidden_authority_fields_rejected",
+      "input_text_not_persisted",
+      "lexical_fallback_primary",
+      "no_cross_box_mutation"
+    ],
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_mock_semantic_evidence_contract.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_mock_semantic_evidence_contract.py",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781702487082481800,
+      "source_name": "routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+      "source_size_bytes": 13784
+    },
+    "summary": "Adds a standard-library-only mock semantic evidence contract inside routing_signal_scorer so future semantic providers must fit metadata eligibility, ambiguity, advisory-only, no-authority, no-query-persistence, and lexical-fallback boundaries before any real ML implementation.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_mock_semantic_evidence_contract.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_mock_semantic_evidence_contract.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_mock_semantic_evidence_contract_v1\nCONTRACT_TEST_OK: mock semantic evidence contract provides disabled provider and mock candidate evidence shapes with metadata eligibility, ambiguity, advisory-only guard, forbidden-authority rejection, no-query-persistence, stdlib-only dependency ceiling, lexical fallback, and no runtime ML/vector/corpus artifacts while preserving v2 shield and v3 design regressions.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_MOCK_SEMANTIC_EVIDENCE_CONTRACT_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T13:22:55Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781702487082481800,
+    "source_name": "routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+    "source_size_bytes": 13784
+  },
+  "used_at_utc": null
+}

@@ -1,0 +1,15 @@
+Freeze info correction bundle: freeze_formulary_current_feature_autofill_regression_freeze_info_v2
+
+Purpose:
+- Install corrected frozen memory entry for freeze_formulary_current_feature_autofill_regression.
+- Replace the accidental starter-placeholder freeze info entry that lacked mandatory validated_files and validation_evidence_summary fields.
+
+Installs:
+- project_freeze_after_update/frozen_features_memory/entries/freeze-20260616-freeze-formulary-current-feature-autofill-regression-v1.md
+- project_freeze_after_update/frozen_features_memory/_patch_manifests/freeze_formulary_current_feature_autofill_regression_freeze_info_v2.txt
+- workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_formulary_current_feature_autofill_regression_freeze_info_v2.txt
+
+Does not modify source code.
+Does not install KANDA_FREEZE_HINT.json into project root.
+Recommended installer should remove the obsolete placeholder entry:
+- project_freeze_after_update/frozen_features_memory/entries/freeze-20260616-current-validated-feature-replace-with-exact-feature-title.md

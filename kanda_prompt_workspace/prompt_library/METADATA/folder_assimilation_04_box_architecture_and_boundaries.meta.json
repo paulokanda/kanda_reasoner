@@ -1,0 +1,32 @@
+{
+  "prompt_id": "folder_assimilation_04_box_architecture_and_boundaries",
+  "display_name": "Folder Assimilation - Box Architecture and Boundaries",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "04_box_architecture_and_boundaries",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Define owner boxes, Box Boundary Audit requirements, public contracts, private internals, forbidden touches, dependency boundaries, fallback behavior, and anti-contamination rules.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "owner box",
+    "box boundary",
+    "box boundary audit",
+    "box architecture",
+    "architecture",
+    "dependencies",
+    "public contract",
+    "private internals",
+    "private reach-in",
+    "god box",
+    "leaking registry",
+    "one primary box"
+  ],
+  "card_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md"
+}

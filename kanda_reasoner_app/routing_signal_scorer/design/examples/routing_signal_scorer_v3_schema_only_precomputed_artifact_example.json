@@ -1,0 +1,129 @@
+{
+  "aggregate_summaries": {
+    "authority_leakage_count": 0,
+    "candidate_count_by_kind": {
+      "active_prompt_metadata": 1,
+      "synthetic_near_miss_control": 1
+    },
+    "eligible_candidate_count": 1,
+    "privacy_rejection_count": 0,
+    "schema_validation_status": "example_fixture_passes_design_checks",
+    "suppressed_deprecated_candidate_count": 0,
+    "suppressed_stale_candidate_count": 0
+  },
+  "artifact_example_id": "routing_signal_scorer_v3_schema_only_precomputed_artifact_example_v1",
+  "artifact_identity": {
+    "artifact_kind": "redacted_schema_example_fixture",
+    "review_evidence_only": true,
+    "runtime_eligible": false,
+    "source_schema_version": "3.8-precomputed-semantic-evidence-artifact-design",
+    "structural_hash_placeholder": "sha256:redacted-static-fixture-placeholder"
+  },
+  "candidate_records": [
+    {
+      "authority_status": "no_authority_fields_present",
+      "candidate_id": "synthetic-active-prompt-metadata-001",
+      "candidate_kind": "active_prompt_metadata",
+      "eligibility_status": "eligible_for_human_review_only",
+      "privacy_status": "redacted_metadata_only",
+      "redacted_label": "Synthetic active prompt metadata label",
+      "review_note": "Synthetic metadata-only example; no private or raw text.",
+      "score_bucket_placeholder": "high_bucket_without_numeric_vector",
+      "source_manifest_item_id": "synthetic-manifest-item-001",
+      "staleness_status": "not_stale_in_fixture",
+      "synthetic_case_reference": "positive_routing_cases.synthetic.001"
+    },
+    {
+      "authority_status": "no_authority_fields_present",
+      "candidate_id": "synthetic-near-miss-control-001",
+      "candidate_kind": "synthetic_near_miss_control",
+      "eligibility_status": "suppressed_for_human_review_training",
+      "privacy_status": "redacted_metadata_only",
+      "redacted_label": "Synthetic near-miss metadata label",
+      "review_note": "Synthetic control only; no routing or prompt-loading authority.",
+      "score_bucket_placeholder": "near_miss_bucket_without_numeric_vector",
+      "source_manifest_item_id": "synthetic-manifest-item-002",
+      "staleness_status": "not_stale_in_fixture",
+      "synthetic_case_reference": "near_miss_cases.synthetic.001"
+    }
+  ],
+  "declared_schema_only": true,
+  "disabled_flags": {
+    "artifact_example_is_runtime_artifact": false,
+    "artifact_generation_enabled": false,
+    "artifact_loading_enabled": false,
+    "artifact_reader_enabled": false,
+    "artifact_writing_enabled": false,
+    "background_loading_enabled": false,
+    "embedding_value_materialization_enabled": false,
+    "evaluation_execution_enabled": false,
+    "file_watcher_loading_enabled": false,
+    "prompt_router_mutation_enabled": false,
+    "provider_execution_enabled": false,
+    "raw_text_materialization_enabled": false,
+    "runtime_loading_enabled": false,
+    "startup_loading_enabled": false,
+    "threshold_auto_tuning_enabled": false,
+    "vector_index_loading_enabled": false,
+    "vector_value_materialization_enabled": false,
+    "write_freeze_memory_enabled": false
+  },
+  "example_status": "schema_only_static_fixture",
+  "forbidden_content_assertions": [
+    "contains_no_authority_fields",
+    "contains_no_credentials",
+    "contains_no_embedding_values",
+    "contains_no_freeze_entry_text",
+    "contains_no_model_config",
+    "contains_no_private_project_text",
+    "contains_no_prompt_body_text",
+    "contains_no_provider_config",
+    "contains_no_raw_user_query_text",
+    "contains_no_terminal_log_text",
+    "contains_no_vector_index",
+    "contains_no_vector_values"
+  ],
+  "no_authority_assertions": [
+    "canon_remains_final_authority",
+    "example_is_advisory_only",
+    "example_is_review_evidence_only",
+    "example_must_not_choose_required_prompts",
+    "example_must_not_choose_route",
+    "example_must_not_decide_may_proceed",
+    "example_must_not_load_prompts",
+    "example_must_not_mutate_router",
+    "example_must_not_write_freeze_memory"
+  ],
+  "permitted_uses": [
+    "human_review_training_only",
+    "no_final_route_signal",
+    "no_may_proceed_signal",
+    "no_prompt_loading",
+    "no_runtime_enablement",
+    "redacted_metadata_preview_training_only",
+    "review_evidence_only",
+    "schema_documentation_only",
+    "static_validation_fixture_only"
+  ],
+  "schema_version": "3.11-schema-only-precomputed-artifact-example",
+  "source_references": {
+    "advisory_artifact_ui_preview_design_ref": "routing_signal_scorer_v3_advisory_precomputed_artifact_ui_preview_design_v1",
+    "disabled_artifact_reader_boundary_ref": "routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1",
+    "metadata_vector_manifest_schema_ref": "routing_signal_scorer_v3_metadata_vector_manifest_schema_v1",
+    "offline_evaluation_gold_set_schema_ref": "routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1",
+    "precomputed_artifact_design_ref": "routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1"
+  },
+  "validation_gates": [
+    "gold_set_reference_present",
+    "no_authority_fields_present",
+    "no_embedding_values_present",
+    "no_provider_config_present",
+    "no_raw_text_fields_present",
+    "no_vector_index_present",
+    "no_vector_values_present",
+    "review_evidence_only_output",
+    "runtime_enablement_absent",
+    "schema_version_matches",
+    "source_manifest_reference_present"
+  ]
+}

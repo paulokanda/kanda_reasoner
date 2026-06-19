@@ -1,0 +1,1327 @@
+{
+  "items": [
+    {
+      "consumed_at_utc": "2026-06-16T02:10:47Z",
+      "feature_id": "freeze-hint-intake-box-v1",
+      "feature_title": "Freeze Hint Intake Box v1",
+      "source": {
+        "source_mtime_ns": 1781575624553172100,
+        "source_name": "freeze_hint_intake_box_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_intake_box_v1_patch.zip",
+        "source_size_bytes": 29259
+      },
+      "used_freeze_id": "freeze-20260616-freeze-hint-intake-box-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T02:40:51Z",
+      "feature_id": "freeze-hint-preserve-local-validation-v1",
+      "feature_title": "Freeze Hint Preserve Local Validation v1",
+      "source": {
+        "source_mtime_ns": 1781577264662803900,
+        "source_name": "freeze_hint_preserve_local_validation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_preserve_local_validation_v1_patch.zip",
+        "source_size_bytes": 79364
+      },
+      "used_freeze_id": "freeze-20260616-freeze-hint-preserve-local-validation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T02:43:05Z",
+      "feature_id": "freeze-hint-validation-evidence-merge-v1",
+      "feature_title": "Freeze Hint Validation Evidence Merge v1",
+      "source": {
+        "source_mtime_ns": 1781576956101154600,
+        "source_name": "freeze_hint_validation_evidence_merge_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_validation_evidence_merge_v1_patch.zip",
+        "source_size_bytes": 79391
+      },
+      "used_freeze_id": "freeze-20260616-freeze-hint-validation-evidence-merge-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T02:45:18Z",
+      "feature_id": "freeze-code-intake-prompt-routing-v1",
+      "feature_title": "Freeze Code Intake Prompt Routing v1",
+      "source": {
+        "source_mtime_ns": 1781576414981655600,
+        "source_name": "freeze_code_intake_prompt_routing_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_code_intake_prompt_routing_v1_patch.zip",
+        "source_size_bytes": 122976
+      },
+      "used_freeze_id": "freeze-20260616-freeze-code-intake-prompt-routing-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T02:46:09Z",
+      "feature_id": "freeze-hint-sidecar-delivery-contract-v1",
+      "feature_title": "Freeze Hint Sidecar Delivery Contract v1",
+      "source": {
+        "source_mtime_ns": 1781574269516573900,
+        "source_name": "freeze_hint_sidecar_delivery_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_sidecar_delivery_contract_v1_patch.zip",
+        "source_size_bytes": 8352
+      },
+      "used_freeze_id": "freeze-20260616-freeze-hint-sidecar-delivery-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T03:31:20Z",
+      "feature_id": "phase-2-prompt-call-accuracy-routing-matrix-v1",
+      "feature_title": "Phase 2 Prompt-Call Accuracy Routing Matrix v1",
+      "source": {
+        "source_mtime_ns": 1781580486873397200,
+        "source_name": "phase2_prompt_routing_tests_freeze_hint_v1.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\phase2_prompt_routing_tests_freeze_hint_v1.zip",
+        "source_size_bytes": 3415
+      },
+      "used_freeze_id": "freeze-20260616-phase-2-prompt-call-accuracy-routing-matrix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T15:16:57Z",
+      "feature_id": "freeze-hint-windows-temp-cleanup-tolerance-v1",
+      "feature_title": "Freeze Hint Windows Temp Cleanup Tolerance v1",
+      "source": {
+        "source_mtime_ns": 1781622796320217900,
+        "source_name": "freeze_hint_windows_temp_cleanup_tolerance_v1_formulary_data.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_windows_temp_cleanup_tolerance_v1_formulary_data.zip",
+        "source_size_bytes": 5281
+      },
+      "used_freeze_id": "freeze-20260616-freeze-hint-windows-temp-cleanup-tolerance-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T22:58:02Z",
+      "feature_id": "routing-signal-scorer-v1-diagnostic",
+      "feature_title": "Routing Signal Scorer v1 Diagnostic",
+      "source": {
+        "source_mtime_ns": 1781649294753164400,
+        "source_name": "routing_signal_scorer_v1_diagnostic_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v1_diagnostic_patch.zip",
+        "source_size_bytes": 8047
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-v1-diagnostic"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T23:03:18Z",
+      "feature_id": "routing-signal-scorer-manual-pilots-v1",
+      "feature_title": "Routing Signal Scorer Manual Pilots v1",
+      "source": {
+        "source_mtime_ns": 1781650875119644000,
+        "source_name": "routing_signal_scorer_manual_pilots_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_manual_pilots_v1_patch.zip",
+        "source_size_bytes": 3445
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-manual-pilots-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T23:09:23Z",
+      "feature_id": "routing-signal-scorer-v1-advisory",
+      "feature_title": "Routing Signal Scorer v1 Advisory",
+      "source": {
+        "source_mtime_ns": 1781651232746126800,
+        "source_name": "routing_signal_scorer_v1_advisory_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v1_advisory_patch.zip",
+        "source_size_bytes": 9608
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-v1-advisory"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T23:17:55Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-design",
+      "feature_title": "Routing Signal Scorer v2 Similarity Design",
+      "source": {
+        "source_mtime_ns": 1781651737930474200,
+        "source_name": "routing_signal_scorer_v2_similarity_design_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_design_patch.zip",
+        "source_size_bytes": 5725
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-v2-similarity-design"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T23:33:00Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-test-corpus",
+      "feature_title": "Routing Signal Scorer v2 Similarity Test Corpus",
+      "source": {
+        "source_mtime_ns": 1781652707131854300,
+        "source_name": "routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+        "source_size_bytes": 6637
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-v2-similarity-design"
+    },
+    {
+      "consumed_at_utc": "2026-06-16T23:52:15Z",
+      "feature_id": "freeze-form-autofill-stale-sidecar-selection-repair-v1",
+      "feature_title": "Freeze Form Autofill Stale Sidecar Selection Repair v1",
+      "source": {
+        "source_mtime_ns": 1781653862006218800,
+        "source_name": "freeze_form_autofill_stale_sidecar_selection_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_form_autofill_stale_sidecar_selection_repair_v1_patch.zip",
+        "source_size_bytes": 14488
+      },
+      "used_freeze_id": "freeze-20260616-freeze-form-autofill-stale-sidecar-selection-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T00:12:00Z",
+      "feature_id": "freeze-hint-autofill-state-machine-tests-v1",
+      "feature_title": "Freeze Hint Autofill State Machine Tests v1",
+      "source": {
+        "source_mtime_ns": 1781655034793925700,
+        "source_name": "freeze_hint_autofill_state_machine_tests_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_autofill_state_machine_tests_v1_patch.zip",
+        "source_size_bytes": 16800
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-autofill-state-machine-tests-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T00:22:44Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-runtime-lite",
+      "feature_title": "Routing Signal Scorer v2 Similarity Runtime Lite",
+      "source": {
+        "source_mtime_ns": 1781655697858813500,
+        "source_name": "routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+        "source_size_bytes": 13206
+      },
+      "used_freeze_id": "freeze-20260616-routing-signal-scorer-v2-similarity-test-corpus"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T00:28:22Z",
+      "feature_id": "freeze-hint-consumed-newer-scan-continuation-v1",
+      "feature_title": "Freeze Hint Consumed Newer Scan Continuation v1",
+      "source": {
+        "source_mtime_ns": 1781656027935436800,
+        "source_name": "freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_consumed_newer_scan_continuation_v1_patch.zip",
+        "source_size_bytes": 16537
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-consumed-newer-scan-continuation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T00:48:16Z",
+      "feature_id": "freeze-hint-frozen-entry-body-mention-guard-v1",
+      "feature_title": "Freeze Hint Frozen Entry Body Mention Guard v1",
+      "source": {
+        "source_mtime_ns": 1781657126267605500,
+        "source_name": "freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+        "source_size_bytes": 16842
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-frozen-entry-body-mention-guard-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:04:34Z",
+      "feature_id": "freeze-hint-false-consumed-retry-guard-v1",
+      "feature_title": "Freeze Hint False Consumed Retry Guard v1",
+      "source": {
+        "source_mtime_ns": 1781658103383168900,
+        "source_name": "freeze_hint_false_consumed_retry_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_false_consumed_retry_guard_v1_patch.zip",
+        "source_size_bytes": 17967
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-false-consumed-retry-guard-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:27:27Z",
+      "feature_id": "freeze-hint-metadata-alias-autofill-v1",
+      "feature_title": "Freeze Hint Metadata Alias Autofill v1",
+      "source": {
+        "source_mtime_ns": 1781659574262512000,
+        "source_name": "freeze_hint_metadata_alias_autofill_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_metadata_alias_autofill_v1_patch.zip",
+        "source_size_bytes": 16754
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-metadata-alias-autofill-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:29:12Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-runtime-lite-calibration-tests-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Runtime Lite Calibration Tests v1",
+      "source": {
+        "source_mtime_ns": 1781658803652065500,
+        "source_name": "routing_signal_scorer_v2_similarity_runtime_lite_calibration_tests_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_runtime_lite_calibration_tests_v1_patch.zip",
+        "source_size_bytes": 3580
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-runtime-lite-calibration-tests-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:37:47Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-threshold-policy-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Threshold Policy v1",
+      "source": {
+        "source_mtime_ns": 1781660091322351300,
+        "source_name": "routing_signal_scorer_v2_similarity_threshold_policy_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_threshold_policy_v1_patch.zip",
+        "source_size_bytes": 5169
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-threshold-policy-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:45:52Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-policy-runtime-alignment-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Policy Runtime Alignment v1",
+      "source": {
+        "source_mtime_ns": 1781660680683285100,
+        "source_name": "routing_signal_scorer_v2_similarity_policy_runtime_alignment_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_policy_runtime_alignment_v1_patch.zip",
+        "source_size_bytes": 12661
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-policy-runtime-alignment-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T01:59:14Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-explainability-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Explainability v1",
+      "source": {
+        "source_mtime_ns": 1781661303775087900,
+        "source_name": "routing_signal_scorer_v2_similarity_explainability_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_explainability_v1_patch.zip",
+        "source_size_bytes": 13361
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-explainability-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T02:07:22Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-decision-report-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Decision Report v1",
+      "source": {
+        "source_mtime_ns": 1781661936439362000,
+        "source_name": "routing_signal_scorer_v2_similarity_decision_report_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_decision_report_v1_patch.zip",
+        "source_size_bytes": 13407
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-decision-report-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T09:38:25Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-ui-preview-adapter-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity UI Preview Adapter v1",
+      "source": {
+        "source_mtime_ns": 1781689014088701600,
+        "source_name": "routing_signal_scorer_v2_similarity_ui_preview_adapter_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_ui_preview_adapter_v1_patch.zip",
+        "source_size_bytes": 15406
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-ui-preview-adapter-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T10:00:25Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-prompt-context-preview-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Prompt Context Preview v1",
+      "source": {
+        "source_mtime_ns": 1781689881761609200,
+        "source_name": "routing_signal_scorer_v2_similarity_prompt_context_preview_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_prompt_context_preview_v1_patch.zip",
+        "source_size_bytes": 17452
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-prompt-context-preview-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T11:14:34Z",
+      "feature_id": "freeze-hint-nested-patch-boundary-formulary-autofill-v1",
+      "feature_title": "Freeze Hint Nested Patch-Boundary Formulary Autofill v1",
+      "source": {
+        "source_mtime_ns": 1781694787939784700,
+        "source_name": "freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+        "source_size_bytes": 19497
+      },
+      "used_freeze_id": "freeze-20260617-freeze-hint-nested-patch-boundary-formulary-autofill-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T11:15:59Z",
+      "feature_id": "kanda-box-shielding-canon-routing-registration-v1",
+      "feature_title": "KANDA Box Shielding Canon Routing Registration v1",
+      "source": {
+        "source_mtime_ns": 1781693966981663500,
+        "source_name": "kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+        "source_size_bytes": 80423
+      },
+      "used_freeze_id": "freeze-20260617-kanda-box-shielding-canon-routing-registration-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T11:30:58Z",
+      "feature_id": "kanda-routing-system-canon-registration-v1",
+      "feature_title": "KANDA Routing System Canon Registration v1",
+      "source": {
+        "source_mtime_ns": 1781695580658016200,
+        "source_name": "kanda_routing_system_canon_registration_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_routing_system_canon_registration_v1_patch.zip",
+        "source_size_bytes": 87722
+      },
+      "used_freeze_id": "freeze-20260617-kanda-routing-system-canon-registration-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T12:05:01Z",
+      "feature_id": "freeze-tab-local-preview-visible-log-v1",
+      "feature_title": "Freeze Tab Local Preview Visible Log v1",
+      "source": {
+        "source_mtime_ns": 1781697794729691100,
+        "source_name": "freeze_tab_local_preview_visible_log_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_tab_local_preview_visible_log_v1_patch.zip",
+        "source_size_bytes": 24805
+      },
+      "used_freeze_id": "freeze-20260617-freeze-tab-local-preview-visible-log-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T12:06:53Z",
+      "feature_id": "routing-signal-scorer-v2-similarity-box-shield-v1",
+      "feature_title": "Routing Signal Scorer v2 Similarity Box Shield v1",
+      "source": {
+        "source_mtime_ns": 1781696824685980800,
+        "source_name": "routing_signal_scorer_v2_similarity_box_shield_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_box_shield_v1_patch.zip",
+        "source_size_bytes": 22413
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v2-similarity-box-shield-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T12:55:55Z",
+      "feature_id": "routing-signal-scorer-v3-semantic-readiness-canon-registration-v1",
+      "feature_title": "Routing Signal Scorer v3 Semantic Readiness Canon Registration v1",
+      "source": {
+        "source_mtime_ns": 1781700825147462600,
+        "source_name": "routing_signal_scorer_v3_semantic_readiness_canon_registration_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_semantic_readiness_canon_registration_v1_patch.zip",
+        "source_size_bytes": 100252
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-semantic-readiness-canon-registration-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:08:46Z",
+      "feature_id": "routing-signal-scorer-v3-structural-contract-semantic-readiness-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Structural Contract and Semantic Readiness Design v1",
+      "source": {
+        "source_mtime_ns": 1781701663405529900,
+        "source_name": "routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+        "source_size_bytes": 13759
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-structural-contract-and-semantic-readiness-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:23:04Z",
+      "feature_id": "routing-signal-scorer-v3-mock-semantic-evidence-contract-v1",
+      "feature_title": "Routing Signal Scorer v3 Mock Semantic Evidence Contract v1",
+      "source": {
+        "source_mtime_ns": 1781702487082481800,
+        "source_name": "routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mock_semantic_evidence_contract_v1_patch.zip",
+        "source_size_bytes": 13784
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-mock-semantic-evidence-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:29:46Z",
+      "feature_id": "routing-signal-scorer-v3-metadata-vector-manifest-schema-v1",
+      "feature_title": "Routing Signal Scorer v3 Metadata Vector Manifest Schema v1",
+      "source": {
+        "source_mtime_ns": 1781702889996877700,
+        "source_name": "routing_signal_scorer_v3_metadata_vector_manifest_schema_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_metadata_vector_manifest_schema_v1_patch.zip",
+        "source_size_bytes": 14065
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-metadata-vector-manifest-schema-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:38:01Z",
+      "feature_id": "routing-signal-scorer-v3-offline-corpus-governance-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Offline Corpus Governance Design v1",
+      "source": {
+        "source_mtime_ns": 1781703374651264900,
+        "source_name": "routing_signal_scorer_v3_offline_corpus_governance_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_offline_corpus_governance_design_v1_patch.zip",
+        "source_size_bytes": 13164
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-offline-corpus-governance-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:47:02Z",
+      "feature_id": "routing-signal-scorer-v3-offline-evaluation-corpus-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Offline Evaluation Corpus Design v1",
+      "source": {
+        "source_mtime_ns": 1781703954071641900,
+        "source_name": "routing_signal_scorer_v3_offline_evaluation_corpus_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_offline_evaluation_corpus_design_v1_patch.zip",
+        "source_size_bytes": 15801
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-offline-evaluation-corpus-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T13:55:49Z",
+      "feature_id": "routing-signal-scorer-v3-offline-evaluation-gold-set-schema-v1",
+      "feature_title": "Routing Signal Scorer v3 Offline Evaluation Gold Set Schema v1",
+      "source": {
+        "source_mtime_ns": 1781704448240190400,
+        "source_name": "routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+        "source_size_bytes": 18984
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-offline-evaluation-gold-set-schema-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:05:58Z",
+      "feature_id": "routing-signal-scorer-v3-disabled-evaluation-runner-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Disabled Evaluation Runner Design v1",
+      "source": {
+        "source_mtime_ns": 1781705082930783500,
+        "source_name": "routing_signal_scorer_v3_disabled_evaluation_runner_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_disabled_evaluation_runner_design_v1_patch.zip",
+        "source_size_bytes": 21830
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-disabled-evaluation-runner-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:16:50Z",
+      "feature_id": "routing-signal-scorer-v3-provider-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Provider Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781705753671213900,
+        "source_name": "routing_signal_scorer_v3_provider_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_provider_boundary_design_v1_patch.zip",
+        "source_size_bytes": 24606
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-provider-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:24:47Z",
+      "feature_id": "routing-signal-scorer-v3-precomputed-semantic-evidence-artifact-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Precomputed Semantic Evidence Artifact Design v1",
+      "source": {
+        "source_mtime_ns": 1781706236325816800,
+        "source_name": "routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1_patch.zip",
+        "source_size_bytes": 27303
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-precomputed-semantic-evidence-artifact-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:33:42Z",
+      "feature_id": "routing-signal-scorer-v3-disabled-artifact-reader-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Disabled Artifact Reader Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781706767632363200,
+        "source_name": "routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+        "source_size_bytes": 30093
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-disabled-artifact-reader-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:46:56Z",
+      "feature_id": "routing-signal-scorer-v3-advisory-precomputed-artifact-ui-preview-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Advisory Precomputed Artifact UI Preview Design v1",
+      "source": {
+        "source_mtime_ns": 1781707572370535600,
+        "source_name": "routing_signal_scorer_v3_advisory_precomputed_artifact_ui_preview_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_advisory_precomputed_artifact_ui_preview_design_v1_patch.zip",
+        "source_size_bytes": 33752
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-advisory-precomputed-artifact-ui-preview-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T14:55:35Z",
+      "feature_id": "routing-signal-scorer-v3-schema-only-precomputed-artifact-example-v1",
+      "feature_title": "Routing Signal Scorer v3 Schema-Only Precomputed Artifact Example v1",
+      "source": {
+        "source_mtime_ns": 1781708076754315200,
+        "source_name": "routing_signal_scorer_v3_schema_only_precomputed_artifact_example_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_schema_only_precomputed_artifact_example_v1_patch.zip",
+        "source_size_bytes": 38912
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-schema-only-precomputed-artifact-example-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T22:56:20Z",
+      "feature_id": "routing-signal-scorer-v3-closure-shield-v1",
+      "feature_title": "Routing Signal Scorer v3 Closure Shield v1",
+      "source": {
+        "source_mtime_ns": 1781736860685417700,
+        "source_name": "routing_signal_scorer_v3_closure_shield_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_closure_shield_v1_patch.zip",
+        "source_size_bytes": 10913
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-closure-shield-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T23:25:29Z",
+      "feature_id": "routing-signal-scorer-v3-disabled-generation-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Disabled Generation Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781738658856027000,
+        "source_name": "routing_signal_scorer_v3_disabled_generation_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_disabled_generation_boundary_design_v1_patch.zip",
+        "source_size_bytes": 14644
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-disabled-generation-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T23:32:29Z",
+      "feature_id": "routing-signal-scorer-v3-dry-run-artifact-generation-plan-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Dry-Run Artifact Generation Plan Design v1",
+      "source": {
+        "source_mtime_ns": 1781739086628713100,
+        "source_name": "routing_signal_scorer_v3_dry_run_artifact_generation_plan_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_dry_run_artifact_generation_plan_design_v1_patch.zip",
+        "source_size_bytes": 15012
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-dry-run-artifact-generation-plan-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T23:41:33Z",
+      "feature_id": "routing-signal-scorer-v3-local-generator-candidate-review-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Local Generator Candidate Review Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781739637888160000,
+        "source_name": "routing_signal_scorer_v3_local_generator_candidate_review_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_local_generator_candidate_review_gate_design_v1_patch.zip",
+        "source_size_bytes": 15751
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-local-generator-candidate-review-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T23:48:56Z",
+      "feature_id": "routing-signal-scorer-v3-human-architectural-review-record-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Human Architectural Review Record Design v1",
+      "source": {
+        "source_mtime_ns": 1781740089044708900,
+        "source_name": "routing_signal_scorer_v3_human_architectural_review_record_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_human_architectural_review_record_design_v1_patch.zip",
+        "source_size_bytes": 15591
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-human-architectural-review-record-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-17T23:56:30Z",
+      "feature_id": "routing-signal-scorer-v3-human-decision-intake-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Human Decision Intake Design v1",
+      "source": {
+        "source_mtime_ns": 1781740532685604400,
+        "source_name": "routing_signal_scorer_v3_human_decision_intake_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_human_decision_intake_design_v1_patch.zip",
+        "source_size_bytes": 15390
+      },
+      "used_freeze_id": "freeze-20260617-routing-signal-scorer-v3-human-decision-intake-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:04:03Z",
+      "feature_id": "routing-signal-scorer-v3-actual-human-decision-record-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Actual Human Decision Record Design v1",
+      "source": {
+        "source_mtime_ns": 1781740968719240200,
+        "source_name": "routing_signal_scorer_v3_actual_human_decision_record_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_actual_human_decision_record_design_v1_patch.zip",
+        "source_size_bytes": 16160
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-actual-human-decision-record-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:11:06Z",
+      "feature_id": "routing-signal-scorer-v3-actual-human-decision-recording-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Actual Human Decision Recording Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781741411514111600,
+        "source_name": "routing_signal_scorer_v3_actual_human_decision_recording_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_actual_human_decision_recording_boundary_design_v1_patch.zip",
+        "source_size_bytes": 15942
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-actual-human-decision-recording-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:18:34Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-proposal-schema-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Proposal Schema Design v1",
+      "source": {
+        "source_mtime_ns": 1781741863556913200,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_proposal_schema_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_proposal_schema_design_v1_patch.zip",
+        "source_size_bytes": 15491
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-proposal-schema-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:25:53Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-proposal-review-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Proposal Review Design v1",
+      "source": {
+        "source_mtime_ns": 1781742312878604500,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_proposal_review_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_proposal_review_design_v1_patch.zip",
+        "source_size_bytes": 15139
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-proposal-review-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:36:41Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-patch-preflight-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Patch Preflight Design v1",
+      "source": {
+        "source_mtime_ns": 1781742936590183900,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_patch_preflight_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_patch_preflight_design_v1_patch.zip",
+        "source_size_bytes": 15240
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-patch-preflight-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:43:32Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-patch-envelope-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Patch Envelope Design v1",
+      "source": {
+        "source_mtime_ns": 1781743349525627800,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_patch_envelope_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_patch_envelope_design_v1_patch.zip",
+        "source_size_bytes": 15447
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-patch-envelope-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T00:51:43Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-patch-skeleton-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Patch Skeleton Design v1",
+      "source": {
+        "source_mtime_ns": 1781743799215880800,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_patch_skeleton_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_patch_skeleton_design_v1_patch.zip",
+        "source_size_bytes": 15652
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-patch-skeleton-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:02:24Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-patch-file-set-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Patch File-Set Design v1",
+      "source": {
+        "source_mtime_ns": 1781744501505720100,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_patch_file_set_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_patch_file_set_design_v1_patch.zip",
+        "source_size_bytes": 15953
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-patch-file-set-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:08:10Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-dependency-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Dependency Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781744824027811300,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_dependency_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_dependency_boundary_design_v1_patch.zip",
+        "source_size_bytes": 16752
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-dependency-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:13:18Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-side-effect-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Side-Effect Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781745167557503900,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_side_effect_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_side_effect_boundary_design_v1_patch.zip",
+        "source_size_bytes": 16914
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-side-effect-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:18:36Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-review-bundle-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Review Bundle Design v1",
+      "source": {
+        "source_mtime_ns": 1781745452861112300,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_review_bundle_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_review_bundle_design_v1_patch.zip",
+        "source_size_bytes": 16112
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-review-bundle-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:23:43Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-preparation-closure-shield-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Preparation Closure Shield v1",
+      "source": {
+        "source_mtime_ns": 1781745734425495300,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_preparation_closure_shield_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_preparation_closure_shield_v1_patch.zip",
+        "source_size_bytes": 16863
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-preparation-closure-shield-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:28:47Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781746083763794600,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_gate_design_v1_patch.zip",
+        "source_size_bytes": 16737
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:33:50Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-record-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Record Design v1",
+      "source": {
+        "source_mtime_ns": 1781746381384651500,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_record_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_record_design_v1_patch.zip",
+        "source_size_bytes": 17358
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-record-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:39:28Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781746702384217100,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_boundary_design_v1_patch.zip",
+        "source_size_bytes": 16832
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:47:03Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-candidate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Candidate Design v1",
+      "source": {
+        "source_mtime_ns": 1781747159191747200,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_candidate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_candidate_design_v1_patch.zip",
+        "source_size_bytes": 17518
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-candidate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T01:55:42Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-implementation-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Implementation Design v1",
+      "source": {
+        "source_mtime_ns": 1781747682402078400,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_implementation_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_implementation_design_v1_patch.zip",
+        "source_size_bytes": 17952
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-implementation-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T02:06:23Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-commit-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Commit Design v1",
+      "source": {
+        "source_mtime_ns": 1781748312713067000,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_commit_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_commit_design_v1_patch.zip",
+        "source_size_bytes": 18097
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-commit-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T02:19:10Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-finalization-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Finalization Design v1",
+      "source": {
+        "source_mtime_ns": 1781749104681990600,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_finalization_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_finalization_design_v1_patch.zip",
+        "source_size_bytes": 17704
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-finalization-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T02:28:29Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-finalization-closure-shield-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Finalization Closure Shield v1",
+      "source": {
+        "source_mtime_ns": 1781749623097969300,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_finalization_closure_shield_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_finalization_closure_shield_v1_patch.zip",
+        "source_size_bytes": 18341
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-finalization-closure-shield-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T02:33:13Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-patch-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Patch Design v1",
+      "source": {
+        "source_mtime_ns": 1781749937718597800,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_design_v1_patch.zip",
+        "source_size_bytes": 17710
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-patch-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T02:40:44Z",
+      "feature_id": "routing-signal-scorer-v3-generator-candidate-human-decision-recording-patch-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Generator Candidate Human Decision Recording Patch Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781750381701105000,
+        "source_name": "routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_boundary_design_v1_patch.zip",
+        "source_size_bytes": 18054
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-generator-candidate-human-decision-recording-patch-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T11:42:01Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-foundations-reference-and-box-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781782899497997300,
+        "source_name": "routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+        "source_size_bytes": 17050
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-foundations-reference-and-box-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T11:46:53Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-system-card-bug-bar-threat-model-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser System Card Bug Bar Threat Model Design v1",
+      "source": {
+        "source_mtime_ns": 1781783150012759800,
+        "source_name": "routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design_v1_patch.zip",
+        "source_size_bytes": 20140
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-system-card-bug-bar-threat-model-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T11:52:50Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-schema-family-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Schema Family Design v1",
+      "source": {
+        "source_mtime_ns": 1781783477602433200,
+        "source_name": "routing_signal_scorer_v3_adviser_schema_family_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_schema_family_design_v1_patch.zip",
+        "source_size_bytes": 25925
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-schema-family-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T11:59:49Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-contract-validator-output-guard-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Contract Validator Output Guard v1",
+      "source": {
+        "source_mtime_ns": 1781783952662771100,
+        "source_name": "routing_signal_scorer_v3_adviser_contract_validator_output_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_contract_validator_output_guard_v1_patch.zip",
+        "source_size_bytes": 27427
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-contract-validator-output-guard-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T12:06:13Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-severity-resource-limits-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Severity Resource Limits v1",
+      "source": {
+        "source_mtime_ns": 1781784299672432100,
+        "source_name": "routing_signal_scorer_v3_adviser_severity_resource_limits_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_severity_resource_limits_v1_patch.zip",
+        "source_size_bytes": 29187
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-severity-resource-limits-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T12:12:38Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-pure-comparison-harness-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Pure Comparison Harness v1",
+      "source": {
+        "source_mtime_ns": 1781784716080847100,
+        "source_name": "routing_signal_scorer_v3_adviser_pure_comparison_harness_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_pure_comparison_harness_v1_patch.zip",
+        "source_size_bytes": 36202
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-pure-comparison-harness-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T12:43:19Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-gold-manifest-run-registry-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Gold Manifest Run Registry v1",
+      "source": {
+        "source_mtime_ns": 1781786560159847800,
+        "source_name": "routing_signal_scorer_v3_adviser_gold_manifest_run_registry_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_gold_manifest_run_registry_v1_patch.zip",
+        "source_size_bytes": 37155
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-gold-manifest-run-registry-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T12:51:02Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-seed-case-corpus-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Seed Case Corpus v1",
+      "source": {
+        "source_mtime_ns": 1781787001131560900,
+        "source_name": "routing_signal_scorer_v3_adviser_seed_case_corpus_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_seed_case_corpus_v1_patch.zip",
+        "source_size_bytes": 51075
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-seed-case-corpus-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T12:59:04Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-human-review-draft-teacher-answers-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Human Review Draft Teacher Answers v1",
+      "source": {
+        "source_mtime_ns": 1781787489335253700,
+        "source_name": "routing_signal_scorer_v3_adviser_human_review_draft_teacher_answers_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_human_review_draft_teacher_answers_v1_patch.zip",
+        "source_size_bytes": 29949
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-human-review-draft-teacher-answers-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T13:05:09Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-seed-gold-set-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Seed Gold Set Gate v1",
+      "source": {
+        "source_mtime_ns": 1781787872102572400,
+        "source_name": "routing_signal_scorer_v3_adviser_seed_gold_set_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_seed_gold_set_gate_v1_patch.zip",
+        "source_size_bytes": 20691
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-seed-gold-set-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T14:03:54Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-human-reviewed-approval-records-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Human Reviewed Approval Records v1",
+      "source": {
+        "source_mtime_ns": 1781791358394515900,
+        "source_name": "routing_signal_scorer_v3_adviser_human_reviewed_approval_records_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_human_reviewed_approval_records_v1_patch.zip",
+        "source_size_bytes": 44102
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-human-reviewed-approval-records-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T14:11:20Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-seed-gold-set-assembly-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Seed Gold Set Assembly v1",
+      "source": {
+        "source_mtime_ns": 1781791813193762300,
+        "source_name": "routing_signal_scorer_v3_adviser_seed_gold_set_assembly_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_seed_gold_set_assembly_v1_patch.zip",
+        "source_size_bytes": 43861
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-seed-gold-set-assembly-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T15:08:44Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-candidate-v0-offline-lexical-scorer-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Candidate v0 Offline Lexical Scorer Design v1",
+      "source": {
+        "source_mtime_ns": 1781794630585073000,
+        "source_name": "routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_design_v1_patch_FIXED_FREEZE_HINT.zip",
+        "source_path": "E:\\routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_design_v1_patch_FIXED_FREEZE_HINT.zip",
+        "source_size": 22707
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-candidate-v0-offline-lexical-scorer-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T16:14:06Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-candidate-v0-offline-lexical-scorer-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Candidate v0 Offline Lexical Scorer v1",
+      "source": {
+        "source_mtime_ns": 1781799195368582700,
+        "source_name": "routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_candidate_v0_offline_lexical_scorer_v1_patch.zip",
+        "source_size_bytes": 44393
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-candidate-v0-offline-lexical-scorer-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T16:23:49Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-candidate-v0-evaluation-runner-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Candidate v0 Evaluation Runner v1",
+      "source": {
+        "source_mtime_ns": 1781799791475033400,
+        "source_name": "routing_signal_scorer_v3_adviser_candidate_v0_evaluation_runner_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_candidate_v0_evaluation_runner_v1_patch.zip",
+        "source_size_bytes": 30598
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-candidate-v0-evaluation-runner-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T16:28:42Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-active-review-queue-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Active Review Queue v1",
+      "source": {
+        "source_mtime_ns": 1781800064427714100,
+        "source_name": "routing_signal_scorer_v3_adviser_active_review_queue_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_active_review_queue_v1_patch.zip",
+        "source_size_bytes": 30723
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-active-review-queue-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T16:58:34Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-candidate-registry-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Candidate Registry v1",
+      "source": {
+        "source_mtime_ns": 1781801677011472000,
+        "source_name": "routing_signal_scorer_v3_adviser_candidate_registry_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_candidate_registry_v1_patch.zip",
+        "source_size_bytes": 31194
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-candidate-registry-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T17:04:43Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-gold-set-expansion-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Gold Set Expansion Plan v1",
+      "source": {
+        "source_mtime_ns": 1781802236393337600,
+        "source_name": "routing_signal_scorer_v3_adviser_gold_set_expansion_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_gold_set_expansion_plan_v1_patch.zip",
+        "source_size_bytes": 32754
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-gold-set-expansion-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T17:21:14Z",
+      "feature_id": "routing-signal-scorer-v3-adviser-promotion-criteria-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 Adviser Promotion Criteria Gate v1",
+      "source": {
+        "source_mtime_ns": 1781803210765304300,
+        "source_name": "routing_signal_scorer_v3_adviser_promotion_criteria_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_promotion_criteria_gate_v1_patch.zip",
+        "source_size_bytes": 32728
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-adviser-promotion-criteria-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T17:27:15Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-assistant-transition-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode / Assistant Transition Design v1",
+      "source": {
+        "source_mtime_ns": 1781803595225888700,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_assistant_transition_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_assistant_transition_design_v1_patch.zip",
+        "source_size_bytes": 30979
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-assistant-transition-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T19:19:36Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781810334173659900,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_boundary_design_v1_patch.zip",
+        "source_size_bytes": 31652
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T19:26:29Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-io-contract-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Input Output Contract Design v1",
+      "source": {
+        "source_mtime_ns": 1781810731779625000,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_io_contract_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_io_contract_design_v1_patch.zip",
+        "source_size_bytes": 33816
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-input-output-contract-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T19:31:38Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-contract-validator-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Contract Validator Design v1",
+      "source": {
+        "source_mtime_ns": 1781811057549869400,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_contract_validator_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_contract_validator_design_v1_patch.zip",
+        "source_size_bytes": 34266
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-contract-validator-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T19:38:28Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-observation-skeleton-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Observation Skeleton Design v1",
+      "source": {
+        "source_mtime_ns": 1781811448934017400,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_observation_skeleton_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_observation_skeleton_design_v1_patch.zip",
+        "source_size_bytes": 34563
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-observation-skeleton-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T19:45:01Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-implementation-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Implementation Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781811853718006800,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_implementation_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_implementation_gate_design_v1_patch.zip",
+        "source_size_bytes": 36722
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-implementation-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T20:10:36Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-non-runtime-observation-v1",
+      "feature_title": "Routing Signal Scorer v3 Non Runtime Shadow Observation Implementation v1",
+      "source": {
+        "source_mtime_ns": 1781813342906023500,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_non_runtime_observation_v1_patch.zip",
+        "source_size_bytes": 36016
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-non-runtime-shadow-observation-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T20:17:27Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-observation-review-evidence-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Observation Review Evidence Design v1",
+      "source": {
+        "source_mtime_ns": 1781813775552818200,
+        "source_name": "routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+        "source_size_bytes": 37459
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-observation-review-evidence-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T20:36:13Z",
+      "feature_id": "routing-signal-scorer-v3-shadow-mode-assistant-boundary-readiness-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Shadow Mode Readiness Gate for Assistant Boundary Review v1",
+      "source": {
+        "source_mtime_ns": 1781814884715087500,
+        "source_name": "routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+        "source_size_bytes": 37903
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-readiness-gate-for-assistant-boundary-review-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T20:43:20Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781815361990425700,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_boundary_design_v1_patch.zip",
+        "source_size_bytes": 37586
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T20:51:48Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-input-output-contract-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Input Output Contract Design v1",
+      "source": {
+        "source_mtime_ns": 1781815777775838000,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+        "source_size_bytes": 39542
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-input-output-contract-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T21:01:59Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-contract-validator-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Contract Validator Design v1",
+      "source": {
+        "source_mtime_ns": 1781816473771027300,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_contract_validator_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_contract_validator_design_v1_patch.zip",
+        "source_size_bytes": 39808
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-contract-validator-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T21:20:25Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-assistance-skeleton-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Assistance Skeleton Design v1",
+      "source": {
+        "source_mtime_ns": 1781817591272913100,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_assistance_skeleton_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_assistance_skeleton_design_v1_patch.zip",
+        "source_size_bytes": 39910
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-assistance-skeleton-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T21:30:13Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-implementation-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Implementation Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781818143442870400,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_implementation_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_implementation_gate_design_v1_patch.zip",
+        "source_size_bytes": 42518
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-implementation-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T21:39:49Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-non-runtime-assistance-v1",
+      "feature_title": "Routing Signal Scorer v3 Non Runtime Auxiliar/Assistant Assistance Implementation v1",
+      "source": {
+        "source_mtime_ns": 1781818730217553100,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_non_runtime_assistance_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_non_runtime_assistance_v1_patch.zip",
+        "source_size_bytes": 42177
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-non-runtime-auxiliar-assistant-assistance-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T21:51:19Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-assistance-review-evidence-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Assistance Review Evidence Design v1",
+      "source": {
+        "source_mtime_ns": 1781819425715380300,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_assistance_review_evidence_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_assistance_review_evidence_design_v1_patch.zip",
+        "source_size_bytes": 42313
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-assistance-review-evidence-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T22:07:58Z",
+      "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-assistance-readiness-gate-for-pilot-boundary-review-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Assistance Readiness Gate for Pilot Boundary Review v1",
+      "source": {
+        "source_mtime_ns": 1781820384477380000,
+        "source_name": "routing_signal_scorer_v3_auxiliar_assistant_assistance_readiness_gate_pilot_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_assistance_readiness_gate_pilot_boundary_design_v1_patch.zip",
+        "source_size_bytes": 43838
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-assistance-readiness-gate-for-pilot-boundary-review-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T22:22:01Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-copilot-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot/Copilot Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781821273107546100,
+        "source_name": "routing_signal_scorer_v3_pilot_copilot_boundary_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_copilot_boundary_design_v1_patch.zip",
+        "source_size_bytes": 43600
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-pilot-copilot-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-18T22:30:59Z",
+      "feature_id": "routing-signal-scorer-v3-post-adviser-pilot-copilot-handoff-closure-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Post-Adviser to Pilot/Copilot Handoff Closure Design v1",
+      "source": {
+        "source_mtime_ns": 1781821765564687800,
+        "source_name": "routing_signal_scorer_v3_post_adviser_pilot_copilot_handoff_closure_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_post_adviser_pilot_copilot_handoff_closure_design_v1_patch.zip",
+        "source_size_bytes": 45050
+      },
+      "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-post-adviser-to-pilot-copilot-handoff-closure-design-v1"
+    }
+  ],
+  "kind": "kanda_consumed_freeze_hints",
+  "schema_version": "1.0",
+  "updated_at_utc": "2026-06-18T22:30:59Z"
+}

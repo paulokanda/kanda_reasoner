@@ -1,0 +1,25 @@
+{
+  "prompt_id": "kubernetes_deployment_operations",
+  "display_name": "Kubernetes Deployment and Operations",
+  "filename": "kubernetes_deployment_operations.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Uses Kubernetes deployment and operations concepts where appropriate.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 55,
+  "trigger_phrases": [
+    "kubernetes",
+    "deploy to k8s",
+    "containers operations",
+    "cluster deployment",
+    "helm"
+  ],
+  "required_companion_prompts": [
+    "professional_ai_assisted_engineering_framework",
+    "evidence_freshness_gate"
+  ]
+}

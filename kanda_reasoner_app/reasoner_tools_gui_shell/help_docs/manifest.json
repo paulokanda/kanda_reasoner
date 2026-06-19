@@ -1,0 +1,36 @@
+{
+  "schema": "kanda-desktop-help-docs/v1",
+  "description": "Local offline help documents rendered inside the KANDA Reasoner desktop GUI.",
+  "pages": [
+    {
+      "id": "architecture_review",
+      "title": "Architecture Review Help",
+      "tab_id": "architecture_review",
+      "legacy_help_catalog": "tab1_architecture.json",
+      "source": "source/architecture_review.md",
+      "rendered": "rendered/architecture_review.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/architecture_review_opener.svg",
+        "assets/drawings/architecture_review_workflow_cafe.svg",
+        "assets/drawings/architecture_review_issue_catalog_library.svg",
+        "assets/drawings/architecture_review_checklist_airport.svg",
+        "assets/diagrams/architecture_review_pipeline.svg"
+      ]
+    },
+    {
+      "id": "adviser_to_pilot_copilot_bridge",
+      "title": "Adviser to Pilot/Copilot Bridge Help",
+      "tab_id": "routing_signal_scorer_v3_bridge",
+      "legacy_help_catalog": "",
+      "source": "source/adviser_to_pilot_copilot_bridge.md",
+      "rendered": "rendered/adviser_to_pilot_copilot_bridge.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/adviser_to_pilot_bridge_opener.png",
+        "assets/drawings/adviser_to_pilot_shadow_observation_cafe.png",
+        "assets/drawings/adviser_to_pilot_frozen_roadmap_station.png"
+      ]
+    }
+  ]
+}

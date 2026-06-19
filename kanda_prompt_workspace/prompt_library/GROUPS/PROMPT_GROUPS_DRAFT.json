@@ -1,0 +1,160 @@
+{
+  "groups": [
+    {
+      "group_id": "01_session_start_and_navigation",
+      "display_name": "Session Start and Navigation",
+      "description": "Start a session, load the base stack, and establish AI-human operating context.",
+      "prompt_ids": [
+        "daily_reasoner_startup_loader",
+        "daily_session_start_prompt",
+        "daily_startup_loader_template",
+        "general_prompt_stack_load_order",
+        "project_startup_canon_template",
+        "reasoner_startup_canon",
+        "session_start_upload_checklist",
+        "ai_human_partnership_session_start"
+      ]
+    },
+    {
+      "group_id": "02_prompt_routing_and_indexing",
+      "display_name": "Prompt Routing and Indexing",
+      "description": "Map human intent to the correct prompt, route, overlay, or companion stack.",
+      "prompt_ids": [
+        "project_overlay_selector",
+        "prompt_navigation_index",
+        "prompt_router",
+        "prompt_substitution_map"
+      ]
+    },
+    {
+      "group_id": "03_governance_freeze_and_handoff",
+      "display_name": "Governance, Freeze, and Handoff",
+      "description": "Freeze validated work, write handoffs, and preserve governance state.",
+      "prompt_ids": [
+        "end_of_chat_governance_update_template",
+        "active_governance_freeze_update",
+        "professional_engineering_governance_template",
+        "current_workflow_handoff_template",
+        "reasoner_professional_engineering_governance",
+        "workflow_handoff_template"
+      ]
+    },
+    {
+      "group_id": "04_box_architecture_and_boundaries",
+      "display_name": "Box Architecture and Boundaries",
+      "description": "Declare active box, ownership boundaries, public contracts, and cross-box validation.",
+      "prompt_ids": [
+        "closed_box_delivery_canon",
+        "stateful_control_regression_canon",
+        "box_architecture_canon",
+        "project_folder_organization_canon"
+      ]
+    },
+    {
+      "group_id": "05_patch_delivery_and_validation",
+      "display_name": "Patch Delivery and Validation",
+      "description": "Build installable patches, validate evidence, track patch status, and protect rollback.",
+      "prompt_ids": [
+        "universal_delivery_protocol",
+        "bundle_gated_development_workflow",
+        "evidence_freshness_gate",
+        "implementation_and_delivery_protocol",
+        "implementation_roadmap_builder",
+        "patch_registry_validation_freeze"
+      ]
+    },
+    {
+      "group_id": "06_refactor_and_architecture_hardening",
+      "display_name": "Refactor and Architecture Hardening",
+      "description": "Split large modules, triage architecture, and harden system design.",
+      "prompt_ids": [
+        "architecture_hardening_triage_protocol",
+        "architecture_hardening_triage_template",
+        "large_module_refactor_protocol",
+        "large_module_refactor_template",
+        "problem_set_roadmap_solver",
+        "refactor_fragmentation_audit_runner",
+        "tab1_tab2_audit_taxonomy"
+      ]
+    },
+    {
+      "group_id": "07_prompt_authoring_and_audit",
+      "display_name": "Prompt Authoring and Audit",
+      "description": "Audit, update, generalize, reconcile, and maintain prompt canons.",
+      "prompt_ids": [
+        "prompt_audit_canon",
+        "project_specific_prompt_generalization",
+        "prompt_canon_reconciliation_protocol"
+      ]
+    },
+    {
+      "group_id": "08_python_engineering_core",
+      "display_name": "Python Engineering Core",
+      "description": "Core Python design, architecture, refactoring, patterns, and engineering judgement.",
+      "prompt_ids": [
+        "python_clean_architecture",
+        "python_clean_code",
+        "python_design_patterns",
+        "python_domain_driven_design",
+        "python_enterprise_architecture",
+        "python_high_performance",
+        "python_legacy_code_workflow",
+        "peopleware_team_boundary",
+        "practical_field_handbook_template",
+        "python_pragmatic_programmer",
+        "python_refactoring",
+        "software_engineering_books_master"
+      ]
+    },
+    {
+      "group_id": "09_python_quality_security_observability",
+      "display_name": "Python Quality, Security, and Observability",
+      "description": "Testing, security, observability, resilience, validation, documentation, and quality gates.",
+      "prompt_ids": [
+        "tab4_docstring_quality_roadmap",
+        "python_documentation_developer_experience",
+        "python_observability_logging_metrics_tracing",
+        "python_resilience_error_handling",
+        "python_security_threat_prevention",
+        "python_testing_pytest",
+        "python_validation_serialisation_type_safety"
+      ]
+    },
+    {
+      "group_id": "10_python_api_data_async_config",
+      "display_name": "Python API, Data, Async, and Config",
+      "description": "APIs, databases, async/distributed design, configuration, and feature flags.",
+      "prompt_ids": [
+        "python_api_design",
+        "python_async_parallel_distributed",
+        "python_configuration_feature_flags",
+        "python_database_design_optimisation"
+      ]
+    },
+    {
+      "group_id": "11_productization_and_release_readiness",
+      "display_name": "Productization and Release Readiness",
+      "description": "Productization, infrastructure, lifecycle, deployment, operations, and SRE.",
+      "prompt_ids": [
+        "professional_ai_assisted_engineering_framework",
+        "professional_infrastructure_roadmap",
+        "productization_readiness_roadmap",
+        "kubernetes_deployment_operations",
+        "python_lifecycle_versioning_deprecation",
+        "python_site_reliability_engineering"
+      ]
+    },
+    {
+      "group_id": "12_generalized_project_canons",
+      "display_name": "Generalized Project Canons",
+      "description": "Reusable architecture canons generalized from project-specific systems.",
+      "prompt_ids": [
+        "data_transform_pipeline_invariants",
+        "domain_decision_table_template",
+        "plugin_package_import_canon",
+        "shared_visual_render_engine_canon",
+        "transform_resolver_architecture_contract"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_name": "adviser_case_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "case_id",
+    "input_text",
+    "input_hash",
+    "case_source",
+    "case_category",
+    "created_at"
+  ],
+  "optional_fields": [
+    "context",
+    "expected_review_priority",
+    "tags",
+    "notes"
+  ],
+  "field_definitions": {
+    "case_id": "stable unique case identifier",
+    "input_text": "primitive string input for offline Adviser evaluation only",
+    "input_hash": "sha256 of input_text and case metadata relevant to evaluation",
+    "case_source": "synthetic | real_redacted | derived | regression",
+    "case_category": [
+      "freeze",
+      "patch",
+      "box",
+      "shield",
+      "startup",
+      "prompt_library",
+      "coding",
+      "explanation",
+      "ambiguous",
+      "out_of_scope",
+      "unknown"
+    ],
+    "context": {
+      "available_files": "optional static list only; never active file handles",
+      "current_state": "startup | active | freeze | unknown",
+      "notes": "bounded non-authoritative context notes"
+    }
+  },
+  "safety_rules": [
+    "cases are static offline inputs only",
+    "cases must not contain active object handles or runtime state references",
+    "ambiguous and out_of_scope cases must be represented explicitly"
+  ]
+}

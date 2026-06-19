@@ -1,0 +1,12 @@
+Bundle: freeze_formulary_current_feature_autofill_regression_freeze_info_v3
+Purpose: Install corrected frozen-feature memory entry for freeze_formulary_current_feature_autofill_regression.
+Scope: freeze-info only; no source-code changes.
+Validation evidence:
+- VALIDATION OK: freeze_formulary_current_feature_autofill_regression
+- CONTRACT_TEST_OK: New Local Freeze Entry no longer auto-fills stale legacy freeze-workflow title, paths, or validation evidence
+- STATUS: FREEZE_FORMULARY_CURRENT_FEATURE_AUTOFILL_ACTIVE
+Files:
+- project_freeze_after_update/frozen_features_memory/entries/freeze-20260616-freeze-formulary-current-feature-autofill-regression-v1.md
+- project_freeze_after_update/frozen_features_memory/_patch_manifests/freeze_formulary_current_feature_autofill_regression_freeze_info_v3.txt
+- workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_formulary_current_feature_autofill_regression_freeze_info_v3.txt
+Notes: v3 removes exact starter placeholder wording from the freeze entry so placeholder-absence validation passes.

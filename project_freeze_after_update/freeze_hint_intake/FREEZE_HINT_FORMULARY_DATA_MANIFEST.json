@@ -1,0 +1,21 @@
+{
+  "kind": "kanda_freeze_hint_formulary_data_manifest",
+  "schema_version": "1.0",
+  "feature_id": "freeze-hint-windows-temp-cleanup-tolerance-v1",
+  "feature_title": "Freeze Hint Windows Temp Cleanup Tolerance v1",
+  "project_root_placeholder": "__PROJECT_ROOT__",
+  "generated_at_utc": "2026-06-16T15:15:00Z",
+  "purpose": "Install project-local freeze_hint_intake JSON so the Freeze Feature After Update formulary reads the validated feature locally.",
+  "install_targets": [
+    "project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json",
+    "project_freeze_after_update/freeze_hint_intake/history/20260616T151500Z_freeze-hint-windows-temp-cleanup-tolerance-v1.json",
+    "project_freeze_after_update/freeze_hint_intake/FREEZE_HINT_FORMULARY_DATA_MANIFEST.json"
+  ],
+  "delivery_metadata_root_file": "KANDA_FREEZE_HINT.json",
+  "delivery_metadata_rule": "KANDA_FREEZE_HINT.json is patch ZIP root delivery metadata only and must not be installed into the active project root.",
+  "validation_markers": [
+    "VALIDATION OK: freeze_hint_windows_temp_cleanup_tolerance_v1",
+    "CONTRACT_TEST_OK: freeze_hint_intake Windows temp cleanup tolerance keeps focused validations stable without changing product code",
+    "STATUS: FREEZE_HINT_WINDOWS_TEMP_CLEANUP_TOLERANCE_ACTIVE"
+  ]
+}

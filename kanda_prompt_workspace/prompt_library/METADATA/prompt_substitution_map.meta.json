@@ -1,0 +1,24 @@
+{
+  "prompt_id": "prompt_substitution_map",
+  "display_name": "Prompt Substitution Map",
+  "filename": "prompt_substitution_map.md",
+  "category": "02_prompt_routing_and_indexing",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Maps old, generic, or project-specific prompt concepts to current KANDA prompt concepts.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 10,
+  "trigger_phrases": [
+    "substitute prompt",
+    "replace prompt",
+    "old prompt new prompt",
+    "prompt substitution",
+    "rename prompt reference"
+  ],
+  "required_companion_prompts": [
+    "general_prompt_stack_load_order"
+  ]
+}

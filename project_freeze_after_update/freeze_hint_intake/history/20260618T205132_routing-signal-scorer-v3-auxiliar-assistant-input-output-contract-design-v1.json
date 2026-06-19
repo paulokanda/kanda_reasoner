@@ -1,0 +1,63 @@
+{
+  "form_inputs": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_auxiliar_assistant_io_contract_design_sub_box",
+    "do_not_regress_rules": "M27 remains immutable design-only Auxiliar/Assistant input/output contract design and must not implement live input processing, live output generation, or live contract validation.\nM27 must not start Assistant, Auxiliar, Pilot, or Copilot behavior.\nM27 must not activate shadow mode, compare routes, select routes, load prompts, integrate runtime routing, or grant router authority.\nM27 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.\nFuture outputs remain non-authoritative human-review support only and must carry no routing effect, prompt-loading effect, persistence effect, or Assistant activation effect.\nM28 requires separate governed Auxiliar/Assistant contract validator design and does not imply Assistant activation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Input Output Contract Design v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_notes.md\ntests/test_routing_signal_scorer_v3_auxiliar_assistant_io_contract_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "known_warnings": "['M27 is design-only; it does not process inputs, generate outputs, or validate live payloads.', 'M27 does not start Auxiliar/Assistant behavior or activate shadow mode.', 'M27 does not persist evidence, write reports, write queues, or record human decisions.', 'M28 is required before any Auxiliar/Assistant contract validator design and still requires separate governed validation/freeze.']",
+    "notes": "",
+    "planned_next_step": "After freeze confirmation, proceed only to M28: Routing Signal Scorer v3 Auxiliar/Assistant Contract Validator Design v1, after separate scope review.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_notes.md\ntests/test_routing_signal_scorer_v3_auxiliar_assistant_io_contract_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1\nCONTRACT_TEST_OK: Auxiliar/Assistant input/output contract design, immutable design-only post-Adviser contract boundary over M26 Assistant-boundary constraints, no input processing, no output generation, no live contract validation, no live assistant, no Assistant/Auxiliar/Copilot/Pilot behavior, no assistant activation, no shadow-mode activation, no route comparison, no route selection, no prompt loading, no runtime integration, no router authority, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, M26/M25/M24/M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_AUXILIAR_ASSISTANT_IO_CONTRACT_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_auxiliar_assistant_io_contract_design_sub_box",
+    "do_not_regress_rules": "M27 remains immutable design-only Auxiliar/Assistant input/output contract design and must not implement live input processing, live output generation, or live contract validation.\nM27 must not start Assistant, Auxiliar, Pilot, or Copilot behavior.\nM27 must not activate shadow mode, compare routes, select routes, load prompts, integrate runtime routing, or grant router authority.\nM27 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.\nFuture outputs remain non-authoritative human-review support only and must carry no routing effect, prompt-loading effect, persistence effect, or Assistant activation effect.\nM28 requires separate governed Auxiliar/Assistant contract validator design and does not imply Assistant activation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.",
+    "do_not_touch_summary": [
+      "M27 remains immutable design-only Auxiliar/Assistant input/output contract design and must not implement live input processing, live output generation, or live contract validation.",
+      "M27 must not start Assistant, Auxiliar, Pilot, or Copilot behavior.",
+      "M27 must not activate shadow mode, compare routes, select routes, load prompts, integrate runtime routing, or grant router authority.",
+      "M27 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.",
+      "Future outputs remain non-authoritative human-review support only and must carry no routing effect, prompt-loading effect, persistence effect, or Assistant activation effect.",
+      "M28 requires separate governed Auxiliar/Assistant contract validator design and does not imply Assistant activation.",
+      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+      "Do not store project-specific frozen memory inside project_freeze_ledger.",
+      "After a local freeze write, the AI startup freeze context must be refreshed.",
+      "Preview Freeze Entry must remain read-only and must not write files.",
+      "Confirm and Write must require explicit human confirmation before writing governed freeze memory."
+    ],
+    "feature_id": "routing-signal-scorer-v3-auxiliar-assistant-input-output-contract-design-v1",
+    "feature_summary": "M27 defines immutable design-only input/output contract boundaries for a future non-authoritative Auxiliar/Assistant human-review support envelope. It adds no input processing, output generation, live validation, Assistant behavior, shadow-mode activation, runtime integration, prompt loading, file IO, persistence, report writing, review queue writing, human decision recording, gold or registry mutation, provider/model calls, embeddings, candidate promotion, or router authority.",
+    "feature_title": "Routing Signal Scorer v3 Auxiliar/Assistant Input Output Contract Design v1",
+    "freeze_id_suggestion": "freeze-20260618-routing-signal-scorer-v3-auxiliar-assistant-input-output-contract-design-v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_notes.md\ntests/test_routing_signal_scorer_v3_auxiliar_assistant_io_contract_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['M27 is design-only; it does not process inputs, generate outputs, or validate live payloads.', 'M27 does not start Auxiliar/Assistant behavior or activate shadow mode.', 'M27 does not persist evidence, write reports, write queues, or record human decisions.', 'M28 is required before any Auxiliar/Assistant contract validator design and still requires separate governed validation/freeze.']",
+    "notes": "",
+    "planned_next_step": "After freeze confirmation, proceed only to M28: Routing Signal Scorer v3 Auxiliar/Assistant Contract Validator Design v1, after separate scope review.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781815777775838000,
+      "source_name": "routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+      "source_size_bytes": 39542
+    },
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_notes.md\ntests/test_routing_signal_scorer_v3_auxiliar_assistant_io_contract_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1\nCONTRACT_TEST_OK: Auxiliar/Assistant input/output contract design, immutable design-only post-Adviser contract boundary over M26 Assistant-boundary constraints, no input processing, no output generation, no live contract validation, no live assistant, no Assistant/Auxiliar/Copilot/Pilot behavior, no assistant activation, no shadow-mode activation, no route comparison, no route selection, no prompt loading, no runtime integration, no router authority, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, M26/M25/M24/M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_AUXILIAR_ASSISTANT_IO_CONTRACT_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-18T20:51:32Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781815777775838000,
+    "source_name": "routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_auxiliar_assistant_io_contract_design_v1_patch.zip",
+    "source_size_bytes": 39542
+  },
+  "used_at_utc": null
+}

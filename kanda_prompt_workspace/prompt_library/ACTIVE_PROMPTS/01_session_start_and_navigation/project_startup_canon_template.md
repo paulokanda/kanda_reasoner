@@ -1,0 +1,88 @@
+# Project Startup Canon Template
+
+## Box Logic Requirement
+
+Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+
+- Identify the active box before implementation.
+- State owner paths.
+- State files allowed to change.
+- State files explicitly out of scope.
+- Declare cross-box touches.
+- Preserve public contracts.
+- Validate the active box and any touched external box.
+
+
+Version: 1.0.0
+Status: Reusable project profile template
+Use: Adapt this file to define project-specific architecture, safety, validation, and box rules.
+
+## Purpose
+
+Define the project identity and the project-specific rules that the AI must obey during software engineering work.
+
+
+## Project-Agnostic Contract
+
+This prompt must work for any software project. Replace variables before use.
+
+Required variables:
+
+```text
+<PROJECT_ROOT>
+<PROJECT_NAME>
+<PRODUCT_PACKAGE>
+<TASK_DESCRIPTION>
+<TASK_SLUG>
+<GOVERNANCE_FOLDER>
+<VALIDATION_COMMANDS>
+<OUTPUT_FOLDER>
+<SOURCE_FILES>
+<LOG_FILES>
+```
+
+Rules:
+- Do not hardcode one project root.
+- Do not assume one product package.
+- Do not treat examples as active project truth.
+- Use current source files, logs, and validation output as evidence.
+- If evidence is missing, request it before implementation.
+
+## Adaptation Variables
+
+```text
+<PROJECT_NAME> =
+<PROJECT_ROOT> =
+<PRODUCT_PACKAGE> =
+<NON_CANONICAL_FOLDERS> =
+<DOMAIN_CRITICAL_STATE> =
+<DOMAIN_PIPELINE_RULES> =
+<GUI_FRAMEWORK> =
+<VALIDATION_COMMANDS> =
+```
+
+## Truth Hierarchy
+
+1. Actual source files and logs.
+2. Current user instruction for goals.
+3. Active governance files, if present.
+4. Current handoff.
+5. This project profile.
+6. Universal delivery protocol for delivery mechanics.
+7. Older prompts and examples.
+
+## Box Policy
+
+A box is one isolated responsibility area. Before editing, identify the current box, owner paths, forbidden boxes, inputs, outputs, handoff contract, and validation. Patch the owner box, not the symptom.
+
+## File and Module Rules
+
+Use standard Python 3.10+ when the project is Python. Preserve platform assumptions supplied by the project. Avoid import side effects, wildcard imports, circular imports, and hidden global state changes.
+
+## GUI Rules
+
+If the project has a GUI, use layouts, screen-aware sizing, safe signal blocking, and manual GUI checklists where relevant. Remove this section if the project has no GUI.
+
+## Freeze Rule
+
+Do not update canon before validation and explicit user approval.

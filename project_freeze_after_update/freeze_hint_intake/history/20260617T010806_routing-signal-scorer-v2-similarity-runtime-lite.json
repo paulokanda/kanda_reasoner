@@ -1,0 +1,48 @@
+{
+  "form_inputs": {
+    "box_type": "advisory-only deterministic lexical similarity runtime",
+    "do_not_regress_rules": "Runtime-lite similarity remains advisory only.\nThe scorer may suggest; the canon decides.\nDo not let similarity decide May proceed now.\nDo not let similarity override the router.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nDo not introduce embeddings, vector stores, non-standard dependencies, self-learning, or cross-project route memory.\nPreserve v1 diagnostic, manual-pilot, advisory, v2 design, and v2 corpus behavior.\nPreserve Fast Path false-positive protection.\nPreserve pre_output_contract_gates recommendations for high-risk artifacts through the existing diagnostic/advisory chain.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v2 Similarity Runtime Lite",
+    "generated_files": "",
+    "known_warnings": "This is runtime-lite lexical similarity only. It is not embeddings, TF-IDF dependency, a classifier, self-learning, or router authority.",
+    "notes": "KANDA_FREEZE_HINT.json is delivery metadata only and must not be installed into the project root.",
+    "planned_next_step": "After freezing, consider Box Shielding Protocol for routing_signal_scorer or continue with a later similarity calibration milestone only if needed.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/contract.py\nkanda_reasoner_app/routing_signal_scorer/__init__.py\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_runtime_lite.md\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_runtime_lite\nCONTRACT_TEST_OK: advisory-only deterministic lexical similarity runtime, frozen corpus matching, Fast Path false-positive protection, high-risk hook preservation, no external dependencies, no self-learning, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_RUNTIME_LITE_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "advisory-only deterministic lexical similarity runtime",
+    "do_not_regress_rules": "Runtime-lite similarity remains advisory only.\nThe scorer may suggest; the canon decides.\nDo not let similarity decide May proceed now.\nDo not let similarity override the router.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nDo not introduce embeddings, vector stores, non-standard dependencies, self-learning, or cross-project route memory.\nPreserve v1 diagnostic, manual-pilot, advisory, v2 design, and v2 corpus behavior.\nPreserve Fast Path false-positive protection.\nPreserve pre_output_contract_gates recommendations for high-risk artifacts through the existing diagnostic/advisory chain.",
+    "feature_id": "routing-signal-scorer-v2-similarity-runtime-lite",
+    "feature_title": "Routing Signal Scorer v2 Similarity Runtime Lite",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This is runtime-lite lexical similarity only. It is not embeddings, TF-IDF dependency, a classifier, self-learning, or router authority.",
+    "notes": "KANDA_FREEZE_HINT.json is delivery metadata only and must not be installed into the project root.",
+    "planned_next_step": "After freezing, consider Box Shielding Protocol for routing_signal_scorer or continue with a later similarity calibration milestone only if needed.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781655697858813500,
+      "source_name": "routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+      "source_size_bytes": 13206
+    },
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/contract.py\nkanda_reasoner_app/routing_signal_scorer/__init__.py\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_runtime_lite.md\ntests/test_routing_signal_scorer_v2_similarity_runtime_lite.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_runtime_lite\nCONTRACT_TEST_OK: advisory-only deterministic lexical similarity runtime, frozen corpus matching, Fast Path false-positive protection, high-risk hook preservation, no external dependencies, no self-learning, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_RUNTIME_LITE_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T01:08:06Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781655697858813500,
+    "source_name": "routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_runtime_lite_patch.zip",
+    "source_size_bytes": 13206
+  },
+  "used_at_utc": null
+}

@@ -1,0 +1,25 @@
+{
+  "prompt_id": "general_prompt_stack_load_order",
+  "display_name": "General Prompt Stack Load Order",
+  "filename": "general_prompt_stack_load_order.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Defines the generic order for loading project prompt stacks.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 20,
+  "trigger_phrases": [
+    "load order",
+    "prompt stack order",
+    "which prompt first",
+    "startup stack",
+    "prompt precedence"
+  ],
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_router"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "prompt_id": "bundle_gated_development_workflow",
+  "display_name": "Bundle-Gated Development Workflow",
+  "filename": "bundle_gated_development_workflow.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Requires focused installable bundles, backup, validation, and freeze discipline.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 15,
+  "trigger_phrases": [
+    "bundle gated",
+    "one patch one problem",
+    "safe patch",
+    "installable bundle",
+    "AI patch workflow"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "evidence_freshness_gate"
+  ]
+}

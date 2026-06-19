@@ -1,0 +1,41 @@
+{
+    "freeze_id":  "freeze-20260618-routing-signal-scorer-v3-adviser-foundations-reference-and-box-boundary-design-v1",
+    "feature_title":  "Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1",
+    "box":  "routing_signal_scorer",
+    "status":  "frozen",
+    "date":  "2026-06-18",
+    "validated_files":  [
+                            "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+                            "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_foundations_reference.md",
+                            "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_box_boundary.md",
+                            "tests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py",
+                            "tests/test_routing_signal_scorer_v3_generator_candidate_human_decision_recording_patch_boundary_design.py",
+                            "tests/test_routing_signal_scorer_v2_similarity_runtime_lite.py",
+                            "tests/test_freeze_hint_autofill_state_machine.py"
+                        ],
+    "generated_files":  [
+                            "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_foundations_reference.md",
+                            "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_box_boundary.md",
+                            "tests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py"
+                        ],
+    "protected_paths":  [
+                            "project_freeze_after_update/frozen_features_memory"
+                        ],
+    "do_not_touch_summary":  [
+                                 "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+                                 "Do not store project-specific frozen memory inside project_freeze_ledger.",
+                                 "Preview Freeze Entry must remain read-only and must not write files.",
+                                 "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+                                 "After a local freeze write, the AI startup freeze context must be refreshed.",
+                                 "External AI review remains advanced/fallback, not the normal local freeze path."
+                             ],
+    "validation_evidence":  "VALIDATION OK: routing_signal_scorer_v3_adviser_foundations_reference_and_box_boundary_design_v1\nCONTRACT_TEST_OK: adviser foundations reference and box boundary design, no candidate scorer, no runtime import/export, no prompt auto-loading, no artifact IO, no embeddings, no providers, current generator-candidate patch-boundary, runtime-lite, and freeze-hint state-machine regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_ADVISER_FOUNDATIONS_REFERENCE_AND_BOX_BOUNDARY_DESIGN_V1_VALIDATION_OK",
+    "known_warnings":  [
+                           "Design-only milestone.",
+                           "No candidate scorer was added.",
+                           "No runtime integration was added.",
+                           "No ML execution, embeddings, providers, prompt auto-loading, artifact IO, or router authority were added."
+                       ],
+    "planned_next_step":  "After freeze confirmation, proceed to M1: Routing Signal Scorer v3 Adviser System Card Bug Bar Threat Model Design v1.",
+    "superseded_by":  null
+}

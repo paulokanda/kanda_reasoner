@@ -1,0 +1,25 @@
+{
+  "prompt_id": "folder_assimilation_06_refactor_and_architecture_hardening",
+  "display_name": "Folder Assimilation - Refactor and Architecture Hardening",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Plan and control large-module refactors, architecture hardening, fragmentation audits, and problem-set solving order.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "large file",
+    "refactor",
+    "hardening",
+    "fragmentation",
+    "roadmap problems"
+  ],
+  "card_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/_FOLDER_ASSIMILATION.md"
+}

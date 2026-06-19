@@ -1,0 +1,16 @@
+{
+  "id": "folder_card_word_limit_repair",
+  "patch": "kanda_context_routing_layer_phase6_repair_folder_card_word_limits_v1",
+  "created_at": "2026-06-12T03:23:45Z",
+  "scope": "prompt_library prompt-staging folder only",
+  "type": "repair_metadata",
+  "trigger": "Phase 6 validator failure caused by three folder cards above hard word limit",
+  "cards_repaired": [
+    "01_session_start_and_navigation",
+    "06_refactor_and_architecture_hardening",
+    "08_python_engineering_core"
+  ],
+  "runtime_code": false,
+  "live_app_touched": false,
+  "status": "pending_local_validation"
+}

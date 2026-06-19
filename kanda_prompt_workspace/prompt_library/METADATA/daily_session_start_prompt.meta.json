@@ -1,0 +1,25 @@
+{
+  "prompt_id": "daily_session_start_prompt",
+  "display_name": "Daily Session Start Prompt",
+  "filename": "daily_session_start_prompt.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Starts a daily AI-human engineering session with the expected operating rules.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 20,
+  "trigger_phrases": [
+    "start session",
+    "new session checklist",
+    "what should I upload",
+    "begin work today",
+    "session boot"
+  ],
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_router"
+  ]
+}

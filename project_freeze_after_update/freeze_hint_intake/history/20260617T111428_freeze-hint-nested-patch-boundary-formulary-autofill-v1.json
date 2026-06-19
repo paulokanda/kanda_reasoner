@@ -1,0 +1,67 @@
+{
+  "form_inputs": {
+    "box_type": "freeze hint intake contract repair",
+    "do_not_regress_rules": "Nested patch_boundary.allowed_paths must populate validated_files and protected_paths in the freeze form.\nowning_box must populate primary_box when primary_box is absent.\nfeature_type must populate box_type when box_type is absent.\nsummary must populate notes and freeze_warning must populate known_warnings.\nprotected_architecture_characteristics must populate feature-specific do-not-regress rules.\nLegacy saved freeze-hint records with blank or placeholder form_inputs must be repaired from the raw hint.\nConfirm/write readiness must require mandatory non-placeholder freeze fields, including validated_files.\nRecognizable validation evidence must not be discarded merely because it contains the words safe starter fallback.\nThe repair must stay inside freeze_hint_intake plus tests and must not alter freeze_after_update_gui or local_freeze_writer logic.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Nested Patch-Boundary Formulary Autofill v1",
+    "generated_files": "",
+    "known_warnings": "This fixes the form/autofill resolver logic. After this repair is installed, validated, and frozen, retry freezing KANDA Box Shielding Canon Routing Registration v1 so its nested patch_boundary metadata populates the form correctly.",
+    "notes": "Repairs the Freeze Feature After Update form/autofill logic so nested KANDA_FREEZE_HINT.json metadata such as patch_boundary.allowed_paths, owning_box, feature_type, summary, freeze_warning, and protected_architecture_characteristics populate mandatory freeze-entry fields instead of leaking starter placeholders or leaving validated_files empty.",
+    "planned_next_step": "Install and validate this repair, freeze it, then retry Freeze Feature After Update for KANDA Box Shielding Canon Routing Registration v1.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\ntests/test_freeze_hint_nested_patch_boundary_formulary_autofill.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\ntests/test_freeze_hint_nested_patch_boundary_formulary_autofill.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_nested_patch_boundary_formulary_autofill_v1\nCONTRACT_TEST_OK: nested patch-boundary freeze hints populate mandatory formulary fields, repair legacy saved placeholder records, preserve validation evidence, and keep confirm/write disabled until validated_files and other mandatory non-placeholder fields exist while preserving prior freeze-hint regressions and KBSC routing registration tests.\nSANDBOX_FREEZE_HINT_NESTED_PATCH_BOUNDARY_FORMULARY_AUTOFILL_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "freeze hint intake contract repair",
+    "do_not_regress_rules": "Nested patch_boundary.allowed_paths must populate validated_files and protected_paths in the freeze form.\nowning_box must populate primary_box when primary_box is absent.\nfeature_type must populate box_type when box_type is absent.\nsummary must populate notes and freeze_warning must populate known_warnings.\nprotected_architecture_characteristics must populate feature-specific do-not-regress rules.\nLegacy saved freeze-hint records with blank or placeholder form_inputs must be repaired from the raw hint.\nConfirm/write readiness must require mandatory non-placeholder freeze fields, including validated_files.\nRecognizable validation evidence must not be discarded merely because it contains the words safe starter fallback.\nThe repair must stay inside freeze_hint_intake plus tests and must not alter freeze_after_update_gui or local_freeze_writer logic.",
+    "expected_freeze_title": "Freeze Hint Nested Patch-Boundary Formulary Autofill v1",
+    "feature_id": "freeze-hint-nested-patch-boundary-formulary-autofill-v1",
+    "feature_title": "Freeze Hint Nested Patch-Boundary Formulary Autofill v1",
+    "feature_type": "freeze_hint_intake_contract_repair",
+    "freeze_warning": "Freeze this repair before retrying the KBSC freeze. KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into project root.",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This fixes the form/autofill resolver logic. After this repair is installed, validated, and frozen, retry freezing KANDA Box Shielding Canon Routing Registration v1 so its nested patch_boundary metadata populates the form correctly.",
+    "notes": "Repairs the Freeze Feature After Update form/autofill logic so nested KANDA_FREEZE_HINT.json metadata such as patch_boundary.allowed_paths, owning_box, feature_type, summary, freeze_warning, and protected_architecture_characteristics populate mandatory freeze-entry fields instead of leaking starter placeholders or leaving validated_files empty.",
+    "owning_box": "kanda_reasoner_app/freeze_hint_intake",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_reasoner_app/freeze_hint_intake/contract.py",
+        "kanda_reasoner_app/freeze_hint_intake/box_manifest.json",
+        "tests/test_freeze_hint_nested_patch_boundary_formulary_autofill.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "kanda_reasoner_app/freeze_after_update",
+        "project_freeze_ledger",
+        "kanda_prompt_workspace",
+        "project_freeze_after_update/frozen_features_memory"
+      ]
+    },
+    "planned_next_step": "Install and validate this repair, freeze it, then retry Freeze Feature After Update for KANDA Box Shielding Canon Routing Registration v1.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\ntests/test_freeze_hint_nested_patch_boundary_formulary_autofill.py\nproject_freeze_after_update/freeze_hint_intake/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781694787939784700,
+      "source_name": "freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+      "source_size_bytes": 19497
+    },
+    "summary": "Repairs the Freeze Feature After Update form/autofill logic so nested KANDA_FREEZE_HINT.json metadata such as patch_boundary.allowed_paths, owning_box, feature_type, summary, freeze_warning, and protected_architecture_characteristics populate mandatory freeze-entry fields instead of leaking starter placeholders or leaving validated_files empty.",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\ntests/test_freeze_hint_nested_patch_boundary_formulary_autofill.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_nested_patch_boundary_formulary_autofill_v1\nCONTRACT_TEST_OK: nested patch-boundary freeze hints populate mandatory formulary fields, repair legacy saved placeholder records, preserve validation evidence, and keep confirm/write disabled until validated_files and other mandatory non-placeholder fields exist while preserving prior freeze-hint regressions and KBSC routing registration tests.\nSANDBOX_FREEZE_HINT_NESTED_PATCH_BOUNDARY_FORMULARY_AUTOFILL_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T11:14:28Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781694787939784700,
+    "source_name": "freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_nested_patch_boundary_formulary_autofill_v1_patch.zip",
+    "source_size_bytes": 19497
+  },
+  "used_at_utc": null
+}

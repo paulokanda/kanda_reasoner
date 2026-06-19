@@ -1,0 +1,93 @@
+{
+  "form_inputs": {
+    "box_type": "routing signal scorer design-only semantic readiness architecture contract",
+    "do_not_regress_rules": "Preserve design only no runtime behavior change.\nPreserve semantic evidence only not authority.\nPreserve lexical fallback primary.\nPreserve metadata eligibility before semantic scoring.\nPreserve metadata vector manifest not raw prompt embedding.\nPreserve offline human governed corpus generation.\nPreserve vector index disposable generated evidence.\nPreserve no automatic rebuild at startup.\nPreserve disabled null provider default.\nPreserve no external api provider v3.\nPreserve no user query persistence.\nPreserve no ml dependency added.\nPreserve no embedding provider added.\nPreserve no vector index added.\nPreserve no cross box mutation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Structural Contract and Semantic Readiness Design v1",
+    "generated_files": "",
+    "known_warnings": "This is a design-only milestone. It intentionally does not implement embeddings, semantic provider logic, corpus generation, vector indexes, external libraries, runtime behavior, or prompt-router changes. Future implementation still requires separate governed patches and freeze entries.",
+    "notes": "Adds and registers a design-only structural contract for future semantic retrieval and machine-learning readiness inside routing_signal_scorer. The design freezes corpus governance, Metadata Vector Manifest policy, metadata eligibility before semantic scoring, lexical fallback, provider-disabled default, vector-index generated-cache policy, no-query-persistence, external dependency adoption gates, evaluation metrics, threat model, and future implementation gates without adding runtime ML behavior.",
+    "planned_next_step": "After freeze, continue with Routing Signal Scorer v3 Mock Semantic Evidence Contract v1 or another explicitly governed design/mock phase; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_structural_contract_semantic_readiness_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_structural_contract_semantic_readiness_design.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_structural_contract_semantic_readiness_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_structural_contract_semantic_readiness_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1\nCONTRACT_TEST_OK: design-only v3 semantic readiness architecture is registered in routing_signal_scorer manifest and permanent tests while preserving v2 shield boundaries, adding Metadata Vector Manifest, corpus lifecycle, metadata eligibility, vector cache, provider, evaluation, threat-model, and external-adoption policies without runtime ML behavior or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_STRUCTURAL_CONTRACT_SEMANTIC_READINESS_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "routing signal scorer design-only semantic readiness architecture contract",
+    "do_not_regress_rules": "Preserve design only no runtime behavior change.\nPreserve semantic evidence only not authority.\nPreserve lexical fallback primary.\nPreserve metadata eligibility before semantic scoring.\nPreserve metadata vector manifest not raw prompt embedding.\nPreserve offline human governed corpus generation.\nPreserve vector index disposable generated evidence.\nPreserve no automatic rebuild at startup.\nPreserve disabled null provider default.\nPreserve no external api provider v3.\nPreserve no user query persistence.\nPreserve no ml dependency added.\nPreserve no embedding provider added.\nPreserve no vector index added.\nPreserve no cross box mutation.",
+    "feature_id": "routing-signal-scorer-v3-structural-contract-semantic-readiness-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Structural Contract and Semantic Readiness Design v1",
+    "feature_type": "routing_signal_scorer design-only semantic readiness architecture contract",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This is a design-only milestone. It intentionally does not implement embeddings, semantic provider logic, corpus generation, vector indexes, external libraries, runtime behavior, or prompt-router changes. Future implementation still requires separate governed patches and freeze entries.",
+    "notes": "Adds and registers a design-only structural contract for future semantic retrieval and machine-learning readiness inside routing_signal_scorer. The design freezes corpus governance, Metadata Vector Manifest policy, metadata eligibility before semantic scoring, lexical fallback, provider-disabled default, vector-index generated-cache policy, no-query-persistence, external dependency adoption gates, evaluation metrics, threat model, and future implementation gates without adding runtime ML behavior.",
+    "owning_box": "kanda_reasoner_app/routing_signal_scorer",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_structural_contract_semantic_readiness_design.md",
+        "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+        "tests/test_routing_signal_scorer_v3_structural_contract_semantic_readiness_design.py"
+      ],
+      "boundary_reason": "Design-only semantic readiness milestone; no runtime scorer logic, prompt-router assets, freeze boxes, GUI boxes, project memory, provider code, ML dependency, corpus generator, or vector index are changed.",
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/__init__.py",
+        "kanda_reasoner_app/routing_signal_scorer/providers",
+        "kanda_reasoner_app/routing_signal_scorer/indices",
+        "kanda_reasoner_app/routing_signal_scorer/corpus_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/semantic_provider.py",
+        "kanda_reasoner_app/routing_signal_scorer/vector_index.py",
+        "kanda_prompt_workspace",
+        "kanda_reasoner_app/freeze_hint_intake",
+        "kanda_reasoner_app/freeze_after_update",
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory",
+        "startup_delivery"
+      ]
+    },
+    "planned_next_step": "After freeze, continue with Routing Signal Scorer v3 Mock Semantic Evidence Contract v1 or another explicitly governed design/mock phase; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_architecture_characteristics": [
+      "design_only_no_runtime_behavior_change",
+      "semantic_evidence_only_not_authority",
+      "lexical_fallback_primary",
+      "metadata_eligibility_before_semantic_scoring",
+      "metadata_vector_manifest_not_raw_prompt_embedding",
+      "offline_human_governed_corpus_generation",
+      "vector_index_disposable_generated_evidence",
+      "no_automatic_rebuild_at_startup",
+      "disabled_null_provider_default",
+      "no_external_api_provider_v3",
+      "no_user_query_persistence",
+      "no_ml_dependency_added",
+      "no_embedding_provider_added",
+      "no_vector_index_added",
+      "no_cross_box_mutation"
+    ],
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_structural_contract_semantic_readiness_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_structural_contract_semantic_readiness_design.py",
+    "requires_freeze_before_next_step": true,
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781701663405529900,
+      "source_name": "routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+      "source_size_bytes": 13759
+    },
+    "summary": "Adds and registers a design-only structural contract for future semantic retrieval and machine-learning readiness inside routing_signal_scorer. The design freezes corpus governance, Metadata Vector Manifest policy, metadata eligibility before semantic scoring, lexical fallback, provider-disabled default, vector-index generated-cache policy, no-query-persistence, external dependency adoption gates, evaluation metrics, threat model, and future implementation gates without adding runtime ML behavior.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_structural_contract_semantic_readiness_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_structural_contract_semantic_readiness_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1\nCONTRACT_TEST_OK: design-only v3 semantic readiness architecture is registered in routing_signal_scorer manifest and permanent tests while preserving v2 shield boundaries, adding Metadata Vector Manifest, corpus lifecycle, metadata eligibility, vector cache, provider, evaluation, threat-model, and external-adoption policies without runtime ML behavior or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_STRUCTURAL_CONTRACT_SEMANTIC_READINESS_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T13:08:39Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781701663405529900,
+    "source_name": "routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_structural_contract_semantic_readiness_design_v1_patch.zip",
+    "source_size_bytes": 13759
+  },
+  "used_at_utc": null
+}

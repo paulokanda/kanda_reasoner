@@ -1,0 +1,26 @@
+{
+  "prompt_id": "refactor_fragmentation_audit_runner",
+  "display_name": "Refactor Fragmentation Audit Runner",
+  "filename": "refactor_fragmentation_audit_runner.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Finds fragmented ownership, duplicate logic, and refactor risks.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 30,
+  "trigger_phrases": [
+    "fragmentation audit",
+    "too fragmented",
+    "refactor runner",
+    "fragmented modules",
+    "audit split"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "bundle_gated_development_workflow",
+    "python_refactoring"
+  ]
+}

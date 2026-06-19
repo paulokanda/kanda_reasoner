@@ -1,0 +1,24 @@
+{
+  "prompt_id": "professional_infrastructure_roadmap",
+  "display_name": "Professional Infrastructure Roadmap",
+  "filename": "professional_infrastructure_roadmap.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Identifies missing infrastructure for professional AI-assisted engineering.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 55,
+  "trigger_phrases": [
+    "missing professional infrastructure",
+    "infrastructure roadmap",
+    "what is missing to be professional",
+    "validation infrastructure"
+  ],
+  "required_companion_prompts": [
+    "professional_ai_assisted_engineering_framework",
+    "evidence_freshness_gate"
+  ]
+}

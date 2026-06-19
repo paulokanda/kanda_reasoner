@@ -1,0 +1,42 @@
+{
+  "schema_name": "gold_manifest_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "gold_set_id",
+    "gold_set_version",
+    "created_at",
+    "case_count",
+    "category_counts",
+    "case_hashes",
+    "source_teacher_versions",
+    "review_status_summary",
+    "critical_case_count",
+    "manifest_hash"
+  ],
+  "safety_rules": [
+    "gold manifests must be checksummed",
+    "gold cases must be reviewed",
+    "gold corrections are append-only with supersedes link",
+    "unreviewed teacher answers are not gold"
+  ]
+}

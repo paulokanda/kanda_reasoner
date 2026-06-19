@@ -1,0 +1,27 @@
+{
+  "prompt_id": "patch_registry_validation_freeze",
+  "display_name": "Patch Registry Validation and Freeze",
+  "filename": "patch_registry_validation_freeze.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Tracks patch provenance, validation status, and freeze readiness.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 15,
+  "trigger_phrases": [
+    "patch registry",
+    "patch status",
+    "freeze patch",
+    "validated patch",
+    "track patch"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "evidence_freshness_gate",
+    "bundle_gated_development_workflow",
+    "current_workflow_handoff_template"
+  ]
+}

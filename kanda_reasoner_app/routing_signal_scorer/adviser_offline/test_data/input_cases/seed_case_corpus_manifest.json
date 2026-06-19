@@ -1,0 +1,25 @@
+{
+  "authority_statement": "advisory_only",
+  "case_count": 50,
+  "contains_candidate_outputs": false,
+  "contains_runtime_integration": false,
+  "contains_teacher_answers": false,
+  "corpus_id": "adviser_seed_case_corpus_v1",
+  "families": {
+    "adversarial_bypass": 8,
+    "ambiguous": 4,
+    "box_boundary": 5,
+    "false_positive": 5,
+    "freeze_workflow": 5,
+    "out_of_scope": 5,
+    "patch_delivery": 5,
+    "prompt_library": 4,
+    "routing_signal_scorer": 5,
+    "startup_delivery": 4
+  },
+  "feature_id": "routing_signal_scorer_v3_adviser_seed_case_corpus_v1",
+  "human_review_status": "seed_unreviewed",
+  "is_gold_set": false,
+  "notes": "M7 seed input cases only; later milestones may add draft teacher answers and reviewed gold sets under separate freezes.",
+  "schema_version": "3.46-adviser-seed-case-corpus"
+}

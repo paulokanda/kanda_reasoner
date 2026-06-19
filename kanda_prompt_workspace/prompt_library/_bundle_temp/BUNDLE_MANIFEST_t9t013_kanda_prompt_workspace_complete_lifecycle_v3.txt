@@ -1,0 +1,29 @@
+﻿T9T013 KANDA PROMPT WORKSPACE COMPLETE LIFECYCLE V2
+
+Patch name: T9T013_kanda_prompt_workspace_complete_lifecycle_v3
+Installed: 2026-06-13T23:12:49.9909553-03:00
+Project root: E:\kanda_reasoner
+Workspace: E:\kanda_reasoner\kanda_prompt_workspace
+Active prompt root: E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS
+
+Regression correction:
+- Active prompts are under kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS.
+
+Files intentionally changed:
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\07_prompt_authoring_and_audit\prompt_canon_reconciliation_protocol.md
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\07_prompt_authoring_and_audit\prompt_audit_canon.md
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\07_prompt_authoring_and_audit\project_specific_prompt_generalization.md
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\07_prompt_authoring_and_audit\_FOLDER_ASSIMILATION.md
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\METADATA\prompt_canon_reconciliation_protocol.meta.json
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\METADATA\prompt_audit_canon.meta.json
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\METADATA\project_specific_prompt_generalization.meta.json
+
+Files intentionally not changed:
+- prompt_library/GROUPS/PROMPT_GROUPS_DRAFT.json
+- prompt_tools/
+- first_AI_deliver/
+- GUI/runtime/source files
+- governance/freeze files
+
+Backup directory:
+E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\_bundle_temp\backup_T9T013_kanda_prompt_workspace_complete_lifecycle_v3_20260613_231249

@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_legacy_code_workflow",
+  "display_name": "Python Legacy Code Workflow",
+  "filename": "python_legacy_code_workflow.md",
+  "category": "08_python_engineering_core",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Safely changes legacy Python code using characterization and seams.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "legacy code",
+    "working effectively with legacy code",
+    "safe change legacy",
+    "characterization tests",
+    "hard to change"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "implementation_roadmap_builder",
+    "python_testing_pytest",
+    "implementation_and_delivery_protocol"
+  ]
+}

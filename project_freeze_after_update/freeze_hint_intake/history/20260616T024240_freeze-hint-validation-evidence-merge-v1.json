@@ -1,0 +1,49 @@
+{
+  "form_inputs": {
+    "box_type": "Freeze Hint Intake / Validation Evidence Synchronization / Prompt Guardrail",
+    "do_not_regress_rules": "Validation evidence intended for Confirm and Write must include a recognizer-friendly line such as VALIDATION OK: <feature_id>.\nFreeze hint sidecars created before user-local validation must not invent local validation.\nAfter local validation passes, validation blocks should update the selected active project's project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json with the actual validation output.\nThe freeze_hint_intake public contract must expose merge_validation_evidence_into_latest_hint.\nThe validation evidence merge must preserve selected active project ownership and must not write to project_freeze_ledger.\nStartup synchronization evidence must be written as STATUS: IN_SYNC, not STATUS IN_SYNC.\nSandbox validation alone must not replace user-local validation evidence for Confirm and Write.\nNew Local Freeze Entry must use the latest saved hint after validation evidence has been merged.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and Confirm and Write must require explicit human confirmation.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Validation Evidence Merge v1",
+    "generated_files": "kanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/paste_after_first_prompts_to_ai.md\nkanda_prompt_workspace/first_AI_deliver/paste_if_modify_startup_delivery.md\nproject_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json",
+    "known_warnings": "This sidecar is created before user-local validation. It intentionally does not claim local validation until the validation block runs and merges recognizer-friendly evidence into the saved freeze hint record.",
+    "notes": "This feature fixes the validation-evidence gap where a freeze form could carry correct feature identity but still be blocked because validation_evidence_summary lacked a recognizable local validation marker.",
+    "planned_next_step": "Install and validate this patch. The validation block should update the latest freeze hint intake record with VALIDATION OK: freeze_hint_validation_evidence_merge_v1, then freeze this feature.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff + startup delivery guardrails",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md\nkanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/paste_after_first_prompts_to_ai.md\nkanda_prompt_workspace/first_AI_deliver/paste_if_modify_startup_delivery.md\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/__init__.py\nkanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+    "validation_evidence_summary": "SANDBOX_FREEZE_HINT_VALIDATION_EVIDENCE_MERGE_VALIDATION_OK\nLocal validation pending: after the validation block passes, it must merge recognizer-friendly local validation evidence into this saved freeze hint intake record."
+  },
+  "hint": {
+    "box_type": "Freeze Hint Intake / Validation Evidence Synchronization / Prompt Guardrail",
+    "do_not_regress_rules": "Validation evidence intended for Confirm and Write must include a recognizer-friendly line such as VALIDATION OK: <feature_id>.\nFreeze hint sidecars created before user-local validation must not invent local validation.\nAfter local validation passes, validation blocks should update the selected active project's project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json with the actual validation output.\nThe freeze_hint_intake public contract must expose merge_validation_evidence_into_latest_hint.\nThe validation evidence merge must preserve selected active project ownership and must not write to project_freeze_ledger.\nStartup synchronization evidence must be written as STATUS: IN_SYNC, not STATUS IN_SYNC.\nSandbox validation alone must not replace user-local validation evidence for Confirm and Write.\nNew Local Freeze Entry must use the latest saved hint after validation evidence has been merged.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and Confirm and Write must require explicit human confirmation.",
+    "feature_id": "freeze-hint-validation-evidence-merge-v1",
+    "feature_title": "Freeze Hint Validation Evidence Merge v1",
+    "generated_files": "kanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/paste_after_first_prompts_to_ai.md\nkanda_prompt_workspace/first_AI_deliver/paste_if_modify_startup_delivery.md\nproject_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This sidecar is created before user-local validation. It intentionally does not claim local validation until the validation block runs and merges recognizer-friendly evidence into the saved freeze hint record.",
+    "notes": "This feature fixes the validation-evidence gap where a freeze form could carry correct feature identity but still be blocked because validation_evidence_summary lacked a recognizable local validation marker.",
+    "patch_name": "freeze_hint_validation_evidence_merge_v1_patch",
+    "planned_next_step": "Install and validate this patch. The validation block should update the latest freeze hint intake record with VALIDATION OK: freeze_hint_validation_evidence_merge_v1, then freeze this feature.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff + startup delivery guardrails",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md\nkanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/paste_after_first_prompts_to_ai.md\nkanda_prompt_workspace/first_AI_deliver/paste_if_modify_startup_delivery.md\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781576956101154600,
+      "source_name": "freeze_hint_validation_evidence_merge_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_validation_evidence_merge_v1_patch.zip",
+      "source_size_bytes": 79391
+    },
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/__init__.py\nkanda_reasoner_app/freeze_hint_intake/contract.py\nkanda_reasoner_app/freeze_hint_intake/box_manifest.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+    "validation_evidence_summary": "SANDBOX_FREEZE_HINT_VALIDATION_EVIDENCE_MERGE_VALIDATION_OK\nLocal validation pending: after the validation block passes, it must merge recognizer-friendly local validation evidence into this saved freeze hint intake record."
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-16T02:42:40Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781576956101154600,
+    "source_name": "freeze_hint_validation_evidence_merge_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_validation_evidence_merge_v1_patch.zip",
+    "source_size_bytes": 79391
+  },
+  "used_at_utc": null
+}

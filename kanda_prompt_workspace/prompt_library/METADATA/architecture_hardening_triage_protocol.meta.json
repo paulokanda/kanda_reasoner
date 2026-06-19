@@ -1,0 +1,26 @@
+{
+  "prompt_id": "architecture_hardening_triage_protocol",
+  "display_name": "Architecture Hardening Triage Protocol",
+  "filename": "architecture_hardening_triage_protocol.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Triages architectural problems before repair or refactor.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 30,
+  "trigger_phrases": [
+    "architecture hardening",
+    "triage architecture",
+    "architecture problem",
+    "hardening protocol",
+    "structural risk"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "bundle_gated_development_workflow",
+    "python_refactoring"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "prompt_id": "folder_assimilation_10_python_api_data_async_config",
+  "display_name": "Folder Assimilation - Python API, Data, Async, and Config",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "10_python_api_data_async_config",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "API",
+    "database",
+    "async",
+    "parallel",
+    "config",
+    "feature flag"
+  ],
+  "card_path": "ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md"
+}

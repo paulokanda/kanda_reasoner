@@ -1,0 +1,73 @@
+{
+  "form_inputs": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_shadow_observation_review_evidence_design_sub_box",
+    "do_not_regress_rules": "Adviser phase remains closed through M16.\nM17 remains post-Adviser transition design only.\nM18 remains immutable design-only shadow-mode boundary.\nM19 remains immutable design-only shadow-mode input/output contract design.\nM20 remains immutable design-only shadow-mode contract validator design.\nM21 remains immutable design-only shadow-mode observation skeleton design.\nM22 remains immutable design-only shadow-mode implementation gate design.\nM23 remains non-runtime in-memory shadow observation implementation only.\nM24 remains immutable design-only shadow observation review evidence design.\nM24 must not build live review evidence, transform observations, validate live input, compare routes, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, load prompts, integrate with runtime routing, activate shadow mode, start Auxiliar/Assistant behavior, call providers, use embeddings, promote candidates, or grant router authority.\nShadow mode is not active.\nAuxiliar/Assistant has not started.\nCandidate promotion remains blocked.\nRuntime router authority remains not granted.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Shadow Observation Review Evidence Design v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_notes.md\ntests/test_routing_signal_scorer_v3_shadow_observation_review_evidence_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "known_warnings": "['M24 is design-only; it does not implement a review evidence builder.', 'M24 does not persist observations, write reports, write queues, or record human decisions.', 'M24 does not compare routes; route-comparison semantics remain unapproved.', 'M25 readiness gate is required before any Assistant boundary review.']",
+    "notes": "M24 defines immutable design-only shadow observation review evidence fields and boundaries for future human review of M23 non-runtime observations. It adds no live review evidence builder, validation execution, observation transformation, persistence, report writing, review queue writing, human decision recording, route comparison, runtime integration, prompt loading, router authority, shadow-mode activation, Auxiliar/Assistant behavior, gold/registry mutation, provider/model calls, embeddings, or candidate promotion.",
+    "planned_next_step": "After freeze confirmation, proceed only to M25: Routing Signal Scorer v3 Shadow Mode Readiness Gate for Assistant Boundary Review v1.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_notes.md\ntests/test_routing_signal_scorer_v3_shadow_observation_review_evidence_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1\nCONTRACT_TEST_OK: shadow observation review evidence design, immutable design-only post-Adviser evidence envelope over M23 non-runtime observation constraints, no live review evidence builder, no observation transformation, no live validation execution, no route comparison, no observation execution, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_OBSERVATION_REVIEW_EVIDENCE_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_shadow_observation_review_evidence_design_sub_box",
+    "date": "2026-06-18",
+    "do_not_regress_rules": "Adviser phase remains closed through M16.\nM17 remains post-Adviser transition design only.\nM18 remains immutable design-only shadow-mode boundary.\nM19 remains immutable design-only shadow-mode input/output contract design.\nM20 remains immutable design-only shadow-mode contract validator design.\nM21 remains immutable design-only shadow-mode observation skeleton design.\nM22 remains immutable design-only shadow-mode implementation gate design.\nM23 remains non-runtime in-memory shadow observation implementation only.\nM24 remains immutable design-only shadow observation review evidence design.\nM24 must not build live review evidence, transform observations, validate live input, compare routes, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, load prompts, integrate with runtime routing, activate shadow mode, start Auxiliar/Assistant behavior, call providers, use embeddings, promote candidates, or grant router authority.\nShadow mode is not active.\nAuxiliar/Assistant has not started.\nCandidate promotion remains blocked.\nRuntime router authority remains not granted.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "do_not_touch_summary": [
+      "Adviser phase remains closed through M16.",
+      "M17 remains post-Adviser transition design only.",
+      "M18 remains immutable design-only shadow-mode boundary.",
+      "M19 remains immutable design-only shadow-mode input/output contract design.",
+      "M20 remains immutable design-only shadow-mode contract validator design.",
+      "M21 remains immutable design-only shadow-mode observation skeleton design.",
+      "M22 remains immutable design-only shadow-mode implementation gate design.",
+      "M23 remains non-runtime in-memory shadow observation implementation only.",
+      "M24 remains immutable design-only shadow observation review evidence design.",
+      "M24 must not build live review evidence, transform observations, validate live input, compare routes, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, load prompts, integrate with runtime routing, activate shadow mode, start Auxiliar/Assistant behavior, call providers, use embeddings, promote candidates, or grant router authority.",
+      "Shadow mode is not active.",
+      "Auxiliar/Assistant has not started.",
+      "Candidate promotion remains blocked.",
+      "Runtime router authority remains not granted.",
+      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+      "Do not store project-specific frozen memory inside project_freeze_ledger.",
+      "After a local freeze write, the AI startup freeze context must be refreshed.",
+      "Preview Freeze Entry must remain read-only and must not write files.",
+      "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+      "External AI review remains advanced/fallback, not the normal local freeze path."
+    ],
+    "feature_id": "routing-signal-scorer-v3-shadow-observation-review-evidence-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Shadow Observation Review Evidence Design v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_notes.md\ntests/test_routing_signal_scorer_v3_shadow_observation_review_evidence_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['M24 is design-only; it does not implement a review evidence builder.', 'M24 does not persist observations, write reports, write queues, or record human decisions.', 'M24 does not compare routes; route-comparison semantics remain unapproved.', 'M25 readiness gate is required before any Assistant boundary review.']",
+    "notes": "M24 defines immutable design-only shadow observation review evidence fields and boundaries for future human review of M23 non-runtime observations. It adds no live review evidence builder, validation execution, observation transformation, persistence, report writing, review queue writing, human decision recording, route comparison, runtime integration, prompt loading, router authority, shadow-mode activation, Auxiliar/Assistant behavior, gold/registry mutation, provider/model calls, embeddings, or candidate promotion.",
+    "planned_next_step": "After freeze confirmation, proceed only to M25: Routing Signal Scorer v3 Shadow Mode Readiness Gate for Assistant Boundary Review v1.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781813775552818200,
+      "source_name": "routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+      "source_size_bytes": 37459
+    },
+    "status": "freeze_ready_after_local_validation",
+    "summary": "M24 defines immutable design-only shadow observation review evidence fields and boundaries for future human review of M23 non-runtime observations. It adds no live review evidence builder, validation execution, observation transformation, persistence, report writing, review queue writing, human decision recording, route comparison, runtime integration, prompt loading, router authority, shadow-mode activation, Auxiliar/Assistant behavior, gold/registry mutation, provider/model calls, embeddings, or candidate promotion.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_notes.md\ntests/test_routing_signal_scorer_v3_shadow_observation_review_evidence_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1\nCONTRACT_TEST_OK: shadow observation review evidence design, immutable design-only post-Adviser evidence envelope over M23 non-runtime observation constraints, no live review evidence builder, no observation transformation, no live validation execution, no route comparison, no observation execution, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_OBSERVATION_REVIEW_EVIDENCE_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-18T20:17:21Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781813775552818200,
+    "source_name": "routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_observation_review_evidence_design_v1_patch.zip",
+    "source_size_bytes": 37459
+  },
+  "used_at_utc": null
+}

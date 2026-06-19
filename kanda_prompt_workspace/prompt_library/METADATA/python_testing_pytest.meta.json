@@ -1,0 +1,26 @@
+{
+  "prompt_id": "python_testing_pytest",
+  "display_name": "Python Testing with Pytest",
+  "filename": "python_testing_pytest.md",
+  "category": "09_python_quality_security_observability",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Designs and runs Python tests using pytest.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 45,
+  "trigger_phrases": [
+    "pytest",
+    "unit tests",
+    "test coverage",
+    "write tests",
+    "regression test"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "bundle_gated_development_workflow",
+    "implementation_and_delivery_protocol"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema_name": "human_review_record_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "review_id",
+    "case_id",
+    "reviewer_id",
+    "review_status",
+    "review_decision",
+    "review_reason",
+    "reviewed_at",
+    "safety_impact",
+    "next_action"
+  ],
+  "enums": {
+    "review_status": [
+      "pending",
+      "completed",
+      "deferred"
+    ],
+    "review_decision": [
+      "approve_gold",
+      "reject_teacher",
+      "revise_case",
+      "improve_candidate",
+      "add_adversarial_case",
+      "unresolved"
+    ],
+    "safety_impact": [
+      "none",
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ],
+    "next_action": [
+      "freeze_gold",
+      "revise_teacher",
+      "revise_case",
+      "improve_candidate",
+      "add_test",
+      "defer",
+      "none"
+    ]
+  },
+  "safety_rules": [
+    "human review is structured governance data",
+    "critical cases require explicit review before gold promotion"
+  ]
+}

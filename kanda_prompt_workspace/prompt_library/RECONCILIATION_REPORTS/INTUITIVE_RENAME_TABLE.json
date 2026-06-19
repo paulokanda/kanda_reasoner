@@ -1,0 +1,650 @@
+[
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/daily_reasoner_startup_loader.md",
+    "old_prompt_id": "daily_reasoner_startup_loader",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "daily_reasoner_startup_loader",
+    "new_filename": "daily_reasoner_startup_loader.md",
+    "display_name": "Daily Reasoner Startup Loader",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/daily_session_start_prompt.md",
+    "old_prompt_id": "daily_session_start_prompt",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "daily_session_start_prompt",
+    "new_filename": "daily_session_start_prompt.md",
+    "display_name": "Daily Session Start Prompt",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/daily_startup_loader_template.md",
+    "old_prompt_id": "daily_startup_loader_template",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "daily_startup_loader_template",
+    "new_filename": "daily_startup_loader_template.md",
+    "display_name": "Daily Startup Loader Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/general_prompt_stack_load_order.md",
+    "old_prompt_id": "general_prompt_stack_load_order",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "general_prompt_stack_load_order",
+    "new_filename": "general_prompt_stack_load_order.md",
+    "display_name": "General Prompt Stack Load Order",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/project_overlay_reasoner.md",
+    "old_prompt_id": "project_overlay_reasoner",
+    "new_group": "02_prompt_routing_and_indexing",
+    "new_prompt_id": "project_overlay_selector",
+    "new_filename": "project_overlay_selector.md",
+    "display_name": "Project Overlay Selector",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/project_startup_canon_template.md",
+    "old_prompt_id": "project_startup_canon_template",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "project_startup_canon_template",
+    "new_filename": "project_startup_canon_template.md",
+    "display_name": "Project Startup Canon Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/prompt_audit_canon.md",
+    "old_prompt_id": "prompt_audit_canon",
+    "new_group": "07_prompt_authoring_and_audit",
+    "new_prompt_id": "prompt_audit_canon",
+    "new_filename": "prompt_audit_canon.md",
+    "display_name": "Prompt Audit Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/prompt_navigation_index.md",
+    "old_prompt_id": "prompt_navigation_index",
+    "new_group": "02_prompt_routing_and_indexing",
+    "new_prompt_id": "prompt_navigation_index",
+    "new_filename": "prompt_navigation_index.md",
+    "display_name": "Prompt Navigation Index",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/prompt_router.md",
+    "old_prompt_id": "prompt_router",
+    "new_group": "02_prompt_routing_and_indexing",
+    "new_prompt_id": "prompt_router",
+    "new_filename": "prompt_router.md",
+    "display_name": "Prompt Router",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/prompt_substitution_map_reasoner.md",
+    "old_prompt_id": "prompt_substitution_map_reasoner",
+    "new_group": "02_prompt_routing_and_indexing",
+    "new_prompt_id": "prompt_substitution_map",
+    "new_filename": "prompt_substitution_map.md",
+    "display_name": "Prompt Substitution Map",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/reasoner_startup_canon.md",
+    "old_prompt_id": "reasoner_startup_canon",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "reasoner_startup_canon",
+    "new_filename": "reasoner_startup_canon.md",
+    "display_name": "Reasoner Startup Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/session_start_upload_checklist.md",
+    "old_prompt_id": "session_start_upload_checklist",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "session_start_upload_checklist",
+    "new_filename": "session_start_upload_checklist.md",
+    "display_name": "Session Start Upload Checklist",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/core_session_navigation/universal_delivery_protocol.md",
+    "old_prompt_id": "universal_delivery_protocol",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "universal_delivery_protocol",
+    "new_filename": "universal_delivery_protocol.md",
+    "display_name": "Universal Delivery Protocol",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/closed_box_product_delivery_canon.md",
+    "old_prompt_id": "closed_box_product_delivery_canon",
+    "new_group": "04_box_architecture_and_boundaries",
+    "new_prompt_id": "closed_box_delivery_canon",
+    "new_filename": "closed_box_delivery_canon.md",
+    "display_name": "Closed-Box Delivery Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/data_transform_pipeline_invariants.md",
+    "old_prompt_id": "data_transform_pipeline_invariants",
+    "new_group": "12_generalized_project_canons",
+    "new_prompt_id": "data_transform_pipeline_invariants",
+    "new_filename": "data_transform_pipeline_invariants.md",
+    "display_name": "Data Transform Pipeline Invariants",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/domain_decision_table_canon_template.md",
+    "old_prompt_id": "domain_decision_table_canon_template",
+    "new_group": "12_generalized_project_canons",
+    "new_prompt_id": "domain_decision_table_template",
+    "new_filename": "domain_decision_table_template.md",
+    "display_name": "Domain Decision Table Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/plugin_package_import_canon.md",
+    "old_prompt_id": "plugin_package_import_canon",
+    "new_group": "12_generalized_project_canons",
+    "new_prompt_id": "plugin_package_import_canon",
+    "new_filename": "plugin_package_import_canon.md",
+    "display_name": "Plugin Package Import Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/project_specific_canon_generalization_protocol.md",
+    "old_prompt_id": "project_specific_canon_generalization_protocol",
+    "new_group": "07_prompt_authoring_and_audit",
+    "new_prompt_id": "project_specific_prompt_generalization",
+    "new_filename": "project_specific_prompt_generalization.md",
+    "display_name": "Project-Specific Prompt Generalization",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/shared_visual_render_engine_canon.md",
+    "old_prompt_id": "shared_visual_render_engine_canon",
+    "new_group": "12_generalized_project_canons",
+    "new_prompt_id": "shared_visual_render_engine_canon",
+    "new_filename": "shared_visual_render_engine_canon.md",
+    "display_name": "Shared Visual Render Engine Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/stateful_control_dropdown_regression_canon.md",
+    "old_prompt_id": "stateful_control_dropdown_regression_canon",
+    "new_group": "04_box_architecture_and_boundaries",
+    "new_prompt_id": "stateful_control_regression_canon",
+    "new_filename": "stateful_control_regression_canon.md",
+    "display_name": "Stateful Control Regression Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/generalized_project_canons/transform_resolver_architecture_contract.md",
+    "old_prompt_id": "transform_resolver_architecture_contract",
+    "new_group": "12_generalized_project_canons",
+    "new_prompt_id": "transform_resolver_architecture_contract",
+    "new_filename": "transform_resolver_architecture_contract.md",
+    "display_name": "Transform Resolver Architecture Contract",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/ai_human_partnership_session_start.md",
+    "old_prompt_id": "ai_human_partnership_session_start",
+    "new_group": "01_session_start_and_navigation",
+    "new_prompt_id": "ai_human_partnership_session_start",
+    "new_filename": "ai_human_partnership_session_start.md",
+    "display_name": "AI-Human Partnership Session Start",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/bundle_gated_development_workflow.md",
+    "old_prompt_id": "bundle_gated_development_workflow",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "bundle_gated_development_workflow",
+    "new_filename": "bundle_gated_development_workflow.md",
+    "display_name": "Bundle-Gated Development Workflow",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/end_of_chat_governance_update_template.md",
+    "old_prompt_id": "end_of_chat_governance_update_template",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "end_of_chat_governance_update_template",
+    "new_filename": "end_of_chat_governance_update_template.md",
+    "display_name": "End-of-Chat Governance Update Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/kanda_end_of_chat_active_governance_update.md",
+    "old_prompt_id": "kanda_end_of_chat_active_governance_update",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "active_governance_freeze_update",
+    "new_filename": "active_governance_freeze_update.md",
+    "display_name": "Active Governance Freeze Update",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/professional_ai_assisted_engineering_framework.md",
+    "old_prompt_id": "professional_ai_assisted_engineering_framework",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "professional_ai_assisted_engineering_framework",
+    "new_filename": "professional_ai_assisted_engineering_framework.md",
+    "display_name": "Professional AI-Assisted Engineering Framework",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/professional_engineering_governance_template.md",
+    "old_prompt_id": "professional_engineering_governance_template",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "professional_engineering_governance_template",
+    "new_filename": "professional_engineering_governance_template.md",
+    "display_name": "Professional Engineering Governance Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/reasoner_current_workflow_handoff_template.md",
+    "old_prompt_id": "reasoner_current_workflow_handoff_template",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "current_workflow_handoff_template",
+    "new_filename": "current_workflow_handoff_template.md",
+    "display_name": "Current Workflow Handoff Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/reasoner_professional_engineering_governance.md",
+    "old_prompt_id": "reasoner_professional_engineering_governance",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "reasoner_professional_engineering_governance",
+    "new_filename": "reasoner_professional_engineering_governance.md",
+    "display_name": "Reasoner Professional Engineering Governance",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/governance_handoff/workflow_handoff_template.md",
+    "old_prompt_id": "workflow_handoff_template",
+    "new_group": "03_governance_freeze_and_handoff",
+    "new_prompt_id": "workflow_handoff_template",
+    "new_filename": "workflow_handoff_template.md",
+    "display_name": "Workflow Handoff Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/architecture_hardening_triage_protocol.md",
+    "old_prompt_id": "architecture_hardening_triage_protocol",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "architecture_hardening_triage_protocol",
+    "new_filename": "architecture_hardening_triage_protocol.md",
+    "display_name": "Architecture Hardening Triage Protocol",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/architecture_hardening_triage_template.md",
+    "old_prompt_id": "architecture_hardening_triage_template",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "architecture_hardening_triage_template",
+    "new_filename": "architecture_hardening_triage_template.md",
+    "display_name": "Architecture Hardening Triage Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/box_architecture_canon.md",
+    "old_prompt_id": "box_architecture_canon",
+    "new_group": "04_box_architecture_and_boundaries",
+    "new_prompt_id": "box_architecture_canon",
+    "new_filename": "box_architecture_canon.md",
+    "display_name": "Box Architecture Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/canon_reconciliation_and_prompt_update.md",
+    "old_prompt_id": "canon_reconciliation_and_prompt_update",
+    "new_group": "07_prompt_authoring_and_audit",
+    "new_prompt_id": "prompt_canon_reconciliation_protocol",
+    "new_filename": "prompt_canon_reconciliation_protocol.md",
+    "display_name": "Prompt Canon Reconciliation Protocol",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/evidence_freshness_gate_roadmap.md",
+    "old_prompt_id": "evidence_freshness_gate_roadmap",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "evidence_freshness_gate",
+    "new_filename": "evidence_freshness_gate.md",
+    "display_name": "Evidence Freshness Gate",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/implementation_and_delivery_protocol.md",
+    "old_prompt_id": "implementation_and_delivery_protocol",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "implementation_and_delivery_protocol",
+    "new_filename": "implementation_and_delivery_protocol.md",
+    "display_name": "Implementation and Delivery Protocol",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/implementation_roadmap_prompt.md",
+    "old_prompt_id": "implementation_roadmap_prompt",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "implementation_roadmap_builder",
+    "new_filename": "implementation_roadmap_builder.md",
+    "display_name": "Implementation Roadmap Builder",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/large_module_refactor_protocol.md",
+    "old_prompt_id": "large_module_refactor_protocol",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "large_module_refactor_protocol",
+    "new_filename": "large_module_refactor_protocol.md",
+    "display_name": "Large Module Refactor Protocol",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/large_module_refactor_template.md",
+    "old_prompt_id": "large_module_refactor_template",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "large_module_refactor_template",
+    "new_filename": "large_module_refactor_template.md",
+    "display_name": "Large Module Refactor Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/missing_professional_infrastructure_roadmap.md",
+    "old_prompt_id": "missing_professional_infrastructure_roadmap",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "professional_infrastructure_roadmap",
+    "new_filename": "professional_infrastructure_roadmap.md",
+    "display_name": "Professional Infrastructure Roadmap",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/patch_registry_validation_and_freeze_roadmap.md",
+    "old_prompt_id": "patch_registry_validation_and_freeze_roadmap",
+    "new_group": "05_patch_delivery_and_validation",
+    "new_prompt_id": "patch_registry_validation_freeze",
+    "new_filename": "patch_registry_validation_freeze.md",
+    "display_name": "Patch Registry Validation and Freeze",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/problem_set_roadmap_solver.md",
+    "old_prompt_id": "problem_set_roadmap_solver",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "problem_set_roadmap_solver",
+    "new_filename": "problem_set_roadmap_solver.md",
+    "display_name": "Problem-Set Roadmap Solver",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/productization_readiness_roadmap.md",
+    "old_prompt_id": "productization_readiness_roadmap",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "productization_readiness_roadmap",
+    "new_filename": "productization_readiness_roadmap.md",
+    "display_name": "Productization Readiness Roadmap",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/project_folder_organization_canon.md",
+    "old_prompt_id": "project_folder_organization_canon",
+    "new_group": "04_box_architecture_and_boundaries",
+    "new_prompt_id": "project_folder_organization_canon",
+    "new_filename": "project_folder_organization_canon.md",
+    "display_name": "Project Folder Organization Canon",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/refactor_fragmentation_audit_runner_roadmap.md",
+    "old_prompt_id": "refactor_fragmentation_audit_runner_roadmap",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "refactor_fragmentation_audit_runner",
+    "new_filename": "refactor_fragmentation_audit_runner.md",
+    "display_name": "Refactor Fragmentation Audit Runner",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/tab1_tab2_audit_taxonomy_roadmap.md",
+    "old_prompt_id": "tab1_tab2_audit_taxonomy_roadmap",
+    "new_group": "06_refactor_and_architecture_hardening",
+    "new_prompt_id": "tab1_tab2_audit_taxonomy",
+    "new_filename": "tab1_tab2_audit_taxonomy.md",
+    "display_name": "Tab 1 and Tab 2 Audit Taxonomy",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/implementation_delivery/tab4_docstring_quality_roadmap.md",
+    "old_prompt_id": "tab4_docstring_quality_roadmap",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "tab4_docstring_quality_roadmap",
+    "new_filename": "tab4_docstring_quality_roadmap.md",
+    "display_name": "Tab 4 Docstring Quality Roadmap",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/clean_architecture_python_prompt.md",
+    "old_prompt_id": "clean_architecture_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_clean_architecture",
+    "new_filename": "python_clean_architecture.md",
+    "display_name": "Python Clean Architecture",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/clean_code_python_prompt.md",
+    "old_prompt_id": "clean_code_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_clean_code",
+    "new_filename": "python_clean_code.md",
+    "display_name": "Python Clean Code",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/design_patterns_python_prompt.md",
+    "old_prompt_id": "design_patterns_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_design_patterns",
+    "new_filename": "python_design_patterns.md",
+    "display_name": "Python Design Patterns",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/domain_driven_design_python_prompt.md",
+    "old_prompt_id": "domain_driven_design_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_domain_driven_design",
+    "new_filename": "python_domain_driven_design.md",
+    "display_name": "Python Domain-Driven Design",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/enterprise_application_architecture_python_prompt.md",
+    "old_prompt_id": "enterprise_application_architecture_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_enterprise_architecture",
+    "new_filename": "python_enterprise_architecture.md",
+    "display_name": "Python Enterprise Architecture",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/high_performance_python_prompt.md",
+    "old_prompt_id": "high_performance_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_high_performance",
+    "new_filename": "python_high_performance.md",
+    "display_name": "Python High Performance",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/kubernetes_up_and_running_prompt.md",
+    "old_prompt_id": "kubernetes_up_and_running_prompt",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "kubernetes_deployment_operations",
+    "new_filename": "kubernetes_deployment_operations.md",
+    "display_name": "Kubernetes Deployment and Operations",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/legacy_code_python_prompt.md",
+    "old_prompt_id": "legacy_code_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_legacy_code_workflow",
+    "new_filename": "python_legacy_code_workflow.md",
+    "display_name": "Python Legacy Code Workflow",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/peopleware_team_boundary_prompt.md",
+    "old_prompt_id": "peopleware_team_boundary_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "peopleware_team_boundary",
+    "new_filename": "peopleware_team_boundary.md",
+    "display_name": "Peopleware Team Boundary",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/practical_field_handbook_template_prompt.md",
+    "old_prompt_id": "practical_field_handbook_template_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "practical_field_handbook_template",
+    "new_filename": "practical_field_handbook_template.md",
+    "display_name": "Practical Field Handbook Template",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/pragmatic_programmer_python_prompt.md",
+    "old_prompt_id": "pragmatic_programmer_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_pragmatic_programmer",
+    "new_filename": "python_pragmatic_programmer.md",
+    "display_name": "Python Pragmatic Programmer",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_api_design_prompt.md",
+    "old_prompt_id": "python_api_design_prompt",
+    "new_group": "10_python_api_data_async_config",
+    "new_prompt_id": "python_api_design",
+    "new_filename": "python_api_design.md",
+    "display_name": "Python API Design",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_async_parallel_distributed_prompt.md",
+    "old_prompt_id": "python_async_parallel_distributed_prompt",
+    "new_group": "10_python_api_data_async_config",
+    "new_prompt_id": "python_async_parallel_distributed",
+    "new_filename": "python_async_parallel_distributed.md",
+    "display_name": "Python Async, Parallel, and Distributed Computing",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_configuration_feature_flags_prompt.md",
+    "old_prompt_id": "python_configuration_feature_flags_prompt",
+    "new_group": "10_python_api_data_async_config",
+    "new_prompt_id": "python_configuration_feature_flags",
+    "new_filename": "python_configuration_feature_flags.md",
+    "display_name": "Python Configuration and Feature Flags",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_database_design_optimisation_prompt.md",
+    "old_prompt_id": "python_database_design_optimisation_prompt",
+    "new_group": "10_python_api_data_async_config",
+    "new_prompt_id": "python_database_design_optimisation",
+    "new_filename": "python_database_design_optimisation.md",
+    "display_name": "Python Database Design and Optimisation",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_documentation_developer_experience_prompt.md",
+    "old_prompt_id": "python_documentation_developer_experience_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_documentation_developer_experience",
+    "new_filename": "python_documentation_developer_experience.md",
+    "display_name": "Python Documentation and Developer Experience",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_lifecycle_versioning_deprecation_prompt.md",
+    "old_prompt_id": "python_lifecycle_versioning_deprecation_prompt",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "python_lifecycle_versioning_deprecation",
+    "new_filename": "python_lifecycle_versioning_deprecation.md",
+    "display_name": "Python Lifecycle, Versioning, and Deprecation",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_observability_logging_metrics_tracing_prompt.md",
+    "old_prompt_id": "python_observability_logging_metrics_tracing_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_observability_logging_metrics_tracing",
+    "new_filename": "python_observability_logging_metrics_tracing.md",
+    "display_name": "Python Observability Logging Metrics and Tracing",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_resilience_error_handling_prompt.md",
+    "old_prompt_id": "python_resilience_error_handling_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_resilience_error_handling",
+    "new_filename": "python_resilience_error_handling.md",
+    "display_name": "Python Resilience and Error Handling",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_security_threat_prevention_prompt.md",
+    "old_prompt_id": "python_security_threat_prevention_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_security_threat_prevention",
+    "new_filename": "python_security_threat_prevention.md",
+    "display_name": "Python Security and Threat Prevention",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_testing_pytest_prompt.md",
+    "old_prompt_id": "python_testing_pytest_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_testing_pytest",
+    "new_filename": "python_testing_pytest.md",
+    "display_name": "Python Testing with Pytest",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/python_validation_serialisation_type_safety_prompt.md",
+    "old_prompt_id": "python_validation_serialisation_type_safety_prompt",
+    "new_group": "09_python_quality_security_observability",
+    "new_prompt_id": "python_validation_serialisation_type_safety",
+    "new_filename": "python_validation_serialisation_type_safety.md",
+    "display_name": "Python Validation, Serialisation, and Type Safety",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/refactoring_python_prompt.md",
+    "old_prompt_id": "refactoring_python_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "python_refactoring",
+    "new_filename": "python_refactoring.md",
+    "display_name": "Python Refactoring",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/site_reliability_engineering_python_prompt.md",
+    "old_prompt_id": "site_reliability_engineering_python_prompt",
+    "new_group": "11_productization_and_release_readiness",
+    "new_prompt_id": "python_site_reliability_engineering",
+    "new_filename": "python_site_reliability_engineering.md",
+    "display_name": "Python Site Reliability Engineering",
+    "status": "promoted_active"
+  },
+  {
+    "old_relative_path": "ACTIVE_PROMPTS/python_engineering_prompts/software_engineering_books_master_prompt.md",
+    "old_prompt_id": "software_engineering_books_master_prompt",
+    "new_group": "08_python_engineering_core",
+    "new_prompt_id": "software_engineering_books_master",
+    "new_filename": "software_engineering_books_master.md",
+    "display_name": "Software Engineering Books Master",
+    "status": "promoted_active"
+  }
+]

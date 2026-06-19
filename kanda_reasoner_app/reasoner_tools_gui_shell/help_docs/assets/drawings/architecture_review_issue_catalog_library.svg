@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="300" viewBox="0 0 620 300" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture Review issue catalog library drawing</title>
+  <desc id="desc">A colorful library cartoon where duplicate and misplaced books show architecture issue families.</desc>
+  <rect width="620" height="300" fill="#ffffff"/>
+  <path d="M46 255h528" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <rect x="66" y="58" width="208" height="174" rx="8" fill="#dbeafe" stroke="#0d0d1a" stroke-width="4"/>
+  <rect x="328" y="58" width="208" height="174" rx="8" fill="#fef3c7" stroke="#0d0d1a" stroke-width="4"/>
+  <text x="170" y="84" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="17" font-weight="800" fill="#0f3460" transform="rotate(-1 170 84)">ACTIVE SHELF</text>
+  <text x="432" y="84" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="17" font-weight="800" fill="#d97706" transform="rotate(1 432 84)">WRONG SHELF</text>
+
+  <rect x="88" y="106" width="32" height="82" fill="#2563a8" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="126" y="106" width="32" height="82" fill="#f59e0b" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="164" y="106" width="32" height="82" fill="#16a34a" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="202" y="106" width="32" height="82" fill="#ffffff" stroke="#0d0d1a" stroke-width="3"/>
+  <text x="104" y="156" transform="rotate(-91 104 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="11" font-weight="700" fill="#ffffff">OWNER</text>
+  <text x="142" y="156" transform="rotate(-89 142 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#0d0d1a">TEST</text>
+  <text x="180" y="156" transform="rotate(-91 180 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#ffffff">API</text>
+  <text x="218" y="156" transform="rotate(-89 218 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#0d0d1a">DOC</text>
+
+  <rect x="352" y="106" width="32" height="82" fill="#2563a8" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="390" y="106" width="32" height="82" fill="#2563a8" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="428" y="106" width="32" height="82" fill="#ffffff" stroke="#0d0d1a" stroke-width="3"/>
+  <rect x="466" y="106" width="32" height="82" fill="#ea580c" stroke="#0d0d1a" stroke-width="3"/>
+  <text x="368" y="156" transform="rotate(-89 368 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#ffffff">OWNER</text>
+  <text x="406" y="156" transform="rotate(-91 406 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#ffffff">OWNER</text>
+  <text x="444" y="156" transform="rotate(-89 444 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#0d0d1a">OLD</text>
+  <text x="482" y="156" transform="rotate(-91 482 156)" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" font-weight="700" fill="#ffffff">RISK</text>
+
+  <circle cx="289" cy="156" r="20" fill="#ffe0bd" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M268 145c13-17 34-17 45 0" fill="none" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M264 226v-42c0-18 12-31 27-31s28 13 28 31v42" fill="#2563a8" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M266 226l-18 34M316 226l21 34" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M263 188l-42 22M319 188l45-22" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <rect x="206" y="194" width="70" height="42" rx="5" fill="#fff7ed" stroke="#0d0d1a" stroke-width="4"/>
+  <text x="241" y="220" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="12" font-weight="800" fill="#ea580c" transform="rotate(-2 241 220)">DUP?</text>
+  <path d="M363 166l22-15 22 15" fill="none" stroke="#ea580c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="310" y="278" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="17" font-weight="700" fill="#0f3460">The issue catalog is a library shelf for risks, duplicates, and wrong owners.</text>
+</svg>

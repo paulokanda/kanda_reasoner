@@ -1,0 +1,35 @@
+{
+  "prompt_id": "freeze_code_intake_and_form_protocol",
+  "display_name": "Freeze Code Intake and Form Protocol",
+  "filename": "freeze_code_intake_and_form_protocol.md",
+  "category": "03_governance_freeze_and_handoff",
+  "status": "active_candidate",
+  "load_type": "on_request",
+  "source_stage": "freeze_hint_intake_box_v1_followup",
+  "description": "Ensures AI carries feature-specific freeze data through patch ZIP sidecars, freeze form review, multi-project freeze-intake state, and local freeze confirmation rules.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v1",
+  "priority": 30,
+  "trigger_phrases": [
+    "freeze code",
+    "freeze this feature",
+    "Freeze Feature After Update",
+    "New Local Freeze Entry",
+    "freeze form",
+    "freeze formulary",
+    "KANDA_FREEZE_HINT.json",
+    "prepare freeze entry",
+    "review freeze JSON",
+    "after validation freeze it",
+    "patch ZIP should be freeze-ready"
+  ],
+  "required_companion_prompts": [
+    "active_governance_freeze_update",
+    "daily_patch_delivery_guardrails"
+  ],
+  "recommended_companion_prompts": [
+    "cooperative_implementation_methodology",
+    "box_architecture_canon",
+    "implementation_and_delivery_protocol"
+  ]
+}

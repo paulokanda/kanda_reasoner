@@ -1,0 +1,25 @@
+{
+  "prompt_id": "shared_visual_render_engine_canon",
+  "display_name": "Shared Visual Render Engine Canon",
+  "filename": "shared_visual_render_engine_canon.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Protects shared visual rendering contracts across tools.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 40,
+  "trigger_phrases": [
+    "shared render engine",
+    "visual renderer",
+    "drawing engine",
+    "canvas rendering",
+    "render contract"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "project_specific_prompt_generalization"
+  ]
+}

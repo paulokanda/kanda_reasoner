@@ -1,0 +1,69 @@
+{
+  "form_inputs": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_shadow_mode_assistant_boundary_readiness_gate_design_sub_box",
+    "do_not_regress_rules": "M25 remains immutable design-only readiness gate prerequisite design and must not implement a live readiness gate.\nM25 must not calculate readiness, evaluate live observations, build review evidence, transform observations, or compare routes.\nM25 must not activate shadow mode, start Auxiliar/Assistant/Copilot behavior, integrate runtime routing, load prompts, or grant router authority.\nM25 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.\nM25 may only return a static immutable design record describing future prerequisites for a separately confirmed M26 boundary design review.\nM26 requires separate explicit human scope confirmation after M25 validation and freeze.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Shadow Mode Readiness Gate for Assistant Boundary Review v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "known_warnings": "['M25 is design-only; it does not execute a readiness gate.', 'M25 does not start Auxiliar/Assistant behavior or activate shadow mode.', 'M25 does not persist observations, write reports, write queues, or record human decisions.', 'M26 is required before any Assistant boundary design, and M26 still requires separate human confirmation.']",
+    "notes": "M25 defines immutable design-only prerequisites for a later M26 Auxiliar/Assistant boundary review. It adds no live readiness gate, no readiness calculation, no review evidence building, no observation transformation, no runtime integration, no prompt loading, no persistence, no human decision recording, no shadow-mode activation, no candidate promotion, and no Auxiliar/Assistant behavior.",
+    "planned_next_step": "After freeze confirmation, proceed only to M26: Routing Signal Scorer v3 Auxiliar/Assistant Boundary Design v1, after separate explicit human scope confirmation.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1\nCONTRACT_TEST_OK: shadow mode Assistant boundary readiness gate design, immutable design-only post-Adviser prerequisite boundary over M24 review-evidence design constraints, no live readiness gate, no readiness evaluation execution, no review evidence builder, no observation transformation, no route comparison, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M24/M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_MODE_ASSISTANT_BOUNDARY_READINESS_GATE_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "diagnostic_pre_router_signal_layer/post_adviser_shadow_mode_assistant_boundary_readiness_gate_design_sub_box",
+    "do_not_regress_rules": "M25 remains immutable design-only readiness gate prerequisite design and must not implement a live readiness gate.\nM25 must not calculate readiness, evaluate live observations, build review evidence, transform observations, or compare routes.\nM25 must not activate shadow mode, start Auxiliar/Assistant/Copilot behavior, integrate runtime routing, load prompts, or grant router authority.\nM25 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.\nM25 may only return a static immutable design record describing future prerequisites for a separately confirmed M26 boundary design review.\nM26 requires separate explicit human scope confirmation after M25 validation and freeze.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "do_not_touch_summary": [
+      "M25 remains immutable design-only readiness gate prerequisite design and must not implement a live readiness gate.",
+      "M25 must not calculate readiness, evaluate live observations, build review evidence, transform observations, or compare routes.",
+      "M25 must not activate shadow mode, start Auxiliar/Assistant/Copilot behavior, integrate runtime routing, load prompts, or grant router authority.",
+      "M25 must not read/write files, persist evidence, write reports, write review queues, record human decisions, mutate gold sets, mutate registries, call providers, use embeddings, promote candidates, or execute patches.",
+      "M25 may only return a static immutable design record describing future prerequisites for a separately confirmed M26 boundary design review.",
+      "M26 requires separate explicit human scope confirmation after M25 validation and freeze.",
+      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+      "Do not store project-specific frozen memory inside project_freeze_ledger.",
+      "After a local freeze write, the AI startup freeze context must be refreshed.",
+      "Preview Freeze Entry must remain read-only and must not write files.",
+      "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+      "External AI review remains advanced/fallback, not the normal local freeze path."
+    ],
+    "feature_id": "routing-signal-scorer-v3-shadow-mode-assistant-boundary-readiness-gate-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Shadow Mode Readiness Gate for Assistant Boundary Review v1",
+    "freeze_id_suggestion": "freeze-20260618-routing-signal-scorer-v3-shadow-mode-assistant-boundary-readiness-gate-design-v1",
+    "generated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['M25 is design-only; it does not execute a readiness gate.', 'M25 does not start Auxiliar/Assistant behavior or activate shadow mode.', 'M25 does not persist observations, write reports, write queues, or record human decisions.', 'M26 is required before any Assistant boundary design, and M26 still requires separate human confirmation.']",
+    "milestone": "M25",
+    "must_not_install_in_project_root": [
+      "KANDA_FREEZE_HINT.json"
+    ],
+    "notes": "M25 defines immutable design-only prerequisites for a later M26 Auxiliar/Assistant boundary review. It adds no live readiness gate, no readiness calculation, no review evidence building, no observation transformation, no runtime integration, no prompt loading, no persistence, no human decision recording, no shadow-mode activation, no candidate promotion, and no Auxiliar/Assistant behavior.",
+    "planned_next_step": "After freeze confirmation, proceed only to M26: Routing Signal Scorer v3 Auxiliar/Assistant Boundary Design v1, after separate explicit human scope confirmation.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781814884715087500,
+      "source_name": "routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+      "source_size_bytes": 37903
+    },
+    "source_patch_zip": "routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+    "summary": "M25 defines immutable design-only prerequisites for a later M26 Auxiliar/Assistant boundary review. It adds no live readiness gate, no readiness calculation, no review evidence building, no observation transformation, no runtime integration, no prompt loading, no persistence, no human decision recording, no shadow-mode activation, no candidate promotion, and no Auxiliar/Assistant behavior.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/box_manifest.json\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/README.md\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_design.py\nkanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_notes.md\ntests/test_routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design.py\ntests/test_routing_signal_scorer_v3_adviser_schema_family_design.py\ntests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py\ntests/test_routing_signal_scorer_v3_adviser_system_card_bug_bar_threat_model_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1\nCONTRACT_TEST_OK: shadow mode Assistant boundary readiness gate design, immutable design-only post-Adviser prerequisite boundary over M24 review-evidence design constraints, no live readiness gate, no readiness evaluation execution, no review evidence builder, no observation transformation, no route comparison, no runtime integration, no router authority, no prompt loading, no file IO, no persistence, no report writing, no review queue writing, no human decision recording, no gold mutation, no registry mutation, no provider/model calls, no embeddings, no candidate promotion, no shadow-mode activation, no Auxiliar/Assistant behavior, M24/M23/M22/M21/M20/M19/M18/M17 and Adviser closure regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_SHADOW_MODE_ASSISTANT_BOUNDARY_READINESS_GATE_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-18T20:36:09Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781814884715087500,
+    "source_name": "routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_shadow_mode_assistant_boundary_readiness_gate_design_v1_patch.zip",
+    "source_size_bytes": 37903
+  },
+  "used_at_utc": null
+}

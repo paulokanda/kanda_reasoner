@@ -1,0 +1,101 @@
+{
+  "form_inputs": {
+    "box_type": "standard-library-only disabled artifact reader boundary design contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve disabled artifact reader boundary design.\nPreserve artifact reader design disabled only.\nPreserve no artifact reader implementation added.\nPreserve no artifact reader enabled.\nPreserve no startup artifact loading.\nPreserve no runtime artifact loading.\nPreserve no background artifact loading.\nPreserve no file watcher artifact loading.\nPreserve no artifact auto discovery.\nPreserve no artifact auto refresh.\nPreserve artifact reader schema validation only.\nPreserve artifact reader no raw text materialization.\nPreserve artifact reader no vector materialization.\nPreserve artifact reader review evidence only.\nPreserve artifact reader no runtime enablement.\nPreserve artifact reader requires separate governed patch.\nPreserve no embeddings added.\nPreserve no vector values added.\nPreserve no vector index added.\nPreserve no provider implementation added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Disabled Artifact Reader Boundary Design v1",
+    "generated_files": "",
+    "known_warnings": "['This is a disabled artifact reader boundary design/validation contract only and intentionally does not implement artifact reading, artifact loading, raw text materialization, vector materialization, providers, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual artifact reader implementation remains a future governed phase and must remain disabled by default, review-evidence-only, manually gated, and separately frozen.']",
+    "notes": "",
+    "planned_next_step": "After freeze, continue with advisory precomputed artifact UI preview design or a schema-only artifact example; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/disabled_artifact_reader_boundary_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.py\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1\nCONTRACT_TEST_OK: disabled artifact reader boundary design validates disabled reader/startup/runtime/background/file-watcher loading flags, future manual reader gates, artifact source requirements, forbidden raw text/vector/provider/runtime/authority fields, permitted review-evidence outputs, activation-request denial, stdlib-only dependency ceiling, manifest registration, and v3 precomputed/provider/runner/gold-set/evaluation/governance/manifest/mock/design/v2 shield regressions without artifact reader implementation, artifact loading, raw text materialization, vector materialization, provider execution, runtime behavior, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_DISABLED_ARTIFACT_READER_BOUNDARY_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box": "kanda_reasoner_app/routing_signal_scorer",
+    "box_type": "standard-library-only disabled artifact reader boundary design contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve disabled artifact reader boundary design.\nPreserve artifact reader design disabled only.\nPreserve no artifact reader implementation added.\nPreserve no artifact reader enabled.\nPreserve no startup artifact loading.\nPreserve no runtime artifact loading.\nPreserve no background artifact loading.\nPreserve no file watcher artifact loading.\nPreserve no artifact auto discovery.\nPreserve no artifact auto refresh.\nPreserve artifact reader schema validation only.\nPreserve artifact reader no raw text materialization.\nPreserve artifact reader no vector materialization.\nPreserve artifact reader review evidence only.\nPreserve artifact reader no runtime enablement.\nPreserve artifact reader requires separate governed patch.\nPreserve no embeddings added.\nPreserve no vector values added.\nPreserve no vector index added.\nPreserve no provider implementation added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.",
+    "feature_id": "routing-signal-scorer-v3-disabled-artifact-reader-boundary-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Disabled Artifact Reader Boundary Design v1",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['This is a disabled artifact reader boundary design/validation contract only and intentionally does not implement artifact reading, artifact loading, raw text materialization, vector materialization, providers, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual artifact reader implementation remains a future governed phase and must remain disabled by default, review-evidence-only, manually gated, and separately frozen.']",
+    "notes": "",
+    "patch_boundary": {
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/__init__.py",
+        "kanda_reasoner_app/routing_signal_scorer/artifact_reader.py",
+        "kanda_reasoner_app/routing_signal_scorer/precomputed_artifact_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/providers",
+        "kanda_reasoner_app/routing_signal_scorer/indices",
+        "kanda_prompt_workspace",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "updated_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/disabled_artifact_reader_boundary_design.py",
+        "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.md",
+        "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+        "tests/test_routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.py",
+        "tests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py",
+        "tests/test_routing_signal_scorer_v3_provider_boundary_design.py",
+        "tests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py",
+        "tests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py"
+      ]
+    },
+    "planned_next_step": "After freeze, continue with advisory precomputed artifact UI preview design or a schema-only artifact example; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_architecture_characteristics": [
+      "advisory_only",
+      "standard_library_only",
+      "disabled_artifact_reader_boundary_design",
+      "artifact_reader_design_disabled_only",
+      "no_artifact_reader_implementation_added",
+      "no_artifact_reader_enabled",
+      "no_startup_artifact_loading",
+      "no_runtime_artifact_loading",
+      "no_background_artifact_loading",
+      "no_file_watcher_artifact_loading",
+      "no_artifact_auto_discovery",
+      "no_artifact_auto_refresh",
+      "artifact_reader_schema_validation_only",
+      "artifact_reader_no_raw_text_materialization",
+      "artifact_reader_no_vector_materialization",
+      "artifact_reader_review_evidence_only",
+      "artifact_reader_no_runtime_enablement",
+      "artifact_reader_requires_separate_governed_patch",
+      "no_embeddings_added",
+      "no_vector_values_added",
+      "no_vector_index_added",
+      "no_provider_implementation_added",
+      "no_runtime_behavior_change",
+      "no_cross_box_mutation"
+    ],
+    "protected_paths": "",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781706767632363200,
+      "source_name": "routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+      "source_size_bytes": 30093
+    },
+    "source_patch_zip": "routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/disabled_artifact_reader_boundary_design.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_disabled_artifact_reader_boundary_design.py\ntests/test_routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design.py\ntests/test_routing_signal_scorer_v3_provider_boundary_design.py\ntests/test_routing_signal_scorer_v3_disabled_evaluation_runner_design.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1\nCONTRACT_TEST_OK: disabled artifact reader boundary design validates disabled reader/startup/runtime/background/file-watcher loading flags, future manual reader gates, artifact source requirements, forbidden raw text/vector/provider/runtime/authority fields, permitted review-evidence outputs, activation-request denial, stdlib-only dependency ceiling, manifest registration, and v3 precomputed/provider/runner/gold-set/evaluation/governance/manifest/mock/design/v2 shield regressions without artifact reader implementation, artifact loading, raw text materialization, vector materialization, provider execution, runtime behavior, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_DISABLED_ARTIFACT_READER_BOUNDARY_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T14:33:35Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781706767632363200,
+    "source_name": "routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_disabled_artifact_reader_boundary_design_v1_patch.zip",
+    "source_size_bytes": 30093
+  },
+  "used_at_utc": null
+}

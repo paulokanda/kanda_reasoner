@@ -1,0 +1,26 @@
+{
+  "prompt_id": "folder_assimilation_05_patch_delivery_and_validation",
+  "display_name": "Folder Assimilation - Patch Delivery and Validation",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "zip",
+    "install",
+    "validation",
+    "patch",
+    "bundle",
+    "expected output"
+  ],
+  "card_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md"
+}

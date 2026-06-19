@@ -1,0 +1,79 @@
+{
+  "form_inputs": {
+    "box_type": "diagnostic_pre_router_signal_layer",
+    "do_not_regress_rules": "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1",
+    "generated_files": "",
+    "known_warnings": "",
+    "notes": "Adds design-only Adviser foundations reference and adviser_offline box boundary under routing_signal_scorer. No candidate scorer, no runtime integration, no prompt loading, no artifact IO, no embeddings, no providers, and no router authority are added.",
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory/",
+    "validated_files": "",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_adviser_foundations_reference_and_box_boundary_design_v1\nCONTRACT_TEST_OK: adviser foundations reference and box boundary design, no candidate scorer, no runtime import/export, no prompt auto-loading, no artifact IO, no embeddings, no providers, current generator-candidate patch-boundary, runtime-lite, and freeze-hint state-machine regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_ADVISER_FOUNDATIONS_REFERENCE_AND_BOX_BOUNDARY_DESIGN_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "diagnostic_pre_router_signal_layer",
+    "do_not_regress_rules": "",
+    "feature_id": "routing-signal-scorer-v3-adviser-foundations-reference-and-box-boundary-design-v1",
+    "feature_title": "Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1",
+    "files_changed": [
+      "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+      "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_foundations_reference.md",
+      "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_box_boundary.md",
+      "tests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py"
+    ],
+    "freeze_readiness": "freeze_after_local_validation",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "",
+    "local_freeze_title": "Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1",
+    "non_goals": [
+      "no_candidate_scorer",
+      "no_machine_learning_execution",
+      "no_runtime_router_integration",
+      "no_prompt_auto_loading",
+      "no_router_authority",
+      "no_source_scanning",
+      "no_artifact_generation",
+      "no_artifact_reading",
+      "no_artifact_writing",
+      "no_embeddings",
+      "no_vector_indexes",
+      "no_providers",
+      "no_startup_behavior_change"
+    ],
+    "notes": "Adds design-only Adviser foundations reference and adviser_offline box boundary under routing_signal_scorer. No candidate scorer, no runtime integration, no prompt loading, no artifact IO, no embeddings, no providers, and no router authority are added.",
+    "patch_name": "routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch",
+    "payload_sha256": {
+      "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_box_boundary.md": "202cee27c2ccea390920b50613252b72f4284c4fce748d7948cec1ce4b40edfd",
+      "kanda_reasoner_app/routing_signal_scorer/adviser_offline/design/adviser_foundations_reference.md": "e782407a1f30da22e535e70ba6e81605b7a69fc82577ad2a8892d6ff3a59e0b0",
+      "kanda_reasoner_app/routing_signal_scorer/box_manifest.json": "20b3a46749cf581c3683b8ad26f3e74eaad90d27c341ddc26cce30894d187646",
+      "tests/test_routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design.py": "47c298ab6c491991fe77d22beda9faa922ae3c13ff1c27cc20cdda72a0e64aea"
+    },
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for Routing Signal Scorer v3 Adviser Foundations Reference and Box Boundary Design v1.",
+    "primary_box": "routing_signal_scorer",
+    "protected_paths": "",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781781858134532500,
+      "source_name": "routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+      "source_size_bytes": 16916
+    },
+    "summary": "Adds design-only Adviser foundations reference and adviser_offline box boundary under routing_signal_scorer. No candidate scorer, no runtime integration, no prompt loading, no artifact IO, no embeddings, no providers, and no router authority are added.",
+    "validated_files": "",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_adviser_foundations_reference_and_box_boundary_design_v1\nCONTRACT_TEST_OK: adviser foundations reference and box boundary design, no candidate scorer, no runtime import/export, no prompt auto-loading, no artifact IO, no embeddings, no providers, current generator-candidate patch-boundary, runtime-lite, and freeze-hint state-machine regressions validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_ADVISER_FOUNDATIONS_REFERENCE_AND_BOX_BOUNDARY_DESIGN_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-18T11:32:45Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781781858134532500,
+    "source_name": "routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_adviser_foundations_reference_box_boundary_design_v1_patch.zip",
+    "source_size_bytes": 16916
+  },
+  "used_at_utc": null
+}

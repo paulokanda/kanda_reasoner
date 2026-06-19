@@ -1,0 +1,60 @@
+{
+  "schema_name": "teacher_answer_schema",
+  "schema_version": "3.41-adviser-schema-family-design",
+  "feature_id": "routing_signal_scorer_v3_adviser_schema_family_design_v1",
+  "design_status": "design_only_json_contract_no_validator_no_candidate_no_harness_no_runtime_behavior_change",
+  "authority_policy": "advisory_only_evidence_not_router_authority",
+  "forbidden_runtime_behaviors": [
+    "runtime_router_integration",
+    "prompt_auto_loading",
+    "router_authority_change",
+    "automatic_freeze_write",
+    "autonomous_decision_recording",
+    "source_scanning",
+    "artifact_generation",
+    "artifact_reading",
+    "artifact_writing",
+    "embeddings",
+    "vector_indexes",
+    "provider_calls",
+    "dependency_installation",
+    "network_calls"
+  ],
+  "required_fields": [
+    "schema_version",
+    "case_id",
+    "teacher_id",
+    "teacher_version",
+    "input_hash",
+    "answer",
+    "review_status",
+    "reviewed_by",
+    "reviewed_at",
+    "supersedes",
+    "expected_severity_if_missed",
+    "provenance"
+  ],
+  "enums": {
+    "review_status": [
+      "draft",
+      "human_reviewed",
+      "approved_as_gold",
+      "rejected_by_human",
+      "deprecated",
+      "superseded"
+    ],
+    "expected_severity_if_missed": [
+      "none",
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ]
+  },
+  "safety_rules": [
+    "teacher answers are draft evidence until human reviewed",
+    "teacher answers are not ground truth automatically",
+    "approved gold requires review_status approved_as_gold in gold schema path",
+    "corrections supersede rather than overwrite old records"
+  ]
+}

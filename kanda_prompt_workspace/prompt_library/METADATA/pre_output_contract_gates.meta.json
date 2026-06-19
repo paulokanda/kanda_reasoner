@@ -1,0 +1,33 @@
+{
+  "prompt_id": "pre_output_contract_gates",
+  "display_name": "Pre-Output Contract Gates",
+  "filename": "pre_output_contract_gates.md",
+  "category": "03_governance_freeze_and_handoff",
+  "status": "active_candidate",
+  "load_type": "on_request",
+  "source_stage": "pre_output_contract_gates_v1",
+  "description": "Forces output-time contract checks before terminal code, patch delivery, freeze-form JSON, validation evidence, freeze hint sidecars, and multi-project freeze paths.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v1",
+  "priority": 35,
+  "trigger_phrases": [
+    "pre-output contract",
+    "terminal cleanup contract",
+    "PowerShell install block",
+    "PowerShell validation block",
+    "patch delivery contract",
+    "freeze JSON strict output",
+    "validation evidence marker",
+    "KANDA_FREEZE_HINT.json sidecar contract",
+    "output-time compliance",
+    "make AI follow the canon"
+  ],
+  "required_companion_prompts": [
+    "daily_patch_delivery_guardrails",
+    "freeze_code_intake_and_form_protocol"
+  ],
+  "recommended_companion_prompts": [
+    "implementation_and_delivery_protocol",
+    "python_validation_serialisation_type_safety"
+  ]
+}

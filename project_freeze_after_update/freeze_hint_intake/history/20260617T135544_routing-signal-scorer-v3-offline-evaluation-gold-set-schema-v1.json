@@ -1,0 +1,99 @@
+{
+  "form_inputs": {
+    "box_type": "standard-library-only offline evaluation gold-set schema contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve offline evaluation gold set schema.\nPreserve gold set schema validation only.\nPreserve no evaluation runner added.\nPreserve gold set cases synthetic or curated only.\nPreserve gold set case category coverage required.\nPreserve gold set metrics declared before run.\nPreserve gold set thresholds declared before run.\nPreserve gold set zero authority leakage required.\nPreserve gold set zero privacy leakage required.\nPreserve gold set no runtime enablement.\nPreserve gold set no threshold auto tuning.\nPreserve no embeddings added.\nPreserve no vector values added.\nPreserve no vector index added.\nPreserve no provider implementation added.\nPreserve no ml dependency added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v3 Offline Evaluation Gold Set Schema v1",
+    "generated_files": "",
+    "known_warnings": "['This is a gold-set schema contract only and intentionally does not implement an evaluation runner, gold-set artifact generation, embeddings, vector values, vector indexes, providers, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual evaluation gold-set artifacts and evaluation execution remain future governed phases.']",
+    "notes": "Adds a schema-only offline evaluation gold-set contract for future synthetic/curated semantic-evidence evaluation cases without adding an evaluation runner, embeddings, vectors, indexes, providers, threshold tuning, runtime enablement, or cross-box mutation.",
+    "planned_next_step": "After freeze, continue with disabled evaluation runner design or schema-only gold-set artifact examples; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_offline_evaluation_gold_set_schema.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_offline_evaluation_gold_set_schema.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1\nCONTRACT_TEST_OK: offline evaluation gold-set schema validates synthetic/curated gold-set artifact shape, case-category coverage, predeclared metrics/thresholds, zero authority/privacy leakage, stale/deprecated suppression rules, forbidden raw/private text and authority fields, stdlib-only dependency ceiling, manifest registration, and v3 evaluation/governance/manifest/mock/design/v2 shield regressions without evaluation runner, embeddings, vector values, vector indexes, runtime behavior, threshold auto-tuning, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_OFFLINE_EVALUATION_GOLD_SET_SCHEMA_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "standard-library-only offline evaluation gold-set schema contract",
+    "do_not_regress_rules": "Preserve advisory only.\nPreserve standard library only.\nPreserve offline evaluation gold set schema.\nPreserve gold set schema validation only.\nPreserve no evaluation runner added.\nPreserve gold set cases synthetic or curated only.\nPreserve gold set case category coverage required.\nPreserve gold set metrics declared before run.\nPreserve gold set thresholds declared before run.\nPreserve gold set zero authority leakage required.\nPreserve gold set zero privacy leakage required.\nPreserve gold set no runtime enablement.\nPreserve gold set no threshold auto tuning.\nPreserve no embeddings added.\nPreserve no vector values added.\nPreserve no vector index added.\nPreserve no provider implementation added.\nPreserve no ml dependency added.\nPreserve no runtime behavior change.\nPreserve no cross box mutation.",
+    "feature_id": "routing-signal-scorer-v3-offline-evaluation-gold-set-schema-v1",
+    "feature_title": "Routing Signal Scorer v3 Offline Evaluation Gold Set Schema v1",
+    "feature_type": "standard-library-only offline evaluation gold-set schema contract",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "['This is a gold-set schema contract only and intentionally does not implement an evaluation runner, gold-set artifact generation, embeddings, vector values, vector indexes, providers, semantic UI display, prompt-router behavior, contract.py export, or __init__.py export.', 'Actual evaluation gold-set artifacts and evaluation execution remain future governed phases.']",
+    "notes": "Adds a schema-only offline evaluation gold-set contract for future synthetic/curated semantic-evidence evaluation cases without adding an evaluation runner, embeddings, vectors, indexes, providers, threshold tuning, runtime enablement, or cross-box mutation.",
+    "owning_box": "kanda_reasoner_app/routing_signal_scorer",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py",
+        "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_offline_evaluation_gold_set_schema.md",
+        "kanda_reasoner_app/routing_signal_scorer/box_manifest.json",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py",
+        "tests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py",
+        "tests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer/contract.py",
+        "kanda_reasoner_app/routing_signal_scorer/__init__.py",
+        "kanda_reasoner_app/routing_signal_scorer/providers",
+        "kanda_reasoner_app/routing_signal_scorer/indices",
+        "kanda_reasoner_app/routing_signal_scorer/evaluation_runner.py",
+        "kanda_reasoner_app/routing_signal_scorer/corpus_generator.py",
+        "kanda_reasoner_app/routing_signal_scorer/semantic_provider.py",
+        "kanda_reasoner_app/routing_signal_scorer/vector_index.py",
+        "kanda_prompt_workspace",
+        "kanda_reasoner_app/freeze_hint_intake",
+        "kanda_reasoner_app/freeze_after_update",
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ]
+    },
+    "planned_next_step": "After freeze, continue with disabled evaluation runner design or schema-only gold-set artifact examples; do not implement real embeddings yet.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer",
+    "protected_architecture_characteristics": [
+      "advisory_only",
+      "standard_library_only",
+      "offline_evaluation_gold_set_schema",
+      "gold_set_schema_validation_only",
+      "no_evaluation_runner_added",
+      "gold_set_cases_synthetic_or_curated_only",
+      "gold_set_case_category_coverage_required",
+      "gold_set_metrics_declared_before_run",
+      "gold_set_thresholds_declared_before_run",
+      "gold_set_zero_authority_leakage_required",
+      "gold_set_zero_privacy_leakage_required",
+      "gold_set_no_runtime_enablement",
+      "gold_set_no_threshold_auto_tuning",
+      "no_embeddings_added",
+      "no_vector_values_added",
+      "no_vector_index_added",
+      "no_provider_implementation_added",
+      "no_ml_dependency_added",
+      "no_runtime_behavior_change",
+      "no_cross_box_mutation"
+    ],
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_offline_evaluation_gold_set_schema.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781704448240190400,
+      "source_name": "routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+      "source_size_bytes": 18984
+    },
+    "summary": "Adds a schema-only offline evaluation gold-set contract for future synthetic/curated semantic-evidence evaluation cases without adding an evaluation runner, embeddings, vectors, indexes, providers, threshold tuning, runtime enablement, or cross-box mutation.",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py\nkanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v3_offline_evaluation_gold_set_schema.md\nkanda_reasoner_app/routing_signal_scorer/box_manifest.json\ntests/test_routing_signal_scorer_v3_offline_evaluation_gold_set_schema.py\ntests/test_routing_signal_scorer_v3_offline_evaluation_corpus_design.py\ntests/test_routing_signal_scorer_v3_offline_corpus_governance_design.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1\nCONTRACT_TEST_OK: offline evaluation gold-set schema validates synthetic/curated gold-set artifact shape, case-category coverage, predeclared metrics/thresholds, zero authority/privacy leakage, stale/deprecated suppression rules, forbidden raw/private text and authority fields, stdlib-only dependency ceiling, manifest registration, and v3 evaluation/governance/manifest/mock/design/v2 shield regressions without evaluation runner, embeddings, vector values, vector indexes, runtime behavior, threshold auto-tuning, or cross-box mutation.\nSANDBOX_ROUTING_SIGNAL_SCORER_V3_OFFLINE_EVALUATION_GOLD_SET_SCHEMA_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T13:55:44Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781704448240190400,
+    "source_name": "routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1_patch.zip",
+    "source_size_bytes": 18984
+  },
+  "used_at_utc": null
+}

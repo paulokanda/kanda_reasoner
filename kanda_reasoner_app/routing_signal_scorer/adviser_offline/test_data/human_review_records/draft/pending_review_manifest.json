@@ -1,0 +1,20 @@
+{
+  "all_next_actions": [
+    "defer"
+  ],
+  "all_review_decisions": [
+    "unresolved"
+  ],
+  "authority_statement": "human_review_pending_no_gold_promotion",
+  "contains_candidate_outputs": false,
+  "contains_completed_human_reviews": false,
+  "contains_gold_approvals": false,
+  "contains_runtime_integration": false,
+  "dataset_kind": "pending_human_review_records",
+  "feature_id": "routing_signal_scorer_v3_adviser_human_review_draft_teacher_answers_v1",
+  "human_review_record_file": "pending_human_review_records_v1.jsonl",
+  "is_gold_set": false,
+  "record_count": 50,
+  "review_status": "pending",
+  "schema_version": "3.47-adviser-human-review-draft-teacher-answers"
+}

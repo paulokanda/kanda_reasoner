@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_async_parallel_distributed",
+  "display_name": "Python Async, Parallel, and Distributed Computing",
+  "filename": "python_async_parallel_distributed.md",
+  "category": "10_python_api_data_async_config",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Guides async, parallel, and distributed Python design.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "async",
+    "parallel",
+    "distributed",
+    "concurrency",
+    "background task"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "python_testing_pytest",
+    "python_validation_serialisation_type_safety",
+    "implementation_and_delivery_protocol"
+  ]
+}

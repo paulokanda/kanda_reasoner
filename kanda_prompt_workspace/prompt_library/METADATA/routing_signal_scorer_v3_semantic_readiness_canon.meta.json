@@ -1,0 +1,117 @@
+{
+  "prompt_id": "routing_signal_scorer_v3_semantic_readiness_canon",
+  "display_name": "Routing Signal Scorer v3 Semantic Readiness Canon",
+  "filename": "routing_signal_scorer_v3_semantic_readiness_canon.md",
+  "category": "02_prompt_routing_and_indexing",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "routing_signal_scorer_v3_semantic_readiness_canon_registration_v1",
+  "description": "On-request semantic-readiness canon for routing_signal_scorer v3 ML/embedding/semantic retrieval work. It freezes the rule that semantic retrieval is advisory evidence only, design-only first, no ML dependency yet, no provider code yet, metadata-filtered generated corpus only, lexical fallback, and no authority escalation.",
+  "routing_coverage": "semantic_readiness_canon_v1",
+  "priority": 2,
+  "trigger_phrases": [
+    "semantic readiness canon",
+    "routing_signal_scorer v3",
+    "routing signal scorer v3",
+    "embedding readiness",
+    "semantic readiness",
+    "semantic evidence layer",
+    "semantic scorer",
+    "semantic retrieval",
+    "semantic search",
+    "machine learning architecture",
+    "ML architecture",
+    "embeddings",
+    "vector index",
+    "vector database",
+    "FAISS",
+    "Qdrant",
+    "Chroma",
+    "sentence-transformers",
+    "all-MiniLM",
+    "Metadata Vector Manifest",
+    "semantic corpus",
+    "corpus generator",
+    "retrieval evaluation",
+    "IR metrics",
+    "semantic veto",
+    "embedding drift",
+    "stale corpus",
+    "index poisoning",
+    "external ML dependency",
+    "ML safety boundary"
+  ],
+  "user_intent_examples": [
+    "Before implementing embeddings, canonize the semantic readiness plan.",
+    "Design routing_signal_scorer v3 with semantic evidence but no ML implementation yet.",
+    "Can we use sentence-transformers or FAISS in KANDA Reasoner?",
+    "Plan the Metadata Vector Manifest and retrieval evaluation before embeddings.",
+    "Add semantic retrieval to routing_signal_scorer."
+  ],
+  "aliases": [
+    "routing_signal_scorer_v3_semantic_readiness_canon",
+    "routing_signal_scorer_v3_semantic_readiness_canon.md",
+    "semantic readiness canon",
+    "semantic evidence canon",
+    "embedding readiness canon",
+    "routing_signal_scorer v3 canon",
+    "ML readiness canon",
+    "Metadata Vector Manifest canon"
+  ],
+  "when_to_load": "When KANDA work involves ML, embeddings, semantic retrieval/search, vector indexes/databases, semantic scorer work, routing_signal_scorer v3, Metadata Vector Manifest, corpus generation, retrieval evaluation, or adoption of libraries such as sentence-transformers, FAISS, Qdrant, or Chroma.",
+  "when_not_to_load": "Do not load for ordinary lexical routing-scorer patches, simple Fast Path explanations, non-routing ML discussion unrelated to KANDA, or as a substitute for the actual routing_signal_scorer source and freeze context during implementation.",
+  "required_companion_prompts": [
+    "kanda_routing_system_canon",
+    "kanda_box_shielding_canon",
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "optional_companion_prompts": [
+    "cooperative_implementation_methodology",
+    "05_patch_delivery_and_validation",
+    "09_python_quality_security_observability",
+    "08_python_engineering_core"
+  ],
+  "authority_boundary": {
+    "may_define": [
+      "semantic-readiness architecture",
+      "future ML adoption gates",
+      "metadata vector manifest rules",
+      "retrieval evaluation requirements",
+      "semantic evidence safety boundaries"
+    ],
+    "must_not_decide": [
+      "final route",
+      "required prompts",
+      "May proceed now",
+      "prompt auto-loading",
+      "router override",
+      "freeze write",
+      "provider implementation",
+      "dependency installation"
+    ]
+  },
+  "on_request_not_startup_always_loaded": true,
+  "requires_design_before_implementation": true,
+  "semantic_layer_role": "untrusted_evidence_witness",
+  "forbidden_authority": [
+    "final_route",
+    "required_prompts",
+    "may_proceed_now",
+    "automatic_prompt_loading",
+    "router_override",
+    "freeze_write",
+    "startup_mutation",
+    "prompt_library_mutation",
+    "self_learning"
+  ],
+  "forbidden_in_next_design_phase": [
+    "embeddings",
+    "ML dependency",
+    "provider implementation",
+    "vector index",
+    "corpus generator",
+    "runtime behavior change",
+    "external API provider"
+  ]
+}

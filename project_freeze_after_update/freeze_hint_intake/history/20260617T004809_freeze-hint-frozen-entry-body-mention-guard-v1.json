@@ -1,0 +1,48 @@
+{
+  "form_inputs": {
+    "box_type": "Freeze hint frozen-entry matching false-positive guard",
+    "do_not_regress_rules": "Do not infer that a feature is frozen merely because its slug appears in another freeze entry body, validation notes, or related-feature prose.\nFrozen feature detection may match entry filename, freeze_id, feature_title, title, or H1 heading, but not arbitrary body containment.\nA frozen repair entry that mentions routing_signal_scorer_v2_similarity_runtime_lite must not hide the current runtime-lite patch ZIP.\nConsumed/frozen newer sidecars must still be skipped without hiding the next current unconsumed validated patch.\nOlder stale pending sidecars remain blocked.\nThe Freeze Hint Autofill State Machine regression suite must remain passing.\nRouting Signal Scorer v2 Similarity Runtime Lite validation must remain passing.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and Confirm and Write must remain human-confirmed.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Frozen Entry Body Mention Guard v1",
+    "generated_files": "",
+    "known_warnings": "Human review remains required before Confirm and Write. This patch narrows frozen-entry matching and does not rewrite the GUI.",
+    "notes": "This guard was created after audit showed runtime-lite ZIP visible and valid while unrelated frozen entries mentioned runtime-lite in body/prose, causing false already-frozen detection.",
+    "planned_next_step": "Install and validate, freeze this guard, then retry freezing Routing Signal Scorer v2 Similarity Runtime Lite.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_frozen_entry_body_mention_guard_v1\nCONTRACT_TEST_OK: frozen-entry body/prose mentions no longer create false already-frozen matches, runtime-lite patch remains selectable, consumed-newer scan continuation and prior freeze-hint state-machine regressions preserved\nSANDBOX_FREEZE_HINT_FROZEN_ENTRY_BODY_MENTION_GUARD_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "Freeze hint frozen-entry matching false-positive guard",
+    "do_not_regress_rules": "Do not infer that a feature is frozen merely because its slug appears in another freeze entry body, validation notes, or related-feature prose.\nFrozen feature detection may match entry filename, freeze_id, feature_title, title, or H1 heading, but not arbitrary body containment.\nA frozen repair entry that mentions routing_signal_scorer_v2_similarity_runtime_lite must not hide the current runtime-lite patch ZIP.\nConsumed/frozen newer sidecars must still be skipped without hiding the next current unconsumed validated patch.\nOlder stale pending sidecars remain blocked.\nThe Freeze Hint Autofill State Machine regression suite must remain passing.\nRouting Signal Scorer v2 Similarity Runtime Lite validation must remain passing.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and Confirm and Write must remain human-confirmed.",
+    "feature_id": "freeze-hint-frozen-entry-body-mention-guard-v1",
+    "feature_title": "Freeze Hint Frozen Entry Body Mention Guard v1",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "Human review remains required before Confirm and Write. This patch narrows frozen-entry matching and does not rewrite the GUI.",
+    "notes": "This guard was created after audit showed runtime-lite ZIP visible and valid while unrelated frozen entries mentioned runtime-lite in body/prose, causing false already-frozen detection.",
+    "planned_next_step": "Install and validate, freeze this guard, then retry freezing Routing Signal Scorer v2 Similarity Runtime Lite.",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake + tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781657126267605500,
+      "source_name": "freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+      "source_size_bytes": 16842
+    },
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_autofill_state_machine.py",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_frozen_entry_body_mention_guard_v1\nCONTRACT_TEST_OK: frozen-entry body/prose mentions no longer create false already-frozen matches, runtime-lite patch remains selectable, consumed-newer scan continuation and prior freeze-hint state-machine regressions preserved\nSANDBOX_FREEZE_HINT_FROZEN_ENTRY_BODY_MENTION_GUARD_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T00:48:09Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781657126267605500,
+    "source_name": "freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_frozen_entry_body_mention_guard_v1_patch.zip",
+    "source_size_bytes": 16842
+  },
+  "used_at_utc": null
+}

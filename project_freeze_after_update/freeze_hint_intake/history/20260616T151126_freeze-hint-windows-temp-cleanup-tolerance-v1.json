@@ -1,0 +1,48 @@
+{
+  "form_inputs": {
+    "box_type": "Regression Test Harness / Windows Cleanup Tolerance",
+    "do_not_regress_rules": "Focused freeze_hint_intake tests must not fail on Windows TemporaryDirectory cleanup after product assertions pass.\nThe cleanup tolerance must not weaken product behavior or freeze hint selection logic.\nAlready-frozen hints must remain skipped.\nNewest unused staged hints must remain preferred over older validated latest records.\nFreeze hint intake must tolerate scalar legacy source metadata.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Freeze Hint Windows Temp Cleanup Tolerance v1",
+    "generated_files": "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_windows_temp_cleanup_tolerance_v1.txt",
+    "known_warnings": "This patch changes focused test cleanup only; it does not change product code.",
+    "notes": "Repair for Windows WinError 145 TemporaryDirectory cleanup error after all relevant test assertions passed.",
+    "planned_next_step": "Install locally, rerun source-shape/formulary-data validation, then freeze validated intake/formulary flow.",
+    "primary_box": "tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "tests/test_freeze_hint_skip_entry_file_frozen.py\ntests/test_freeze_hint_skip_already_frozen.py",
+    "validation_evidence_summary": "SANDBOX VALIDATION OK: freeze_hint_windows_temp_cleanup_tolerance_v1\npy_compile: OK\nfocused unittest cleanup-tolerance tests: OK"
+  },
+  "hint": {
+    "box_type": "Regression Test Harness / Windows Cleanup Tolerance",
+    "do_not_regress_rules": "Focused freeze_hint_intake tests must not fail on Windows TemporaryDirectory cleanup after product assertions pass.\nThe cleanup tolerance must not weaken product behavior or freeze hint selection logic.\nAlready-frozen hints must remain skipped.\nNewest unused staged hints must remain preferred over older validated latest records.\nFreeze hint intake must tolerate scalar legacy source metadata.\nDo not store project-specific frozen memory inside project_freeze_ledger.",
+    "feature_id": "freeze-hint-windows-temp-cleanup-tolerance-v1",
+    "feature_title": "Freeze Hint Windows Temp Cleanup Tolerance v1",
+    "generated_files": "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_windows_temp_cleanup_tolerance_v1.txt",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This patch changes focused test cleanup only; it does not change product code.",
+    "notes": "Repair for Windows WinError 145 TemporaryDirectory cleanup error after all relevant test assertions passed.",
+    "planned_next_step": "Install locally, rerun source-shape/formulary-data validation, then freeze validated intake/formulary flow.",
+    "primary_box": "tests",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/contract.py\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781622625864946000,
+      "source_name": "freeze_hint_windows_temp_cleanup_tolerance_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_windows_temp_cleanup_tolerance_v1_patch.zip",
+      "source_size_bytes": 6504
+    },
+    "validated_files": "tests/test_freeze_hint_skip_entry_file_frozen.py\ntests/test_freeze_hint_skip_already_frozen.py",
+    "validation_evidence_summary": "SANDBOX VALIDATION OK: freeze_hint_windows_temp_cleanup_tolerance_v1\npy_compile: OK\nfocused unittest cleanup-tolerance tests: OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-16T15:11:26Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781622625864946000,
+    "source_name": "freeze_hint_windows_temp_cleanup_tolerance_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_windows_temp_cleanup_tolerance_v1_patch.zip",
+    "source_size_bytes": 6504
+  },
+  "used_at_utc": null
+}

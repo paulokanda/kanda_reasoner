@@ -1,0 +1,26 @@
+{
+  "prompt_id": "implementation_roadmap_builder",
+  "display_name": "Implementation Roadmap Builder",
+  "filename": "implementation_roadmap_builder.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Builds a staged implementation roadmap before patch work.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 15,
+  "trigger_phrases": [
+    "roadmap implementation",
+    "implementation plan",
+    "before coding plan",
+    "task roadmap",
+    "plan patch"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "evidence_freshness_gate",
+    "bundle_gated_development_workflow"
+  ]
+}

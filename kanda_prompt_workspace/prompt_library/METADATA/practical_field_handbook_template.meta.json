@@ -1,0 +1,27 @@
+{
+  "prompt_id": "practical_field_handbook_template",
+  "display_name": "Practical Field Handbook Template",
+  "filename": "practical_field_handbook_template.md",
+  "category": "08_python_engineering_core",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Template for practical field-handbook style instructions.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "field handbook",
+    "practical guide",
+    "operator handbook",
+    "how to use system",
+    "runbook style guide"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "implementation_roadmap_builder",
+    "python_testing_pytest",
+    "implementation_and_delivery_protocol"
+  ]
+}

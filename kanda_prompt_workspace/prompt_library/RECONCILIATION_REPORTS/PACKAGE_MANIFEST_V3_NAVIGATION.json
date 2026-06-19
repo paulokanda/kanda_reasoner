@@ -1,0 +1,13 @@
+﻿{
+  "package": "kanda_prompts_reconciled_clean_prompt_library_v3_navigation_index",
+  "target": "E:/kanda_reasoner/KANDA_PROMPTS_AUDITED/prompt_library",
+  "active_prompt_count": 72,
+  "metadata_count": 72,
+  "navigation_entries": 72,
+  "created_files": [
+    "ROUTING/PROMPT_NAVIGATION_INDEX.md",
+    "ROUTING/prompt_navigation_index.json",
+    "ROUTING/prompt_route_coverage_table.csv"
+  ],
+  "official_governance_changed": false
+}

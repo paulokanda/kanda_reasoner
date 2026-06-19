@@ -1,0 +1,27 @@
+{
+  "bundle_name": "kanda_context_routing_layer_phase4_validator_v1",
+  "changed_box": "Context Routing Validator Box",
+  "task_class": "prompt_laboratory_validator",
+  "risk_level": "medium_low",
+  "files_changed": [
+    "prompt_library/TOOLS/validate_context_routing_layer.py",
+    "prompt_library/METADATA/validate_context_routing_layer.meta.json",
+    "prompt_library/RECONCILIATION_REPORTS/context_routing_phase4_validator_report.md",
+    "prompt_library/_bundle_temp/BUNDLE_MANIFEST_kanda_context_routing_layer_phase4_validator_v1.json"
+  ],
+  "what_changed": "Added a read-only Python validator for the staged context routing layer.",
+  "what_did_not_change": "No live app code, prompt library GUI, or runtime source files were touched.",
+  "safety_boundaries_preserved": [
+    "prompt_library staging folder only",
+    "read-only validator",
+    "no live app integration"
+  ],
+  "validation_performed": [
+    "Python syntax compile check in sandbox",
+    "ZIP structure check in sandbox"
+  ],
+  "user_validation_commands": [
+    "python TOOLS\\validate_context_routing_layer.py --root E:\\kanda_reasoner\\KANDA_PROMPTS_AUDITED\\prompt_library"
+  ],
+  "next_recommended_step": "Run validator locally and paste validation output back to AI."
+}

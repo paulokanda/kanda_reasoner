@@ -1,0 +1,26 @@
+{
+  "prompt_id": "python_site_reliability_engineering",
+  "display_name": "Python Site Reliability Engineering",
+  "filename": "python_site_reliability_engineering.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Applies SRE principles to Python systems.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 55,
+  "trigger_phrases": [
+    "SRE",
+    "reliability",
+    "SLI",
+    "SLO",
+    "incident response",
+    "operational readiness"
+  ],
+  "required_companion_prompts": [
+    "professional_ai_assisted_engineering_framework",
+    "evidence_freshness_gate"
+  ]
+}

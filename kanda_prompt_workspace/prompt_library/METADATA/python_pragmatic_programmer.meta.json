@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_pragmatic_programmer",
+  "display_name": "Python Pragmatic Programmer",
+  "filename": "python_pragmatic_programmer.md",
+  "category": "08_python_engineering_core",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Applies pragmatic programmer habits to Python work.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "pragmatic programmer",
+    "DRY",
+    "orthogonality",
+    "tracer bullets",
+    "pragmatic code"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "implementation_roadmap_builder",
+    "python_testing_pytest",
+    "implementation_and_delivery_protocol"
+  ]
+}

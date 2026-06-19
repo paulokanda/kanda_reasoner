@@ -1,0 +1,25 @@
+{
+  "prompt_id": "folder_assimilation_02_prompt_routing_and_indexing",
+  "display_name": "Folder Assimilation - Prompt Routing and Indexing",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "02_prompt_routing_and_indexing",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Map task intent to required groups, optional groups, minimum viable context, and specialist prompt requests.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "route this",
+    "what prompt",
+    "which group",
+    "find correct prompt",
+    "context router"
+  ],
+  "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md"
+}

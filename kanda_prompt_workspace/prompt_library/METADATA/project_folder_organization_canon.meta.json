@@ -1,0 +1,25 @@
+{
+  "prompt_id": "project_folder_organization_canon",
+  "display_name": "Project Folder Organization Canon",
+  "filename": "project_folder_organization_canon.md",
+  "category": "04_box_architecture_and_boundaries",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Defines project folder boundaries and placement discipline.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 5,
+  "trigger_phrases": [
+    "organize folder",
+    "project folder structure",
+    "where should files go",
+    "folder canon",
+    "project layout"
+  ],
+  "required_companion_prompts": [
+    "bundle_gated_development_workflow",
+    "implementation_roadmap_builder"
+  ]
+}

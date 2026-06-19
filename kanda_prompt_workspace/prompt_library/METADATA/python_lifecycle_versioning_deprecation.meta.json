@@ -1,0 +1,25 @@
+{
+  "prompt_id": "python_lifecycle_versioning_deprecation",
+  "display_name": "Python Lifecycle, Versioning, and Deprecation",
+  "filename": "python_lifecycle_versioning_deprecation.md",
+  "category": "11_productization_and_release_readiness",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Manages Python lifecycle, release versioning, deprecation, and legacy transition.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 55,
+  "trigger_phrases": [
+    "versioning",
+    "deprecation",
+    "release lifecycle",
+    "legacy support",
+    "migration path"
+  ],
+  "required_companion_prompts": [
+    "professional_ai_assisted_engineering_framework",
+    "evidence_freshness_gate"
+  ]
+}

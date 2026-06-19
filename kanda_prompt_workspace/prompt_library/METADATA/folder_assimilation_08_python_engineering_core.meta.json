@@ -1,0 +1,26 @@
+{
+  "prompt_id": "folder_assimilation_08_python_engineering_core",
+  "display_name": "Folder Assimilation - Python Engineering Core",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "08_python_engineering_core",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Provide broad Python engineering judgment for clean architecture, refactoring, DDD, performance, patterns, legacy code, and professional practice.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "clean code",
+    "design patterns",
+    "DDD",
+    "legacy code",
+    "performance",
+    "refactoring"
+  ],
+  "card_path": "ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md"
+}

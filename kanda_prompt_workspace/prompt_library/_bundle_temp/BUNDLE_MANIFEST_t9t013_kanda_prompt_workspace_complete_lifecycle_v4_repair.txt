@@ -1,0 +1,16 @@
+﻿T9T013 KANDA prompt workspace complete lifecycle v4 repair
+Patch: T9T013_kanda_prompt_workspace_complete_lifecycle_v4_repair
+Installed: 2026-06-13T23:15:37.2500226-03:00
+Project root: E:\kanda_reasoner
+Workspace: E:\kanda_reasoner\kanda_prompt_workspace
+
+Purpose:
+- Repair the v3 validation/content mismatch by adding the exact phrase "unrelated project roots" to the installed T9T013 lifecycle section.
+- Do not change PROMPT_GROUPS_DRAFT.json.
+- Do not change startup delivery, GUI/runtime/source code, governance, freeze files, or unrelated project roots.
+
+Changed file:
+- kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_canon_reconciliation_protocol.md
+
+Backup:
+- E:\kanda_reasoner\kanda_prompt_workspace\prompt_library\_bundle_temp\backup_T9T013_kanda_prompt_workspace_complete_lifecycle_v4_repair_20260613_231537

@@ -1,0 +1,39 @@
+{
+  "id": "context_routing_layer_staging_baseline_freeze",
+  "patch": "kanda_context_routing_layer_phase6_freeze_baseline_v1",
+  "created_at": "2026-06-12T03:21:39Z",
+  "scope": "prompt_library prompt-staging folder only",
+  "status": "freeze_declaration",
+  "baseline_status": "frozen_pending_local_validation",
+  "frozen_after_phases": [
+    "phase1_context_routing_kernel",
+    "phase2_folder_assimilation_cards",
+    "phase3_routing_tests",
+    "phase4_python_validator",
+    "phase5_human_review"
+  ],
+  "frozen_components": [
+    "ACTIVE_PROMPTS session kernel and routing prompts",
+    "ROUTING group and folder indices",
+    "ACTIVE_PROMPTS folder assimilation cards",
+    "ROUTING_TESTS routing tests and manual review matrix",
+    "TOOLS validate_context_routing_layer.py",
+    "RECONCILIATION_REPORTS phase reports"
+  ],
+  "excluded_components": [
+    "kanda_reasoner_app",
+    "prompt_library_gui",
+    "live Tab Prompt Library",
+    "runtime dispatcher",
+    "GUI wiring"
+  ],
+  "next_allowed_step": "later_app_integration_planning_only_after_user_request",
+  "future_change_policy": "closed_box_patch_required",
+  "terminal_behavior_canon": {
+    "install_success": "clear_terminal_after_5_seconds",
+    "install_error": "do_not_clear_terminal",
+    "validation_success": "clear_only_after_enter_enter",
+    "validation_error": "do_not_clear_terminal",
+    "powershell_finally_blocks": "forbidden"
+  }
+}

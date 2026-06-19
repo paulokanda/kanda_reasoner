@@ -1,0 +1,85 @@
+{
+  "form_inputs": {
+    "box_type": "prompt library routing canonization",
+    "do_not_regress_rules": "Preserve routing system canon registered as routable context asset.\nPreserve on request not always startup loaded.\nPreserve context package manifest before dispatcher automation.\nPreserve prompt registration not global injection.\nPreserve similarity advisory not final route authority.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "KANDA Routing System Canon Registration v1",
+    "generated_files": "",
+    "known_warnings": "Freeze only after local validation passes. Do not freeze placeholder titles. The full routing canon must remain on-request and must not be added to startup source map.",
+    "notes": "Registers the KANDA Routing System Canon as an on-request routable context asset and authoritative routing-system canon for Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, and shield-aware routing boundaries.",
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for KANDA Routing System Canon Registration v1.",
+    "primary_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing + prompt routing indexes",
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\ntests/test_kanda_routing_system_canon_registration.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\ntests/test_kanda_routing_system_canon_registration.py",
+    "validation_evidence_summary": "VALIDATION OK: kanda_routing_system_canon_registration_v1\nCONTRACT_TEST_OK: KANDA Routing System Canon is registered as an on-request prompt-routing canon in active prompt files, metadata, human-readable routing indexes, machine-readable routing JSON, prompt-request canon, startup sync output, and permanent regression tests without globally auto-loading the full canon at startup or invading runtime app boxes.\nSANDBOX_KANDA_ROUTING_SYSTEM_CANON_REGISTRATION_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "prompt library routing canonization",
+    "do_not_regress_rules": "Preserve routing system canon registered as routable context asset.\nPreserve on request not always startup loaded.\nPreserve context package manifest before dispatcher automation.\nPreserve prompt registration not global injection.\nPreserve similarity advisory not final route authority.",
+    "expected_freeze_title": "KANDA Routing System Canon Registration v1",
+    "feature_id": "kanda-routing-system-canon-registration-v1",
+    "feature_title": "KANDA Routing System Canon Registration v1",
+    "feature_type": "prompt_library_routing_canonization",
+    "freeze_warning": "Freeze only after local validation passes. Do not freeze placeholder titles. The full routing canon must remain on-request and must not be added to startup source map.",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "Freeze only after local validation passes. Do not freeze placeholder titles. The full routing canon must remain on-request and must not be added to startup source map.",
+    "notes": "Registers the KANDA Routing System Canon as an on-request routable context asset and authoritative routing-system canon for Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, and shield-aware routing boundaries.",
+    "owning_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing + prompt routing indexes",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+        "kanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json",
+        "kanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json",
+        "kanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json",
+        "tests/test_kanda_routing_system_canon_registration.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/routing_signal_scorer",
+        "kanda_reasoner_app/freeze_hint_intake",
+        "kanda_reasoner_app/freeze_after_update",
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory",
+        "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json"
+      ]
+    },
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for KANDA Routing System Canon Registration v1.",
+    "primary_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing + prompt routing indexes",
+    "protected_architecture_characteristics": [
+      "routing_system_canon_registered_as_routable_context_asset",
+      "on_request_not_always_startup_loaded",
+      "context_package_manifest_before_dispatcher_automation",
+      "prompt_registration_not_global_injection",
+      "similarity_advisory_not_final_route_authority"
+    ],
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\ntests/test_kanda_routing_system_canon_registration.py",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781695580658016200,
+      "source_name": "kanda_routing_system_canon_registration_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_routing_system_canon_registration_v1_patch.zip",
+      "source_size_bytes": 87722
+    },
+    "summary": "Registers the KANDA Routing System Canon as an on-request routable context asset and authoritative routing-system canon for Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, and shield-aware routing boundaries.",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\ntests/test_kanda_routing_system_canon_registration.py",
+    "validation_evidence_summary": "VALIDATION OK: kanda_routing_system_canon_registration_v1\nCONTRACT_TEST_OK: KANDA Routing System Canon is registered as an on-request prompt-routing canon in active prompt files, metadata, human-readable routing indexes, machine-readable routing JSON, prompt-request canon, startup sync output, and permanent regression tests without globally auto-loading the full canon at startup or invading runtime app boxes.\nSANDBOX_KANDA_ROUTING_SYSTEM_CANON_REGISTRATION_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T11:30:51Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781695580658016200,
+    "source_name": "kanda_routing_system_canon_registration_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_routing_system_canon_registration_v1_patch.zip",
+    "source_size_bytes": 87722
+  },
+  "used_at_utc": null
+}

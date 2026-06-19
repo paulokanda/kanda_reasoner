@@ -1,0 +1,26 @@
+{
+  "prompt_id": "implementation_and_delivery_protocol",
+  "display_name": "Implementation and Delivery Protocol",
+  "filename": "implementation_and_delivery_protocol.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Rules for building, packaging, and delivering code or prompt changes.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 15,
+  "trigger_phrases": [
+    "implement and send",
+    "code and deliver",
+    "patch with install code",
+    "implementation protocol",
+    "send code to user"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "evidence_freshness_gate",
+    "bundle_gated_development_workflow"
+  ]
+}

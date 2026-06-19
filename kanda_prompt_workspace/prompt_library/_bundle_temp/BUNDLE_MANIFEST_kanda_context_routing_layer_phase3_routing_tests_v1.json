@@ -1,0 +1,28 @@
+{
+  "bundle_name": "kanda_context_routing_layer_phase3_routing_tests_v1",
+  "bundle_type": "prompt_routing_test_bundle",
+  "owner_box": "routing_test_box",
+  "risk_level": "medium_low",
+  "files_changed": [
+    "prompt_library/ROUTING_TESTS/context_routing_test_cases.md",
+    "prompt_library/ROUTING_TESTS/context_routing_expected_outputs.json",
+    "prompt_library/METADATA/context_routing_test_cases.meta.json",
+    "prompt_library/METADATA/context_routing_expected_outputs.meta.json",
+    "prompt_library/RECONCILIATION_REPORTS/context_routing_phase3_tests_report.md",
+    "prompt_library/_bundle_temp/BUNDLE_MANIFEST_kanda_context_routing_layer_phase3_routing_tests_v1.json"
+  ],
+  "what_changed": "Added routing test cases, expected outputs, metadata, and validation report.",
+  "what_did_not_change": [
+    "live app code",
+    "prompt_library_gui",
+    "kanda_reasoner_app",
+    "folder assimilation cards"
+  ],
+  "validation_performed": [
+    "json parse",
+    "test count check",
+    "required field check",
+    "forbidden path check"
+  ],
+  "user_validation_required": true
+}

@@ -1,0 +1,597 @@
+{
+  "artifact_id": "folder_assimilation_cards_index",
+  "version": "1.0",
+  "status": "audited_candidate",
+  "created_by_patch": "kanda_context_routing_layer_phase2_folder_cards_v1",
+  "purpose": "Machine-readable index of folder assimilation cards. Cards are selected when needed and are not daily-loaded behavioral prompts.",
+  "load_rule": "Use GROUP_ASSIMILATION_INDEX first, then select only relevant folder assimilation cards.",
+  "folder_count": 12,
+  "folders": [
+    {
+      "folder_id": "01_session_start_and_navigation",
+      "folder_name": "Session Start and Navigation",
+      "card_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Start the work session, establish minimum context, and control when the AI must request more prompts before acting.",
+      "use_when": "Use when opening a work session, continuing from a handoff, or deciding whether current context is enough to proceed.",
+      "do_not_use_when": "Do not use as a replacement for specialist delivery, architecture, validation, governance, or prompt-audit protocols.",
+      "required_for": [
+        "START_DAY",
+        "continue project work",
+        "context sufficiency check",
+        "prompt request decision"
+      ],
+      "optional_for": [
+        "simple explanation",
+        "handoff review"
+      ],
+      "never_load_for": [
+        "runtime source execution",
+        "GUI rendering",
+        "domain-specific coding without routing"
+      ],
+      "depends_on_groups": [
+        "02_prompt_routing_and_indexing"
+      ],
+      "common_task_triggers": [
+        "start day",
+        "continue from handoff",
+        "what do you need",
+        "do we have enough context"
+      ],
+      "minimum_viable_context": [
+        "start_of_day_master_stack",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "prompt_count": 9,
+      "main_prompt_ids": [
+        "ai_human_partnership_session_start",
+        "ai_prompt_request_canon",
+        "daily_reasoner_startup_loader",
+        "daily_session_start_prompt",
+        "daily_startup_loader_template",
+        "general_prompt_stack_load_order",
+        "project_startup_canon_template",
+        "reasoner_startup_canon",
+        "session_start_upload_checklist"
+      ]
+    },
+    {
+      "folder_id": "02_prompt_routing_and_indexing",
+      "folder_name": "Prompt Routing and Indexing",
+      "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, and semantic-readiness canon context for ML/embedding routing work.",
+      "use_when": "Use when deciding what prompts/groups are needed, or when routing-system canon, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, or semantic-readiness behavior for routing_signal_scorer v3 is being changed or audited.",
+      "do_not_use_when": "Do not use as a behavioral prompt that teaches the full protocol of another group.",
+      "required_for": [
+        "task routing",
+        "prompt selection",
+        "context routing",
+        "missing prompt request",
+        "routing-system canonization",
+        "Context Package Manifest",
+        "Prompt Registration v2",
+        "semantic-readiness canonization",
+        "routing_signal_scorer v3",
+        "embedding readiness",
+        "Metadata Vector Manifest"
+      ],
+      "optional_for": [
+        "prompt-library explanation",
+        "route review"
+      ],
+      "never_load_for": [
+        "direct implementation without owner-box audit",
+        "replacing source evidence"
+      ],
+      "depends_on_groups": [
+        "01_session_start_and_navigation"
+      ],
+      "common_task_triggers": [
+        "route this",
+        "what prompt",
+        "which group",
+        "find correct prompt",
+        "context router",
+        "routing system canon",
+        "Context Package Manifest",
+        "Prompt Registration v2",
+        "register prompt as routable context asset",
+        "semantic readiness canon",
+        "embedding readiness",
+        "routing_signal_scorer v3",
+        "Metadata Vector Manifest"
+      ],
+      "minimum_viable_context": [
+        "prompt_navigation_index",
+        "GROUP_ASSIMILATION_INDEX",
+        "kanda_routing_system_canon",
+        "routing_signal_scorer_v3_semantic_readiness_canon"
+      ],
+      "prompt_count": 6,
+      "main_prompt_ids": [
+        "kanda_routing_system_canon",
+        "routing_signal_scorer_v3_semantic_readiness_canon",
+        "project_overlay_selector",
+        "prompt_navigation_index",
+        "prompt_router",
+        "prompt_substitution_map"
+      ]
+    },
+    {
+      "folder_id": "03_governance_freeze_and_handoff",
+      "folder_name": "Governance, Freeze, and Handoff",
+      "card_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Control validated freeze decisions, governance updates, end-of-chat state transfer, and handoff creation.",
+      "use_when": "Use when validation output must be classified, a step must be frozen, governance must be updated, or a handoff is needed.",
+      "do_not_use_when": "Do not use before validation evidence exists, except to plan required freeze gates.",
+      "required_for": [
+        "freeze review",
+        "governance update",
+        "session handoff",
+        "validated state transfer"
+      ],
+      "optional_for": [
+        "roadmap closeout",
+        "risk summary"
+      ],
+      "never_load_for": [
+        "early brainstorming",
+        "unvalidated patch acceptance"
+      ],
+      "depends_on_groups": [
+        "05_patch_delivery_and_validation"
+      ],
+      "common_task_triggers": [
+        "freeze",
+        "handoff",
+        "end of chat",
+        "update governance",
+        "validated output"
+      ],
+      "minimum_viable_context": [
+        "current_workflow_handoff_template",
+        "active_governance_freeze_update"
+      ],
+      "prompt_count": 6,
+      "main_prompt_ids": [
+        "active_governance_freeze_update",
+        "current_workflow_handoff_template",
+        "end_of_chat_governance_update_template",
+        "professional_engineering_governance_template",
+        "reasoner_professional_engineering_governance",
+        "workflow_handoff_template"
+      ]
+    },
+    {
+      "folder_id": "04_box_architecture_and_boundaries",
+      "folder_name": "Box Architecture and Boundaries",
+      "card_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Define owner boxes, public contracts, forbidden touches, dependency boundaries, anti-contamination rules, and KBSC box shielding.",
+      "use_when": "Use before code, architecture, module splitting, cross-box wiring, GUI ownership changes, prompt-library updates, bundle creation, box shielding, meaningful milestone hardening, stronger ML preparation, or any change that may touch ownership boundaries.",
+      "do_not_use_when": "Do not use as a substitute for delivery scripts, validation scripts, or prompt audit decisions.",
+      "required_for": [
+        "implementation patch",
+        "architecture change",
+        "cross-box touch",
+        "module split",
+        "new feature with ownership",
+        "box shield after meaningful milestone",
+        "stronger ML preparation"
+      ],
+      "optional_for": [
+        "architecture explanation",
+        "boundary teaching"
+      ],
+      "never_load_for": [
+        "pure text editing with no implementation consequence"
+      ],
+      "depends_on_groups": [
+        "05_patch_delivery_and_validation"
+      ],
+      "common_task_triggers": [
+        "owner box",
+        "box boundary",
+        "architecture",
+        "dependencies",
+        "public contract",
+        "box shield",
+        "box shielding",
+        "KBSC",
+        "KANDA Box Shielding Canon",
+        "architectural fitness function",
+        "shield before stronger ML"
+      ],
+      "minimum_viable_context": [
+        "box_architecture_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "prompt_count": 5,
+      "main_prompt_ids": [
+        "box_architecture_canon",
+        "closed_box_delivery_canon",
+        "project_folder_organization_canon",
+        "stateful_control_regression_canon",
+        "kanda_box_shielding_canon"
+      ]
+    },
+    {
+      "folder_id": "05_patch_delivery_and_validation",
+      "folder_name": "Patch Delivery and Validation",
+      "card_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates.",
+      "use_when": "Use whenever a ZIP, install script, validation script, patch manifest, or validation classification is needed.",
+      "do_not_use_when": "Do not use to decide ownership boundaries without the Box Architecture group.",
+      "required_for": [
+        "implementation bundle",
+        "validation script",
+        "install script",
+        "patch delivery",
+        "freeze evidence"
+      ],
+      "optional_for": [
+        "read-only patch planning",
+        "delivery model explanation"
+      ],
+      "never_load_for": [
+        "prompt-library routing with no file placement"
+      ],
+      "depends_on_groups": [
+        "04_box_architecture_and_boundaries"
+      ],
+      "common_task_triggers": [
+        "zip",
+        "install",
+        "validation",
+        "patch",
+        "bundle",
+        "expected output"
+      ],
+      "minimum_viable_context": [
+        "implementation_and_delivery_protocol",
+        "universal_delivery_protocol"
+      ],
+      "prompt_count": 6,
+      "main_prompt_ids": [
+        "bundle_gated_development_workflow",
+        "evidence_freshness_gate",
+        "implementation_and_delivery_protocol",
+        "implementation_roadmap_builder",
+        "patch_registry_validation_freeze",
+        "universal_delivery_protocol"
+      ]
+    },
+    {
+      "folder_id": "06_refactor_and_architecture_hardening",
+      "folder_name": "Refactor and Architecture Hardening",
+      "card_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Plan and control large-module refactors, architecture hardening, fragmentation audits, and problem-set solving order.",
+      "use_when": "Use when a file is too large, architecture has drifted, a refactor is requested, or a problem list needs a safe solving order.",
+      "do_not_use_when": "Do not use for simple one-line fixes unless a large-module or architecture-hardening trigger exists.",
+      "required_for": [
+        "file above 500 lines",
+        "large refactor",
+        "architecture hardening",
+        "problem set roadmap"
+      ],
+      "optional_for": [
+        "future refactor planning",
+        "debt analysis"
+      ],
+      "never_load_for": [
+        "small isolated text update",
+        "routine handoff"
+      ],
+      "depends_on_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation"
+      ],
+      "common_task_triggers": [
+        "large file",
+        "refactor",
+        "hardening",
+        "fragmentation",
+        "roadmap problems"
+      ],
+      "minimum_viable_context": [
+        "large_module_refactor_protocol",
+        "architecture_hardening_triage_protocol"
+      ],
+      "prompt_count": 7,
+      "main_prompt_ids": [
+        "architecture_hardening_triage_protocol",
+        "architecture_hardening_triage_template",
+        "large_module_refactor_protocol",
+        "large_module_refactor_template",
+        "problem_set_roadmap_solver",
+        "refactor_fragmentation_audit_runner",
+        "tab1_tab2_audit_taxonomy"
+      ]
+    },
+    {
+      "folder_id": "07_prompt_authoring_and_audit",
+      "folder_name": "Prompt Authoring and Audit",
+      "card_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Audit, generalize, reconcile, split, deprecate, or improve prompt files without contaminating unrelated prompts.",
+      "use_when": "Use when reviewing prompt quality, creating prompt audit reports, extracting integration candidates, or reconciling prompt canons.",
+      "do_not_use_when": "Do not use to implement runtime code unless prompt-library files are being changed.",
+      "required_for": [
+        "audit prompt",
+        "compare prompts",
+        "deprecate prompt",
+        "generalize prompt",
+        "integration candidate"
+      ],
+      "optional_for": [
+        "prompt writing advice",
+        "library documentation"
+      ],
+      "never_load_for": [
+        "normal runtime bug fix",
+        "GUI app patch without prompt changes"
+      ],
+      "depends_on_groups": [
+        "02_prompt_routing_and_indexing"
+      ],
+      "common_task_triggers": [
+        "audit this prompt",
+        "compare prompts",
+        "generalize",
+        "deprecated prompt",
+        "to be inserted"
+      ],
+      "minimum_viable_context": [
+        "prompt_audit_canon",
+        "prompt_canon_reconciliation_protocol"
+      ],
+      "prompt_count": 3,
+      "main_prompt_ids": [
+        "project_specific_prompt_generalization",
+        "prompt_audit_canon",
+        "prompt_canon_reconciliation_protocol"
+      ]
+    },
+    {
+      "folder_id": "08_python_engineering_core",
+      "folder_name": "Python Engineering Core",
+      "card_path": "ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Provide broad Python engineering judgment for clean architecture, refactoring, DDD, performance, patterns, legacy code, and professional practice.",
+      "use_when": "Use when implementation needs general Python engineering expertise beyond the project-specific canons.",
+      "do_not_use_when": "Do not load wholesale for every patch; select only the relevant specialist prompt.",
+      "required_for": [
+        "complex Python design decision",
+        "clean architecture review",
+        "legacy workflow",
+        "performance-sensitive Python design"
+      ],
+      "optional_for": [
+        "teaching",
+        "code review perspective"
+      ],
+      "never_load_for": [
+        "small prompt audit",
+        "freeze-only decision"
+      ],
+      "depends_on_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation"
+      ],
+      "common_task_triggers": [
+        "clean code",
+        "design patterns",
+        "DDD",
+        "legacy code",
+        "performance",
+        "refactoring"
+      ],
+      "minimum_viable_context": [
+        "python_clean_code or python_clean_architecture selected by task"
+      ],
+      "prompt_count": 12,
+      "main_prompt_ids": [
+        "peopleware_team_boundary",
+        "practical_field_handbook_template",
+        "python_clean_architecture",
+        "python_clean_code",
+        "python_design_patterns",
+        "python_domain_driven_design",
+        "python_enterprise_architecture",
+        "python_high_performance",
+        "python_legacy_code_workflow",
+        "python_pragmatic_programmer",
+        "python_refactoring",
+        "software_engineering_books_master"
+      ]
+    },
+    {
+      "folder_id": "09_python_quality_security_observability",
+      "folder_name": "Python Quality, Security, and Observability",
+      "card_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Guide testing, documentation, resilience, logging, metrics, security, type safety, and validation quality.",
+      "use_when": "Use when a patch affects tests, docs, error handling, security, observability, serialization, or quality gates.",
+      "do_not_use_when": "Do not use as the primary owner for domain architecture or delivery mechanics.",
+      "required_for": [
+        "testing strategy",
+        "security-sensitive change",
+        "logging/observability",
+        "type safety",
+        "docstring roadmap"
+      ],
+      "optional_for": [
+        "quality review",
+        "maintainability review"
+      ],
+      "never_load_for": [
+        "pure routing metadata update unless quality gates are being designed"
+      ],
+      "depends_on_groups": [
+        "05_patch_delivery_and_validation"
+      ],
+      "common_task_triggers": [
+        "pytest",
+        "security",
+        "logging",
+        "observability",
+        "resilience",
+        "docstrings",
+        "validation"
+      ],
+      "minimum_viable_context": [
+        "python_testing_pytest or python_documentation_developer_experience selected by task"
+      ],
+      "prompt_count": 7,
+      "main_prompt_ids": [
+        "python_documentation_developer_experience",
+        "python_observability_logging_metrics_tracing",
+        "python_resilience_error_handling",
+        "python_security_threat_prevention",
+        "python_testing_pytest",
+        "python_validation_serialisation_type_safety",
+        "tab4_docstring_quality_roadmap"
+      ]
+    },
+    {
+      "folder_id": "10_python_api_data_async_config",
+      "folder_name": "Python API, Data, Async, and Config",
+      "card_path": "ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions.",
+      "use_when": "Use when the task touches APIs, data storage, async work, distributed work, configuration, or feature flags.",
+      "do_not_use_when": "Do not use for GUI-only layout changes or prompt-only audit work.",
+      "required_for": [
+        "API design",
+        "database design",
+        "async architecture",
+        "configuration system",
+        "feature flags"
+      ],
+      "optional_for": [
+        "data model review",
+        "backend architecture planning"
+      ],
+      "never_load_for": [
+        "read-only explanation of existing prompt routing"
+      ],
+      "depends_on_groups": [
+        "08_python_engineering_core",
+        "09_python_quality_security_observability"
+      ],
+      "common_task_triggers": [
+        "API",
+        "database",
+        "async",
+        "parallel",
+        "config",
+        "feature flag"
+      ],
+      "minimum_viable_context": [
+        "one selected specialist prompt matching the technical area"
+      ],
+      "prompt_count": 4,
+      "main_prompt_ids": [
+        "python_api_design",
+        "python_async_parallel_distributed",
+        "python_configuration_feature_flags",
+        "python_database_design_optimisation"
+      ]
+    },
+    {
+      "folder_id": "11_productization_and_release_readiness",
+      "folder_name": "Productization and Release Readiness",
+      "card_path": "ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Guide release maturity, lifecycle, versioning, deprecation, infrastructure, Kubernetes, SRE, and operational readiness.",
+      "use_when": "Use when moving from local tool to product, release, infrastructure, operations, deprecation, or production-readiness planning.",
+      "do_not_use_when": "Do not use for early small internal patching unless release readiness is directly affected.",
+      "required_for": [
+        "release readiness",
+        "versioning",
+        "deprecation",
+        "SRE",
+        "infrastructure roadmap",
+        "Kubernetes deployment"
+      ],
+      "optional_for": [
+        "future product strategy",
+        "professionalization review"
+      ],
+      "never_load_for": [
+        "minor prompt index update",
+        "simple source collector request"
+      ],
+      "depends_on_groups": [
+        "05_patch_delivery_and_validation",
+        "09_python_quality_security_observability"
+      ],
+      "common_task_triggers": [
+        "release",
+        "production",
+        "deprecation",
+        "versioning",
+        "SRE",
+        "Kubernetes",
+        "infrastructure"
+      ],
+      "minimum_viable_context": [
+        "productization_readiness_roadmap or python_lifecycle_versioning_deprecation selected by task"
+      ],
+      "prompt_count": 6,
+      "main_prompt_ids": [
+        "kubernetes_deployment_operations",
+        "productization_readiness_roadmap",
+        "professional_ai_assisted_engineering_framework",
+        "professional_infrastructure_roadmap",
+        "python_lifecycle_versioning_deprecation",
+        "python_site_reliability_engineering"
+      ]
+    },
+    {
+      "folder_id": "12_generalized_project_canons",
+      "folder_name": "Generalized Project Canons",
+      "card_path": "ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md",
+      "responsibility": "Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, transform resolvers, data pipelines, and decision tables.",
+      "use_when": "Use when the project needs reusable architectural canons that are not Reasoner-specific.",
+      "do_not_use_when": "Do not use as the initial session kernel or as a generic patch protocol.",
+      "required_for": [
+        "plugin package import canon",
+        "help document layout",
+        "desktop help document layout",
+        "shared render engine",
+        "transform resolver",
+        "data pipeline invariant",
+        "domain decision table"
+      ],
+      "optional_for": [
+        "new project canon creation",
+        "cross-project reuse planning"
+      ],
+      "never_load_for": [
+        "routine freeze",
+        "simple prompt audit without domain canon impact"
+      ],
+      "depends_on_groups": [
+        "04_box_architecture_and_boundaries",
+        "08_python_engineering_core"
+      ],
+      "common_task_triggers": [
+        "plugin",
+        "help document layout",
+        "desktop help",
+        "visual render",
+        "transform resolver",
+        "pipeline invariant",
+        "decision table"
+      ],
+      "minimum_viable_context": [
+        "one selected generalized canon matching the task"
+      ],
+      "prompt_count": 6,
+      "main_prompt_ids": [
+        "data_transform_pipeline_invariants",
+        "desktop_help_document_layout_canon",
+        "domain_decision_table_template",
+        "plugin_package_import_canon",
+        "shared_visual_render_engine_canon",
+        "transform_resolver_architecture_contract"
+      ]
+    }
+  ]
+}

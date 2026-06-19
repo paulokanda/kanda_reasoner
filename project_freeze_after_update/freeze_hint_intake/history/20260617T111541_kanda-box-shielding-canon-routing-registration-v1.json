@@ -1,0 +1,87 @@
+{
+  "form_inputs": {
+    "box_type": "prompt library routing canonization",
+    "do_not_regress_rules": "Preserve prompt registered as routable context asset.\nPreserve on request not always startup loaded.\nPreserve shield before stronger ml.\nPreserve tests first shielding method.\nPreserve box boundary and no invasion routing.\nPreserve context package prompt call accuracy.\nPreserve source map startup sync preserved.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "KANDA Box Shielding Canon Routing Registration v1",
+    "generated_files": "",
+    "known_warnings": "Freeze only after local validation passes and startup sync reports STATUS: IN_SYNC. KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into project root. Do not freeze placeholder titles. Expected title: KANDA Box Shielding Canon Routing Registration v1.",
+    "notes": "Registers KANDA Box Shielding Canon (KBSC) as an on-request routable context asset, adds its metadata, folder card visibility, prompt-navigation routes, prompt-request context package rules, machine-readable routing entries, and permanent validation tests. KBSC remains on-request and is not inserted into always-loaded startup as a full prompt.",
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for KANDA Box Shielding Canon Routing Registration v1.",
+    "primary_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries + prompt routing indexes",
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\ntests/test_kbsc_routing_registration.py\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\ntests/test_kbsc_routing_registration.py",
+    "validation_evidence_summary": "VALIDATION OK: kanda_box_shielding_canon_routing_registration_v1\nCONTRACT_TEST_OK: KBSC is registered as an on-request shield canon in prompt routing assets, prompt-request canon, folder/group indexes, machine-readable routing JSON, startup sync output, and permanent regression tests without auto-loading the full KBSC prompt at startup or invading runtime app boxes.\nSANDBOX_KANDA_BOX_SHIELDING_CANON_ROUTING_REGISTRATION_V1_VALIDATION_OK"
+  },
+  "hint": {
+    "box_type": "prompt library routing canonization",
+    "do_not_regress_rules": "Preserve prompt registered as routable context asset.\nPreserve on request not always startup loaded.\nPreserve shield before stronger ml.\nPreserve tests first shielding method.\nPreserve box boundary and no invasion routing.\nPreserve context package prompt call accuracy.\nPreserve source map startup sync preserved.",
+    "expected_freeze_title": "KANDA Box Shielding Canon Routing Registration v1",
+    "feature_id": "kanda-box-shielding-canon-routing-registration-v1",
+    "feature_title": "KANDA Box Shielding Canon Routing Registration v1",
+    "feature_type": "prompt_library_routing_canonization",
+    "freeze_warning": "Freeze only after local validation passes and startup sync reports STATUS: IN_SYNC. KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into project root. Do not freeze placeholder titles. Expected title: KANDA Box Shielding Canon Routing Registration v1.",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "Freeze only after local validation passes and startup sync reports STATUS: IN_SYNC. KANDA_FREEZE_HINT.json is ZIP delivery metadata only and must not be installed into project root. Do not freeze placeholder titles. Expected title: KANDA Box Shielding Canon Routing Registration v1.",
+    "notes": "Registers KANDA Box Shielding Canon (KBSC) as an on-request routable context asset, adds its metadata, folder card visibility, prompt-navigation routes, prompt-request context package rules, machine-readable routing entries, and permanent validation tests. KBSC remains on-request and is not inserted into always-loaded startup as a full prompt.",
+    "owning_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries + prompt routing indexes",
+    "patch_boundary": {
+      "allowed_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
+        "kanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md",
+        "kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json",
+        "kanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json",
+        "kanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
+        "tests/test_kbsc_routing_registration.py"
+      ],
+      "forbidden_paths": [
+        "kanda_reasoner_app/freeze_hint_intake",
+        "kanda_reasoner_app/freeze_after_update",
+        "kanda_reasoner_app/freeze_after_update_gui",
+        "kanda_reasoner_app/routing_signal_scorer",
+        "project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory",
+        "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json"
+      ]
+    },
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for KANDA Box Shielding Canon Routing Registration v1.",
+    "primary_box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries + prompt routing indexes",
+    "protected_architecture_characteristics": [
+      "prompt_registered_as_routable_context_asset",
+      "on_request_not_always_startup_loaded",
+      "shield_before_stronger_ml",
+      "tests_first_shielding_method",
+      "box_boundary_and_no_invasion_routing",
+      "context_package_prompt_call_accuracy",
+      "source_map_startup_sync_preserved"
+    ],
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\ntests/test_kbsc_routing_registration.py",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781693966981663500,
+      "source_name": "kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+      "source_size_bytes": 80423
+    },
+    "summary": "Registers KANDA Box Shielding Canon (KBSC) as an on-request routable context asset, adds its metadata, folder card visibility, prompt-navigation routes, prompt-request context package rules, machine-readable routing entries, and permanent validation tests. KBSC remains on-request and is not inserted into always-loaded startup as a full prompt.",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md\ntests/test_kbsc_routing_registration.py",
+    "validation_evidence_summary": "VALIDATION OK: kanda_box_shielding_canon_routing_registration_v1\nCONTRACT_TEST_OK: KBSC is registered as an on-request shield canon in prompt routing assets, prompt-request canon, folder/group indexes, machine-readable routing JSON, startup sync output, and permanent regression tests without auto-loading the full KBSC prompt at startup or invading runtime app boxes.\nSANDBOX_KANDA_BOX_SHIELDING_CANON_ROUTING_REGISTRATION_V1_VALIDATION_OK"
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-17T11:15:41Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781693966981663500,
+    "source_name": "kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_box_shielding_canon_routing_registration_v1_patch.zip",
+    "source_size_bytes": 80423
+  },
+  "used_at_utc": null
+}

@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_api_design",
+  "display_name": "Python API Design",
+  "filename": "python_api_design.md",
+  "category": "10_python_api_data_async_config",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Designs REST, GraphQL, and interface APIs for Python systems.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "REST API",
+    "GraphQL",
+    "API design",
+    "endpoint design",
+    "interface contract"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "python_testing_pytest",
+    "python_validation_serialisation_type_safety",
+    "implementation_and_delivery_protocol"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "prompt_id": "folder_assimilation_01_session_start_and_navigation",
+  "display_name": "Folder Assimilation - Session Start and Navigation",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "01_session_start_and_navigation",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Start the work session, establish minimum context, and control when the AI must request more prompts before acting.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "start day",
+    "continue from handoff",
+    "what do you need",
+    "do we have enough context"
+  ],
+  "card_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md"
+}

@@ -1,0 +1,482 @@
+{
+  "schema_version": "1.0",
+  "name": "KANDA Context Routing Layer - Group Assimilation Index",
+  "phase": "Phase 1 - Context Routing Kernel",
+  "generated_at": "2026-06-12",
+  "purpose": "Map human task intent to the 12 use-based prompt groups before selecting specialist prompts.",
+  "rules": [
+    "This index is routing metadata only.",
+    "Do not load all 12 groups at session start.",
+    "Use Fast Path for explanation, discussion, brainstorming, and reading-only tasks.",
+    "Use selected group routes before selected specialist prompts.",
+    "Do not create or require _FOLDER_ASSIMILATION.md cards until Phase 2 is approved.",
+    "Do not touch live app folders during Phase 1."
+  ],
+  "groups": [
+    {
+      "group_id": "01_session_start_and_navigation",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation",
+      "responsibility": "Start sessions, load the small kernel, and establish AI-human operating context.",
+      "use_when": "At beginning of day/session or when continuity is needed.",
+      "do_not_use_when": "Do not use as a substitute for specialist implementation prompts.",
+      "required_for": [
+        "session start",
+        "continuation",
+        "daily kernel"
+      ],
+      "prompt_count": 9,
+      "main_prompts": [
+        "ai_human_partnership_session_start.md",
+        "ai_prompt_request_canon.md",
+        "daily_reasoner_startup_loader.md",
+        "daily_session_start_prompt.md",
+        "daily_startup_loader_template.md",
+        "general_prompt_stack_load_order.md",
+        "project_startup_canon_template.md",
+        "reasoner_startup_canon.md",
+        "session_start_upload_checklist.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "02_prompt_routing_and_indexing",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
+      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, and semantic-readiness canon for ML/embedding routing work.",
+      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, or when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails.",
+      "do_not_use_when": "Do not use as a complete behavior protocol.",
+      "required_for": [
+        "routing",
+        "prompt selection",
+        "context map",
+        "routing-system canonization",
+        "Context Package Manifest",
+        "Prompt Registration v2",
+        "semantic-readiness canonization",
+        "routing_signal_scorer v3",
+        "embedding readiness",
+        "Metadata Vector Manifest"
+      ],
+      "prompt_count": 6,
+      "main_prompts": [
+        "kanda_routing_system_canon.md",
+        "routing_signal_scorer_v3_semantic_readiness_canon.md",
+        "project_overlay_selector.md",
+        "prompt_navigation_index.md",
+        "prompt_router.md",
+        "prompt_substitution_map.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "03_governance_freeze_and_handoff",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff",
+      "responsibility": "Freeze validated work, update governance, and transfer state across sessions.",
+      "use_when": "When validation/freeze/governance/handoff is requested.",
+      "do_not_use_when": "Do not freeze without validation evidence.",
+      "required_for": [
+        "freeze",
+        "governance update",
+        "handoff"
+      ],
+      "prompt_count": 6,
+      "main_prompts": [
+        "active_governance_freeze_update.md",
+        "current_workflow_handoff_template.md",
+        "end_of_chat_governance_update_template.md",
+        "professional_engineering_governance_template.md",
+        "reasoner_professional_engineering_governance.md",
+        "workflow_handoff_template.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "04_box_architecture_and_boundaries",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries",
+      "responsibility": "Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, and KBSC shield requirements.",
+      "use_when": "Before implementation, architecture changes, refactors, cross-box touches, meaningful milestone shielding, or stronger ML preparation.",
+      "do_not_use_when": "Do not use for simple explanation-only tasks.",
+      "required_for": [
+        "implementation",
+        "architecture",
+        "refactor",
+        "box ownership",
+        "box shielding",
+        "meaningful milestone shield",
+        "stronger ML preparation"
+      ],
+      "prompt_count": 5,
+      "main_prompts": [
+        "box_architecture_canon.md",
+        "closed_box_delivery_canon.md",
+        "project_folder_organization_canon.md",
+        "stateful_control_regression_canon.md",
+        "kanda_box_shielding_canon.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "05_patch_delivery_and_validation",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation",
+      "responsibility": "Package, deliver, validate, register, and classify implementation patches.",
+      "use_when": "When code/files/ZIP/install/validation/freeze are involved.",
+      "do_not_use_when": "Do not use as a reason to touch unrelated boxes.",
+      "required_for": [
+        "patch",
+        "ZIP delivery",
+        "validation",
+        "freeze evidence"
+      ],
+      "prompt_count": 6,
+      "main_prompts": [
+        "bundle_gated_development_workflow.md",
+        "evidence_freshness_gate.md",
+        "implementation_and_delivery_protocol.md",
+        "implementation_roadmap_builder.md",
+        "patch_registry_validation_freeze.md",
+        "universal_delivery_protocol.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "06_refactor_and_architecture_hardening",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening",
+      "responsibility": "Handle large modules, architecture hardening, fragmentation, and roadmap-solving.",
+      "use_when": "When modules are large, risks are architectural, or problem sets need ordering.",
+      "do_not_use_when": "Do not use for tiny text edits or simple explanation.",
+      "required_for": [
+        "large module",
+        "architecture hardening",
+        "problem ordering"
+      ],
+      "prompt_count": 7,
+      "main_prompts": [
+        "architecture_hardening_triage_protocol.md",
+        "architecture_hardening_triage_template.md",
+        "large_module_refactor_protocol.md",
+        "large_module_refactor_template.md",
+        "problem_set_roadmap_solver.md",
+        "refactor_fragmentation_audit_runner.md",
+        "tab1_tab2_audit_taxonomy.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "07_prompt_authoring_and_audit",
+      "relative_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit",
+      "responsibility": "Audit, generalize, reconcile, split, merge, deprecate, and create prompts safely.",
+      "use_when": "When prompt files or prompt canons are being reviewed or changed.",
+      "do_not_use_when": "Do not use for runtime code architecture unless prompts are involved.",
+      "required_for": [
+        "prompt audit",
+        "prompt canon update",
+        "prompt conflict"
+      ],
+      "prompt_count": 3,
+      "main_prompts": [
+        "project_specific_prompt_generalization.md",
+        "prompt_audit_canon.md",
+        "prompt_canon_reconciliation_protocol.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "08_python_engineering_core",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core",
+      "responsibility": "Provide core Python engineering principles, architecture, refactoring, patterns, and code quality.",
+      "use_when": "When implementation needs general Python engineering judgment.",
+      "do_not_use_when": "Do not load the whole group for a narrow issue if one prompt is enough.",
+      "required_for": [
+        "core Python implementation",
+        "refactoring",
+        "design patterns"
+      ],
+      "prompt_count": 12,
+      "main_prompts": [
+        "peopleware_team_boundary.md",
+        "practical_field_handbook_template.md",
+        "python_clean_architecture.md",
+        "python_clean_code.md",
+        "python_design_patterns.md",
+        "python_domain_driven_design.md",
+        "python_enterprise_architecture.md",
+        "python_high_performance.md",
+        "python_legacy_code_workflow.md",
+        "python_pragmatic_programmer.md",
+        "python_refactoring.md",
+        "software_engineering_books_master.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "09_python_quality_security_observability",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability",
+      "responsibility": "Guide testing, documentation, type safety, resilience, security, and observability.",
+      "use_when": "When quality gates, docs, tests, logs, safety, or validation concerns are central.",
+      "do_not_use_when": "Do not use for pure routing or session-start tasks.",
+      "required_for": [
+        "testing",
+        "security",
+        "observability",
+        "documentation"
+      ],
+      "prompt_count": 7,
+      "main_prompts": [
+        "python_documentation_developer_experience.md",
+        "python_observability_logging_metrics_tracing.md",
+        "python_resilience_error_handling.md",
+        "python_security_threat_prevention.md",
+        "python_testing_pytest.md",
+        "python_validation_serialisation_type_safety.md",
+        "tab4_docstring_quality_roadmap.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "10_python_api_data_async_config",
+      "relative_path": "ACTIVE_PROMPTS/10_python_api_data_async_config",
+      "responsibility": "Guide APIs, async/concurrency, configuration, databases, and data/storage design.",
+      "use_when": "When API/data/config/async/database work is requested.",
+      "do_not_use_when": "Do not use for non-data UI-only changes.",
+      "required_for": [
+        "database",
+        "API",
+        "configuration",
+        "async"
+      ],
+      "prompt_count": 4,
+      "main_prompts": [
+        "python_api_design.md",
+        "python_async_parallel_distributed.md",
+        "python_configuration_feature_flags.md",
+        "python_database_design_optimisation.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "11_productization_and_release_readiness",
+      "relative_path": "ACTIVE_PROMPTS/11_productization_and_release_readiness",
+      "responsibility": "Guide release readiness, infrastructure, lifecycle, SRE, deployment, and productization.",
+      "use_when": "When moving from prototype to reliable product/release operations.",
+      "do_not_use_when": "Do not use for early brainstorming unless explicitly requested.",
+      "required_for": [
+        "release",
+        "deployment",
+        "SRE",
+        "productization"
+      ],
+      "prompt_count": 6,
+      "main_prompts": [
+        "kubernetes_deployment_operations.md",
+        "productization_readiness_roadmap.md",
+        "professional_ai_assisted_engineering_framework.md",
+        "professional_infrastructure_roadmap.md",
+        "python_lifecycle_versioning_deprecation.md",
+        "python_site_reliability_engineering.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    },
+    {
+      "group_id": "12_generalized_project_canons",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons",
+      "responsibility": "Store generalized reusable project canons, architecture contracts, and desktop help-document layout rules.",
+      "use_when": "When extracting project-agnostic rules from specific projects or creating reusable desktop help-document layout.",
+      "do_not_use_when": "Do not place project-specific facts here.",
+      "required_for": [
+        "generalization",
+        "reusable canon",
+        "project-agnostic rules",
+        "desktop help layout",
+        "help document layout"
+      ],
+      "prompt_count": 6,
+      "main_prompts": [
+        "data_transform_pipeline_invariants.md",
+        "desktop_help_document_layout_canon.md",
+        "domain_decision_table_template.md",
+        "plugin_package_import_canon.md",
+        "shared_visual_render_engine_canon.md",
+        "transform_resolver_architecture_contract.md"
+      ],
+      "phase_1_folder_card_status": "not_created_by_design"
+    }
+  ],
+  "task_routes": [
+    {
+      "task_intent": "START_DAY",
+      "triggers": [
+        "start day",
+        "continue session",
+        "daily startup"
+      ],
+      "required_groups": [
+        "01_session_start_and_navigation",
+        "02_prompt_routing_and_indexing"
+      ],
+      "optional_groups": [
+        "03_governance_freeze_and_handoff"
+      ],
+      "minimum_viable_context": [
+        "start_of_day_master_stack",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "missing_behavior": "STEP_PAUSE",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "EXPLAIN_OR_BRAINSTORM",
+      "triggers": [
+        "explain",
+        "what does this mean",
+        "brainstorm"
+      ],
+      "required_groups": [],
+      "optional_groups": [],
+      "minimum_viable_context": [
+        "loaded_context"
+      ],
+      "missing_behavior": "DEGRADED_WARNING",
+      "fast_path_allowed": true
+    },
+    {
+      "task_intent": "CREATE_OR_MODIFY_CODE",
+      "triggers": [
+        "create code",
+        "fix bug",
+        "implement",
+        "patch"
+      ],
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation"
+      ],
+      "optional_groups": [
+        "08_python_engineering_core",
+        "09_python_quality_security_observability",
+        "10_python_api_data_async_config"
+      ],
+      "minimum_viable_context": [
+        "box_architecture_canon",
+        "delivery_or_bundle_workflow",
+        "current_source_files"
+      ],
+      "missing_behavior": "HARD_STOP_before_implementation",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "DATABASE_OR_STORAGE_ARCHITECTURE",
+      "triggers": [
+        "databank",
+        "database",
+        "storage",
+        "SQLite",
+        "JSON store"
+      ],
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation",
+        "09_python_quality_security_observability",
+        "10_python_api_data_async_config"
+      ],
+      "optional_groups": [
+        "11_productization_and_release_readiness"
+      ],
+      "minimum_viable_context": [
+        "box_architecture_canon",
+        "python_database_design_optimisation",
+        "validation_serialisation_type_safety",
+        "delivery_or_bundle_workflow"
+      ],
+      "missing_behavior": "HARD_STOP_before_implementation",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "LARGE_MODULE_REFACTOR",
+      "triggers": [
+        "module too big",
+        "file above 500 lines",
+        "split module",
+        "large refactor"
+      ],
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation",
+        "06_refactor_and_architecture_hardening"
+      ],
+      "optional_groups": [
+        "08_python_engineering_core",
+        "09_python_quality_security_observability"
+      ],
+      "minimum_viable_context": [
+        "large_module_refactor_protocol",
+        "box_architecture_canon",
+        "validation_protocol"
+      ],
+      "missing_behavior": "HARD_STOP_before_implementation",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "PROMPT_AUDIT",
+      "triggers": [
+        "audit prompt",
+        "compare prompts",
+        "deprecated",
+        "merge prompts",
+        "split prompt"
+      ],
+      "required_groups": [
+        "02_prompt_routing_and_indexing",
+        "07_prompt_authoring_and_audit"
+      ],
+      "optional_groups": [
+        "12_generalized_project_canons",
+        "03_governance_freeze_and_handoff"
+      ],
+      "minimum_viable_context": [
+        "prompt_navigation_index",
+        "prompt_audit_canon",
+        "actual_prompt_files"
+      ],
+      "missing_behavior": "STEP_PAUSE_until_related_prompts_inspected",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "FREEZE_OR_GOVERNANCE",
+      "triggers": [
+        "ok freeze",
+        "freeze this",
+        "update governance",
+        "canonize"
+      ],
+      "required_groups": [
+        "03_governance_freeze_and_handoff",
+        "05_patch_delivery_and_validation"
+      ],
+      "optional_groups": [
+        "04_box_architecture_and_boundaries"
+      ],
+      "minimum_viable_context": [
+        "validation_output",
+        "freeze_or_governance_prompt",
+        "handoff_or_work_state"
+      ],
+      "missing_behavior": "HARD_STOP_if_validation_output_missing",
+      "fast_path_allowed": false
+    },
+    {
+      "route_id": "routing_signal_scorer_v3_semantic_readiness_route",
+      "task_intent": "Machine learning, embeddings, semantic retrieval, vector indexes/databases, semantic scorer, Metadata Vector Manifest, corpus generator, or routing_signal_scorer v3 readiness work.",
+      "required_groups": [
+        "02_prompt_routing_and_indexing",
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation"
+      ],
+      "required_prompts": [
+        "routing_signal_scorer_v3_semantic_readiness_canon",
+        "kanda_routing_system_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "routing_note": "Semantic-readiness work is Routed Work Path. Planning may proceed partially, but implementation must wait for semantic-readiness canon, KBSC boundary, current routing_signal_scorer shield context, validation plan, and freeze path."
+    }
+  ]
+}

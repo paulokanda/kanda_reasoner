@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="300" viewBox="0 0 620 300" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture Review workflow cafe drawing</title>
+  <desc id="desc">A colorful cafe counter cartoon where an architecture reviewer checks an order ticket before a robot serves a risky patch.</desc>
+  <rect width="620" height="300" fill="#ffffff"/>
+  <path d="M48 254h528" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <rect x="60" y="152" width="500" height="62" rx="8" fill="#fef3c7" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M92 171h84M220 171h84M348 171h84M476 171h48" stroke="#d97706" stroke-width="6" stroke-linecap="round"/>
+  <text x="116" y="203" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="13" font-weight="700" fill="#0f3460" transform="rotate(-1 116 203)">ROOT</text>
+  <text x="262" y="203" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="13" font-weight="700" fill="#0f3460" transform="rotate(1 262 203)">EVIDENCE</text>
+  <text x="392" y="203" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="13" font-weight="700" fill="#0f3460" transform="rotate(-1 392 203)">PATCH</text>
+  <text x="504" y="203" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="13" font-weight="700" fill="#0f3460" transform="rotate(1 504 203)">TEST</text>
+
+  <circle cx="152" cy="94" r="22" fill="#ffe0bd" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M130 83c16-18 34-18 46 2" fill="none" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M122 158v-36c0-20 14-35 32-35s33 15 33 35v36" fill="#2563a8" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M130 158l-22 38M176 158l20 38" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M122 126l-48 26M188 126l42 20" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <rect x="62" y="132" width="72" height="46" rx="5" fill="#ffffff" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M75 146h44M75 160h30" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+
+  <circle cx="424" cy="91" r="21" fill="#dbeafe" stroke="#0d0d1a" stroke-width="4"/>
+  <rect x="395" y="117" width="62" height="62" rx="10" fill="#94a3b8" stroke="#0d0d1a" stroke-width="4"/>
+  <circle cx="415" cy="91" r="4" fill="#0d0d1a"/>
+  <circle cx="433" cy="91" r="4" fill="#0d0d1a"/>
+  <path d="M412 104c8 6 18 6 27 0" fill="none" stroke="#0d0d1a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M394 138l-48 14M458 138l52-17" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <rect x="485" y="86" width="78" height="54" rx="6" fill="#fff7ed" stroke="#0d0d1a" stroke-width="4"/>
+  <text x="524" y="108" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="13" font-weight="800" fill="#ea580c" transform="rotate(-2 524 108)">SERVE?</text>
+  <text x="524" y="126" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" fill="#0d0d1a" transform="rotate(1 524 126)">wait for test</text>
+
+  <path d="M238 96h98v70h-98z" fill="#ffffff" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M252 116h70M252 134h46M252 152h60" stroke="#2563a8" stroke-width="6" stroke-linecap="round"/>
+  <text x="287" y="88" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="14" font-weight="700" fill="#d97706" transform="rotate(-1 287 88)">ORDER TICKET</text>
+  <path d="M331 96l18-18 20 20" fill="none" stroke="#ea580c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="310" y="276" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="17" font-weight="700" fill="#0f3460">The workflow checks the order before serving the patch.</text>
+</svg>

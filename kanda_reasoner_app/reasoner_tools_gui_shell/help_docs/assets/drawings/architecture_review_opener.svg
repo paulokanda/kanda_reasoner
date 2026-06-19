@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture Review daily-life ownership drawing</title>
+  <desc id="desc">A colorful moving-day cartoon where boxes are almost placed in the wrong rooms while an architecture reviewer stops the mix-up.</desc>
+  <rect width="560" height="360" fill="#ffffff"/>
+
+  <path d="M42 302h476" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <rect x="52" y="65" width="146" height="190" rx="8" fill="#dbeafe" stroke="#0d0d1a" stroke-width="4"/>
+  <rect x="214" y="65" width="146" height="190" rx="8" fill="#fef3c7" stroke="#0d0d1a" stroke-width="4"/>
+  <rect x="376" y="65" width="132" height="190" rx="8" fill="#ecfdf5" stroke="#0d0d1a" stroke-width="4"/>
+  <text x="125" y="92" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="18" font-weight="700" fill="#0f3460">GUI</text>
+  <text x="287" y="92" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="18" font-weight="700" fill="#d97706">ROUTER</text>
+  <text x="442" y="92" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="18" font-weight="700" fill="#166534">TESTS</text>
+
+  <path d="M78 124h92M78 142h52M78 164h82" stroke="#2563a8" stroke-width="5" stroke-linecap="round"/>
+  <path d="M238 124h92M238 142h48M238 164h76" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+  <path d="M401 124h82M401 142h48M401 164h68" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+
+  <path d="M216 258c28-23 69-21 103 0" fill="none" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 7"/>
+  <path d="M318 245l24 14-24 15" fill="none" stroke="#ea580c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="284" y="238" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="12" font-weight="700" fill="#ea580c" transform="rotate(-2 284 238)">WRONG ROOM</text>
+
+  <rect x="216" y="202" width="94" height="62" rx="5" fill="#f59e0b" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M216 223h94" stroke="#0d0d1a" stroke-width="3"/>
+  <text x="263" y="243" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="16" font-weight="700" fill="#0d0d1a" transform="rotate(1 263 243)">GUI</text>
+  <text x="263" y="259" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="10" fill="#0d0d1a" transform="rotate(-1 263 259)">button code</text>
+
+  <circle cx="185" cy="193" r="19" fill="#ffe0bd" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M166 181c11-18 32-18 43 0" fill="none" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M170 251v-40c0-17 11-30 26-30s27 13 27 30v40" fill="#2563a8" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M173 252l-17 41M217 252l20 41" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M170 218l-38 24M220 218l28-18" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M132 242c7 7 15 9 24 5" fill="none" stroke="#0d0d1a" stroke-width="3"/>
+
+  <circle cx="348" cy="188" r="20" fill="#ffe0bd" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M329 178c13-17 36-15 48 2" fill="none" stroke="#0d0d1a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M326 250v-37c0-18 13-31 29-31s29 13 29 31v37" fill="#fef3c7" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M331 251l-19 41M380 251l21 41" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M329 215l-28 27M382 215l42 18" stroke="#0d0d1a" stroke-width="6" stroke-linecap="round"/>
+  <rect x="398" y="211" width="64" height="42" rx="5" fill="#ffffff" stroke="#0d0d1a" stroke-width="4"/>
+  <path d="M410 224h40M410 238h26" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+  <text x="430" y="202" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="12" font-weight="700" fill="#0f3460" transform="rotate(2 430 202)">CHECKLIST</text>
+
+  <rect x="292" y="149" width="76" height="36" rx="5" fill="#fff7ed" stroke="#0d0d1a" stroke-width="4"/>
+  <text x="330" y="173" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="18" font-weight="800" fill="#ea580c" transform="rotate(-2 330 173)">STOP</text>
+
+  <path d="M78 274c24-8 55-8 86 0M234 276c32-10 65-9 97 0M400 276c22-8 50-8 77 0" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M96 112l62 0M258 112l58 0M414 112l52 0" stroke="#0d0d1a" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5"/>
+  <text x="280" y="334" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, Comic Sans, cursive" font-size="17" font-weight="700" fill="#0f3460">Architecture Review catches the moving box before it enters the wrong room.</text>
+</svg>

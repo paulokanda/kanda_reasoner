@@ -1,0 +1,35 @@
+{
+  "prompt_id": "cooperative_implementation_methodology",
+  "display_name": "Cooperative Implementation Methodology",
+  "filename": "cooperative_implementation_methodology.md",
+  "category": "03_governance_freeze_and_handoff",
+  "status": "active_candidate",
+  "load_type": "on_request",
+  "source_stage": "human_ai_methodology_extracted_v1",
+  "description": "Defines KANDA's cooperative human-AI implementation method for consequential work without duplicating Box Architecture, freeze memory, patch delivery, or prompt-authoring canons.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v1",
+  "priority": 25,
+  "trigger_phrases": [
+    "implementation methodology",
+    "AI assisted programming workflow",
+    "cooperative implementation",
+    "proposal before code",
+    "when should we use handoff",
+    "when should we do web research",
+    "book research before implementation",
+    "methodology improvement",
+    "human confirmation before implementation",
+    "partnership health check"
+  ],
+  "required_companion_prompts": [
+    "current_workflow_handoff_template",
+    "active_governance_freeze_update"
+  ],
+  "recommended_companion_prompts": [
+    "box_architecture_canon",
+    "implementation_and_delivery_protocol",
+    "evidence_freshness_gate",
+    "bundle_gated_development_workflow"
+  ]
+}

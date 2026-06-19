@@ -1,0 +1,25 @@
+{
+  "prompt_id": "folder_assimilation_07_prompt_authoring_and_audit",
+  "display_name": "Folder Assimilation - Prompt Authoring and Audit",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "07_prompt_authoring_and_audit",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Audit, generalize, reconcile, split, deprecate, or improve prompt files without contaminating unrelated prompts.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "audit this prompt",
+    "compare prompts",
+    "generalize",
+    "deprecated prompt",
+    "to be inserted"
+  ],
+  "card_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit/_FOLDER_ASSIMILATION.md"
+}

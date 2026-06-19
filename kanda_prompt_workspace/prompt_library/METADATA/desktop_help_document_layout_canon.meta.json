@@ -1,0 +1,27 @@
+{
+  "prompt_id": "desktop_help_document_layout_canon",
+  "display_name": "Desktop Help Document Layout Canon",
+  "filename": "desktop_help_document_layout_canon.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "reconciled_from_project_reference_notes",
+  "description": "Defines local desktop help document layout, offline HTML/CSS rendering, dual-audience help explanations, and characterful help artwork rules.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v4",
+  "priority": 40,
+  "trigger_phrases": [
+    "desktop help layout",
+    "help document layout",
+    "book-style help",
+    "help file artwork",
+    "daily-life cartoon help",
+    "QWebEngineView help",
+    "offline help HTML"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "project_specific_prompt_generalization",
+    "shared_visual_render_engine_canon"
+  ]
+}

@@ -1,0 +1,67 @@
+﻿{
+  "schema_version": "1.0",
+  "kind": "kanda_saved_freeze_hint",
+  "saved_at_utc": "2026-06-16T14:55:00Z",
+  "used_at_utc": null,
+  "project_root": "E:\kanda_reasoner",
+  "source": {
+    "source_kind": "formulary_data_zip",
+    "source_name": "freeze_hint_prefer_newest_staged_v1_formulary_data.zip",
+    "source_created_utc": "2026-06-16T14:55:00Z"
+  },
+  "hint": {
+    "schema_version": "1.0",
+    "kind": "kanda_freeze_hint",
+    "feature_id": "freeze-hint-prefer-newest-staged-v1",
+    "feature_title": "Freeze Hint Prefer Newest Staged v1",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "box_type": "Intake / Selection Contract",
+    "validated_files": [
+      "kanda_reasoner_app/freeze_hint_intake/contract.py",
+      "tests/test_freeze_hint_validated_latest_preserve.py"
+    ],
+    "generated_files": [
+      "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_prefer_newest_staged_v1.txt"
+    ],
+    "protected_paths": [
+      "kanda_reasoner_app/freeze_hint_intake/",
+      "project_freeze_after_update/freeze_hint_intake/",
+      "project_freeze_after_update/frozen_features_memory/"
+    ],
+    "do_not_regress_rules": [
+      "New Local Freeze Entry must prefer the newest unused staged KANDA_FREEZE_HINT sidecar for current work.",
+      "A validated latest hint may only be preserved when the scanned sidecar is the same source or same feature.",
+      "Already-frozen or already-used hints must not refill the New Local Freeze Entry form.",
+      "Freeze hint intake must not preserve an older validated latest hint forever when a newer current staged hint exists.",
+      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+      "Do not store project-specific frozen memory inside project_freeze_ledger.",
+      "Preview Freeze Entry must remain read-only and must not write files.",
+      "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+      "After a local freeze write, the AI startup freeze context must be refreshed.",
+      "External AI review remains advanced/fallback, not the normal local freeze path."
+    ],
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_prefer_newest_staged_v1\nCONTRACT_TEST_OK: freeze_hint_intake prefers newest unused staged hint instead of preserving older validated latest forever\nSTATUS: FREEZE_HINT_PREFER_NEWEST_STAGED_ACTIVE",
+    "known_warnings": "Data-only formulary freeze-info ZIP. It saves the current validated freeze hint under project_freeze_after_update/freeze_hint_intake so the Freeze Feature After Update tab can fill New Local Freeze Entry locally. It does not modify source code and does not freeze the feature by itself.",
+    "planned_next_step": "Open Freeze Feature After Update > New Local Freeze Entry, confirm the title is Freeze Hint Prefer Newest Staged v1, review the fields, then Preview and Confirm and Write if the human approves.",
+    "notes": "This freeze hint records the validated selection-order repair where freeze_hint_intake prefers the newest unused staged hint instead of preserving an older validated latest hint forever. It is intended for the local formulary flow, not for manual JSON paste.",
+    "source": {
+      "source_kind": "formulary_data_zip",
+      "source_name": "freeze_hint_prefer_newest_staged_v1_formulary_data.zip",
+      "source_created_utc": "2026-06-16T14:55:00Z"
+    }
+  },
+  "form_inputs": {
+    "feature_title": "Freeze Hint Prefer Newest Staged v1",
+    "primary_box": "kanda_reasoner_app/freeze_hint_intake",
+    "box_type": "Intake / Selection Contract",
+    "validated_files": "kanda_reasoner_app/freeze_hint_intake/contract.py\ntests/test_freeze_hint_validated_latest_preserve.py",
+    "generated_files": "workbench/bundle_manifest/BUNDLE_MANIFEST_freeze_hint_prefer_newest_staged_v1.txt",
+    "protected_paths": "kanda_reasoner_app/freeze_hint_intake/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "do_not_regress_rules": "New Local Freeze Entry must prefer the newest unused staged KANDA_FREEZE_HINT sidecar for current work.\nA validated latest hint may only be preserved when the scanned sidecar is the same source or same feature.\nAlready-frozen or already-used hints must not refill the New Local Freeze Entry form.\nFreeze hint intake must not preserve an older validated latest hint forever when a newer current staged hint exists.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "validation_evidence_summary": "VALIDATION OK: freeze_hint_prefer_newest_staged_v1\nCONTRACT_TEST_OK: freeze_hint_intake prefers newest unused staged hint instead of preserving older validated latest forever\nSTATUS: FREEZE_HINT_PREFER_NEWEST_STAGED_ACTIVE",
+    "known_warnings": "Data-only formulary freeze-info ZIP. It saves the current validated freeze hint under project_freeze_after_update/freeze_hint_intake so the Freeze Feature After Update tab can fill New Local Freeze Entry locally. It does not modify source code and does not freeze the feature by itself.",
+    "planned_next_step": "Open Freeze Feature After Update > New Local Freeze Entry, confirm the title is Freeze Hint Prefer Newest Staged v1, review the fields, then Preview and Confirm and Write if the human approves.",
+    "notes": "This freeze hint records the validated selection-order repair where freeze_hint_intake prefers the newest unused staged hint instead of preserving an older validated latest hint forever. It is intended for the local formulary flow, not for manual JSON paste."
+  },
+  "validation_evidence_merged_at_utc": "2026-06-16T14:55:00Z"
+}

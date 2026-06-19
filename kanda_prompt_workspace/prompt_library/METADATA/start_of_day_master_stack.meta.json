@@ -1,0 +1,22 @@
+{
+  "prompt_id": "start_of_day_master_stack",
+  "display_name": "Start-of-Day Master Stack",
+  "filename": "start_of_day_master_stack.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active_candidate",
+  "load_type": "tier_0_session_kernel",
+  "source_stage": "kanda_context_routing_layer_phase1",
+  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library.",
+  "priority": 5,
+  "required_companion_prompts": [
+    "session_start_upload_checklist",
+    "ai_prompt_request_canon",
+    "prompt_navigation_index"
+  ],
+  "trigger_phrases": [
+    "start day",
+    "start of day",
+    "continue KANDA context routing",
+    "daily kernel"
+  ]
+}

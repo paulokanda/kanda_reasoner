@@ -1,0 +1,25 @@
+{
+  "prompt_id": "folder_assimilation_03_governance_freeze_and_handoff",
+  "display_name": "Folder Assimilation - Governance, Freeze, and Handoff",
+  "filename": "_FOLDER_ASSIMILATION.md",
+  "category": "03_governance_freeze_and_handoff",
+  "status": "audited_candidate",
+  "load_type": "selected_when_needed",
+  "artifact_type": "folder_assimilation_card",
+  "source_stage": "context_routing_layer_phase2",
+  "description": "Control validated freeze decisions, governance updates, end-of-chat state transfer, and handoff creation.",
+  "routing_metadata_only": true,
+  "priority": 20,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "trigger_phrases": [
+    "freeze",
+    "handoff",
+    "end of chat",
+    "update governance",
+    "validated output"
+  ],
+  "card_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md"
+}

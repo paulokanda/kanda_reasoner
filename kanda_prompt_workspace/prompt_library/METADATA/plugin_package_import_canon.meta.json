@@ -1,0 +1,25 @@
+{
+  "prompt_id": "plugin_package_import_canon",
+  "display_name": "Plugin Package Import Canon",
+  "filename": "plugin_package_import_canon.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Defines safe import and validation rules for plugin packages.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 40,
+  "trigger_phrases": [
+    "plugin package",
+    "import plugin",
+    "plugin manifest",
+    "package import",
+    "extension package"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "project_specific_prompt_generalization"
+  ]
+}

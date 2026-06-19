@@ -1,0 +1,50 @@
+{
+  "form_inputs": {
+    "box_type": "Corpus-Only Similarity Planning / Prompt-Call Accuracy Support",
+    "do_not_regress_rules": "This milestone is corpus-only and must not implement runtime similarity.\nDo not add TF-IDF, embeddings, vector stores, sklearn, numpy, torch, faiss, sentence-transformers, or self-learning behavior in this milestone.\nDo not modify deterministic router behavior.\nDo not modify scorer runtime behavior.\nDo not let similarity output decide May proceed now.\nDo not let similarity output override the router canon.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nPreserve v1 diagnostic, manual-pilot, advisory, and v2 similarity design behavior.\nFast Path simple explanation protection remains mandatory.\nSimilarity false-positive traps must not classify conceptual patch explanations as installable patch delivery.\nHigh-risk patch, terminal, freeze JSON, freeze sidecar, freeze memory, and external-project-root scenarios must continue to recommend pre_output_contract_gates through the existing advisory/diagnostic chain.\nThe canon decides final route, required prompts, missing context, and whether work may proceed.\nProject-specific freeze-intake state must remain under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific freeze-intake state or frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Routing Signal Scorer v2 Similarity Test Corpus",
+    "generated_files": "",
+    "known_warnings": "This patch intentionally does not implement runtime similarity. It adds a fixed JSON corpus and tests only. Runtime-lite should only be considered after this corpus is installed, validated, and frozen.",
+    "notes": "This patch creates the curated fixed test corpus required before any runtime similarity work. Source patch ZIP: routing_signal_scorer_v2_similarity_test_corpus_patch.zip.",
+    "planned_next_step": "After freezing this corpus, consider routing_signal_scorer_v2_similarity_runtime_lite as advisory-only and conservative, with no router override.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer/design + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_test_corpus.json\ntests/test_routing_signal_scorer_v2_similarity_test_corpus.py\nkanda_reasoner_app/routing_signal_scorer/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_test_corpus.json\ntests/test_routing_signal_scorer_v2_similarity_test_corpus.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_test_corpus\nCONTRACT_TEST_OK: corpus-only similarity scenarios, expected labels, Fast Path false-positive trap, RG anchors, no-runtime-similarity boundary, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_TEST_CORPUS_VALIDATION_OK\n\nVALIDATION OK\nrouting_signal_scorer_v2_similarity_test_corpus is installed and validated."
+  },
+  "hint": {
+    "box_type": "Corpus-Only Similarity Planning / Prompt-Call Accuracy Support",
+    "do_not_regress_rules": "This milestone is corpus-only and must not implement runtime similarity.\nDo not add TF-IDF, embeddings, vector stores, sklearn, numpy, torch, faiss, sentence-transformers, or self-learning behavior in this milestone.\nDo not modify deterministic router behavior.\nDo not modify scorer runtime behavior.\nDo not let similarity output decide May proceed now.\nDo not let similarity output override the router canon.\nDo not auto-load prompts from similarity output.\nDo not output final required prompts/groups from similarity output.\nPreserve v1 diagnostic, manual-pilot, advisory, and v2 similarity design behavior.\nFast Path simple explanation protection remains mandatory.\nSimilarity false-positive traps must not classify conceptual patch explanations as installable patch delivery.\nHigh-risk patch, terminal, freeze JSON, freeze sidecar, freeze memory, and external-project-root scenarios must continue to recommend pre_output_contract_gates through the existing advisory/diagnostic chain.\nThe canon decides final route, required prompts, missing context, and whether work may proceed.\nProject-specific freeze-intake state must remain under project_freeze_after_update/freeze_hint_intake.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific freeze-intake state or frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.",
+    "feature_id": "routing-signal-scorer-v2-similarity-test-corpus",
+    "feature_title": "Routing Signal Scorer v2 Similarity Test Corpus",
+    "generated_files": "",
+    "kind": "kanda_freeze_hint",
+    "known_warnings": "This patch intentionally does not implement runtime similarity. It adds a fixed JSON corpus and tests only. Runtime-lite should only be considered after this corpus is installed, validated, and frozen.",
+    "notes": "This patch creates the curated fixed test corpus required before any runtime similarity work. Source patch ZIP: routing_signal_scorer_v2_similarity_test_corpus_patch.zip.",
+    "patch_name": "routing_signal_scorer_v2_similarity_test_corpus_patch",
+    "planned_next_step": "After freezing this corpus, consider routing_signal_scorer_v2_similarity_runtime_lite as advisory-only and conservative, with no router override.",
+    "primary_box": "kanda_reasoner_app/routing_signal_scorer/design + tests",
+    "protected_paths": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_test_corpus.json\ntests/test_routing_signal_scorer_v2_similarity_test_corpus.py\nkanda_reasoner_app/routing_signal_scorer/\nproject_freeze_after_update/freeze_hint_intake/\nproject_freeze_after_update/frozen_features_memory/",
+    "schema_version": "1.0",
+    "source": {
+      "source_mtime_ns": 1781652707131854300,
+      "source_name": "routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+      "source_size_bytes": 6637
+    },
+    "validated_files": "kanda_reasoner_app/routing_signal_scorer/design/routing_signal_scorer_v2_similarity_test_corpus.json\ntests/test_routing_signal_scorer_v2_similarity_test_corpus.py",
+    "validation_evidence_summary": "VALIDATION OK: routing_signal_scorer_v2_similarity_test_corpus\nCONTRACT_TEST_OK: corpus-only similarity scenarios, expected labels, Fast Path false-positive trap, RG anchors, no-runtime-similarity boundary, and no-router-override guarantees validated\nSANDBOX_ROUTING_SIGNAL_SCORER_V2_SIMILARITY_TEST_CORPUS_VALIDATION_OK\n\nVALIDATION OK\nrouting_signal_scorer_v2_similarity_test_corpus is installed and validated."
+  },
+  "kind": "kanda_saved_freeze_hint",
+  "project_root": "E:\\kanda_reasoner",
+  "saved_at_utc": "2026-06-16T23:37:59Z",
+  "schema_version": "1.0",
+  "source": {
+    "source_mtime_ns": 1781652707131854300,
+    "source_name": "routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v2_similarity_test_corpus_patch.zip",
+    "source_size_bytes": 6637
+  },
+  "used_at_utc": null,
+  "validation_evidence_merged_at_utc": "2026-06-16T23:37:59Z"
+}

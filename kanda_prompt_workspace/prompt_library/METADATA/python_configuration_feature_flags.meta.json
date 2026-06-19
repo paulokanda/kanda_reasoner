@@ -1,0 +1,27 @@
+{
+  "prompt_id": "python_configuration_feature_flags",
+  "display_name": "Python Configuration and Feature Flags",
+  "filename": "python_configuration_feature_flags.md",
+  "category": "10_python_api_data_async_config",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Designs configuration, settings, and feature-flag behavior.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 50,
+  "trigger_phrases": [
+    "configuration",
+    "feature flags",
+    "settings",
+    "environment variables",
+    "config management"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "python_testing_pytest",
+    "python_validation_serialisation_type_safety",
+    "implementation_and_delivery_protocol"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "prompt_id": "universal_delivery_protocol",
+  "display_name": "Universal Delivery Protocol",
+  "filename": "universal_delivery_protocol.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "description": "Defines consistent delivery style for code, prompts, reports, and install instructions.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 15,
+  "trigger_phrases": [
+    "deliver zip",
+    "send implementation",
+    "package output",
+    "final delivery",
+    "artifact delivery"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "evidence_freshness_gate",
+    "bundle_gated_development_workflow"
+  ]
+}
