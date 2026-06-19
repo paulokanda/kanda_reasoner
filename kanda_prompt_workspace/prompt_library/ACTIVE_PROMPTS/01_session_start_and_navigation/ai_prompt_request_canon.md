@@ -202,6 +202,38 @@ May proceed now: NO for implementation until the exact routing assets, prompt-re
 Do not auto-load the full routing canon at startup. It is on-request and should be discoverable through startup routing indexes.
 
 
+
+### RG-PILOT-000 Pilot/Copilot Phase 0 exact context package
+
+When the user asks to start Pilot, start Copilot, continue after M35, create P0, implement Pilot/Copilot Phase 0, canonize Pilot/Copilot router logic, add Pilot projection/simulation, add Pilot disagreement taxonomy, add a Pilot implementation gate, add Pilot router reproduction, use Pilot output as training data, run Pilot in batch mode, persist Pilot output, or introduce Limited Shadow Runtime, treat the task as governed post-M35 Pilot/Copilot scope work.
+
+Required prompts/groups and context for this task type:
+
+```text
+1. routing_signal_scorer_v3_pilot_copilot_phase0_router_canon - required because post-M35 Pilot/Copilot work must preserve P0-only next-step logic and no-runtime/no-prompt-loading boundaries.
+2. kanda_routing_system_canon - required because Pilot/Copilot output must not become routing authority.
+3. kanda_box_shielding_canon - required because Pilot/Copilot changes maturity, authority, evidence, and bounded-context risks.
+4. 02_prompt_routing_and_indexing - required because routing indexes and prompt-call behavior decide when this canon is requested.
+5. active project freeze context and M35 closure evidence - required because Pilot/Copilot scope depends on the closed M35 bridge state.
+6. Current project files and current routing_signal_scorer context - required IF a design or implementation patch is requested.
+7. 05_patch_delivery_and_validation - required IF a patch ZIP, install block, validation block, or freeze-ready delivery is requested.
+8. 09_python_quality_security_observability - required IF validation, safety gates, test matrix, threat model, or no-authority leakage behavior is changed.
+```
+
+Canonical RG-PILOT-000 rule:
+
+```text
+Pilot/Copilot Phase 0 begins only as a design-only, non-authoritative, opt-in, ephemeral, zero-critical-error scope charter that preserves M35 bridge closure, forbids runtime authority and prompt loading, requires Pilot to reproduce frozen router/canon outcomes before disagreement evidence is trusted, and defers Copilot and any runtime shadow mode to separately governed future scopes.
+```
+
+Forbidden next-step shortcuts:
+
+```text
+Do not implement Pilot before P0-P6 gates allow it. Do not implement Copilot. Do not add prompt loading, runtime integration, persistence, training-data use, batch mode, candidate promotion, route execution, route override, or Limited Shadow Runtime in P0-P12.
+```
+
+May proceed now: PARTIAL for read-only planning, audit, and router-canon review. NO for implementation until the RG-PILOT-000 canon, KBSC boundary, routing-system canon, current project context, M35 closure evidence, patch boundary, validation plan, and freeze path are clear. If P0 is not yet validated and frozen, the next implementation milestone is P0 only.
+
 ### Routing Signal Scorer v3 semantic-readiness exact context package
 
 When the user asks to design, canonize, audit, or implement work involving machine learning, embeddings, semantic retrieval, vector indexes, vector databases, semantic scorer behavior, `routing_signal_scorer` v3, Metadata Vector Manifest, semantic corpus generation, retrieval evaluation, or ML/retrieval library adoption, treat the task as governed semantic-readiness work.

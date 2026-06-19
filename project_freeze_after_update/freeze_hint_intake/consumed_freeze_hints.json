@@ -1319,9 +1319,129 @@
         "source_size_bytes": 45050
       },
       "used_freeze_id": "freeze-20260618-routing-signal-scorer-v3-post-adviser-to-pilot-copilot-handoff-closure-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T00:22:28Z",
+      "feature_id": "rg-pilot-000-pilot-copilot-phase0-router-canon-v1",
+      "feature_title": "RG-PILOT-000 Pilot/Copilot Phase 0 Router Canon v1",
+      "source": {
+        "source_mtime_ns": 1781828451745517400,
+        "source_name": "rg_pilot_000_pilot_copilot_phase0_router_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rg_pilot_000_pilot_copilot_phase0_router_canon_v1_patch.zip",
+        "source_size_bytes": 93541
+      },
+      "used_freeze_id": "freeze-20260619-rg-pilot-000-pilot-copilot-phase-0-router-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T00:53:01Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-copilot-scope-charter-entry-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot/Copilot Scope Charter and Entry Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781830249358025400,
+        "source_name": "routing_signal_scorer_v3_pilot_copilot_scope_charter_entry_gate_design_v1_patch_freeze_hint_repaired.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_copilot_scope_charter_entry_gate_design_v1_patch_freeze_hint_repaired.zip",
+        "source_size_bytes": 47429
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-copilot-scope-charter-and-entry-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T01:10:20Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-boundary-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Boundary Design v1",
+      "source": {
+        "source_mtime_ns": 1781831329908993200,
+        "source_name": "routing_signal_scorer_v3_pilot_boundary_design_v1_patch_p0_normalization_repair.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_boundary_design_v1_patch_p0_normalization_repair.zip",
+        "source_size_bytes": 57341
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-boundary-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T01:19:03Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-io-contract-validator-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Input Output Contract and Validator Design v1",
+      "source": {
+        "source_mtime_ns": 1781831885839776500,
+        "source_name": "routing_signal_scorer_v3_pilot_io_contract_validator_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_io_contract_validator_design_v1_patch.zip",
+        "source_size_bytes": 51746
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-input-output-contract-and-validator-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T01:30:04Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-disagreement-taxonomy-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Disagreement Taxonomy Design v1",
+      "source": {
+        "source_mtime_ns": 1781832496919462100,
+        "source_name": "routing_signal_scorer_v3_pilot_disagreement_taxonomy_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_disagreement_taxonomy_design_v1_patch.zip",
+        "source_size_bytes": 49245
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-disagreement-taxonomy-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T01:52:09Z",
+      "feature_id": "kanda-patch-delivery-root-drive-staging-canon-v1",
+      "feature_title": "KANDA Patch Delivery Root-Drive ZIP Staging Canon v1",
+      "source": {
+        "source_mtime_ns": 1781833697554541600,
+        "source_name": "kanda_patch_delivery_root_drive_staging_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_patch_delivery_root_drive_staging_canon_v1_patch.zip",
+        "source_size_bytes": 126696
+      },
+      "used_freeze_id": "freeze-20260619-kanda-patch-delivery-root-drive-zip-staging-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T02:01:26Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-gold-frozen-router-reproduction-harness-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Gold Frozen Router Reproduction Harness Design v1",
+      "source": {
+        "source_mtime_ns": 1781834437725019000,
+        "source_name": "routing_signal_scorer_v3_pilot_gold_frozen_router_reproduction_harness_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_gold_frozen_router_reproduction_harness_design_v1_patch.zip",
+        "source_size_bytes": 49912
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-gold-frozen-router-reproduction-harness-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T02:10:35Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-simulation-skeleton-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Simulation Skeleton Design v1",
+      "source": {
+        "source_mtime_ns": 1781834991936389300,
+        "source_name": "routing_signal_scorer_v3_pilot_simulation_skeleton_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_simulation_skeleton_design_v1_patch.zip",
+        "source_size_bytes": 50654
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-simulation-skeleton-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T02:19:00Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-review-evidence-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Review Evidence Design v1",
+      "source": {
+        "source_mtime_ns": 1781835496957238000,
+        "source_name": "routing_signal_scorer_v3_pilot_review_evidence_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_review_evidence_design_v1_patch.zip",
+        "source_size_bytes": 51687
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-review-evidence-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T02:25:02Z",
+      "feature_id": "routing-signal-scorer-v3-pilot-implementation-gate-design-v1",
+      "feature_title": "Routing Signal Scorer v3 Pilot Implementation Gate Design v1",
+      "source": {
+        "source_mtime_ns": 1781835847778585600,
+        "source_name": "routing_signal_scorer_v3_pilot_implementation_gate_design_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_pilot_implementation_gate_design_v1_patch.zip",
+        "source_size_bytes": 52832
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-implementation-gate-design-v1"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-18T22:30:59Z"
+  "updated_at_utc": "2026-06-19T02:25:02Z"
 }

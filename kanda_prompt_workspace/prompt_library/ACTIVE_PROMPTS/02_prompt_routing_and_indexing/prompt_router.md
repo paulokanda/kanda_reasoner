@@ -216,6 +216,46 @@ Group to open in Tab 9:
 teach_ai_prompt_authoring
 ```
 
+
+### Pilot/Copilot Phase 0 router canon after M35
+
+Trigger:
+
+```text
+start Pilot
+start Copilot
+continue after M35
+Pilot/Copilot Phase 0
+create P0
+Pilot scope charter
+Pilot projection
+Pilot simulation
+Pilot disagreement taxonomy
+Pilot implementation gate
+Pilot router reproduction
+Limited Shadow Runtime after M35
+```
+
+Load or recommend:
+
+```text
+routing_signal_scorer_v3_pilot_copilot_phase0_router_canon
+kanda_routing_system_canon
+kanda_box_shielding_canon
+prompt_navigation_index
+GROUP_ASSIMILATION_INDEX
+```
+
+Group to open in Tab 9:
+
+```text
+02_prompt_routing_and_indexing
+```
+
+Rule:
+
+If P0 is not yet validated and frozen, the only safe implementation milestone is P0. Do not implement Pilot, Copilot, prompt loading, persistence, runtime integration, training-data use, batch mode, or Limited Shadow Runtime.
+
 ### Governance or canon update
 
 Trigger:

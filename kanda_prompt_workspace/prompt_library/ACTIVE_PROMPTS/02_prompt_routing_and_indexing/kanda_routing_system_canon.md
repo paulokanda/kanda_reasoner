@@ -993,21 +993,55 @@ Important rules:
 
 Patch delivery has a strict validated rule.
 
-The user downloads patch ZIP to drive root:
+For every KANDA/PyArchitect project, the user downloads the patch ZIP to the root of the same drive as the active project:
 
 ```text
-E:/PATCH_NAME.zip
+<drive>:/PATCH_NAME.zip
 ```
 
-Installer must move it to:
+Installer code must first detect the project drive dynamically from `$PROJECT_ROOT`, for example:
 
 ```text
-E:/kanda_reasoner_delete_after_daily_work/PATCH_NAME.zip
+PROJECT_ROOT = E:/kanda_reasoner
+DRIVE_ROOT = E:/
 ```
 
-Then install from there.
+Then the installer must stage the ZIP into:
 
-The installer must not expect the ZIP to already be inside delete_after_daily_work.
+```text
+<drive>:/<project_name>_delete_after_daily_work/PATCH_NAME.zip
+```
+
+After successful staging, the installer must delete the temporary root-drive ZIP copy.
+
+Then install only from the staged ZIP under delete_after_daily_work.
+
+Canonical variable names in install code:
+
+```text
+$PROJECT_ROOT
+$DRIVE_ROOT
+$ROOT_PATCH_ZIP
+$WORK_PATCH_ZIP
+```
+
+The exact failure text must remain:
+
+```text
+zip is not in root of drive:\ where project is
+```
+
+Install code must delete the root-drive ZIP copy after successful staging.
+
+This behavior is mandatory and replaces the old generic installer search template.
+
+Forbidden behavior:
+
+* Do not search Downloads/Desktop before the project drive root.
+* Do not use a generic candidate list that can prefer user profile folders over `<drive>:/PATCH_NAME.zip`.
+* Do not leave `<drive>:/PATCH_NAME.zip` behind after successful staging.
+* Do not expect the ZIP to already be inside delete_after_daily_work.
+* Do not extract or install from the project root or drive root.
 
 The installer must not leave temporary scripts/readmes in project root.
 
@@ -1015,7 +1049,7 @@ Validation helper files must be created under delete_after_daily_work.
 
 Before any patch is delivered to the user, the AI must test the ZIP, install assumptions, and validation logic in its own sandbox and report the result honestly.
 
-This rule was added after an installer mistake caused a patch ZIP lookup failure.
+This rule was strengthened after the AI reused a generic Downloads/Desktop-first installer search template during governed KANDA patch delivery.
 
 ---
 

@@ -217,7 +217,7 @@ $BACKUP_DIR = Join-Path $WORK_DIR ("backup_" + $PATCH_NAME + "_" + (Get-Date -Fo
 Do not hardcode `E:\` or any other fixed drive.
 Derive the drive from `$PROJECT_ROOT` using `$DRIVE_ROOT`.
 
-6.2 Move the ZIP from drive root into staging
+6.2 Move or copy-stage the ZIP from drive root into staging, then delete the root copy
 
 The install script must contain this behavior before extraction:
 
@@ -227,7 +227,10 @@ if (-not (Test-Path $WORK_DIR)) {
 }
 
 if (Test-Path $ROOT_PATCH_ZIP) {
-    Move-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
+    Copy-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
+    if (Test-Path $WORK_PATCH_ZIP) {
+        Remove-Item -Path $ROOT_PATCH_ZIP -Force
+    }
 }
 
 if (-not (Test-Path $WORK_PATCH_ZIP)) {
@@ -238,6 +241,13 @@ if (-not (Test-Path $WORK_PATCH_ZIP)) {
 The final install block must include the phrase and behavior `move the ZIP`.
 Do not require the user to manually put the ZIP in the staging folder.
 Install only from `$WORK_PATCH_ZIP`.
+
+Forbidden for KANDA/PyArchitect patch installers:
+
+- Do not search `Downloads` or `Desktop` before checking `$ROOT_PATCH_ZIP`.
+- Do not use a generic fallback candidate list that can prefer user profile folders over the project drive root.
+- Do not leave `$ROOT_PATCH_ZIP` behind after staging succeeds.
+- Do not extract or install from any location except `$WORK_PATCH_ZIP` under `$WORK_DIR`.
 
 6.3 Extract ZIP to `$EXTRACT_DIR` under the delete-after-daily-work folder
 

@@ -153,7 +153,7 @@ Fast Path is not allowed for:
 | Group | Prompt count | Routing role |
 |---|---:|---|
 | 01_session_start_and_navigation | 9 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
-| 02_prompt_routing_and_indexing | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
+| 02_prompt_routing_and_indexing | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 03_governance_freeze_and_handoff | 9 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 04_box_architecture_and_boundaries | 5 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 05_patch_delivery_and_validation | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
@@ -202,6 +202,34 @@ For implementation or canonization of shielding behavior, required context norma
 
 May proceed now is NO for implementation until the relevant owning-box context and validation path are available. It may be PARTIAL for architecture-only discussion or draft planning.
 
+
+
+## RG-PILOT-000 Pilot/Copilot Phase 0 routing hook
+
+Request `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md` from `02_prompt_routing_and_indexing` when the user asks to start Pilot, start Copilot, continue after M35, implement Pilot/Copilot Phase 0, create P0, canonize Pilot/Copilot router logic, add Pilot projection/simulation, add Pilot disagreement taxonomy, add Pilot implementation gates, add Pilot router reproduction, use Pilot outputs as training data, batch-generate Pilot outputs, persist Pilot outputs, or introduce Limited Shadow Runtime after M35.
+
+This canon is on-request. Do not load it for simple Fast Path explanation-only tasks. Do not treat it as an implementation prompt, and do not use it to add Pilot runtime, Copilot runtime, prompt loading, persistence, training-data use, batch mode, route execution, router authority, or runtime shadow behavior.
+
+For Pilot/Copilot Phase 0 work, required context normally includes:
+
+```text
+1. routing_signal_scorer_v3_pilot_copilot_phase0_router_canon
+2. kanda_routing_system_canon
+3. kanda_box_shielding_canon
+4. 02_prompt_routing_and_indexing
+5. 04_box_architecture_and_boundaries, if source boundaries or box manifest are touched
+6. 05_patch_delivery_and_validation, if a patch ZIP, install block, validation block, or freeze-ready delivery is requested
+7. Active project freeze context and M35 closure evidence
+8. Current project files and validation command or manual validation steps
+```
+
+May proceed now is PARTIAL for read-only planning or audit. It is NO for implementation until current project files, M35 closure context, patch boundary, validation path, and freeze path are clear. If P0 is not yet validated and frozen, the next implementation milestone is P0 only.
+
+Canonical RG-PILOT-000 rule:
+
+```text
+Pilot/Copilot Phase 0 begins only as a design-only, non-authoritative, opt-in, ephemeral, zero-critical-error scope charter that preserves M35 bridge closure, forbids runtime authority and prompt loading, requires Pilot to reproduce frozen router/canon outcomes before disagreement evidence is trusted, and defers Copilot and any runtime shadow mode to separately governed future scopes.
+```
 
 ## Routing Signal Scorer v3 semantic-readiness routing hook
 
@@ -289,6 +317,7 @@ Do not downgrade the context load to medium/medium-high for this confirmation-by
 | create a new folder with a databank | 04, 05, 09, 10 | 11 if production-ready storage | HARD STOP before implementation |
 | large module / file over 500 lines | 04, 05, 06 | 08, 09 | HARD STOP before implementation |
 | architecture decision | 04 | 06, 11, 12 | STEP PAUSE before canon/patch |
+| Pilot/Copilot Phase 0 / post-M35 / P0 / Pilot projection / Copilot boundary | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for read-only planning; P0 only until frozen |
 | semantic readiness / embeddings / ML retrieval / routing_signal_scorer v3 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_semantic_readiness_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for architecture discussion |
 | box shielding / KBSC / shield before stronger ML | 04_box_architecture_and_boundaries, kanda_box_shielding_canon; 05 plus source files and validation steps if patching; 07 if registering or updating prompts/routing assets | 03 if freeze/governance, 08/09 if source/validation/safety code may be modified | HARD STOP before implementation; PARTIAL only for architecture discussion |
 | prompt audit / prompt batch review | 02, 07 | 03 if deprecation/freeze, 12 if generalizing | STEP PAUSE until related prompts inspected |

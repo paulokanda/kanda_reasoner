@@ -120,6 +120,17 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** Do not load for simple Fast Path explanations, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.
 - **Required companion prompts:** `ai_prompt_request_canon`; `prompt_navigation_index`; `GROUP_ASSIMILATION_INDEX`
 
+### `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon` - RG-PILOT-000 Pilot/Copilot Phase 0 Router Canon
+
+- **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md`
+- **Priority:** `1`
+- **Trigger phrases:** `Pilot/Copilot Phase 0`; `post-M35 continuation`; `start Pilot`; `start Copilot`; `create P0`; `Pilot scope charter`; `Pilot projection`; `Pilot simulation`; `Pilot disagreement taxonomy`; `Pilot implementation gate`; `Pilot router reproduction`; `reproduction-before-disagreement`; `Limited Shadow Runtime`; `human_review_mandatory`; `candidate_prompt_groups`; `simulated_required_prompt_groups`
+- **User intent examples:** `Canonize Pilot/Copilot router logic after M35.`; `Create P0 for Pilot/Copilot Phase 0.`; `Can we implement Pilot projection now?`
+- **Aliases:** `RG-PILOT-000`; `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon`; `Pilot/Copilot router canon`; `post-M35 Pilot canon`; `P0 router canon`
+- **When to load:** When KANDA work involves post-M35 Pilot/Copilot scope, P0, P-series milestones, Pilot projection/simulation, Copilot boundary, reproduction-before-disagreement, or any request that could grant Pilot/Copilot authority, prompt loading, persistence, training-data use, batch mode, or runtime shadow behavior.
+- **When not to load:** Do not load for ordinary lexical routing-scorer patches unrelated to Pilot/Copilot, simple Fast Path explanation-only tasks, or as a substitute for current project files and freeze evidence during implementation.
+- **Required companion prompts:** `kanda_routing_system_canon`; `kanda_box_shielding_canon`; `prompt_navigation_index`; `GROUP_ASSIMILATION_INDEX`
+
 ### `routing_signal_scorer_v3_semantic_readiness_canon` — Routing Signal Scorer v3 Semantic Readiness Canon
 
 - **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_semantic_readiness_canon.md`

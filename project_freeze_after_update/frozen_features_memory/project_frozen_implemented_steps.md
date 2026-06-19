@@ -483,3 +483,13 @@ freeze_memory_context_publish_v1_1 may be designed only as a separate governed p
 - 2026-06-18 | freeze-20260618-routing-signal-scorer-v3-pilot-copilot-boundary-design-v1 | Routing Signal Scorer v3 Pilot/Copilot Boundary Design v1 | frozen
 - 2026-06-18 | freeze-20260618-routing-signal-scorer-v3-post-adviser-to-pilot-copilot-handoff-closure-design-v1 | Routing Signal Scorer v3 Post-Adviser to Pilot/Copilot Handoff Closure Design v1 | frozen
 - 2026-06-18 | freeze-20260618-help-hand-lettered-daily-life-drawings-v7 | Help Hand-Lettered Daily-Life Drawings v7 | frozen
+- 2026-06-19 | freeze-20260619-rg-pilot-000-pilot-copilot-phase-0-router-canon-v1 | RG-PILOT-000 Pilot/Copilot Phase 0 Router Canon v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-copilot-scope-charter-and-entry-gate-design-v1 | Routing Signal Scorer v3 Pilot/Copilot Scope Charter and Entry Gate Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-boundary-design-v1 | Routing Signal Scorer v3 Pilot Boundary Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-input-output-contract-and-validator-design-v1 | Routing Signal Scorer v3 Pilot Input Output Contract and Validator Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-disagreement-taxonomy-design-v1 | Routing Signal Scorer v3 Pilot Disagreement Taxonomy Design v1 | frozen
+- 2026-06-19 | freeze-20260619-kanda-patch-delivery-root-drive-zip-staging-canon-v1 | KANDA Patch Delivery Root-Drive ZIP Staging Canon v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-gold-frozen-router-reproduction-harness-design-v1 | Routing Signal Scorer v3 Pilot Gold Frozen Router Reproduction Harness Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-simulation-skeleton-design-v1 | Routing Signal Scorer v3 Pilot Simulation Skeleton Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-review-evidence-design-v1 | Routing Signal Scorer v3 Pilot Review Evidence Design v1 | frozen
+- 2026-06-19 | freeze-20260619-routing-signal-scorer-v3-pilot-implementation-gate-design-v1 | Routing Signal Scorer v3 Pilot Implementation Gate Design v1 | frozen

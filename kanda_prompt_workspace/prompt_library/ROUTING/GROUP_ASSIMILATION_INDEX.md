@@ -100,7 +100,7 @@ Use the three routing indexes in a deliberate escalation order.
 | Group | Prompt count | Responsibility | Use when | Do not use when |
 |---|---:|---|---|---|
 | 01_session_start_and_navigation | 9 | Start sessions, load the small kernel, and establish AI-human operating context. | At beginning of day/session or when continuity is needed. | Do not use as a substitute for specialist implementation prompts. |
-| 02_prompt_routing_and_indexing | 5 | Route human intent to groups, prompts, overlays, substitution history, and the KANDA Routing System Canon. | When deciding what context should be loaded. | Do not use as a complete behavior protocol. |
+| 02_prompt_routing_and_indexing | 7 | Route human intent to groups, prompts, overlays, substitution history, the KANDA Routing System Canon, semantic-readiness canon, and RG-PILOT-000 Pilot/Copilot Phase 0 router canon. | When deciding what context should be loaded, or when post-M35 Pilot/Copilot/P0/P-series work is requested. | Do not use as a complete behavior protocol. |
 | 03_governance_freeze_and_handoff | 9 | Freeze validated work, update governance, transfer state across sessions, guide cooperative implementation methodology, control freeze-code intake/form review, and apply pre-output contract gates. | When validation/freeze/governance/handoff, freeze-code intake, freeze form correction, consequential implementation-method discussion, or high-risk artifact output is requested. | Do not freeze without validation evidence; do not use methodology, intake, or pre-output contracts as a substitute for specialist prompts. |
 | 04_box_architecture_and_boundaries | 5 | Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, and KBSC shield requirements. | Before implementation, architecture changes, refactors, cross-box touches, meaningful milestone shielding, or stronger ML preparation. | Do not use for simple explanation-only tasks. |
 | 05_patch_delivery_and_validation | 6 | Package, deliver, validate, register, and classify implementation patches. | When code/files/ZIP/install/validation/freeze are involved. | Do not use as a reason to touch unrelated boxes. |
@@ -114,6 +114,15 @@ Use the three routing indexes in a deliberate escalation order.
 
 
 
+
+
+## RG-PILOT-000 Pilot/Copilot Phase 0 route
+
+Use `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon` from `02_prompt_routing_and_indexing` when post-M35 Pilot/Copilot Phase 0, P0, Pilot projection/simulation, Pilot disagreement taxonomy, Pilot implementation gate, Pilot router reproduction, Copilot boundary, training-data use, batch mode, persistence, or runtime-shadow work is requested.
+
+This route is on-request and must not become an always-loaded startup prompt. Pair it with `kanda_routing_system_canon`, `kanda_box_shielding_canon`, current M35 closure/freeze context, current project files, patch-delivery rules, and validation steps when implementation is requested.
+
+Canonical rule: if P0 is not locally validated and frozen, the next implementation milestone is P0 only.
 
 ## KANDA Routing System Canon route
 
@@ -136,6 +145,7 @@ KBSC is an on-request shielding canon. It must not be loaded for simple Fast Pat
 | CREATE_OR_MODIFY_CODE | 05_patch_delivery_and_validation plus source files and validation steps; 04_box_architecture_and_boundaries if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08_python_engineering_core, 09_python_quality_security_observability, 10_python_api_data_async_config | HARD_STOP_before_implementation | NO |
 | DATABASE_OR_STORAGE_ARCHITECTURE | 04_box_architecture_and_boundaries, 05_patch_delivery_and_validation, 09_python_quality_security_observability, 10_python_api_data_async_config | 11_productization_and_release_readiness | HARD_STOP_before_implementation | NO |
 | LARGE_MODULE_REFACTOR | 04_box_architecture_and_boundaries, 05_patch_delivery_and_validation, 06_refactor_and_architecture_hardening | 08_python_engineering_core, 09_python_quality_security_observability | HARD_STOP_before_implementation | NO |
+| PILOT_COPILOT_PHASE0_POST_M35 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus current project files and validation steps if patching | 04_box_architecture_and_boundaries, 03_governance_freeze_and_handoff, 08_python_engineering_core, 09_python_quality_security_observability | HARD_STOP_before_implementation; PARTIAL_for_read_only_review; P0 only until frozen | NO |
 | ROUTING_SYSTEM_CANON_OR_CONTEXT_PACKAGE_MANIFEST | 02_prompt_routing_and_indexing, kanda_routing_system_canon, ai_prompt_request_canon, current routing indexes, 07_prompt_authoring_and_audit if prompt assets are updated, validation command or manual validation steps | 04_box_architecture_and_boundaries, kanda_box_shielding_canon, 03_governance_freeze_and_handoff | HARD_STOP_before_implementation; PARTIAL_for_read_only_review | NO |
 | BOX_SHIELDING_OR_STRONGER_ML_PREP | 04_box_architecture_and_boundaries, kanda_box_shielding_canon, 05_patch_delivery_and_validation if patching, relevant owning-box source files/tests, validation command or manual validation steps | 03_governance_freeze_and_handoff, 08_python_engineering_core, 09_python_quality_security_observability | HARD_STOP_before_implementation; PARTIAL_for_architecture_discussion_only | NO |
 | PROMPT_AUDIT | 02_prompt_routing_and_indexing, 07_prompt_authoring_and_audit | 12_generalized_project_canons, 03_governance_freeze_and_handoff | STEP_PAUSE_until_related_prompts_inspected | NO |

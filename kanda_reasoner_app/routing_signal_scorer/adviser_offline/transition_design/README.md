@@ -153,3 +153,67 @@ Next allowed milestone after M32 validation and freeze: M33 - Routing Signal Sco
 ## M35 - Post-Adviser to Pilot/Copilot Handoff Closure Design v1
 
 `shadow_mode_post_adviser_pilot_copilot_handoff_closure_design.py` defines an immutable design-only closure and handoff record for the post-Adviser bridge after M34. It does not activate Assistant, Auxiliar, Pilot, Copilot, or shadow mode; does not run a handoff; does not compare, select, override, or execute routes; does not select or load prompts; does not integrate runtime routing; does not persist records; does not record human decisions; and does not grant runtime authority. After M35 validation and freeze, this bridge sequence is closed. Any future Pilot/Copilot work requires a separate governed scope.
+
+## P0 - Pilot/Copilot Scope Charter and Entry Gate Design v1
+
+`pilot_copilot_scope_charter_entry_gate_design.py` defines the first governed P-series scope charter after the M35 bridge closure and RG-PILOT-000 router canon freeze. It is design-only and records current state, lifecycle limits, forbidden operations, evidence ladder, surrounding-process risks, red-team seed cases, and the revised P0-P12 ladder.
+
+P0 does not implement Pilot, Copilot, route projection, route comparison, prompt loading, runtime integration, persistence, training-data use, batch mode, limited shadow runtime, or candidate promotion.
+
+Next allowed milestone after P0 validation and freeze: P1 - Routing Signal Scorer v3 Pilot Boundary Design v1.
+
+## P1 - Pilot Boundary Design v1
+
+`pilot_boundary_design.py` defines the immutable design-only boundary for what a future Pilot may become after P0 freeze. It records that Pilot remains not active, not runtime, not Copilot, not router authority, not prompt loader, not state writer, not a training-data source, and not a batch engine.
+
+P1 does not implement Pilot, Copilot, projection logic, route comparison, input/output contracts, live validators, prompt loading, runtime integration, persistence, human decision recording, training-data use, batch mode, limited shadow runtime, or candidate promotion.
+
+Next allowed milestone after P1 validation and freeze: P2 - Routing Signal Scorer v3 Pilot Input Output Contract and Validator Design v1.
+
+## P2 - Pilot Input Output Contract and Validator Design v1
+
+`pilot_io_contract_validator_design.py` defines immutable design-only future Pilot input/output field contracts and fail-closed validator-rule plans after P1 freeze. It does not implement a live validator, process inputs, generate outputs, implement Pilot, implement Copilot, implement projection logic, execute route comparison, select or load prompts, integrate runtime routing, persist records, use outputs for training data, run batch mode, activate limited shadow runtime, or grant runtime authority.
+
+The contract design replaces unsafe prompt-group terminology with `task_classification_hints_summary` and requires future output invariants including `human_review_mandatory = True`, effect fields fixed to `"none"`, and `storage_status = "in_memory_only"`.
+
+Next allowed milestone after P2 validation and freeze: P3 - Routing Signal Scorer v3 Pilot Disagreement Taxonomy Design v1.
+
+## P3 - Pilot Disagreement Taxonomy Design v1
+
+`pilot_disagreement_taxonomy_design.py` defines immutable design-only future Pilot disagreement categories and evidence-language rules after P2 freeze. It does not detect disagreements, score disagreements, compare routes, project routes, recommend actions, select or load prompts, read freeze memory, read gold sets, mutate registries, persist records, train models, run batch mode, activate Limited Shadow Runtime, or grant runtime authority.
+
+The taxonomy is descriptive vocabulary for later human review only. It preserves match-before-disagree: no future taxonomy label can be trusted as a real disagreement until a governed future reproduction harness proves frozen router/canon reproduction first.
+
+Next allowed milestone after P3 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P4 - Routing Signal Scorer v3 Pilot Gold/Frozen Router Reproduction Harness Design v1.
+
+## P4 - Pilot Gold/Frozen Router Reproduction Harness Design v1
+
+`pilot_gold_router_reproduction_harness_design.py` defines immutable design-only future reproduction harness boundaries after P3 freeze. It preserves match-before-disagree: no Pilot disagreement evidence can be trusted until a later governed harness proves frozen router/canon reproduction first.
+
+P4 does not implement a harness, load gold sets, read freeze memory, inspect runtime router state, compare routes, calculate scores, rank candidates, certify readiness, select or load prompts, persist records, train models, run batch mode, activate Limited Shadow Runtime, or grant Pilot/Copilot authority. It adds no Pilot implementation, no Copilot implementation, and no runtime authority.
+
+Next allowed milestone after P4 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P5 - Routing Signal Scorer v3 Pilot Simulation Skeleton Design v1.
+
+## P5 - Pilot Simulation Skeleton Design v1
+
+`pilot_simulation_skeleton_design.py` defines an immutable design-only skeleton for a future non-authoritative, opt-in, ephemeral Pilot simulation review envelope after P4 freeze. It names placeholder slots and stage ordering only.
+
+P5 does not implement a simulator, callable builder, live validator, input processor, output generator, reproduction harness, no input processing, no output generation, gold loader, freeze-memory reader, prompt-library reader, route comparison executor, score calculator, disagreement detector, route projection, recommendation engine, prompt selection or loading, report writer, queue writer, persistence, human decision recording, training-data use, batch mode, Limited Shadow Runtime, Pilot behavior, Copilot behavior, or runtime authority.
+
+Next allowed milestone after P5 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P6 - Routing Signal Scorer v3 Pilot Review Evidence Design v1.
+
+## P6 - Pilot Review Evidence Design v1
+
+`pilot_review_evidence_design.py` defines immutable design-only vocabulary for a future non-authoritative, opt-in, ephemeral Pilot review evidence packet after P5 freeze. It names evidence fields and section ordering only.
+
+P6 does not implement evidence collection, evidence packet generation, live validation, input processing, output generation, simulation execution, reproduction harness execution, gold loading, freeze-memory reading, prompt-library reading, runtime router inspection, route comparison execution, metric calculation, disagreement detection or trust, route projection, recommendation, prompt selection or loading, report writing, queue writing, persistence, human decision recording, approval recording, training-data use, batch mode, Limited Shadow Runtime, Pilot behavior, Copilot behavior, or runtime authority.
+
+Next allowed milestone after P6 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P7 - Routing Signal Scorer v3 Pilot Implementation Gate Design v1.
+
+## P7 - Pilot Implementation Gate Design v1
+
+`pilot_implementation_gate_design.py` defines immutable design-only gate conditions for a future non-runtime Pilot candidate implementation after P6 freeze. It names gate conditions and stage ordering only.
+
+P7 does not implement gate evaluation, implementation approval, Pilot candidate creation, callable Pilot behavior, live validation, input processing, output generation, evidence collection, evidence packet generation, simulation execution, reproduction harness execution, gold loading, freeze-memory reading, prompt-library reading, runtime router inspection, route comparison execution, metric calculation, disagreement detection or trust, route projection, recommendation, prompt selection or loading, persistence, human decision recording, approval recording, training-data use, batch mode, Limited Shadow Runtime, Pilot runtime behavior, Copilot behavior, or runtime authority.
+
+Next allowed milestone after P7 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P8 - Routing Signal Scorer v3 Non-Runtime Pilot Candidate Implementation v1.

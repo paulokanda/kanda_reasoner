@@ -4,7 +4,7 @@
   "generated_at": "2026-06-12",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use trigger_phrases and user_intent_examples to detect intent; load the highest-priority matching prompt plus required companions; if uncertain, ask one focused clarification or load prompt_router + prompt_navigation_index.",
-  "prompt_count": 79,
+  "prompt_count": 80,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -321,6 +321,61 @@
       "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.",
       "required_companion_prompts": [
         "ai_prompt_request_canon",
+        "prompt_navigation_index",
+        "GROUP_ASSIMILATION_INDEX"
+      ]
+    },
+    {
+      "prompt_id": "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+      "display_name": "RG-PILOT-000 Pilot/Copilot Phase 0 Router Canon",
+      "filename": "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
+      "category": "02_prompt_routing_and_indexing",
+      "priority": 1,
+      "trigger_phrases": [
+        "Pilot/Copilot Phase 0",
+        "Pilot Copilot Phase 0",
+        "post-M35 continuation",
+        "after M35",
+        "start Pilot",
+        "start Copilot",
+        "create P0",
+        "implement P0",
+        "Pilot scope charter",
+        "Copilot scope charter",
+        "Pilot boundary",
+        "Pilot projection",
+        "Pilot simulation",
+        "Pilot disagreement taxonomy",
+        "Pilot implementation gate",
+        "Pilot router reproduction",
+        "reproduction-before-disagreement",
+        "Limited Shadow Runtime",
+        "human_review_mandatory",
+        "candidate_prompt_groups",
+        "simulated_required_prompt_groups"
+      ],
+      "user_intent_examples": [
+        "Canonize Pilot/Copilot router logic after M35.",
+        "Start the next stage after the Adviser-to-Pilot bridge.",
+        "Create P0 for Pilot/Copilot Phase 0.",
+        "Can we implement Pilot projection now?",
+        "Add a limited shadow runtime after M35."
+      ],
+      "aliases": [
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
+        "RG-PILOT-000",
+        "Pilot/Copilot router canon",
+        "post-M35 Pilot canon",
+        "P0 router canon",
+        "Pilot Phase 0 canon"
+      ],
+      "when_to_load": "When KANDA work involves post-M35 Pilot/Copilot scope, P0, P-series milestones, Pilot projection/simulation, Copilot boundary, reproduction-before-disagreement, or any request that could grant Pilot/Copilot authority, prompt loading, persistence, training-data use, batch mode, or runtime shadow behavior.",
+      "when_not_to_load": "Do not load for ordinary lexical routing-scorer patches unrelated to Pilot/Copilot, simple Fast Path explanation-only tasks, or as a substitute for current project files and freeze evidence during implementation.",
+      "required_companion_prompts": [
+        "kanda_routing_system_canon",
+        "kanda_box_shielding_canon",
         "prompt_navigation_index",
         "GROUP_ASSIMILATION_INDEX"
       ]

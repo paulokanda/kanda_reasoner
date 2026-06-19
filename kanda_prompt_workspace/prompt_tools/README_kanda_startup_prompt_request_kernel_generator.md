@@ -37,7 +37,7 @@ The startup ZIP must include:
 07_daily_patch_delivery_guardrails.md
 ```
 
-This file is an always-startup guardrail. It tells the receiving AI how to handle patch ZIP delivery, root cleanliness, terminal hygiene, and installer ZIP staging. In particular, generated installer commands must create `<drive>:\<project_in_use_name>_delete_after_daily_work\`, move the latest project-related ZIP from the project drive root into that staging folder when present, install only from the staging folder, and stop with `zip is not in root of drive:\ where project is` when the expected ZIP cannot be found.
+This file is an always-startup guardrail. It tells the receiving AI how to handle patch ZIP delivery, root cleanliness, terminal hygiene, and installer ZIP staging. In particular, generated installer commands must derive the project drive from `PROJECT_ROOT`, create `<drive>:\<project_in_use_name>_delete_after_daily_work\`, look first for the explicit expected ZIP at the project drive root, stage it into that folder, delete the root-drive ZIP copy after successful staging, install only from the staged ZIP, and stop with `zip is not in root of drive:\ where project is` when the expected ZIP cannot be found. The old generic Downloads/Desktop-first installer search pattern is forbidden for governed KANDA patch installs.
 
 ## End-of-work handoff guardrail
 

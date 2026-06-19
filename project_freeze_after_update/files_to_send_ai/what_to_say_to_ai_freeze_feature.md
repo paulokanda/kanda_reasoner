@@ -1,8 +1,8 @@
 # What To Say To AI - Freeze Feature After Update
 
-Generated at UTC: `2026-06-18T22:53:23+00:00`
+Generated at UTC: `2026-06-19T02:46:37+00:00`
 Project: `kanda_reasoner`
-AI-send ZIP: `freeze_feature_ai_send_pack_20260618_195323.zip`
+AI-send ZIP: `freeze_feature_ai_send_pack_20260618_234637.zip`
 
 ## Message to paste to AI
 
@@ -25,7 +25,7 @@ Important rules:
 
 ## Current freeze context
 
-This project currently has 143 frozen feature entry file(s). Read the included freeze state before proposing a new freeze.
+This project currently has 152 frozen feature entry file(s). Read the included freeze state before proposing a new freeze.
 
 ## Files included in the ZIP
 
@@ -113,7 +113,6 @@ This project currently has 143 frozen feature entry file(s). Read the included f
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-architecture-review-blue-orange-dual-layer-help-source-parity-v3.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-architecture-review-help-colorful-daily-life-drawings-v6.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-architecture-review-rich-desktop-help-layout-v1.md`
-- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-help-beautiful-handmade-daily-life-cartoon-canon-v8.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-help-hand-lettered-daily-life-drawings-v7.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-help-layout-colorful-daily-life-image-style-v5.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-help-layout-image-generation-style-rule-v4.md`
@@ -177,6 +176,16 @@ This project currently has 143 frozen feature entry file(s). Read the included f
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-routing-signal-scorer-v3-shadow-mode-observation-skeleton-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-routing-signal-scorer-v3-shadow-mode-readiness-gate-for-assistant-boundary-review-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-routing-signal-scorer-v3-shadow-observation-review-evidence-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-kanda-patch-delivery-root-drive-zip-staging-canon-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-rg-pilot-000-pilot-copilot-phase-0-router-canon-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-boundary-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-copilot-scope-charter-and-entry-gate-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-disagreement-taxonomy-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-gold-frozen-router-reproduction-harness-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-implementation-gate-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-input-output-contract-and-validator-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-review-evidence-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-simulation-skeleton-design-v1.md`
 
 ## Required AI delivery workflow for freeze patches
 

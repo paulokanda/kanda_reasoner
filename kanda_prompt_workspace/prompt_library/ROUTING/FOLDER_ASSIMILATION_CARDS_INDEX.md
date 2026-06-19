@@ -16,7 +16,7 @@ Use this file only after `GROUP_ASSIMILATION_INDEX.md` has identified the broad 
 | Folder | Card Path | Responsibility | Prompt Count |
 |---|---|---|---|
 | `01_session_start_and_navigation` | `ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md` | Start the work session, establish minimum context, and control when the AI must request more prompts before acting. | 9 |
-| `02_prompt_routing_and_indexing` | `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md` | Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, and routing-system canon context. | 5 |
+| `02_prompt_routing_and_indexing` | `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md` | Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, and RG-PILOT-000 Pilot/Copilot Phase 0 router canon context. | 7 |
 | `03_governance_freeze_and_handoff` | `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md` | Control validated freeze decisions, governance updates, end-of-chat state transfer, handoff creation, cooperative implementation methodology, freeze-code intake/form review, and pre-output contract gates. | 9 |
 | `04_box_architecture_and_boundaries` | `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md` | Define owner boxes, public contracts, forbidden touches, dependency boundaries, anti-contamination rules, and KBSC box shielding. | 5 |
 | `05_patch_delivery_and_validation` | `ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md` | Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates. | 6 |
@@ -43,3 +43,9 @@ These cards are routing metadata only. They must not become behavioral prompts o
 
 kanda_routing_system_canon -> ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md
 Use for routing-system canonization, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, and prompt-registration/not-global-insertion rules.
+
+
+## RG-PILOT-000 Pilot/Copilot Phase 0 Routing Hint
+
+routing_signal_scorer_v3_pilot_copilot_phase0_router_canon -> ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md
+Use for post-M35 Pilot/Copilot Phase 0, P0, P-series, Pilot projection/simulation, Pilot implementation gates, reproduction-before-disagreement, and Copilot boundary routing. If P0 is not frozen, P0 is the only safe implementation milestone.

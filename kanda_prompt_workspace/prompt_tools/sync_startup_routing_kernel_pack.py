@@ -224,7 +224,7 @@ WHEN THE NEXT ANSWER WILL EMIT POWERSHELL, TERMINAL COMMANDS, PATCH ZIP DELIVERY
 
 Required behavior:
 1. Terminal output must be classified before footer generation. Successful install uses 5 seconds then Clear-Host and no Enter prompts. Validation, diagnostics, and errors use Enter, Clear-Host, Enter, Clear-Host. Never mix patterns.
-2. Patch delivery must move the ZIP from drive root into `<project>_delete_after_daily_work` before extraction and must freshly extract. Do not assume extracted folders already exist.
+2. Patch delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first for the ZIP at the project drive root, stage it into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, and extract only from the staged ZIP. Do not use the old generic Downloads/Desktop-first installer search template.
 3. Freeze-form JSON must be exact marker-wrapped valid JSON with no markdown, comments, trailing commas, or prose inside markers.
 4. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes, and `STATUS: IN_SYNC` when startup sync was validated.
 5. Freeze-ready patch ZIPs must include root-level `KANDA_FREEZE_HINT.json` unless intentionally non-freezeable and explained.

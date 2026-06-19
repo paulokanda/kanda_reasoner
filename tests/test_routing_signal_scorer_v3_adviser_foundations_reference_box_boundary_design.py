@@ -241,6 +241,50 @@ class AdviserFoundationsReferenceBoxBoundaryDesignTests(unittest.TestCase):
             # helper without Pilot/Copilot activation, runtime export, prompt
             # loading, persistence, route execution, or decisions.
             ADVISER / "transition_design" / "shadow_mode_post_adviser_pilot_copilot_handoff_closure_design.py",
+            # P0 starts the separate governed Pilot/Copilot P-series as a
+            # scope-charter and entry-gate design only, after M35 and RG-PILOT-000,
+            # without Pilot/Copilot activation, runtime export, prompt loading,
+            # persistence, training-data use, batch mode, limited shadow runtime,
+            # route comparison, or decisions.
+            ADVISER / "transition_design" / "pilot_copilot_scope_charter_entry_gate_design.py",
+            # P1 is a separate governed Pilot boundary design milestone
+            # that may add the exact immutable Pilot boundary helper without
+            # Pilot activation, projection implementation, prompt loading,
+            # persistence, training-data use, batch mode, runtime export,
+            # limited shadow runtime, or decisions.
+            ADVISER / "transition_design" / "pilot_boundary_design.py",
+            # P2 is a separate governed Pilot design-only milestone that may add the
+            # exact immutable Pilot input/output contract and validator design helper
+            # without live validation, input processing, output generation, Pilot behavior,
+            # prompt loading, runtime export, persistence, or route authority.
+            ADVISER / "transition_design" / "pilot_io_contract_validator_design.py",
+            # P3 is a separate governed Pilot design-only milestone that may add the
+            # exact immutable Pilot disagreement taxonomy helper without disagreement
+            # detection, scoring, route comparison execution, Pilot behavior, prompt
+            # loading, runtime export, persistence, or route authority.
+            ADVISER / "transition_design" / "pilot_disagreement_taxonomy_design.py",
+            # P4 is a separate governed Pilot design-only milestone that may add the
+            # exact immutable gold/frozen-router reproduction harness design helper
+            # without harness execution, gold loading, route comparison execution,
+            # Pilot behavior, prompt loading, runtime export, persistence, or route authority.
+            ADVISER / "transition_design" / "pilot_gold_router_reproduction_harness_design.py",
+            # P5 is a separate governed Pilot design-only milestone that may add the
+            # exact immutable simulation skeleton design helper without simulation
+            # execution, live validation, input processing, output generation, route
+            # comparison execution, Pilot behavior, prompt loading, runtime export,
+            # persistence, or route authority.
+            ADVISER / "transition_design" / "pilot_simulation_skeleton_design.py",
+            # P6 is a separate governed Pilot design-only milestone that may add the
+            # exact immutable review evidence design helper without evidence collection,
+            # packet generation, live validation, input processing, output generation,
+            # route comparison execution, Pilot behavior, prompt loading, runtime export,
+            # persistence, human decision recording, or route authority.
+            ADVISER / "transition_design" / "pilot_review_evidence_design.py",
+            # P7 is a separate governed Pilot design-only implementation gate
+            # milestone that may add the exact immutable gate design helper
+            # without gate evaluation, implementation authorization, Pilot candidate
+            # creation, prompt loading, runtime export, persistence, or route authority.
+            ADVISER / "transition_design" / "pilot_implementation_gate_design.py",
         }
         py_files = set(ADVISER.rglob("*.py"))
         self.assertTrue(py_files.issubset(allowed_py), sorted(str(p) for p in py_files - allowed_py))

@@ -1,6 +1,6 @@
 # Daily Patch Delivery Guardrails
 
-Version: 1.5
+Version: 1.6
 Status: startup guardrail
 Prompt ID: daily_patch_delivery_guardrails
 Load mode: always_startup
@@ -56,7 +56,7 @@ Minimum startup hook:
 1. Terminal output must be classified as install success, validation, diagnostic, install error, validation error, or other terminal before writing the footer.
 2. Install success uses the 5-second Clear-Host footer and no Enter prompts.
 3. Validation, diagnostic, and error terminal blocks use Enter, Clear-Host, Enter, Clear-Host.
-4. Patch ZIP delivery must move the ZIP from drive root into `<project>_delete_after_daily_work` before extraction and must freshly extract.
+4. Patch ZIP delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first at `<drive>:\PATCH_NAME.zip`, stage the ZIP into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, extract only from staging, and must freshly extract.
 5. Freeze-form JSON must use exact markers and valid JSON only.
 6. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes.
 7. Freeze-ready patch ZIPs must include root-level `KANDA_FREEZE_HINT.json` unless intentionally non-freezeable.
@@ -132,13 +132,13 @@ If the AI cannot run a sandbox check, it must say which check could not be run a
 
 ## Installer ZIP staging rule
 
-When the AI creates terminal install code for any patch ZIP, the install code must implement root-to-staging movement before installation.
+When the AI creates terminal install code for any KANDA/PyArchitect patch ZIP, the install code must implement the strict root-drive-to-staging flow before installation. This replaces and forbids the old generic installer search template.
 
-Required installer behavior:
+Required installer behavior, in this exact priority order:
 
 1. Detect the active project root from the current PyCharm terminal location or from the explicit `$PROJECT_ROOT`.
-2. Detect the drive root where that project is installed.
-3. Define the expected root ZIP path as:
+2. Detect `DRIVE_ROOT` dynamically from `$PROJECT_ROOT`. Do not hardcode `E:\`, `C:\`, or any other fixed drive.
+3. Look first for the downloaded patch ZIP at the project drive root:
 
 ```text
 <drive>:\PATCH_NAME.zip
@@ -150,20 +150,56 @@ Required installer behavior:
 <drive>:\<project_in_use_name>_delete_after_daily_work\
 ```
 
-5. If the expected ZIP exists at the drive root, move the ZIP into the staging folder before extraction or installation. The install block must literally implement this behavior, not merely mention it.
-6. If the expected ZIP is already in the staging folder, use it there.
-7. After moving the ZIP, ensure no duplicate copy remains in the drive root.
-8. Install only from the ZIP path inside the delete-after-daily-work staging folder.
+5. If the expected ZIP exists at the drive root, move or copy-stage it into the staging folder before extraction or installation. The installer must literally implement this behavior, not merely mention it.
+6. After successful staging, delete the temporary downloaded ZIP copy from the drive root so no duplicate root copy remains.
+7. If the ZIP is already in the staging folder and no root copy exists, use the staged ZIP.
+8. Install and extract only from the ZIP path inside the delete-after-daily-work staging folder.
 9. If the expected ZIP is neither in the drive root nor already in the staging folder, stop and show exactly:
 
 ```text
 zip is not in root of drive:\ where project is
 ```
 
-10. Do not ask the user to manually move the ZIP into the staging folder. The installer must do the move from drive root to staging folder.
+10. Do not ask the user to manually move the ZIP into the staging folder. The installer must perform the root-drive staging operation.
 11. Only after the ZIP is confirmed inside the staging folder should the install code extract and copy project files.
 
-The installer code must prefer an explicit expected ZIP filename. Do not rely on a vague newest-ZIP search when the patch filename is known.
+Forbidden installer behavior for this situation:
+
+- Do not search `Downloads` or `Desktop` before the project drive root.
+- Do not use a generic candidate search where `Downloads` or `Desktop` can beat `<drive>:\PATCH_NAME.zip`.
+- Do not leave the root-drive downloaded ZIP copy behind after successful staging.
+- Do not extract from the project root or from the drive root.
+- Do not install from an extracted folder created in an earlier run.
+- Do not rely on a vague newest-ZIP search when the patch filename is known.
+
+Canonical installer opening pattern:
+
+```powershell
+$PROJECT_ROOT = "<PROJECT_ROOT>"
+$PATCH_NAME = "PATCH_NAME"
+$PROJECT_NAME = Split-Path $PROJECT_ROOT -Leaf
+$DRIVE_ROOT = [System.IO.Path]::GetPathRoot($PROJECT_ROOT)
+$WORK_DIR = Join-Path $DRIVE_ROOT ($PROJECT_NAME + "_delete_after_daily_work")
+$ROOT_PATCH_ZIP = Join-Path $DRIVE_ROOT ($PATCH_NAME + ".zip")
+$WORK_PATCH_ZIP = Join-Path $WORK_DIR ($PATCH_NAME + ".zip")
+
+if (-not (Test-Path $WORK_DIR)) {
+    New-Item -ItemType Directory -Path $WORK_DIR -Force | Out-Null
+}
+
+if (Test-Path $ROOT_PATCH_ZIP) {
+    Copy-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
+    if (Test-Path $WORK_PATCH_ZIP) {
+        Remove-Item -Path $ROOT_PATCH_ZIP -Force
+    }
+}
+
+if (-not (Test-Path $WORK_PATCH_ZIP)) {
+    throw "zip is not in root of drive:\ where project is"
+}
+```
+
+The words `Downloads` and `Desktop` must not appear in KANDA patch install blocks unless the user explicitly asks for a one-off diagnostic search outside the governed installer flow.
 
 ## Validation phrase rule
 

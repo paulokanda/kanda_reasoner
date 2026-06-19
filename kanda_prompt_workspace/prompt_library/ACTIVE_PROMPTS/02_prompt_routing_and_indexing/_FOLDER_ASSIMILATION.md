@@ -17,7 +17,7 @@ This card is routing metadata. It helps the AI understand when this prompt folde
 It does not replace the prompts inside this folder and must not become a behavioral master prompt.
 
 ## Responsibility
-Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, the KANDA Routing System Canon, and the semantic-readiness canon for ML/embedding-related routing work.
+Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, the KANDA Routing System Canon, the semantic-readiness canon for ML/embedding-related routing work, and the RG-PILOT-000 Pilot/Copilot Phase 0 router canon for post-M35 Pilot/Copilot scope work.
 
 ## Use When
 Use when deciding what prompts or groups are needed for a task.
@@ -35,6 +35,9 @@ Do not use as a behavioral prompt that teaches the full protocol of another grou
 - Prompt Registration v2 work
 - semantic-readiness / embedding-readiness canon work
 - routing_signal_scorer v3 ML boundary work
+- post-M35 Pilot/Copilot Phase 0 router canon work
+- P0 scope charter routing
+- Pilot/Copilot P-series milestone routing
 
 ## Optional For
 - prompt-library explanation
@@ -57,12 +60,17 @@ Do not use as a behavioral prompt that teaches the full protocol of another grou
 - embedding readiness
 - routing_signal_scorer v3
 - Metadata Vector Manifest
+- RG-PILOT-000
+- Pilot/Copilot Phase 0
+- post-M35 continuation
+- P0 scope charter
 
 ## Minimum Viable Context
 - prompt_navigation_index
 - GROUP_ASSIMILATION_INDEX
 - kanda_routing_system_canon when routing-system behavior is affected
 - routing_signal_scorer_v3_semantic_readiness_canon when ML/semantic retrieval is involved
+- routing_signal_scorer_v3_pilot_copilot_phase0_router_canon when Pilot/Copilot, P0, P-series, post-M35 continuation, or runtime-authority risk is involved
 
 ## Main Prompts In This Folder
 

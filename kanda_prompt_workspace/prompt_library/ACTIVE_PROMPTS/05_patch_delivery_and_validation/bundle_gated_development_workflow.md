@@ -222,7 +222,10 @@ if (-not (Test-Path $WORK_DIR)) {
 }
 
 if (Test-Path $ROOT_PATCH_ZIP) {
-    Move-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
+    Copy-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
+    if (Test-Path $WORK_PATCH_ZIP) {
+        Remove-Item -Path $ROOT_PATCH_ZIP -Force
+    }
 }
 
 if (-not (Test-Path $WORK_PATCH_ZIP)) {
@@ -230,7 +233,9 @@ if (-not (Test-Path $WORK_PATCH_ZIP)) {
 }
 ```
 
-Then extract only from `$WORK_PATCH_ZIP` into a temporary extraction folder under `$WORK_DIR`, back up exact overwritten files, and copy only the bundle files into the project.
+This is mandatory for every KANDA/PyArchitect patch installer: detect `DRIVE_ROOT` from `$PROJECT_ROOT`, check the project drive root first, stage into `<project_name>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, and then extract only from `$WORK_PATCH_ZIP` into a temporary extraction folder under `$WORK_DIR`. Do not search `Downloads` or `Desktop` before the project drive root and do not use the old generic installer search template for governed patch installs.
+
+Then back up exact overwritten files and copy only the bundle files into the project.
 
 Important Windows limitation:
 

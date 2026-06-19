@@ -41,8 +41,8 @@
     {
       "group_id": "02_prompt_routing_and_indexing",
       "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
-      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, and semantic-readiness canon for ML/embedding routing work.",
-      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, or when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails.",
+      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, semantic-readiness canon for ML/embedding routing work, and RG-PILOT-000 for post-M35 Pilot/Copilot Phase 0 routing work.",
+      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails, or when post-M35 Pilot/Copilot/P0/P-series work is requested.",
       "do_not_use_when": "Do not use as a complete behavior protocol.",
       "required_for": [
         "routing",
@@ -54,12 +54,16 @@
         "semantic-readiness canonization",
         "routing_signal_scorer v3",
         "embedding readiness",
-        "Metadata Vector Manifest"
+        "Metadata Vector Manifest",
+        "post-M35 Pilot/Copilot Phase 0 router canonization",
+        "P0 scope charter routing",
+        "Pilot/Copilot P-series milestone routing"
       ],
-      "prompt_count": 6,
+      "prompt_count": 7,
       "main_prompts": [
         "kanda_routing_system_canon.md",
         "routing_signal_scorer_v3_semantic_readiness_canon.md",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
         "project_overlay_selector.md",
         "prompt_navigation_index.md",
         "prompt_router.md",
@@ -477,6 +481,21 @@
         "kanda_box_shielding_canon"
       ],
       "routing_note": "Semantic-readiness work is Routed Work Path. Planning may proceed partially, but implementation must wait for semantic-readiness canon, KBSC boundary, current routing_signal_scorer shield context, validation plan, and freeze path."
+    },
+    {
+      "route_id": "routing_signal_scorer_v3_pilot_copilot_phase0_route",
+      "task_intent": "Post-M35 Pilot/Copilot Phase 0, P0, Pilot projection/simulation, Pilot gates, Pilot router reproduction, Copilot boundary, training-data use, batch mode, persistence, or runtime-shadow requests.",
+      "required_groups": [
+        "02_prompt_routing_and_indexing",
+        "04_box_architecture_and_boundaries",
+        "05_patch_delivery_and_validation"
+      ],
+      "required_prompts": [
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "kanda_routing_system_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "routing_note": "Pilot/Copilot Phase 0 work is Routed Work Path. Planning may proceed partially, but implementation must wait for RG-PILOT-000, M35 closure evidence, current project files, validation plan, and freeze path. If P0 is not frozen, P0 is the only safe implementation milestone."
     }
   ]
 }

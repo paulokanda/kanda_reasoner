@@ -60,8 +60,8 @@
       "folder_id": "02_prompt_routing_and_indexing",
       "folder_name": "Prompt Routing and Indexing",
       "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
-      "responsibility": "Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, and semantic-readiness canon context for ML/embedding routing work.",
-      "use_when": "Use when deciding what prompts/groups are needed, or when routing-system canon, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, or semantic-readiness behavior for routing_signal_scorer v3 is being changed or audited.",
+      "responsibility": "Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, and RG-PILOT-000 Pilot/Copilot Phase 0 router canon context.",
+      "use_when": "Use when deciding what prompts/groups are needed, or when routing-system canon, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, semantic-readiness behavior, or post-M35 Pilot/Copilot/P0/P-series behavior is being changed or audited.",
       "do_not_use_when": "Do not use as a behavioral prompt that teaches the full protocol of another group.",
       "required_for": [
         "task routing",
@@ -74,7 +74,10 @@
         "semantic-readiness canonization",
         "routing_signal_scorer v3",
         "embedding readiness",
-        "Metadata Vector Manifest"
+        "Metadata Vector Manifest",
+        "post-M35 Pilot/Copilot Phase 0 router canonization",
+        "P0 scope charter routing",
+        "Pilot/Copilot P-series milestone routing"
       ],
       "optional_for": [
         "prompt-library explanation",
@@ -100,18 +103,24 @@
         "semantic readiness canon",
         "embedding readiness",
         "routing_signal_scorer v3",
-        "Metadata Vector Manifest"
+        "Metadata Vector Manifest",
+        "RG-PILOT-000",
+        "Pilot/Copilot Phase 0",
+        "post-M35 continuation",
+        "P0 scope charter"
       ],
       "minimum_viable_context": [
         "prompt_navigation_index",
         "GROUP_ASSIMILATION_INDEX",
         "kanda_routing_system_canon",
-        "routing_signal_scorer_v3_semantic_readiness_canon"
+        "routing_signal_scorer_v3_semantic_readiness_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon"
       ],
-      "prompt_count": 6,
+      "prompt_count": 7,
       "main_prompt_ids": [
         "kanda_routing_system_canon",
         "routing_signal_scorer_v3_semantic_readiness_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
         "project_overlay_selector",
         "prompt_navigation_index",
         "prompt_router",
