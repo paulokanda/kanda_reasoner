@@ -129,11 +129,11 @@ class LazyToolTab(QWidget):
 
         source_hover_message = {
             _ARCHITECTURE_GUI_SOURCE: (
-                "Tab 1:\n"
+                "Architecture Review:\n"
                 f"Source: {_CANONICAL_PACKAGE_NAME}/manage_architecture/"
                 "manage_architecture_gui.py"),
             _WORKFLOWS_GUI_SOURCE: (
-                "Tab 2:\n"
+                "Workflow Review:\n"
                 f"Source: {_CANONICAL_PACKAGE_NAME}/manage_workflows/"
                 "manage_workflows_gui.py\n"
                 "Worker script: manage_workflows.py"

@@ -1439,9 +1439,1228 @@
         "source_size_bytes": 52832
       },
       "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-pilot-implementation-gate-design-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T15:37:08Z",
+      "feature_id": "routing-signal-scorer-v3-non-runtime-pilot-candidate-implementation-v1",
+      "feature_title": "Routing Signal Scorer v3 Non-Runtime Pilot Candidate Implementation v1",
+      "source": {
+        "source_mtime_ns": 1781883375049548300,
+        "source_name": "routing_signal_scorer_v3_non_runtime_pilot_candidate_implementation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_non_runtime_pilot_candidate_implementation_v1_patch.zip",
+        "source_size_bytes": 53171
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T16:30:02Z",
+      "feature_id": "routing-signal-scorer-v3-non-runtime-pilot-candidate-contract-conformance-v1",
+      "feature_title": "Routing Signal Scorer v3 Non-Runtime Pilot Candidate Contract Conformance v1",
+      "source": {
+        "source_mtime_ns": 1781884522255785900,
+        "source_name": "routing_signal_scorer_v3_non_runtime_pilot_candidate_contract_conformance_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_non_runtime_pilot_candidate_contract_conformance_v1_patch.zip",
+        "source_size_bytes": 54380
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-contract-conformance-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T16:42:00Z",
+      "feature_id": "routing-signal-scorer-v3-non-runtime-pilot-candidate-readiness-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 Non-Runtime Pilot Candidate Readiness Gate v1",
+      "source": {
+        "source_mtime_ns": 1781887270473273200,
+        "source_name": "routing_signal_scorer_v3_non_runtime_pilot_candidate_readiness_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_non_runtime_pilot_candidate_readiness_gate_v1_patch.zip",
+        "source_size_bytes": 55212
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-readiness-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T16:53:19Z",
+      "feature_id": "routing-signal-scorer-v3-non-runtime-pilot-candidate-review-evidence-packet-v1",
+      "feature_title": "Routing Signal Scorer v3 Non-Runtime Pilot Candidate Review Evidence Packet v1",
+      "source": {
+        "source_mtime_ns": 1781887942806541800,
+        "source_name": "routing_signal_scorer_v3_non_runtime_pilot_candidate_review_evidence_packet_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_non_runtime_pilot_candidate_review_evidence_packet_v1_patch.zip",
+        "source_size_bytes": 56539
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-review-evidence-packet-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T17:03:59Z",
+      "feature_id": "routing-signal-scorer-v3-non-runtime-pilot-phase-closure-copilot-boundary-entry-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 Non-Runtime Pilot Phase Closure / Copilot Boundary Entry Gate v1",
+      "source": {
+        "source_mtime_ns": 1781888594508590300,
+        "source_name": "routing_signal_scorer_v3_non_runtime_pilot_phase_closure_copilot_boundary_entry_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_non_runtime_pilot_phase_closure_copilot_boundary_entry_gate_v1_patch.zip",
+        "source_size_bytes": 58089
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-phase-closure-copilot-boundary-entry-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:13:54Z",
+      "feature_id": "rg-lab-000-ml-lab-phase-entry-router-canon-v1",
+      "feature_title": "RG-LAB-000 ML LAB Phase Entry Router Canon v1",
+      "source": {
+        "source_mtime_ns": 1781892795979417700,
+        "source_name": "rg_lab_000_ml_lab_phase_entry_router_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rg_lab_000_ml_lab_phase_entry_router_canon_v1_patch.zip",
+        "source_size_bytes": 174139
+      },
+      "used_freeze_id": "freeze-20260619-rg-lab-000-ml-lab-phase-entry-router-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:28:10Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-phase-boundary-charter-entry-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Phase Boundary / Charter Entry Gate v1",
+      "source": {
+        "source_mtime_ns": 1781893661414131000,
+        "source_name": "routing_signal_scorer_v3_ml_lab_phase_boundary_charter_entry_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_phase_boundary_charter_entry_gate_v1_patch.zip",
+        "source_size_bytes": 38363
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-phase-boundary-charter-entry-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:34:27Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-success-criteria-matrix-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Success Criteria Matrix v1",
+      "source": {
+        "source_mtime_ns": 1781894034969911600,
+        "source_name": "routing_signal_scorer_v3_ml_lab_success_criteria_matrix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_success_criteria_matrix_v1_patch.zip",
+        "source_size_bytes": 39672
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-success-criteria-matrix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:39:26Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-risk-control-matrix-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Risk-Control Matrix v1",
+      "source": {
+        "source_mtime_ns": 1781894309334976000,
+        "source_name": "routing_signal_scorer_v3_ml_lab_risk_control_matrix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_risk_control_matrix_v1_patch.zip",
+        "source_size_bytes": 41422
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-risk-control-matrix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:43:59Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-slo-critical-error-budget-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB SLO / Critical Error Budget Declaration v1",
+      "source": {
+        "source_mtime_ns": 1781894596810909200,
+        "source_name": "routing_signal_scorer_v3_ml_lab_slo_critical_error_budget_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_slo_critical_error_budget_v1_patch.zip",
+        "source_size_bytes": 42136
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-slo-critical-error-budget-declaration-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:49:18Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-box-boundary-shielding-manifest-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Box Boundary + Shielding Manifest v1",
+      "source": {
+        "source_mtime_ns": 1781894918268001600,
+        "source_name": "routing_signal_scorer_v3_ml_lab_box_boundary_shielding_manifest_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_box_boundary_shielding_manifest_v1_patch.zip",
+        "source_size_bytes": 43635
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-box-boundary-shielding-manifest-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T18:57:17Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-failure-taxonomy-critical-violation-model-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Failure Taxonomy + Critical Violation Model v1",
+      "source": {
+        "source_mtime_ns": 1781895399944591400,
+        "source_name": "routing_signal_scorer_v3_ml_lab_failure_taxonomy_critical_violation_model_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_failure_taxonomy_critical_violation_model_v1_patch.zip",
+        "source_size_bytes": 47174
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-failure-taxonomy-critical-violation-model-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T19:13:24Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-scoring-model-hard-gates-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Scoring Model + Hard Gates v1",
+      "source": {
+        "source_mtime_ns": 1781896375134488900,
+        "source_name": "routing_signal_scorer_v3_ml_lab_scoring_model_hard_gates_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_scoring_model_hard_gates_v1_patch.zip",
+        "source_size_bytes": 47964
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-scoring-model-hard-gates-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T20:55:46Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-test-case-schema-candidate-output-contract-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Test Case Schema + Candidate Output Contract v1",
+      "source": {
+        "source_mtime_ns": 1781902513307272900,
+        "source_name": "routing_signal_scorer_v3_ml_lab_test_case_schema_candidate_output_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_test_case_schema_candidate_output_contract_v1_patch.zip",
+        "source_size_bytes": 48595
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-test-case-schema-candidate-output-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T21:02:43Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-frozen-canon-fixture-format-hash-manifest-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Frozen Canon Fixture Format + Hash Manifest v1",
+      "source": {
+        "source_mtime_ns": 1781902866757019900,
+        "source_name": "routing_signal_scorer_v3_ml_lab_frozen_canon_fixture_format_hash_manifest_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_frozen_canon_fixture_format_hash_manifest_v1_patch.zip",
+        "source_size_bytes": 49475
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-frozen-canon-fixture-format-hash-manifest-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T21:12:29Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-deterministic-runner-skeleton-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Deterministic Runner Skeleton v1",
+      "source": {
+        "source_mtime_ns": 1781903480620511600,
+        "source_name": "routing_signal_scorer_v3_ml_lab_deterministic_runner_skeleton_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_deterministic_runner_skeleton_v1_patch.zip",
+        "source_size_bytes": 81408
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-deterministic-runner-skeleton-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T21:30:23Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-self-validation-gate-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Self-Validation Gate v1",
+      "source": {
+        "source_mtime_ns": 1781904586514953400,
+        "source_name": "routing_signal_scorer_v3_ml_lab_self_validation_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_self_validation_gate_v1_patch.zip",
+        "source_size_bytes": 85268
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-self-validation-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T21:54:39Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-alpha-corpus-seed-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Alpha Corpus Seed v1",
+      "source": {
+        "source_mtime_ns": 1781906055153653800,
+        "source_name": "routing_signal_scorer_v3_ml_lab_alpha_corpus_seed_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_alpha_corpus_seed_v1_patch.zip",
+        "source_size_bytes": 55870
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-alpha-corpus-seed-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T22:13:09Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-offline-observability-experiment-report-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Offline Observability + Experiment Report v1",
+      "source": {
+        "source_mtime_ns": 1781907155667573500,
+        "source_name": "routing_signal_scorer_v3_ml_lab_offline_observability_experiment_report_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_offline_observability_experiment_report_v1_patch.zip",
+        "source_size_bytes": 54374
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-offline-observability-experiment-report-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T23:16:49Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-candidate-evaluation-harness-interface-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Candidate Evaluation Harness Interface v1",
+      "source": {
+        "source_mtime_ns": 1781910961433115600,
+        "source_name": "routing_signal_scorer_v3_ml_lab_candidate_evaluation_harness_interface_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_candidate_evaluation_harness_interface_v1_patch.zip",
+        "source_size_bytes": 98738
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-candidate-evaluation-harness-interface-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T23:52:39Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-corpus-v1-expansion-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Corpus V1 Expansion v1",
+      "source": {
+        "source_mtime_ns": 1781912872846418800,
+        "source_name": "routing_signal_scorer_v3_ml_lab_corpus_v1_expansion_v1_patch_freeze_hint_repaired.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_corpus_v1_expansion_v1_patch_freeze_hint_repaired.zip",
+        "source_size_bytes": 65921
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-corpus-v1-expansion-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-19T23:57:35Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-error-canonization-intake-spec-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Error Canonization Intake Spec v1",
+      "source": {
+        "source_mtime_ns": 1781913420400596200,
+        "source_name": "routing_signal_scorer_v3_ml_lab_error_canonization_intake_spec_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_error_canonization_intake_spec_v1_patch.zip",
+        "source_size_bytes": 55945
+      },
+      "used_freeze_id": "freeze-20260619-routing-signal-scorer-v3-ml-lab-error-canonization-intake-spec-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T00:04:33Z",
+      "feature_id": "routing-signal-scorer-v3-ml-lab-closure-next-phase-readiness-review-v1",
+      "feature_title": "Routing Signal Scorer v3 ML LAB Closure / Next-Phase Readiness Review v1",
+      "source": {
+        "source_mtime_ns": 1781913836204664200,
+        "source_name": "routing_signal_scorer_v3_ml_lab_closure_next_phase_readiness_review_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_ml_lab_closure_next_phase_readiness_review_v1_patch.zip",
+        "source_size_bytes": 57328
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-ml-lab-closure-next-phase-readiness-review-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T00:11:10Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-controlled-non-runtime-candidate-reliability-test-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-0 Controlled Non-Runtime ML/Router Candidate Reliability Test Plan v1",
+      "source": {
+        "source_mtime_ns": 1781914211636898200,
+        "source_name": "routing_signal_scorer_v3_mlrt_controlled_non_runtime_candidate_reliability_test_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_controlled_non_runtime_candidate_reliability_test_plan_v1_patch.zip",
+        "source_size_bytes": 46540
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-0-controlled-non-runtime-ml-router-candidate-reliability-test-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T00:17:08Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-reliability-input-output-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-1 Candidate Reliability Input/Output Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781914593586754000,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_reliability_input_output_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_reliability_input_output_contract_plan_v1_patch.zip",
+        "source_size_bytes": 47246
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-1-candidate-reliability-input-output-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T00:59:27Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-package-intake-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-2 Candidate Package Intake Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781917126372969000,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_package_intake_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_package_intake_contract_plan_v1_patch.zip",
+        "source_size_bytes": 48113
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-2-candidate-package-intake-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:05:27Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-static-review-checklist-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-3 Candidate Static Review Checklist Plan v1",
+      "source": {
+        "source_mtime_ns": 1781917489190223400,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_static_review_checklist_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_static_review_checklist_plan_v1_patch.zip",
+        "source_size_bytes": 50365
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-3-candidate-static-review-checklist-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:25:13Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-4-candidate-static-review-evidence-envelope-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-4 Candidate Static Review Evidence Envelope Plan v1",
+      "source": {
+        "source_mtime_ns": 1781918676186616600,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_static_review_evidence_envelope_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_static_review_evidence_envelope_plan_v1_patch.zip",
+        "source_size_bytes": 50318
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-4-candidate-static-review-evidence-envelope-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:35:29Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-5-candidate-static-review-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-5 Candidate Static Review Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781919282885350900,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_static_review_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_static_review_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 50405
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-5-candidate-static-review-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:41:57Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-6-candidate-non-runtime-dry-run-readiness-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-6 Candidate Non-Runtime Dry-Run Readiness Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781919650662465400,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_readiness_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_readiness_gate_plan_v1_patch.zip",
+        "source_size_bytes": 51756
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-6-candidate-non-runtime-dry-run-readiness-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:47:55Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-protocol-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-7 Candidate Non-Runtime Dry-Run Protocol Plan v1",
+      "source": {
+        "source_mtime_ns": 1781920044868828800,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_protocol_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_protocol_plan_v1_patch.zip",
+        "source_size_bytes": 51563
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-7-candidate-non-runtime-dry-run-protocol-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T01:56:07Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-input-set-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-8 Candidate Non-Runtime Dry-Run Input Set Plan v1",
+      "source": {
+        "source_mtime_ns": 1781920514650640600,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_input_set_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_input_set_plan_v1_patch.zip",
+        "source_size_bytes": 52155
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-8-candidate-non-runtime-dry-run-input-set-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T02:20:05Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-output-capture-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-9 Candidate Non-Runtime Dry-Run Output Capture Plan v1",
+      "source": {
+        "source_mtime_ns": 1781921965942842200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_plan_v1_patch.zip",
+        "source_size_bytes": 51421
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-9-candidate-non-runtime-dry-run-output-capture-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T02:36:32Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-output-capture-rejection-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-10 Candidate Non-Runtime Dry-Run Output Capture Rejection Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781922907008815200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_rejection_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_rejection_gate_plan_v1_patch.zip",
+        "source_size_bytes": 51883
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-10-candidate-non-runtime-dry-run-output-capture-rejection-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T02:42:20Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-output-capture-contract-conformance-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-11 Candidate Non-Runtime Dry-Run Output Capture Contract-Conformance Plan v1",
+      "source": {
+        "source_mtime_ns": 1781923281725381500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_contract_conformance_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_output_capture_contract_conformance_plan_v1_patch.zip",
+        "source_size_bytes": 52689
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-11-candidate-non-runtime-dry-run-output-capture-contract-conformance-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T02:51:48Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-non-runtime-dry-run-contract-conformance-rejection-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-12 Candidate Non-Runtime Dry-Run Contract-Conformance Rejection Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781923802696286500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_contract_conformance_rejection_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_non_runtime_dry_run_contract_conformance_rejection_gate_plan_v1_patch.zip",
+        "source_size_bytes": 53581
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-12-candidate-non-runtime-dry-run-contract-conformance-rejection-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T02:59:19Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-execution-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-13 Candidate First Non-Runtime Dry-Run Execution Plan v1",
+      "source": {
+        "source_mtime_ns": 1781924304004448900,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_execution_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_execution_plan_v1_patch.zip",
+        "source_size_bytes": 53153
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-13-candidate-first-non-runtime-dry-run-execution-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:04:43Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-skeleton-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-14 Candidate First Non-Runtime Dry-Run Harness Skeleton Plan v1",
+      "source": {
+        "source_mtime_ns": 1781924645663416400,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_skeleton_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_skeleton_plan_v1_patch.zip",
+        "source_size_bytes": 53344
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-14-candidate-first-non-runtime-dry-run-harness-skeleton-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:28:27Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-15 Candidate First Non-Runtime Dry-Run Harness Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781926062184809700,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_contract_plan_v1_patch.zip",
+        "source_size_bytes": 53982
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-15-candidate-first-non-runtime-dry-run-harness-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:38:28Z",
+      "feature_id": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_implementation_boundary_plan_v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-16 Candidate First Non-Runtime Dry-Run Harness Implementation Boundary Plan v1",
+      "source": {},
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-16-candidate-first-non-runtime-dry-run-harness-implementation-boundary-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:42:55Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-implementation-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-17 Candidate First Non-Runtime Dry-Run Harness Stub Implementation Plan v1",
+      "source": {
+        "source_mtime_ns": 1781926918845677200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_implementation_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_implementation_plan_v1_patch.zip",
+        "source_size_bytes": 55835
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-17-candidate-first-non-runtime-dry-run-harness-stub-implementation-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:46:09Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-source-surface-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-18 Candidate First Non-Runtime Dry-Run Harness Stub Source Surface Plan v1",
+      "source": {
+        "source_mtime_ns": 1781927126817350400,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_source_surface_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_source_surface_plan_v1_patch.zip",
+        "source_size_bytes": 55945
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-18-candidate-first-non-runtime-dry-run-harness-stub-source-surface-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:49:43Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-19 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781927339363168200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_contract_plan_v1_patch.zip",
+        "source_size_bytes": 56622
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-19-candidate-first-non-runtime-dry-run-harness-stub-static-interface-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:53:46Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-abort-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-20 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Abort Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781927592355786000,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_abort_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_abort_contract_plan_v1_patch.zip",
+        "source_size_bytes": 57360
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-20-candidate-first-non-runtime-dry-run-harness-stub-static-interface-abort-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T03:58:23Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-rejection-contract-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-21 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Rejection Contract Plan v1",
+      "source": {
+        "source_mtime_ns": 1781927865104088600,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_rejection_contract_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_rejection_contract_plan_v1_patch.zip",
+        "source_size_bytes": 58221
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-21-candidate-first-non-runtime-dry-run-harness-stub-static-interface-rejection-contract-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:04:05Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-test-start-readiness-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-22 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Test-Start Readiness Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781928195293641100,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_test_start_readiness_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_test_start_readiness_gate_plan_v1_patch.zip",
+        "source_size_bytes": 59120
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-22-candidate-first-non-runtime-dry-run-harness-stub-static-interface-test-start-readiness-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:08:23Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-implementation-boundary-confirmation-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-23 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Source/Implementation Boundary Confirmation Plan v1",
+      "source": {
+        "source_mtime_ns": 1781928472075106700,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_source_implementation_boundary_confirmation_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_source_implementation_boundary_confirmation_plan_v1_patch.zip",
+        "source_size_bytes": 59944
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-23-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-implementation-boundary-confirmation-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:13:23Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-file-authorization-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-24 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Source File Authorization Plan v1",
+      "source": {
+        "source_mtime_ns": 1781928755265459600,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_source_file_authorization_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_source_file_authorization_plan_v1_patch.zip",
+        "source_size_bytes": 60019
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-24-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-file-authorization-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:17:20Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-stub-source-creation-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-25 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Stub Source Creation Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781928999856431100,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_stub_source_creation_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_stub_source_creation_gate_plan_v1_patch.zip",
+        "source_size_bytes": 59739
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-25-candidate-first-non-runtime-dry-run-harness-stub-static-interface-stub-source-creation-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:20:44Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-26 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Plan v1",
+      "source": {
+        "source_mtime_ns": 1781929189256855500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_plan_v1_patch.zip",
+        "source_size_bytes": 59953
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-26-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:24:12Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-authorization-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-27 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Authorization Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781929416038237800,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_authorization_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_authorization_gate_plan_v1_patch.zip",
+        "source_size_bytes": 60792
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-27-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-authorization-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:28:00Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-28 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Plan v1",
+      "source": {
+        "source_mtime_ns": 1781929621655999500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_plan_v1_patch.zip",
+        "source_size_bytes": 61877
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-28-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T04:39:22Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-29 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Safety Review Plan v1",
+      "source": {
+        "source_mtime_ns": 1781929892029048500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_safety_review_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_safety_review_plan_v1_patch.zip",
+        "source_size_bytes": 63239
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-29-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T16:41:48Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-30 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Safety Review Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781930605858685300,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_safety_review_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_safety_review_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 64182
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-30-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T16:49:46Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-31 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Final Human Review Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781974007058054300,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_human_review_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_human_review_gate_plan_v1_patch.zip",
+        "source_size_bytes": 64731
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-31-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T16:57:44Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-32 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Final Human Review Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781974625475226200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_human_review_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_human_review_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 64626
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-32-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T17:24:28Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-33 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Final Source Creation Authorization Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781976227770363000,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_source_creation_authorization_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_source_creation_authorization_gate_plan_v1_patch.zip",
+        "source_size_bytes": 65347
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-33-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T17:29:50Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-34 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Final Source Creation Authorization Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781976535856898900,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_source_creation_authorization_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_final_source_creation_authorization_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 65976
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-34-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T17:36:00Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-35 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Plan v1",
+      "source": {
+        "source_mtime_ns": 1781976921511187300,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_plan_v1_patch.zip",
+        "source_size_bytes": 64908
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-35-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T17:43:19Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-36 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Safety Review Plan v1",
+      "source": {
+        "source_mtime_ns": 1781977353502347500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_safety_review_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_safety_review_plan_v1_patch.zip",
+        "source_size_bytes": 65784
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-36-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T17:54:43Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-37 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Safety Review Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781978025952456100,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_safety_review_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_safety_review_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 66366
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-37-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:01:15Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-38 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Final Human Review Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781978446345641500,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_final_human_review_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_final_human_review_gate_plan_v1_patch.zip",
+        "source_size_bytes": 66733
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-38-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:17:02Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-39 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Final Human Review Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781978711406536400,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_final_human_review_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_final_human_review_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 67554
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-39-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:22:12Z",
+      "feature_id": "routing-signal-scorer-v3-mlrt-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-execution-readiness-plan-v1",
+      "feature_title": "Routing Signal Scorer v3 MLRT-40 Candidate First Non-Runtime Dry-Run Harness Stub Static Interface Minimal Stub Source File Creation Patch Controlled Minimal Source File Creation Patch Execution Readiness Plan v1",
+      "source": {
+        "source_mtime_ns": 1781979690160796200,
+        "source_name": "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_execution_readiness_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_stub_static_interface_minimal_stub_source_file_creation_patch_controlled_minimal_source_file_creation_patch_execution_readiness_plan_v1_patch.zip",
+        "source_size_bytes": 68085
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-v3-mlrt-40-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-execution-readiness-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:38:38Z",
+      "feature_id": "rss-mlrt41-execution-readiness-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-41 Execution Readiness Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781980702596648300,
+        "source_name": "rss_mlrt41_freeze_hint_v1.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt41_freeze_hint_v1.zip",
+        "source_size_bytes": 1733
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-41-execution-readiness-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:47:51Z",
+      "feature_id": "rss-mlrt42-execution-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-42 Execution Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781981225674460200,
+        "source_name": "rss_mlrt42_execution_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt42_execution_gate_plan_v1_patch.zip",
+        "source_size_bytes": 65663
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-42-execution-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T18:52:50Z",
+      "feature_id": "rss-mlrt43-execution-gate-outcome-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-43 Execution Gate Outcome Plan v1",
+      "source": {
+        "source_mtime_ns": 1781981534044633100,
+        "source_name": "rss_mlrt43_execution_gate_outcome_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt43_execution_gate_outcome_plan_v1_patch.zip",
+        "source_size_bytes": 66214
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-43-execution-gate-outcome-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:00:11Z",
+      "feature_id": "rss-mlrt44-source-creation-auth-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-44 Source Creation Authorization Plan v1",
+      "source": {
+        "source_mtime_ns": 1781981973075876500,
+        "source_name": "rss_mlrt44_source_creation_auth_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt44_source_creation_auth_plan_v1_patch.zip",
+        "source_size_bytes": 66459
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-44-source-creation-authorization-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:03:57Z",
+      "feature_id": "rss-mlrt45-source-creation-auth-outcome-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-45 Source Creation Authorization Outcome Plan v1",
+      "source": {
+        "source_mtime_ns": 1781982188027482100,
+        "source_name": "rss_mlrt45_source_creation_auth_outcome_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt45_source_creation_auth_outcome_plan_v1_patch.zip",
+        "source_size_bytes": 66935
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-45-source-creation-authorization-outcome-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:08:19Z",
+      "feature_id": "rss-mlrt46-source-creation-auth-outcome-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-46 Source Creation Authorization Outcome Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781982452404381400,
+        "source_name": "rss_mlrt46_source_creation_auth_outcome_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt46_source_creation_auth_outcome_gate_plan_v1_patch.zip",
+        "source_size_bytes": 67517
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-46-source-creation-authorization-outcome-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:20:43Z",
+      "feature_id": "rss-mlrt47-source-creation-final-review-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-47 Source Creation Final Human Review Plan v1",
+      "source": {
+        "source_mtime_ns": 1781983203267193300,
+        "source_name": "rss_mlrt47_source_creation_final_review_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt47_source_creation_final_review_plan_v1_patch.zip",
+        "source_size_bytes": 67879
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-47-source-creation-final-human-review-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:31:11Z",
+      "feature_id": "rss-mlrt48-controlled-minimal-source-creation-v1",
+      "feature_title": "Routing Signal Scorer MLRT-48 Controlled Minimal Source Creation v1",
+      "source": {
+        "source_mtime_ns": 1781983793200426400,
+        "source_name": "rss_mlrt48_controlled_minimal_source_creation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt48_controlled_minimal_source_creation_v1_patch.zip",
+        "source_size_bytes": 69170
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-48-controlled-minimal-source-creation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:35:00Z",
+      "feature_id": "rss-mlrt49-static-boundary-test-v1",
+      "feature_title": "Routing Signal Scorer MLRT-49 Static Boundary Test v1",
+      "source": {
+        "source_mtime_ns": 1781984055028973700,
+        "source_name": "rss_mlrt49_static_boundary_test_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt49_static_boundary_test_v1_patch.zip",
+        "source_size_bytes": 67843
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-49-static-boundary-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:41:49Z",
+      "feature_id": "rss-mlrt50-non-runtime-harness-smoke-test-v1",
+      "feature_title": "Routing Signal Scorer MLRT-50 Non-Runtime Harness Smoke Test v1",
+      "source": {
+        "source_mtime_ns": 1781984474320783100,
+        "source_name": "rss_mlrt50_non_runtime_harness_smoke_test_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt50_non_runtime_harness_smoke_test_v1_patch.zip",
+        "source_size_bytes": 68283
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-50-non-runtime-harness-smoke-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T19:53:32Z",
+      "feature_id": "rss-mlrt51-candidate-evaluation-harness-self-test-v1",
+      "feature_title": "Routing Signal Scorer MLRT-51 Candidate Evaluation Harness Self-Test v1",
+      "source": {
+        "source_mtime_ns": 1781985163027132300,
+        "source_name": "rss_mlrt51_candidate_evaluation_harness_self_test_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt51_candidate_evaluation_harness_self_test_v1_patch.zip",
+        "source_size_bytes": 69929
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-51-candidate-evaluation-harness-self-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T20:45:25Z",
+      "feature_id": "rss-mlrt52-lab-reliability-fixed-cases-v1",
+      "feature_title": "Routing Signal Scorer MLRT-52 Lab Reliability Test Against Fixed Cases v1",
+      "source": {
+        "source_mtime_ns": 1781988282964239700,
+        "source_name": "rss_mlrt52_lab_reliability_fixed_cases_v1_freeze_form_intake.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt52_lab_reliability_fixed_cases_v1_freeze_form_intake.zip",
+        "source_size_bytes": 2398
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-52-lab-reliability-test-against-fixed-cases-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T20:49:48Z",
+      "feature_id": "rss-mlrt53-training-learning-governance-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-53 Training Learning Governance Plan v1",
+      "source": {
+        "source_mtime_ns": 1781988550415338300,
+        "source_name": "rss_mlrt53_training_learning_governance_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt53_training_learning_governance_plan_v1_patch.zip",
+        "source_size_bytes": 71595
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-53-training-learning-governance-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T20:57:25Z",
+      "feature_id": "rss-mlrt54-training-data-boundary-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-54 Training Data Boundary Plan v1",
+      "source": {
+        "source_mtime_ns": 1781989005871067500,
+        "source_name": "rss_mlrt54_training_data_boundary_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt54_training_data_boundary_plan_v1_patch.zip",
+        "source_size_bytes": 72940
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-54-training-data-boundary-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:03:01Z",
+      "feature_id": "rss-mlrt55-gold-registry-mutation-gate-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-55 Gold Registry Mutation Gate Plan v1",
+      "source": {
+        "source_mtime_ns": 1781989339669878600,
+        "source_name": "rss_mlrt55_gold_registry_mutation_gate_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt55_gold_registry_mutation_gate_plan_v1_patch.zip",
+        "source_size_bytes": 73749
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-55-gold-registry-mutation-gate-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:07:12Z",
+      "feature_id": "rss-mlrt56-offline-evaluation-protocol-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-56 Offline Evaluation Protocol Plan v1",
+      "source": {
+        "source_mtime_ns": 1781989602866621900,
+        "source_name": "rss_mlrt56_offline_evaluation_protocol_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt56_offline_evaluation_protocol_plan_v1_patch.zip",
+        "source_size_bytes": 74367
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-56-offline-evaluation-protocol-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:13:01Z",
+      "feature_id": "rss-mlrt57-calibration-only-dry-run-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-57 Calibration-Only Dry-Run Plan v1",
+      "source": {
+        "source_mtime_ns": 1781989934825964400,
+        "source_name": "rss_mlrt57_calibration_only_dry_run_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt57_calibration_only_dry_run_plan_v1_patch.zip",
+        "source_size_bytes": 75106
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-57-calibration-only-dry-run-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:17:36Z",
+      "feature_id": "rss-mlrt58-learning-sandbox-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-58 Learning Sandbox Plan v1",
+      "source": {
+        "source_mtime_ns": 1781990210034799800,
+        "source_name": "rss_mlrt58_learning_sandbox_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt58_learning_sandbox_plan_v1_patch.zip",
+        "source_size_bytes": 75848
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-58-learning-sandbox-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:21:56Z",
+      "feature_id": "rss-mlrt59-first-controlled-learning-experiment-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-59 First Controlled Learning Experiment Plan v1",
+      "source": {
+        "source_mtime_ns": 1781990466547428600,
+        "source_name": "rss_mlrt59_first_controlled_learning_experiment_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt59_first_controlled_learning_experiment_plan_v1_patch.zip",
+        "source_size_bytes": 76917
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-59-first-controlled-learning-experiment-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:28:42Z",
+      "feature_id": "rss-mlrt60-gold-registry-schema-proposal-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-60 Gold Registry Schema Proposal Plan v1",
+      "source": {
+        "source_mtime_ns": 1781990889895577200,
+        "source_name": "rss_mlrt60_gold_registry_schema_proposal_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt60_gold_registry_schema_proposal_plan_v1_patch.zip",
+        "source_size_bytes": 77764
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-60-gold-registry-schema-proposal-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:36:20Z",
+      "feature_id": "rss-mlrt61-router-prompt-selection-offline-evaluation-case-schema-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-61 Router Prompt Selection Offline Evaluation Case Schema Plan v1",
+      "source": {
+        "source_mtime_ns": 1781991346744316600,
+        "source_name": "rss_mlrt61_router_prompt_selection_offline_evaluation_case_schema_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt61_router_prompt_selection_offline_evaluation_case_schema_plan_v1_patch.zip",
+        "source_size_bytes": 78654
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-61-router-prompt-selection-offline-evaluation-case-schema-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:40:35Z",
+      "feature_id": "rss-mlrt62-router-prompt-selection-fixed-case-set-format-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-62 Router Prompt Selection Fixed Case Set Format Plan v1",
+      "source": {
+        "source_mtime_ns": 1781991602593061300,
+        "source_name": "rss_mlrt62_router_prompt_selection_fixed_case_set_format_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt62_router_prompt_selection_fixed_case_set_format_plan_v1_patch.zip",
+        "source_size_bytes": 78996
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-62-router-prompt-selection-fixed-case-set-format-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:44:28Z",
+      "feature_id": "rss-mlrt63-router-prompt-selection-fixed-case-set-static-validation-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-63 Router Prompt Selection Fixed Case Set Static Validation Plan v1",
+      "source": {
+        "source_mtime_ns": 1781991827341686000,
+        "source_name": "rss_mlrt63_router_prompt_selection_fixed_case_set_static_validation_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt63_router_prompt_selection_fixed_case_set_static_validation_plan_v1_patch.zip",
+        "source_size_bytes": 79806
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-63-router-prompt-selection-fixed-case-set-static-validation-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:49:50Z",
+      "feature_id": "rss-mlrt64-router-prompt-selection-non-runtime-offline-evaluation-harness-plan-v1",
+      "feature_title": "Routing Signal Scorer MLRT-64 Router Prompt Selection Non-Runtime Offline Evaluation Harness Plan v1",
+      "source": {
+        "source_mtime_ns": 1781992159218017600,
+        "source_name": "rss_mlrt64_router_prompt_selection_non_runtime_offline_evaluation_harness_plan_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt64_router_prompt_selection_non_runtime_offline_evaluation_harness_plan_v1_patch.zip",
+        "source_size_bytes": 80845
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-64-router-prompt-selection-non-runtime-offline-evaluation-harness-plan-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T21:55:01Z",
+      "feature_id": "rss-mlrt65-first-controlled-offline-ml-prompt-selection-test-v1",
+      "feature_title": "Routing Signal Scorer MLRT-65 First Controlled Offline ML Prompt-Selection Test v1",
+      "source": {
+        "source_mtime_ns": 1781992464164513400,
+        "source_name": "rss_mlrt65_first_controlled_offline_ml_prompt_selection_test_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt65_first_controlled_offline_ml_prompt_selection_test_v1_patch.zip",
+        "source_size_bytes": 81340
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-65-first-controlled-offline-ml-prompt-selection-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T22:00:26Z",
+      "feature_id": "rss-mlrt66-controlled-offline-ml-prompt-selection-test-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-66 Controlled Offline ML Prompt-Selection Test Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781992784136748000,
+        "source_name": "rss_mlrt66_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt66_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 80990
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-66-controlled-offline-ml-prompt-selection-test-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T22:09:14Z",
+      "feature_id": "rss-mlrt67-second-controlled-offline-ml-prompt-selection-test-v1",
+      "feature_title": "Routing Signal Scorer MLRT-67 Second Controlled Offline ML Prompt-Selection Test v1",
+      "source": {
+        "source_mtime_ns": 1781993305528049000,
+        "source_name": "rss_mlrt67_second_controlled_offline_ml_prompt_selection_test_v1_freeze_form_intake.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt67_second_controlled_offline_ml_prompt_selection_test_v1_freeze_form_intake.zip",
+        "source_size_bytes": 3094
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-67-second-controlled-offline-ml-prompt-selection-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T22:21:22Z",
+      "feature_id": "rss-mlrt68-second-controlled-offline-ml-prompt-selection-test-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-68 Second Controlled Offline ML Prompt-Selection Test Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781993928349119500,
+        "source_name": "rss_mlrt68_second_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt68_second_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 81073
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-68-second-controlled-offline-ml-prompt-selection-test-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T22:28:39Z",
+      "feature_id": "rss-mlrt69-expanded-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-69 Expanded Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1781994471558922000,
+        "source_name": "rss_mlrt69_expanded_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt69_expanded_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 83996
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-69-expanded-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T22:34:12Z",
+      "feature_id": "rss-mlrt70-expanded-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-70 Expanded Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781994810930263900,
+        "source_name": "rss_mlrt70_expanded_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt70_expanded_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 83435
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-70-expanded-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:06:08Z",
+      "feature_id": "rss-mlrt71-boundary-negative-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-71 Boundary-Negative Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1781996719148570800,
+        "source_name": "rss_mlrt71_boundary_negative_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt71_boundary_negative_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 86271
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-71-boundary-negative-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:12:56Z",
+      "feature_id": "rss-mlrt72-boundary-negative-controlled-offline-ml-prompt-selection-test-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-72 Boundary-Negative Controlled Offline ML Prompt-Selection Test Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781997131531812500,
+        "source_name": "rss_mlrt72_boundary_negative_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt72_boundary_negative_controlled_offline_ml_prompt_selection_test_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 85514
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-72-boundary-negative-controlled-offline-ml-prompt-selection-test-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:27:45Z",
+      "feature_id": "rss-mlrt73-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-73 Increased-Volume Mixed Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1781998015699783100,
+        "source_name": "rss_mlrt73_increased_volume_mixed_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt73_increased_volume_mixed_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 91190
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-73-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:35:02Z",
+      "feature_id": "rss-mlrt74-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-74 Increased-Volume Mixed Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781998467117280500,
+        "source_name": "rss_mlrt74_increased_volume_mixed_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt74_increased_volume_mixed_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 87001
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-74-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:43:37Z",
+      "feature_id": "rss-mlrt75-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-75 Maximum-Optimized Adversarial Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1781998972252760900,
+        "source_name": "rss_mlrt75_maximum_optimized_adversarial_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt75_maximum_optimized_adversarial_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 92758
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-75-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:47:51Z",
+      "feature_id": "rss-mlrt76-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-76 Maximum-Optimized Adversarial Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781999218149236600,
+        "source_name": "rss_mlrt76_maximum_optimized_adversarial_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt76_maximum_optimized_adversarial_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 87648
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-76-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-20T23:54:43Z",
+      "feature_id": "rss-mlrt77-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-77 Maximum-Optimized Near-Miss Counterfactual Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1781999632611356300,
+        "source_name": "rss_mlrt77_maximum_optimized_near_miss_counterfactual_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt77_maximum_optimized_near_miss_counterfactual_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 93367
+      },
+      "used_freeze_id": "freeze-20260620-routing-signal-scorer-mlrt-77-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:00:16Z",
+      "feature_id": "rss-mlrt78-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-78 Maximum-Optimized Near-Miss Counterfactual Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1781999953887171100,
+        "source_name": "rss_mlrt78_maximum_optimized_near_miss_counterfactual_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt78_maximum_optimized_near_miss_counterfactual_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 89339
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-78-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-19T02:25:02Z"
+  "updated_at_utc": "2026-06-21T00:00:16Z"
 }

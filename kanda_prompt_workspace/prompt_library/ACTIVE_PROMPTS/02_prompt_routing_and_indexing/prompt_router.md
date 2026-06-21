@@ -256,6 +256,47 @@ Rule:
 
 If P0 is not yet validated and frozen, the only safe implementation milestone is P0. Do not implement Pilot, Copilot, prompt loading, persistence, runtime integration, training-data use, batch mode, or Limited Shadow Runtime.
 
+
+
+### RG-LAB-000 post-P12 ML LAB phase entry
+
+Trigger:
+
+```text
+canonize LAB phase
+start LAB after P12
+continue after P12
+go next after P12
+LAB-0
+lab charter
+ML lab/test
+router prompt logic lab
+test ML router prompt logic
+prompt choosing reliability
+continue ML implementation after lab
+```
+
+Load or recommend:
+
+```text
+routing_signal_scorer_v3_lab_phase_entry_router_canon
+routing_signal_scorer_v3_pilot_copilot_phase0_router_canon
+kanda_routing_system_canon
+kanda_box_shielding_canon
+prompt_navigation_index
+GROUP_ASSIMILATION_INDEX
+```
+
+Group to open in Tab 9:
+
+```text
+02_prompt_routing_and_indexing
+```
+
+Rule:
+
+After P12, "next" does not mean direct ML implementation. First canonize LAB entry, then route to LAB-0 only. LAB-0 is documentation-only. Do not create LAB code, schema, fixtures, corpus, runner, candidate harness, prompt loading, persistence, provider calls, embeddings, activation, field-test mode, runtime Pilot, or Copilot behavior.
+
 ### Governance or canon update
 
 Trigger:

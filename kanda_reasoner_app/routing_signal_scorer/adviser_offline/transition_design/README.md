@@ -217,3 +217,106 @@ Next allowed milestone after P6 validation, freeze, startup refresh, and `FREEZE
 P7 does not implement gate evaluation, implementation approval, Pilot candidate creation, callable Pilot behavior, live validation, input processing, output generation, evidence collection, evidence packet generation, simulation execution, reproduction harness execution, gold loading, freeze-memory reading, prompt-library reading, runtime router inspection, route comparison execution, metric calculation, disagreement detection or trust, route projection, recommendation, prompt selection or loading, persistence, human decision recording, approval recording, training-data use, batch mode, Limited Shadow Runtime, Pilot runtime behavior, Copilot behavior, or runtime authority.
 
 Next allowed milestone after P7 validation, freeze, startup refresh, and `FREEZE_MEMORY_STATUS: OK`: P8 - Routing Signal Scorer v3 Non-Runtime Pilot Candidate Implementation v1.
+
+## P8 - Non-Runtime Pilot Candidate Implementation v1
+
+`non_runtime_pilot_candidate.py` defines the first immutable non-runtime Pilot
+candidate record after P7 freeze. It creates static metadata only: candidate
+identity, boundary state, allowed/forbidden capability declarations, predecessor
+precondition declarations, and fixed no-effect constants.
+
+P8 does not implement a live Pilot, Copilot behavior, a callable simulator, live
+validation, input processing, output generation, route projection, route
+comparison execution, prompt selection or loading, prompt-library reading,
+freeze-memory reading, gold loading, persistence, report writing, review queue
+writing, human decision recording, approval recording, provider calls,
+embeddings, training-data use, batch mode, Limited Shadow Runtime, field-test
+activation, definitive enablement, or runtime authority.
+
+The future activation key or maturity on/off behavior belongs to a separate
+Activation Gate Box after lab testing and maturity evidence. P8 only records
+that such activation is blocked in this milestone.
+
+Next allowed milestone after P8 validation, freeze, startup refresh, and
+`FREEZE_MEMORY_STATUS: OK`: P9 - Routing Signal Scorer v3 Non-Runtime Pilot
+Candidate Contract Conformance v1.
+
+## P9 - Non-Runtime Pilot Candidate Contract Conformance v1
+
+P9 adds an immutable static contract-conformance declaration for the P8
+non-runtime Pilot candidate. P9 is a static conformance declaration only. It maps future allowed input fields, future allowed
+non-authoritative output fields, forbidden fields, and fixed invariants without
+creating a live validator.
+
+P9 does not process inputs, generate outputs, transform payloads, run a Pilot,
+run a Copilot, compare routes, load prompts, read prompt libraries, read gold,
+read freeze memory, persist records, write queues, write reports, call providers,
+use embeddings, train from output, run batch mode, activate field testing,
+activate Pilot/Copilot behavior, or grant runtime authority.
+
+Field-test activation and definitive enablement remain deferred to a later
+Activation Gate Box after lab testing and maturity evidence.
+## P10 - Non-Runtime Pilot Candidate Readiness Gate v1
+
+P10 adds an immutable static readiness gate declaration for the non-runtime
+Pilot candidate after P9 freeze. It names readiness prerequisites, blocker
+classes, allowed static outcome names, forbidden outcome names, and fixed
+no-effect constants without creating a live gate evaluator.
+
+P10 does not evaluate readiness, approve readiness, mark the candidate ready,
+create a review packet, start lab testing, start field testing, activate Pilot,
+start Copilot, compare routes, load prompts, read prompt libraries, read
+gold, read freeze memory, persist records, write queues, write reports, call
+providers, use embeddings, train from output, run batch mode, or grant runtime
+authority.
+
+Before any test-lab coding begins, the AI must warn the user and wait for
+explicit confirmation. Field-test activation and definitive enablement remain
+deferred to a later Activation Gate Box after lab testing and maturity evidence.
+
+## P8/P9 regression phrase preservation note
+
+Non-Runtime Pilot Candidate Implementation v1 remains an inert, static candidate record.
+It is not a Pilot runtime. Human governance and the real router remain authoritative.
+The field-test and definitive enablement are not allowed in this milestone.
+The Activation Gate Box after lab testing and maturity evidence remains deferred.
+P9 - Routing Signal Scorer v3 Non-Runtime Pilot Candidate Contract Conformance v1 remains the P8 successor.
+
+Non-Runtime Pilot Candidate Contract Conformance v1 remains a static conformance declaration only.
+It is not a live validator. Field-test activation and definitive enablement remain deferred.
+P10 - Routing Signal Scorer v3 Non-Runtime Pilot Candidate Readiness Gate v1 remains the P9 successor.
+## P11 - Non-Runtime Pilot Candidate Review Evidence Packet v1
+
+P11 adds an immutable static review-evidence packet shape declaration for the
+non-runtime Pilot candidate after P10 freeze. It names the future evidence
+sections that a later governed human-review artifact must contain, but it does
+not collect evidence, build a packet, populate a packet, write reports, persist
+records, write review queues, record human decisions, approve readiness, or
+activate any Pilot/Copilot behavior.
+
+P11 does not start lab testing or field testing. Before any test-lab coding
+begins, the AI must warn the user and wait for explicit confirmation. Field-test
+activation and definitive enablement remain deferred to a later Activation Gate
+Box after lab testing and maturity evidence.
+
+P11 preserves no route comparison execution, no prompt loading, no prompt
+library reading, no gold loading, no freeze-memory reading, no providers, no
+embeddings, no training-data use, no batch mode, no Limited Shadow Runtime, and
+no runtime authority.
+## P12 - Non-Runtime Pilot Phase Closure / Copilot Boundary Entry Gate v1
+
+P12 adds an immutable static closure and entry-gate declaration for the current
+non-runtime Pilot candidate foundation series after P11 freeze. It records that
+P0 through P12 may be considered closed only after P12 validation, local freeze
+write, startup freeze-context refresh, and `FREEZE_MEMORY_STATUS: OK`.
+
+P12 does not implement Copilot, define Copilot scope, approve Copilot boundary,
+start Pilot runtime, mark the ML mature, start lab testing, start field testing,
+create an activation key, load prompts, persist records, compare routes, mutate
+gold or registry data, train from output, run batch mode, or grant route
+authority.
+
+After P12 is frozen, the next safe behavior is STOP. Before any test-lab design
+or coding begins, the AI must warn the user explicitly and wait for
+confirmation. Any Copilot boundary design also requires a separate governed
+scope.

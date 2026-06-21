@@ -16,7 +16,7 @@ Use this file only after `GROUP_ASSIMILATION_INDEX.md` has identified the broad 
 | Folder | Card Path | Responsibility | Prompt Count |
 |---|---|---|---|
 | `01_session_start_and_navigation` | `ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md` | Start the work session, establish minimum context, and control when the AI must request more prompts before acting. | 9 |
-| `02_prompt_routing_and_indexing` | `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md` | Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, and RG-PILOT-000 Pilot/Copilot Phase 0 router canon context. | 7 |
+| `02_prompt_routing_and_indexing` | `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md` | Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, RG-PILOT-000 Pilot/Copilot Phase 0 router canon context, and RG-LAB-000 post-P12 LAB phase entry router canon context. | 8 |
 | `03_governance_freeze_and_handoff` | `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md` | Control validated freeze decisions, governance updates, end-of-chat state transfer, handoff creation, cooperative implementation methodology, freeze-code intake/form review, and pre-output contract gates. | 9 |
 | `04_box_architecture_and_boundaries` | `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md` | Define owner boxes, public contracts, forbidden touches, dependency boundaries, anti-contamination rules, and KBSC box shielding. | 5 |
 | `05_patch_delivery_and_validation` | `ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md` | Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates. | 6 |
@@ -26,7 +26,7 @@ Use this file only after `GROUP_ASSIMILATION_INDEX.md` has identified the broad 
 | `09_python_quality_security_observability` | `ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md` | Guide testing, documentation, resilience, logging, metrics, security, type safety, and validation quality. | 7 |
 | `10_python_api_data_async_config` | `ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md` | Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions. | 4 |
 | `11_productization_and_release_readiness` | `ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md` | Guide release maturity, lifecycle, versioning, deprecation, infrastructure, Kubernetes, SRE, and operational readiness. | 6 |
-| `12_generalized_project_canons` | `ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md` | Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, transform resolvers, data pipelines, and decision tables. | 6 |
+| `12_generalized_project_canons` | `ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md` | Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, practical quick-start help blocks, transform resolvers, data pipelines, and decision tables. | 6 |
 
 
 
@@ -38,6 +38,12 @@ Use for KBSC, box shielding, meaningful milestone protection, and stronger ML pr
 ```
 
 These cards are routing metadata only. They must not become behavioral prompts or replace specialist prompt files.
+
+
+## RG-LAB-000 Post-P12 ML LAB Phase Entry Routing Hint
+
+routing_signal_scorer_v3_lab_phase_entry_router_canon -> ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md
+Use for post-P12 LAB phase entry, LAB-0, ML lab/test, ML router prompt logic reliability testing, and continuation of ML implementation after LAB reliability. After P12, canonize LAB entry first; LAB-0 is the first allowed milestone and is documentation-only.
 
 ## Routing System Canon Routing Hint
 

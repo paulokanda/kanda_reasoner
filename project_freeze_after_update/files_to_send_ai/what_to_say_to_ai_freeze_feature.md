@@ -1,8 +1,8 @@
 # What To Say To AI - Freeze Feature After Update
 
-Generated at UTC: `2026-06-19T02:46:37+00:00`
+Generated at UTC: `2026-06-21T00:00:17+00:00`
 Project: `kanda_reasoner`
-AI-send ZIP: `freeze_feature_ai_send_pack_20260618_234637.zip`
+AI-send ZIP: `freeze_feature_ai_send_pack_20260620_210016.zip`
 
 ## Message to paste to AI
 
@@ -25,7 +25,7 @@ Important rules:
 
 ## Current freeze context
 
-This project currently has 152 frozen feature entry file(s). Read the included freeze state before proposing a new freeze.
+This project currently has 254 frozen feature entry file(s). Read the included freeze state before proposing a new freeze.
 
 ## Files included in the ZIP
 
@@ -177,7 +177,29 @@ This project currently has 152 frozen feature entry file(s). Read the included f
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-routing-signal-scorer-v3-shadow-mode-readiness-gate-for-assistant-boundary-review-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260618-routing-signal-scorer-v3-shadow-observation-review-evidence-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-kanda-patch-delivery-root-drive-zip-staging-canon-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-rg-lab-000-ml-lab-phase-entry-router-canon-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-rg-pilot-000-pilot-copilot-phase-0-router-canon-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-alpha-corpus-seed-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-box-boundary-shielding-manifest-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-candidate-evaluation-harness-interface-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-corpus-v1-expansion-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-deterministic-runner-skeleton-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-error-canonization-intake-spec-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-failure-taxonomy-critical-violation-model-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-frozen-canon-fixture-format-hash-manifest-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-offline-observability-experiment-report-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-phase-boundary-charter-entry-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-risk-control-matrix-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-scoring-model-hard-gates-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-self-validation-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-slo-critical-error-budget-declaration-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-success-criteria-matrix-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-ml-lab-test-case-schema-candidate-output-contract-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-contract-conformance-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-implementation-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-readiness-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-candidate-review-evidence-packet-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-non-runtime-pilot-phase-closure-copilot-boundary-entry-gate-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-boundary-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-copilot-scope-charter-and-entry-gate-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-disagreement-taxonomy-design-v1.md`
@@ -186,6 +208,86 @@ This project currently has 152 frozen feature entry file(s). Read the included f
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-input-output-contract-and-validator-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-review-evidence-design-v1.md`
 - `project_freeze_after_update/frozen_features_memory/entries/freeze-20260619-routing-signal-scorer-v3-pilot-simulation-skeleton-design-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-41-execution-readiness-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-42-execution-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-43-execution-gate-outcome-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-44-source-creation-authorization-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-45-source-creation-authorization-outcome-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-46-source-creation-authorization-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-47-source-creation-final-human-review-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-48-controlled-minimal-source-creation-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-49-static-boundary-test-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-50-non-runtime-harness-smoke-test-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-51-candidate-evaluation-harness-self-test-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-52-lab-reliability-test-against-fixed-cases-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-53-training-learning-governance-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-54-training-data-boundary-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-55-gold-registry-mutation-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-56-offline-evaluation-protocol-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-57-calibration-only-dry-run-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-58-learning-sandbox-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-59-first-controlled-learning-experiment-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-60-gold-registry-schema-proposal-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-61-router-prompt-selection-offline-evaluation-case-schema-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-62-router-prompt-selection-fixed-case-set-format-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-63-router-prompt-selection-fixed-case-set-static-validation-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-64-router-prompt-selection-non-runtime-offline-evaluation-harness-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-65-first-controlled-offline-ml-prompt-selection-test-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-66-controlled-offline-ml-prompt-selection-test-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-67-second-controlled-offline-ml-prompt-selection-test-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-68-second-controlled-offline-ml-prompt-selection-test-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-69-expanded-controlled-offline-ml-prompt-selection-test-suite-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-70-expanded-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-71-boundary-negative-controlled-offline-ml-prompt-selection-test-suite-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-72-boundary-negative-controlled-offline-ml-prompt-selection-test-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-73-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-74-increased-volume-mixed-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-75-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-76-maximum-optimized-adversarial-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-mlrt-77-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-ml-lab-closure-next-phase-readiness-review-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-0-controlled-non-runtime-ml-router-candidate-reliability-test-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-1-candidate-reliability-input-output-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-10-candidate-non-runtime-dry-run-output-capture-rejection-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-11-candidate-non-runtime-dry-run-output-capture-contract-conformance-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-12-candidate-non-runtime-dry-run-contract-conformance-rejection-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-13-candidate-first-non-runtime-dry-run-execution-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-14-candidate-first-non-runtime-dry-run-harness-skeleton-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-15-candidate-first-non-runtime-dry-run-harness-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-16-candidate-first-non-runtime-dry-run-harness-implementation-boundary-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-17-candidate-first-non-runtime-dry-run-harness-stub-implementation-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-18-candidate-first-non-runtime-dry-run-harness-stub-source-surface-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-19-candidate-first-non-runtime-dry-run-harness-stub-static-interface-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-2-candidate-package-intake-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-20-candidate-first-non-runtime-dry-run-harness-stub-static-interface-abort-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-21-candidate-first-non-runtime-dry-run-harness-stub-static-interface-rejection-contract-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-22-candidate-first-non-runtime-dry-run-harness-stub-static-interface-test-start-readiness-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-23-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-implementation-boundary-confirmation-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-24-candidate-first-non-runtime-dry-run-harness-stub-static-interface-source-file-authorization-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-25-candidate-first-non-runtime-dry-run-harness-stub-static-interface-stub-source-creation-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-26-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-27-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-authorization-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-28-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-29-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-3-candidate-static-review-checklist-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-30-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-safety-review-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-31-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-32-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-human-review-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-33-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-34-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-final-source-creation-authorization-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-35-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-36-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-37-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-safety-review-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-38-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-39-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-final-human-review-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-4-candidate-static-review-evidence-envelope-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-40-candidate-first-non-runtime-dry-run-harness-stub-static-interface-minimal-stub-source-file-creation-patch-controlled-minimal-source-file-creation-patch-execution-readiness-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-5-candidate-static-review-outcome-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-6-candidate-non-runtime-dry-run-readiness-gate-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-7-candidate-non-runtime-dry-run-protocol-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-8-candidate-non-runtime-dry-run-input-set-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260620-routing-signal-scorer-v3-mlrt-9-candidate-non-runtime-dry-run-output-capture-plan-v1.md`
+- `project_freeze_after_update/frozen_features_memory/entries/freeze-20260621-routing-signal-scorer-mlrt-78-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1.md`
 
 ## Required AI delivery workflow for freeze patches
 

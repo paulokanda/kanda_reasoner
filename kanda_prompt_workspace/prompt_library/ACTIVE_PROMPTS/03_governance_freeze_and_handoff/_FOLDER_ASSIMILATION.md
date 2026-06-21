@@ -13,14 +13,13 @@ created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
 # Governance, Freeze, and Handoff - Folder Assimilation Card
 
 ## Purpose
-Routing metadata for freeze decisions, governance updates, handoffs, validated state transfer, cooperative implementation methodology, freeze-code intake/form protocol, and pre-output contract gates.
-This card points to specialist prompts. It does not replace them.
+Routing metadata for freeze decisions, governance updates, handoffs, state transfer, methodology, freeze-code intake/forms, and pre-output gates.
 
 ## Use When
-Use when validation output must be classified, a step must be frozen, governance must be updated, a handoff is needed, or consequential implementation methodology must be clarified.
+Use when validation output must be classified, a step frozen, governance updated, a handoff made, or implementation methodology clarified.
 
 ## Do Not Use When
-Do not use for early brainstorming, unvalidated patch acceptance, or as a substitute for specialist prompts.
+Do not use for brainstorming, unvalidated patch acceptance, or as a substitute for specialist prompts.
 
 ## Required For
 - freeze review
@@ -29,7 +28,7 @@ Do not use for early brainstorming, unvalidated patch acceptance, or as a substi
 - validated state transfer
 - consequential implementation methodology discussion
 - freeze-code intake and freeze form correction
-- output-time contract checks for terminal blocks, patch delivery, freeze JSON, validation evidence, and multi-project freeze paths
+- output-time contract checks
 
 ## Optional For
 - roadmap closeout
@@ -70,7 +69,7 @@ Do not use for early brainstorming, unvalidated patch acceptance, or as a substi
 | `workflow_handoff_template` | `workflow_handoff_template.md` | on_request | Generic workflow handoff. |
 | `cooperative_implementation_methodology` | `cooperative_implementation_methodology.md` | on_request | Proposal-before-code, escalation, and methodology discipline. |
 | `freeze_code_intake_and_form_protocol` | `freeze_code_intake_and_form_protocol.md` | on_request | Carries feature-specific freeze data through patch ZIP sidecars and freeze form review. |
-| `pre_output_contract_gates` | `pre_output_contract_gates.md` | on_request | Applies output-time contracts before terminal code, patch delivery, freeze JSON, validation evidence, sidecars, and multi-project path artifacts. |
+| `pre_output_contract_gates` | `pre_output_contract_gates.md` | on_request | Applies output-time contracts before terminal code, patch delivery, freeze JSON, evidence, sidecars, and multi-project paths. |
 
 ## Routing Rule
 Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful.

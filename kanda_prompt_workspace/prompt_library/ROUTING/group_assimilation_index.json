@@ -41,8 +41,8 @@
     {
       "group_id": "02_prompt_routing_and_indexing",
       "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
-      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, semantic-readiness canon for ML/embedding routing work, and RG-PILOT-000 for post-M35 Pilot/Copilot Phase 0 routing work.",
-      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails, or when post-M35 Pilot/Copilot/P0/P-series work is requested.",
+      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, semantic-readiness canon for ML/embedding routing work, RG-PILOT-000 for post-M35 Pilot/Copilot Phase 0 routing work, and RG-LAB-000 for post-P12 ML LAB phase entry routing.",
+      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails, when post-M35 Pilot/Copilot/P0/P-series work is requested, or when post-P12 LAB phase entry / ML router reliability-testing roadmap work is requested.",
       "do_not_use_when": "Do not use as a complete behavior protocol.",
       "required_for": [
         "routing",
@@ -57,13 +57,18 @@
         "Metadata Vector Manifest",
         "post-M35 Pilot/Copilot Phase 0 router canonization",
         "P0 scope charter routing",
-        "Pilot/Copilot P-series milestone routing"
+        "Pilot/Copilot P-series milestone routing",
+        "post-P12 LAB phase entry router canonization",
+        "LAB-0 charter routing",
+        "ML lab/test routing",
+        "ML router prompt logic reliability routing"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompts": [
         "kanda_routing_system_canon.md",
         "routing_signal_scorer_v3_semantic_readiness_canon.md",
         "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
         "project_overlay_selector.md",
         "prompt_navigation_index.md",
         "prompt_router.md",
@@ -282,15 +287,18 @@
     {
       "group_id": "12_generalized_project_canons",
       "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons",
-      "responsibility": "Store generalized reusable project canons, architecture contracts, and desktop help-document layout rules.",
-      "use_when": "When extracting project-agnostic rules from specific projects or creating reusable desktop help-document layout.",
+      "responsibility": "Store generalized reusable project canons, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references.",
+      "use_when": "When extracting project-agnostic rules from specific projects or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules.",
       "do_not_use_when": "Do not place project-specific facts here.",
       "required_for": [
         "generalization",
         "reusable canon",
         "project-agnostic rules",
         "desktop help layout",
-        "help document layout"
+        "help document layout",
+        "help quick start",
+        "non-technical help explanation",
+        "book-grounded help references"
       ],
       "prompt_count": 6,
       "main_prompts": [
@@ -496,6 +504,40 @@
         "kanda_box_shielding_canon"
       ],
       "routing_note": "Pilot/Copilot Phase 0 work is Routed Work Path. Planning may proceed partially, but implementation must wait for RG-PILOT-000, M35 closure evidence, current project files, validation plan, and freeze path. If P0 is not frozen, P0 is the only safe implementation milestone."
+    },
+    {
+      "task_intent": "POST_P12_LAB_PHASE_ENTRY_OR_ML_ROUTER_RELIABILITY",
+      "triggers": [
+        "RG-LAB-000",
+        "LAB phase",
+        "LAB-0",
+        "post-P12 LAB",
+        "start LAB after P12",
+        "continue after P12",
+        "go next after P12",
+        "ML lab/test",
+        "router prompt logic lab",
+        "test ML router prompt logic",
+        "ML router prompt logic reliability",
+        "continue ML implementation after lab"
+      ],
+      "required_groups": [
+        "02_prompt_routing_and_indexing",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "kanda_routing_system_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "optional_groups": [
+        "04_box_architecture_and_boundaries",
+        "03_governance_freeze_and_handoff",
+        "05_patch_delivery_and_validation",
+        "08_python_engineering_core",
+        "09_python_quality_security_observability"
+      ],
+      "minimum_viable_context": "P12 freeze evidence and FREEZE_MEMORY_STATUS OK when continuing after P12; current routing assets and validation path when canonizing RG-LAB-000; current project files and patch boundary when implementation is requested.",
+      "missing_behavior": "HARD_STOP_before_ML_implementation; PARTIAL_for_RG_LAB_000_review; LAB_0_only_after_RG_LAB_000_freeze",
+      "fast_path_allowed": "NO"
     }
   ]
 }

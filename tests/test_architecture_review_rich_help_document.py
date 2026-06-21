@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -57,11 +58,15 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
             self.assertTrue(str(asset.resolve()).startswith(str(HELP_DOCS_ROOT.resolve())))
             if "assets\\drawings" in str(asset) or "assets/drawings" in str(asset):
                 drawing_assets.append(asset)
-            asset_text = asset.read_text(encoding="utf-8")
-            for forbidden in ("https://", "//cdn.", "fonts.googleapis", "tracker"):
-                self.assertNotIn(forbidden, asset_text)
-            self.assertNotIn('href="http://', asset_text)
-            self.assertNotIn("href='http://", asset_text)
+            if asset.suffix == ".png":
+                self.assertGreater(asset.stat().st_size, 100000)
+                self.assertEqual(asset.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
+            else:
+                asset_text = asset.read_text(encoding="utf-8")
+                for forbidden in ("https://", "//cdn.", "fonts.googleapis", "tracker"):
+                    self.assertNotIn(forbidden, asset_text)
+                self.assertNotIn('href="http://', asset_text)
+                self.assertNotIn("href='http://", asset_text)
         self.assertGreaterEqual(len(drawing_assets), 4)
 
     def test_rendered_html_is_local_static_book_style_document(self) -> None:
@@ -72,19 +77,23 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
 
         self.assertIn('<article class="book-page">', html)
         self.assertIn('<link rel="stylesheet" href="../css/book_help.css">', html)
-        self.assertIn('class="chapter-opener"', html)
-        self.assertIn('class="chapter-drawing"', html)
+        self.assertIn('class="chapter-opener', html)
+        self.assertIn('class="chapter-drawing', html)
         self.assertIn('class="section-drawing"', html)
-        self.assertIn("../assets/drawings/architecture_review_opener.svg", html)
-        self.assertIn("../assets/drawings/architecture_review_workflow_cafe.svg", html)
-        self.assertIn("../assets/drawings/architecture_review_issue_catalog_library.svg", html)
-        self.assertIn("../assets/drawings/architecture_review_checklist_airport.svg", html)
+        self.assertIn("../assets/drawings/architecture_review_summary_inspector.png", html)
+        self.assertIn("../assets/drawings/architecture_review_workflow_cafe.png", html)
+        self.assertIn("../assets/drawings/architecture_review_issue_catalog_library.png", html)
+        self.assertIn("../assets/drawings/architecture_review_checklist_airport.png", html)
         self.assertIn("../assets/diagrams/architecture_review_pipeline.svg", html)
         self.assertIn("<figcaption>", html)
-        self.assertIn("<table>", html)
-        self.assertIn("<caption>", html)
+        self.assertNotIn("<table>", html)
+        self.assertIn('class="route-steps"', html)
+        self.assertGreaterEqual(html.count('class="control-card"'), 23)
+        self.assertEqual(html.count('class="issue-card"'), 25)
+        self.assertEqual(html.count('class="reading-map"'), 6)
+        self.assertIn("Table AR-3 is rendered as issue cards", html)
         self.assertIn("Architecture Review reports risks", html)
-        self.assertIn("Further Reading Map", html)
+        self.assertIn("Book Grounding Map", html)
         self.assertIn("running-footer", html)
 
         for forbidden in ("http://", "https://", "//cdn.", "fonts.googleapis", "tracker"):
@@ -97,32 +106,22 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
         self.assertIn("--orange-mid: #f59e0b", css)
         self.assertIn("--orange-rule: #ea580c", css)
         self.assertIn(".callout-warning", css)
+        self.assertIn("overflow-wrap: anywhere", css)
+        self.assertIn("white-space: pre-wrap", css)
+        self.assertIn(".control-card", css)
         self.assertIn('"Minion Pro"', css)
         self.assertIn('"Myriad Pro Cond"', css)
         self.assertIn('"Ubuntu Mono"', css)
 
-        drawing = (HELP_DOCS_ROOT / "assets" / "drawings" / "architecture_review_opener.svg").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn("Architecture Review catches the moving box", drawing)
-        self.assertIn("WRONG ROOM", drawing)
-        self.assertIn("#f59e0b", drawing)
-        self.assertIn("#16a34a", drawing)
-        self.assertIn("Segoe Print", drawing)
-
         for drawing_name in (
-            "architecture_review_workflow_cafe.svg",
-            "architecture_review_issue_catalog_library.svg",
-            "architecture_review_checklist_airport.svg",
+            "architecture_review_summary_inspector.png",
+            "architecture_review_workflow_cafe.png",
+            "architecture_review_issue_catalog_library.png",
+            "architecture_review_checklist_airport.png",
         ):
-            drawing_text = (HELP_DOCS_ROOT / "assets" / "drawings" / drawing_name).read_text(
-                encoding="utf-8"
-            )
-            self.assertTrue(
-                any(orange in drawing_text for orange in ("#f59e0b", "#d97706", "#ea580c"))
-            )
-            self.assertIn("#2563a8", drawing_text)
-            self.assertIn("Segoe Print", drawing_text)
+            drawing_path = HELP_DOCS_ROOT / "assets" / "drawings" / drawing_name
+            self.assertGreater(drawing_path.stat().st_size, 100000)
+            self.assertEqual(drawing_path.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
 
     def test_adviser_to_pilot_bridge_help_uses_local_bitmap_artwork(self) -> None:
         manifest = load_help_manifest()
@@ -192,24 +191,26 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
         assert page is not None
         html = page.rendered_path.read_text(encoding="utf-8")
         source = page.source_path.read_text(encoding="utf-8")
+        html_plain = re.sub(r"<[^>]+>", "", html)
+        source_plain = source.replace("`", "")
 
         for item in payload["errors"]:
-            self.assertIn(str(item["error"]), html)
-        self.assertGreaterEqual(html.count('class="issue-card"'), 25)
+            self.assertIn(str(item["error"]), html_plain)
+            self.assertIn(str(item["error"]), source_plain)
+        self.assertEqual(html.count('class="issue-card"'), 25)
         self.assertGreaterEqual(html.count("<strong>Technical:</strong>"), 25)
         self.assertGreaterEqual(html.count("<strong>In plain English:</strong>"), 25)
-        self.assertGreaterEqual(html.count('class="further-reading"'), 25)
-        self.assertGreaterEqual(source.count("**Technical:**"), 25)
-        self.assertGreaterEqual(source.count("**In plain English:**"), 25)
-        self.assertGreaterEqual(source.count("> **Further reading:**"), 25)
-        self.assertEqual(source.count("Density-rule justification:"), 4)
+        self.assertGreaterEqual(html.count("<strong>If ignored:</strong>"), 25)
+        self.assertIn("Table AR-3 is rendered as issue cards", html)
+        self.assertIn("Table AR-3 is rendered as issue cards", source)
+        self.assertNotIn("Density-rule justification:", source)
 
         issue_cards = html.split('class="issue-card"')[1:]
         self.assertEqual(len(issue_cards), 25)
         for card in issue_cards:
             self.assertIn("<strong>Technical:</strong>", card)
             self.assertIn("<strong>In plain English:</strong>", card)
-            self.assertIn("<strong>Further reading:</strong>", card)
+            self.assertIn("<strong>If ignored:</strong>", card)
 
     def test_path_resolver_rejects_traversal_and_absolute_paths(self) -> None:
         with self.assertRaises(ValueError):
@@ -265,7 +266,7 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
         self.assertIn("desktop_help_document_layout_canon", folder_card)
 
         self.assertIn(
-            "Markdown source -> dual-layer explanations -> beautiful hand-made daily-life cartoon illustrations -> deterministic local HTML/CSS -> desktop Qt help window",
+            "Markdown source -> local-code-grounded dual-audience explanations -> optional official/maintainer/spec/book grounding -> beautiful hand-made daily-life cartoon illustrations -> deterministic local HTML/CSS -> desktop Qt help window",
             prompt_text,
         )
         self.assertIn("Reference notes under `.project_reference/` are not active project prompt artifacts", prompt_text)
@@ -278,13 +279,16 @@ class ArchitectureReviewRichHelpDocumentTests(unittest.TestCase):
         self.assertIn("colorful editorial cartoon line art", prompt_text)
         self.assertIn("funny daily-life", prompt_text)
         self.assertIn("visible hatching", prompt_text)
-        self.assertIn("Hand-lettering enforcement", prompt_text)
-        self.assertIn("Drawing density rule", prompt_text)
-        self.assertIn("perfect vector-icon geometry", prompt_text)
+        self.assertIn("hand-lettered signs", prompt_text)
+        self.assertIn("Drawing Density Rule", prompt_text)
+        self.assertIn("simple schematic vector art", prompt_text)
         self.assertIn("geometric placeholder", prompt_text)
-        self.assertIn("do not copy any reference image", prompt_text)
-        self.assertIn("local PNG or WebP", prompt_text)
+        self.assertIn("copied compositions", prompt_text)
+        self.assertIn("local `PNG` or `WebP`", prompt_text)
         self.assertIn("SVG is reserved for technical diagrams", prompt_text)
+        self.assertIn("Page Boundary And No-Overflow Rule", prompt_text)
+        self.assertIn("No horizontal overflow is allowed", prompt_text)
+        self.assertIn("issue-family catalogs", prompt_text)
 
 
 if __name__ == "__main__":

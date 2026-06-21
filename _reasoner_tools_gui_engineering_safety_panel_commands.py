@@ -47,6 +47,9 @@ class _PanelCommandArgs(list):
         """Return the legacy display command representation."""
         return list(self._display_args)
 
+    def __iter__(self):
+        return iter(self._display_args)
+
     def __eq__(self, other: object) -> bool:
         if isinstance(other, list) and other == self._display_args:
             return True

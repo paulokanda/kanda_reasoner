@@ -58,11 +58,6 @@ def _wire_events(window: object) -> None:
     """Connect Tab 3 widgets to their owner-window methods."""
     _connect(window._run_button, "clicked", window.run_selected_mode)
     _connect(window._stop_button, "clicked", _stop_running_selected_mode_slot(window))
-    _connect(
-        window._insert_missing_docstring_help_button,
-        "clicked",
-        _insert_missing_docstring_help_slot(window),
-    )
     _connect(window._browse_root_button, "clicked", window.browse_root)
     _connect(window._browse_target_button, "clicked", window.browse_target_path)
     _connect(window._clear_target_button, "clicked", _clear_target_path(window))
@@ -124,11 +119,6 @@ def _build_options_group(window: object) -> Any:
 
     group = QGroupBox("Missing Docstring Handler Options")
     layout = QVBoxLayout(group)
-
-    window._insert_missing_docstring_help_button = QPushButton(
-        "Help - Insert Missing Docstring"
-    )
-    layout.addWidget(window._insert_missing_docstring_help_button)
 
     mode_row = QHBoxLayout()
     mode_row.addWidget(QLabel("Mode: Scan"))
@@ -371,18 +361,6 @@ def _build_review_panel(window: object) -> Any:
 
     tabs.addTab(review_tab, "Review and Correct Missing Docstrings")
     return tabs
-
-def _insert_missing_docstring_help_slot(window: object) -> Any:
-    """Return a slot that opens the Insert Missing Docstring help window."""
-    def _open() -> None:
-        module = import_module(
-            "kanda_reasoner_app.tab3_manual_review_runtime"
-            + ".insert_missing_docstring_help_runtime"
-        )
-        module.open_insert_missing_docstring_help(window)
-
-    return _open
-
 
 def _bulk_draft_slot(window: object, scope: str) -> Any:
     """Return a slot that generates drafts for one bulk review scope."""

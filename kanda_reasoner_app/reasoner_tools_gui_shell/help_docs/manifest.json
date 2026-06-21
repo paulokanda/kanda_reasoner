@@ -11,11 +11,105 @@
       "rendered": "rendered/architecture_review.html",
       "css": "css/book_help.css",
       "assets": [
-        "assets/drawings/architecture_review_opener.svg",
-        "assets/drawings/architecture_review_workflow_cafe.svg",
-        "assets/drawings/architecture_review_issue_catalog_library.svg",
-        "assets/drawings/architecture_review_checklist_airport.svg",
+        "assets/drawings/architecture_review_summary_inspector.png",
+        "assets/drawings/architecture_review_workflow_cafe.png",
+        "assets/drawings/architecture_review_issue_catalog_library.png",
+        "assets/drawings/architecture_review_checklist_airport.png",
         "assets/diagrams/architecture_review_pipeline.svg"
+      ]
+    },
+    {
+      "id": "workflow_review",
+      "title": "Workflow Review Help",
+      "tab_id": "workflow_review",
+      "legacy_help_catalog": "tab2_workflow.json",
+      "source": "source/workflow_review.md",
+      "rendered": "rendered/workflow_review.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/workflow_review_opener_station.png",
+        "assets/drawings/workflow_review_sequence_bakery.png",
+        "assets/drawings/workflow_review_contract_post_office.png",
+        "assets/drawings/workflow_review_validation_laundromat.png"
+      ]
+    },
+    {
+      "id": "engineering_safety",
+      "title": "Engineering Safety Help",
+      "tab_id": "engineering_safety",
+      "legacy_help_catalog": "engineering_safety.json",
+      "source": "source/engineering_safety.md",
+      "rendered": "rendered/engineering_safety.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/engineering_safety_opener_workshop.png",
+        "assets/drawings/engineering_safety_command_cafe.png",
+        "assets/drawings/engineering_safety_source_hygiene_tailor.png",
+        "assets/drawings/engineering_safety_triage_clinic.png",
+        "assets/drawings/engineering_safety_preflight_governance.png",
+        "assets/drawings/engineering_safety_symbol_atlas_city_map.png",
+        "assets/drawings/engineering_safety_operating_library.png"
+      ]
+    },
+    {
+      "id": "docstring_assistant",
+      "title": "Docstring Assistant Help",
+      "tab_id": "docstring_assistant",
+      "legacy_help_catalog": "docstring_assistant.json",
+      "source": "source/docstring_assistant.md",
+      "rendered": "rendered/docstring_assistant.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/docstring_assistant_opener_library.png",
+        "assets/drawings/docstring_assistant_scan_post_room.png",
+        "assets/drawings/docstring_assistant_ai_copy_shop.png",
+        "assets/drawings/docstring_assistant_review_tailor.png",
+        "assets/drawings/docstring_assistant_report_clerk.png"
+      ]
+    },
+    {
+      "id": "refactor_report",
+      "title": "Refactor Report Help",
+      "tab_id": "refactor_report",
+      "legacy_help_catalog": "refactor_report.json",
+      "source": "source/refactor_report.md",
+      "rendered": "rendered/refactor_report.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/refactor_report_opener_workshop.png",
+        "assets/drawings/refactor_report_mode_a_scan_workbench.png",
+        "assets/drawings/refactor_report_bundle_shipping_desk.png"
+      ]
+    },
+    {
+      "id": "project_structure_map",
+      "title": "Project Structure Map Help",
+      "tab_id": "project_structure_map",
+      "legacy_help_catalog": "project_structure_map.json",
+      "source": "source/project_structure_map.md",
+      "rendered": "rendered/project_structure_map.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/project_structure_map_opener_city_planning.png",
+        "assets/drawings/project_structure_map_scope_survey.png",
+        "assets/drawings/project_structure_map_run_stations.png",
+        "assets/drawings/project_structure_map_records_workshop.png",
+        "assets/drawings/project_structure_map_evidence_archive.png",
+        "assets/drawings/project_structure_map_zip_shipping.png"
+      ]
+    },
+    {
+      "id": "ai_import_builder",
+      "title": "AI Import Builder Help",
+      "tab_id": "ai_import_builder",
+      "legacy_help_catalog": "ai_import_builder.json",
+      "source": "source/ai_import_builder.md",
+      "rendered": "rendered/ai_import_builder.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/ai_import_builder_opener_shipping_desk.png",
+        "assets/drawings/ai_import_builder_startup_pack_intake.png",
+        "assets/drawings/ai_import_builder_reassembly_validation.png"
       ]
     },
     {

@@ -13,21 +13,23 @@ created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
 # Generalized Project Canons - Folder Assimilation Card
 
 ## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
+Routing metadata for selecting this prompt folder. It does not replace the prompts inside it.
 
 ## Responsibility
-Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, transform resolvers, data pipelines, and decision tables.
+Provide reusable canons for plugins, visual rendering, desktop help layout, quick-start help blocks, transforms, data pipelines, and decision tables.
 
 ## Use When
-Use when the project needs reusable architectural canons that are not Reasoner-specific.
+Use when the project needs reusable architectural canons.
 
 ## Do Not Use When
-Do not use as the initial session kernel or as a generic patch protocol.
+Do not use as the session kernel or patch protocol.
 
 ## Required For
 - plugin package import canon
 - desktop help document layout
+- help quick start
+- non-technical help explanation
+- book-grounded help references
 - shared render engine
 - transform resolver
 - data pipeline invariant
@@ -49,6 +51,9 @@ Do not use as the initial session kernel or as a generic patch protocol.
 - plugin
 - desktop help
 - help document layout
+- help quick start
+- non-technical help
+- book-grounded help
 - visual render
 - transform resolver
 - pipeline invariant
@@ -62,16 +67,14 @@ Do not use as the initial session kernel or as a generic patch protocol.
 | Prompt ID | File Name | Load Type | Short Purpose |
 |---|---|---|---|
 | `data_transform_pipeline_invariants` | `data_transform_pipeline_invariants.md` | on_request | Preserves source truth, canonical working base, and derived runtime output boundaries. |
-| `desktop_help_document_layout_canon` | `desktop_help_document_layout_canon.md` | on_request | Defines local desktop help layout, offline HTML/CSS rendering, and characterful help artwork rules. |
+| `desktop_help_document_layout_canon` | `desktop_help_document_layout_canon.md` | on_request | Defines desktop help layout, quick-start blocks, non-technical artifact explanation, book grounding, and help artwork rules. |
 | `domain_decision_table_template` | `domain_decision_table_template.md` | on_request | Template for converting domain rules into explicit decision tables. |
 | `plugin_package_import_canon` | `plugin_package_import_canon.md` | on_request | Defines safe import and validation rules for plugin packages. |
 | `shared_visual_render_engine_canon` | `shared_visual_render_engine_canon.md` | on_request | Protects shared visual rendering contracts across tools. |
 | `transform_resolver_architecture_contract` | `transform_resolver_architecture_contract.md` | on_request | Defines base identity plus active transform resolver behavior. |
 
 ## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
+Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
 
 ## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+This card may point to prompt files, but must not copy specialist rules from them.

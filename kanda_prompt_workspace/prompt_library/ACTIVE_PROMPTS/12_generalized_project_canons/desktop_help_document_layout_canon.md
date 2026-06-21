@@ -1,11 +1,36 @@
 # Desktop Help Document Layout Canon
 
-Version: 1.0
+Version: 1.7
 Status: Active special prompt candidate
 Prompt ID: desktop_help_document_layout_canon
 Load mode: on_request
 Owner group: 12_generalized_project_canons
-Use: Load when creating or updating local desktop help documents, help-book layout, offline help HTML/CSS, or characterful help illustrations.
+Use: Load when creating or updating local desktop help documents, help-book layout, offline help HTML/CSS, practical quick-start blocks, verified book-grounded explanations, full-width summary-linked cartoons, or hidden artwork metadata records.
+
+## Purpose
+
+Create user-facing help documents that read like compact, dense, and thoroughly explanatory technical book chapters inside a desktop application window. The document must be accurate, local-only, comfortable to read, visually polished, and useful to both technical and non-technical readers.
+
+Every local desktop help document must serve two readers:
+
+- a common non-technical user who needs to understand what the tool does and how to use it;
+- a common non-technical user who needs to understand what each discussed artifact is and why it matters;
+- an engineer or power user who needs dense technical explanation, invariants, artifacts, and failure modes.
+
+The required layout change is intentionally narrow:
+
+1. Keep the stable H1/title as the first identity signal in the first large blue chapter-header section.
+2. Put the page summary/block summary directly below the main H1 inside that same blue chapter-header section.
+3. Put one funny full-width hand-made cartoon immediately below the blue chapter-header section and immediately above the `How To Use This` heading. Full-width means full width of the readable help-page container, never wider than the page.
+4. The cartoon must use a common human daily activity as the analogy for the code or feature idea.
+5. Add a short practical block for common users under the `How To Use This` heading.
+6. Then continue with the dense technical-book explanation.
+
+When the user explicitly asks for a full rebuild, replacement, or "totally new" help file, do not treat the task as a narrow optimization. Back up the current help source/rendered files first, then create a materially expanded help document that satisfies every rule in this canon instead of only patching the missing block.
+
+Dense explanations are divided into two parts: a technical layer for engineers and a plain-English layer for common non-technical users.
+
+This prompt is only for help-file creation and optimization. It must not invade other logic boxes, runtime behavior, generated startup delivery files, freeze memory, or unrelated prompt-library areas.
 
 ## Box Logic Requirement
 
@@ -19,6 +44,15 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 - Preserve public contracts.
 - Validate the active box and any touched external box.
 
+For desktop-help artwork work, the AI must keep these boxes separate:
+
+- Prompt canon box: `kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/` owns this reusable prompt rule and its metadata.
+- Help-doc content box: the owning application `help_docs/` folder owns Markdown, rendered HTML, CSS, local manifests, and local help assets.
+- Runtime GUI box: the owning GUI shell owns buttons, windows, renderers, and user interactions.
+- Optional artwork-generation box: if a project has a local image-generation helper, it owns candidate image generation, staging, and asset manifests only through its public contract.
+
+Prompt-canon updates must not directly edit runtime help files, GUI files, generated startup delivery files, freeze memory, or another box's private internals. Runtime help work may use this prompt as a rule source, but must change only the owning help-doc box unless a separate Box Boundary Audit declares and validates a cross-box touch.
+
 ## Router Placement Rule
 
 This prompt is the active KANDA prompt-library asset for desktop help document layout.
@@ -29,7 +63,7 @@ Active prompt assets live under:
 kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/
 ```
 
-Metadata lives under:
+Metadata belongs under:
 
 ```text
 kanda_prompt_workspace/prompt_library/METADATA/
@@ -44,15 +78,95 @@ When this help-layout rule needs an update, follow the prompt-library lifecycle:
 3. Update this prompt, its metadata, and routing visibility only when needed.
 4. Keep runtime help files under the owning application help-docs box, not inside `.project_reference`.
 
-## Purpose
+## Creation Pipeline
 
-Create user-facing help documents that read like compact technical-book chapters inside a desktop application window. The document must be accurate, local-only, comfortable to read, visually polished, and useful to both technical and non-technical readers.
+Length is determined by the subject's complexity. Do not truncate or abbreviate meaningful explanations. A comprehensive help file is allowed and expected when the feature includes many workflows, artifacts, edge cases, or failure modes.
 
 The canonical creation pipeline is:
 
 ```text
-Markdown source -> dual-layer explanations -> beautiful hand-made daily-life cartoon illustrations -> deterministic local HTML/CSS -> desktop Qt help window
+Markdown source -> local-code-grounded dual-audience explanations -> optional official/maintainer/spec/book grounding -> beautiful hand-made daily-life cartoon illustrations -> deterministic local HTML/CSS -> desktop Qt help window
 ```
+
+## Required Help Page Order
+
+Every help document must follow this order:
+
+1. Stable document title using the real feature or tab name inside the first large blue chapter-header section.
+2. Page summary/block summary directly below the H1 inside that same blue chapter-header section.
+3. Funny hand-made opener illustration rendered as a full-width page image immediately below the blue chapter-header section and immediately above `How To Use This`. Full-width means full width of the readable help-page container, never wider than the page.
+4. Short practical "How To Use This" block for a common non-technical user.
+5. Dense technical and plain-English chapter sections.
+6. Control reference, operating checklist, authority boundary, further reading, and validation rule.
+7. Optional scholarly book references when book grounding was used.
+
+The opener image must explain the idea of the code through the same daily-life metaphor used by the page summary. It must not be decorative filler. When the user requests a new help file or challenges whether the image matches the summary, create or replace the opener artwork instead of reusing an older acceptable image.
+
+The opener image must not be placed inside the blue chapter-header section as a small side image. It must be a full-width image in the reader flow below the blue title/summary section, but it must remain constrained by the help-page content width. The image should be funny, human, and practical: use an ordinary daily activity that a non-technical person understands, then map that activity to the feature's core purpose.
+
+Visible reader-facing help must not contain image-production metadata sections such as `Image note`, `Opener Image Note`, `Prompt summary`, `Density-rule justification`, `Artwork status`, or `Visual-inspection result`. Those records are maintainer metadata only. If the project needs to keep them, store them in source-only comments, sidecar metadata, or validation notes, but do not render them as headings, paragraphs, lists, tables, captions, callouts, or visible prose in the desktop help page.
+
+The practical block must be short and action-oriented. It answers: "What do I do here?" before the document enters dense theory.
+
+The dense body must still provide full dual-audience explanations for every important artifact, event, error, workflow, control, manifest, and boundary.
+
+For a full rebuild, the new dense body must be meaningfully larger and more complete than the prior page when the prior page was thin, partial, or missing required 2.1+ elements. Do not satisfy a rebuild request with only a small insertion.
+
+## Practical Quick-Start Block Rule
+
+Every help document must include a short practical block immediately after the full-width opener cartoon and before dense explanatory sections.
+
+The block title should be one of:
+
+```text
+How To Use This
+Quick Start
+Practical Use
+```
+
+Use the simplest title that matches the feature.
+
+The block must:
+
+- be based on the actual code surface: real buttons, inputs, outputs, modes, generated files, and validation actions;
+- use plain imperative language;
+- explain the primary 3 to 5 user workflows;
+- avoid internals, architecture, edge cases, and failure-mode theory;
+- help a non-technical user understand what the artifact is for before reading the dense chapter.
+
+Example shape:
+
+```markdown
+## How To Use This
+
+1. Choose the input file or project folder.
+2. Select the mode that matches your goal.
+3. Choose the output location.
+4. Run the main action.
+5. Check the log or generated artifact before handing it to another tool or AI.
+```
+
+This block must appear below the main H1/title, below the page summary, and below the full-width opener illustration. The opener illustration must sit directly above this block's heading. The block must not replace the H1. It must not appear above the document title.
+
+## Creation Vs Optimization Decision
+
+Before writing anything, the AI must check whether the target help document already exists in the owning help-doc box: Markdown source, rendered HTML, and manifest entry.
+
+- If no Markdown source exists for this tab, feature, or help topic, run the full Creation Pipeline.
+- If Markdown source already exists, run an Optimization Pass instead of a fresh rewrite.
+- If the human explicitly asks for a full rebuild, replacement, "totally new" help file, stronger book grounding, or new summary-linked cartoon, back up the existing Markdown/rendered help files and run the full Creation Pipeline even if Markdown already exists.
+- Do not modify existing generated help files solely because this prompt was updated. Existing help files should receive the practical quick-start block only when their help pages are next created, repaired, or explicitly optimized.
+- An Optimization Pass must:
+  - diff the current code, feature surface, help source, rendered HTML, manifest entry, and relevant assets;
+  - keep correct, still-accurate sections unchanged;
+  - rewrite only sections that are stale, thin, contradicted by current code, or missing required explanation/artwork records;
+  - add missing dual-layer explanations for any new artifact, feature, error, logic branch, event, or workflow found in the code that has no help coverage yet;
+  - add or update the practical quick-start block when missing, stale, or contradicted by current code;
+  - re-run the Technical-Layer Research Rule and Plain-English Completeness Rule only for sections being added or rewritten, not for sections kept as-is;
+  - re-run book grounding only if a new major subject domain is introduced or if existing book references are inaccurate, hallucinated, or no longer useful;
+  - update the image manifest only if a new major section was added, an old section was removed, an existing image fails the artwork gate, or an unchanged image no longer matches the section analogy;
+  - avoid regenerating artwork for unchanged sections that already pass the artwork gate.
+- State explicitly at the start of the work which mode was selected and why: file absent, file present, missing manifest entry, stale rendered output, requested optimization, or missing practical quick-start.
 
 ## Desktop Format Decision
 
@@ -86,6 +200,27 @@ Plain read-only Qt text widget
 ```
 
 Rendered HTML must remain local-only. Do not reference `http://`, `https://`, CDN assets, trackers, remote images, remote scripts, or remote fonts.
+
+## Source/Rendered Parity Rule
+
+Markdown source is the canonical editable help document. Rendered HTML is the deterministic desktop-view artifact.
+
+- Do not update rendered HTML without updating the Markdown source.
+- Do not leave Markdown source changes unapplied to rendered HTML.
+- Every image, section title, issue family, major explanation, practical quick-start item, further-reading entry, and validation note added to Markdown must also appear in rendered HTML unless a local renderer intentionally transforms it.
+- If the project has an approved renderer, regenerate rendered HTML through that renderer; otherwise update both files in the same patch and validate parity with targeted text checks.
+- The manifest must reference the canonical Markdown source, rendered HTML, shared CSS, and every local asset used by the rendered page.
+
+## Stable Help Header Identity Rule
+
+The top of every tab, feature, or help-topic document must identify the document by its stable tab or feature name, not by the tab's current position in the GUI.
+
+- Markdown H1 must be the canonical tab or feature title without `Help`, `Tab N`, numeric ordering, chapter number, or position label. Use `# Engineering Safety`, not `# Tab 8 Engineering Safety Help`.
+- Rendered opener must use an `<h1>` with the same stable title. The opener's part label may say `KANDA Reasoner Help` or the owning help collection, but it must not say `Tab 1`, `Tab 2`, `Tab N`, `first tab`, `second tab`, or any position-derived label.
+- Do not render `chapter-number` badges, numeric opener labels, or tab-order labels for desktop tab help unless the value is a stable domain identifier unrelated to tab order and the human explicitly requests it. The default for tab help is no opener number.
+- Intro copy must not describe the tab as first, second, third, or any other ordinal position. Refer to the tab by its stable name and purpose.
+- Figure, table, and footer labels must not use tab-order-derived numbers. Use unnumbered labels or stable document prefixes when labels are needed.
+- If existing help is optimized, treat top-header numbering and tab-position wording as stale content and remove it without rewriting unrelated correct sections.
 
 ## Page Design
 
@@ -136,11 +271,61 @@ Typography:
 - Captions: italic serif in subtitle color.
 - Key terms: bold plus amber-orange underline.
 
+## Page Boundary And No-Overflow Rule
+
+Every rendered help page must keep all reader-facing content inside the visible page/container at normal desktop and narrow desktop-help-window widths. Keep the full meaning of the text, tables, captions, code, and cartoons; fix overflow by changing layout, wrapping, splitting, or restructuring content, not by deleting explanation.
+
+Hard boundary rules:
+
+- No horizontal overflow is allowed from `body`, the main help article/page container, section blocks, headings, figures, captions, images, code blocks, route chains, or tables.
+- `document.documentElement.scrollWidth` and the main help-page container's `scrollWidth` must not exceed their `clientWidth` by more than 1 px at representative help-window widths such as 360 px, 768 px, and the normal desktop help width.
+- `full-width` artwork means `width: 100%` of the readable help-page container, with `max-width: 100%`, `height: auto`, and `box-sizing: border-box`; it does not mean `100vw`, a fixed pixel width, or any size that escapes the page margins.
+- Do not use fixed pixel widths, `min-width` values, `white-space: nowrap`, negative margins, viewport-width sizing, or unbounded transforms that can push help content outside the page.
+- Captions, headings, inline code, buttons names, labels, long words, and table cells must wrap cleanly inside their parent boxes.
+
+Long technical text rules:
+
+- Long route chains, import paths, file paths, commands, JSON keys, manifest names, and inline code must have legal break opportunities. Use wrapped prose, multi-line lists, `<wbr>` breakpoints, or CSS such as `overflow-wrap: anywhere` and `word-break: break-word`.
+- Do not render route chains like `Help button -> tab1_architecture.json key -> help_docs manifest -> rendered/architecture_review.html -> local book_help.css` as one unbreakable line. Prefer a wrapped list, a stepped flow, or a preformatted block that wraps inside the page.
+- `pre` and code blocks must wrap or be transformed into a readable wrapped structure. Do not rely on page-level horizontal scrolling to hide an oversized code line.
+
+Table rules:
+
+- Tables must fit the readable page width. Use `width: 100%`, `table-layout: fixed` only when it remains readable, and wrapping rules for `th`, `td`, and inline `code`.
+- Normal help-page tables should stay at four columns or fewer. If a table needs more than four columns, split it into multiple smaller tables, issue cards, definition lists, or per-item sections.
+- Dense control references and issue-family catalogs must not be forced into a six-column table when that makes the table wider than the page. Preserve every field by stacking details inside each row/card or by splitting technical evidence, plain-English meaning, and failure mode into separate reader-friendly blocks.
+- A table caption and every cell must remain inside the page. Do not shrink text below readability, crop content, or hide overflow to pass layout checks.
+
+Validation for any help-page update:
+
+- Inspect the rendered help page at the normal desktop help width and at a narrow width before declaring the page complete.
+- Confirm no text, cartoon, caption, `pre`, inline code route, control-reference table, or issue-family table extends beyond the page boundary.
+- Search the CSS/rendered HTML for risky layout declarations such as fixed large widths, `100vw` inside the help page, unbounded `min-width`, and `white-space: nowrap`; justify or remove each one.
+
+## Layout Research Rule
+
+Before finalizing a new layout or materially changing CSS/layout for a help document, the AI should look at reputable technical-book and editorial-typography design resources for ideas that could improve rhythm, spacing, table legibility, section flow, image placement, quick-start readability, or long-document navigation.
+
+Any idea adopted from that research must:
+
+- stay inside the palette, font stack, and proportions already defined in this canon;
+- improve readability inside a desktop Qt help window, not optimize for a marketing website;
+- be implementable with local-only CSS, with no remote stylesheets, icon fonts, or CDN assets;
+- be recorded with a one-line note of which idea was adopted and why, so the choice is auditable later.
+
+This rule is for refinement only. It must never justify gradients, decorative blobs, card-heavy layouts, hero sections, marketing typography, remote assets, or any pattern already excluded under Page Design.
+
 ## Characterful Artwork Canon
 
 The canonical characterful-help-art look is beautiful hand-made daily-life cartoon illustration: original, colorful, human-feeling editorial artwork that uses everyday situations to explain the technical subject.
 
-Final characterful help art should use local `PNG` or `WebP` when artistic quality matters. SVG is reserved for technical diagrams, simple schematic figures, or fallback sketches unless a true hand-drawn vector illustration meets the same quality bar as bitmap artwork.
+Before creating or accepting an opener illustration, write a one-sentence page summary and identify the summary's daily-life metaphor. The opener illustration must dramatize that exact summary/metaphor pair. For example, if the summary says a tool is "a building inspector checking rooms before a repair crew starts work," the opener must show that inspection scene, not a generic computer, abstract workflow, or unrelated office cartoon.
+
+The daily-life analogy used in a section's Plain-English Completeness Rule explanation is the required creative source for that section's illustration. Do not invent a different metaphor for the image than the one already established in the text. The image dramatizes the same analogy the reader just read; it does not introduce a new one.
+
+Primary characterful help art must use local `PNG` or `WebP` raster artwork when the goal is beautiful hand-made illustration quality. SVG is reserved for technical diagrams, simple schematic figures, or explicit fallback sketches unless the SVG visibly meets the same hand-made editorial quality bar as bitmap artwork.
+
+A geometric SVG made from basic circles, rectangles, straight lines, clean labels, icon-like figures, or simple flat UI-diagram props is not compliant primary characterful artwork. It may be kept only as a fallback sketch, technical diagram, or temporary placeholder, and it must be labeled as such in the image record and manifest.
 
 Artwork rules:
 
@@ -153,34 +338,43 @@ Artwork rules:
 - Use simple white-paper backgrounds.
 - Avoid gradients, glossy digital rendering, stock-illustration polish, copied compositions, signatures, logos, names, exact poses, exact layouts, simple geometric placeholder characters, and diagram props pretending to be illustration.
 
-Every generated characterful drawing should be created from a prompt shaped like this:
+Every primary characterful illustration must visibly contain:
 
-```text
-Create an original beautiful hand-made daily-life cartoon illustration for a serious technical help book.
-Scene: [specific KANDA event/artifact/error].
-Daily-life metaphor: [funny everyday situation related to the subject].
-Style: rich hand-drawn pen-and-ink editorial cartoon with flat color fills, expressive human figures, everyday props,
-white paper background, visible sketch hatching, compact composition, funny but professional, visually finished.
-Hand-drawn enforcement: people and everyday objects must have slightly imperfect pen outlines, organic curves,
-varied stroke rhythm, small asymmetries, and visible hatching; avoid perfect vector-icon geometry, CAD-like objects,
-emoji style, polished clipart, generic stock-illustration shapes, simple geometric placeholder characters, or diagram props
-pretending to be illustration.
-Hand-lettering enforcement: any words drawn inside the scene should look handwritten or marker-written, with uneven
-baseline and human spacing, unless the object is a technical diagram that intentionally needs crisp labels.
-Color: KANDA blue (#0f3460 / #2563a8) and amber-orange (#d97706 / #f59e0b) are dominant teaching colors;
-small secondary colors are allowed for daily-life props. No gradients, no glossy digital art, no stock illustration look.
-Legal/safety: original scene only; do not copy any reference image, signature, character, logo, exact pose, or exact layout.
-Output: local PNG or WebP preferred for characterful artwork; SVG is reserved for technical diagrams or fallback sketches.
-All assets must be local, listed in the manifest, and rendered offline inside the desktop help window.
-```
+- a daily-life scene tied to the technical topic being explained;
+- expressive human posture, hands, faces, and ordinary props;
+- imperfect pen outlines, organic curves, varied stroke rhythm, and small asymmetries;
+- visible hatching, paper/ink texture, or another clearly hand-made surface cue;
+- a non-mechanical composition that does not look like an icon set or UI schematic;
+- local raster output as `PNG` or `WebP`, except for a separately justified true hand-drawn vector illustration;
+- alt text, caption, prompt summary, source resolution or intended display size, and density-rule justification.
 
-Drawing density rule:
+Fail the artwork gate if the final asset looks like any of these:
 
-- Small help files usually need 2 drawings.
-- Normal help files need 2 to 3 drawings.
-- Larger help files with many events, artifacts, or errors may use 4 or more drawings, but only when each image explains a distinct major section.
+- simple schematic vector art;
+- placeholder icon art;
+- simple geometric figures;
+- flat UI diagram pretending to be an illustration;
+- text-only or label-heavy scene;
+- generic stock-style characters;
+- polished corporate vector illustration without hand-made texture;
+- prompt-summary claims such as "hand-drawn" or "visible hatching" that are not visible in the actual rendered asset.
 
-For each image asset, record:
+## Drawing Density Rule
+
+- Every help file gets exactly one opener/title illustration at the top of the document, tied to the overall topic of the page, not to a single subsection.
+- The opener illustration is rendered as a full-width reader-facing image below the first large blue chapter-header section and above the `How To Use This` heading.
+- The blue chapter-header section should contain title identity and summary text, not a small side-mounted opener illustration.
+- The opener illustration must use a funny common human daily-life activity as the analogy for the page summary.
+- Small help files with few artifacts, events, or errors additionally need 2 to 3 body illustrations.
+- Normal help files additionally need 3 to 5 body illustrations.
+- Larger help files with many themes, issue families, artifacts, events, or errors may be longer and may use 6 or more body illustrations when the content genuinely needs them.
+- There is no hard maximum illustration count for a comprehensive help file, but every added body illustration must explain a distinct major section, coherent theme group, or high-value recurring failure mode.
+- Do not use one image to cover unrelated sections.
+- Do not add decorative filler images.
+- Do not reduce necessary explanation depth merely to keep the document short; long help files are allowed when the subject has many meaningful themes.
+- Keep the document readable by grouping related issue families into sections and tying each section's body illustration to the same daily-life analogy used by that section's plain-English explanation.
+
+For each image asset, record maintainer-only metadata:
 
 - subject/event represented;
 - generated asset path;
@@ -188,30 +382,153 @@ For each image asset, record:
 - alt text;
 - one-sentence caption;
 - short image prompt or prompt summary;
-- density-rule justification.
+- density-rule justification;
+- section analogy source;
+- artwork status: `primary_characterful_raster`, `true_hand_drawn_vector`, `technical_diagram`, or `fallback_sketch`;
+- visual-inspection result confirming whether the actual asset passes the hand-made quality gate.
+
+Do not render those records as visible reader-facing help content. Never create visible sections named `Image note`, `Opener Image Note`, `Prompt summary`, `Density-rule justification`, `Artwork status`, or `Visual-inspection result`. Keep the records in hidden source comments, sidecar metadata, validation notes, or a maintainer-only artifact when the project needs them.
+
+## Technical-Layer Research Rule
+
+For every artifact, feature, error, logic branch, event, config key, manifest field, or file contract that the target code surfaces and that the help file will document, the AI must, before drafting the technical explanation:
+
+1. Identify the concrete code element: function, class, file contract, error type, event, config key, manifest field, workflow step, rendered artifact, or boundary rule.
+2. Inspect the actual local code and current help assets first.
+3. Search technical-specific sources for the element's general category when an authoritative description is available.
+4. Add authoritative books only as conceptual grounding when they improve the explanation for a major subject domain.
+5. From that research plus the actual local code, write a technical explanation that covers:
+   - what the element is: role, shape, owner, inputs, and outputs;
+   - why it must be implemented or used correctly within this system: invariant or contract protected;
+   - what concretely happens if it is implemented incorrectly or fails: failure mode, blast radius, and downstream artifacts it may corrupt.
+6. Record which source category grounded the explanation in the Further Reading line.
+
+Source authority order remains:
+
+1. actual local code and existing local help assets;
+2. official language, framework, vendor, API, or standards documentation;
+3. maintainer documentation for the involved library or tool;
+4. relevant RFCs, specs, or stable project documentation;
+5. authoritative books as conceptual grounding;
+6. reputable technical documentation or engineering references;
+7. accepted technical Q&A only as supplemental context.
+
+Books do not replace official documentation, maintainer documentation, standards, local code inspection, or reputable technical references. Books are added for conceptual grounding.
+
+Rendered help remains local-only, so external sources are represented as local reading-map references unless a future governed design approves external links.
+
+## Scholarly Book Grounding Rule
+
+Books are added as conceptual grounding. They do not substitute official docs, maintainer docs, specifications, or local code truth.
+
+Before drafting dense technical explanations for a major subject domain, the AI should identify authoritative books only when they add useful conceptual grounding for the topic.
+
+When the user explicitly asks for book grounding, full scholarly grounding, or five books per discussed feature area, this becomes mandatory:
+
+- identify each major feature area discussed by the help page;
+- verify five authoritative books for each major feature area, unless fewer than five credible books exist for that narrow area;
+- if an exact feature is too project-specific for five books, map it to its closest stable book-grounded domain and state that mapping in the local research notes;
+- books are added in addition to official docs, maintainer docs, specs, reputable references, and local code inspection;
+- the help file must include a "Book Grounding Map" or equivalent section that shows the feature area, the five verified books used, and the concept each book contributed;
+- do not claim the five-book check was done unless the books were actually searched or verified during the work.
+
+When books are used:
+
+- verify the title, author, publisher, and year;
+- do not invent books, editions, authors, ISBNs, or citations;
+- do not use books as a substitute for local code truth;
+- add them to the Further Reading Map or optional References section;
+- use them to strengthen terminology and conceptual framing, not to override implementation facts.
+
+A Vancouver-style numbered book list is allowed when useful, but it is not a substitute for local code references or official documentation references. It is optional unless book grounding was actually used.
+
+## Plain-English Completeness Rule
+
+For the same code element covered by the Technical-Layer Research Rule, the plain-English layer must be a complete, practical explanation for a non-specialist reader, built around one consistent daily-life analogy.
+
+It must explicitly answer:
+
+- what this element is used for, in the analogy's terms, inside the workflow being explained;
+- why it must behave correctly for the rest of the daily-life process to work;
+- what goes wrong, in the analogy's terms, when this element fails or is misused.
+
+The analogy must stay consistent across the technical/plain-English pair and any section illustration tied to that pair. Do not switch metaphors mid-explanation. A major section may use one analogy domain for a group of related issue families, but each explanation inside that group must remain compatible with that domain.
+
+A plain-English paragraph that only restates the technical sentence in simpler words, without covering use, why-correct, and what-if-wrong, does not satisfy this rule.
 
 ## Dual-Audience Explanation Rule
 
-Every event, artifact, implementation step, or error documented in help must include two layers:
+Every event, artifact, implementation step, or error documented in help must include two layers, produced under the Technical-Layer Research Rule and Plain-English Completeness Rule above:
 
 ```text
-Technical: precise implementation meaning, owner, inputs, outputs, invariants, and failure mode.
-In plain English: user-facing consequence, ripple effect, and why it must be corrected.
-Further reading: local in-document reference to source material used to ground the explanation.
+Technical: precise implementation meaning, owner, inputs, outputs, invariants, and failure mode, grounded in local code and appropriate technical sources.
+In plain English: practical daily-life-analogy explanation covering what it is used for, why it must work correctly, and what happens on failure.
+Further reading: local in-document reference to source material used to ground the explanation, including book references only when book grounding was used.
 ```
 
-Plain-English explanations must be grounded in relevant source research and paraphrased. Rendered desktop help remains local-only, so external sources should be represented as local reading-map references unless a future governed design approves external links.
+Rendered desktop help remains local-only, so source material should be represented as local reading-map references unless a future governed design approves external links.
 
 ## Validation Checklist
 
 Before declaring a help-document implementation complete:
 
+- The document opens with stable H1/title identity.
+- The first large blue chapter-header section contains the stable H1/title and the page summary/block summary.
+- The opener image is a funny hand-made full-width illustration below the blue chapter-header section and directly above `How To Use This`.
+- The opener image is tied to a common human daily-life activity that explains the feature's core metaphor.
+- No image-production metadata is visible in rendered reader-facing help content; `Image note`, `Opener Image Note`, `Prompt summary`, `Density-rule justification`, `Artwork status`, and `Visual-inspection result` are source-only or maintainer-only records.
+- The practical quick-start block appears below the main H1/title, page summary, and opener illustration, and before dense technical sections.
+- The quick-start correctly reflects primary workflows based on actual code controls and artifacts.
+- The rendered page has no horizontal overflow: body, article/page container, section blocks, headings, figures, captions, cartoons, `pre`, inline code, route chains, and tables remain inside the page at normal and narrow help-window widths.
+- Full-width cartoons are constrained to the readable help-page container, not the viewport, and never extend beyond page margins.
+- Long route chains, file paths, command examples, JSON keys, and inline code wrap or are restructured into stepped lists or readable blocks.
+- Control-reference tables and issue-family catalogs either fit with readable wrapping or are split into smaller tables, issue cards, definition lists, or per-item sections; no dense table is wider than the page.
 - Manifest loads successfully.
 - Every source, rendered, CSS, drawing, diagram, and screenshot path exists.
 - Rendered HTML references local CSS and local assets only.
 - Renderer rejects path traversal.
 - Fallback rendering remains available without direct WebEngine imports.
 - Palette variables are present in shared CSS.
-- Characterful artwork is local, captioned, alt-texted, prompt-documented, and density-rule justified.
-- Technical and plain-English explanation layers are present for every event, artifact, and error.
+- Markdown source and rendered HTML are in parity for section titles, image references, practical quick-start items, issue families, major explanations, and further-reading entries.
+- Markdown H1, rendered opener, footer, and figure/table labels use stable tab or feature names only; no `Tab N`, ordinal position, `chapter-number` badge, or tab-order-derived number appears as document identity.
+- Primary characterful artwork is local `PNG` or `WebP`, captioned, alt-texted, prompt-documented, density-rule justified, visibly tied to the page summary, and visually inspected against the hand-made quality gate.
+- SVG assets are classified as `technical_diagram`, `fallback_sketch`, or `true_hand_drawn_vector`; no simple geometric SVG is accepted as primary characterful artwork.
+- Any claim such as "beautiful", "hand-made", "hand-drawn", "visible hatching", or "editorial cartoon" is verified against the actual rendered image, not only the filename, alt text, or prompt summary.
+- Technical and plain-English explanation layers are present for every event, artifact, and error being documented.
+- Each technical explanation cites a technical-source research category or a grouped research basis for the coherent issue family group it belongs to.
+- Book references are included only if book grounding was used; any listed books are verified and do not replace official docs or local code truth.
+- When the user requested five-book grounding, each major feature area has five verified books or a recorded reason why that exact area had to be mapped to a broader book-grounded domain.
+- Each plain-English explanation answers what-it-is-for, why-correct, and what-if-wrong using one consistent analogy, also used in that section's illustration when an illustration is present.
 - No runtime or prompt-library test depends on `.project_reference` as an active artifact.
+
+## Box-Shielded Implementation Gate
+
+Before applying this canon to a real help-document update, produce a short Box Boundary Audit:
+
+```text
+Primary box:
+Owner paths:
+Files allowed to change:
+Files out of scope:
+Cross-box touches:
+Public contract used:
+Validation:
+```
+
+Safe defaults:
+
+- Prompt-library strengthening changes only the prompt file and its metadata.
+- Help-doc content changes only source Markdown, rendered HTML, CSS, local manifest entries, and local assets under the owning help-doc box.
+- GUI changes are out of scope unless the task explicitly asks to change the renderer, help button, or tab behavior.
+- Generated startup delivery files, freeze memory, `.project_reference`, and unrelated prompt groups are out of scope unless a separate governed task opens them.
+- An artwork-generation helper may stage candidate assets, but it must not write prompt-library files, mutate GUI runtime files, make routing decisions, or register assets outside the owning help-doc box without explicit public-contract approval.
+
+Fail the shield if the work:
+
+- edits another box's private files without a declared cross-box touch;
+- spreads the same artwork rule into unrelated prompts;
+- changes runtime GUI behavior while only asked for help artwork quality;
+- treats a fallback sketch as validated primary artwork;
+- uses remote images, remote scripts, remote fonts, or CDN resources;
+- leaves text, cartoons, code blocks, route chains, control-reference tables, or issue-family tables wider than the visible help page;
+- updates generated startup files instead of active canonical sources.

@@ -161,6 +161,14 @@ def _format_help_catalog_text(path: Path) -> str:
         lines.append(str(purpose))
         lines.append("")
 
+    display_lines = payload.get("display_lines", [])
+    if isinstance(display_lines, list):
+        for line in display_lines:
+            if isinstance(line, str) and line.strip():
+                lines.append(line.strip())
+        if display_lines:
+            lines.append("")
+
     errors = payload.get("errors", [])
     if isinstance(errors, list):
         for item in errors:

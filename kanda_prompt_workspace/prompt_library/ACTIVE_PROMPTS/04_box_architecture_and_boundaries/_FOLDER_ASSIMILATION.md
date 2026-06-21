@@ -13,14 +13,13 @@ created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
 # Box Architecture and Boundaries - Folder Assimilation Card
 
 ## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
+Routing metadata for selecting this prompt folder. It does not replace the prompts inside it.
 
 ## Responsibility
-Define owner boxes, Box Boundary Audit requirements, public contracts, private internals, forbidden touches, dependency boundaries, fallback behavior, anti-contamination rules, and KBSC box shielding before stronger or cross-box work.
+Define owner boxes, audits, public contracts, private internals, forbidden touches, dependencies, fallback behavior, anti-contamination rules, and KBSC shielding.
 
 ## Use When
-Use before code, architecture, module splitting, cross-box wiring, GUI ownership changes, prompt-library updates, bundle creation, box shielding, meaningful milestone hardening, stronger ML preparation, or any change that may touch ownership boundaries.
+Use before code, architecture, module splitting, cross-box wiring, GUI ownership changes, prompt-library updates, bundle creation, shielding, milestone hardening, stronger ML prep, or ownership-boundary changes.
 
 ## Do Not Use When
 Do not use as a substitute for delivery scripts, validation scripts, or prompt audit decisions.
@@ -65,16 +64,14 @@ Do not use as a substitute for delivery scripts, validation scripts, or prompt a
 
 | Prompt ID | File Name | Load Type | Short Purpose |
 |---|---|---|---|
-| `box_architecture_canon` | `box_architecture_canon.md` | on_request | Defines Box Architecture, Box Boundary Audit, active ownership, allowed touches, public contracts, private internals, and cross-box validation. |
+| `box_architecture_canon` | `box_architecture_canon.md` | on_request | Defines Box Architecture, audits, ownership, allowed touches, contracts, internals, and cross-box validation. |
 | `closed_box_delivery_canon` | `closed_box_delivery_canon.md` | on_request | Generalized closed-box delivery rules for safe project modifications. |
 | `project_folder_organization_canon` | `project_folder_organization_canon.md` | on_request | Defines project folder boundaries and placement discipline. |
 | `stateful_control_regression_canon` | `stateful_control_regression_canon.md` | on_request | Protects dropdowns and stateful controls from regression during UI changes. |
 | `kanda_box_shielding_canon` | `kanda_box_shielding_canon.md` | on_request | Defines KBSC: tests-first box shielding as an architectural fitness-function suite for bounded contexts before stronger or cross-box work. |
 
 ## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
+Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
 
 ## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+This card may point to prompt files, but must not copy specialist rules from them.

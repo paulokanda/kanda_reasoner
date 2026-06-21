@@ -1,6 +1,6 @@
 """Engineering Safety panel for the Reasoner tools GUI.
 
-This module owns the Tab 8 panel factory only. It is intentionally
+This module owns the Engineering Safety panel factory only. It is intentionally
 import-safe: PySide6 is imported only inside create_engineering_safety_panel.
 The backend logic is reached through the canonical kanda_reasoner_app
 safety_suite_cli facade during the staged package migration.
@@ -234,6 +234,7 @@ def create_engineering_safety_panel():
     PySide6 is imported lazily so importing this module remains safe in tests and
     non-GUI workflows.
     """
+    from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
     from PySide6.QtWidgets import (  # type: ignore[import-not-found]
 
         QGroupBox,
@@ -267,7 +268,6 @@ def create_engineering_safety_panel():
 
     # BEGIN PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
     from concurrent.futures import ThreadPoolExecutor
-    from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
 
     command_executor = ThreadPoolExecutor(max_workers=1)
     running_commands: set[str] = set()

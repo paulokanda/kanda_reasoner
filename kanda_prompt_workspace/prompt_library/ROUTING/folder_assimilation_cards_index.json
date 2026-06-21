@@ -60,8 +60,8 @@
       "folder_id": "02_prompt_routing_and_indexing",
       "folder_name": "Prompt Routing and Indexing",
       "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
-      "responsibility": "Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, and RG-PILOT-000 Pilot/Copilot Phase 0 router canon context.",
-      "use_when": "Use when deciding what prompts/groups are needed, or when routing-system canon, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, semantic-readiness behavior, or post-M35 Pilot/Copilot/P0/P-series behavior is being changed or audited.",
+      "responsibility": "Map task intent to required groups, optional groups, minimum viable context, specialist prompt requests, routing-system canon context, semantic-readiness canon context, RG-PILOT-000 Pilot/Copilot Phase 0 router canon context, and RG-LAB-000 post-P12 LAB phase entry router canon context.",
+      "use_when": "Use when deciding what prompts/groups are needed, or when routing-system canon, Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, semantic-readiness behavior, post-M35 Pilot/Copilot/P0/P-series behavior, or post-P12 LAB phase behavior is being changed or audited.",
       "do_not_use_when": "Do not use as a behavioral prompt that teaches the full protocol of another group.",
       "required_for": [
         "task routing",
@@ -77,7 +77,11 @@
         "Metadata Vector Manifest",
         "post-M35 Pilot/Copilot Phase 0 router canonization",
         "P0 scope charter routing",
-        "Pilot/Copilot P-series milestone routing"
+        "Pilot/Copilot P-series milestone routing",
+        "post-P12 LAB phase entry router canonization",
+        "LAB-0 charter routing",
+        "ML lab/test routing",
+        "ML router prompt logic reliability routing"
       ],
       "optional_for": [
         "prompt-library explanation",
@@ -107,20 +111,28 @@
         "RG-PILOT-000",
         "Pilot/Copilot Phase 0",
         "post-M35 continuation",
-        "P0 scope charter"
+        "P0 scope charter",
+        "RG-LAB-000",
+        "LAB phase",
+        "LAB-0",
+        "post-P12 LAB",
+        "ML lab/test",
+        "ML router prompt logic reliability"
       ],
       "minimum_viable_context": [
         "prompt_navigation_index",
         "GROUP_ASSIMILATION_INDEX",
         "kanda_routing_system_canon",
         "routing_signal_scorer_v3_semantic_readiness_canon",
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon"
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompt_ids": [
         "kanda_routing_system_canon",
         "routing_signal_scorer_v3_semantic_readiness_canon",
         "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
         "project_overlay_selector",
         "prompt_navigation_index",
         "prompt_router",
@@ -556,7 +568,7 @@
       "folder_id": "12_generalized_project_canons",
       "folder_name": "Generalized Project Canons",
       "card_path": "ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md",
-      "responsibility": "Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, transform resolvers, data pipelines, and decision tables.",
+      "responsibility": "Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, practical quick-start help blocks, transform resolvers, data pipelines, and decision tables.",
       "use_when": "Use when the project needs reusable architectural canons that are not Reasoner-specific.",
       "do_not_use_when": "Do not use as the initial session kernel or as a generic patch protocol.",
       "required_for": [
@@ -566,7 +578,10 @@
         "shared render engine",
         "transform resolver",
         "data pipeline invariant",
-        "domain decision table"
+        "domain decision table",
+        "help quick start",
+        "non-technical help explanation",
+        "book-grounded help references"
       ],
       "optional_for": [
         "new project canon creation",
@@ -587,7 +602,10 @@
         "visual render",
         "transform resolver",
         "pipeline invariant",
-        "decision table"
+        "decision table",
+        "help quick start",
+        "non-technical help",
+        "book-grounded help"
       ],
       "minimum_viable_context": [
         "one selected generalized canon matching the task"

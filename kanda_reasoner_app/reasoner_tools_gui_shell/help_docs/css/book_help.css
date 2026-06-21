@@ -24,6 +24,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 
 body {
@@ -32,19 +33,27 @@ body {
   font-family: "Minion Pro", "Adobe Garamond Pro", "Source Serif 4", Georgia, serif;
 }
 
-.book-page {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+.book-page {
   width: min(100%, 7in);
+  max-width: 100%;
   min-height: 9.2in;
   margin: 24px auto;
   padding: 0.62in 0.66in 0.54in;
   background: var(--paper);
+  overflow-wrap: anywhere;
 }
 
 .part-label,
 h1,
 h2,
 h3,
+h4,
 .running-footer,
 .issue-number,
 .chapter-number,
@@ -63,6 +72,14 @@ thead th {
   background: var(--blue-chapter);
   border-top: 8px solid var(--orange-rule);
   color: white;
+}
+
+.chapter-opener-text-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.chapter-opener-wide {
+  margin: -8px 0 22px;
 }
 
 .part-label {
@@ -103,6 +120,12 @@ h3 {
   font-size: 16px;
 }
 
+h4 {
+  margin: 0 0 6px;
+  color: var(--blue-chapter);
+  font-size: 15px;
+}
+
 p,
 li {
   font-size: 10.5pt;
@@ -125,6 +148,27 @@ pre,
   font-family: "Ubuntu Mono", Consolas, "JetBrains Mono", monospace;
 }
 
+code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre {
+  max-width: 100%;
+  margin: 12px 0;
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--table-rule);
+}
+
+pre code {
+  white-space: inherit;
+}
+
 a,
 .xref {
   color: var(--xref);
@@ -142,6 +186,7 @@ a,
 }
 
 figure {
+  max-width: 100%;
   margin: 18px 0;
 }
 
@@ -150,11 +195,12 @@ figure {
 }
 
 figure img {
+  display: block;
   max-width: 100%;
+  height: auto;
 }
 
 .chapter-drawing img {
-  display: block;
   width: 100%;
   border: 3px solid var(--orange-mid);
   background: white;
@@ -179,8 +225,10 @@ figcaption {
 
 table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   font-size: 9.5pt;
+  table-layout: fixed;
 }
 
 caption {
@@ -201,11 +249,13 @@ th {
   border: 1px solid var(--table-rule);
   padding: 5px 7px;
   vertical-align: top;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .callout {
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 42px minmax(0, 1fr);
   gap: 10px;
   margin: 14px 0;
   padding: 12px;
@@ -243,14 +293,40 @@ th {
 .issue-list {
   display: grid;
   gap: 12px;
+  max-width: 100%;
 }
 
-.issue-card {
+.issue-card,
+.control-card {
   border: 1px solid var(--table-rule);
   border-left: 5px solid var(--blue-mid);
   border-radius: 6px;
   padding: 10px 12px;
   background: #ffffff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.control-list,
+.reference-list,
+.route-steps {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.control-list {
+  display: grid;
+  gap: 10px;
+}
+
+.control-list h3 {
+  margin-top: 14px;
+}
+
+.control-card p,
+.issue-card p,
+.reading-map p {
+  margin-bottom: 6px;
 }
 
 .issue-number {
@@ -274,11 +350,20 @@ th {
   border: 1px solid var(--table-rule);
   border-radius: 6px;
   padding: 12px 14px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.reference-list {
+  display: grid;
+  gap: 12px;
 }
 
 .running-footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 8px;
   margin-top: 32px;
   padding-top: 8px;
   border-top: 3px solid var(--blue-chapter);

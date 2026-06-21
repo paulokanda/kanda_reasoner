@@ -231,6 +231,35 @@ Canonical RG-PILOT-000 rule:
 Pilot/Copilot Phase 0 begins only as a design-only, non-authoritative, opt-in, ephemeral, zero-critical-error scope charter that preserves M35 bridge closure, forbids runtime authority and prompt loading, requires Pilot to reproduce frozen router/canon outcomes before disagreement evidence is trusted, and defers Copilot and any runtime shadow mode to separately governed future scopes.
 ```
 
+
+
+## RG-LAB-000 Post-P12 ML LAB phase entry routing hook
+
+Request `routing_signal_scorer_v3_lab_phase_entry_router_canon.md` from `02_prompt_routing_and_indexing` when the user asks to canonize LAB phase entry, start LAB after P12, continue after P12, go next after P12, create LAB-0, create a lab charter, implement ML lab/test logic, test ML router prompt logic, test prompt choosing reliability, validate ML router prompt logic reliability, or continue ML implementation after lab reliability.
+
+This canon is on-request. Do not load it for simple Fast Path explanation-only tasks. Do not treat it as an implementation prompt, and do not use it to add LAB code, schema, fixtures, runner, candidate harness, prompt loading, persistence, provider calls, embeddings, training-data use, batch mode, activation gates, field-test mode, runtime Pilot, or Copilot behavior.
+
+For post-P12 LAB phase work, required context normally includes:
+
+```text
+1. routing_signal_scorer_v3_lab_phase_entry_router_canon
+2. routing_signal_scorer_v3_pilot_copilot_phase0_router_canon
+3. kanda_routing_system_canon
+4. kanda_box_shielding_canon
+5. 02_prompt_routing_and_indexing
+6. active project freeze context and P12 freeze evidence when continuing after P12
+7. 05_patch_delivery_and_validation plus current project files and validation steps if patching
+8. 09_python_quality_security_observability if validation, safety gates, tests, metrics, or observability are involved
+```
+
+May proceed now is PARTIAL for read-only planning, audit, and RG-LAB-000 canon review. It is YES only for a governed RG-LAB-000 routing-canon patch when the routing assets, patch boundary, validation path, and freeze path are clear. It is NO for ML implementation, LAB coding, runner creation, schema creation, fixtures, corpus, candidate harness, prompt loading, persistence, provider calls, activation, field-test mode, or Copilot behavior until the correct earlier LAB milestone is frozen.
+
+Canonical RG-LAB-000 rule:
+
+```text
+After P12, canonize LAB entry first; build and validate the LAB before testing ML router prompt logic; validate ML router prompt logic reliability before continuing ML implementation.
+```
+
 ## Routing Signal Scorer v3 semantic-readiness routing hook
 
 Request `routing_signal_scorer_v3_semantic_readiness_canon.md` from `02_prompt_routing_and_indexing` when the user asks to design, canonize, audit, or implement machine learning, embeddings, semantic retrieval, vector indexes, vector databases, semantic scorer behavior, `routing_signal_scorer` v3, Metadata Vector Manifest, semantic corpus generation, retrieval evaluation, or ML/retrieval library adoption.

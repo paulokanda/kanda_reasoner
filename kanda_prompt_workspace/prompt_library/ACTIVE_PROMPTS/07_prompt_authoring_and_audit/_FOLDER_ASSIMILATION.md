@@ -13,8 +13,7 @@ created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
 # Prompt Authoring and Audit - Folder Assimilation Card
 
 ## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
+Routing metadata for selecting this prompt folder. It does not replace the prompts inside it.
 
 ## Responsibility
 Audit, generalize, reconcile, split, deprecate, or improve prompt files without contaminating unrelated prompts.
@@ -63,12 +62,10 @@ Do not use to implement runtime code unless prompt-library files are being chang
 | `prompt_canon_reconciliation_protocol` | `prompt_canon_reconciliation_protocol.md` | on_request | Reconciles overlapping prompt canons and updates the active prompt set. |
 
 ## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
+Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
 
 ## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+This card may point to prompt files, but must not copy specialist rules from them.
 
 <!-- T9T013_KANDA_FOLDER_CARD_START -->
 
@@ -95,7 +92,7 @@ Required companion for installable bundles:
 - bundle_gated_development_workflow
 ```
 
-Dashboard or routing registration must not be assumed. Update group/routing files only when the user explicitly requests visibility/registration or when the prompt cannot be found without it.
+Update routing files only when the user requests visibility/registration or when the prompt cannot be found without it.
 
 <!-- T9T013_KANDA_FOLDER_CARD_END -->
 

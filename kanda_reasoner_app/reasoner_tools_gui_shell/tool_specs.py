@@ -67,6 +67,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         ),
         class_candidates=("MissingDocstringsWindow",),
         source_hint=_source_path("insert_missing_docstrings_gui", "insert_missing_docstrings_gui.py"),
+        help_catalog="docstring_assistant.json",
         tab_id="docstring_assistant",
     ),
     ToolSpec(
@@ -76,6 +77,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         ),
         class_candidates=("CollectorRunnerWindow",),
         source_hint=_source_path("reasoner_context_collector", "runner.py"),
+        help_catalog="project_structure_map.json",
         tab_id="project_structure_map",
     ),
     ToolSpec(
@@ -85,6 +87,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         ),
         class_candidates=("JsonSplitterPanel", "JsonSplitterWindow"),
         source_hint=_source_path("json_splitter", "json_splitter_8.py"),
+        help_catalog="ai_import_builder.json",
         tab_id="ai_import_builder",
     ),
     ToolSpec(
@@ -94,6 +97,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         ),
         class_candidates=("StateVectorCompiler",),
         source_hint=_source_path("daily_rfctr_report", "daily_refactor_report.py"),
+        help_catalog="refactor_report.json",
         tab_id="refactor_report",
     ),
     ToolSpec(
@@ -159,7 +163,7 @@ def _gui002r_register_engineering_safety_tab() -> None:
         "module_candidates": ("reasoner_tools_gui_engineering_safety_panel",),
         "class_candidates": ("create_engineering_safety_panel",),
         "source_hint": "reasoner_tools_gui_engineering_safety_panel.py",
-        "help_catalog": None,
+        "help_catalog": "engineering_safety.json",
         "tab_id": "engineering_safety",
         "tab_kind": "lazy_tool",
     }

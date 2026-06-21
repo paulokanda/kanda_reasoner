@@ -4,15 +4,24 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from kanda_reasoner_app.tab3_manual_review_runtime import (
     insert_missing_docstring_help_runtime as help_runtime,
 )
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MAIN_WINDOW = PROJECT_ROOT / 'ask_' 'ai_project_reasoner' / "reasoner_tools_gui_shell" / "main_window.py"
+MAIN_WINDOW = (
+    PROJECT_ROOT
+    / "kanda_reasoner_app"
+    / "reasoner_tools_gui_shell"
+    / "main_window.py"
+)
 PA051B_TEST = PROJECT_ROOT / "tests" / "test_pa051b_tab3_size_clamp_two_thirds_screen.py"
 PA052B_TEST = PROJECT_ROOT / "tests" / "test_pa052b_insert_missing_docstring_help_button_visibility.py"
 
@@ -32,11 +41,12 @@ def test_pa051b_regression_no_longer_requires_active_tab_resize_guard() -> None:
 
 
 def test_pa052b_regression_no_longer_depends_on_exact_button_label() -> None:
-    """The help button test should verify connection, not a brittle label string."""
+    """The help button test should verify shell ownership, not a lower panel label."""
     test_source = _read_text(PA052B_TEST)
 
     assert "Help - Insert Missing Docstring" not in test_source
-    assert "open_insert_missing_docstring_help" in test_source
+    assert "docstring_assistant.json" in test_source
+    assert "open_help_document_for_legacy_catalog" in test_source
 
 
 def test_help_runtime_has_direct_public_contract_import() -> None:

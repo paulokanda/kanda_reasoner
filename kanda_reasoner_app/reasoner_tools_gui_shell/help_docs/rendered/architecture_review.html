@@ -8,290 +8,560 @@
 </head>
 <body>
   <article class="book-page">
-    <header class="chapter-opener">
+    <header class="chapter-opener chapter-opener-text-only">
       <div>
-        <p class="part-label">KANDA Reasoner Help - Tab 1</p>
-        <span class="chapter-number">01</span>
+        <p class="part-label">KANDA Reasoner Help</p>
         <h1>Architecture Review</h1>
-        <p class="subtitle">A local, evidence-backed safety lens for finding architecture risks before a human or AI edits the wrong part of the project.</p>
+        <p class="subtitle"><strong>Page summary:</strong> Architecture Review is a building inspection desk for code. Before a person or an AI repair crew changes the project, it checks owner rooms, permits, wiring, tests, manifests, public names, and evidence stamps so the next fix lands in the right place.</p>
       </div>
-      <figure class="chapter-drawing">
-        <img src="../assets/drawings/architecture_review_opener.svg" alt="Colorful moving-day cartoon where Architecture Review stops a GUI box from entering the Router room">
-      </figure>
     </header>
 
-    <section>
-      <h2>What Problem This Solves</h2>
-      <p><strong>Technical:</strong> Architecture Review reads project structure, import evidence, symbol ownership, boundary metadata, test links, and generated artifact contracts. It turns that evidence into named issue families that can be validated before any patch is accepted.</p>
-      <p><strong>In plain English:</strong> The tool is a map reader. It helps you see when the project has two roads with the same name, a file living in the wrong neighborhood, or a test that protects the wrong thing.</p>
-    </section>
-
-    <figure class="technical-diagram">
-      <img src="../assets/diagrams/architecture_review_pipeline.svg" alt="Architecture Review pipeline from project snapshot to validation">
-      <figcaption>Figure 1-1. Architecture Review names risks, exposes evidence, and keeps fixes behind human review and validation.</figcaption>
+    <figure class="chapter-drawing chapter-opener-wide">
+      <img src="../assets/drawings/architecture_review_summary_inspector.png" alt="Hand-made cartoon where an architecture inspector stops a developer and AI repair robot before they change code rooms labeled GUI, Router, Tests, and Manifest">
+      <figcaption>Review first, then repair the right room.</figcaption>
     </figure>
 
     <section>
-      <h2>Workflow</h2>
-      <figure class="section-drawing">
-        <img src="../assets/drawings/architecture_review_workflow_cafe.svg" alt="Colorful cafe cartoon where the Architecture Review workflow checks an order ticket before serving a patch">
-        <figcaption>Figure 1-2. The workflow checks the order before serving the patch.</figcaption>
-      </figure>
+      <h2>How To Use This</h2>
       <ol>
-        <li>Open <strong>Architecture Review</strong> from the KANDA Reasoner desktop GUI.</li>
-        <li>Confirm the active project root and worker script.</li>
-        <li>Run the architecture review and inspect the issue families.</li>
-        <li>Use the evidence paths and issue codes to find the responsible owner box.</li>
-        <li>Patch narrowly, validate locally, and freeze only after clean evidence exists.</li>
+        <li>Open the <code>Architecture Review</code> tab and click <code>Load this tool now</code> if the panel has not loaded yet.</li>
+        <li>Check <code>Project root</code>; use <code>Browse...</code> when the field is not the repository you want to inspect.</li>
+        <li>Leave <code>Mode</code> on <code>validate</code> for the first pass. Use <code>diff</code> to preview generated changes, <code>scan</code> to print the manifest JSON, and <code>write</code> only when you deliberately want the worker to write architecture artifacts.</li>
+        <li>Click <code>Run Selected Mode</code> or one of the mode buttons, then read the <code>Output</code> panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.</li>
+        <li>Use <code>AI Review First Check</code> only after deterministic output exists. Treat it as an advisory second opinion over the latest output, not as the authority.</li>
+        <li>Use <code>Save Output</code> when the result needs to become handoff evidence for a review, bundle, issue, or later help-page update.</li>
       </ol>
     </section>
 
-    <div class="callout callout-warning">
-      <div class="callout-icon">!</div>
-      <div>
-        <p><strong>Authority boundary.</strong> Architecture Review reports risks. It does not change files, approve patches, select prompts, freeze features, or override routing logic.</p>
-      </div>
-    </div>
-
     <section>
-      <h2>Fast Reading Table</h2>
-      <table>
-        <caption>Table 1-1. The issue families are review signals. They are not automatic permission to rewrite code.</caption>
-        <thead>
-          <tr>
-            <th>Issue</th>
-            <th>What It Means</th>
-            <th>Why It Matters</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Duplicate public symbols</td><td>Two or more files define or export the same public name.</td><td>The wrong file can be imported, edited, or trusted.</td></tr>
-          <tr><td>Symbol shadowing</td><td>A local name hides another name with the same spelling.</td><td>Code may call a variable or helper different from the intended one.</td></tr>
-          <tr><td>Wrong owner box</td><td>Code lives in the wrong part of the system.</td><td>Future fixes may land outside the true owner boundary.</td></tr>
-          <tr><td>Cross-box boundary violations</td><td>One app area reaches directly into another area it should not control.</td><td>Boxes become tightly coupled and fragile.</td></tr>
-          <tr><td>Circular imports</td><td>Two modules depend on each other in a loop.</td><td>Startup can fail or behave differently by import order.</td></tr>
-          <tr><td>Side effect on import</td><td>A module performs visible work just by being imported.</td><td>Inspection can unexpectedly write files, launch tools, or mutate state.</td></tr>
-          <tr><td>Mixed responsibility files</td><td>One file tries to own unrelated jobs.</td><td>The file becomes hard to reason about, test, and safely refactor.</td></tr>
-          <tr><td>Stale or deprecated variants</td><td>Old versions or backups still look active.</td><td>Human or AI repair may target a dead path.</td></tr>
-          <tr><td>Misplaced tests</td><td>A test exists but lives in the wrong place or tests the wrong target.</td><td>The project may look protected while active code is uncovered.</td></tr>
-          <tr><td>Test protection gap</td><td>Important active code has no meaningful test protection.</td><td>Critical behavior can break silently during later work.</td></tr>
-          <tr><td>Unsafe path and platform assumptions</td><td>Code assumes a path, OS, or encoding that may not hold.</td><td>The tool can work on one machine and fail on another.</td></tr>
-          <tr><td>Canonical vs working-copy boundary errors</td><td>The app confuses protected canonical data with local AI working copies.</td><td>Experiments can contaminate the source of truth.</td></tr>
-          <tr><td>Generated artifact contract errors</td><td>Generated files violate expected names, locations, or sections.</td><td>Downstream tools may consume incomplete or stale output.</td></tr>
-          <tr><td>Public API instability</td><td>A public function, class, or export changes without compatibility planning.</td><td>Other callers may still use the old public surface.</td></tr>
-          <tr><td>Dead code and unreachable files</td><td>Files or functions exist but nothing active uses them.</td><td>Noise increases and AI attention is wasted.</td></tr>
-          <tr><td>Inconsistent source of truth</td><td>Docs or code disagree about what is active.</td><td>Developers may follow stale instructions.</td></tr>
-          <tr><td>Test asserts internal detail</td><td>A test depends on private implementation details instead of public behavior.</td><td>Safe refactors look broken while real behavior bugs may be missed.</td></tr>
-          <tr><td>Import heaviness and slow startup risk</td><td>A lightweight path imports heavy modules too early.</td><td>Startup becomes slow, fragile, or dependent on optional packages.</td></tr>
-          <tr><td>Bundle safety issues</td><td>A delivered patch changes too much or lacks safe boundaries.</td><td>A small bug fix can become a broad accidental rewrite.</td></tr>
-          <tr><td>Project-wide AI confusion risks</td><td>Project layout makes AI likely to pick the wrong owner, symbol, or file.</td><td>AI help becomes less reliable even when files are syntactically valid.</td></tr>
-          <tr><td>Cross-box public symbol collision</td><td>Different boxes expose the same public name.</td><td>Import order can decide behavior instead of a clear owner contract.</td></tr>
-          <tr><td>Shared mutable state coupling</td><td>Multiple boxes quietly read and write the same mutable state.</td><td>A change in one box can silently affect another.</td></tr>
-          <tr><td>Inconsistent error contract at boundaries</td><td>One box raises, another swallows, and another returns unclear results.</td><td>Failures disappear or surface in the wrong place.</td></tr>
-          <tr><td>Tests assert implementation internals instead of public contracts</td><td>A test checks private details instead of what users or APIs observe.</td><td>Tests become brittle and miss user-visible failures.</td></tr>
-          <tr><td>Missing __all__ or uncontrolled public surface</td><td>A module does not clearly define its public names.</td><td>Private helpers can become accidental public API.</td></tr>
-        </tbody>
-      </table>
+      <h2>What This Tab Owns</h2>
+      <p><strong>Technical:</strong> <code>Architecture Review</code> is registered as the lazy tool with tab id <code>architecture_review</code>, legacy help catalog <code>tab1_architecture.json</code>, source hint <code>kanda_reasoner_app/manage_architecture/manage_architecture_gui.py</code>, and runtime class <code>ArchitectureManagerWindow</code>. The shell help button resolves this rich local help page through the manifest before falling back to the legacy JSON catalog. The tool itself loads a sibling worker script, runs the selected mode in a <code>QThread</code>, captures stdout/stderr into the output panel, and exposes a read-only advisory AI review path over the last deterministic result.</p>
+      <p><strong>In plain English:</strong> This tab is the inspection desk before repair work. It checks whether the project has rooms with clear labels, wiring that does not loop back on itself, permits for generated files, and test records before anyone carries a toolbox into the wrong place.</p>
+      <p><strong>Invariant:</strong> Local code and generated evidence are the truth. Books, official docs, and AI comments are used to explain the design, not to overrule what the current code does.</p>
     </section>
 
     <section>
-      <h2>Issue Family Details</h2>
-      <figure class="section-drawing">
-        <img src="../assets/drawings/architecture_review_issue_catalog_library.svg" alt="Colorful library cartoon where duplicate and misplaced books represent architecture issue families">
-        <figcaption>Figure 1-3. The issue catalog is a library shelf for risks, duplicates, and wrong owners.</figcaption>
+      <h2>Routed Help And Loading Path</h2>
+      <p>The visible <code>Help</code> button belongs to the shell host, not the inner worker window. The shell reads the <code>ToolSpec</code> for <code>Architecture Review</code>, sees <code>help_catalog="tab1_architecture.json"</code>, and calls the rich help resolver. The resolver finds the manifest page with <code>legacy_help_catalog</code> equal to <code>tab1_architecture.json</code> and opens <code>rendered/architecture_review.html</code> with the shared local CSS.</p>
+      <p>If the rich rendered file or CSS is missing, the shell can fall back to the old catalog formatter. That fallback is useful for safety, but it is not the desired user experience. The canonical path for this tab is rendered as a wrapped route so the help page never grows wider than the desktop help window:</p>
+      <ol class="route-steps">
+        <li><code>Help</code> button.</li>
+        <li><code>tab1_architecture.json</code> legacy catalog key.</li>
+        <li><code>help_docs/manifest.json</code> page registration.</li>
+        <li><code>rendered/architecture_review.html</code> local document.</li>
+        <li><code>css/book_help.css</code> local book layout.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Control Reference</h2>
+      <p>Table AR-1 is rendered as stacked control records instead of a wide four-column table. This keeps the full contract text visible at normal desktop width and at narrow help-window width.</p>
+
+      <div class="control-list" aria-label="Table AR-1. Live controls and artifacts documented from the current Architecture Review GUI code.">
+        <h3>Shell and host controls</h3>
+        <article class="control-card">
+          <h4><code>Help</code></h4>
+          <p><strong>Area:</strong> Shell.</p>
+          <p><strong>Technical contract:</strong> Opens the rich local help file through the legacy catalog resolver.</p>
+          <p><strong>In plain English:</strong> Opens this guide.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Load this tool now</code></h4>
+          <p><strong>Area:</strong> Shell.</p>
+          <p><strong>Technical contract:</strong> Imports and embeds <code>ArchitectureManagerWindow</code> only when requested or when the lazy tab is activated.</p>
+          <p><strong>In plain English:</strong> Brings the inspection desk into the room.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Source</code> label</h4>
+          <p><strong>Area:</strong> Shell.</p>
+          <p><strong>Technical contract:</strong> Shows <code>kanda_reasoner_app/manage_architecture/manage_architecture_gui.py</code> as the GUI source hint.</p>
+          <p><strong>In plain English:</strong> Shows where this tool lives.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Worker Script:</code></h4>
+          <p><strong>Area:</strong> Host row.</p>
+          <p><strong>Technical contract:</strong> Shows or lets the GUI move the worker selector into the shell status row.</p>
+          <p><strong>In plain English:</strong> Shows which inspector script will run.</p>
+        </article>
+        <article class="control-card">
+          <h4>Worker script path</h4>
+          <p><strong>Area:</strong> Worker.</p>
+          <p><strong>Technical contract:</strong> Defaults to sibling <code>manage_architecture.py</code>; must exist before a run starts.</p>
+          <p><strong>In plain English:</strong> The inspection checklist must be present.</p>
+        </article>
+
+        <h3>Input, mode, and safety controls</h3>
+        <article class="control-card">
+          <h4><code>Project root</code></h4>
+          <p><strong>Area:</strong> Input.</p>
+          <p><strong>Technical contract:</strong> Converted to <code>Path</code> and checked with <code>exists()</code> before the worker thread starts.</p>
+          <p><strong>In plain English:</strong> Pick the building to inspect.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Browse...</code> for project root</h4>
+          <p><strong>Area:</strong> Input.</p>
+          <p><strong>Technical contract:</strong> Opens a directory chooser and writes the selected root into the field.</p>
+          <p><strong>In plain English:</strong> Choose the correct building folder.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Mode</code> combo</h4>
+          <p><strong>Area:</strong> Mode.</p>
+          <p><strong>Technical contract:</strong> Selects <code>validate</code>, <code>diff</code>, <code>scan</code>, or <code>write</code> for the worker.</p>
+          <p><strong>In plain English:</strong> Pick inspection, preview, map printout, or controlled writing.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Require confirm before write</code></h4>
+          <p><strong>Area:</strong> Safety.</p>
+          <p><strong>Technical contract:</strong> When checked, <code>write</code> mode opens a warning dialog before files can be updated.</p>
+          <p><strong>In plain English:</strong> Requires a permit before construction work.</p>
+        </article>
+
+        <h3>Command and toolbar controls</h3>
+        <article class="control-card">
+          <h4><code>Run Selected Mode</code></h4>
+          <p><strong>Area:</strong> Command.</p>
+          <p><strong>Technical contract:</strong> Runs the current combo selection through <code>run_mode</code>.</p>
+          <p><strong>In plain English:</strong> Start the selected inspection.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Validate</code></h4>
+          <p><strong>Area:</strong> Command.</p>
+          <p><strong>Technical contract:</strong> Runs validation without writing generated artifacts.</p>
+          <p><strong>In plain English:</strong> Inspect first.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Diff</code></h4>
+          <p><strong>Area:</strong> Command.</p>
+          <p><strong>Technical contract:</strong> Previews changes that would be made to architecture files.</p>
+          <p><strong>In plain English:</strong> Show the permit draft.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Scan</code></h4>
+          <p><strong>Area:</strong> Command.</p>
+          <p><strong>Technical contract:</strong> Prints the full architecture manifest JSON.</p>
+          <p><strong>In plain English:</strong> Print the building map.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Write</code></h4>
+          <p><strong>Area:</strong> Command.</p>
+          <p><strong>Technical contract:</strong> Writes architecture artifacts only after explicit write confirmation when strict mode is enabled.</p>
+          <p><strong>In plain English:</strong> Stamp and file the approved paperwork.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Run</code></h4>
+          <p><strong>Area:</strong> Toolbar.</p>
+          <p><strong>Technical contract:</strong> Shortcut to <code>run_selected_mode</code>.</p>
+          <p><strong>In plain English:</strong> Start the selected mode from the toolbar.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Clear Output</code></h4>
+          <p><strong>Area:</strong> Toolbar.</p>
+          <p><strong>Technical contract:</strong> Clears the read-only output panel.</p>
+          <p><strong>In plain English:</strong> Clear the inspection desk.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Save Output</code></h4>
+          <p><strong>Area:</strong> Toolbar.</p>
+          <p><strong>Technical contract:</strong> Writes the current output panel text to a user-selected <code>.txt</code> file.</p>
+          <p><strong>In plain English:</strong> Save the inspection report.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Mode Help</code> and <code>What do these modes do?</code></h4>
+          <p><strong>Area:</strong> Toolbar/button.</p>
+          <p><strong>Technical contract:</strong> Show the built-in message box explaining the four worker modes.</p>
+          <p><strong>In plain English:</strong> Quick reminder of each mode.</p>
+        </article>
+
+        <h3>AI, output, and status controls</h3>
+        <article class="control-card">
+          <h4><code>AI model:</code> combo</h4>
+          <p><strong>Area:</strong> AI.</p>
+          <p><strong>Technical contract:</strong> Stores the selected local advisory model in <code>QSettings</code>; blank means auto.</p>
+          <p><strong>In plain English:</strong> Pick the local reviewer voice.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Refresh AI Models</code></h4>
+          <p><strong>Area:</strong> AI.</p>
+          <p><strong>Technical contract:</strong> Lists available local Ollama models through the Tab 1 adapter.</p>
+          <p><strong>In plain English:</strong> Refresh reviewer choices.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>AI Review First Check</code></h4>
+          <p><strong>Area:</strong> AI.</p>
+          <p><strong>Technical contract:</strong> Reads the current output panel, starts an advisory worker, and appends the result.</p>
+          <p><strong>In plain English:</strong> Ask a second reader after the first report exists.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>Output</code> panel</h4>
+          <p><strong>Area:</strong> Output.</p>
+          <p><strong>Technical contract:</strong> Read-only <code>QPlainTextEdit</code> with no line wrap; receives captured output and status lines.</p>
+          <p><strong>In plain English:</strong> The inspection ledger.</p>
+        </article>
+        <article class="control-card">
+          <h4>Activity indicator and status bar</h4>
+          <p><strong>Area:</strong> Status.</p>
+          <p><strong>Technical contract:</strong> Shows heuristic or AI review activity and final success/error messages.</p>
+          <p><strong>In plain English:</strong> The desk light that says what is running.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Mode Chapters</h2>
+      <p>Table AR-2 is rendered as mode cards so each mode keeps its authority level, common-user meaning, and failure warning inside the page.</p>
+      <div class="control-list mode-list" aria-label="Table AR-2. The four worker modes have different authority levels.">
+        <article class="control-card">
+          <h4><code>validate</code></h4>
+          <p><strong>Technical behavior:</strong> Calls the worker in validation mode and reports architecture risks without writing the generated architecture files.</p>
+          <p><strong>Common-user meaning:</strong> Walk through the building and list problems before repairs.</p>
+          <p><strong>Failure mode to watch:</strong> A clean-looking run is only useful when the selected root and worker script are correct.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>diff</code></h4>
+          <p><strong>Technical behavior:</strong> Previews changes that would be written to <code>__init__.py</code>, <code>ARCHITECTURE.md</code>, and <code>architecture_manifest.json</code>.</p>
+          <p><strong>Common-user meaning:</strong> Show the paperwork before filing it.</p>
+          <p><strong>Failure mode to watch:</strong> Treat the preview as evidence, not as proof that files have already changed.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>scan</code></h4>
+          <p><strong>Technical behavior:</strong> Prints the full manifest JSON describing project structure.</p>
+          <p><strong>Common-user meaning:</strong> Print the full map of the building.</p>
+          <p><strong>Failure mode to watch:</strong> Large output can be dense; save it when it becomes review evidence.</p>
+        </article>
+        <article class="control-card">
+          <h4><code>write</code></h4>
+          <p><strong>Technical behavior:</strong> Writes <code>architecture_manifest.json</code>, minimal <code>__init__.py</code> facades, and <code>ARCHITECTURE.md</code>, with confirmation when strict mode is checked.</p>
+          <p><strong>Common-user meaning:</strong> File the approved inspection paperwork.</p>
+          <p><strong>Failure mode to watch:</strong> Wrong root plus write mode can update the wrong building, so strict confirmation stays on by default.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Execution And Safety Pipeline</h2>
+      <figure class="technical-diagram">
+        <img src="../assets/diagrams/architecture_review_pipeline.svg" alt="Architecture Review pipeline from project root and worker script to mode execution, output, optional advisory AI review, and saved evidence">
+        <figcaption>Figure AR-1. The deterministic worker produces evidence before advisory AI or human review.</figcaption>
       </figure>
-      <div class="issue-list">
-        <section class="issue-card" id="issue-01">
-          <h3><span class="issue-number">1.</span> Duplicate public symbols</h3>
-          <p class="technical-line"><strong>Technical:</strong> Two or more files define or export the same public class, function, or constant. Check <code>symbol_index</code>, <code>web_ai_symbol_index</code>, <code>primary_definition_index</code>, and <span class="issue-code">DUPLICATE_PUBLIC_SYMBOL</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Two active files wear the same public name. A developer or AI can edit the old one and believe the app was fixed.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-python-public-api">Python public names</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-02">
-          <h3><span class="issue-number">2.</span> Symbol shadowing</h3>
-          <p class="technical-line"><strong>Technical:</strong> A local name hides another name with the same spelling. Check <code>files</code>, <code>source_file_index</code>, <code>symbol_index</code>, <code>imports</code>, and <span class="issue-code">SYMBOL_SHADOWING</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> A new label is placed over an old label, so the code may call a variable when it meant to call an imported helper.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-python-public-api">Python public names</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-03">
-          <h3><span class="issue-number">3.</span> Wrong owner box</h3>
-          <p class="technical-line"><strong>Technical:</strong> A file or symbol appears in a system box that should not own that responsibility. Check <code>web_ai_file_responsibility_index</code>, <code>boundary_index</code>, <code>semantic_roles</code>, and <span class="issue-code">WRONG_OWNER_BOX</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The right code exists, but it lives in the wrong drawer. Future fixes become guesses instead of owner-based repairs.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-04">
-          <h3><span class="issue-number">4.</span> Cross-box boundary violations</h3>
-          <p class="technical-line"><strong>Technical:</strong> One box reaches through another box's private implementation instead of using a public contract. Check <code>import_graph</code>, <code>call_edges</code>, <code>boundary_violation_index</code>, and <span class="issue-code">CROSS_BOX_BOUNDARY_VIOLATION</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> One area of the app is touching controls that belong to another area. A small fix can break a distant workflow.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-samm">secure architecture</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-05">
-          <h3><span class="issue-number">5.</span> Circular imports</h3>
-          <p class="technical-line"><strong>Technical:</strong> Two or more modules import each other in a cycle. Check <code>import_graph</code>, <code>module_summary_index</code>, and <span class="issue-code">CIRCULAR_IMPORT</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> File A waits for File B while File B waits for File A. Startup can fail depending on which file is loaded first.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-06">
-          <h3><span class="issue-number">6.</span> Side effect on import</h3>
-          <p class="technical-line"><strong>Technical:</strong> A module performs visible work merely because it is imported. Check <code>source_file_index</code>, <code>call_edges</code>, <code>entry_points_detail</code>, and <span class="issue-code">SIDE_EFFECT_ON_IMPORT</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Looking at a file should not start the GUI, write files, launch tools, or mutate settings.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-07">
-          <h3><span class="issue-number">7.</span> Mixed responsibility files</h3>
-          <p class="technical-line"><strong>Technical:</strong> One file owns unrelated roles, such as UI layout, persistence, prompt policy, and validation. Check <code>web_ai_file_responsibility_index</code>, <code>semantic_roles</code>, <code>symbol_index</code>, and <span class="issue-code">MIXED_RESPONSIBILITY_FILE</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The file has too many jobs. It becomes hard to test because nobody can say which behavior it owns.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-08">
-          <h3><span class="issue-number">8.</span> Stale or deprecated variants</h3>
-          <p class="technical-line"><strong>Technical:</strong> Old versions, backup files, or deprecated variants still look active. Check <code>canonical_conflict_index</code>, <code>legacy_shadow_hotspots</code>, <span class="issue-code">STALE_VARIANT_SOURCE_OF_TRUTH</span>, and <span class="issue-code">DEPRECATED_VARIANT_STILL_REFERENCED</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The project has old signs still pointing to closed roads. AI can follow the stale sign and patch the wrong path.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-09">
-          <h3><span class="issue-number">9.</span> Misplaced tests</h3>
-          <p class="technical-line"><strong>Technical:</strong> A test exists but is stored in the wrong location or imports the wrong target. Check <code>test_links</code>, <code>web_ai_test_protection_index</code>, and <span class="issue-code">MISPLACED_TEST</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The project looks protected, but the test may be checking a retired file instead of active behavior.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-import">Python import system</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-10">
-          <h3><span class="issue-number">10.</span> Test protection gap</h3>
-          <p class="technical-line"><strong>Technical:</strong> Important active code has no direct or indirect test protection. Check <code>web_ai_test_protection_index</code>, <code>test_links</code>, and <span class="issue-code">TEST_PROTECTION_GAP</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> A central behavior can break and nothing will complain until a user sees the failure.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-11">
-          <h3><span class="issue-number">11.</span> Unsafe path and platform assumptions</h3>
-          <p class="technical-line"><strong>Technical:</strong> Code assumes a path style, operating system, working directory, or encoding that may not hold. Check <code>collection_config</code>, <code>packaging_metadata</code>, and <span class="issue-code">UNSAFE_PATH_PLATFORM_ASSUMPTION</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The tool may work on one machine and fail on another because the file path or platform rule was hardcoded.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-12">
-          <h3><span class="issue-number">12.</span> Canonical vs working-copy boundary errors</h3>
-          <p class="technical-line"><strong>Technical:</strong> The app confuses protected canonical JSON with local AI working-copy data. Check <code>persistence_io_index</code>, <code>call_edges</code>, and <span class="issue-code">CANONICAL_WORKING_COPY_BOUNDARY</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> An experiment can accidentally write into the source of truth, turning a temporary AI note into official project data.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-owasp-sbd">secure design reviews</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-13">
-          <h3><span class="issue-number">13.</span> Generated artifact contract errors</h3>
-          <p class="technical-line"><strong>Technical:</strong> Generated files do not match required names, locations, sections, or manifests. Check route manifests, split manifests, and <span class="issue-code">GENERATED_ARTIFACT_CONTRACT</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> A generated file may look present but be incomplete, stale, or shaped differently than downstream tools expect.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-14">
-          <h3><span class="issue-number">14.</span> Public API instability</h3>
-          <p class="technical-line"><strong>Technical:</strong> A public function, class, or export changes without compatibility planning. Check <code>__all__</code>, <code>symbol_index</code>, <code>call_edges</code>, and <span class="issue-code">PUBLIC_API_INSTABILITY</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Other files may still call the old public name. Renaming a public door without signs breaks callers.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-15">
-          <h3><span class="issue-number">15.</span> Dead code and unreachable files</h3>
-          <p class="technical-line"><strong>Technical:</strong> Files or functions exist but no active entry point, import, or call uses them. Check <code>import_graph</code>, <code>call_edges</code>, <code>entry_points_detail</code>, and <span class="issue-code">DEAD_CODE_UNREACHABLE_FILE</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Old machinery is still on the floor. It adds noise and can mislead future edits.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-16">
-          <h3><span class="issue-number">16.</span> Inconsistent source of truth</h3>
-          <p class="technical-line"><strong>Technical:</strong> Documentation, code, or manifests disagree about what is active or correct. Check documentation intent, <code>web_ai_file_responsibility_index</code>, <code>source_file_index</code>, and <span class="issue-code">STALE_VARIANT_SOURCE_OF_TRUTH</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Two official-looking instructions disagree. A person or AI cannot know which one to trust without evidence.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-17">
-          <h3><span class="issue-number">17.</span> Test asserts internal detail</h3>
-          <p class="technical-line"><strong>Technical:</strong> A test depends on private implementation details instead of public behavior. Check <code>control_flow</code>, <code>runtime_trace_raw</code>, and <span class="issue-code">TEST_ASSERTS_INTERNAL_DETAIL</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The test cares about how the app is built inside, not what the user or public API can observe.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-public-api">Python public names</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-18">
-          <h3><span class="issue-number">18.</span> Import heaviness and slow startup risk</h3>
-          <p class="technical-line"><strong>Technical:</strong> A lightweight path imports heavy modules, optional UI stacks, or slow dependencies too early. Check <code>import_graph</code>, <code>module_centrality_index</code>, and <span class="issue-code">IMPORT_HEAVINESS_STARTUP</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Opening a small drawer pulls in the whole workshop, making startup slow and fragile.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-import">Python import system</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-19">
-          <h3><span class="issue-number">19.</span> Bundle safety issues</h3>
-          <p class="technical-line"><strong>Technical:</strong> A delivered patch changes too much, lacks a manifest, or edits files outside the intended boundary. Check bundle manifest text, changed-file lists, and <span class="issue-code">BUNDLE_SAFETY</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> A small fix arrives with extra unrelated edits. That makes review harder and regression risk higher.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-owasp-sbd">secure design reviews</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-20">
-          <h3><span class="issue-number">20.</span> Project-wide AI confusion risks</h3>
-          <p class="technical-line"><strong>Technical:</strong> Project structure makes AI likely to choose the wrong owner, symbol, or file. Check <code>canonical_conflict_index</code>, <code>responsibility_overlap_index</code>, <code>primary_definition_index</code>, and <span class="issue-code">PROJECT_WIDE_AI_CONFUSION</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> The project contains too many convincing wrong answers, so AI help becomes less dependable.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-python-public-api">Python public names</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-21">
-          <h3><span class="issue-number">21.</span> Cross-box public symbol collision</h3>
-          <p class="technical-line"><strong>Technical:</strong> Different architecture boxes expose the same public name. Check <code>symbol_index</code>, <code>boundary_index</code>, <code>web_ai_file_responsibility_index</code>, and <span class="issue-code">CROSS_BOX_PUBLIC_SYMBOL_COLLISION</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Two boxes put the same label on different public doors. Import order can decide behavior instead of design.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-fowler-architecture">architecture boundaries</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-22">
-          <h3><span class="issue-number">22.</span> Shared mutable state coupling</h3>
-          <p class="technical-line"><strong>Technical:</strong> Multiple boxes read and mutate the same runtime state without an explicit owner or adapter. Check <code>attribute_state_map</code>, <code>object_ownership</code>, <code>state_mutation_index</code>, and <span class="issue-code">SHARED_MUTABLE_STATE_COUPLING</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> One area can quietly change the conditions another area depends on, so bugs appear far away from the edit.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-fowler-architecture">architecture boundaries</a>; <a href="#source-owasp-samm">secure architecture</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-23">
-          <h3><span class="issue-number">23.</span> Inconsistent error contract at boundaries</h3>
-          <p class="technical-line"><strong>Technical:</strong> Boundary calls report failure in incompatible ways, such as raising, swallowing, or returning <code>None</code>. Check <code>call_edges</code>, <code>control_flow</code>, <code>runtime_trace_raw</code>, and <span class="issue-code">BOUNDARY_ERROR_CONTRACT</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> One box shouts, another whispers, and another says nothing. Failures become hard to locate.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-owasp-sbd">secure design reviews</a>; <a href="#source-google-sre-testing">testing reliability</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-24">
-          <h3><span class="issue-number">24.</span> Tests assert implementation internals instead of public contracts</h3>
-          <p class="technical-line"><strong>Technical:</strong> A test checks private details instead of observable user behavior or public API behavior. Check <code>test_links</code>, <code>source_file_index</code>, <code>symbol_index</code>, and <span class="issue-code">TEST_ASSERTS_INTERNAL_DETAIL</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> A safe refactor can break the test, while a real user-visible failure may pass unnoticed.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-google-sre-testing">testing reliability</a>; <a href="#source-python-public-api">Python public names</a>.</p>
-        </section>
-        <section class="issue-card" id="issue-25">
-          <h3><span class="issue-number">25.</span> Missing __all__ or uncontrolled public surface</h3>
-          <p class="technical-line"><strong>Technical:</strong> A module exposes names without a clear public-surface contract. Check <code>source_file_index</code>, <code>__all__</code>, <code>symbol_index</code>, <span class="issue-code">MISSING___ALL___FOR_EXPOSES</span>, and <span class="issue-code">MISSING_PUBLIC_SURFACE_CONTROL</span>.</p>
-          <p class="plain-line"><strong>In plain English:</strong> Private helpers can look public. Other files may start depending on code that was never meant to be shared.</p>
-          <p class="further-reading"><strong>Further reading:</strong> <a href="#source-python-public-api">Python public names</a>; <a href="#source-python-import">Python import system</a>.</p>
-        </section>
-      </div>
-    </section>
-
-    <div class="callout callout-tip">
-      <div class="callout-icon">i</div>
-      <div>
-        <p><strong>Operating rule.</strong> Use Architecture Review to find the owner and risk class. Then patch narrowly, validate, and freeze only after clean evidence exists.</p>
-      </div>
-    </div>
-
-    <section>
-      <h2>Further Reading Map</h2>
-      <div class="reading-map">
-        <p id="source-fowler-architecture"><strong>Architecture boundaries:</strong> Martin Fowler, Software Architecture Guide, used for the idea that architecture is shared system understanding and component organization.</p>
-        <p id="source-python-import"><strong>Python import system:</strong> Python language reference, The import system, used for import search, module creation, and name binding behavior.</p>
-        <p id="source-python-public-api"><strong>Python public names:</strong> Python language reference, Simple statements, used for <code>__all__</code> and public-name rules.</p>
-        <p id="source-google-sre-testing"><strong>Testing reliability:</strong> Google SRE, Testing for Reliability, used for test coverage as evidence that reduces change uncertainty.</p>
-        <p id="source-owasp-sbd"><strong>Secure design reviews:</strong> OWASP Secure by Design Framework, used for design-time review, trust boundaries, and evidence-based design checks.</p>
-        <p id="source-owasp-samm"><strong>Secure architecture:</strong> OWASP SAMM Secure Architecture, used for architecture design attention to components, supporting technologies, and security properties.</p>
-      </div>
+      <p>When a mode starts, the GUI verifies the worker script path and project root. For <code>write</code>, it may ask for confirmation. It blocks concurrent deterministic and AI work by checking whether either worker thread is already active. It then appends a command-style line to the output panel:</p>
+      <pre><code>&gt; in-process run: &lt;worker-script&gt; --root &lt;project-root&gt; --&lt;mode&gt;</code></pre>
+      <p>The run happens inside <code>ArchitectureRunWorker</code>, moved to a <code>QThread</code>. The worker imports the selected script from its file path, looks first for a <code>run(root, mode)</code> function, and falls back to <code>main()</code> with temporary <code>sys.argv</code> if needed. It redirects stdout and stderr to a string buffer and emits the captured text back to the GUI. On success, the output receives <code>[finished] mode=&lt;mode&gt; exit_code=0</code>; on failure, it receives <code>[finished] mode=&lt;mode&gt; exit_code=1</code> plus details.</p>
+      <p><strong>In plain English:</strong> The inspector does not wander through the building while the desk is open to other work. The desk locks one inspection at a time, writes down exactly which checklist was used, and then stamps the result.</p>
     </section>
 
     <section>
-      <h2>Operational Checklist</h2>
+      <h2>Advisory AI Review Boundary</h2>
+      <p>The AI review controls are installed into the Architecture Review button row. They are deliberately read-only. The AI worker receives the latest deterministic output, the selected project root, and the chosen local model name. It cannot replace <code>validate</code>, <code>diff</code>, <code>scan</code>, or <code>write</code>, and it should not be treated as permission to change files.</p>
+      <p>The AI review button refuses to run when the output panel is empty. The user-facing message is: <code>Run Tab 1 First Check before asking for an AI review.</code> If deterministic work or another AI review is already running, the tab asks the user to wait. If local model discovery or advisory review fails, deterministic review remains the authority.</p>
+      <p><strong>In plain English:</strong> Ask the AI reviewer to read the inspection report after the inspector has written it. Do not ask the reviewer to inspect an empty desk, and do not let the reviewer become the permit office.</p>
+    </section>
+
+    <section>
+      <h2>Workflow With Human Repair</h2>
       <figure class="section-drawing">
-        <img src="../assets/drawings/architecture_review_checklist_airport.svg" alt="Colorful airport check-in cartoon where a patch suitcase cannot board until tests and freeze evidence are stamped">
-        <figcaption>Figure 1-4. The checklist is airport security for patches: test, stamp, then freeze.</figcaption>
+        <img src="../assets/drawings/architecture_review_workflow_cafe.png" alt="Colorful cafe cartoon where the Architecture Review workflow checks an order ticket before serving a patch">
+        <figcaption>Figure AR-2. The workflow checks the order before serving the patch.</figcaption>
       </figure>
+      <ol>
+        <li>Load the tab and confirm the worker script.</li>
+        <li>Confirm the project root.</li>
+        <li>Run <code>validate</code> first unless you specifically need <code>scan</code> or <code>diff</code>.</li>
+        <li>Read issue codes and evidence paths before touching source.</li>
+        <li>Repair the smallest owner box that explains the evidence.</li>
+        <li>Run focused tests and rerun Architecture Review.</li>
+        <li>Save output when the evidence must travel to a reviewer, patch bundle, or freeze step.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Issue Family Catalog</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/architecture_review_issue_catalog_library.png" alt="Colorful library cartoon where duplicate and misplaced books represent architecture issue families">
+        <figcaption>Figure AR-3. The issue catalog is a library shelf for risks, duplicates, and wrong owners.</figcaption>
+      </figure>
+      <p>Each issue family below has a detector name or evidence family, a plain-English reading, and a failure mode. Table AR-3 is rendered as issue cards instead of a six-column table, because the six-column version exceeded the help page width.</p>
+      <div class="issue-list" aria-label="Table AR-3. Architecture Review issue families and failure modes.">
+        <article class="issue-card">
+          <p><span class="issue-number">1.</span> <strong>Duplicate public symbols</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>symbol_index</code>, <code>web_ai_symbol_index</code>, <code>primary_definition_index</code>, <code>DUPLICATE_PUBLIC_SYMBOL</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Two or more files define or export the same public class, function, or constant.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two workers wear the same name tag.</p>
+          <p><strong>If ignored:</strong> The wrong file can be imported, edited, or trusted.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">2.</span> <strong>Symbol shadowing</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>source_file_index</code>, <code>imports</code>, <code>SYMBOL_SHADOWING</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A local name hides an imported or outer name with the same spelling.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A new label covers the old label.</p>
+          <p><strong>If ignored:</strong> Calls can hit a variable or helper different from the intended one.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">3.</span> <strong>Wrong owner box</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>web_ai_file_responsibility_index</code>, <code>boundary_index</code>, <code>WRONG_OWNER_BOX</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Code lives in a box whose stated responsibility does not match the code's role.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Kitchen tools are stored in the bathroom cabinet.</p>
+          <p><strong>If ignored:</strong> Future repair lands on the symptom instead of the owner.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">4.</span> <strong>Cross-box boundary violations</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>import_graph</code>, <code>call_edges</code>, <code>boundary_violation_index</code>, <code>CROSS_BOX_BOUNDARY_VIOLATION</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> One architecture box reaches directly into another box it should not control.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A cashier edits the chef's recipe.</p>
+          <p><strong>If ignored:</strong> Boxes become tightly coupled and fragile.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">5.</span> <strong>Circular imports</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>import_graph</code>, <code>module_summary_index</code>, <code>CIRCULAR_IMPORT</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Modules depend on each other in a loop.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Door A requires key B while door B requires key A.</p>
+          <p><strong>If ignored:</strong> Startup can fail or depend on import order.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">6.</span> <strong>Side effect on import</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>source_file_index</code>, <code>call_edges</code>, <code>entry_points_detail</code>, <code>SIDE_EFFECT_ON_IMPORT</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Importing a module performs work beyond defining names.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Opening a folder starts a machine by surprise.</p>
+          <p><strong>If ignored:</strong> Inspection can write files, launch tools, or mutate state.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">7.</span> <strong>Mixed responsibility files</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>semantic_roles</code>, <code>symbol_index</code>, <code>MIXED_RESPONSIBILITY_FILE</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> One file owns unrelated roles such as GUI, collection, validation, and prompt rules.</p>
+          <p class="plain-line"><strong>In plain English:</strong> One person is driver, mechanic, accountant, and doctor.</p>
+          <p><strong>If ignored:</strong> The file becomes hard to test and dangerous to refactor.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">8.</span> <strong>Stale or deprecated variants</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>canonical_conflict_index</code>, <code>legacy_shadow_hotspots</code>, <code>STALE_VARIANT_SOURCE_OF_TRUTH</code>, <code>DEPRECATED_VARIANT_STILL_REFERENCED</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Old versions, backups, or temporary copies still look active.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Old signs still point to a closed office.</p>
+          <p><strong>If ignored:</strong> Human or AI repair can target a dead path.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">9.</span> <strong>Misplaced tests</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>test_links</code>, <code>web_ai_test_protection_index</code>, <code>MISPLACED_TEST</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A test file exists but is in the wrong folder or protects the wrong target.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The inspection report is filed under the wrong building.</p>
+          <p><strong>If ignored:</strong> Active code appears protected while it is not.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">10.</span> <strong>Test protection gap</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>test_links</code>, <code>TEST_PROTECTION_GAP</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Important active source has no focused direct or indirect test protection.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A bridge has no inspection record.</p>
+          <p><strong>If ignored:</strong> Critical behavior can break silently.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">11.</span> <strong>Unsafe path and platform assumptions</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>collection_config</code>, <code>packaging_metadata</code>, <code>UNSAFE_PATH_PLATFORM_ASSUMPTION</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Code assumes a path style, operating system, encoding, or current directory that may not hold.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The map only works in one city.</p>
+          <p><strong>If ignored:</strong> The tool works on one machine and fails on another.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">12.</span> <strong>Canonical vs working-copy boundary errors</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>persistence_io_index</code>, <code>reasoner_project_truths</code>, <code>CANONICAL_WORKING_COPY_BOUNDARY</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Protected canonical data is confused with local AI working copies.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The official permit drawer is mixed with scratch notes.</p>
+          <p><strong>If ignored:</strong> Experiments can corrupt the source of truth.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">13.</span> <strong>Generated artifact contract errors</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>stable_evidence_id_summary</code>, route manifests, <code>GENERATED_ARTIFACT_CONTRACT</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Generated files miss expected names, formats, locations, or required sections.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The delivery box lacks its label or contents list.</p>
+          <p><strong>If ignored:</strong> Downstream tools consume incomplete or stale output.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">14.</span> <strong>Public API instability</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>__all__</code>, <code>symbol_index</code>, <code>call_edges</code>, <code>PUBLIC_API_INSTABILITY</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A public function, class, or export changes without compatibility planning.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A front-door sign changes without telling visitors.</p>
+          <p><strong>If ignored:</strong> Other callers still use the old public surface and crash.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">15.</span> <strong>Dead code and unreachable files</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>import_graph</code>, <code>call_edges</code>, <code>entry_points_detail</code>, <code>DEAD_CODE_UNREACHABLE_FILE</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Files or functions exist but nothing active reaches them.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Empty rooms still appear on the map.</p>
+          <p><strong>If ignored:</strong> Noise increases and AI attention is wasted.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">16.</span> <strong>Inconsistent source of truth</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>documentation_intent</code>, <code>source_file_index</code>, <code>STALE_VARIANT_SOURCE_OF_TRUTH</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Docs, generated data, or code disagree about what is active.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two notice boards give different instructions.</p>
+          <p><strong>If ignored:</strong> Developers follow stale guidance.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">17.</span> <strong>Test asserts internal detail</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>control_flow</code>, <code>runtime_trace_raw</code>, <code>TEST_ASSERTS_INTERNAL_DETAIL</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A test depends on private implementation detail rather than public behavior.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The inspector checks paint under the wall instead of the door opening.</p>
+          <p><strong>If ignored:</strong> Safe refactors look broken while user-visible bugs may be missed.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">18.</span> <strong>Import heaviness and slow startup risk</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>import_graph</code>, <code>module_centrality_index</code>, <code>IMPORT_HEAVINESS_STARTUP</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Lightweight paths import heavy modules too early.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A small desk requires the whole warehouse to open.</p>
+          <p><strong>If ignored:</strong> Startup becomes slow, fragile, or dependent on optional packages.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">19.</span> <strong>Bundle safety issues</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> bundle manifests, files-changed lists, <code>BUNDLE_SAFETY</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A delivered patch changes too much, lacks a manifest, or modifies the wrong files.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A small repair box arrives with half the workshop inside.</p>
+          <p><strong>If ignored:</strong> A narrow fix becomes an accidental rewrite.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">20.</span> <strong>Project-wide AI confusion risks</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>canonical_conflict_index</code>, <code>responsibility_overlap_index</code>, <code>PROJECT_WIDE_AI_CONFUSION</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Project layout makes AI likely to pick the wrong file, owner, or symbol.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Several identical room signs confuse the assistant.</p>
+          <p><strong>If ignored:</strong> AI assistance becomes less reliable even when code parses.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">21.</span> <strong>Cross-box public symbol collision</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>boundary_index</code>, <code>CROSS_BOX_PUBLIC_SYMBOL_COLLISION</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Different architecture boxes expose the same public name.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two departments publish the same front-desk label.</p>
+          <p><strong>If ignored:</strong> Import order or guesswork decides the owner.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">22.</span> <strong>Shared mutable state coupling</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>attribute_state_map</code>, <code>object_ownership</code>, <code>SHARED_MUTABLE_STATE_COUPLING</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Multiple boxes read and write the same mutable state without a clear adapter.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Two offices use the same whiteboard and erase each other.</p>
+          <p><strong>If ignored:</strong> One box silently changes another box's runtime behavior.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">23.</span> <strong>Inconsistent error contract at boundaries</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>call_edges</code>, <code>control_flow</code>, <code>BOUNDARY_ERROR_CONTRACT</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> One boundary raises, another swallows, and another returns unclear values.</p>
+          <p class="plain-line"><strong>In plain English:</strong> One guard rings an alarm, another hides it, another shrugs.</p>
+          <p><strong>If ignored:</strong> Failures disappear or surface in the wrong place.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">24.</span> <strong>Tests assert implementation internals instead of public contracts</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>test_links</code>, <code>symbol_index</code>, <code>TEST_ASSERTS_INTERNAL_DETAIL</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> Tests inspect private names instead of externally observable behavior.</p>
+          <p class="plain-line"><strong>In plain English:</strong> A test grades the backstage rope instead of the show.</p>
+          <p><strong>If ignored:</strong> Tests become brittle and miss public failures.</p>
+        </article>
+        <article class="issue-card">
+          <p><span class="issue-number">25.</span> <strong>Missing <code>__all__</code> or uncontrolled public surface</strong></p>
+          <p class="technical-line"><strong>Evidence or code surface:</strong> <code>__all__</code>, <code>source_file_index</code>, <code>MISSING_PUBLIC_SURFACE_CONTROL</code>, <code>MISSING___ALL___FOR_EXPOSES</code>.</p>
+          <p class="technical-line"><strong>Technical:</strong> A module does not clearly state which names are public.</p>
+          <p class="plain-line"><strong>In plain English:</strong> Every drawer looks open to visitors.</p>
+          <p><strong>If ignored:</strong> Private helpers become accidental public API.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Artifact Contracts And Write Risk</h2>
+      <p>Architecture Review cares about files that become future evidence. <code>architecture_manifest.json</code> records the structure map. <code>ARCHITECTURE.md</code> is a human-readable architecture summary. Minimal <code>__init__.py</code> facades define public import surfaces. If those files are stale, mismatched, or written for the wrong root, later tools can reason from a bad map.</p>
+      <p><strong>Technical:</strong> <code>write</code> mode is intentionally guarded because it can update generated architecture files. The GUI does not hide that risk. It shows a confirmation dialog saying write mode can update <code>__init__.py</code> files, <code>ARCHITECTURE.md</code>, and <code>architecture_manifest.json</code>.</p>
+      <p><strong>In plain English:</strong> Filing the wrong building plan is worse than finding no plan at all. Keep <code>validate</code> and <code>diff</code> ahead of <code>write</code> unless you are deliberately refreshing architecture paperwork.</p>
+    </section>
+
+    <section>
+      <h2>Book Grounding Map</h2>
+      <p>Books are conceptual grounding only. They supplement local code inspection, official documentation, maintainer docs, specifications, and reputable references. The exact KANDA feature names are project-specific, so each group below maps the feature area to the nearest stable book-grounded discipline and records the five-book basis used for this rebuilt page.</p>
+      <p>The book map is rendered as stacked reference blocks instead of a wide table. Each block keeps five books plus the local concept they contributed.</p>
+      <div class="reference-list" aria-label="Table AR-4. Five-book conceptual grounding for each major feature area discussed.">
+        <article class="reading-map">
+          <h3>Owner boxes, architecture boundaries, wrong-owner warnings, and cross-box public surfaces</h3>
+          <p><strong>Stable book-grounded domain:</strong> Software architecture and domain boundaries.</p>
+          <p><strong>Five verified books used:</strong> <code>Clean Architecture</code> by Robert C. Martin, Prentice Hall, 2017; <code>Software Architecture in Practice</code>, 4th ed., by Len Bass, Paul Clements, and Rick Kazman, Addison-Wesley, 2021; <code>Fundamentals of Software Architecture</code> by Mark Richards and Neal Ford, O'Reilly, 2020; <code>Patterns of Enterprise Application Architecture</code> by Martin Fowler, Addison-Wesley, 2002; <code>Domain-Driven Design</code> by Eric Evans, Addison-Wesley, 2003.</p>
+          <p><strong>Concept contributed:</strong> Boundaries are contracts; owner names should match responsibility; public interfaces should reduce coupling rather than spread it.</p>
+        </article>
+        <article class="reading-map">
+          <h3>Python imports, public names, <code>__all__</code>, import side effects, circular imports, and path handling</h3>
+          <p><strong>Stable book-grounded domain:</strong> Python module design and application structure.</p>
+          <p><strong>Five verified books used:</strong> <code>Fluent Python</code>, 2nd ed., by Luciano Ramalho, O'Reilly, 2022; <code>Effective Python</code>, 2nd ed., by Brett Slatkin, Addison-Wesley, 2019; <code>Architecture Patterns with Python</code> by Harry Percival and Bob Gregory, O'Reilly, 2020; <code>Python Distilled</code> by David Beazley, Addison-Wesley, 2021; <code>Python in Practice</code> by Mark Summerfield, Addison-Wesley, 2013.</p>
+          <p><strong>Concept contributed:</strong> Python modules should expose intentional public surfaces, keep imports predictable, and isolate application boundaries.</p>
+        </article>
+        <article class="reading-map">
+          <h3>Validation modes, tests, evidence output, test protection gaps, and internal-detail tests</h3>
+          <p><strong>Stable book-grounded domain:</strong> Testing, legacy-code safety, and change evidence.</p>
+          <p><strong>Five verified books used:</strong> <code>Working Effectively with Legacy Code</code> by Michael Feathers, Prentice Hall, 2004; <code>Test-Driven Development: By Example</code> by Kent Beck, Addison-Wesley, 2002; <code>xUnit Test Patterns</code> by Gerard Meszaros, Addison-Wesley, 2007; <code>Growing Object-Oriented Software, Guided by Tests</code> by Steve Freeman and Nat Pryce, Addison-Wesley, 2009; <code>Unit Testing Principles, Practices, and Patterns</code> by Vladimir Khorikov, Manning, 2020.</p>
+          <p><strong>Concept contributed:</strong> A warning is useful when it connects to testable behavior, focused evidence, and change points that can be verified after repair.</p>
+        </article>
+        <article class="reading-map">
+          <h3>Unsafe paths, canonical/working-copy split, generated artifact contracts, error contracts, and bundle safety</h3>
+          <p><strong>Stable book-grounded domain:</strong> Secure design, threat modeling, and reliable data contracts.</p>
+          <p><strong>Five verified books used:</strong> <code>Secure by Design</code> by Dan Bergh Johnsson, Daniel Deogun, and Daniel Sawano, Manning, 2019; <code>Threat Modeling: Designing for Security</code> by Adam Shostack, Wiley, 2014; <code>Web Application Security</code> by Andrew Hoffman, O'Reilly, 2020; <code>Secure Coding: Principles and Practices</code> by Mark G. Graff and Kenneth R. van Wyk, O'Reilly, 2003; <code>Designing Data-Intensive Applications</code> by Martin Kleppmann, O'Reilly, 2017.</p>
+          <p><strong>Concept contributed:</strong> Boundary mistakes should be treated as risk paths: wrong roots, mixed truth stores, unclear errors, and malformed artifacts can mislead downstream systems.</p>
+        </article>
+        <article class="reading-map">
+          <h3>Qt shell help button, lazy loading, worker threads, local rendered help, and advisory AI controls</h3>
+          <p><strong>Stable book-grounded domain:</strong> Desktop GUI workflows, responsiveness, and operational safety.</p>
+          <p><strong>Five verified books used:</strong> <code>Rapid GUI Programming with Python and Qt</code> by Mark Summerfield, Prentice Hall, 2007; <code>Create GUI Applications with Python &amp; Qt6</code> by Martin Fitzpatrick, 2021; <code>Qt 6 C++ GUI Programming Cookbook</code> by Lee Zhi Eng, Packt, 2022; <code>Software Engineering at Google</code> by Titus Winters, Tom Manshreck, and Hyrum Wright, O'Reilly, 2020; <code>Release It!</code>, 2nd ed., by Michael T. Nygard, Pragmatic Bookshelf, 2018.</p>
+          <p><strong>Concept contributed:</strong> GUI tools should keep long work off the main UI path, make status visible, preserve local deterministic evidence, and contain advisory systems behind clear authority boundaries.</p>
+        </article>
+        <article class="reading-map">
+          <h3>Help-file layout, local rendered docs, local image assets, manifests, saved outputs, and future maintainer handoff</h3>
+          <p><strong>Stable book-grounded domain:</strong> Documentation as an engineering artifact.</p>
+          <p><strong>Five verified books used:</strong> <code>Docs for Developers</code> by Jared Bhatti, Zachary Sarah Corleissen, Jen Lambourne, David Nunez, and Heidi Waterhouse, O'Reilly, 2021; <code>Living Documentation</code> by Cyrille Martraire, Addison-Wesley, 2019; <code>Software Engineering at Google</code> by Titus Winters, Tom Manshreck, and Hyrum Wright, O'Reilly, 2020; <code>Refactoring</code>, 2nd ed., by Martin Fowler, Addison-Wesley, 2018; <code>Software Design X-Rays</code> by Adam Tornhill, Pragmatic Bookshelf, 2018.</p>
+          <p><strong>Concept contributed:</strong> Help is not decoration; it is a maintained artifact that should document source truth, design intent, failure modes, evidence paths, and how future readers should change the system.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Official And Maintainer Reference Map</h2>
       <ul>
-        <li>Confirm the project root and source label before loading the tool.</li>
-        <li>Read the issue code and evidence before deciding what owns the fix.</li>
-        <li>Do not treat an issue report as permission for broad refactoring.</li>
-        <li>Run focused tests after any architecture repair.</li>
-        <li>Freeze only after validation evidence is clean and current.</li>
+        <li><strong>Local KANDA code:</strong> <code>tool_specs.py</code>, <code>lazy_tabs.py</code>, <code>help_docs/path_resolver.py</code>, <code>help_docs/renderer.py</code>, <code>manage_architecture_gui.py</code>, <code>ai_review/gui_integration.py</code>, and <code>tab1_architecture.json</code>.</li>
+        <li><strong>Python documentation categories:</strong> import system behavior, module execution, <code>__all__</code> conventions, <code>pathlib.Path</code>, <code>json</code>, and command argument handling.</li>
+        <li><strong>Qt for Python documentation categories:</strong> <code>QThread</code>, <code>QMessageBox</code>, <code>QPlainTextEdit</code>, <code>QComboBox</code>, <code>QSettings</code>, and local help rendering widgets.</li>
+        <li><strong>Security and reliability references:</strong> OWASP secure architecture guidance, threat-modeling practice, and SRE-style reliability testing concepts.</li>
+        <li><strong>KANDA help-layout canon:</strong> local-only rendered HTML, shared CSS, source/rendered parity, local image assets, hidden maintainer-only artwork records, and the summary-linked opener requirement.</li>
       </ul>
     </section>
 
-    <footer class="running-footer">
-      <span>Architecture Review Help</span>
-      <span>1</span>
-    </footer>
+    <section>
+      <h2>Operating Checklist</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/architecture_review_checklist_airport.png" alt="Colorful airport preflight cartoon where Architecture Review checks evidence before a patch can depart">
+        <figcaption>Figure AR-4. The patch leaves only after the preflight checklist is signed.</figcaption>
+      </figure>
+      <h3>Before running</h3>
+      <ul>
+        <li>Confirm the worker script path exists.</li>
+        <li>Confirm <code>Project root</code> points to the intended repository.</li>
+        <li>Prefer <code>validate</code> before <code>diff</code>, <code>scan</code>, or <code>write</code>.</li>
+        <li>Keep write confirmation enabled unless you have a specific governed reason.</li>
+      </ul>
+      <h3>After running</h3>
+      <ul>
+        <li>Read issue codes and evidence paths before deciding what to edit.</li>
+        <li>Treat output as a diagnostic report, not as automatic permission.</li>
+        <li>If the output is empty, do not run advisory AI review yet.</li>
+        <li>Save output before handing evidence to another person, AI workflow, patch bundle, or freeze step.</li>
+      </ul>
+      <h3>Before changing code</h3>
+      <ul>
+        <li>Identify the owner box.</li>
+        <li>Check whether the warning is about public surface, import wiring, test protection, generated artifacts, or truth-store boundaries.</li>
+        <li>Patch the narrowest source that explains the evidence.</li>
+        <li>Rerun focused tests and the relevant Architecture Review mode.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Authority Boundary</h2>
+      <p>Architecture Review reports risks and generated architecture evidence. It does not approve patches, choose prompts, override the router, replace tests, freeze features, or make advisory AI authoritative. <code>write</code> mode can update architecture artifacts, but only as the selected worker mode, and strict confirmation exists because writing is a higher-risk action than validating.</p>
+      <p>The help page follows the same boundary. It explains controls, modes, issue families, and failure contracts. It does not modify runtime behavior by itself.</p>
+    </section>
+
+    <section>
+      <h2>Validation Rule</h2>
+      <p>Use this page successfully when a common user can answer "what do I click and why?" and an engineer can answer "what code path, invariant, artifact, evidence family, and failure mode does this represent?" The page must stay in parity with the rendered HTML, the manifest must route <code>tab1_architecture.json</code> to <code>architecture_review</code>, all image paths must exist locally, and the opener image must remain tied to the page summary.</p>
+    </section>
+
+    <footer class="running-footer">KANDA Reasoner desktop help - Architecture Review - local-only rendered HTML</footer>
   </article>
 </body>
 </html>

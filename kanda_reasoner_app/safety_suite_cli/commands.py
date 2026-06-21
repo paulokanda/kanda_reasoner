@@ -71,7 +71,7 @@ def build_safety_suite_parser() -> argparse.ArgumentParser:
     _add_shadow_audit_parser(subparsers)
     _add_shadow_plan_parser(subparsers)
     _add_facade_fix_plan_parser(subparsers)
-    from kanda_reasoner_app.safety_suite_cli.reasoner_symbol_atlas_commands import add_reasoner_symbol_atlas_parsers
+    from kanda_reasoner_app.safety_suite_cli.project_symbol_atlas_commands import add_reasoner_symbol_atlas_parsers
     add_reasoner_symbol_atlas_parsers(subparsers)
     return parser
 

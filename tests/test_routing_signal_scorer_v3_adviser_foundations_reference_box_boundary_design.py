@@ -285,6 +285,33 @@ class AdviserFoundationsReferenceBoxBoundaryDesignTests(unittest.TestCase):
             # without gate evaluation, implementation authorization, Pilot candidate
             # creation, prompt loading, runtime export, persistence, or route authority.
             ADVISER / "transition_design" / "pilot_implementation_gate_design.py",
+            # P8 is a separate governed non-runtime Pilot candidate
+            # implementation milestone that may add the exact immutable static
+            # candidate record without callable Pilot behavior, prompt loading,
+            # persistence, field-test activation, or route authority.
+            ADVISER / "transition_design" / "non_runtime_pilot_candidate.py",
+            # P9 is a separate governed non-runtime Pilot candidate
+            # contract conformance milestone that may add the exact static
+            # conformance record without live validation, input processing,
+            # output generation, prompt loading, persistence, or runtime authority.
+            ADVISER / "transition_design" / "non_runtime_pilot_candidate_contract_conformance.py",
+            # P10 is a separate governed non-runtime Pilot candidate readiness
+            # gate milestone that may add the exact static gate record without
+            # live gate evaluation, lab-test coding, activation, prompt loading,
+            # persistence, or runtime authority.
+            ADVISER / "transition_design" / "non_runtime_pilot_candidate_readiness_gate.py",
+            # P11 is a separate governed non-runtime Pilot candidate review
+            # evidence packet milestone that may add the exact static packet
+            # shape record without evidence collection, packet building,
+            # persistence, lab-test coding, activation, prompt loading, or
+            # runtime authority.
+            ADVISER / "transition_design" / "non_runtime_pilot_candidate_review_evidence_packet.py",
+            # P12 is a separate governed non-runtime Pilot phase closure and
+            # Copilot boundary entry-gate milestone that may add the exact
+            # static closure record without closure execution, Copilot scope
+            # design, lab-test coding, activation, prompt loading, or runtime
+            # authority.
+            ADVISER / "transition_design" / "non_runtime_pilot_phase_closure_copilot_boundary_entry_gate.py",
         }
         py_files = set(ADVISER.rglob("*.py"))
         self.assertTrue(py_files.issubset(allowed_py), sorted(str(p) for p in py_files - allowed_py))

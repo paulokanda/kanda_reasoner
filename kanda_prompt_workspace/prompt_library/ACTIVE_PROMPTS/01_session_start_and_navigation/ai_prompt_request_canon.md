@@ -234,6 +234,40 @@ Do not implement Pilot before P0-P6 gates allow it. Do not implement Copilot. Do
 
 May proceed now: PARTIAL for read-only planning, audit, and router-canon review. NO for implementation until the RG-PILOT-000 canon, KBSC boundary, routing-system canon, current project context, M35 closure evidence, patch boundary, validation plan, and freeze path are clear. If P0 is not yet validated and frozen, the next implementation milestone is P0 only.
 
+
+
+### RG-LAB-000 Post-P12 ML LAB phase entry exact context package
+
+When the user asks to canonize LAB phase entry, start LAB after P12, continue after P12, go next after P12, create LAB-0, create a lab charter, implement lab/test logic, test ML router prompt logic, test prompt choosing or prompt-selection reliability, validate ML router prompt logic reliability, or continue ML implementation after lab reliability, treat the task as governed post-P12 LAB phase entry and ML/router reliability-testing roadmap work.
+
+Required prompts/groups and context for this task type:
+
+```text
+1. routing_signal_scorer_v3_lab_phase_entry_router_canon - required because post-P12 work must preserve canonize-LAB-entry-first and no-direct-ML-implementation routing.
+2. routing_signal_scorer_v3_pilot_copilot_phase0_router_canon - required because the LAB phase follows the closed P-series and must preserve no-runtime/no-prompt-loading Pilot/Copilot boundaries.
+3. kanda_routing_system_canon - required because LAB output and ML candidate output must not become routing authority.
+4. kanda_box_shielding_canon - required because LAB work protects stronger ML and must preserve box boundaries.
+5. 02_prompt_routing_and_indexing - required because routing indexes and prompt-call behavior decide when this canon is requested.
+6. active project freeze context and P12 freeze evidence - required when continuing after P12.
+7. Current project files and current routing/prompt-library context - required IF a canonization, design, or implementation patch is requested.
+8. 05_patch_delivery_and_validation - required IF a patch ZIP, install block, validation block, or freeze-ready delivery is requested.
+9. 09_python_quality_security_observability - required IF validation, safety gates, test matrix, metrics, observability, or no-authority leakage behavior is changed.
+```
+
+Canonical RG-LAB-000 rule:
+
+```text
+After P12, canonize LAB entry first; build and validate the LAB before testing ML router prompt logic; validate ML router prompt logic reliability before continuing ML implementation.
+```
+
+Forbidden next-step shortcuts:
+
+```text
+Do not continue ML implementation directly after P12. Do not start LAB coding before LAB-0 freezes. Do not create schema, fixtures, corpus, runner, metrics, candidate harness, provider calls, prompt loading, persistence, training-data use, batch mode, activation gate, field-test mode, runtime Pilot, or Copilot behavior before the proper LAB milestone is frozen.
+```
+
+May proceed now: PARTIAL for read-only planning, audit, and RG-LAB-000 canon review. YES only for a governed RG-LAB-000 routing-canon patch when routing assets, patch boundary, validation path, and freeze path are clear. NO for ML implementation or LAB coding until the correct earlier LAB milestone is frozen.
+
 ### Routing Signal Scorer v3 semantic-readiness exact context package
 
 When the user asks to design, canonize, audit, or implement work involving machine learning, embeddings, semantic retrieval, vector indexes, vector databases, semantic scorer behavior, `routing_signal_scorer` v3, Metadata Vector Manifest, semantic corpus generation, retrieval evaluation, or ML/retrieval library adoption, treat the task as governed semantic-readiness work.
