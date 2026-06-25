@@ -81,16 +81,6 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="project_structure_map",
     ),
     ToolSpec(
-        step_title="AI Import Builder",
-        module_candidates=(
-            _module_path("json_splitter", "json_splitter_8"),
-        ),
-        class_candidates=("JsonSplitterPanel", "JsonSplitterWindow"),
-        source_hint=_source_path("json_splitter", "json_splitter_8.py"),
-        help_catalog="ai_import_builder.json",
-        tab_id="ai_import_builder",
-    ),
-    ToolSpec(
         step_title="Refactor Report",
         module_candidates=(
             _module_path("daily_rfctr_report", "daily_refactor_report"),

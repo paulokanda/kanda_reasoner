@@ -1,70 +1,53 @@
 {
   "form_inputs": {
-    "box_type": "governed Show Project to AI artifact metadata hotfix",
-    "do_not_regress_rules": "ai_briefing.evidence_files.ai_briefing_json must use hash_status self_hash_not_embedded.\nai_briefing.evidence_files.ai_briefing_json.sha256 must be an empty string because the briefing cannot embed its own final sha256 without changing itself.\nai_briefing.evidence_files.ai_briefing_json.size_status must be self_size_not_embedded and size_bytes must be 0.\nThe bundle manifest remains the hash authority for the final ai_briefing_json artifact.\nbundle_manifest.artifacts.ai_briefing_json.sha256 must match the actual final ai_briefing JSON bytes.\nAI handoff upload ZIPs must contain the self-reference briefing metadata, not a stale embedded self-hash.\nAI briefing dynamic path policy must use <project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files and must not mention _architecture_audit as the real current output folder.\nHandoff ZIP members and JSON/TXT/MD contents must not expose second_prompt_files_building or .json_handoff_zip_stage staging paths.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory and not under project_freeze_ledger.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
-    "feature_title": "Show Project to AI AI Briefing Self-Hash Contract v1",
-    "generated_files": "<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_briefing.json\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__bundle_manifest.json\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_handoff_upload*.zip\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_handoff_all_in_one*.zip",
-    "known_warnings": "",
-    "notes": "Root-level KANDA_FREEZE_HINT.json is patch delivery metadata only and must not be copied into the active project root. Install the changed source/test files, validate locally, regenerate Create First and Second Prompt Files, audit second_prompt_files, then freeze only if local evidence passes.",
-    "planned_next_step": "Install locally, run validation, rerun Create First and Second Prompt Files, audit regenerated second_prompt_files, then freeze this hotfix if local validation and regenerated audit pass.",
-    "primary_box": "reasoner_context_bundle AI briefing builder; Show Project to AI second_prompt_files metadata",
-    "protected_paths": "kanda_reasoner_app/reasoner_context_bundle/ai_briefing_builder.py\nproject_freeze_after_update/freeze_hint_intake\nproject_freeze_after_update/frozen_features_memory\nproject_freeze_after_update/frozen_features_memory/",
-    "validated_files": "kanda_reasoner_app/reasoner_context_bundle/ai_briefing_builder.py\ntests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py\ntests/test_show_project_to_ai_final_artifact_consistency_cleanup_v1.py\ntests/test_second_upload_group_json_zip_startup_contract_v1.py\ntests/test_show_project_to_ai_build_override_hash_resolution_v1.py",
-    "validation_evidence_summary": "VALIDATION OK: show_project_to_ai_ai_briefing_self_hash_contract_v1\nSTATUS: IN_SYNC\nSandbox py_compile passed for ai_briefing_builder.py and the new regression test.\nSandbox regression test passed: tests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py.\nSandbox regression test passed: tests/test_show_project_to_ai_final_artifact_consistency_cleanup_v1.py.\nSandbox regression test passed: tests/test_second_upload_group_json_zip_startup_contract_v1.py.\nSandbox regression test passed: tests/test_show_project_to_ai_build_override_hash_resolution_v1.py.\nThe new regression test generates a sample Show Project to AI bundle and handoff upload ZIP, verifies ai_briefing_json is marked self_hash_not_embedded with empty sha256 and self_size_not_embedded, verifies the bundle manifest hash matches the actual ai_briefing artifact, verifies the zipped briefing uses the same self-reference metadata, and verifies the dynamic path policy no longer points to _architecture_audit."
+    "box_type": "prompt_library_router_canon_patch",
+    "do_not_regress_rules": "Do not hardcode kanda_reasoner as the active project for project-specific paths.\nDo not collapse tool identity and target project identity even when both slugs match in the current session.\nProject-specific freeze intake and frozen memory must stay under <active_project_root>/project_freeze_after_update.\nproject_freeze_ledger remains reusable engine logic, not active project frozen memory.\nPrompt router logic must recommend project_tool_boundary_canon when coding or patch workflows involve project-root, staging, freeze, handoff, or validation paths.\nGenerated startup artifacts must be regenerated from canonical prompt sources, not edited as source truth.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Project/tool boundary canon routed for coding tasks",
+    "generated_files": "kanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/tell_AI_read_before_all.md\nkanda_prompt_workspace/first_AI_deliver/prompt_library.zip",
+    "known_warnings": "The patch changes canonical startup-loaded prompt_navigation_index.md, so local validation must run startup sync after install and confirm STATUS: IN_SYNC before freezing.",
+    "notes": "The uploaded insertion guide was used as the route: create the prompt in the correct ACTIVE_PROMPTS folder, add metadata, update folder assimilation, connect router/navigation indexes, validate, and deliver a freeze-capable patch sidecar.",
+    "planned_next_step": "Install the patch into the selected kanda_reasoner project root, run the validation block, then freeze only after local validation reports VALIDATION OK: project_tool_boundary_canon_v1 and STATUS: IN_SYNC.",
+    "primary_box": "kanda_prompt_workspace/prompt_library",
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons\nkanda_prompt_workspace/prompt_library/METADATA\nkanda_prompt_workspace/prompt_library/ROUTING\n<active_project_root>/project_freeze_after_update/frozen_features_memory\n<active_project_root>/project_freeze_after_update/freeze_hint_intake\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nscripts/validate_project_tool_boundary_canon_v1.py",
+    "validation_evidence_summary": "Sandbox validation passed: py_compile scripts/validate_project_tool_boundary_canon_v1.py; python scripts/validate_project_tool_boundary_canon_v1.py emitted VALIDATION OK: project_tool_boundary_canon_v1; python scripts/validate_patch_zip.py accepted this ZIP contract after package creation. Local Windows validation must be run after install before freeze."
   },
   "hint": {
-    "box_type": "governed Show Project to AI artifact metadata hotfix",
-    "changed_files": [
-      "kanda_reasoner_app/reasoner_context_bundle/ai_briefing_builder.py",
-      "tests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py"
-    ],
-    "do_not_regress_rules": "ai_briefing.evidence_files.ai_briefing_json must use hash_status self_hash_not_embedded.\nai_briefing.evidence_files.ai_briefing_json.sha256 must be an empty string because the briefing cannot embed its own final sha256 without changing itself.\nai_briefing.evidence_files.ai_briefing_json.size_status must be self_size_not_embedded and size_bytes must be 0.\nThe bundle manifest remains the hash authority for the final ai_briefing_json artifact.\nbundle_manifest.artifacts.ai_briefing_json.sha256 must match the actual final ai_briefing JSON bytes.\nAI handoff upload ZIPs must contain the self-reference briefing metadata, not a stale embedded self-hash.\nAI briefing dynamic path policy must use <project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files and must not mention _architecture_audit as the real current output folder.\nHandoff ZIP members and JSON/TXT/MD contents must not expose second_prompt_files_building or .json_handoff_zip_stage staging paths.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory and not under project_freeze_ledger.",
-    "do_not_write_to_project_freeze_ledger": true,
-    "feature_id": "show-project-to-ai-ai-briefing-self-hash-contract-v1",
-    "feature_name": "Show Project to AI AI Briefing Self-Hash Contract v1",
-    "feature_title": "Show Project to AI AI Briefing Self-Hash Contract v1",
-    "freeze_validation_markers": {
-      "status": "STATUS: IN_SYNC",
-      "validation_ok": "VALIDATION OK: show_project_to_ai_ai_briefing_self_hash_contract_v1"
-    },
-    "generated_files": "<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_briefing.json\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__bundle_manifest.json\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_handoff_upload*.zip\n<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files\\<project_slug>__ai_handoff_all_in_one*.zip",
+    "box_type": "prompt_library_router_canon_patch",
+    "do_not_regress_rules": "Do not hardcode kanda_reasoner as the active project for project-specific paths.\nDo not collapse tool identity and target project identity even when both slugs match in the current session.\nProject-specific freeze intake and frozen memory must stay under <active_project_root>/project_freeze_after_update.\nproject_freeze_ledger remains reusable engine logic, not active project frozen memory.\nPrompt router logic must recommend project_tool_boundary_canon when coding or patch workflows involve project-root, staging, freeze, handoff, or validation paths.\nGenerated startup artifacts must be regenerated from canonical prompt sources, not edited as source truth.",
+    "feature_id": "project-tool-boundary-canon-v1",
+    "feature_title": "Project/tool boundary canon routed for coding tasks",
+    "freeze_readiness": "pre_validation_hint",
+    "generated_files": "kanda_prompt_workspace/first_AI_deliver/first_prompts_to_ai.zip\nkanda_prompt_workspace/first_AI_deliver/tell_AI_read_before_all.md\nkanda_prompt_workspace/first_AI_deliver/prompt_library.zip",
     "kind": "kanda_freeze_hint",
-    "known_warnings": "['This patch repairs metadata consistency only; regenerate Create First and Second Prompt Files after install and re-audit second_prompt_files before freezing.', 'Excluded-path records may still mention old/deprecated folder names as exclusion evidence; those paths must not appear in included_files or source ZIP contents.']",
-    "notes": "Root-level KANDA_FREEZE_HINT.json is patch delivery metadata only and must not be copied into the active project root. Install the changed source/test files, validate locally, regenerate Create First and Second Prompt Files, audit second_prompt_files, then freeze only if local evidence passes.",
-    "patch_name": "show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
-    "planned_next_step": "Install locally, run validation, rerun Create First and Second Prompt Files, audit regenerated second_prompt_files, then freeze this hotfix if local validation and regenerated audit pass.",
-    "primary_box": "reasoner_context_bundle AI briefing builder; Show Project to AI second_prompt_files metadata",
-    "project_memory_target": "<active_project_root>/project_freeze_after_update/frozen_features_memory",
-    "protected_paths": "kanda_reasoner_app/reasoner_context_bundle/ai_briefing_builder.py\nproject_freeze_after_update/freeze_hint_intake\nproject_freeze_after_update/frozen_features_memory",
+    "known_warnings": "The patch changes canonical startup-loaded prompt_navigation_index.md, so local validation must run startup sync after install and confirm STATUS: IN_SYNC before freezing.",
+    "notes": "The uploaded insertion guide was used as the route: create the prompt in the correct ACTIVE_PROMPTS folder, add metadata, update folder assimilation, connect router/navigation indexes, validate, and deliver a freeze-capable patch sidecar.",
+    "patch_name": "project_tool_boundary_canon_v1_patch",
+    "planned_next_step": "Install the patch into the selected kanda_reasoner project root, run the validation block, then freeze only after local validation reports VALIDATION OK: project_tool_boundary_canon_v1 and STATUS: IN_SYNC.",
+    "primary_box": "kanda_prompt_workspace/prompt_library",
+    "protected_paths": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons\nkanda_prompt_workspace/prompt_library/METADATA\nkanda_prompt_workspace/prompt_library/ROUTING\n<active_project_root>/project_freeze_after_update/frozen_features_memory\n<active_project_root>/project_freeze_after_update/freeze_hint_intake",
+    "requires_user_validation": true,
     "schema_version": "1.0",
     "source": {
-      "source_mtime_ns": 1782344449144051900,
-      "source_name": "show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
-      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
-      "source_size_bytes": 5969
+      "source_mtime_ns": 1782357927794757000,
+      "source_name": "project_tool_boundary_canon_v1_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\project_tool_boundary_canon_v1_patch.zip",
+      "source_size_bytes": 96404
     },
-    "status": "sandbox_validated_ready_for_local_install",
-    "summary": "Fixes the final Show Project to AI second_prompt_files audit failure where kanda_reasoner__ai_briefing.json embedded a stale sha256 for ai_briefing_json. The AI briefing now treats its own artifact record as self-referential, does not embed its own final sha256 or final size, and leaves the bundle manifest as the hash authority for generated artifacts. The patch also updates the AI briefing dynamic path policy to the current <project_slug>_show_project_to_AI/second_prompt_files output contract.",
-    "validated_files": "kanda_reasoner_app/reasoner_context_bundle/ai_briefing_builder.py\ntests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py\ntests/test_show_project_to_ai_final_artifact_consistency_cleanup_v1.py\ntests/test_second_upload_group_json_zip_startup_contract_v1.py\ntests/test_show_project_to_ai_build_override_hash_resolution_v1.py",
-    "validation_evidence": [
-      "python -m py_compile changed files passed in sandbox",
-      "tests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py passed in sandbox",
-      "tests/test_show_project_to_ai_final_artifact_consistency_cleanup_v1.py passed in sandbox",
-      "tests/test_second_upload_group_json_zip_startup_contract_v1.py passed in sandbox",
-      "tests/test_show_project_to_ai_build_override_hash_resolution_v1.py passed in sandbox"
-    ],
-    "validation_evidence_summary": "VALIDATION OK: show_project_to_ai_ai_briefing_self_hash_contract_v1\nSTATUS: IN_SYNC\nSandbox py_compile passed for ai_briefing_builder.py and the new regression test.\nSandbox regression test passed: tests/test_show_project_to_ai_ai_briefing_self_hash_contract_v1.py.\nSandbox regression test passed: tests/test_show_project_to_ai_final_artifact_consistency_cleanup_v1.py.\nSandbox regression test passed: tests/test_second_upload_group_json_zip_startup_contract_v1.py.\nSandbox regression test passed: tests/test_show_project_to_ai_build_override_hash_resolution_v1.py.\nThe new regression test generates a sample Show Project to AI bundle and handoff upload ZIP, verifies ai_briefing_json is marked self_hash_not_embedded with empty sha256 and self_size_not_embedded, verifies the bundle manifest hash matches the actual ai_briefing artifact, verifies the zipped briefing uses the same self-reference metadata, and verifies the dynamic path policy no longer points to _architecture_audit."
+    "source_patch_zip": "project_tool_boundary_canon_v1_patch.zip",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md\nkanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nscripts/validate_project_tool_boundary_canon_v1.py",
+    "validation_evidence_summary": "Sandbox validation passed: py_compile scripts/validate_project_tool_boundary_canon_v1.py; python scripts/validate_project_tool_boundary_canon_v1.py emitted VALIDATION OK: project_tool_boundary_canon_v1; python scripts/validate_patch_zip.py accepted this ZIP contract after package creation. Local Windows validation must be run after install before freeze."
   },
   "kind": "kanda_saved_freeze_hint",
   "project_root": "E:\\kanda_reasoner",
-  "saved_at_utc": "2026-06-24T23:41:54Z",
+  "saved_at_utc": "2026-06-25T03:26:19Z",
   "schema_version": "1.0",
   "source": {
-    "source_mtime_ns": 1782344449144051900,
-    "source_name": "show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
-    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
-    "source_size_bytes": 5969
+    "source_mtime_ns": 1782357927794757000,
+    "source_name": "project_tool_boundary_canon_v1_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\project_tool_boundary_canon_v1_patch.zip",
+    "source_size_bytes": 96404
   },
-  "used_at_utc": "2026-06-24T23:41:57Z",
-  "used_freeze_id": "freeze-20260624-show-project-to-ai-ai-briefing-self-hash-contract-v1"
+  "used_at_utc": "2026-06-25T03:26:26Z",
+  "used_freeze_id": "freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks"
 }

@@ -762,3 +762,7 @@ freeze_memory_context_publish_v1_1 may be designed only as a separate governed p
 - 2026-06-24 | freeze-20260624-startup-second-upload-json-handoff-zip-contract-v1 | Startup Second Upload JSON Handoff ZIP Contract v1 | frozen
 - 2026-06-24 | freeze-20260624-show-project-to-ai-build-override-hash-resolution-v1 | Show Project to AI Build Override Hash Resolution v1 | frozen
 - 2026-06-24 | freeze-20260624-show-project-to-ai-ai-briefing-self-hash-contract-v1 | Show Project to AI AI Briefing Self-Hash Contract v1 | frozen
+- 2026-06-25 | freeze-20260625-show-project-to-ai-second-prompt-cleanup-and-zip-size-v1 | Show Project to AI Second Prompt Cleanup and ZIP Size v1 | frozen
+- 2026-06-25 | freeze-20260625-show-project-to-ai-remove-ai-import-builder-v1 | Show Project to AI Remove AI Import Builder v1 | frozen
+- 2026-06-25 | freeze-20260625-show-project-to-ai-project-independent-png-assets-reuse-v1 | Show Project to AI Project-Independent PNG Assets Reuse v1 | frozen
+- 2026-06-25 | freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks | Project/tool boundary canon routed for coding tasks | frozen

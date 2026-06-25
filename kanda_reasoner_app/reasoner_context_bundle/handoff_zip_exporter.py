@@ -31,14 +31,12 @@ from .handoff_zip_exporter_writer import write_external_readme, write_package_pa
 from .source_archive_exporter import write_source_archive_parts
 from .schema_models import ProjectContext
 
-DEFAULT_PART_SIZE_MB = 40
-CONSERVATIVE_PART_SIZE_MB = 25
-EXTENDED_PART_SIZE_MB_OPTIONS = (100, 200, 300, 450)
-ALLOWED_PART_SIZE_MB_OPTIONS = (CONSERVATIVE_PART_SIZE_MB, DEFAULT_PART_SIZE_MB, *EXTENDED_PART_SIZE_MB_OPTIONS)
+DEFAULT_PART_SIZE_MB = 500
+EXTENDED_PART_SIZE_MB_OPTIONS = (100, 200, 300, 400, 500)
+ALLOWED_PART_SIZE_MB_OPTIONS = EXTENDED_PART_SIZE_MB_OPTIONS
 
 __all__ = [
     "DEFAULT_PART_SIZE_MB",
-    "CONSERVATIVE_PART_SIZE_MB",
     "EXTENDED_PART_SIZE_MB_OPTIONS",
     "ALLOWED_PART_SIZE_MB_OPTIONS",
     "export_json_handoff_zip_parts",
@@ -166,6 +164,20 @@ def _delivery_folder_for_metadata(destination: Path) -> Path:
     return destination
 
 
+def _previous_second_prompt_files_for_reuse(destination: Path) -> Path:
+    """Return the selected project's previous final second_prompt_files folder.
+
+    Show Project to AI may build new artifacts in a temporary sibling named
+    ``second_prompt_files_building``.  Reusable artifact families, such as
+    PNG assets, must be read from the same selected project's previously
+    published ``second_prompt_files`` folder, not from the tool installation
+    and not from a hard-coded project name.
+    """
+    if destination.name == "second_prompt_files_building":
+        return destination.with_name("second_prompt_files")
+    return destination
+
+
 def _rewrite_text_references(folder: Path, delivery_folder: Path) -> int:
     """Rewrite build/stage folder references to the public delivery folder."""
     replacements = (
@@ -258,27 +270,48 @@ def export_json_handoff_zip_parts(
         zip_records: list[dict[str, Any]] = []
         packages: list[dict[str, Any]] = []
 
+        previous_reuse_folder = _previous_second_prompt_files_for_reuse(destination)
         source_archive = write_source_archive_parts(
             context,
             output_stage,
             temp_root,
             part_size_mb=part_size_mb,
             part_size_bytes=resolved_part_size_bytes,
+            reuse_png_assets_from=previous_reuse_folder,
         )
         created_paths.extend(Path(str(path)) for path in source_archive.get("created_paths", []))
         source_manifest_path = Path(str(source_archive.get("manifest_path", "")))
-        source_zip_records = list(source_archive.get("zip_parts", []))
+        source_zip_records = list(source_archive.get("source_zip_parts", []))
+        if not source_zip_records:
+            source_zip_records = [
+                item
+                for item in list(source_archive.get("zip_parts", []))
+                if str(item.get("package", "")) == "source_archive"
+            ]
+        png_asset_zip_records = list(source_archive.get("png_asset_zip_parts", []))
         zip_records.extend(source_zip_records)
+        zip_records.extend(png_asset_zip_records)
         packages.append(
             {
                 "name": "source_archive",
                 "stem": context.project_slug + "__source_archive",
-                "purpose": "Exact source-tree reconstruction as standalone ZIP parts for the selected Project root.",
+                "purpose": "Exact non-PNG source-tree reconstruction as standalone ZIP parts for the selected Project root.",
                 "zip_count": len(source_zip_records),
                 "artifact_count": sum(int(item.get("artifact_count", 0)) for item in source_zip_records),
                 "zip_parts": source_zip_records,
             }
         )
+        if png_asset_zip_records:
+            packages.append(
+                {
+                    "name": "png_assets",
+                    "stem": context.project_slug + "__png_assets",
+                    "purpose": "Exact PNG asset reconstruction as standalone ZIP_STORED parts for the selected Project root.",
+                    "zip_count": len(png_asset_zip_records),
+                    "artifact_count": sum(int(item.get("artifact_count", 0)) for item in png_asset_zip_records),
+                    "zip_parts": png_asset_zip_records,
+                }
+            )
 
         _finalize_ai_context_artifacts_for_handoff(context, destination)
         artifacts = ordered_export_paths(context, include_runtime_trace)

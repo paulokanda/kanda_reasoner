@@ -52,8 +52,8 @@ from .bundle_zipper import zip_ai_context_bundle
 
 
 _HANDOFF_ZIP_EXPORTER_PUBLIC_NAMES = {
-    "CONSERVATIVE_PART_SIZE_MB",
     "DEFAULT_PART_SIZE_MB",
+    "ALLOWED_PART_SIZE_MB_OPTIONS",
     "export_json_handoff_zip_parts",
     "is_destination_inside_project_root",
 }
@@ -98,7 +98,7 @@ __all__ = [
     "export_json_handoff_zip_parts",
     "is_destination_inside_project_root",
     "DEFAULT_PART_SIZE_MB",
-    "CONSERVATIVE_PART_SIZE_MB",
+    "ALLOWED_PART_SIZE_MB_OPTIONS",
     "SNAPSHOT_TEXT_EXTENSIONS",
     "TEXT_FILE_EXTENSIONS",
     "GENERATED_EVIDENCE_PREFIXES",

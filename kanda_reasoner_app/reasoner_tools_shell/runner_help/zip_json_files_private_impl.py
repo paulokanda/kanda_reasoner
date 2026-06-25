@@ -24,10 +24,13 @@ from kanda_reasoner_app.project_analysis_evidence_paths import (
 )
 
 __all__ = [
-    "CONSERVATIVE_ZIP_SIZE_MB",
     "DEFAULT_ZIP_SIZE_MB",
     "EXTENDED_ZIP_SIZE_MB_OPTIONS",
     "ALLOWED_ZIP_SIZE_MB_OPTIONS",
+    "load_saved_part_size_mb",
+    "save_selected_part_size_mb",
+    "cleanup_loose_json_files_after_success",
+    "cleanup_transient_daily_refactor_folders",
     "auto_zip_json_complete",
     "cleanup_show_project_to_ai_root_after_success",
     "clear_second_prompt_files_dir",
@@ -40,14 +43,9 @@ __all__ = [
     "selected_part_size_mb",
 ]
 
-CONSERVATIVE_ZIP_SIZE_MB = 25
-DEFAULT_ZIP_SIZE_MB = 40
-EXTENDED_ZIP_SIZE_MB_OPTIONS = (100, 200, 300, 450)
-ALLOWED_ZIP_SIZE_MB_OPTIONS = (
-    CONSERVATIVE_ZIP_SIZE_MB,
-    DEFAULT_ZIP_SIZE_MB,
-    *EXTENDED_ZIP_SIZE_MB_OPTIONS,
-)
+DEFAULT_ZIP_SIZE_MB = 500
+EXTENDED_ZIP_SIZE_MB_OPTIONS = (100, 200, 300, 400, 500)
+ALLOWED_ZIP_SIZE_MB_OPTIONS = EXTENDED_ZIP_SIZE_MB_OPTIONS
 
 
 
@@ -319,6 +317,99 @@ def _remove_forbidden_second_prompt_payloads(final_path: Path, project_root: str
                 pass
     return removed
 
+
+def cleanup_loose_json_files_after_success(final_path: str | Path) -> list[str]:
+    """Remove loose JSON artifacts after their ZIP handoff package exists.
+
+    The normal second-stage AI upload reads JSON artifacts from
+    ``*_ai_handoff_upload.zip``.  Keeping loose JSON siblings in
+    ``second_prompt_files`` is useful while building and auditing, but after a
+    successful ZIP export they are duplicate delivery noise.  This helper only
+    deletes root-level ``*.json`` files from the approved final folder; ZIP
+    contents are never modified.
+    """
+    resolved_dir = _require_show_project_child_dir(final_path, "second_prompt_files")
+    removed: list[str] = []
+    if not resolved_dir.exists() or not resolved_dir.is_dir():
+        return removed
+    upload_zips = [
+        child
+        for child in resolved_dir.iterdir()
+        if child.is_file()
+        and child.suffix.lower() == ".zip"
+        and "__ai_handoff_upload" in child.name
+    ]
+    if not upload_zips:
+        return removed
+    for child in sorted(resolved_dir.iterdir(), key=lambda item: item.name.lower()):
+        if not child.is_file() or child.suffix.lower() != ".json":
+            continue
+        try:
+            child.unlink()
+            removed.append(str(child))
+        except Exception:
+            pass
+    return removed
+
+
+_TRANSIENT_DAILY_REFACTOR_DIR_NAMES = {
+    "daily_refactor",
+    "daily_refactor_report",
+    "daily_refactor_engine",
+}
+
+
+def _is_transient_daily_refactor_folder(path: Path) -> bool:
+    """Return True for generated daily-refactor folders safe to remove."""
+    name = path.name.lower()
+    return (
+        name in _TRANSIENT_DAILY_REFACTOR_DIR_NAMES
+        or name.endswith("_daily_refactor_engine")
+        or name.endswith("_daily_refactor_report")
+    )
+
+
+def cleanup_transient_daily_refactor_folders(
+    project_root: str | Path | None,
+    *,
+    final_dir: str | Path | None = None,
+) -> list[str]:
+    """Remove transient daily-refactor output folders after successful handoff.
+
+    Cleanup is deliberately scoped to the external Show Project to AI output
+    tree and, optionally, its final ``second_prompt_files`` child.  It never
+    deletes folders from the selected source project itself, so source modules
+    such as ``kanda_reasoner_app/daily_rfctr_report`` are protected.
+    """
+    candidates: list[Path] = []
+    if project_root is not None:
+        try:
+            candidates.append(project_analysis_evidence_root(project_root).expanduser().resolve(strict=False))
+        except Exception:
+            pass
+    if final_dir is not None:
+        try:
+            candidates.append(Path(final_dir).expanduser().resolve(strict=False))
+        except Exception:
+            pass
+
+    removed: list[str] = []
+    seen: set[str] = set()
+    for base in candidates:
+        key = str(base)
+        if key in seen or not base.exists() or not base.is_dir():
+            continue
+        seen.add(key)
+        for child in sorted(base.iterdir(), key=lambda item: item.name.lower()):
+            if not child.is_dir() or not _is_transient_daily_refactor_folder(child):
+                continue
+            try:
+                shutil.rmtree(child)
+                removed.append(str(child))
+            except Exception:
+                pass
+    return removed
+
 def publish_second_prompt_files_building_dir(
     building_dir: str | Path,
     final_dir: str | Path,
@@ -398,6 +489,11 @@ def publish_second_prompt_files_building_dir(
         shutil.rmtree(backup_path, ignore_errors=True)
 
     removed_forbidden_payloads = _remove_forbidden_second_prompt_payloads(final_path, project_root)
+    removed_loose_json_files = cleanup_loose_json_files_after_success(final_path)
+    removed_daily_refactor_folders = cleanup_transient_daily_refactor_folders(
+        project_root,
+        final_dir=final_path,
+    )
 
     cleanup_result = {"removed": [], "skipped": []}
     if project_root is not None:
@@ -416,6 +512,8 @@ def publish_second_prompt_files_building_dir(
             "Rewritten generated text files: " + str(rewritten_files),
             "Cleaned stale root items: " + str(len(cleanup_result.get("removed", []))),
             "Removed stale heavy payloads from final folder: " + str(len(removed_forbidden_payloads)),
+            "Removed loose JSON files after ZIP export: " + str(len(removed_loose_json_files)),
+            "Removed transient daily_refactor folders: " + str(len(removed_daily_refactor_folders)),
         ],
     )
     return {
@@ -427,6 +525,8 @@ def publish_second_prompt_files_building_dir(
         "refreshed_bundle_manifest": str(refreshed_manifest) if refreshed_manifest is not None else "",
         "cleanup_result": cleanup_result,
         "removed_forbidden_payloads": removed_forbidden_payloads,
+        "removed_loose_json_files": removed_loose_json_files,
+        "removed_daily_refactor_folders": removed_daily_refactor_folders,
     }
 
 
@@ -450,28 +550,62 @@ def _prefs_path() -> Path:
     return Path(__file__).resolve().parent / ".zip_json_export_prefs.json"
 
 
-def _load_destination() -> str:
+def _load_prefs_payload() -> dict[str, Any]:
     try:
         prefs_path = _prefs_path()
         if prefs_path.exists():
             payload = json.loads(prefs_path.read_text(encoding="utf-8"))
             if isinstance(payload, dict):
-                destination = str(payload.get("destination_folder", "")).strip()
-                if destination:
-                    return destination
+                return payload
     except Exception:
         pass
-    return ""
+    return {}
 
 
-def _save_destination(destination_folder: str) -> None:
+def _save_prefs_payload(payload: dict[str, Any]) -> None:
     try:
-        _prefs_path().write_text(
-            json.dumps({"destination_folder": destination_folder}, indent=2),
+        prefs_path = _prefs_path()
+        prefs_path.parent.mkdir(parents=True, exist_ok=True)
+        prefs_path.write_text(
+            json.dumps(payload, indent=2, sort_keys=True),
             encoding="utf-8",
         )
     except Exception:
         pass
+
+
+def _load_destination() -> str:
+    payload = _load_prefs_payload()
+    destination = str(payload.get("destination_folder", "")).strip()
+    return destination
+
+
+def _save_destination(destination_folder: str) -> None:
+    payload = _load_prefs_payload()
+    payload["destination_folder"] = destination_folder
+    _save_prefs_payload(payload)
+
+
+def load_saved_part_size_mb() -> int:
+    """Return the saved ZIP part-size preference or the default 500 MB."""
+    payload = _load_prefs_payload()
+    try:
+        value = int(payload.get("part_size_mb", DEFAULT_ZIP_SIZE_MB))
+    except Exception:
+        value = DEFAULT_ZIP_SIZE_MB
+    if value in ALLOWED_ZIP_SIZE_MB_OPTIONS:
+        return value
+    return DEFAULT_ZIP_SIZE_MB
+
+
+def save_selected_part_size_mb(part_size_mb: int) -> None:
+    """Persist the user's selected ZIP part-size option for next session."""
+    value = int(part_size_mb)
+    if value not in ALLOWED_ZIP_SIZE_MB_OPTIONS:
+        value = DEFAULT_ZIP_SIZE_MB
+    payload = _load_prefs_payload()
+    payload["part_size_mb"] = value
+    _save_prefs_payload(payload)
 
 
 def _destination_inside_project_root(project_root: Path, destination: Path) -> bool:
@@ -487,22 +621,24 @@ def _destination_inside_project_root(project_root: Path, destination: Path) -> b
 
 
 def selected_part_size_mb(window: Any) -> int:
-    """Return the selected ZIP size option for the collector tab."""
+    """Return and persist the selected ZIP size option for the collector tab."""
     radio_by_size = (
-        (CONSERVATIVE_ZIP_SIZE_MB, "zip_size_conservative_radio"),
-        (DEFAULT_ZIP_SIZE_MB, "zip_size_default_radio"),
         (100, "zip_size_100_radio"),
         (200, "zip_size_200_radio"),
         (300, "zip_size_300_radio"),
-        (450, "zip_size_450_radio"),
+        (400, "zip_size_400_radio"),
+        (500, "zip_size_500_radio"),
     )
     for size_mb, attribute in radio_by_size:
         try:
             if bool(getattr(window, attribute).isChecked()):
+                save_selected_part_size_mb(size_mb)
                 return size_mb
         except Exception:
             pass
-    return DEFAULT_ZIP_SIZE_MB
+    saved = load_saved_part_size_mb()
+    save_selected_part_size_mb(saved)
+    return saved
 
 
 def _selected_part_size_mb(window: Any) -> int:
@@ -514,13 +650,11 @@ def _set_controls_enabled(window: Any, enabled: bool) -> None:
         "run_button",
         "browse_project_button",
         "browse_output_button",
-        "zip_json_files_button",
-        "zip_size_conservative_radio",
-        "zip_size_default_radio",
         "zip_size_100_radio",
         "zip_size_200_radio",
         "zip_size_300_radio",
-        "zip_size_450_radio",
+        "zip_size_400_radio",
+        "zip_size_500_radio",
     ):
         try:
             getattr(window, attribute).setEnabled(enabled)
@@ -786,11 +920,10 @@ def _start_folder_for_dialog(project_root: Path) -> str:
 def auto_zip_json_complete(window: Any, project_root: str | Path | None = None) -> None:
     """Automatically export handoff ZIP parts into the dynamic second_prompt_files folder.
 
-    This is the Run Collector follow-up path. It intentionally bypasses the
-    manual ``Zip JSON files`` destination button: the selected project root owns
-    the destination contract, and ZIPs are written next to the generated
-    complete/companion JSON artifacts under
-    ``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
+    This is the Create Second Prompt Files follow-up path. ZIP export is now
+    integrated into generation: the selected project root owns the destination
+    contract, and ZIPs are written next to the generated companion artifacts
+    under ``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
     """
     if getattr(window, "_process", None) is not None:
         _append_log(window, "[WARN] Automatic JSON ZIP export skipped because another process is active.")
@@ -817,8 +950,8 @@ def auto_zip_json_complete(window: Any, project_root: str | Path | None = None) 
     destination_path.mkdir(parents=True, exist_ok=True)
     part_size_mb = selected_part_size_mb(window)
 
-    _append_log(window, "Starting automatic JSON ZIP export after Run Collector...")
-    _append_log(window, "  manual Zip JSON files button: bypassed")
+    _append_log(window, "Starting automatic JSON ZIP export from Create Second Prompt Files...")
+    _append_log(window, "  manual ZIP button removed; ZIP export is part of Create Second Prompt Files")
     _append_log(window, "  root       : " + str(resolved_project_root))
     _append_log(window, "  build/final: " + ("build folder first" if destination_path != final_destination else "final folder"))
     _append_log(window, "  destination: " + str(destination_path))
@@ -883,6 +1016,7 @@ def run_zip_json_files(window: Any) -> None:
 
     _save_destination(str(destination_path))
     part_size_mb = _selected_part_size_mb(window)
+    save_selected_part_size_mb(part_size_mb)
     _append_log(window, "Starting JSON ZIP export...")
     _append_log(window, "  root       : " + str(project_root))
     _append_log(window, "  destination: " + str(destination_path))

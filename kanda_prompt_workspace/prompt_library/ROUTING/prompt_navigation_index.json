@@ -4,7 +4,7 @@
   "generated_at": "2026-06-12",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use trigger_phrases and user_intent_examples to detect intent; load the highest-priority matching prompt plus required companions; if uncertain, ask one focused clarification or load prompt_router + prompt_navigation_index.",
-  "prompt_count": 81,
+  "prompt_count": 82,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -3050,6 +3050,49 @@
       ],
       "missing_behavior": "HARD_STOP if a high-risk artifact would violate terminal cleanup, patch staging, freeze JSON, validation evidence, sidecar, monotonic intake, or multi-project path canon.",
       "load_type": "on_request"
+    },
+    {
+      "prompt_id": "project_tool_boundary_canon",
+      "prompt_code": "KPR-12-001",
+      "display_name": "Project Tool Boundary Canon",
+      "filename": "project_tool_boundary_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 35,
+      "trigger_phrases": [
+        "project versus tool",
+        "project vs tool",
+        "tool identity",
+        "active project identity",
+        "project in use",
+        "selected project root",
+        "active project root",
+        "target project",
+        "my_project",
+        "PROJECT_ROOT",
+        "do not hardcode kanda_reasoner",
+        "freeze paths active project",
+        "handoff path active project",
+        "patch staging active project"
+      ],
+      "user_intent_examples": [
+        "Keep KANDA Reasoner separate from the active project in every coding task.",
+        "Make sure freeze paths use the project in use, not always kanda_reasoner.",
+        "Canonize the distinction between the tool and <my_project>."
+      ],
+      "aliases": [
+        "project tool boundary",
+        "project_tool_boundary_canon",
+        "tool target boundary",
+        "active project boundary",
+        "selected project boundary"
+      ],
+      "when_to_load": "When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.",
+      "when_not_to_load": "Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.",
+      "required_companion_prompts": [
+        "box_architecture_canon",
+        "bundle_gated_development_workflow"
+      ]
     }
   ]
 }

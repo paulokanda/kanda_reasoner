@@ -37,7 +37,7 @@ EXPECTED_REGION_TO_TAB = {
     "brainstem_midbrain": "engineering_safety",
     "cerebellar_folia": "docstring_assistant",
     "occipital_lobe": "project_structure_map",
-    "central_sulcus": "ai_import_builder",
+    "central_sulcus": "project_structure_map",
     "cerebellum": "refactor_report",
     "temporal_lobe": "project_qa",
     "hippocampus": "freeze_feature_after_update",

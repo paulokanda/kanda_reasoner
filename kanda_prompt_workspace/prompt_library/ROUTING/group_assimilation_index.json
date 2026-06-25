@@ -287,8 +287,8 @@
     {
       "group_id": "12_generalized_project_canons",
       "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons",
-      "responsibility": "Store generalized reusable project canons, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references.",
-      "use_when": "When extracting project-agnostic rules from specific projects or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules.",
+      "responsibility": "Store generalized reusable project canons, project/tool boundary rules, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references.",
+      "use_when": "When extracting project-agnostic rules from specific projects, preserving active-project versus tool identity, or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules.",
       "do_not_use_when": "Do not place project-specific facts here.",
       "required_for": [
         "generalization",
@@ -300,7 +300,7 @@
         "non-technical help explanation",
         "book-grounded help references"
       ],
-      "prompt_count": 6,
+      "prompt_count": 7,
       "main_prompts": [
         "data_transform_pipeline_invariants.md",
         "desktop_help_document_layout_canon.md",

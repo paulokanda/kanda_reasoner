@@ -834,6 +834,18 @@ This file maps natural human requests to the correct clean prompt ID and compani
 
 ## Generalized Project Canons (`12_generalized_project_canons`)
 
+### `project_tool_boundary_canon` - Project Tool Boundary Canon
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md`
+- **Prompt code:** `KPR-12-001`
+- **Priority:** `35`
+- **Trigger phrases:** `project versus tool`; `project vs tool`; `tool identity`; `active project identity`; `project in use`; `selected project root`; `active project root`; `target project`; `my_project`; `PROJECT_ROOT`; `do not hardcode kanda_reasoner`; `freeze paths active project`; `handoff path active project`; `patch staging active project`
+- **User intent examples:** `Keep KANDA Reasoner separate from the active project in every coding task.`; `Make sure freeze paths use the project in use, not always kanda_reasoner.`; `Canonize the distinction between the tool and <my_project>.`
+- **Aliases:** `project tool boundary`; `project_tool_boundary_canon`; `tool target boundary`; `active project boundary`; `selected project boundary`
+- **When to load:** When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.
+- **When not to load:** Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.
+- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`
+
 ### `data_transform_pipeline_invariants` — Data Transform Pipeline Invariants
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md`

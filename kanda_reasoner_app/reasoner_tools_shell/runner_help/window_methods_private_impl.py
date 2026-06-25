@@ -148,36 +148,43 @@ def _build_ui(self) -> None:
     self.run_button = QPushButton("Create Second Prompt Files")
     self.path_to_second_prompt_files_button = QPushButton("Path to Second Prompt Files")
     self.path_to_second_prompt_files_button.setStyleSheet("color: blue;")
-    self.zip_json_files_button = QPushButton("Zip JSON files")
-    self.zip_size_conservative_radio = QRadioButton("Conservative 25 MB")
-    self.zip_size_default_radio = QRadioButton("Default 40 MB")
     self.zip_size_100_radio = QRadioButton("100 MB")
     self.zip_size_200_radio = QRadioButton("200 MB")
     self.zip_size_300_radio = QRadioButton("300 MB")
-    self.zip_size_450_radio = QRadioButton("450 MB")
-    self.zip_size_default_radio.setChecked(True)
+    self.zip_size_400_radio = QRadioButton("400 MB")
+    self.zip_size_500_radio = QRadioButton("500 MB")
     self.close_button = QPushButton("Close")
     button_row.addWidget(self.run_button)
     button_row.addWidget(self.path_to_second_prompt_files_button)
-    button_row.addWidget(self.zip_json_files_button)
-    button_row.addWidget(QLabel("ZIP size:"))
-    button_row.addWidget(self.zip_size_conservative_radio)
-    button_row.addWidget(self.zip_size_default_radio)
+    button_row.addWidget(QLabel("ZIP size limit:"))
     button_row.addWidget(self.zip_size_100_radio)
     button_row.addWidget(self.zip_size_200_radio)
     button_row.addWidget(self.zip_size_300_radio)
-    button_row.addWidget(self.zip_size_450_radio)
+    button_row.addWidget(self.zip_size_400_radio)
+    button_row.addWidget(self.zip_size_500_radio)
     button_row.addWidget(self.close_button)
     button_row.addStretch()
     collector_right_layout.addLayout(button_row)
 
     try:
         from kanda_reasoner_app.reasoner_tools_shell.runner_help import zip_json_files_private_impl as _zip_json_impl
-        self.zip_json_files_button.clicked.connect(
-            lambda: _zip_json_impl.run_zip_json_files(self)
-        )
+        _saved_zip_size = _zip_json_impl.load_saved_part_size_mb()
+        _zip_size_radios = {
+            100: self.zip_size_100_radio,
+            200: self.zip_size_200_radio,
+            300: self.zip_size_300_radio,
+            400: self.zip_size_400_radio,
+            500: self.zip_size_500_radio,
+        }
+        _zip_size_radios.get(_saved_zip_size, self.zip_size_500_radio).setChecked(True)
+        for _zip_size_mb, _radio in _zip_size_radios.items():
+            _radio.toggled.connect(
+                lambda checked, size=_zip_size_mb: (
+                    _zip_json_impl.save_selected_part_size_mb(size) if checked else None
+                )
+            )
     except Exception:
-        pass
+        self.zip_size_500_radio.setChecked(True)
 
     self.path_to_second_prompt_files_button.clicked.connect(
         lambda: _copy_show_project_to_ai_path("second")

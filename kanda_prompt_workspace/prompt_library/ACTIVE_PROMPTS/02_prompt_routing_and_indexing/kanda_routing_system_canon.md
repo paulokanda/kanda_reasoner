@@ -55,6 +55,33 @@ The routing system exists because KANDA is not intended to be a single giant pro
 
 ---
 
+
+## Project/tool identity boundary
+
+The routing system must preserve a canonical distinction between the tool and the selected target project:
+
+```text
+tool_project_slug = kanda_reasoner
+active_project_slug = selected project in use
+active_project_root = selected project root
+```
+
+KANDA Reasoner can be the reusable tool/runtime and can also be the selected target project in a particular session. Those identities must not be collapsed. Even when both slugs match, router logic, patch logic, freeze logic, handoff logic, validation logic, and source-inspection logic must behave as if they could be different in the next session.
+
+For any coding, patch, freeze, handoff, validation, source-inspection, project-root, or staging-path task where that distinction matters, route to:
+
+```text
+project_tool_boundary_canon
+```
+
+The canon is owned by:
+
+```text
+ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md
+```
+
+It is a boundary invariant, not a substitute for Box Architecture, patch delivery, validation, freeze intake, handoff, or Python engineering prompts.
+
 # 2. Core routing objective
 
 The current objective is no longer just:

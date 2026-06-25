@@ -4662,9 +4662,57 @@
         "source_size_bytes": 5969
       },
       "used_freeze_id": "freeze-20260624-show-project-to-ai-ai-briefing-self-hash-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T01:12:07Z",
+      "feature_id": "show-project-to-ai-second-prompt-cleanup-and-zip-size-v1",
+      "feature_title": "Show Project to AI Second Prompt Cleanup and ZIP Size v1",
+      "source": {
+        "source_mtime_ns": 1782349865611357700,
+        "source_name": "show_project_to_ai_second_prompt_cleanup_and_zip_size_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_second_prompt_cleanup_and_zip_size_v1_patch.zip",
+        "source_size_bytes": 46283
+      },
+      "used_freeze_id": "freeze-20260625-show-project-to-ai-second-prompt-cleanup-and-zip-size-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T01:25:29Z",
+      "feature_id": "show-project-to-ai-remove-ai-import-builder-v1",
+      "feature_title": "Show Project to AI Remove AI Import Builder v1",
+      "source": {
+        "source_mtime_ns": 1782350667218265500,
+        "source_name": "show_project_to_ai_remove_ai_import_builder_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_remove_ai_import_builder_v1_patch.zip",
+        "source_size_bytes": 22387
+      },
+      "used_freeze_id": "freeze-20260625-show-project-to-ai-remove-ai-import-builder-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T02:44:07Z",
+      "feature_id": "show-project-to-ai-project-independent-png-assets-reuse-v1",
+      "feature_title": "Show Project to AI Project-Independent PNG Assets Reuse v1",
+      "source": {
+        "source_mtime_ns": 1782355395475679600,
+        "source_name": "show_project_to_ai_project_independent_png_assets_reuse_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_project_independent_png_assets_reuse_v1_patch.zip",
+        "source_size_bytes": 21895
+      },
+      "used_freeze_id": "freeze-20260625-show-project-to-ai-project-independent-png-assets-reuse-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T03:26:26Z",
+      "feature_id": "project-tool-boundary-canon-v1",
+      "feature_title": "Project/tool boundary canon routed for coding tasks",
+      "source": {
+        "source_mtime_ns": 1782357927794757000,
+        "source_name": "project_tool_boundary_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\project_tool_boundary_canon_v1_patch.zip",
+        "source_size_bytes": 96404
+      },
+      "used_freeze_id": "freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-24T23:41:57Z"
+  "updated_at_utc": "2026-06-25T03:26:26Z"
 }

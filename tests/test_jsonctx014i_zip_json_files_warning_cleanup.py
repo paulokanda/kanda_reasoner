@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_private_impl import (  # noqa: E402
-    CONSERVATIVE_ZIP_SIZE_MB,
+    ALLOWED_ZIP_SIZE_MB_OPTIONS,
     DEFAULT_ZIP_SIZE_MB,
     resolve_zip_dialog_start_folder,
     run_zip_json_files,
@@ -16,15 +16,15 @@ from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_private_
 
 
 def test_zip_json_files_public_contract_is_directly_protected() -> None:
-    assert CONSERVATIVE_ZIP_SIZE_MB == 25
-    assert DEFAULT_ZIP_SIZE_MB == 40
+    assert DEFAULT_ZIP_SIZE_MB == 500
+    assert ALLOWED_ZIP_SIZE_MB_OPTIONS == (100, 200, 300, 400, 500)
     assert callable(run_zip_json_files)
 
 
 def test_zip_json_files_helper_avoids_direct_qtcore_import() -> None:
     source_path = (
         PROJECT_ROOT
-        / 'ask_' 'ai_project_reasoner'
+        / 'kanda_reasoner_app'
         / "reasoner_tools_shell"
         / "runner_help"
         / "zip_json_files_private_impl.py"

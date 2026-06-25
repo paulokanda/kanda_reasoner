@@ -16,7 +16,7 @@ from kanda_reasoner_app.reasoner_tools_shell.runner_help import (  # noqa: E402
 def _source_path() -> Path:
     return (
         PROJECT_ROOT
-        / 'ask_' 'ai_project_reasoner'
+        / 'kanda_reasoner_app'
         / "reasoner_tools_shell"
         / "runner_help"
         / "zip_json_files_private_impl.py"
@@ -41,8 +41,8 @@ def test_zip_json_files_qtwidgets_import_is_lazy() -> None:
 
 
 def test_zip_json_files_public_contract_still_available() -> None:
-    assert module.CONSERVATIVE_ZIP_SIZE_MB == 25
-    assert module.DEFAULT_ZIP_SIZE_MB == 40
+    assert module.DEFAULT_ZIP_SIZE_MB == 500
+    assert module.ALLOWED_ZIP_SIZE_MB_OPTIONS == (100, 200, 300, 400, 500)
     assert callable(module.run_zip_json_files)
 
 

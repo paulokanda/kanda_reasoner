@@ -68,6 +68,33 @@ Recovery order:
 
 The human is the project partner. Asking a clarifying rule question is preferred over inventing terminal behavior, patch-delivery behavior, freeze behavior, prompt-routing behavior, or validation behavior.
 
+
+## Project/tool boundary canon
+
+Before coding, patching, validating, freezing, staging files, or producing a handoff, preserve this identity split:
+
+```text
+tool_project_slug = kanda_reasoner
+active_project_slug = selected project in use
+active_project_root = selected project root
+```
+
+KANDA Reasoner may be the tool that performs the work, but `<my_project>` is the target project in use. Even when the selected target project is KANDA Reasoner itself, the AI must still reason with separate tool identity and target project identity so the logic continues to work for any other selected project.
+
+Load or recommend:
+
+```text
+project_tool_boundary_canon
+```
+
+whenever implementation, patch delivery, freeze memory, handoff output, validation evidence, source inspection, project-root resolution, or staging paths could confuse the KANDA Reasoner tool with the active target project.
+
+Rule:
+
+```text
+Do not hardcode kanda_reasoner as the active project unless KANDA Reasoner is explicitly the selected active project. Project-specific writes use active_project_root. Reusable tool writes use the owning tool path.
+```
+
 ## Router table
 
 ### General engineering implementation
@@ -86,6 +113,7 @@ Load or recommend:
 
 ```text
 kanda_bundle_gated_development_workflow
+project_tool_boundary_canon, when project-root, staging, freeze, handoff, or validation paths are involved
 ```
 
 If Python source code is changed, also load:
@@ -119,6 +147,7 @@ Load or recommend:
 ```text
 kanda_bundle_gated_development_workflow
 python_clean_code_overlay
+project_tool_boundary_canon, when project-root, staging, freeze, handoff, or validation paths are involved
 ```
 
 Group to open in Tab 9:

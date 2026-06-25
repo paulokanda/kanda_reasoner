@@ -226,6 +226,34 @@ KPR-07-002 = prompt_identity_code_registry_canon
 If a legacy prompt lacks a known prompt_code, do not invent a code. Include prompt_id, folder_path, and prompt_path so the local manual capture validator can resolve the canonical ACTIVE_PROMPTS file safely.
 <!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_END -->
 
+
+<!-- PROJECT_TOOL_BOUNDARY_CANON_V1_START -->
+## Project Tool Boundary Canon route
+
+When a coding, patch, freeze, handoff, validation, source-inspection, project-root, or staging-path task could confuse KANDA Reasoner as the tool with `<my_project>` as the selected target project, load or recommend:
+
+```text
+project_tool_boundary_canon
+```
+
+Prompt identity:
+
+```text
+KPR-12-001 = project_tool_boundary_canon
+ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md
+```
+
+Required behavior:
+
+```text
+tool_project_slug = kanda_reasoner
+active_project_slug = selected project in use
+active_project_root = selected project root
+```
+
+Do not hardcode `kanda_reasoner` as the active target project unless KANDA Reasoner is explicitly the selected active project. Project-specific writes use `<active_project_root>`. Reusable tool writes use the owning KANDA Reasoner tool path. This route is a boundary invariant and must be paired with the relevant implementation, box, patch, validation, freeze, or handoff prompt; it does not replace those prompts.
+<!-- PROJECT_TOOL_BOUNDARY_CANON_V1_END -->
+
 ## Fast Path
 
 Fast Path is allowed for:
@@ -261,7 +289,7 @@ Fast Path is not allowed for:
 | 09_python_quality_security_observability | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 10_python_api_data_async_config | 4 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 11_productization_and_release_readiness | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
-| 12_generalized_project_canons | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
+| 12_generalized_project_canons | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 
 
 ## Governed patch ZIP release hook

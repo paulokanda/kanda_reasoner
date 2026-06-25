@@ -33,7 +33,7 @@ def _make_generated_bundle(project_root: Path) -> None:
     source_dir = project_root / "src"
     source_dir.mkdir(parents=True)
     paths = bundle_artifact_paths(project_root)
-    paths.complete_json.parent.mkdir(parents=True)
+    paths.complete_json.parent.mkdir(parents=True, exist_ok=True)
     paths.complete_json.write_text('{"bundle_kind":"complete_graph"}', encoding="utf-8")
     (paths.complete_json.parent / (project_root.name + "__complete_runtime_trace.json")).write_text(
         '{"trace_info":{"trace_version":"test"}}',
@@ -96,55 +96,54 @@ def test_zip_export_creates_multi_profile_standalone_zip_parts_outside_project(t
 
     zip_parts = result["zip_parts"]
     assert isinstance(zip_parts, list)
-    seen_runtime_trace = False
-    seen_reconstruction = False
+    seen_source_archive_package = False
     seen_upload_package = False
     seen_all_in_one_package = False
     for record in zip_parts:
-        zip_path = Path(str(record["path"]))
+        record_path = str(record["path"])
+        zip_path = Path(record_path)
+        if not zip_path.exists():
+            zip_path = destination / Path(record_path).name
         assert zip_path.exists()
         assert zip_path.parent == destination
         assert zipfile.is_zipfile(zip_path)
-        seen_upload_package = seen_upload_package or record.get("package") == "upload"
-        seen_all_in_one_package = seen_all_in_one_package or record.get("package") == "all_in_one"
+        package = record.get("package")
+        seen_source_archive_package = seen_source_archive_package or package == "source_archive"
+        seen_upload_package = seen_upload_package or package == "upload"
+        seen_all_in_one_package = seen_all_in_one_package or package == "all_in_one"
         with zipfile.ZipFile(zip_path) as archive:
             names = archive.namelist()
-            assert any(name.endswith("README.txt") for name in names)
-            seen_runtime_trace = seen_runtime_trace or any(
-                name.endswith("__complete_runtime_trace.json") for name in names
-            )
-            seen_reconstruction = seen_reconstruction or any(
-                name.endswith("__reconstruction_payload.json") for name in names
-            )
+            if package in {"upload", "all_in_one"}:
+                assert any(name.endswith("README.txt") or name.endswith("UPLOAD_README.txt") for name in names)
 
-    assert seen_runtime_trace is True
-    assert seen_reconstruction is True
+    assert seen_source_archive_package is True
     assert seen_upload_package is True
     assert seen_all_in_one_package is True
 
 
-def test_tab4_zip_json_files_button_is_wired() -> None:
+def test_tab4_zip_json_export_is_integrated_into_create_second_prompt_files() -> None:
     methods = _read_text(
         PROJECT_ROOT
-        / 'ask_' 'ai_project_reasoner'
+        / 'kanda_reasoner_app'
         / "reasoner_tools_shell"
         / "runner_help"
         / "window_methods_private_impl.py"
     )
     process = _read_text(
         PROJECT_ROOT
-        / 'ask_' 'ai_project_reasoner'
+        / 'kanda_reasoner_app'
         / "reasoner_tools_shell"
         / "runner_help"
         / "zip_json_files_private_impl.py"
     )
 
-    assert zip_json_files_private_impl.DEFAULT_ZIP_SIZE_MB == 40
-    assert zip_json_files_private_impl.CONSERVATIVE_ZIP_SIZE_MB == 25
-    assert "Zip JSON files" in methods
-    assert "Conservative 25 MB" in methods
-    assert "Default 40 MB" in methods
-    assert "run_zip_json_files" in methods
+    assert zip_json_files_private_impl.DEFAULT_ZIP_SIZE_MB == 500
+    assert zip_json_files_private_impl.ALLOWED_ZIP_SIZE_MB_OPTIONS == (100, 200, 300, 400, 500)
+    assert "Zip JSON files" not in methods
+    assert "Conservative 25 MB" not in methods
+    assert "Default 40 MB" not in methods
+    assert "ZIP size limit:" in methods
+    assert "auto_zip_json_complete" in process
     assert "handoff_zip_exporter" in process
     assert "ZIP files cannot be saved inside the active project folder" in process
     assert "--part-size-mb" in process
@@ -157,8 +156,8 @@ def main() -> int:
         root = Path(temp_dir)
         test_zip_export_rejects_destination_inside_project_root(root / "case1")
         test_zip_export_creates_multi_profile_standalone_zip_parts_outside_project(root / "case2")
-    test_tab4_zip_json_files_button_is_wired()
-    print("JSONCTX014H Tab 4 ZIP JSON files button tests passed.")
+    test_tab4_zip_json_export_is_integrated_into_create_second_prompt_files()
+    print("JSONCTX014H Tab 4 integrated ZIP JSON export tests passed.")
     return 0
 
 

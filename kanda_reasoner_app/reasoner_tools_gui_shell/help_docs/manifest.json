@@ -99,20 +99,6 @@
       ]
     },
     {
-      "id": "ai_import_builder",
-      "title": "AI Import Builder Help",
-      "tab_id": "ai_import_builder",
-      "legacy_help_catalog": "ai_import_builder.json",
-      "source": "source/ai_import_builder.md",
-      "rendered": "rendered/ai_import_builder.html",
-      "css": "css/book_help.css",
-      "assets": [
-        "assets/drawings/ai_import_builder_opener_shipping_desk.png",
-        "assets/drawings/ai_import_builder_startup_pack_intake.png",
-        "assets/drawings/ai_import_builder_reassembly_validation.png"
-      ]
-    },
-    {
       "id": "adviser_to_pilot_copilot_bridge",
       "title": "Adviser to Pilot/Copilot Bridge Help",
       "tab_id": "routing_signal_scorer_v3_bridge",

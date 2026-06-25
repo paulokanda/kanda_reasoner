@@ -89,7 +89,6 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
             persisted_root=saved_project_root
         )
         self._collector_widget: QWidget | None = None
-        self._splitter_widget: QWidget | None = None
         self._daily_refactor_widget: QWidget | None = None
         self._help_dialog: QMainWindow | None = None
         self._is_propagating_project_root = False
@@ -143,7 +142,7 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
 
         subtitle = QLabel(
             "Unified workflow shell for architecture, workflows, docstrings, "
-            "project structure collection, JSON splitting, daily refactor reporting, "
+            "Show Project to AI handoff generation, daily refactor reporting, "
             "and AI reasoning."
         )
         subtitle.setAlignment(_qt_core_attr("Qt").AlignCenter)

@@ -115,9 +115,9 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "central_sulcus",
         "Central sulcus",
-        "AI Import Builder",
-        "Boundary between functional regions",
-        "Packages project structure cleanly for AI ingestion while keeping source boundaries understandable.",
+        "Show Project to AI",
+        "Boundary between source and AI handoff",
+        "Owns the boundary between source files and external AI handoff packages.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),

@@ -96,15 +96,15 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
     {
         "region_id": "central_sulcus",
         "region_name": "Central sulcus",
-        "target_tab_id": "ai_import_builder",
-        "target_tab_label": "AI Import Builder",
-        "analogy_title": "Boundary between functional regions",
+        "target_tab_id": "project_structure_map",
+        "target_tab_label": "Show Project to AI",
+        "analogy_title": "Boundary between source and AI handoff",
         "analogy_text": (
             "The central sulcus separates major functional cortical areas, "
-            "like AI Import Builder separates and packages project structure "
-            "for clean AI ingestion."
+            "like Show Project to AI now owns the boundary between source files "
+            "and external AI handoff packages."
         ),
-        "tooltip_text": "Central sulcus -> AI Import Builder",
+        "tooltip_text": "Central sulcus -> Show Project to AI",
         "category": "Project Tools",
     },
     {

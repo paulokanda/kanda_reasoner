@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import contextlib
-import json
 from pathlib import Path
 
 from PySide6.QtWidgets import QMessageBox, QWidget
@@ -29,9 +28,6 @@ class _WindowToolPatchesMixin:
         if "reasoner_context_collector" in spec.source_hint:
             self._collector_widget = widget
             self._patch_collector_widget(widget)
-        elif "json_splitter" in spec.source_hint:
-            self._splitter_widget = widget
-            self._patch_splitter_widget(widget)
         elif "daily_rfctr_report" in spec.source_hint:
             self._daily_refactor_widget = widget
             self._patch_daily_refactor_widget(widget)
@@ -124,109 +120,6 @@ class _WindowToolPatchesMixin:
                 widget.runtime_trace_json_edit.setText(str(runtime_trace))
         self._propagate_project_root(project_root)
 
-    def _patch_splitter_widget(self, widget: QWidget) -> None:
-        _replace_exact_label_text(widget, "Input JSON:", "Input file:")
-        _replace_exact_label_text(widget, "Input JSON", "Input file")
-
-        if hasattr(widget, "input_edit"):
-            widget.input_edit.setReadOnly(False)
-        if hasattr(widget, "output_edit"):
-            widget.output_edit.setReadOnly(False)
-        if hasattr(widget, "target_edit"):
-            widget.target_edit.setReadOnly(True)
-            widget.target_edit.setPlaceholderText("Splitting full root JSON")
-            widget.target_edit.clear()
-
-        if hasattr(widget, "split_button") and hasattr(widget, "_start_split"):
-            widget._original_start_split = widget._start_split
-            _safe_disconnect(widget.split_button.clicked)
-            widget.split_button.clicked.connect(lambda: self._start_split_via_wrapper(widget))
-
-        original_finished = getattr(widget, "_on_worker_finished", None)
-        if callable(original_finished):
-            widget._original_on_worker_finished = original_finished
-
-            def wrapped_finished(ok: bool, message: str) -> None:
-                if ok:
-                    self._rename_splitter_metadata_if_needed()
-                widget._original_on_worker_finished(ok, message)
-                if ok and hasattr(widget, "_append_log"):
-                    project_root = self.current_project_root
-                    if project_root is not None:
-                        widget._append_log(
-                            f"Metadata normalized to: "
-                            f"{self._split_manifest_file(project_root).name} and "
-                            f"{self._split_index_file(project_root).name}"
-                        )
-
-            widget._on_worker_finished = wrapped_finished
-
-    def _start_split_via_wrapper(self, widget: QWidget) -> None:
-        """Start Tab 5 split from canonical project evidence paths."""
-        project_root = self.current_project_root
-        if project_root is None:
-            widget._original_start_split()
-            return
-
-        input_file = self._collector_complete_file(project_root)
-        output_folder = self._json_splitted_dir(project_root)
-
-        if hasattr(widget, "input_edit"):
-            widget.input_edit.setText(str(input_file))
-        if hasattr(widget, "output_edit"):
-            widget.output_edit.setText(str(output_folder))
-        if hasattr(widget, "target_edit"):
-            widget.target_edit.clear()
-
-        if input_file.exists():
-            try:
-                self._clear_directory_contents(output_folder)
-            except Exception as exc:
-                QMessageBox.critical(
-                    self,
-                    "Delete failed",
-                    "Failed to clear split files before splitting JSON.\n\n"
-                    + "Details: "
-                    + str(exc),
-                )
-                return
-
-        widget._original_start_split()
-
-    def _rename_splitter_metadata_if_needed(self) -> None:
-        project_root = self.current_project_root
-        if project_root is None:
-            return
-        folder = self._json_splitted_dir(project_root)
-        project_name = self._project_name(project_root)
-
-        old_manifest = folder / f"{project_name}__complete__split_manifest.json"
-        old_index = folder / f"{project_name}__complete__upload_index.json"
-        new_manifest = self._split_manifest_file(project_root)
-        new_index = self._split_index_file(project_root)
-
-        if old_manifest.exists():
-            try:
-                if new_manifest.exists():
-                    new_manifest.unlink()
-                old_manifest.rename(new_manifest)
-            except Exception:
-                pass
-        if old_index.exists():
-            try:
-                if new_index.exists():
-                    new_index.unlink()
-                old_index.rename(new_index)
-            except Exception:
-                pass
-        if new_index.exists():
-            try:
-                payload = json.loads(new_index.read_text(encoding="utf-8"))
-                payload["manifest_filename"] = new_manifest.name
-                new_index.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-            except Exception:
-                pass
-
     def _patch_daily_refactor_widget(self, widget: QWidget) -> None:
         for line_name in ("domain_edit", "json_folder_edit", "json_name_edit", "ai_bundle_edit"):
             if hasattr(widget, line_name):
@@ -260,8 +153,6 @@ class _WindowToolPatchesMixin:
 
             if self._collector_widget is not None:
                 self._apply_project_root_to_collector(self._collector_widget, project_root)
-            if self._splitter_widget is not None:
-                self._apply_project_root_to_splitter(project_root)
             if self._daily_refactor_widget is not None:
                 self._apply_project_root_to_daily_refactor(project_root)
         finally:
@@ -282,20 +173,6 @@ class _WindowToolPatchesMixin:
             widget.output_json_edit.setText(str(complete_folder))
         if hasattr(widget, "runtime_trace_json_edit"):
             widget.runtime_trace_json_edit.setText(str(runtime_trace))
-
-    def _apply_project_root_to_splitter(self, project_root: Path) -> None:
-        widget = self._splitter_widget
-        if widget is None:
-            return
-        input_file = self._collector_complete_file(project_root)
-        output_folder = self._json_splitted_dir(project_root)
-
-        if hasattr(widget, "input_edit"):
-            widget.input_edit.setText(str(input_file))
-        if hasattr(widget, "output_edit"):
-            widget.output_edit.setText(str(output_folder))
-        if hasattr(widget, "target_edit"):
-            widget.target_edit.clear()
 
     def _apply_project_root_to_daily_refactor(self, project_root: Path) -> None:
         widget = self._daily_refactor_widget

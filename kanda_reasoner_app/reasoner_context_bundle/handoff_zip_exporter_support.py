@@ -16,8 +16,7 @@ from .schema_models import ProjectContext
 _EXPORT_KIND = "json_handoff_zip_parts"
 _EXPORT_GENERATOR = "reasoner_context_bundle.handoff_zip_exporter"
 _EXPORT_GENERATOR_VERSION = "2.2.0"
-_DEFAULT_PART_SIZE_MB = 40
-_CONSERVATIVE_PART_SIZE_MB = 25
+_DEFAULT_PART_SIZE_MB = 500
 _BYTES_PER_MB = 1024 * 1024
 _RECONSTRUCTION_SUFFIX = "__reconstruction_payload.json"
 _RUNTIME_TRACE_SUFFIX = "__complete_runtime_trace.json"
@@ -196,7 +195,7 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "Project root marker: <PROJECT_ROOT>",
             "Target standalone ZIP part size: " + str(part_size_mb) + " MB",
             "The AI-readable JSON handoff is delivered as ZIP package(s) that respect the selected Show Project to AI size cap.",
-            "Loose JSON files may exist for local inspection, but the normal AI upload should use the JSON handoff ZIP package.",
+            "Loose JSON files are packaged into the JSON handoff ZIP and are normally removed from second_prompt_files after successful ZIP export.",
             "",
             "Second-upload reading order:",
             "1. _RUN_COLLECTOR_STATUS.txt, if present, to confirm generation status.",
@@ -204,17 +203,20 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "3. " + slug + "__ai_handoff_upload*.zip, in numeric order if split. This is the zipped JSON handoff package.",
             "4. Inside the JSON handoff ZIP, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state.",
             "5. " + slug + "__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed. Use source_archive_manifest to choose needed parts.",
-            "6. " + slug + "__ai_handoff_all_in_one*.zip only as convenience/archive fallback if the upload ZIP package is missing.",
+            "6. " + slug + "__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets. These are ZIP_STORED asset parts listed in source_archive_manifest.",
+            "7. " + slug + "__ai_handoff_all_in_one*.zip only as convenience/archive fallback if the upload ZIP package is missing.",
             "",
             "Created package families:",
             "1. " + slug + "__ai_handoff_upload*.zip",
             "   Upload/read this JSON handoff package before source archive parts. It may be split to respect the selected size cap.",
             "2. " + slug + "__source_archive_partXX_of_YY.zip",
             "   Upload only when exact source-tree reconstruction is needed.",
-            "3. " + slug + "__ai_handoff_all_in_one*.zip",
+            "3. " + slug + "__png_assets_partXX_of_YY.zip",
+            "   Upload with source_archive parts when exact source-tree reconstruction needs PNG assets; parts use ZIP_STORED and split by the selected size cap.",
+            "4. " + slug + "__ai_handoff_all_in_one*.zip",
             "   Archive/convenience package containing AI-readable handoff artifacts, not nested source ZIPs.",
             "",
-            "Each part is a normal standalone ZIP file. Source archive parts are independent ZIPs with disjoint file subsets.",
+            "Each part is a normal standalone ZIP file. Source archive and PNG asset parts are independent ZIPs with disjoint file subsets.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
             "No internet or AI service is contacted during ZIP creation.",
             "",
@@ -244,7 +246,7 @@ def package_readme_text(
             "Each part is a normal standalone ZIP file.",
             "If this package is split, read/upload parts in numeric order.",
             "For ai_handoff_upload packages, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state.",
-            "Source archive part ZIPs should be opened only when exact source inspection is needed.",
+            "Source archive and PNG asset part ZIPs should be opened only when exact source inspection or reconstruction is needed.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
             "No internet or AI service is contacted during ZIP creation.",
             "",

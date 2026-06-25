@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "generated_by": "project_freeze_ledger.freeze_tools.freeze_after_update_generator",
-  "generated_at_utc": "2026-06-24T23:41:57Z",
+  "generated_at_utc": "2026-06-25T03:26:26Z",
   "freezes": [
     {
       "freeze_id": "freeze-20260612-phase7a-v24",
@@ -14269,6 +14269,105 @@
         "AI briefing dynamic path policy must use <project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files and must not mention _architecture_audit as the real current output folder.",
         "Handoff ZIP members and JSON/TXT/MD contents must not expose second_prompt_files_building or .json_handoff_zip_stage staging paths.",
         "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory and not under project_freeze_ledger.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260625-show-project-to-ai-second-prompt-cleanup-and-zip-size-v1",
+      "feature_title": "Show Project to AI Second Prompt Cleanup and ZIP Size v1",
+      "box": "kanda_reasoner_app/reasoner_tools_shell + kanda_reasoner_app/reasoner_context_bundle + tests",
+      "status": "frozen",
+      "date": "2026-06-25",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260625-show-project-to-ai-second-prompt-cleanup-and-zip-size-v1.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260625-show-project-to-ai-remove-ai-import-builder-v1",
+      "feature_title": "Show Project to AI Remove AI Import Builder v1",
+      "box": "kanda_reasoner_app/reasoner_tools_gui_shell + tests",
+      "status": "frozen",
+      "date": "2026-06-25",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260625-show-project-to-ai-remove-ai-import-builder-v1.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260625-show-project-to-ai-project-independent-png-assets-reuse-v1",
+      "feature_title": "Show Project to AI Project-Independent PNG Assets Reuse v1",
+      "box": "kanda_reasoner_app/reasoner_context_bundle + tests",
+      "status": "frozen",
+      "date": "2026-06-25",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260625-show-project-to-ai-project-independent-png-assets-reuse-v1.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Selected project root owns <project_slug>_show_project_to_AI outputs",
+        "KANDA Reasoner is only the tool unless it is also the selected project.",
+        "Do not hardcode kanda_reasoner in generated Show Project to AI output paths, ZIP filenames, or reuse paths.",
+        "second_prompt_files_building is transient",
+        "reusable assets must be read from the selected project's final second_prompt_files sibling.",
+        "Projects without PNG files must not produce empty png_assets ZIPs.",
+        "PNG assets must not be duplicated in both source_archive and png_assets archive families.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks",
+      "feature_title": "Project/tool boundary canon routed for coding tasks",
+      "box": "kanda_prompt_workspace/prompt_library",
+      "status": "frozen",
+      "date": "2026-06-25",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons",
+        "kanda_prompt_workspace/prompt_library/METADATA",
+        "kanda_prompt_workspace/prompt_library/ROUTING",
+        "<active_project_root>/project_freeze_after_update/frozen_features_memory",
+        "<active_project_root>/project_freeze_after_update/freeze_hint_intake",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not hardcode kanda_reasoner as the active project for project-specific paths.",
+        "Do not collapse tool identity and target project identity even when both slugs match in the current session.",
+        "Project-specific freeze intake and frozen memory must stay under <active_project_root>/project_freeze_after_update.",
+        "project_freeze_ledger remains reusable engine logic, not active project frozen memory.",
+        "Prompt router logic must recommend project_tool_boundary_canon when coding or patch workflows involve project-root, staging, freeze, handoff, or validation paths.",
+        "Generated startup artifacts must be regenerated from canonical prompt sources, not edited as source truth.",
         "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
         "Do not store project-specific frozen memory inside project_freeze_ledger.",
         "Preview Freeze Entry must remain read-only and must not write files.",

@@ -26,7 +26,7 @@ Use this file only after `GROUP_ASSIMILATION_INDEX.md` has identified the broad 
 | `09_python_quality_security_observability` | `ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md` | Guide testing, documentation, resilience, logging, metrics, security, type safety, and validation quality. | 7 |
 | `10_python_api_data_async_config` | `ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md` | Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions. | 4 |
 | `11_productization_and_release_readiness` | `ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md` | Guide release maturity, lifecycle, versioning, deprecation, infrastructure, Kubernetes, SRE, and operational readiness. | 6 |
-| `12_generalized_project_canons` | `ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md` | Provide reusable domain-specific canons for plugins, visual rendering, desktop help-document layout, practical quick-start help blocks, transform resolvers, data pipelines, and decision tables. | 6 |
+| `12_generalized_project_canons` | `ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md` | Provide reusable domain-specific canons for project/tool boundaries, plugins, visual rendering, desktop help-document layout, practical quick-start help blocks, transform resolvers, data pipelines, and decision tables. | 7 |
 
 
 
