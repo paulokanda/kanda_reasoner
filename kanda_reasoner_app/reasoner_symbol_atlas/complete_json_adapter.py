@@ -127,7 +127,7 @@ def collect_reasoner_symbol_atlas_complete_json_files(
     support both flat layouts and the json_complete subfolder created by Tab 4.
     Runtime-trace and split-part JSON files are intentionally excluded. Files
     named with the current project prefix, for example
-    ``developer_tools__complete.json``, are ranked ahead of generic fallback
+    ``<project_slug>__complete.json``, are ranked ahead of generic fallback
     matches so Tab 8 reads the active project's evidence when several projects
     have JSON files in the same evidence tree.
     """

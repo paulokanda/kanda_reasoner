@@ -17,7 +17,9 @@ Routed Work Path.
 
 Required prompts/groups:
 1. 07_prompt_authoring_and_audit
-2. prompt_canon_reconciliation_protocol
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
 3. prompt_audit_canon
 4. project_specific_prompt_generalization
 5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
@@ -128,6 +130,102 @@ Use this rule for forgotten delivery footer behavior, prompt-routing rules, star
 8. Do not load all 12 folders at session start.
 9. Do not use routing indexes as a substitute for the specialist prompts they point to.
 
+
+
+<!-- PROMPT_INSERTION_ROUTER_REGISTRATION_PROTOCOL_V1_START -->
+## Prompt Insertion and Router Registration Protocol route
+
+When the user asks to insert, create, add, register, activate, or connect a prompt in `kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS`, route through:
+
+```text
+prompt_insertion_and_router_registration_protocol
+```
+
+Required prompts/groups for this route:
+
+```text
+1. 07_prompt_authoring_and_audit
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
+4. prompt_audit_canon
+5. project_specific_prompt_generalization
+6. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
+7. Existing prompt-library assets/indexes needed to inspect duplicates and overlap
+8. Current prompt navigation/router files needed to register the prompt
+9. bundle_gated_development_workflow, if creating an installable bundle
+10. Validation command or manual validation steps
+```
+
+The protocol is routed, not always_startup. It teaches the AI how to choose the correct ACTIVE_PROMPTS folder by prompt type, create metadata, update folder assimilation, connect startup/routed/on-request/maintenance logic, test, validate, and freeze the new prompt.
+
+Do not insert a new prompt directly into generated `first_prompt_files` artifacts. Do not make a normal routed prompt `always_startup` unless a separate governed startup-delivery change is approved and validated.
+<!-- PROMPT_INSERTION_ROUTER_REGISTRATION_PROTOCOL_V1_END -->
+
+<!-- PROMPT_IDENTITY_CODE_REGISTRY_CANON_V1_START -->
+## Prompt Identity Code Registry Canon route
+
+When the user asks to create, insert, add, register, activate, name, code, or make copy/paste-addressable a prompt, route through:
+
+```text
+prompt_identity_code_registry_canon
+```
+
+Use it together with:
+
+```text
+prompt_insertion_and_router_registration_protocol
+prompt_canon_reconciliation_protocol
+prompt_audit_canon
+project_specific_prompt_generalization
+```
+
+Required behavior:
+
+```text
+Every new prompt must receive prompt_code, prompt_id, title/display name, folder path, file path, metadata, and load_type before router registration is considered complete.
+```
+
+The canonical prompt code format is:
+
+```text
+KPR-<folder_number>-<sequence>
+```
+
+The folder number must match the target ACTIVE_PROMPTS folder family. Do not reuse retired codes. Do not register a routed prompt without prompt_code metadata.
+<!-- PROMPT_IDENTITY_CODE_REGISTRY_CANON_V1_END -->
+
+
+
+<!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_START -->
+## ChatGPT KANDA Routing Choice Output Protocol route
+
+When the user asks ChatGPT to route a task, select a KANDA prompt, identify which prompt/folder/group should be used, or prepare output for manual Prompt Router Reasoner capture, apply:
+
+```text
+chatgpt_kanda_routing_choice_output_protocol
+```
+
+Required output behavior:
+
+```text
+KANDA_ROUTING_CHOICE_START
+{ valid JSON with event_type chatgpt_router_prompt_choice, selected_prompts, and advisory_only true }
+KANDA_ROUTING_CHOICE_END
+```
+
+This block is advisory only. It must not include mutation authority, freeze-writing authority, patch application authority, or ML activation. Browser ChatGPT is not authoritative; local KANDA validates prompt_code, prompt_id, folder_path, and prompt_path before loading canonical prompt text from ACTIVE_PROMPTS.
+
+Known stable prompt-code examples for routing-choice output:
+
+```text
+KPR-02-001 = chatgpt_kanda_routing_choice_output_protocol
+KPR-07-002 = prompt_identity_code_registry_canon
+```
+
+If a legacy prompt lacks a known prompt_code, do not invent a code. Include prompt_id, folder_path, and prompt_path so the local manual capture validator can resolve the canonical ACTIVE_PROMPTS file safely.
+<!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_END -->
+
 ## Fast Path
 
 Fast Path is allowed for:
@@ -165,6 +263,52 @@ Fast Path is not allowed for:
 | 11_productization_and_release_readiness | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 12_generalized_project_canons | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 
+
+## Governed patch ZIP release hook
+
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
+## Canonical freeze-ready patch delivery sequence
+
+For every freezeable KANDA/PyArchitect patch, the delivery order is mandatory and must not be inverted, skipped, or diluted:
+
+1. **Send the patch ZIP only after contract validation.** The ZIP must contain only the changed project files plus a root-level `KANDA_FREEZE_HINT.json` sidecar. If the ZIP contract cannot be verified, block delivery with `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
+2. **Send the install PowerShell after the ZIP.** The install block must stage the ZIP from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project_name>_delete_after_daily_work\`, delete the root-drive ZIP copy after successful staging, extract only from the staged ZIP, and install only changed project files.
+3. **Do not install the freeze sidecar into the project root.** `KANDA_FREEZE_HINT.json` is freeze-intake delivery metadata. It may be scanned or consumed from the staged ZIP / daily-work intake location, but it must not be copied as a normal project source file.
+4. **Send the validation PowerShell after the install block.** Validation must be a separate local action after install and must emit recognizable evidence, including `VALIDATION OK: <feature_id>`. When startup delivery, generated evidence, or sync state is validated, it must also emit `STATUS: IN_SYNC`.
+5. **Freeze only after local validation passes.** The Freeze Feature After Update flow must use the feature-specific `KANDA_FREEZE_HINT.json` / freeze-intake data plus current validation evidence, then require Preview and explicit human Confirm and Write.
+6. **Refresh AI exposure after freeze.** A successful local freeze write must refresh AI-send exposure and startup freeze context so the next startup pack knows the frozen behavior.
+
+Short form:
+
+```text
+patch ZIP with root KANDA_FREEZE_HINT.json
+-> install changed files only, keeping KANDA_FREEZE_HINT.json out of project root
+-> run local validation with VALIDATION OK and STATUS: IN_SYNC when applicable
+-> freeze through Preview + Confirm and Write
+-> refresh AI-send and startup freeze context
+```
+
+Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
+
+
+When the next answer will emit an installable patch ZIP link, an install PowerShell block, a validation block for a patch, `KANDA_FREEZE_HINT.json`, or freeze-form JSON, classify the output route as `PATCH_DELIVERY_RELEASE`.
+
+Required prompts/groups:
+
+1. 05_patch_delivery_and_validation
+2. pre_output_contract_gates from 03_governance_freeze_and_handoff
+3. freeze_code_intake_and_form_protocol when the patch can be frozen later
+4. Relevant source files and validation command
+
+Mandatory behavior:
+
+- Do not emit the ZIP link unless the ZIP contract validator passes.
+- Do not use generic Downloads/Desktop installer search patterns.
+- Do stage from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project>_delete_after_daily_work\`.
+- Do keep root-level `KANDA_FREEZE_HINT.json` outside the install payload folder.
+- Do generate freeze sidecar and freeze-form JSON from the same payload source.
+- If any of these checks cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and do not present the ZIP.
 
 ## Pre-output contract gates routing hook
 
@@ -532,7 +676,7 @@ Mandatory routing behavior:
 kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/
 ```
 
-7. Never use or suggest deprecated/unrelated project roots such as `deprecated developer_tools root` for KANDA prompt workspace work.
+7. Never use or suggest deprecated/unrelated project roots such as `deprecated hardcoded project root` for KANDA prompt workspace work.
 8. If the task asks for an installable delivery, require `bundle_gated_development_workflow` as a companion workflow before packaging.
 9. Require validation commands or manual validation steps before implementation is considered complete.
 
@@ -599,7 +743,9 @@ For those prompt-library create/update/register requests, the ROUTING RESPONSE m
 
 Mandatory exact Required prompts/groups entries:
 1. 07_prompt_authoring_and_audit
-2. prompt_canon_reconciliation_protocol
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
 3. prompt_audit_canon
 4. project_specific_prompt_generalization
 5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
@@ -631,7 +777,9 @@ For those requests, the ROUTING RESPONSE must use these exact KANDA Required pro
 
 Mandatory exact Required prompts/groups:
 1. 07_prompt_authoring_and_audit
-2. prompt_canon_reconciliation_protocol
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
 3. prompt_audit_canon
 4. project_specific_prompt_generalization
 5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
@@ -662,7 +810,9 @@ For those requests, the ROUTING RESPONSE must use these exact KANDA Required pro
 
 Mandatory exact Required prompts/groups:
 1. 07_prompt_authoring_and_audit
-2. prompt_canon_reconciliation_protocol
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
 3. prompt_audit_canon
 4. project_specific_prompt_generalization
 5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
@@ -707,7 +857,9 @@ Routed Work Path.
 
 Required prompts/groups:
 1. 07_prompt_authoring_and_audit
-2. prompt_canon_reconciliation_protocol
+2. prompt_insertion_and_router_registration_protocol
+3. prompt_identity_code_registry_canon
+4. prompt_canon_reconciliation_protocol
 3. prompt_audit_canon
 4. project_specific_prompt_generalization
 5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder
@@ -739,3 +891,8 @@ Request and inspect 07_prompt_authoring_and_audit, prompt_canon_reconciliation_p
 Negative test rule:
 If the response omits 07_prompt_authoring_and_audit, prompt_canon_reconciliation_protocol, prompt_audit_canon, or project_specific_prompt_generalization from Required prompts/groups, the response fails RG-015 even if it refuses implementation.
 <!-- T9T013_KANDA_PROMPT_AUTHORING_RG015_HARD_OVERRIDE_V7_END -->
+
+
+## Terminal cleanup canon route
+
+When the next answer will emit any PowerShell or terminal block, the router must apply the terminal cleanup canon before output. Successful install blocks use `INSTALL_SUCCESS`: wait 5 seconds, `Clear-Host`, keep terminal open, and no Enter prompts. Install errors, validation, validation errors, diagnostics, and all other terminal blocks use `Enter`, `Clear-Host`, `Enter`, `Clear-Host`, and keep terminal open. Install blocks must include a fail-safe `try/catch` or text-equivalent error path so failures cannot skip cleanup.

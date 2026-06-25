@@ -166,7 +166,7 @@ Common conditional-required examples:
 
 ```text
 08_python_engineering_core - required IF Python source code, generator code, validation code, installer logic, or validation scripts may be modified.
-paste_if_modify_startup_delivery.md - required IF startup delivery, first_AI_deliver, source maps, startup naming, startup validation, or paste-after files may be modified.
+paste_if_modify_startup_delivery.md - required IF startup delivery, first_prompt_files, source maps, startup naming, startup validation, or paste-after files may be modified.
 active project freeze context - required IF frozen behavior, protected paths, freeze workflow, project memory, governance artifacts, or freeze status is involved.
 Relevant folder card or _FOLDER_ASSIMILATION - required IF local prompt-library placement, app-box ownership, or workflow-specific folder rules may matter.
 ```
@@ -629,7 +629,7 @@ Mandatory routing behavior:
 kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/
 ```
 
-7. Never use or suggest deprecated/unrelated project roots such as `deprecated developer_tools root` for KANDA prompt workspace work.
+7. Never use or suggest deprecated/unrelated project roots such as `deprecated hardcoded project root` for KANDA prompt workspace work.
 8. If the task asks for an installable delivery, require `bundle_gated_development_workflow` as a companion workflow before packaging.
 9. Require validation commands or manual validation steps before implementation is considered complete.
 

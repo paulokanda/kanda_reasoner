@@ -22,8 +22,8 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 - Validate the active box and any touched external box.
 
 
-**Project:** Kanda Reasoner / developer_tools  
-**Project root:** `E:\\developer_tools`  
+**Project:** Kanda Reasoner / selected project root  
+**Project root:** `E:\\selected_project`  
 **Document purpose:** Complete analysis of missing infrastructure to make AI-assisted patch work tracked, validated, auditable, recoverable, and safely freezable.  
 **Date:** 2026-06-05
 
@@ -39,7 +39,7 @@ What is missing is the **enforcement infrastructure** that makes that discipline
 
 ### Active blocker
 
-Tab 7 patch (`tab7_ollama_startup_model_refresh_surgical`) is installed but not frozen. Workflow validation fails because `developer_tools_split_manifest.json` source_sha256 does not match the current `developer_tools__complete.json`. The source patch is clean — this is a stale generated artifact, not a code failure.
+Tab 7 patch (`tab7_ollama_startup_model_refresh_surgical`) is installed but not frozen. Workflow validation fails because `<project_slug>_split_manifest.json` source_sha256 does not match the current `<project_slug>__complete.json`. The source patch is clean — this is a stale generated artifact, not a code failure.
 
 ### Three patches with unresolved state
 
@@ -73,8 +73,8 @@ python kanda_reasoner_app\project_analysis_evidence_freshness\evidence_freshness
 **Expected output (stale case):**
 ```
 Evidence freshness check
-Complete JSON    : OK   developer_tools__complete.json
-Split manifest   : STALE developer_tools_split_manifest.json
+Complete JSON    : OK   <project_slug>__complete.json
+Split manifest   : STALE <project_slug>_split_manifest.json
   Expected sha256: <current hash>
   Actual sha256  : <manifest hash>
 Recommended action: Run Tab 4 Collector and regenerate split/export files.
@@ -82,7 +82,7 @@ Recommended action: Run Tab 4 Collector and regenerate split/export files.
 
 **Hard constraints:**
 - Read-only. No modification to Tab 4 GUI, Run Collector behaviour, architecture/workflow validation rules, or JSON schema.
-- Dynamic project root — never hardcode `E:\\developer_tools` inside implementation.
+- Dynamic project root — never hardcode `E:\\selected_project` inside implementation.
 
 **Required tests:**
 - `tests/test_evidence_freshness_complete_json.py`
@@ -374,7 +374,7 @@ Once Tab 7 is frozen, open a new narrow ticket for Phase 1 — Evidence Freshnes
 
 - Each phase is a separate narrow surgical ticket. Do not batch phases.
 - Each phase must pass its own focused tests + regressions + py_compile + workflow validation + architecture validation before being frozen.
-- Never hardcode `E:\\developer_tools` inside any implementation. Always use dynamic project root.
+- Never hardcode `E:\\selected_project` inside any implementation. Always use dynamic project root.
 - Never clear terminal logs. Never use `Clear-Host`, `cls`, `clear`, or `Reset-Host`.
 - Never mark a patch frozen unless all applicable gates are clean.
 - Do not confuse "patch created" with "patch frozen."

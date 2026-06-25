@@ -1,4 +1,4 @@
-﻿---
+---
 folder_id: 07_prompt_authoring_and_audit
 folder_name: Prompt Authoring and Audit
 artifact_type: folder_assimilation_card
@@ -52,6 +52,7 @@ Do not use to implement runtime code unless prompt-library files are being chang
 ## Minimum Viable Context
 - prompt_audit_canon
 - prompt_canon_reconciliation_protocol
+- prompt_identity_code_registry_canon when creating/registering prompts or assigning prompt codes
 
 ## Main Prompts In This Folder
 
@@ -60,6 +61,8 @@ Do not use to implement runtime code unless prompt-library files are being chang
 | `project_specific_prompt_generalization` | `project_specific_prompt_generalization.md` | on_request | Generalizes useful project-specific canons into reusable KANDA prompts. |
 | `prompt_audit_canon` | `prompt_audit_canon.md` | on_request | Rules for auditing, updating, generalizing, and deprecating prompt files. |
 | `prompt_canon_reconciliation_protocol` | `prompt_canon_reconciliation_protocol.md` | on_request | Reconciles overlapping prompt canons and updates the active prompt set. |
+| `prompt_insertion_and_router_registration_protocol` | `prompt_insertion_and_router_registration_protocol.md` | routed | Governs safe insertion of new prompts into ACTIVE_PROMPTS and router/startup/on-request registration. |
+| `prompt_identity_code_registry_canon` | `prompt_identity_code_registry_canon.md` | routed | Defines stable KPR prompt_code, prompt_id, title, folder path, file path, metadata, and copy/paste prompt-address rules. |
 
 ## Routing Rule
 Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
@@ -85,6 +88,8 @@ route to this folder and request the smallest useful set of specialist prompts:
 ```text
 Required:
 - prompt_canon_reconciliation_protocol
+- prompt_identity_code_registry_canon when creating/registering prompts or assigning prompt codes
+- prompt_insertion_and_router_registration_protocol when the user asks to insert/register/activate/connect a prompt in router logic
 - prompt_audit_canon when duplicate/overlap detection is needed
 - project_specific_prompt_generalization when importing ideas from another project
 

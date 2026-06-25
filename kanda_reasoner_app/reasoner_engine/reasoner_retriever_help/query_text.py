@@ -83,9 +83,9 @@ def file_name_from_path(path: str) -> str:
 def is_allowed_project_path(path: str) -> bool:
     low = path.replace("\\", "/").lower().lstrip("/")
 
-    # developer_tools/ is the reasoner tool itself, not the EEG project.
+    # kanda_reasoner/ is the reasoner tool itself, not the EEG project.
     # It is not indexed in the JSON and must not enter evidence as noise.
-    if low.startswith("developer_tools/"):
+    if low.startswith("kanda_reasoner/"):
         return False
 
     blocked_parts = [

@@ -65,8 +65,8 @@ python kanda_reasoner_app\project_analysis_evidence_freshness\evidence_freshness
 
 ```text
 Evidence freshness check
-Complete JSON  : OK    developer_tools__complete.json
-Split manifest : STALE developer_tools_split_manifest.json
+Complete JSON  : OK    <project_slug>__complete.json
+Split manifest : STALE <project_slug>_split_manifest.json
 Expected sha256: <current complete json hash>
 Actual sha256  : <manifest source_sha256>
 Recommended action: Run collector and regenerate split/export files.

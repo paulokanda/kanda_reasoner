@@ -55,14 +55,43 @@ def _from_payload(payload: dict[str, Any]) -> FreezeAfterUpdateResult:
 
 
 def generate_freeze_after_update_ai_files(project_root: Path | str) -> FreezeAfterUpdateResult:
-    """Generate the ZIP and instruction Markdown for the selected project."""
+    """Return a deprecated no-op result for legacy AI-send generation.
+
+    Freeze memory is now exposed through the Show Project to AI first/second
+    prompt files and the source archive project ZIPs.  The old
+    project_freeze_after_update/files_to_send_ai ZIP pack lived inside the
+    project source tree and polluted source archives, so this public function no
+    longer creates that folder or ZIP.  It also removes any stale project-local
+    files_to_send_ai folder if present.
+    """
+    root = Path(project_root).expanduser().resolve(strict=False)
     try:
-        return _from_payload(generate_ai_send_files(project_root))
+        from kanda_reasoner_app.generated_artifact_hygiene import cleanup_project_generated_zip_noise
+
+        cleanup = cleanup_project_generated_zip_noise(root)
+        if cleanup.get("errors"):
+            return FreezeAfterUpdateResult(
+                status=FreezeAfterUpdateStatus.ERROR,
+                project_root=root,
+                box_root=root / "project_freeze_after_update",
+                message="Failed to clean deprecated AI-send files: " + str(cleanup.get("errors")),
+            )
+        return FreezeAfterUpdateResult(
+            status=FreezeAfterUpdateStatus.VALID,
+            project_root=root,
+            box_root=root / "project_freeze_after_update",
+            message=(
+                "Deprecated project-local files_to_send_ai ZIP generation skipped. "
+                "Freeze context is delivered through Show Project to AI first_prompt_files "
+                "and second_prompt_files/source_archive artifacts."
+            ),
+            output_zip=None,
+            output_instruction=None,
+        )
     except Exception as exc:
-        root = Path(project_root).expanduser()
         return FreezeAfterUpdateResult(
             status=FreezeAfterUpdateStatus.ERROR,
             project_root=root,
             box_root=root / "project_freeze_after_update",
-            message="Failed to generate files to send AI: " + str(exc),
+            message="Failed to clean deprecated files_to_send_ai output: " + str(exc),
         )

@@ -1,4 +1,4 @@
-"""Internal ZIP writer helpers for JSON handoff export."""
+"""Internal ZIP writer helpers for AI handoff export."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from .handoff_zip_exporter_support import (
     safe_zip_member_name,
 )
 from .hashing import sha256_file
-from .path_normalization import relative_posix_path
+from .path_normalization import artifact_logical_posix_path
 from .schema_models import ProjectContext
 
 __all__ = [
@@ -25,6 +25,8 @@ __all__ = [
     "write_zip",
     "zip_record",
 ]
+
+_PLANNING_TARGET_RATIO = 0.90
 
 
 def write_zip(
@@ -37,7 +39,13 @@ def write_zip(
     readme_name: str = "UPLOAD_README.txt",
 ) -> None:
     """Write one standalone ZIP file."""
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+    with zipfile.ZipFile(
+        zip_path,
+        "w",
+        compression=zipfile.ZIP_DEFLATED,
+        compresslevel=9,
+        allowZip64=True,
+    ) as archive:
         if readme_text is not None:
             archive.writestr(base_folder + "/" + readme_name, readme_text)
         for artifact in artifacts:
@@ -78,10 +86,15 @@ def split_artifacts_into_parts(
     readme_text: str,
     readme_name: str,
 ) -> tuple[list[list[Path]], list[str]]:
-    """Split artifacts into standalone ZIP-compatible groups."""
+    """Split AI-readable artifacts into standalone ZIP-compatible groups.
+
+    The selected radio-button size remains the hard cap.  This function uses a
+    90% planning target to avoid edge-of-cap packages, but final writes still
+    validate against 100% of the selected cap.  It never byte-splits one file.
+    """
+    planning_target = max(1, int(part_size_bytes * _PLANNING_TARGET_RATIO))
     parts: list[list[Path]] = []
     current: list[Path] = []
-    warnings: list[str] = []
 
     for artifact in artifacts:
         candidate = current + [artifact]
@@ -93,33 +106,15 @@ def split_artifacts_into_parts(
             readme_text=readme_text,
             readme_name=readme_name,
         )
-        if candidate_size <= part_size_bytes or not current:
+        if candidate_size <= planning_target or not current:
             current = candidate
-            if candidate_size > part_size_bytes:
-                warnings.append(
-                    "Single artifact compressed above target size: "
-                    + relative_posix_path(artifact, context.root)
-                )
             continue
         parts.append(current)
         current = [artifact]
-        single_size = candidate_zip_size(
-            current,
-            context,
-            temp_dir,
-            base_folder=base_folder,
-            readme_text=readme_text,
-            readme_name=readme_name,
-        )
-        if single_size > part_size_bytes:
-            warnings.append(
-                "Single artifact compressed above target size: "
-                + relative_posix_path(artifact, context.root)
-            )
 
     if current:
         parts.append(current)
-    return parts, warnings
+    return parts, []
 
 
 def zip_record(
@@ -140,6 +135,16 @@ def zip_record(
     }
 
 
+def _artifact_over_cap_error(artifact: Path, context: ProjectContext, part_size_bytes: int) -> ValueError:
+    return ValueError(
+        "A single AI-readable handoff artifact cannot fit under the selected ZIP size cap without byte-splitting: "
+        + artifact_logical_posix_path(artifact, context)
+        + " (cap "
+        + str(part_size_bytes)
+        + " bytes). Choose a larger radio-button size or reduce the generated artifact."
+    )
+
+
 def write_package_parts(
     spec: dict[str, Any],
     context: ProjectContext,
@@ -148,15 +153,20 @@ def write_package_parts(
     part_size_mb: int,
     part_size_bytes: int,
 ) -> tuple[list[dict[str, Any]], list[str], list[Path]]:
-    """Write all standalone ZIP parts for one package spec."""
+    """Write all standalone ZIP parts for one package spec.
+
+    No byte-chunk fallback is allowed.  If one artifact cannot fit inside the
+    selected hard cap as a normal ZIP member, export fails clearly.
+    """
     stem = str(spec["stem"])
     package_name = str(spec["name"])
     artifacts = list(spec["artifacts"])
     readme_name = str(spec["readme_name"])
+    package_purpose = str(spec["purpose"])
     placeholder_readme = package_readme_text(
         context,
         package_name,
-        str(spec["purpose"]),
+        package_purpose,
         "1",
         1,
         part_size_mb,
@@ -175,21 +185,32 @@ def write_package_parts(
     final_records: list[dict[str, Any]] = []
     created_paths: list[Path] = []
     for index, part_artifacts in enumerate(parts, start=1):
+        readme = package_readme_text(
+            context,
+            package_name,
+            package_purpose,
+            str(index),
+            total_parts,
+            part_size_mb,
+        )
+        final_candidate_size = candidate_zip_size(
+            part_artifacts,
+            context,
+            temp_root,
+            base_folder=stem,
+            readme_text=readme,
+            readme_name=readme_name,
+        )
+        if final_candidate_size > part_size_bytes:
+            if len(part_artifacts) == 1:
+                raise _artifact_over_cap_error(part_artifacts[0], context, part_size_bytes)
+            raise ValueError("ZIP part exceeded selected size: " + stem)
         if total_parts == 1:
             filename = stem + ".zip"
-            part_label = "1"
         else:
             part_label = str(index).zfill(2)
             filename = stem + "_part" + part_label + "_of_" + str(total_parts).zfill(2) + ".zip"
         temp_zip = temp_root / filename
-        readme = package_readme_text(
-            context,
-            package_name,
-            str(spec["purpose"]),
-            part_label,
-            total_parts,
-            part_size_mb,
-        )
         write_zip(
             temp_zip,
             part_artifacts,
@@ -198,6 +219,8 @@ def write_package_parts(
             readme_text=readme,
             readme_name=readme_name,
         )
+        if temp_zip.stat().st_size > part_size_bytes:
+            raise ValueError("ZIP part exceeded selected size after write: " + temp_zip.name)
         final_zip = destination / filename
         if final_zip.exists():
             final_zip.unlink()

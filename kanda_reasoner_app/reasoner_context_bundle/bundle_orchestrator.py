@@ -5,12 +5,13 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Mapping
 
-from .active_snapshot_builder import write_active_snapshot_json
+from .ai_briefing_builder import write_ai_briefing_json
 from .bundle_checker import check_ai_context_bundle
 from .bundle_manifest_builder import write_bundle_manifest_json
 from .exclusion_rules_exporter import write_exclusion_rules_json
 from .file_manifest_builder import write_file_manifest_json
-from .reconstruction_payload_builder import write_reconstruction_payload_json
+from .patch_safety_routes_builder import write_patch_safety_routes_json
+from .routing_manifest_builder import write_routing_manifest_json
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
@@ -55,11 +56,12 @@ def _generated_records(paths_by_name: Mapping[str, Path], context: ProjectContex
 def _paths_by_generated_name(project: str | Path | ProjectContext) -> dict[str, Path]:
     paths = bundle_artifact_paths(project)
     return {
+        "ai_briefing_json": paths.ai_briefing_json,
+        "routing_manifest_json": paths.routing_manifest_json,
+        "patch_safety_routes_json": paths.patch_safety_routes_json,
         "exclusion_rules_json": paths.exclusion_rules_json,
         "file_manifest_json": paths.file_manifest_json,
-        "active_snapshot_json": paths.active_snapshot_json,
         "validation_state_json": paths.validation_state_json,
-        "reconstruction_payload_json": paths.reconstruction_payload_json,
         "bundle_manifest_json": paths.bundle_manifest_json,
     }
 
@@ -71,22 +73,21 @@ def generate_ai_context_bundle(
     check_bundle: bool = True,
     commands_run_by_bundle: bool = False,
 ) -> dict[str, Any]:
-    """Generate all additive companion JSON artifacts for one project.
+    """Generate lightweight AI handoff map artifacts for one project.
 
-    This orchestrator is intentionally closed-box and additive. It does not
-    generate or modify the existing complete JSON contract. The current Tab 4
-    collector remains responsible for creating ``<project_slug>__complete.json``.
-    This function writes only companion files and then optionally checks the
-    bundle.
+    Hybrid Source Archive export makes ZIP source archive parts the exact
+    reconstruction authority.  Second Prompt Files must not generate the old
+    heavy ``<project_slug>__complete.json`` or ``<project_slug>__active_snapshot.json``
+    payloads during the normal path.  This function writes only small map,
+    routing, manifest, validation, and exclusion artifacts.
     """
     context = _context(project)
     paths = bundle_artifact_paths(context)
-    complete_hash_before = _hash_if_file(paths.complete_json)
-
     written_paths: list[Path] = []
     written_paths.append(write_exclusion_rules_json(context))
     written_paths.append(write_file_manifest_json(context))
-    written_paths.append(write_active_snapshot_json(context))
+    written_paths.append(write_routing_manifest_json(context))
+    written_paths.append(write_patch_safety_routes_json(context))
     written_paths.append(
         write_validation_state_json(
             context,
@@ -94,11 +95,19 @@ def generate_ai_context_bundle(
             commands_run_by_bundle=commands_run_by_bundle,
         )
     )
-    written_paths.append(write_reconstruction_payload_json(context))
-    written_paths.append(write_bundle_manifest_json(context))
-
-    complete_hash_after = _hash_if_file(paths.complete_json)
-    complete_json_preserved = complete_hash_before == complete_hash_after
+    # Two-pass first-read artifact generation:
+    # 1. Write briefing after peer artifacts exist so it never reports false
+    #    missing artifacts.
+    # 2. Write bundle manifest after briefing so it can hash the final briefing.
+    # 3. Rewrite the briefing once more so it can report the manifest as present
+    #    without embedding a stale mutual hash.
+    # 4. Rewrite the bundle manifest once more so its briefing hash is current.
+    briefing_path = write_ai_briefing_json(context)
+    manifest_path = write_bundle_manifest_json(context)
+    briefing_path = write_ai_briefing_json(context)
+    manifest_path = write_bundle_manifest_json(context)
+    written_paths.append(briefing_path)
+    written_paths.append(manifest_path)
 
     check_result: dict[str, Any] = {
         "ok": True,
@@ -112,8 +121,6 @@ def generate_ai_context_bundle(
 
     generated_paths = _paths_by_generated_name(context)
     failures = []
-    if not complete_json_preserved:
-        failures.append("complete_json hash changed during companion generation")
     if not bool(check_result.get("ok", False)):
         failures.extend(str(item) for item in check_result.get("failures", []))
 
@@ -121,15 +128,15 @@ def generate_ai_context_bundle(
         "ok": not failures,
         "project_slug": context.project_slug,
         "project_root_marker": "<PROJECT_ROOT>",
-        "evidence_root_relative": "project_analysis_evidence",
-        "json_complete_relative": "project_analysis_evidence/json_complete",
-        "complete_json_contract": {
-            "status": "protected_existing_consumer",
-            "mode": "read_hash_reference_only",
-            "schema_changed_by_this_bundle": False,
-            "hash_before": complete_hash_before,
-            "hash_after": complete_hash_after,
-            "preserved": complete_json_preserved,
+        "evidence_root_relative": "show_project_to_AI",
+        "json_complete_relative": "show_project_to_AI/second_prompt_files",
+        "dynamic_output_contract": "<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files",
+        "source_context_contract": {
+            "status": "hybrid_manifest_source_archive",
+            "mode": "lightweight_map_json_plus_source_archive_manifest",
+            "complete_json_generated_by_second_prompt_files": False,
+            "active_snapshot_generated_by_second_prompt_files": False,
+            "source_archive_is_exact_reconstruction_authority": True,
         },
         "written_artifacts": [artifact_logical_posix_path(path, context) for path in written_paths],
         "generated_artifacts": _generated_records(generated_paths, context),

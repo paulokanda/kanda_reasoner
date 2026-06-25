@@ -188,8 +188,9 @@ If the session changed startup delivery, include current startup delivery names 
 Current normal startup delivery names must be reported exactly when relevant:
 
 ```text
+tell_AI_read_before_all.md
 first_prompts_to_ai.zip
-paste_after_first_prompts_to_ai.md
+prompt_library.zip
 ```
 
 The maintenance file must be reported when relevant:

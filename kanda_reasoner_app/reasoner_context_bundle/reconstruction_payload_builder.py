@@ -25,11 +25,11 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "reconstruction_payload"
 GENERATOR_NAME = "reasoner_context_bundle.reconstruction_payload_builder"
-GENERATOR_VERSION = "1.0.0"
+GENERATOR_VERSION = "1.0.1"
 
 _GENERATED_EVIDENCE_PREFIXES = (
-    "project_analysis_evidence/json_complete/",
-    "project_analysis_evidence/json_splitted/",
+    "show_project_to_AI/",
+    "show_project_to_AI/json_splitted/",
 )
 
 
@@ -148,11 +148,12 @@ def build_reconstruction_payload(project: str | Path | ProjectContext) -> dict[s
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
         },
         "reconstruction_policy": {
             "scope": "active_project_files_after_project_exclusion_rules",
+            "recursive_archive_guard": "ignore <project_slug>.zip and generated <project_slug>__ai_handoff_*.zip archives while building Show Project to AI handoff files",
             "excluded_content": "not_project_content_by_active_exclusion_policy",
             "content_encoding": "base64_raw_bytes",
             "binary_policy": "embed_binary_files_as_base64_raw_bytes",

@@ -2658,9 +2658,2013 @@
         "source_size_bytes": 89339
       },
       "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-78-maximum-optimized-near-miss-counterfactual-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:22:57Z",
+      "feature_id": "rss-mlrt79-maximum-optimized-differential-drift-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-79 Maximum-Optimized Differential Drift Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782001311541363500,
+        "source_name": "rss_mlrt79_maximum_optimized_differential_drift_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt79_maximum_optimized_differential_drift_controlled_offline_ml_prompt_selection_test_suite_v1_patch.zip",
+        "source_size_bytes": 93087
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-79-maximum-optimized-differential-drift-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:27:36Z",
+      "feature_id": "rss-mlrt80-maximum-optimized-differential-drift-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-80 Maximum-Optimized Differential Drift Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782001619638044000,
+        "source_name": "rss_mlrt80_maximum_optimized_differential_drift_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_mlrt80_maximum_optimized_differential_drift_controlled_offline_ml_prompt_selection_test_suite_result_review_gate_v1_patch.zip",
+        "source_size_bytes": 91399
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-80-maximum-optimized-differential-drift-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:39:09Z",
+      "feature_id": "rss-mlrt81-maximum-optimized-regression-metamorphic-consistency-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-81 Maximum-Optimized Regression Metamorphic Consistency Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782002287221764700,
+        "source_name": "mlrt81_metamorphic_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt81_metamorphic_v1_patch.zip",
+        "source_size_bytes": 94456
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-81-maximum-optimized-regression-metamorphic-consistency-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:49:49Z",
+      "feature_id": "rss-mlrt82-maximum-optimized-regression-metamorphic-consistency-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-82 Maximum-Optimized Regression Metamorphic Consistency Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782002951829800100,
+        "source_name": "mlrt82_review_gate_v1_freeze_form_intake_fix.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt82_review_gate_v1_freeze_form_intake_fix.zip",
+        "source_size_bytes": 2400
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-82-maximum-optimized-regression-metamorphic-consistency-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T00:55:19Z",
+      "feature_id": "rss-mlrt83-maximum-optimized-semantic-collision-disambiguation-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-83 Maximum-Optimized Semantic Collision Disambiguation Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782003251168752000,
+        "source_name": "mlrt83_semantic_collision_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt83_semantic_collision_v1_patch.zip",
+        "source_size_bytes": 96584
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-83-maximum-optimized-semantic-collision-disambiguation-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:02:44Z",
+      "feature_id": "rss-mlrt84-maximum-optimized-semantic-collision-disambiguation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-84 Maximum-Optimized Semantic Collision Disambiguation Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782003705160113500,
+        "source_name": "mlrt84_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt84_review_gate_v1_patch.zip",
+        "source_size_bytes": 93610
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-84-maximum-optimized-semantic-collision-disambiguation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:08:22Z",
+      "feature_id": "rss-mlrt85-maximum-optimized-ambiguity-saturation-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-85 Maximum-Optimized Ambiguity Saturation Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782004016463596400,
+        "source_name": "mlrt85_ambiguity_saturation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt85_ambiguity_saturation_v1_patch.zip",
+        "source_size_bytes": 96212
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-85-maximum-optimized-ambiguity-saturation-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:18:12Z",
+      "feature_id": "rss-mlrt86-maximum-optimized-ambiguity-saturation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-86 Maximum-Optimized Ambiguity Saturation Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782004564446428100,
+        "source_name": "mlrt86_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt86_review_gate_v1_patch.zip",
+        "source_size_bytes": 95134
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-86-maximum-optimized-ambiguity-saturation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:23:34Z",
+      "feature_id": "rss-mlrt87-maximum-optimized-state-transition-evidence-recognition-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-87 Maximum-Optimized State-Transition Evidence Recognition Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782004940722843100,
+        "source_name": "mlrt87_state_transition_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt87_state_transition_v1_patch.zip",
+        "source_size_bytes": 98269
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-87-maximum-optimized-state-transition-evidence-recognition-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:28:16Z",
+      "feature_id": "rss-mlrt88-maximum-optimized-state-transition-evidence-recognition-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-88 Maximum-Optimized State-Transition Evidence Recognition Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782005197002881500,
+        "source_name": "mlrt88_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt88_review_gate_v1_patch.zip",
+        "source_size_bytes": 96433
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-88-maximum-optimized-state-transition-evidence-recognition-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:34:09Z",
+      "feature_id": "rss-mlrt89-maximum-optimized-temporal-recency-arbitration-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-89 Maximum-Optimized Temporal Recency Arbitration Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782005500930672400,
+        "source_name": "mlrt89_temporal_recency_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt89_temporal_recency_v1_patch.zip",
+        "source_size_bytes": 100042
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-89-maximum-optimized-temporal-recency-arbitration-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:41:23Z",
+      "feature_id": "rss-mlrt90-maximum-optimized-temporal-recency-arbitration-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-90 Maximum-Optimized Temporal Recency Arbitration Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782006022676661200,
+        "source_name": "mlrt90_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt90_review_gate_v1_patch.zip",
+        "source_size_bytes": 98502
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-90-maximum-optimized-temporal-recency-arbitration-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:45:29Z",
+      "feature_id": "rss-mlrt91-maximum-optimized-user-correction-evidence-recovery-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-91 Maximum-Optimized User-Correction Evidence Recovery Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782006281285951100,
+        "source_name": "mlrt91_user_correction_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt91_user_correction_v1_patch.zip",
+        "source_size_bytes": 102027
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-91-maximum-optimized-user-correction-evidence-recovery-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:51:35Z",
+      "feature_id": "rss-mlrt92-maximum-optimized-user-correction-evidence-recovery-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-92 Maximum-Optimized User-Correction Evidence Recovery Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782006594728897300,
+        "source_name": "mlrt92_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt92_review_gate_v1_patch.zip",
+        "source_size_bytes": 99308
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-92-maximum-optimized-user-correction-evidence-recovery-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T01:57:02Z",
+      "feature_id": "rss-mlrt93-maximum-optimized-current-feature-freeze-intake-precedence-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-93 Maximum-Optimized Current-Feature Freeze-Intake Precedence Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782006936227798600,
+        "source_name": "mlrt93_current_feature_precedence_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt93_current_feature_precedence_v1_patch.zip",
+        "source_size_bytes": 103101
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-93-maximum-optimized-current-feature-freeze-intake-precedence-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:02:22Z",
+      "feature_id": "rss-mlrt94-maximum-optimized-current-feature-freeze-intake-precedence-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-94 Maximum-Optimized Current-Feature Freeze-Intake Precedence Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782007225701751500,
+        "source_name": "mlrt94_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt94_review_gate_v1_patch.zip",
+        "source_size_bytes": 99919
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-94-maximum-optimized-current-feature-freeze-intake-precedence-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:06:25Z",
+      "feature_id": "rss-mlrt95-maximum-optimized-freeze-exposure-status-recovery-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-95 Maximum-Optimized Freeze-Exposure Status Recovery Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782007517370166500,
+        "source_name": "mlrt95_freeze_exposure_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt95_freeze_exposure_v1_patch.zip",
+        "source_size_bytes": 104523
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-95-maximum-optimized-freeze-exposure-status-recovery-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:10:14Z",
+      "feature_id": "rss-mlrt96-maximum-optimized-freeze-exposure-status-recovery-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-96 Maximum-Optimized Freeze-Exposure Status Recovery Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782007726503960300,
+        "source_name": "mlrt96_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt96_review_gate_v1_patch.zip",
+        "source_size_bytes": 101349
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-96-maximum-optimized-freeze-exposure-status-recovery-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:13:47Z",
+      "feature_id": "rss-mlrt97-maximum-optimized-preview-versus-write-boundary-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-97 Maximum-Optimized Preview-Versus-Write Boundary Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782007972804285100,
+        "source_name": "mlrt97_preview_write_boundary_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt97_preview_write_boundary_v1_patch.zip",
+        "source_size_bytes": 105702
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-97-maximum-optimized-preview-versus-write-boundary-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:19:03Z",
+      "feature_id": "rss-mlrt98-maximum-optimized-preview-versus-write-boundary-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-98 Maximum-Optimized Preview-Versus-Write Boundary Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782008285268235000,
+        "source_name": "mlrt98_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt98_review_gate_v1_patch.zip",
+        "source_size_bytes": 102619
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-98-maximum-optimized-preview-versus-write-boundary-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:22:59Z",
+      "feature_id": "rss-mlrt99-maximum-optimized-human-confirmation-binding-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-99 Maximum-Optimized Human-Confirmation Binding Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782008524403078700,
+        "source_name": "mlrt99_human_confirmation_binding_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt99_human_confirmation_binding_v1_patch.zip",
+        "source_size_bytes": 107124
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-99-maximum-optimized-human-confirmation-binding-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:27:22Z",
+      "feature_id": "rss-mlrt100-maximum-optimized-human-confirmation-binding-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-100 Maximum-Optimized Human-Confirmation Binding Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782008759940569900,
+        "source_name": "mlrt100_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt100_review_gate_v1_patch.zip",
+        "source_size_bytes": 104480
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-100-maximum-optimized-human-confirmation-binding-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:32:06Z",
+      "feature_id": "rss-mlrt101-maximum-optimized-written-path-integrity-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-101 Maximum-Optimized Written-Path Integrity Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782009048940682500,
+        "source_name": "mlrt101_written_path_integrity_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt101_written_path_integrity_v1_patch.zip",
+        "source_size_bytes": 109331
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-101-maximum-optimized-written-path-integrity-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:36:48Z",
+      "feature_id": "rss-mlrt102-maximum-optimized-written-path-integrity-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-102 Maximum-Optimized Written-Path Integrity Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782009352336828700,
+        "source_name": "mlrt102_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt102_review_gate_v1_patch.zip",
+        "source_size_bytes": 105956
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-102-maximum-optimized-written-path-integrity-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:40:53Z",
+      "feature_id": "rss-mlrt103-maximum-optimized-freeze-index-consistency-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-103 Maximum-Optimized Freeze-Index Consistency Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782009599467216100,
+        "source_name": "mlrt103_freeze_index_consistency_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt103_freeze_index_consistency_v1_patch.zip",
+        "source_size_bytes": 110649
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-103-maximum-optimized-freeze-index-consistency-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:47:47Z",
+      "feature_id": "rss-mlrt104-maximum-optimized-freeze-index-consistency-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-104 Maximum-Optimized Freeze-Index Consistency Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782010011094664600,
+        "source_name": "mlrt104_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt104_review_gate_v1_patch.zip",
+        "source_size_bytes": 107272
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-104-maximum-optimized-freeze-index-consistency-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:52:02Z",
+      "feature_id": "rss-mlrt105-maximum-optimized-ai-send-exposure-alignment-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-105 Maximum-Optimized AI-Send Exposure Alignment Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782010263737210500,
+        "source_name": "mlrt105_ai_send_exposure_alignment_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt105_ai_send_exposure_alignment_v1_patch.zip",
+        "source_size_bytes": 112226
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-105-maximum-optimized-ai-send-exposure-alignment-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T02:57:00Z",
+      "feature_id": "rss-mlrt106-maximum-optimized-ai-send-exposure-alignment-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-106 Maximum-Optimized AI-Send Exposure Alignment Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782010569317237500,
+        "source_name": "mlrt106_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt106_review_gate_v1_patch.zip",
+        "source_size_bytes": 108545
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-106-maximum-optimized-ai-send-exposure-alignment-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:03:37Z",
+      "feature_id": "rss-mlrt107-maximum-optimized-startup-freeze-context-propagation-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-107 Maximum-Optimized Startup Freeze-Context Propagation Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782010795711018200,
+        "source_name": "mlrt107_startup_context_propagation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt107_startup_context_propagation_v1_patch.zip",
+        "source_size_bytes": 113111
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-107-maximum-optimized-startup-freeze-context-propagation-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:11:43Z",
+      "feature_id": "rss-mlrt108-maximum-optimized-startup-freeze-context-propagation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-108 Maximum-Optimized Startup Freeze-Context Propagation Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782011450848494500,
+        "source_name": "mlrt108_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt108_review_gate_v1_patch.zip",
+        "source_size_bytes": 109744
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-108-maximum-optimized-startup-freeze-context-propagation-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:16:35Z",
+      "feature_id": "rss-mlrt109-maximum-optimized-startup-handoff-next-step-arbitration-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-109 Maximum-Optimized Startup Handoff Next-Step Arbitration Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782011770442551800,
+        "source_name": "mlrt109_next_step_arbitration_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt109_next_step_arbitration_v1_patch.zip",
+        "source_size_bytes": 114332
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-109-maximum-optimized-startup-handoff-next-step-arbitration-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:36:55Z",
+      "feature_id": "rss-mlrt110-maximum-optimized-startup-handoff-next-step-arbitration-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-110 Maximum-Optimized Startup Handoff Next-Step Arbitration Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782012902505062000,
+        "source_name": "mlrt110_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt110_review_gate_v1_patch.zip",
+        "source_size_bytes": 111315
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-110-maximum-optimized-startup-handoff-next-step-arbitration-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:43:11Z",
+      "feature_id": "rss-mlrt111-maximum-optimized-freeze-hint-consumption-binding-controlled-offline-ml-prompt-selection-test-suite-v1",
+      "feature_title": "Routing Signal Scorer MLRT-111 Maximum-Optimized Freeze-Hint Consumption Binding Controlled Offline ML Prompt-Selection Test Suite v1",
+      "source": {
+        "source_mtime_ns": 1782013336670935700,
+        "source_name": "mlrt111_freeze_hint_consumption_binding_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt111_freeze_hint_consumption_binding_v1_patch.zip",
+        "source_size_bytes": 115483
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-111-maximum-optimized-freeze-hint-consumption-binding-controlled-offline-ml-prompt-selection-test-suite-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T03:49:04Z",
+      "feature_id": "rss-mlrt112-maximum-optimized-freeze-hint-consumption-binding-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer MLRT-112 Maximum-Optimized Freeze-Hint Consumption Binding Controlled Offline ML Prompt-Selection Test Suite Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782013693418791000,
+        "source_name": "mlrt112_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt112_review_gate_v1_patch.zip",
+        "source_size_bytes": 112679
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-112-maximum-optimized-freeze-hint-consumption-binding-controlled-offline-ml-prompt-selection-test-suite-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T04:01:32Z",
+      "feature_id": "rss-mlrt-consolidation-audit-and-coverage-map-v1",
+      "feature_title": "Routing Signal Scorer MLRT Consolidation Audit and Coverage Map v1",
+      "source": {
+        "source_mtime_ns": 1782014430824303000,
+        "source_name": "mlrt_consolidation_form_fill_v1.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt_consolidation_form_fill_v1.zip",
+        "source_size_bytes": 5177
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-consolidation-audit-and-coverage-map-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T04:12:52Z",
+      "feature_id": "rss-mlrt-final-closure-audit-and-reuse-policy-v1",
+      "feature_title": "Routing Signal Scorer MLRT Final Closure Audit and Reuse Policy v1",
+      "source": {
+        "source_mtime_ns": 1782015115233710200,
+        "source_name": "mlrt_final_closure_audit_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\mlrt_final_closure_audit_v1_patch.zip",
+        "source_size_bytes": 116149
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-mlrt-final-closure-audit-and-reuse-policy-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T17:14:34Z",
+      "feature_id": "release-guard-zip-delivery-contract-v1",
+      "feature_title": "Release Guard ZIP Delivery Contract v1",
+      "source": {
+        "source_mtime_ns": 1782061758003731400,
+        "source_name": "release_guard_zip_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\release_guard_zip_contract_v1_patch.zip",
+        "source_size_bytes": 61155
+      },
+      "used_freeze_id": "freeze-20260621-release-guard-zip-delivery-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T17:30:16Z",
+      "feature_id": "release-guard-validation-runner-fix-v1",
+      "feature_title": "Release Guard Validation Runner Fix v1",
+      "source": {
+        "source_mtime_ns": 1782062947765511000,
+        "source_name": "release_guard_validation_runner_fix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\release_guard_validation_runner_fix_v1_patch.zip",
+        "source_size_bytes": 4805
+      },
+      "used_freeze_id": "freeze-20260621-release-guard-validation-runner-fix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T17:42:47Z",
+      "feature_id": "freeze-hint-stale-pending-cleanup-v1",
+      "feature_title": "Freeze Hint Stale Pending Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782063706293910600,
+        "source_name": "freeze_hint_stale_pending_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_hint_stale_pending_cleanup_v1_patch.zip",
+        "source_size_bytes": 20282
+      },
+      "used_freeze_id": "freeze-20260621-freeze-hint-stale-pending-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T18:16:15Z",
+      "feature_id": "terminal-cleanup-canon-v1",
+      "feature_title": "Terminal Cleanup Canon v1",
+      "source": {
+        "source_mtime_ns": 1782065719382526700,
+        "source_name": "terminal_cleanup_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\terminal_cleanup_canon_v1_patch.zip",
+        "source_size_bytes": 58040
+      },
+      "used_freeze_id": "freeze-20260621-terminal-cleanup-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T18:41:43Z",
+      "feature_id": "freeze-form-pending-write-gate-v1",
+      "feature_title": "Freeze Form Pending Write Gate v1",
+      "source": {
+        "source_mtime_ns": 1782067282624691800,
+        "source_name": "freeze_form_pending_write_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\freeze_form_pending_write_gate_v1_patch.zip",
+        "source_size_bytes": 11594
+      },
+      "used_freeze_id": "freeze-20260621-freeze-form-pending-write-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T19:14:55Z",
+      "feature_id": "rss-ml-advisory-prompt-intake-boundary-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal and Governed Prompt Intake Boundary Contract v1",
+      "source": {
+        "source_mtime_ns": 1782069253392197100,
+        "source_name": "rss_ml_advisory_prompt_intake_boundary_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_advisory_prompt_intake_boundary_v1_patch.zip",
+        "source_size_bytes": 115593
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-and-governed-prompt-intake-boundary-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T19:20:15Z",
+      "feature_id": "rss-ml-adv-phase1a-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 1a Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782069570274789700,
+        "source_name": "rss_ml_adv_phase1a_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase1a_review_gate_v1_patch.zip",
+        "source_size_bytes": 97586
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-1a-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T19:35:03Z",
+      "feature_id": "rss-ml-adv-phase1b-design-audit-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 1b Non-Runtime Design Audit Contract v1",
+      "source": {
+        "source_mtime_ns": 1782070456323586500,
+        "source_name": "ml_adv_phase1b_freeze_hint_fix_v1.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\ml_adv_phase1b_freeze_hint_fix_v1.zip",
+        "source_size_bytes": 2000
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-1b-non-runtime-design-audit-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T19:38:22Z",
+      "feature_id": "rss-ml-adv-phase1b-design-audit-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 1b Non-Runtime Design Audit Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782070658612646600,
+        "source_name": "rss_ml_adv_phase1b_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase1b_review_gate_v1_patch.zip",
+        "source_size_bytes": 98472
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-1b-non-runtime-design-audit-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T20:12:16Z",
+      "feature_id": "rss-ml-adv-phase2-offline-evaluation-harness-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 2 Offline Evaluation Harness Contract v1",
+      "source": {
+        "source_mtime_ns": 1782072678718210000,
+        "source_name": "rss_ml_adv_phase2_harness_v1_final_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase2_harness_v1_final_patch.zip",
+        "source_size_bytes": 104758
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-2-offline-evaluation-harness-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T20:25:59Z",
+      "feature_id": "patch-install-delivery-guard-v1",
+      "feature_title": "Patch Install Delivery Guard Prompt and Startup Enforcement v1",
+      "source": {
+        "source_mtime_ns": 1782073532910486200,
+        "source_name": "patch_install_delivery_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\patch_install_delivery_guard_v1_patch.zip",
+        "source_size_bytes": 39285
+      },
+      "used_freeze_id": "freeze-20260621-patch-install-delivery-guard-prompt-and-startup-enforcement-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T20:36:50Z",
+      "feature_id": "rss-ml-adv-phase2-offline-harness-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 2 Offline Evaluation Harness Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782074180123375500,
+        "source_name": "rss_ml_adv_phase2_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase2_review_gate_v1_patch.zip",
+        "source_size_bytes": 100313
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-2-offline-evaluation-harness-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T20:48:26Z",
+      "feature_id": "rss-ml-adv-phase3-offline-fixture-catalog-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 3 Offline Fixture Catalog Contract v1",
+      "source": {
+        "source_mtime_ns": 1782074876777927200,
+        "source_name": "rss_ml_adv_phase3_fixture_catalog_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase3_fixture_catalog_v1_patch.zip",
+        "source_size_bytes": 105232
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-3-offline-fixture-catalog-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T20:54:43Z",
+      "feature_id": "rss-ml-adv-phase3-fixture-catalog-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 3 Offline Fixture Catalog Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782075247922363400,
+        "source_name": "rss_ml_adv_phase3_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase3_review_gate_v1_patch.zip",
+        "source_size_bytes": 101271
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-3-offline-fixture-catalog-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:00:52Z",
+      "feature_id": "rss-ml-adv-phase4-offline-advisor-comparison-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 4 Offline Advisor Comparison Contract v1",
+      "source": {
+        "source_mtime_ns": 1782075616232662400,
+        "source_name": "rss_ml_adv_phase4_comparison_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase4_comparison_v1_patch.zip",
+        "source_size_bytes": 105589
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-4-offline-advisor-comparison-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:05:05Z",
+      "feature_id": "rss-ml-adv-phase4-advisor-comparison-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 4 Offline Advisor Comparison Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782075874277028300,
+        "source_name": "rss_ml_adv_phase4_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase4_review_gate_v1_patch.zip",
+        "source_size_bytes": 101372
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-4-offline-advisor-comparison-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:09:20Z",
+      "feature_id": "rss-ml-adv-phase5-offline-real-adapter-boundary-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 5 Offline Real-Adapter Boundary Contract v1",
+      "source": {
+        "source_mtime_ns": 1782076122435458700,
+        "source_name": "rss_ml_adv_phase5_adapter_boundary_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase5_adapter_boundary_v1_patch.zip",
+        "source_size_bytes": 105676
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-5-offline-real-adapter-boundary-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:16:30Z",
+      "feature_id": "rss-ml-adv-phase5-real-adapter-boundary-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 5 Offline Real-Adapter Boundary Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782076557065129000,
+        "source_name": "rss_ml_adv_phase5_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase5_review_gate_v1_patch.zip",
+        "source_size_bytes": 102398
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-5-offline-real-adapter-boundary-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:25:11Z",
+      "feature_id": "rss-ml-adv-phase5-offline-real-adapter-candidate-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 5 Offline Real-Adapter Candidate Contract v1",
+      "source": {
+        "source_mtime_ns": 1782077077521170000,
+        "source_name": "rss_ml_adv_phase5_candidate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase5_candidate_v1_patch.zip",
+        "source_size_bytes": 107984
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-5-offline-real-adapter-candidate-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:29:38Z",
+      "feature_id": "rss-ml-adv-phase5-real-adapter-candidate-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 5 Offline Real-Adapter Candidate Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782077347216903800,
+        "source_name": "rss_ml_adv_phase5_candidate_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase5_candidate_review_gate_v1_patch.zip",
+        "source_size_bytes": 103669
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-5-offline-real-adapter-candidate-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:35:08Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Contract v1",
+      "source": {
+        "source_mtime_ns": 1782077677354672500,
+        "source_name": "rss_ml_adv_phase6_display_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_display_contract_v1_patch.zip",
+        "source_size_bytes": 109632
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:39:04Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782077914915505500,
+        "source_name": "rss_ml_adv_phase6_display_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_display_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 104733
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:43:44Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782078196878336400,
+        "source_name": "rss_ml_adv_phase6_display_impl_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_display_impl_v1_patch.zip",
+        "source_size_bytes": 108588
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T21:56:40Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782078989202511900,
+        "source_name": "rss_ml_adv_phase6_impl_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_impl_review_gate_v1_patch.zip",
+        "source_size_bytes": 104782
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:00:24Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782079185388757500,
+        "source_name": "rss_ml_adv_phase6_final_safety_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_final_safety_v1_patch.zip",
+        "source_size_bytes": 104466
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:06:44Z",
+      "feature_id": "rss-ml-adv-phase6-guarded-runtime-advisory-display-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 6 Guarded Runtime Advisory Display Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782079538240492300,
+        "source_name": "rss_ml_adv_phase6_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase6_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 105425
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-6-guarded-runtime-advisory-display-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:33:30Z",
+      "feature_id": "rss-ml-adv-phase7-web-book-informed-advisory-surface-wiring-research-flux-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Web-and-Book-Informed Advisory Surface Wiring Research Flux v1",
+      "source": {
+        "source_mtime_ns": 1782081128487771900,
+        "source_name": "rss_ml_adv_phase7_web_book_research_flux_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_web_book_research_flux_v1_patch.zip",
+        "source_size_bytes": 116210
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-web-and-book-informed-advisory-surface-wiring-research-flux-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:38:53Z",
+      "feature_id": "rss-ml-adv-phase7-guarded-advisory-surface-wiring-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Guarded Advisory Surface Wiring Contract v1",
+      "source": {
+        "source_mtime_ns": 1782081505067083700,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_contract_v1_patch.zip",
+        "source_size_bytes": 116104
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-guarded-advisory-surface-wiring-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:51:12Z",
+      "feature_id": "rss-ml-adv-phase7-guarded-advisory-surface-wiring-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Guarded Advisory Surface Wiring Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782082241244130100,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_review_gate_v1_patch.zip",
+        "source_size_bytes": 110636
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-guarded-advisory-surface-wiring-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T22:58:59Z",
+      "feature_id": "rss-ml-adv-phase7-read-only-advisory-surface-wiring-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Read-Only Advisory Surface Wiring Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782082688489898400,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_impl_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_impl_v1_patch.zip",
+        "source_size_bytes": 116910
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-read-only-advisory-surface-wiring-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:03:38Z",
+      "feature_id": "rss-ml-adv-phase7-read-only-advisory-surface-wiring-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Read-Only Advisory Surface Wiring Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782082969639034100,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_impl_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_impl_review_gate_v1_patch.zip",
+        "source_size_bytes": 111548
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-read-only-advisory-surface-wiring-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:09:01Z",
+      "feature_id": "rss-ml-adv-phase7-read-only-advisory-surface-wiring-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Read-Only Advisory Surface Wiring Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782083293042658100,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_final_safety_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_final_safety_v1_patch.zip",
+        "source_size_bytes": 113463
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-read-only-advisory-surface-wiring-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:13:34Z",
+      "feature_id": "rss-ml-adv-phase7-read-only-advisory-surface-wiring-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 7 Read-Only Advisory Surface Wiring Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782083575140859300,
+        "source_name": "rss_ml_adv_phase7_surface_wiring_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase7_surface_wiring_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 113195
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-7-read-only-advisory-surface-wiring-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:19:54Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Contract v1",
+      "source": {
+        "source_mtime_ns": 1782083952912145100,
+        "source_name": "rss_ml_adv_phase8_panel_ui_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_contract_v1_patch.zip",
+        "source_size_bytes": 119835
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:24:26Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782084222006438500,
+        "source_name": "rss_ml_adv_phase8_panel_ui_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_review_gate_v1_patch.zip",
+        "source_size_bytes": 114380
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:30:28Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782084573744546600,
+        "source_name": "rss_ml_adv_phase8_panel_ui_impl_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_impl_v1_patch.zip",
+        "source_size_bytes": 123335
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:36:41Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782084955007004300,
+        "source_name": "rss_ml_adv_phase8_panel_ui_impl_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_impl_review_gate_v1_patch.zip",
+        "source_size_bytes": 115653
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:41:47Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782085265702195800,
+        "source_name": "rss_ml_adv_phase8_panel_ui_final_safety_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_final_safety_v1_patch.zip",
+        "source_size_bytes": 116423
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-21T23:46:27Z",
+      "feature_id": "rss-ml-adv-phase8-read-only-advisory-panel-ui-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 8 Read-Only Advisory Panel UI Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782085529045952300,
+        "source_name": "rss_ml_adv_phase8_panel_ui_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase8_panel_ui_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 117078
+      },
+      "used_freeze_id": "freeze-20260621-routing-signal-scorer-ml-advisory-signal-phase-8-read-only-advisory-panel-ui-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T00:23:36Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Contract v1",
+      "source": {
+        "source_mtime_ns": 1782087785382843300,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_contract_v1_patch_corrected.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_contract_v1_patch_corrected.zip",
+        "source_size_bytes": 124965
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T00:28:24Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782088051980638400,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 118117
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T00:34:50Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782088441567075600,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_impl_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_impl_v1_patch.zip",
+        "source_size_bytes": 125001
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T00:55:04Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782089661133289100,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_impl_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_impl_review_gate_v1_patch.zip",
+        "source_size_bytes": 120399
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:01:46Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782090063667141800,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_final_safety_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_final_safety_gate_v1_patch.zip",
+        "source_size_bytes": 120845
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:07:30Z",
+      "feature_id": "rss-ml-adv-phase9-read-only-advisory-panel-runtime-activation-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 9 Read-Only Advisory Panel Runtime Activation Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782090391480120000,
+        "source_name": "rss_ml_adv_phase9_panel_runtime_activation_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase9_panel_runtime_activation_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 121391
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-9-read-only-advisory-panel-runtime-activation-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:13:36Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Contract v1",
+      "source": {
+        "source_mtime_ns": 1782090745293067700,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_contract_v1_patch.zip",
+        "source_size_bytes": 130331
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:19:15Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782091112242599200,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 122688
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:27:52Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782091607358690300,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_implementation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_implementation_v1_patch.zip",
+        "source_size_bytes": 131896
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:35:35Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782092068669377000,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_implementation_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_implementation_review_gate_v1_patch.zip",
+        "source_size_bytes": 123867
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:42:08Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782092460694271900,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_final_safety_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_final_safety_gate_v1_patch.zip",
+        "source_size_bytes": 124486
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:48:09Z",
+      "feature_id": "rss-ml-adv-phase10-read-only-advisory-panel-renderer-mount-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 10 Read-Only Advisory Panel Renderer Mount Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782092835054831700,
+        "source_name": "rss_ml_adv_phase10_renderer_mount_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase10_renderer_mount_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 125181
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-10-read-only-advisory-panel-renderer-mount-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T01:55:58Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Contract v1",
+      "source": {
+        "source_mtime_ns": 1782093297430149800,
+        "source_name": "rss_ml_adv_phase11_host_binding_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_contract_v1_patch.zip",
+        "source_size_bytes": 134456
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:04:39Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782093796047250700,
+        "source_name": "rss_ml_adv_phase11_host_binding_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 127014
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:11:58Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782094263283036200,
+        "source_name": "rss_ml_adv_phase11_host_binding_implementation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_implementation_v1_patch.zip",
+        "source_size_bytes": 135505
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:16:51Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782094559685528600,
+        "source_name": "rss_ml_adv_phase11_host_binding_implementation_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_implementation_review_gate_v1_patch.zip",
+        "source_size_bytes": 127899
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:22:11Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782094875757273000,
+        "source_name": "rss_ml_adv_phase11_host_binding_final_safety_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_final_safety_gate_v1_patch.zip",
+        "source_size_bytes": 129007
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:30:52Z",
+      "feature_id": "rss-ml-adv-phase11-read-only-advisory-panel-host-binding-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 11 Read-Only Advisory Panel Host Binding Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782095392424751800,
+        "source_name": "rss_ml_adv_phase11_host_binding_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase11_host_binding_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 129669
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-11-read-only-advisory-panel-host-binding-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:36:42Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Contract v1",
+      "source": {
+        "source_mtime_ns": 1782095756060246200,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_contract_v1_patch.zip",
+        "source_size_bytes": 137223
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:40:24Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782095978391912300,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 129096
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:47:41Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782096399923904800,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_implementation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_implementation_v1_patch.zip",
+        "source_size_bytes": 138535
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T02:53:24Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782096745263999700,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_implementation_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_implementation_review_gate_v1_patch.zip",
+        "source_size_bytes": 131925
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:01:14Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-final-safety-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Final Safety Gate v1",
+      "source": {
+        "source_mtime_ns": 1782097217982928000,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_final_safety_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_final_safety_gate_v1_patch.zip",
+        "source_size_bytes": 133241
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-final-safety-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:08:04Z",
+      "feature_id": "rss-ml-adv-phase12-read-only-advisory-panel-runtime-app-host-visibility-completion-handoff-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 12 Read-Only Advisory Panel Runtime App-Host Visibility Completion Handoff v1",
+      "source": {
+        "source_mtime_ns": 1782097624924062300,
+        "source_name": "rss_ml_adv_phase12_runtime_app_host_visibility_completion_handoff_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase12_runtime_app_host_visibility_completion_handoff_v1_patch.zip",
+        "source_size_bytes": 133579
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-12-read-only-advisory-panel-runtime-app-host-visibility-completion-handoff-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:15:10Z",
+      "feature_id": "rss-ml-adv-phase13-read-only-advisory-panel-passive-visibility-activation-contract-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 13 Read-Only Advisory Panel Passive Visibility Activation Contract v1",
+      "source": {
+        "source_mtime_ns": 1782098065109101500,
+        "source_name": "rss_ml_adv_phase13_passive_visibility_activation_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase13_passive_visibility_activation_contract_v1_patch.zip",
+        "source_size_bytes": 141821
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-13-read-only-advisory-panel-passive-visibility-activation-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:19:28Z",
+      "feature_id": "rss-ml-adv-phase13-read-only-advisory-panel-passive-visibility-activation-contract-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 13 Read-Only Advisory Panel Passive Visibility Activation Contract Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782098313588995100,
+        "source_name": "rss_ml_adv_phase13_passive_visibility_activation_contract_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase13_passive_visibility_activation_contract_review_gate_v1_patch.zip",
+        "source_size_bytes": 133573
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-13-read-only-advisory-panel-passive-visibility-activation-contract-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:24:59Z",
+      "feature_id": "rss-ml-adv-phase13-read-only-advisory-panel-passive-visibility-activation-implementation-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 13 Read-Only Advisory Panel Passive Visibility Activation Implementation v1",
+      "source": {
+        "source_mtime_ns": 1782098640105103900,
+        "source_name": "rss_ml_adv_phase13_passive_visibility_activation_implementation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase13_passive_visibility_activation_implementation_v1_patch.zip",
+        "source_size_bytes": 143207
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-13-read-only-advisory-panel-passive-visibility-activation-implementation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T03:29:45Z",
+      "feature_id": "rss-ml-adv-phase13-read-only-advisory-panel-passive-visibility-activation-implementation-result-review-gate-v1",
+      "feature_title": "Routing Signal Scorer ML Advisory-Signal Phase 13 Read-Only Advisory Panel Passive Visibility Activation Implementation Result Review Gate v1",
+      "source": {
+        "source_mtime_ns": 1782098933877653900,
+        "source_name": "rss_ml_adv_phase13_passive_visibility_activation_implementation_review_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_phase13_passive_visibility_activation_implementation_review_gate_v1_patch.zip",
+        "source_size_bytes": 134770
+      },
+      "used_freeze_id": "freeze-20260622-routing-signal-scorer-ml-advisory-signal-phase-13-read-only-advisory-panel-passive-visibility-activation-implementation-result-review-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T11:38:31Z",
+      "feature_id": "prompt-router-reasoner-persistent-review-store-v1",
+      "feature_title": "Prompt Router Reasoner Persistent Review Store v1",
+      "source": {
+        "source_mtime_ns": 1782128239294581900,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_review_store_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_review_store_v1_patch.zip",
+        "source_size_bytes": 13672
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-persistent-review-store-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T11:47:51Z",
+      "feature_id": "prompt-router-reasoner-shadow-ml-bridge-v1",
+      "feature_title": "Prompt Router Reasoner Shadow ML Bridge v1",
+      "source": {
+        "source_mtime_ns": 1782128559508050300,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_shadow_bridge_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_shadow_bridge_v1_patch.zip",
+        "source_size_bytes": 6203
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-shadow-ml-bridge-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T11:52:50Z",
+      "feature_id": "prompt-router-reasoner-router-mode-state-v1",
+      "feature_title": "Prompt Router Reasoner Router Mode State v1",
+      "source": {
+        "source_mtime_ns": 1782129133347678000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_router_mode_state_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_router_mode_state_v1_patch.zip",
+        "source_size_bytes": 5690
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-router-mode-state-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T11:58:38Z",
+      "feature_id": "prompt-router-reasoner-tab-skeleton-v1",
+      "feature_title": "Prompt Router Reasoner Tab Skeleton v1",
+      "source": {
+        "source_mtime_ns": 1782129480330217600,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_tab_skeleton_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_tab_skeleton_v1_patch.zip",
+        "source_size_bytes": 10223
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-tab-skeleton-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:04:38Z",
+      "feature_id": "prompt-router-reasoner-review-list-loading-v1",
+      "feature_title": "Prompt Router Reasoner Review List Loading v1",
+      "source": {
+        "source_mtime_ns": 1782129840860959200,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_review_list_loading_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_review_list_loading_v1_patch.zip",
+        "source_size_bytes": 10076
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-review-list-loading-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:20:45Z",
+      "feature_id": "prompt-router-reasoner-heuristic-ml-detail-panels-v1",
+      "feature_title": "Prompt Router Reasoner Heuristic ML Detail Panels v1",
+      "source": {
+        "source_mtime_ns": 1782130812230757000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_detail_panels_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_detail_panels_v1_patch.zip",
+        "source_size_bytes": 13076
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-heuristic-ml-detail-panels-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:32:16Z",
+      "feature_id": "prompt-router-reasoner-save-review-and-undo-v1",
+      "feature_title": "Prompt Router Reasoner Save Review and Undo v1",
+      "source": {
+        "source_mtime_ns": 1782131492106006000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_save_review_undo_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_save_review_undo_v1_patch.zip",
+        "source_size_bytes": 18874
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-save-review-and-undo-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:37:22Z",
+      "feature_id": "prompt-router-reasoner-vertical-bars-stats-panel-v1",
+      "feature_title": "Prompt Router Reasoner Vertical Bars and Stats Panel v1",
+      "source": {
+        "source_mtime_ns": 1782131788965493400,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_vertical_bars_stats_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_vertical_bars_stats_v1_patch.zip",
+        "source_size_bytes": 13770
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-vertical-bars-and-stats-panel-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:44:12Z",
+      "feature_id": "prompt-router-reasoner-ask-ai-workflow-v1",
+      "feature_title": "Prompt Router Reasoner Ask AI Workflow v1",
+      "source": {
+        "source_mtime_ns": 1782132220007960300,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_ask_ai_workflow_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_ask_ai_workflow_v1_patch.zip",
+        "source_size_bytes": 29597
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-ask-ai-workflow-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:51:00Z",
+      "feature_id": "prompt-router-reasoner-ai-second-opinion-capture-v1",
+      "feature_title": "Prompt Router Reasoner AI Second Opinion Capture v1",
+      "source": {
+        "source_mtime_ns": 1782132615185480900,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_ai_second_opinion_capture_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_ai_second_opinion_capture_v1_patch.zip",
+        "source_size_bytes": 24626
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-ai-second-opinion-capture-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T12:57:23Z",
+      "feature_id": "prompt-router-reasoner-session-service-runtime-capture-wiring-v1",
+      "feature_title": "Prompt Router Reasoner SessionService Runtime Capture Wiring v1",
+      "source": {
+        "source_mtime_ns": 1782133009827913600,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_session_capture_wiring_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_session_capture_wiring_v1_patch.zip",
+        "source_size_bytes": 10463
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-sessionservice-runtime-capture-wiring-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:03:25Z",
+      "feature_id": "prompt-router-reasoner-windows-temp-cleanup-validation-repair-v1",
+      "feature_title": "Prompt Router Reasoner Windows Temp Cleanup Validation Repair v1",
+      "source": {
+        "source_mtime_ns": 1782133372244712000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_windows_temp_cleanup_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_windows_temp_cleanup_repair_v1_patch.zip",
+        "source_size_bytes": 25818
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-windows-temp-cleanup-validation-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:14:15Z",
+      "feature_id": "prompt-router-reasoner-runtime-capture-visibility-refresh-v1",
+      "feature_title": "Prompt Router Reasoner Runtime Capture Visibility Refresh v1",
+      "source": {
+        "source_mtime_ns": 1782134006456675600,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_runtime_capture_visibility_refresh_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_runtime_capture_visibility_refresh_v1_patch.zip",
+        "source_size_bytes": 17734
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-runtime-capture-visibility-refresh-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:26:59Z",
+      "feature_id": "prompt-router-reasoner-runtime-newest-selection-tie-repair-v1",
+      "feature_title": "Prompt Router Reasoner Runtime Newest Selection Tie Repair v1",
+      "source": {
+        "source_mtime_ns": 1782134766514414800,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_runtime_newest_selection_tie_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_runtime_newest_selection_tie_repair_v1_patch.zip",
+        "source_size_bytes": 27827
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-runtime-newest-selection-tie-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:29:36Z",
+      "feature_id": "prompt-router-reasoner-gui-polish-review-ergonomics-v1",
+      "feature_title": "Prompt Router Reasoner GUI Polish and Review Ergonomics v1",
+      "source": {
+        "source_mtime_ns": 1782134363994825000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_gui_polish_ergonomics_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_gui_polish_ergonomics_v1_patch.zip",
+        "source_size_bytes": 19241
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-gui-polish-and-review-ergonomics-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:36:29Z",
+      "feature_id": "prompt-router-reasoner-full-prompt-lazy-display-v1",
+      "feature_title": "Prompt Router Reasoner Full Prompt Lazy Display v1",
+      "source": {
+        "source_mtime_ns": 1782135339294927400,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_full_prompt_lazy_display_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_full_prompt_lazy_display_v1_patch.zip",
+        "source_size_bytes": 23829
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-full-prompt-lazy-display-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T13:44:12Z",
+      "feature_id": "prompt-router-reasoner-export-review-dataset-v1",
+      "feature_title": "Prompt Router Reasoner Export Review Dataset v1",
+      "source": {
+        "source_mtime_ns": 1782135817246550000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_export_review_dataset_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_export_review_dataset_v1_patch.zip",
+        "source_size_bytes": 31371
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-export-review-dataset-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:04:45Z",
+      "feature_id": "prompt-router-reasoner-import-loaded-ids-tuple-contract-repair-v1",
+      "feature_title": "Prompt Router Reasoner Import Loaded IDs Tuple Contract Repair v1",
+      "source": {
+        "source_mtime_ns": 1782137041635530800,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_import_loaded_ids_tuple_contract_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_import_loaded_ids_tuple_contract_repair_v1_patch.zip",
+        "source_size_bytes": 5141
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-import-loaded-ids-tuple-contract-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:06:19Z",
+      "feature_id": "prompt-router-reasoner-import-no-store-side-effect-repair-v1",
+      "feature_title": "Prompt Router Reasoner Import No-Store Side-Effect Repair v1",
+      "source": {
+        "source_mtime_ns": 1782136694070775400,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_import_no_store_side_effect_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_import_no_store_side_effect_repair_v1_patch.zip",
+        "source_size_bytes": 21741
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-import-no-store-side-effect-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:07:40Z",
+      "feature_id": "prompt-router-reasoner-import-review-dataset-v1",
+      "feature_title": "Prompt Router Reasoner Import Review Dataset v1",
+      "source": {
+        "source_mtime_ns": 1782136410069885000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_import_review_dataset_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_import_review_dataset_v1_patch.zip",
+        "source_size_bytes": 35724
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-import-review-dataset-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:15:49Z",
+      "feature_id": "prompt-router-reasoner-import-conflict-review-v1",
+      "feature_title": "Prompt Router Reasoner Import Conflict Review v1",
+      "source": {
+        "source_mtime_ns": 1782137710530491700,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_import_conflict_review_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_import_conflict_review_v1_patch.zip",
+        "source_size_bytes": 36211
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-import-conflict-review-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:25:06Z",
+      "feature_id": "prompt-router-reasoner-review-dataset-export-polish-v1",
+      "feature_title": "Prompt Router Reasoner Review Dataset Export Polish v1",
+      "source": {
+        "source_mtime_ns": 1782138261600130600,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_review_dataset_export_polish_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_review_dataset_export_polish_v1_patch.zip",
+        "source_size_bytes": 38121
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-review-dataset-export-polish-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:33:04Z",
+      "feature_id": "prompt-router-reasoner-performance-large-review-list-v1",
+      "feature_title": "Prompt Router Reasoner Performance Large Review List v1",
+      "source": {
+        "source_mtime_ns": 1782138743282865800,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_performance_large_review_list_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_performance_large_review_list_v1_patch.zip",
+        "source_size_bytes": 24898
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-performance-large-review-list-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:53:41Z",
+      "feature_id": "prompt-router-reasoner-final-closeout-undo-label-contract-repair-v1",
+      "feature_title": "Prompt Router Reasoner Final Closeout Undo Label Contract Repair v1",
+      "source": {
+        "source_mtime_ns": 1782139977839005300,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_final_closeout_undo_label_contract_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_final_closeout_undo_label_contract_repair_v1_patch.zip",
+        "source_size_bytes": 4536
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-final-closeout-undo-label-contract-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T14:54:49Z",
+      "feature_id": "prompt-router-reasoner-final-gui-regression-closeout-v1",
+      "feature_title": "Prompt Router Reasoner Final GUI Regression and Closeout v1",
+      "source": {
+        "source_mtime_ns": 1782139547783692300,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_final_gui_regression_closeout_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_final_gui_regression_closeout_v1_patch.zip",
+        "source_size_bytes": 4822
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-final-gui-regression-and-closeout-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-22T23:43:13Z",
+      "feature_id": "prompt-router-reasoner-auto-ml-pilot-activation-repair-v1",
+      "feature_title": "Prompt Router Reasoner Auto ML Pilot Activation Repair v1",
+      "source": {
+        "source_mtime_ns": 1782171753548307500,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_auto_ml_pilot_activation_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_auto_ml_pilot_activation_repair_v1_patch.zip",
+        "source_size_bytes": 24522
+      },
+      "used_freeze_id": "freeze-20260622-prompt-router-reasoner-auto-ml-pilot-activation-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T00:12:22Z",
+      "feature_id": "prompt-router-reasoner-startup-check-delivery-v1",
+      "feature_title": "Prompt Router Reasoner Startup Check Delivery v1",
+      "source": {
+        "source_mtime_ns": 1782173258088339600,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_startup_check_delivery_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_startup_check_delivery_v1_patch.zip",
+        "source_size_bytes": 110509
+      },
+      "used_freeze_id": "freeze-20260623-prompt-router-reasoner-startup-check-delivery-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T00:48:14Z",
+      "feature_id": "prompt-insertion-router-registration-protocol-v1",
+      "feature_title": "Prompt Insertion and Router Registration Protocol v1",
+      "source": {
+        "source_mtime_ns": 1782175631092859400,
+        "source_name": "rss_prompt_insertion_router_registration_protocol_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_prompt_insertion_router_registration_protocol_v1_patch.zip",
+        "source_size_bytes": 28620
+      },
+      "used_freeze_id": "freeze-20260623-prompt-insertion-and-router-registration-protocol-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T02:59:06Z",
+      "feature_id": "prompt-identity-code-registry-canon-v1",
+      "feature_title": "Prompt Identity Code Registry Canon v1",
+      "source": {
+        "source_mtime_ns": 1782183534645525400,
+        "source_name": "rss_prompt_identity_code_registry_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_prompt_identity_code_registry_canon_v1_patch.zip",
+        "source_size_bytes": 33416
+      },
+      "used_freeze_id": "freeze-20260623-prompt-identity-code-registry-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T03:06:26Z",
+      "feature_id": "prompt-router-reasoner-manual-router-choice-capture-v1",
+      "feature_title": "Prompt Router Reasoner Manual Router Choice Capture v1",
+      "source": {
+        "source_mtime_ns": 1782183954354311700,
+        "source_name": "rss_prompt_router_reasoner_manual_router_choice_capture_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_prompt_router_reasoner_manual_router_choice_capture_v1_patch.zip",
+        "source_size_bytes": 32805
+      },
+      "used_freeze_id": "freeze-20260623-prompt-router-reasoner-manual-router-choice-capture-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T03:15:35Z",
+      "feature_id": "chatgpt-kanda-routing-choice-output-protocol-v1",
+      "feature_title": "ChatGPT KANDA Routing Choice Output Protocol v1",
+      "source": {
+        "source_mtime_ns": 1782184490600785200,
+        "source_name": "rss_chatgpt_kanda_routing_choice_output_protocol_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_chatgpt_kanda_routing_choice_output_protocol_v1_patch.zip",
+        "source_size_bytes": 29615
+      },
+      "used_freeze_id": "freeze-20260623-chatgpt-kanda-routing-choice-output-protocol-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T03:34:19Z",
+      "feature_id": "prompt-router-reasoner-manual-ui-simplification-v1",
+      "feature_title": "Prompt Router Reasoner Manual UI Simplification v1",
+      "source": {
+        "source_mtime_ns": 1782185589753240100,
+        "source_name": "rss_prompt_router_reasoner_manual_ui_simplification_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_prompt_router_reasoner_manual_ui_simplification_v1_patch.zip",
+        "source_size_bytes": 8715
+      },
+      "used_freeze_id": "freeze-20260623-prompt-router-reasoner-manual-ui-simplification-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T03:59:04Z",
+      "feature_id": "prompt-library-zip-direct-retrieval-v1",
+      "feature_title": "Prompt Library ZIP Direct Retrieval v1",
+      "source": {
+        "source_mtime_ns": 1782187035348284100,
+        "source_name": "rss_prompt_library_zip_direct_retrieval_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_prompt_library_zip_direct_retrieval_v1_patch.zip",
+        "source_size_bytes": 32243
+      },
+      "used_freeze_id": "freeze-20260623-prompt-library-zip-direct-retrieval-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T04:12:22Z",
+      "feature_id": "startup-read-before-all-instruction-file-v1",
+      "feature_title": "Startup Read Before All Instruction File v1",
+      "source": {
+        "source_mtime_ns": 1782187881336131400,
+        "source_name": "rss_startup_read_before_all_instruction_file_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_startup_read_before_all_instruction_file_v1_patch.zip",
+        "source_size_bytes": 30139
+      },
+      "used_freeze_id": "freeze-20260623-startup-read-before-all-instruction-file-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T04:20:14Z",
+      "feature_id": "startup-read-before-all-compliance-refresh-alignment-v1",
+      "feature_title": "Startup Read-Before-All Compliance Refresh Alignment v1",
+      "source": {
+        "source_mtime_ns": 1782188363629226000,
+        "source_name": "rss_startup_read_before_all_compliance_refresh_alignment_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_startup_read_before_all_compliance_refresh_alignment_v1_patch.zip",
+        "source_size_bytes": 49713
+      },
+      "used_freeze_id": "freeze-20260623-startup-read-before-all-compliance-refresh-alignment-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T13:16:44Z",
+      "feature_id": "prompt-router-reasoner-auto-ml-pilot-activation-v1",
+      "feature_title": "Prompt Router Reasoner Auto ML Pilot Activation v1",
+      "source": {
+        "source_mtime_ns": 1782171545256649000,
+        "source_name": "rss_ml_adv_prompt_router_reasoner_auto_ml_pilot_activation_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_ml_adv_prompt_router_reasoner_auto_ml_pilot_activation_v1_patch.zip",
+        "source_size_bytes": 33315
+      },
+      "used_freeze_id": "freeze-20260623-prompt-router-reasoner-auto-ml-pilot-activation-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T13:35:55Z",
+      "feature_id": "project-structure-map-dynamic-ai-delivery-v1",
+      "feature_title": "Project Structure Map Dynamic AI Delivery Files v1",
+      "source": {
+        "source_kind": "manual_clean_freeze_form_intake_repair",
+        "source_name": "project_structure_map_dynamic_ai_delivery_clean_freeze_intake",
+        "source_path": "manual_clean_validation_evidence"
+      },
+      "used_freeze_id": "freeze-20260623-project-structure-map-dynamic-ai-delivery-files-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T13:50:24Z",
+      "feature_id": "patch-freeze-delivery-sequence-canon-v1",
+      "feature_title": "Patch Freeze Delivery Sequence Canon v1",
+      "source": {
+        "source_mtime_ns": 1782222579281737700,
+        "source_name": "rss_patch_freeze_delivery_sequence_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_patch_freeze_delivery_sequence_canon_v1_patch.zip",
+        "source_size_bytes": 2140122
+      },
+      "used_freeze_id": "freeze-20260623-patch-freeze-delivery-sequence-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T14:12:26Z",
+      "feature_id": "project-structure-map-auto-zip-json-complete-v1",
+      "feature_title": "Project Structure Map Auto ZIP json_complete v1",
+      "source": {
+        "source_mtime_ns": 1782223907361476800,
+        "source_name": "rss_project_structure_map_auto_zip_json_complete_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_project_structure_map_auto_zip_json_complete_v1_patch.zip",
+        "source_size_bytes": 18705
+      },
+      "used_freeze_id": "freeze-20260623-project-structure-map-auto-zip-json-complete-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T14:36:37Z",
+      "feature_id": "project-structure-map-show-project-to-ai-folder-v1",
+      "feature_title": "Project Structure Map show_project_to_AI Folder v1",
+      "source": {
+        "source_mtime_ns": 1782225354550543900,
+        "source_name": "rss_project_structure_map_show_project_to_ai_folder_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_project_structure_map_show_project_to_ai_folder_v1_patch.zip",
+        "source_size_bytes": 51297
+      },
+      "used_freeze_id": "freeze-20260623-project-structure-map-show-project-to-ai-folder-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T14:55:18Z",
+      "feature_id": "handoff-zip-exporter-runpy-warning-fix-v1",
+      "feature_title": "Handoff ZIP Exporter Runpy Warning Fix v1",
+      "source": {
+        "source_mtime_ns": 1782226484403982800,
+        "source_name": "rss_handoff_zip_exporter_runpy_warning_fix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_handoff_zip_exporter_runpy_warning_fix_v1_patch.zip",
+        "source_size_bytes": 4502
+      },
+      "used_freeze_id": "freeze-20260623-handoff-zip-exporter-runpy-warning-fix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T22:22:25Z",
+      "feature_id": "handoff-zip-exporter-show-project-warning-fix-v1",
+      "feature_title": "Handoff ZIP Exporter show_project_to_AI Warning Fix v1",
+      "source": {
+        "source_mtime_ns": 1782253280818633800,
+        "source_name": "rss_handoff_zip_exporter_show_project_warning_fix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_handoff_zip_exporter_show_project_warning_fix_v1_patch.zip",
+        "source_size_bytes": 4661
+      },
+      "used_freeze_id": "freeze-20260623-handoff-zip-exporter-show-project-to-ai-warning-fix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-23T23:11:59Z",
+      "feature_id": "show-project-to-ai-second-prompt-files-v1",
+      "feature_title": "Show Project to AI second_prompt_files Output v1",
+      "source": {
+        "source_mtime_ns": 1782256266980546100,
+        "source_name": "rss_show_project_to_ai_second_prompt_files_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_second_prompt_files_v1_patch.zip",
+        "source_size_bytes": 54412
+      },
+      "used_freeze_id": "freeze-20260623-show-project-to-ai-second-prompt-files-output-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T00:22:43Z",
+      "feature_id": "show-project-to-ai-first-prompt-files-columns-v1",
+      "feature_title": "Show Project to AI First Prompt Files Columns v1",
+      "source": {
+        "source_mtime_ns": 1782260432730960400,
+        "source_name": "rss_show_project_to_ai_first_prompt_files_columns_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_first_prompt_files_columns_v1_patch.zip",
+        "source_size_bytes": 36955
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-first-prompt-files-columns-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T00:41:32Z",
+      "feature_id": "show-project-to-ai-startup-reference-cleanup-v1",
+      "feature_title": "Show Project to AI Startup Reference Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782261647656800700,
+        "source_name": "rss_show_project_to_ai_startup_reference_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_startup_reference_cleanup_v1_patch.zip",
+        "source_size_bytes": 82306
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-startup-reference-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T01:11:17Z",
+      "feature_id": "show-project-to-ai-zip-part-size-split-v1",
+      "feature_title": "Show Project to AI ZIP Part Size Split v1",
+      "source": {
+        "source_mtime_ns": 1782263422810480300,
+        "source_name": "rss_show_project_to_ai_zip_part_size_split_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_zip_part_size_split_v1_patch.zip",
+        "source_size_bytes": 13255
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-zip-part-size-split-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T01:34:35Z",
+      "feature_id": "freeze-tab-first-prompt-files-import-hotfix-v1",
+      "feature_title": "Freeze Tab first_prompt_files Import Hotfix v1",
+      "source": {
+        "source_mtime_ns": 1782264841407408300,
+        "source_name": "rss_freeze_tab_first_prompt_files_import_hotfix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_freeze_tab_first_prompt_files_import_hotfix_v1_patch.zip",
+        "source_size_bytes": 5184
+      },
+      "used_freeze_id": "freeze-20260624-freeze-tab-first-prompt-files-import-hotfix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T01:45:19Z",
+      "feature_id": "show-project-to-ai-project-root-selector-v1",
+      "feature_title": "Show Project to AI Project Root Selector v1",
+      "source": {
+        "source_mtime_ns": 1782265474952023400,
+        "source_name": "rss_show_project_to_ai_project_root_selector_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_project_root_selector_v1_patch.zip",
+        "source_size_bytes": 4529
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-project-root-selector-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T02:00:53Z",
+      "feature_id": "show-project-to-ai-combined-actions-v1",
+      "feature_title": "Show Project to AI Combined Actions v1",
+      "source": {
+        "source_mtime_ns": 1782266412786872800,
+        "source_name": "rss_show_project_to_ai_combined_actions_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_combined_actions_v1_patch.zip",
+        "source_size_bytes": 5021
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-combined-actions-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T02:18:42Z",
+      "feature_id": "show-project-to-ai-path-buttons-v1",
+      "feature_title": "Show Project to AI Path Buttons v1",
+      "source": {
+        "source_mtime_ns": 1782267300944423000,
+        "source_name": "rss_show_project_to_ai_path_buttons_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_path_buttons_v1_patch.zip",
+        "source_size_bytes": 6654
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-path-buttons-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T02:30:19Z",
+      "feature_id": "show-project-to-ai-selected-project-override-v1",
+      "feature_title": "Show Project to AI Selected Project Override v1",
+      "source": {
+        "source_mtime_ns": 1782268169376909000,
+        "source_name": "rss_show_project_to_ai_selected_project_override_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_selected_project_override_v1_patch.zip",
+        "source_size_bytes": 11668
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-selected-project-override-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T02:36:24Z",
+      "feature_id": "legacy-project-name-reference-cleanup-v1",
+      "feature_title": "Legacy Project Name Reference Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782268545875267900,
+        "source_name": "rss_legacy_project_name_reference_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_legacy_project_name_reference_cleanup_v1_patch.zip",
+        "source_size_bytes": 93163
+      },
+      "used_freeze_id": "freeze-20260624-legacy-project-name-reference-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T02:53:50Z",
+      "feature_id": "startup-delivery-deep-reference-cleanup-v1",
+      "feature_title": "Startup Delivery Deep Reference Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782269578000743400,
+        "source_name": "rss_startup_delivery_deep_reference_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_startup_delivery_deep_reference_cleanup_v1_patch.zip",
+        "source_size_bytes": 52341
+      },
+      "used_freeze_id": "freeze-20260624-startup-delivery-deep-reference-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T03:06:46Z",
+      "feature_id": "show-project-to-ai-publish-manifest-hash-refresh-v1",
+      "feature_title": "Show Project to AI Publish Manifest Hash Refresh v1",
+      "source": {
+        "source_mtime_ns": 1782270365947874500,
+        "source_name": "rss_show_project_to_ai_publish_manifest_hash_refresh_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_publish_manifest_hash_refresh_v1_patch.zip",
+        "source_size_bytes": 8715
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-publish-manifest-hash-refresh-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T04:52:47Z",
+      "feature_id": "show-project-to-ai-hybrid-source-archive-export-v1",
+      "feature_title": "Show Project to AI Hybrid Source Archive Export v1",
+      "source": {
+        "source_mtime_ns": 1782276407231454900,
+        "source_name": "rss_show_project_to_ai_hybrid_source_archive_export_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_hybrid_source_archive_export_v1_patch.zip",
+        "source_size_bytes": 27109
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-hybrid-source-archive-export-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T11:58:23Z",
+      "feature_id": "show-project-to-ai-transactional-publish-cleanup-v1",
+      "feature_title": "Show Project to AI Transactional Publish Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782302242494018200,
+        "source_name": "rss_show_project_to_ai_transactional_publish_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_transactional_publish_cleanup_v1_patch.zip",
+        "source_size_bytes": 29214
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-transactional-publish-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T12:46:22Z",
+      "feature_id": "show-project-to-ai-minimal-hybrid-map-output-v1",
+      "feature_title": "Show Project to AI Minimal Hybrid Map Output v1",
+      "source": {
+        "source_mtime_ns": 1782305132259713700,
+        "source_name": "rss_show_project_to_ai_minimal_hybrid_map_output_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_minimal_hybrid_map_output_v1_patch.zip",
+        "source_size_bytes": 38890
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-minimal-hybrid-map-output-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T13:21:03Z",
+      "feature_id": "show-project-to-ai-minimal-hybrid-gui-start-hotfix-v1",
+      "feature_title": "Show Project to AI Minimal Hybrid GUI Start Hotfix v1",
+      "source": {
+        "source_mtime_ns": 1782307253980279200,
+        "source_name": "rss_show_project_to_ai_minimal_hybrid_gui_start_hotfix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_minimal_hybrid_gui_start_hotfix_v1_patch.zip",
+        "source_size_bytes": 10756
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-minimal-hybrid-gui-start-hotfix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T13:33:18Z",
+      "feature_id": "show-project-to-ai-zip-build-bundle-manifest-hotfix-v1",
+      "feature_title": "Show Project to AI ZIP Build Folder Bundle Manifest Hotfix v1",
+      "source": {
+        "source_mtime_ns": 1782307903471653000,
+        "source_name": "rss_show_project_to_ai_zip_build_bundle_manifest_hotfix_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_zip_build_bundle_manifest_hotfix_v1_patch.zip",
+        "source_size_bytes": 11459
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-zip-build-folder-bundle-manifest-hotfix-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T14:28:57Z",
+      "feature_id": "show-project-to-ai-project-zip-noise-cleanup-v1",
+      "feature_title": "Show Project to AI Project ZIP Noise Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782311327159486400,
+        "source_name": "rss_show_project_to_ai_project_zip_noise_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\rss_show_project_to_ai_project_zip_noise_cleanup_v1_patch.zip",
+        "source_size_bytes": 46986
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-project-zip-noise-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T22:21:43Z",
+      "feature_id": "show-project-to-ai-final-artifact-consistency-cleanup-v1",
+      "feature_title": "Show Project to AI Final Artifact Consistency Cleanup v1",
+      "source": {
+        "source_mtime_ns": 1782339662697012200,
+        "source_name": "show_project_to_ai_final_artifact_consistency_cleanup_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_final_artifact_consistency_cleanup_v1_patch.zip",
+        "source_size_bytes": 28465
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-final-artifact-consistency-cleanup-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T22:53:00Z",
+      "feature_id": "startup_second_upload_json_handoff_zip_contract_v1",
+      "feature_title": "Startup Second Upload JSON Handoff ZIP Contract v1",
+      "source": {
+        "source_kind": "terminal_freeze_hint_intake_repair",
+        "source_mtime_ns": 0,
+        "source_name": "startup_second_upload_json_handoff_zip_contract_v1",
+        "source_path": "E:\\kanda_reasoner\\project_freeze_after_update\\freeze_hint_intake\\history\\20260624T225250Z_startup_second_upload_json_handoff_zip_contract_v1.json",
+        "source_size_bytes": 0
+      },
+      "used_freeze_id": "freeze-20260624-startup-second-upload-json-handoff-zip-contract-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T23:13:28Z",
+      "feature_id": "show-project-to-ai-build-override-hash-resolution-v1",
+      "feature_title": "Show Project to AI Build Override Hash Resolution v1",
+      "source": {
+        "source_mtime_ns": 1782342750068228900,
+        "source_name": "show_project_to_ai_build_override_hash_resolution_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_build_override_hash_resolution_v1_patch.zip",
+        "source_size_bytes": 5210
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-build-override-hash-resolution-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-24T23:41:57Z",
+      "feature_id": "show-project-to-ai-ai-briefing-self-hash-contract-v1",
+      "feature_title": "Show Project to AI AI Briefing Self-Hash Contract v1",
+      "source": {
+        "source_mtime_ns": 1782344449144051900,
+        "source_name": "show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\show_project_to_ai_ai_briefing_self_hash_contract_v1_patch.zip",
+        "source_size_bytes": 5969
+      },
+      "used_freeze_id": "freeze-20260624-show-project-to-ai-ai-briefing-self-hash-contract-v1"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-21T00:00:16Z"
+  "updated_at_utc": "2026-06-24T23:41:57Z"
 }

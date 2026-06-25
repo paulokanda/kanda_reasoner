@@ -44,8 +44,9 @@ SNAPSHOT_TEXT_EXTENSIONS = (
 )
 
 _GENERATED_ARTIFACT_PREFIXES = (
-    "project_analysis_evidence/json_complete/",
-    "project_analysis_evidence/json_splitted/",
+    "show_project_to_AI/",
+    "show_project_to_AI/second_prompt_files/",
+    "show_project_to_AI/json_splitted/",
 )
 
 
@@ -169,8 +170,8 @@ def build_active_snapshot_payload(project: str | Path | ProjectContext) -> dict[
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
         },
         "source": {
             "file_manifest_builder": "reasoner_context_bundle.file_manifest_builder",

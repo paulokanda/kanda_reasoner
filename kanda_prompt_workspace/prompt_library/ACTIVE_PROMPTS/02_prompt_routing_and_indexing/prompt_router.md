@@ -182,6 +182,107 @@ Group to open in Tab 9:
 architecture_hardening
 ```
 
+### Governed patch ZIP release
+
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
+## Canonical freeze-ready patch delivery sequence
+
+For every freezeable KANDA/PyArchitect patch, the delivery order is mandatory and must not be inverted, skipped, or diluted:
+
+1. **Send the patch ZIP only after contract validation.** The ZIP must contain only the changed project files plus a root-level `KANDA_FREEZE_HINT.json` sidecar. If the ZIP contract cannot be verified, block delivery with `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
+2. **Send the install PowerShell after the ZIP.** The install block must stage the ZIP from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project_name>_delete_after_daily_work\`, delete the root-drive ZIP copy after successful staging, extract only from the staged ZIP, and install only changed project files.
+3. **Do not install the freeze sidecar into the project root.** `KANDA_FREEZE_HINT.json` is freeze-intake delivery metadata. It may be scanned or consumed from the staged ZIP / daily-work intake location, but it must not be copied as a normal project source file.
+4. **Send the validation PowerShell after the install block.** Validation must be a separate local action after install and must emit recognizable evidence, including `VALIDATION OK: <feature_id>`. When startup delivery, generated evidence, or sync state is validated, it must also emit `STATUS: IN_SYNC`.
+5. **Freeze only after local validation passes.** The Freeze Feature After Update flow must use the feature-specific `KANDA_FREEZE_HINT.json` / freeze-intake data plus current validation evidence, then require Preview and explicit human Confirm and Write.
+6. **Refresh AI exposure after freeze.** A successful local freeze write must refresh AI-send exposure and startup freeze context so the next startup pack knows the frozen behavior.
+
+Short form:
+
+```text
+patch ZIP with root KANDA_FREEZE_HINT.json
+-> install changed files only, keeping KANDA_FREEZE_HINT.json out of project root
+-> run local validation with VALIDATION OK and STATUS: IN_SYNC when applicable
+-> freeze through Preview + Confirm and Write
+-> refresh AI-send and startup freeze context
+```
+
+Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
+
+
+Trigger:
+
+```text
+patch ZIP
+install ZIP
+create zip
+deliver zip
+PowerShell install block
+validation block
+KANDA_FREEZE_HINT.json
+freeze-form JSON
+release gate
+patch delivery
+```
+
+Load or recommend:
+
+```text
+05_patch_delivery_and_validation
+pre_output_contract_gates
+freeze_code_intake_and_form_protocol
+```
+
+Group to open in Tab 9:
+
+```text
+05_patch_delivery_and_validation
+03_governance_freeze_and_handoff
+```
+
+Rule:
+
+Classify as `PATCH_DELIVERY_RELEASE`. This is a governed output-time release event. The AI must not emit a ZIP download link, install block, validation block, `KANDA_FREEZE_HINT.json`, or freeze-form JSON until the ZIP contract validator has passed or the patch is explicitly declared non-freezeable. If the contract is not verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and state the missing requirement.
+
+
+
+<!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_START -->
+### Manual Prompt Router Reasoner capture / KANDA_ROUTING_CHOICE output
+
+Trigger:
+
+```text
+KANDA_ROUTING_CHOICE
+manual router capture
+Prompt Router Reasoner paste block
+which prompt should I use
+route this task
+select the prompt
+send this to Prompt Router Reasoner
+```
+
+Load or apply:
+
+```text
+chatgpt_kanda_routing_choice_output_protocol
+prompt_navigation_index
+prompt_router
+prompt_identity_code_registry_canon, when prompt_code assignment or prompt creation is involved
+```
+
+Required behavior:
+
+```text
+Emit a valid advisory KANDA_ROUTING_CHOICE_START / KANDA_ROUTING_CHOICE_END JSON block when the user asks for routing-choice output that will be pasted into Prompt Router Reasoner.
+```
+
+Boundary:
+
+```text
+Browser ChatGPT is advisory only. The block must not claim final local authority, write files, apply patches, write freeze memory, activate ML, or bypass validation. Local KANDA remains responsible for validating prompt addresses and loading canonical ACTIVE_PROMPTS text.
+```
+<!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_END -->
+
 ### Prompt creation or prompt update
 
 Trigger:
@@ -197,10 +298,12 @@ register a prompt group
 Load or recommend:
 
 ```text
-teach_ai_tab9_prompt_authoring_guide
-teach_ai_create_or_update_prompt_request
-tab9_prompt_asset_placement_rules
-kanda_bundle_gated_development_workflow
+prompt_insertion_and_router_registration_protocol
+prompt_identity_code_registry_canon
+prompt_canon_reconciliation_protocol
+prompt_audit_canon
+project_specific_prompt_generalization
+kanda_bundle_gated_development_workflow, if creating an installable bundle
 ```
 
 If the new prompt involves Python code generation or Python refactor, also
@@ -215,6 +318,81 @@ Group to open in Tab 9:
 ```text
 teach_ai_prompt_authoring
 ```
+
+
+
+
+<!-- PROMPT_INSERTION_ROUTER_REGISTRATION_PROTOCOL_V1_START -->
+### Prompt insertion and router registration
+
+Trigger:
+
+```text
+insert a new prompt
+add a new prompt to ACTIVE_PROMPTS
+register this prompt in the router
+connect this prompt to router logic
+make the router call this prompt when necessary
+activate a prompt in router prompt logic
+```
+
+Load or recommend:
+
+```text
+prompt_insertion_and_router_registration_protocol
+prompt_identity_code_registry_canon
+prompt_canon_reconciliation_protocol
+prompt_audit_canon
+project_specific_prompt_generalization
+bundle_gated_development_workflow, if creating an installable bundle
+```
+
+Group to open:
+
+```text
+07_prompt_authoring_and_audit
+02_prompt_routing_and_indexing, if router/navigation files must be changed
+```
+
+Rule:
+The protocol is routed, not always_startup. The AI must inspect the target folder assimilation, metadata, existing prompts, and router/navigation indexes before deciding create vs update vs link/register. The exact ACTIVE_PROMPTS folder depends on the type of prompt.
+<!-- PROMPT_INSERTION_ROUTER_REGISTRATION_PROTOCOL_V1_END -->
+
+<!-- PROMPT_IDENTITY_CODE_REGISTRY_CANON_V1_START -->
+### Prompt identity, prompt_code, and copy/paste prompt address
+
+Trigger:
+
+```text
+prompt code
+prompt identifier
+prompt registry
+assign code to prompt
+make prompt copy/paste addressable
+ChatGPT should display selected prompt code
+new prompt needs a code
+KPR code
+```
+
+Load or recommend:
+
+```text
+prompt_identity_code_registry_canon
+prompt_insertion_and_router_registration_protocol, if creating or registering a prompt
+prompt_canon_reconciliation_protocol
+prompt_audit_canon
+```
+
+Group to open:
+
+```text
+07_prompt_authoring_and_audit
+02_prompt_routing_and_indexing, if router/navigation files must be changed
+```
+
+Rule:
+Every new routed prompt must receive a stable `prompt_code` using `KPR-<folder_number>-<sequence>` before router registration is considered complete. ChatGPT router-choice blocks must display prompt_code and prompt_id when available, and KANDA Reasoner must resolve the code locally.
+<!-- PROMPT_IDENTITY_CODE_REGISTRY_CANON_V1_END -->
 
 
 ### Pilot/Copilot Phase 0 router canon after M35
@@ -820,3 +998,8 @@ Trigger phrases:
 
 Route to:
 - transform_resolver_architecture_contract.md
+
+
+## Terminal cleanup canon
+
+For any response that emits a terminal block, classify the terminal output before writing the footer. Successful install blocks must use the 5-second `Clear-Host` success footer and must not ask for Enter. Install errors, validation, validation errors, diagnostics, and any other terminal output must use the Enter/Clear-Host/Enter/Clear-Host cleanup footer. The terminal must be cleaned, not closed. Install blocks must include a fail-safe `try/catch` or text-equivalent wrapper so an install error cannot bypass cleanup.

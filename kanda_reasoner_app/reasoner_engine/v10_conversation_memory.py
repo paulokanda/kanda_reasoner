@@ -1,6 +1,6 @@
 """Support V10 project reasoning and evidence handling."""
 
-# developer_tools/kanda_reasoner_app/reasoner_engine/v10_conversation_memory.py
+# kanda_reasoner/kanda_reasoner_app/reasoner_engine/v10_conversation_memory.py
 
 from __future__ import annotations
 

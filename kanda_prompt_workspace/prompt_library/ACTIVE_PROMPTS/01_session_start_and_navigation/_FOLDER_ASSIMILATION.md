@@ -22,10 +22,11 @@ Use this folder when the task involves:
 
 - start_of_day_master_stack.md
 - ai_prompt_request_canon.md
+- prompt_router_reasoner_startup_check.md
 
 ## Routing role
 
-This folder helps decide the first context boundary. It should keep session startup small and route outward only when a task requires more context.
+This folder helps decide the first context boundary. It should keep session startup small and route outward only when a task requires more context. It also owns the Prompt Router Reasoner startup readiness checklist used in the beginning-of-day load check.
 
 ## Companion folders
 

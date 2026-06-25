@@ -84,6 +84,9 @@ class BundleArtifactPaths:
     """Resolved artifact paths for the additive AI context bundle."""
 
     complete_json: Path
+    ai_briefing_json: Path
+    routing_manifest_json: Path
+    patch_safety_routes_json: Path
     active_snapshot_json: Path
     file_manifest_json: Path
     exclusion_rules_json: Path
@@ -95,6 +98,9 @@ class BundleArtifactPaths:
         """Return artifact paths keyed by stable artifact name."""
         return {
             "complete_json": str(self.complete_json),
+            "ai_briefing_json": str(self.ai_briefing_json),
+            "routing_manifest_json": str(self.routing_manifest_json),
+            "patch_safety_routes_json": str(self.patch_safety_routes_json),
             "active_snapshot_json": str(self.active_snapshot_json),
             "file_manifest_json": str(self.file_manifest_json),
             "exclusion_rules_json": str(self.exclusion_rules_json),
@@ -106,11 +112,11 @@ class BundleArtifactPaths:
     def required_paths(self) -> list[Path]:
         """Return the required JSON artifact paths in generation order."""
         return [
-            self.complete_json,
-            self.active_snapshot_json,
+            self.ai_briefing_json,
+            self.routing_manifest_json,
+            self.patch_safety_routes_json,
             self.file_manifest_json,
             self.exclusion_rules_json,
             self.validation_state_json,
-            self.reconstruction_payload_json,
             self.bundle_manifest_json,
         ]

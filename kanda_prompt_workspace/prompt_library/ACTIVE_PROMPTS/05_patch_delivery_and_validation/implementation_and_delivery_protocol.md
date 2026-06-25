@@ -486,7 +486,7 @@ For long work:
 
     <PROJECT_ROOT>\project_analysis_evidence\json_complete\<PROJECT_SLUG>__complete.json
 
-    Example: developer_tools__complete.json
+    Example: <project_slug>__complete.json
 
     _project_reference and project_freeze_ledger are memo/reference only – not active code.
 

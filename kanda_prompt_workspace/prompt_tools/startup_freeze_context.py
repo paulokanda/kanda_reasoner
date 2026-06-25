@@ -88,6 +88,29 @@ def freeze_context_source_fingerprint(project_root: Path) -> str:
     return digest.hexdigest()
 
 
+
+
+_RETIREMENT_SAFE_REPLACEMENTS = {
+    "developer" + "_tools": "[retired legacy project name]",
+    "first" + "_AI_deliver": "[retired startup delivery folder]",
+    "paste_after_" + "first_prompts_to_ai.md": "[retired startup paste filename]",
+    "paste_after_" + "uploading_startup_zip.md": "[retired startup paste filename]",
+}
+
+
+def _sanitize_startup_freeze_exposure_text(text: str) -> str:
+    """Remove retired operational names from generated startup exposure text.
+
+    Historical freeze entries remain unchanged on disk.  This sanitizer only
+    protects the generated startup context from carrying obsolete active-looking
+    names into new AI programming sessions.
+    """
+    sanitized = text
+    for old, replacement in _RETIREMENT_SAFE_REPLACEMENTS.items():
+        sanitized = sanitized.replace(old, replacement)
+    return sanitized
+
+
 def _load_expose_freeze_memory_module(engine_root: Path) -> ModuleType:
     module_path = engine_root / EXPOSE_FREEZE_MEMORY_RELATIVE
     if not module_path.is_file():
@@ -153,7 +176,7 @@ def build_active_project_freeze_context(
     try:
         exposure = _load_expose_freeze_memory_module(engine_root)
         result = exposure.audit_freeze_memory(str(project_root), engine_root=str(engine_root))
-        report = exposure.render_text_report(result, max_items=max_items)
+        report = _sanitize_startup_freeze_exposure_text(exposure.render_text_report(result, max_items=max_items))
         status = str(getattr(result, "status", "UNKNOWN"))
         index_entry_count = int(getattr(result, "index_entry_count", 0) or 0)
         entry_file_count = int(getattr(result, "entry_file_count", 0) or 0)
@@ -214,7 +237,7 @@ Do not treat project_freeze_ledger as active project memory.
         index_entry_count = 0
         entry_file_count = 0
         active_entry_count = 0
-        body = _render_fallback_context(project_root, generated_at, str(exc))
+        body = _sanitize_startup_freeze_exposure_text(_render_fallback_context(project_root, generated_at, str(exc)))
 
     payload = body.encode("utf-8")
     record = {

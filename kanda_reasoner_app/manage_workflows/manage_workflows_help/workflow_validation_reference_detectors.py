@@ -29,7 +29,7 @@ OUTDATED_VALIDATION_REFERENCES: tuple[tuple[str, str], ...] = (
         "Use project_freeze_ledger for reference-only governance artifacts.",
     ),
     (
-        "developer_tools_older",
+        "legacy_project_older",
         "Do not route active workflow validation through older project copies.",
     ),
     (

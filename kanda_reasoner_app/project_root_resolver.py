@@ -18,7 +18,6 @@ __all__ = [
     "PROJECT_ROOT_ENV_NAMES",
     "default_smoke_output_json_path",
     "find_reasoner_source_root",
-    "is_legacy_developer_tools_root",
     "is_reasoner_project_root",
     "normalize_project_root_text",
     "resolve_active_project_root",
@@ -41,7 +40,6 @@ _REASONER_PACKAGE_NAMES = (
     _LEGACY_REASONER_PACKAGE_NAME,
 )
 _REASONER_ENTRYPOINT_NAME = "reasoner_tools_gui.py"
-_LEGACY_ROOT_NAMES = {"developer_tools"}
 
 
 def _path_from_text(value: object) -> Path | None:
@@ -94,16 +92,6 @@ def is_reasoner_project_root(project_root: str | Path | None) -> bool:
     return False
 
 
-def is_legacy_developer_tools_root(project_root: str | Path | None) -> bool:
-    """Return True when a path uses an old root folder name."""
-    if project_root is None:
-        return False
-    try:
-        name = Path(str(project_root)).expanduser().name.lower()
-    except Exception:
-        return False
-    return name in _LEGACY_ROOT_NAMES
-
 
 def find_reasoner_source_root(start: str | Path | None = None) -> Path | None:
     """Find the nearest Reasoner source-tree root from start or this module."""
@@ -146,15 +134,11 @@ def _env_project_root() -> Path | None:
 
 
 def _usable_persisted_root(path: Path | None, source_root: Path | None) -> Path | None:
-    """Return a safe persisted root, migrating a stale legacy root when needed."""
+    """Return a safe persisted root without relying on retired project names."""
     if path is None:
         return None
     resolved = _safe_resolve(path)
-    if (
-        source_root is not None
-        and is_legacy_developer_tools_root(resolved)
-        and not resolved.exists()
-    ):
+    if not resolved.exists():
         return None
     return resolved
 

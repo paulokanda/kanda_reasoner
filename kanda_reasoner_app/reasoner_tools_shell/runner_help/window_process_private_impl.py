@@ -1,7 +1,16 @@
 """Private window process private impl helpers for reasoner_tools_shell.runner."""
 
 from __future__ import annotations
+
 from PySide6.QtCore import QProcess, QProcessEnvironment
+
+from kanda_reasoner_app.project_analysis_evidence_paths import (
+    SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV,
+    analysis_json_building_dir,
+    analysis_json_complete_dir,
+    primary_evidence_json_path,
+    secondary_evidence_json_path,
+)
 
 import json
 import os
@@ -130,8 +139,16 @@ def _tab4_build_child_env(project_root: Path) -> dict:
     env["PROJECT_REASONER_PROJECT_ROOT"] = str(project_root)
     env["PROJECT_REASONER_SCAN_ROOT"] = str(project_root)
     env["KANDA_RUNTIME_PROJECT_ROOT"] = str(project_root)
+    env["KANDA_SHOW_PROJECT_TO_AI_PROJECT_ROOT"] = str(project_root)
     env["PROJECT_REASONER_TAB8_IGNORE_RULES_JSON"] = json.dumps(_tab4_load_ignore_rules(project_root), ensure_ascii=True)
     return env
+
+
+def _tab4_apply_second_prompt_build_env(self, env: dict) -> None:
+    """Route child-process JSON bundle writes into the temporary build folder."""
+    build_dir = str(getattr(self, "_pending_second_prompt_build_dir", "") or "").strip()
+    if build_dir:
+        env[SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV] = build_dir
 
 
 def _tab4_apply_qprocess_env(process, env: dict, working_dir: Path) -> None:
@@ -155,14 +172,18 @@ def _start_runtime_trace_process(self) -> None:
     self._pending_project_root = str(project_root)
 
     env = _tab4_build_child_env(project_root)
+    _tab4_apply_second_prompt_build_env(self, env)
     env["PROJECT_REASONER_RUNTIME_TRACE_JSON"] = self._pending_runtime_trace_json
     env["PROJECT_REASONER_RUNTIME_TRACE_OVERWRITE"] = "1"
     env["KANDA_RUNTIME_TRACE_JSON"] = self._pending_runtime_trace_json
     env["KANDA_RUNTIME_TRACE_OVERWRITE"] = "1"
     env["KANDA_RUNTIME_EXECUTE_ENTRY_SCRIPT"] = "0"
 
+    tool_root = _tab4_tool_root()
     _tab4_apply_qprocess_env(self._process, env, project_root)
-    process_args = [str((project_root / CANONICAL_PACKAGE_NAME / "reasoner_runtime_collector" / "runtime_runner.py").resolve())]
+    process_args = [
+        str((tool_root / CANONICAL_PACKAGE_NAME / "reasoner_runtime_collector" / "runtime_runner.py").resolve())
+    ]
 
     self._start_busy_animation("Running runtime runner")
     self._process.start(sys.executable, process_args)
@@ -241,7 +262,6 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
         written_artifacts = result.get("written_artifacts", [])
         artifact_count = len(written_artifacts) if isinstance(written_artifacts, list) else 0
 
-        self._stop_busy_animation("Finished")
         self._append_log("[OK] AI context bundle generated.")
         if project_slug:
             self._append_log("  project_slug: " + project_slug)
@@ -259,6 +279,35 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
         )
 
         self._process = None
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
+            zip_json_files_private_impl as _zip_json_impl,
+        )
+        try:
+            project_root_path = _tab4_resolve_project_root(self._pending_project_root)
+            final_dir = analysis_json_complete_dir(project_root_path).expanduser().resolve(strict=False)
+            build_dir = Path(str(getattr(self, "_pending_second_prompt_build_dir", "") or "")).expanduser().resolve(strict=False)
+            _zip_json_impl.write_second_prompt_status(
+                build_dir,
+                status="running",
+                step="zipping generated files before final publish",
+                project_root=project_root_path,
+                final_output_dir=final_dir,
+                details=[
+                    "The final second_prompt_files folder remains untouched until ZIP export succeeds.",
+                    "ZIP files are created inside the temporary build folder first.",
+                ],
+            )
+            self._pending_second_prompt_final_dir = str(final_dir)
+            self._append_log("Preparing ZIP export inside temporary build folder before final publish...")
+            self._append_log("  build folder: " + str(build_dir))
+            self._append_log("  final folder: " + str(final_dir))
+        except Exception as exc:
+            self._stop_busy_animation("Failed")
+            self._append_log("[ERROR] Preparing second_prompt_files ZIP export failed:")
+            self._append_log(str(exc))
+            QMessageBox.critical(self, "Collector ZIP preparation error", str(exc))
+            return
+        _zip_json_impl.auto_zip_json_complete(self, self._pending_project_root)
         return
 
     if self._active_stage == "Running runtime runner":
@@ -359,12 +408,14 @@ def _start_collector_process(self) -> None:
     self._pending_project_root = str(project_root)
 
     env = _tab4_build_child_env(project_root)
+    _tab4_apply_second_prompt_build_env(self, env)
     env["PROJECT_REASONER_RUNTIME_TRACE_JSON"] = self._pending_runtime_trace_json
     env["PROJECT_REASONER_RUNTIME_TRACE_OVERWRITE"] = "1"
+    tool_root = _tab4_tool_root()
     _tab4_apply_qprocess_env(self._process, env, project_root)
 
     process_args = [
-        str(project_root / CANONICAL_PACKAGE_NAME / "reasoner_tools_shell" / "runner.py"),
+        str(tool_root / CANONICAL_PACKAGE_NAME / "reasoner_tools_shell" / "runner.py"),
         _CHILD_MODE_ARG,
         self._pending_project_root,
         self._pending_output_json,
@@ -384,6 +435,7 @@ def _start_complete_json_enrichment_process(self) -> None:
     self._pending_project_root = str(project_root)
 
     env = _tab4_build_child_env(project_root)
+    _tab4_apply_second_prompt_build_env(self, env)
     _tab4_apply_qprocess_env(self._process, env, project_root)
 
     process_args = [
@@ -410,6 +462,7 @@ def _start_ai_context_bundle_process(self) -> None:
     self._pending_project_root = str(project_root)
 
     env = _tab4_build_child_env(project_root)
+    _tab4_apply_second_prompt_build_env(self, env)
     _tab4_apply_qprocess_env(self._process, env, project_root)
 
     process_args = [
@@ -419,6 +472,7 @@ def _start_ai_context_bundle_process(self) -> None:
         self._pending_project_root,
         "--write",
         "--compact",
+        "--skip-validation",
     ]
 
     self._start_busy_animation("Generating AI context bundle")
@@ -426,12 +480,10 @@ def _start_ai_context_bundle_process(self) -> None:
     self._process.start(sys.executable, process_args)
 
 
+
+
 def _run_collector(self) -> None:
     project_root_raw = self.project_root_edit.text().strip()
-    output_json_raw = self.output_json_edit.text().strip()
-
-    self._sync_runtime_trace_with_output_json()
-    runtime_trace_raw = self.runtime_trace_json_edit.text().strip()
 
     try:
         project_root_path = _tab4_resolve_project_root(project_root_raw)
@@ -455,18 +507,64 @@ def _run_collector(self) -> None:
     if self.project_root_edit.text().strip() != project_root:
         self.project_root_edit.setText(project_root)
 
-    if not runtime_trace_raw:
-        runtime_trace_raw = str(_DEFAULT_RUNTIME_TRACE_JSON.resolve())
-        self.runtime_trace_json_edit.setText(runtime_trace_raw)
+    from kanda_reasoner_app.generated_artifact_hygiene import cleanup_project_generated_zip_noise
 
-    output_json = resolve_output_json_path(output_json_raw)
-    runtime_trace_path = Path(runtime_trace_raw).expanduser().resolve()
+    cleanup_result = cleanup_project_generated_zip_noise(project_root_path)
+    if cleanup_result.get("removed"):
+        self._append_log("Cleaned deprecated in-project ZIP delivery artifacts before source archive:")
+        for item in cleanup_result.get("removed", []):
+            self._append_log("  " + str(item.get("path", "")) + " (" + str(item.get("reason_code", "")) + ")")
+    if cleanup_result.get("errors"):
+        QMessageBox.warning(
+            self,
+            "Cleanup failed",
+            "Generated ZIP artifact cleanup failed before source archive:\n" + str(cleanup_result.get("errors")),
+        )
+        return
+
+    # Hybrid Source Archive mode: the selected project root is the scan target,
+    # but Second Prompt Files no longer generates the old heavy complete.json or
+    # active_snapshot.json payloads.  Exact reconstruction is a source archive
+    # manifest plus standalone source_archive_part ZIPs; AI-readable JSONs are
+    # lightweight maps only.
+    final_output_dir = analysis_json_complete_dir(project_root_path).expanduser().resolve(strict=False)
+    build_output_dir = analysis_json_building_dir(project_root_path).expanduser().resolve(strict=False)
+    project_slug = project_root_path.name
+    output_json = build_output_dir / (project_slug + "__source_archive_manifest.json")
+    runtime_trace_path = build_output_dir / (project_slug + "__validation_state.json")
+    self.output_json_edit.setText(str(output_json))
+    self.runtime_trace_json_edit.setText(str(runtime_trace_path))
 
     self.status_label.setText("Idle")
     self.log_box.clear()
 
-    self._create_json_file_if_missing(output_json)
-    runtime_trace_path.parent.mkdir(parents=True, exist_ok=True)
+    from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
+        zip_json_files_private_impl as _zip_json_impl,
+    )
+    removed_count = _zip_json_impl.clear_second_prompt_files_building_dir(build_output_dir)
+    self._pending_second_prompt_build_dir = str(build_output_dir)
+    self._pending_second_prompt_final_dir = str(final_output_dir)
+    _zip_json_impl.write_second_prompt_status(
+        build_output_dir,
+        status="running",
+        step="starting lightweight map generation",
+        project_root=project_root_path,
+        final_output_dir=final_output_dir,
+        details=[
+            "Temporary build folder was cleared before this run.",
+            "Removed old build-folder items: " + str(removed_count),
+            "Previous final delivery remains available until publish succeeds.",
+            "Hybrid mode skips old heavy complete.json and active_snapshot.json generation.",
+        ],
+    )
+    self._append_log(
+        "Prepared second_prompt_files_building output folder; removed existing items: "
+        + str(removed_count)
+    )
+    self._append_log("  build folder: " + str(build_output_dir))
+    self._append_log("  final folder: " + str(final_output_dir))
+
+    build_output_dir.mkdir(parents=True, exist_ok=True)
 
     self._current_output_json = str(output_json)
     self._pending_project_root = project_root
@@ -479,10 +577,10 @@ def _run_collector(self) -> None:
         self._pending_runtime_trace_json,
     )
 
-    self._append_log("Starting runtime trace generation...")
+    self._append_log("Starting lightweight map generation for hybrid source archive export...")
     self._append_log(f"  root : {self._pending_project_root}")
-    self._append_log(f"  output: {self._pending_output_json}")
-    self._append_log(f"  runtime_trace: {self._pending_runtime_trace_json}")
+    self._append_log(f"  source_archive_manifest: {self._pending_output_json}")
+    self._append_log("  skipped: old complete.json and active_snapshot.json generation")
 
     _safe_log_runtime_event(
         event_type="collector_run_started",
@@ -496,4 +594,4 @@ def _run_collector(self) -> None:
         },
     )
 
-    self._start_runtime_trace_process()
+    _start_ai_context_bundle_process(self)

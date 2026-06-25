@@ -1,30 +1,48 @@
 """Path helpers for generated project-analysis evidence artifacts.
 
-Generated evidence now resolves outside the selected project source tree.
-The active output root is the external architecture-audit folder for the
-selected/analyzed project. The historical in-source folder name
-``project_analysis_evidence`` is retained as a legacy label for compatibility,
-relative display helpers, and migration tools only.
+Generated evidence resolves outside the selected project source tree.
+The active output root is the external ``show project to AI`` folder for the
+selected/analyzed project. Complete Project Structure Map files are generated
+inside its ``second_prompt_files`` child folder:
+``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
+During a Run Collector rebuild, child processes may temporarily write to
+``second_prompt_files_building`` via a guarded environment override before the
+finished files are published to ``second_prompt_files``.
+
+The historical names ``project_analysis_evidence`` and ``json_complete`` are
+retained in helper/function names for compatibility with existing callers, but
+complete Project Structure Map artifacts now resolve to the dynamic
+``*_show_project_to_AI/second_prompt_files`` folder rather than to an
+architecture-audit ``current/json_complete`` subfolder.
 """
 
 from __future__ import annotations
 
+import os
 import re
 from pathlib import Path
 
-from kanda_reasoner_app.storage_policy.architecture_audit_resolver import (
-    get_architecture_audit_current_root,
-    get_architecture_audit_subfolder,
+from kanda_reasoner_app.storage_policy.path_resolver import (
+    get_app_drive_or_anchor,
+    make_safe_slug,
+    normalize_path,
 )
 
 __all__ = [
     "PROJECT_REFERENCE_DIR",
     "PROJECT_ANALYSIS_EVIDENCE_DIR",
     "JSON_COMPLETE_DIR",
+    "SECOND_PROMPT_FILES_DIR",
+    "SECOND_PROMPT_FILES_BUILDING_DIR",
+    "FIRST_PROMPT_FILES_DIR",
+    "SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV",
+    "SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV",
     "JSON_PARTS_DIR",
     "project_name_from_root",
     "project_analysis_evidence_root",
     "analysis_json_complete_dir",
+    "analysis_json_building_dir",
+    "analysis_first_prompt_files_dir",
     "analysis_json_parts_dir",
     "ensure_project_analysis_evidence_dirs",
     "primary_evidence_json_path",
@@ -46,8 +64,13 @@ __all__ = [
 ]
 
 PROJECT_REFERENCE_DIR = "project_freeze_ledger"
-PROJECT_ANALYSIS_EVIDENCE_DIR = "project_analysis_evidence"
-JSON_COMPLETE_DIR = "json_complete"
+PROJECT_ANALYSIS_EVIDENCE_DIR = "show_project_to_AI"
+SECOND_PROMPT_FILES_DIR = "second_prompt_files"
+SECOND_PROMPT_FILES_BUILDING_DIR = "second_prompt_files_building"
+FIRST_PROMPT_FILES_DIR = "first_prompt_files"
+SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV = "KANDA_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR"
+SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV = "KANDA_SHOW_PROJECT_TO_AI_PROJECT_ROOT"
+JSON_COMPLETE_DIR = SECOND_PROMPT_FILES_DIR
 JSON_PARTS_DIR = "json_splitted"
 
 _SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]+")
@@ -61,9 +84,22 @@ def project_name_from_root(project_root: str | Path) -> str:
     return cleaned or "project"
 
 
+def _show_project_to_ai_root(project_root: str | Path) -> Path:
+    """Return <drive>/<project>_show_project_to_AI without creating it."""
+    root = normalize_path(project_root)
+    drive_or_anchor = get_app_drive_or_anchor(root)
+    slug = make_safe_slug(root.name)
+    folder_name = f"{slug}_show_project_to_AI"
+
+    if drive_or_anchor.endswith(":"):
+        return Path(f"{drive_or_anchor}\\{folder_name}")
+
+    return Path(drive_or_anchor) / folder_name
+
+
 def project_analysis_evidence_root(project_root: str | Path) -> Path:
-    """Return the active external evidence root for generated artifacts."""
-    return get_architecture_audit_current_root(project_root)
+    """Return the active external show-project-to-AI root."""
+    return _show_project_to_ai_root(project_root)
 
 
 def _normalize_project_analysis_evidence_dir_casing(project_root: str | Path) -> None:
@@ -83,27 +119,114 @@ def _paths_refer_to_same_location(first: Path, second: Path) -> bool:
         return False
 
 
+def analysis_json_building_dir(project_root: str | Path) -> Path:
+    """Return the guarded temporary Run Collector build folder.
+
+    The GUI writes new second-prompt artifacts here first so the previously
+    published ``second_prompt_files`` delivery remains visible while long JSON
+    collection and bundle generation are running. Only after successful JSON
+    generation are the files published into ``second_prompt_files``.
+    """
+    return project_analysis_evidence_root(project_root) / SECOND_PROMPT_FILES_BUILDING_DIR
+
+
+def _show_project_to_ai_override_project_root(project_root: str | Path) -> Path:
+    """Return the selected project root that owns an active output override.
+
+    Some collector child processes can be imported from the tool package while
+    operating on a user-selected project.  The output-folder override must be
+    validated against that selected project, not against a stale/default package
+    root that may still exist in inherited process state.
+    """
+    raw = os.environ.get(SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV, "").strip()
+    if raw:
+        return Path(raw).expanduser().resolve(strict=False)
+    return Path(project_root).expanduser().resolve(strict=False)
+
+
+def _active_artifact_project_root(project_root: str | Path) -> Path:
+    """Return the project root used for generated evidence filenames."""
+    if os.environ.get(SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, "").strip():
+        return _show_project_to_ai_override_project_root(project_root)
+    return Path(project_root).expanduser().resolve(strict=False)
+
+
+def _analysis_json_complete_dir_override(project_root: str | Path) -> Path | None:
+    """Return a guarded child-process output override, when explicitly set."""
+    raw = os.environ.get(SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, "").strip()
+    if not raw:
+        return None
+    override = Path(raw).expanduser().resolve(strict=False)
+    selected_project_root = _show_project_to_ai_override_project_root(project_root)
+    evidence_root = project_analysis_evidence_root(selected_project_root).expanduser().resolve(strict=False)
+    try:
+        override.relative_to(evidence_root)
+    except ValueError as exc:
+        raise ValueError(
+            SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV
+            + " must stay under the selected project's show_project_to_AI folder: "
+            + str(evidence_root)
+            + "; received: "
+            + str(override)
+        ) from exc
+    if override.name not in {SECOND_PROMPT_FILES_DIR, SECOND_PROMPT_FILES_BUILDING_DIR}:
+        raise ValueError(
+            SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV
+            + " must target second_prompt_files or second_prompt_files_building: "
+            + str(override)
+        )
+    return override
+
+
 def analysis_json_complete_dir(project_root: str | Path) -> Path:
-    """Return the external folder for complete generated JSON artifacts."""
-    return get_architecture_audit_subfolder(project_root, JSON_COMPLETE_DIR)
+    """Return the external second_prompt_files folder for AI-delivery artifacts.
+
+    Compatibility note: the function name is retained because many callers
+    already ask for the complete JSON artifact directory, but the normal
+    returned folder is the Run Collector delivery child folder:
+    ``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
+
+    A child-process-only guarded environment override may point generation to
+    ``second_prompt_files_building`` during a rebuild. The GUI later publishes
+    those files back to ``second_prompt_files`` before ZIP export.
+    """
+    override = _analysis_json_complete_dir_override(project_root)
+    if override is not None:
+        return override
+    return project_analysis_evidence_root(project_root) / SECOND_PROMPT_FILES_DIR
+
+
+def analysis_first_prompt_files_dir(project_root: str | Path) -> Path:
+    """Return the external first_prompt_files folder for startup delivery artifacts.
+
+    Compatibility helper for Freeze Feature After Update and first-prompt
+    delivery callers. The folder is a sibling of second_prompt_files under the
+    selected project's dynamic show_project_to_AI root:
+    ``<project_drive>:/<project_name>_show_project_to_AI/first_prompt_files``.
+    """
+    return project_analysis_evidence_root(project_root) / FIRST_PROMPT_FILES_DIR
 
 
 def analysis_json_parts_dir(project_root: str | Path) -> Path:
-    """Return the external folder for generated split JSON artifacts."""
+    """Return the legacy external folder for generated split JSON artifacts."""
     return project_analysis_evidence_root(project_root) / JSON_PARTS_DIR
 
 
 def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     """Create and return the external evidence root and child folders."""
     evidence_root = project_analysis_evidence_root(project_root)
+    analysis_first_prompt_files_dir(project_root).mkdir(parents=True, exist_ok=True)
     analysis_json_complete_dir(project_root).mkdir(parents=True, exist_ok=True)
-    analysis_json_parts_dir(project_root).mkdir(parents=True, exist_ok=True)
+    # Normal Show Project to AI root must only contain first_prompt_files and
+    # second_prompt_files after a successful run. The temporary building folder
+    # is created only by the runner while work is active, and legacy
+    # json_splitted is not created by normal directory preparation.
     return evidence_root
 
 
 def _project_name(project_root: str | Path) -> str:
     """Return the sanitized project name used in generated filenames."""
-    return project_name_from_root(project_root)
+    return project_name_from_root(_active_artifact_project_root(project_root))
 
 
 def primary_evidence_json_path(project_root: str | Path) -> Path:
@@ -155,9 +278,17 @@ def normalize_evidence_artifact_path(project_root: str | Path, raw_path: str | P
 
 
 def relative_evidence_path(*parts: str) -> str:
-    """Return a legacy POSIX relative path for display compatibility."""
+    """Return a portable POSIX relative path for generated evidence.
+
+    ``analysis_json_complete_dir`` now points at
+    ``*_show_project_to_AI/second_prompt_files``. Avoid duplicating the logical
+    folder name when callers pass retained compatibility constants.
+    """
+    cleaned = [str(part).strip("/\\") for part in parts if str(part).strip("/\\")]
+    if cleaned and cleaned[0] == PROJECT_ANALYSIS_EVIDENCE_DIR:
+        cleaned = cleaned[1:]
     return str(
-        Path(PROJECT_ANALYSIS_EVIDENCE_DIR) / Path(*parts)
+        Path(PROJECT_ANALYSIS_EVIDENCE_DIR) / Path(*cleaned)
     ).replace("\\", "/")
 
 

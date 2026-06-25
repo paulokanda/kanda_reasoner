@@ -314,8 +314,8 @@ def build_validation_state_payload(
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
         },
         "capture_mode": {
             "mode": mode,

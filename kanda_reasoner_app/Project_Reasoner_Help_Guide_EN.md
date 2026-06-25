@@ -18,7 +18,7 @@ The system is meant to reduce drift, duplication, misplacement of new code, and 
 
 ## The four main folders
 
-### 1. `developer_tools/project_reasoner/project_reasoner_v10`
+### 1. `kanda_reasoner/project_reasoner/project_reasoner_v10`
 This is the user-facing reasoning layer.
 It is the part that loads collected evidence and helps the AI answer project questions.
 It contains the main app, retrieval logic, prompt building, models, and the UI used to inspect project evidence.
@@ -30,7 +30,7 @@ Typical responsibilities:
 - present answers with architectural context
 - apply confidence rules when evidence is incomplete or conflicting
 
-### 2. `developer_tools/project_reasoner/reasoner_context_collector`
+### 2. `kanda_reasoner/project_reasoner/reasoner_context_collector`
 This is the static collector.
 It scans the codebase without running the app and builds a structural index.
 
@@ -42,7 +42,7 @@ Typical responsibilities:
 - track state, ownership, duplicates, and architectural hotspots
 - export JSON evidence for later AI retrieval
 
-### 3. `developer_tools/project_reasoner/reasoner_runtime_collector`
+### 3. `kanda_reasoner/project_reasoner/reasoner_runtime_collector`
 This is the runtime evidence layer.
 It captures what actually happened during a real or scripted app session.
 
@@ -55,7 +55,7 @@ Typical responsibilities:
 - errors, warnings, and exception context
 - performance or timing evidence when implemented
 
-### 4. `developer_tools/project_reasoner/runtime_scenarios`
+### 4. `kanda_reasoner/project_reasoner/runtime_scenarios`
 This folder stores runtime scenario scripts or trace outputs that represent real sessions.
 It is the bridge between the running app and the reasoning system.
 

@@ -6,7 +6,7 @@ __all__ = [
     "V9QwenAIModels",
 ]
 
-# developer_tools/kanda_reasoner_app/reasoner_engine/v10_qwen_ai_models.py
+# kanda_reasoner/kanda_reasoner_app/reasoner_engine/v10_qwen_ai_models.py
 
 import hashlib
 import json

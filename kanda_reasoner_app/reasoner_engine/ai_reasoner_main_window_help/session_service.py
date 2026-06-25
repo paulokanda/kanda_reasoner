@@ -15,6 +15,10 @@ from dataclasses import dataclass
 
 from kanda_reasoner_app.reasoner_engine.v10_models import RetrievalBundle
 from kanda_reasoner_app.reasoner_engine.query_router import route_query_intent
+from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_session_capture import (
+    capture_session_prompt_router_reasoner_review,
+    summarize_session_capture_result,
+)
 
 __all__ = ["SessionExecutionError", "SessionExecutionResult", "SessionService"]
 
@@ -113,7 +117,7 @@ class SessionService:
                 lines.extend(["Top symbol evidence:", "None"])
 
             log_messages.append("Answered using ranked retrieval only.")
-            return SessionExecutionResult(
+            result = SessionExecutionResult(
                 route="ranked",
                 question="",
                 selected_model="",
@@ -123,6 +127,8 @@ class SessionService:
                 log_messages=log_messages,
                 prefer_code=prefer_code,
             )
+            self._capture_prompt_router_reasoner_review(window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages)
+            return result
 
         if decision.route == "deterministic":
             log_messages.append(
@@ -137,7 +143,7 @@ class SessionService:
                 + ("prefer_code" if prefer_code else "prefer_prose")
             )
 
-        return SessionExecutionResult(
+        result = SessionExecutionResult(
             route=decision.route,
             question=question,
             selected_model=selected_model,
@@ -147,6 +153,27 @@ class SessionService:
             log_messages=log_messages,
             prefer_code=prefer_code,
         )
+        self._capture_prompt_router_reasoner_review(window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages)
+        return result
+
+    def _capture_prompt_router_reasoner_review(self, window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages) -> None:
+        """Record Prompt Router Reasoner runtime evidence without changing the result."""
+        try:
+            capture_result = capture_session_prompt_router_reasoner_review(
+                project_root=window.project_index.project_root,
+                question=question,
+                decision=decision,
+                bundle=bundle,
+                prompt=prompt,
+                final_session_result=result,
+                selected_model=selected_model,
+                prefer_code=prefer_code,
+                verbosity=window.verbosity_combo.currentText(),
+                enabled=True,
+            )
+            log_messages.append(summarize_session_capture_result(capture_result))
+        except Exception as exc:
+            log_messages.append("Prompt Router Reasoner capture: skipped | reason=runtime_capture_error | detail=" + str(exc))
 
 
 

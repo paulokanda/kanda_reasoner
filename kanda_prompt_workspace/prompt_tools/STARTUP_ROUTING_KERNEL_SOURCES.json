@@ -66,6 +66,30 @@
       "prompt_id": "handoff_at_end_of_work",
       "load_mode": "always_startup",
       "role": "Defines mandatory end-of-work handoff behavior so long governed sessions resume safely in a later AI chat."
+    },
+    {
+      "load_order": 9,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/patch_install_delivery_error_register.md",
+      "generated_filename": "09_patch_install_delivery_error_register.md",
+      "prompt_id": "patch_install_delivery_error_register",
+      "load_mode": "always_startup",
+      "role": "Append-only patch install delivery error register that blocks repeated ZIP staging and validation wrapper regressions."
+    },
+    {
+      "load_order": 10,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+      "generated_filename": "10_prompt_router_reasoner_startup_check.md",
+      "prompt_id": "prompt_router_reasoner_startup_check",
+      "load_mode": "always_startup",
+      "role": "Defines the beginning-of-day Prompt Router Reasoner readiness checklist and fit-to-run status block."
+    },
+    {
+      "load_order": 11,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
+      "generated_filename": "11_chatgpt_kanda_routing_choice_output_protocol.md",
+      "prompt_id": "chatgpt_kanda_routing_choice_output_protocol",
+      "load_mode": "always_startup",
+      "role": "Teaches browser ChatGPT to emit safe advisory KANDA_ROUTING_CHOICE JSON blocks for manual Prompt Router Reasoner capture."
     }
   ]
 }

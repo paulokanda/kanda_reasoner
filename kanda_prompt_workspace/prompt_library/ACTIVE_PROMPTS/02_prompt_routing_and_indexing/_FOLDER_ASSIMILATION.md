@@ -54,10 +54,13 @@ Do not use as a behavioral prompt that teaches the full protocol of another grou
 - RG-LAB-000
 - LAB-0
 - router prompt logic reliability
+- KANDA_ROUTING_CHOICE manual capture blocks
+- browser ChatGPT to local Prompt Router Reasoner round trip
 
 ## Minimum Viable Context
 - prompt_navigation_index
 - GROUP_ASSIMILATION_INDEX
+- chatgpt_kanda_routing_choice_output_protocol when startup output must be machine-readable for Prompt Router Reasoner
 - kanda_routing_system_canon when routing-system behavior is affected
 - semantic, Pilot/Copilot, or LAB router canons when those scopes are involved
 
@@ -72,6 +75,7 @@ Do not use as a behavioral prompt that teaches the full protocol of another grou
 | `prompt_navigation_index` | `prompt_navigation_index.md` | routing_core | Maps requests to prompt IDs, load rules, exclusions, companions, and priority. |
 | `prompt_router` | `prompt_router.md` | on_request | Routes messy requests to prompt families and companions. |
 | `prompt_substitution_map` | `prompt_substitution_map.md` | on_request | Maps old prompt concepts to current KANDA concepts. |
+| `chatgpt_kanda_routing_choice_output_protocol` | `chatgpt_kanda_routing_choice_output_protocol.md` | always_startup | Teaches browser ChatGPT to emit safe advisory KANDA_ROUTING_CHOICE blocks for manual Prompt Router Reasoner capture. |
 
 ## Routing Rule
 Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.

@@ -28,16 +28,17 @@ EXPECTED_ALL_TAB_LABELS = [
     "Workflow Review",
     "Engineering Safety",
     "Docstring Assistant",
-    "Project Structure Map",
+    "Show Project to AI",
     "AI Import Builder",
     "Refactor Report",
     "Project Q&A",
+    "Freeze Feature After Update",
     "Exclusion Rules",
     "Prompt Library",
 ]
 
-EXPECTED_LAZY_TAB_LABELS = EXPECTED_ALL_TAB_LABELS[1:9]
-EXPECTED_BUILTIN_TAB_LABELS = [EXPECTED_ALL_TAB_LABELS[0], *EXPECTED_ALL_TAB_LABELS[9:]]
+EXPECTED_LAZY_TAB_LABELS = EXPECTED_ALL_TAB_LABELS[1:10]
+EXPECTED_BUILTIN_TAB_LABELS = [EXPECTED_ALL_TAB_LABELS[0], *EXPECTED_ALL_TAB_LABELS[10:]]
 
 OLD_STEP_TOKENS = (
     "First step",

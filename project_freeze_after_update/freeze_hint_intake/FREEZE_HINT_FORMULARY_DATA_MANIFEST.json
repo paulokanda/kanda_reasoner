@@ -1,21 +1,20 @@
-﻿{
+{
     "kind":  "kanda_freeze_hint_formulary_data_manifest",
     "schema_version":  "1.0",
-    "feature_id":  "routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_implementation_boundary_plan_v1",
-    "feature_title":  "Routing Signal Scorer v3 MLRT-16 Candidate First Non-Runtime Dry-Run Harness Implementation Boundary Plan v1",
+    "feature_id":  "startup_second_upload_json_handoff_zip_contract_v1",
+    "feature_title":  "Startup Second Upload JSON Handoff ZIP Contract v1",
     "project_root_placeholder":  "__PROJECT_ROOT__",
-    "generated_at_local":  "2026-06-20T00:38:08",
-    "purpose":  "Install project-local freeze_hint_intake JSON so the Freeze Feature After Update formulary reads the validated MLRT-16 feature locally.",
+    "generated_at_utc":  "2026-06-24T22:52:50Z",
+    "purpose":  "Install project-local freeze_hint_intake JSON so the Freeze Feature After Update formulary reads the validated current feature instead of a placeholder starter.",
     "install_targets":  [
                             "project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json",
-                            "project_freeze_after_update/freeze_hint_intake/history/20260620T003756_routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_implementation_boundary_plan_v1.json",
+                            "project_freeze_after_update/freeze_hint_intake/history/20260624T225250Z_startup_second_upload_json_handoff_zip_contract_v1.json",
                             "project_freeze_after_update/freeze_hint_intake/FREEZE_HINT_FORMULARY_DATA_MANIFEST.json"
                         ],
     "delivery_metadata_root_file":  "KANDA_FREEZE_HINT.json",
     "delivery_metadata_rule":  "KANDA_FREEZE_HINT.json is patch ZIP root delivery metadata only and must not be installed into the active project root.",
     "validation_markers":  [
-                               "VALIDATION OK: routing_signal_scorer_v3_mlrt_candidate_first_non_runtime_dry_run_harness_implementation_boundary_plan_v1",
-                               "CONTRACT_TEST_OK: MLRT-16 Candidate First Non-Runtime Dry-Run Harness Implementation Boundary Plan v1",
-                               "SANDBOX_ROUTING_SIGNAL_SCORER_V3_MLRT_CANDIDATE_FIRST_NON_RUNTIME_DRY_RUN_HARNESS_IMPLEMENTATION_BOUNDARY_PLAN_V1_VALIDATION_OK"
+                               "VALIDATION OK: startup_second_upload_json_handoff_zip_contract_v1",
+                               "STATUS: IN_SYNC"
                            ]
 }

@@ -118,7 +118,7 @@
       "consumed_by": []
     },
     "file_retrieval.py": {
-      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "purpose": "MODULE ORIGIN: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
       "reason": "Helper module owned by this helper folder.",
       "stability": "stable",
       "exports": [
@@ -190,7 +190,7 @@
       "consumed_by": []
     },
     "snippet_expansion.py": {
-      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "purpose": "MODULE ORIGIN: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
       "reason": "Helper module owned by this helper folder.",
       "stability": "stable",
       "exports": [],
@@ -217,7 +217,7 @@
       "consumed_by": []
     },
     "symbol_retrieval.py": {
-      "purpose": "MODULE ORIGIN: E:\\developer_tools\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
+      "purpose": "MODULE ORIGIN: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever.py",
       "reason": "Helper module owned by this helper folder.",
       "stability": "stable",
       "exports": [

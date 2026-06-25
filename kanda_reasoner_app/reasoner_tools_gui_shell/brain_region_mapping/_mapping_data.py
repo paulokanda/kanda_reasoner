@@ -84,13 +84,13 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "region_id": "occipital_lobe",
         "region_name": "Occipital lobe",
         "target_tab_id": "project_structure_map",
-        "target_tab_label": "Project Structure Map",
+        "target_tab_label": "Show Project to AI",
         "analogy_title": "Seeing the whole project",
         "analogy_text": (
-            "The occipital lobe processes vision, like Project Structure Map "
+            "The occipital lobe processes vision, like Show Project to AI "
             "helps the user see the project layout and source organization."
         ),
-        "tooltip_text": "Occipital lobe -> Project Structure Map",
+        "tooltip_text": "Occipital lobe -> Show Project to AI",
         "category": "Project Tools",
     },
     {

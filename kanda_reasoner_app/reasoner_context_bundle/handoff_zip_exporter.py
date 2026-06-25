@@ -11,6 +11,7 @@ import argparse
 import json
 import shutil
 import tempfile
+import os
 from pathlib import Path
 from typing import Any
 
@@ -27,14 +28,19 @@ from .handoff_zip_exporter_support import (
     timestamp_value,
 )
 from .handoff_zip_exporter_writer import write_external_readme, write_package_parts
+from .source_archive_exporter import write_source_archive_parts
 from .schema_models import ProjectContext
 
 DEFAULT_PART_SIZE_MB = 40
 CONSERVATIVE_PART_SIZE_MB = 25
+EXTENDED_PART_SIZE_MB_OPTIONS = (100, 200, 300, 450)
+ALLOWED_PART_SIZE_MB_OPTIONS = (CONSERVATIVE_PART_SIZE_MB, DEFAULT_PART_SIZE_MB, *EXTENDED_PART_SIZE_MB_OPTIONS)
 
 __all__ = [
     "DEFAULT_PART_SIZE_MB",
     "CONSERVATIVE_PART_SIZE_MB",
+    "EXTENDED_PART_SIZE_MB_OPTIONS",
+    "ALLOWED_PART_SIZE_MB_OPTIONS",
     "export_json_handoff_zip_parts",
     "is_destination_inside_project_root",
     "main",
@@ -73,8 +79,11 @@ def _resolve_part_size(
     part_size_bytes: int | None,
 ) -> tuple[int | None, dict[str, Any] | None]:
     if part_size_bytes is None:
-        if part_size_mb not in (CONSERVATIVE_PART_SIZE_MB, DEFAULT_PART_SIZE_MB):
-            return None, _part_size_error(context, "part_size_mb must be 25 or 40")
+        if part_size_mb not in ALLOWED_PART_SIZE_MB_OPTIONS:
+            return None, _part_size_error(
+                context,
+                "part_size_mb must be one of " + ", ".join(str(item) for item in ALLOWED_PART_SIZE_MB_OPTIONS),
+            )
         part_size_bytes = part_size_mb * _BYTES_PER_MB
     if part_size_bytes <= 0:
         return None, _part_size_error(context, "part_size_bytes must be positive")
@@ -107,6 +116,106 @@ def _cleanup_created_paths(created_paths: list[Path]) -> None:
             pass
 
 
+def _retarget_path_string(value: Any, stage: Path, destination: Path) -> Any:
+    if not isinstance(value, str):
+        return value
+    stage_text = str(stage)
+    dest_text = str(destination)
+    return value.replace(stage_text, dest_text).replace(
+        stage_text.replace("\\", "/"), dest_text.replace("\\", "/")
+    )
+
+
+def _retarget_record_paths(value: Any, stage: Path, destination: Path) -> Any:
+    if isinstance(value, dict):
+        return {key: _retarget_record_paths(item, stage, destination) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_retarget_record_paths(item, stage, destination) for item in value]
+    return _retarget_path_string(value, stage, destination)
+
+
+def _publish_stage_outputs(stage: Path, destination: Path) -> list[Path]:
+    published: list[Path] = []
+    destination.mkdir(parents=True, exist_ok=True)
+    for child in sorted(stage.iterdir(), key=lambda item: item.name.lower()):
+        target = destination / child.name
+        if target.exists():
+            if target.is_dir():
+                shutil.rmtree(target)
+            else:
+                target.unlink()
+        shutil.move(str(child), str(target))
+        published.append(target)
+    return published
+
+
+def _assert_no_forbidden_outputs(output_dir: Path) -> None:
+    forbidden_names = {"CHUNK_MANIFEST.json", "json_splitted"}
+    for child in output_dir.rglob("*"):
+        if child.name in forbidden_names or child.name == "chunks":
+            raise ValueError("Forbidden legacy split artifact generated: " + str(child))
+        if child.name.endswith("__reconstruction_payload.json"):
+            raise ValueError("Forbidden normal reconstruction payload generated: " + str(child))
+
+
+
+def _delivery_folder_for_metadata(destination: Path) -> Path:
+    """Return the final public folder to write inside artifact metadata."""
+    if destination.name == "second_prompt_files_building":
+        return destination.with_name("second_prompt_files")
+    return destination
+
+
+def _rewrite_text_references(folder: Path, delivery_folder: Path) -> int:
+    """Rewrite build/stage folder references to the public delivery folder."""
+    replacements = (
+        (str(folder), str(delivery_folder)),
+        (str(folder).replace("\\", "/"), str(delivery_folder).replace("\\", "/")),
+        ("show_project_to_AI/second_prompt_files_building", "show_project_to_AI/second_prompt_files"),
+        ("show_project_to_AI\\second_prompt_files_building", "show_project_to_AI\\second_prompt_files"),
+        ("second_prompt_files_building", "second_prompt_files"),
+    )
+    changed = 0
+    if not folder.exists():
+        return changed
+    for path in folder.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in {".json", ".txt", ".md"}:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8-sig")
+        except UnicodeDecodeError:
+            continue
+        original = text
+        for old, new in replacements:
+            text = text.replace(old, new)
+        if text != original:
+            path.write_text(text, encoding="utf-8")
+            changed += 1
+    return changed
+
+
+def _finalize_ai_context_artifacts_for_handoff(context: ProjectContext, destination: Path) -> None:
+    """Refresh JSON artifacts before they are copied into upload ZIPs.
+
+    The GUI builds in ``second_prompt_files_building`` and publishes later.
+    Upload ZIPs are created before that publish step, so this function rewrites
+    metadata to the final delivery folder and refreshes the mutually linked
+    briefing/manifest pair before packaging.
+    """
+    from .ai_briefing_builder import write_ai_briefing_json
+    from .bundle_manifest_builder import write_bundle_manifest_json
+
+    delivery_folder = _delivery_folder_for_metadata(destination)
+    _rewrite_text_references(destination, delivery_folder)
+    write_ai_briefing_json(context)
+    _rewrite_text_references(destination, delivery_folder)
+    write_bundle_manifest_json(context)
+    _rewrite_text_references(destination, delivery_folder)
+    write_ai_briefing_json(context)
+    _rewrite_text_references(destination, delivery_folder)
+    write_bundle_manifest_json(context)
+    _rewrite_text_references(destination, delivery_folder)
+
 def export_json_handoff_zip_parts(
     project: str | Path | ProjectContext,
     destination_folder: str | Path,
@@ -114,10 +223,15 @@ def export_json_handoff_zip_parts(
     part_size_mb: int = DEFAULT_PART_SIZE_MB,
     part_size_bytes: int | None = None,
     timestamp: str | None = None,
-    include_runtime_trace: bool = True,
+    include_runtime_trace: bool = False,
     check_bundle: bool = True,
 ) -> dict[str, Any]:
-    """Export generated JSON handoff artifacts as three ZIP profiles plus TXT README."""
+    """Export lightweight JSON map artifacts plus source archive ZIP parts.
+
+    Normal hybrid export must not upload or require the old heavy
+    complete/active-snapshot JSON artifacts. Exact reconstruction is provided
+    by standalone source_archive_part ZIPs and source_archive_manifest.json.
+    """
     context = context_from_project(project)
     destination = Path(destination_folder).expanduser()
     destination_error = _validate_destination(context, destination)
@@ -134,21 +248,49 @@ def export_json_handoff_zip_parts(
     if bundle_error is not None:
         return bundle_error
 
-    temp_root = Path(tempfile.mkdtemp(prefix="json_handoff_zip_export_", dir=str(destination)))
+    temp_parent = destination.parent if destination.parent != Path("") else destination
+    temp_root = Path(tempfile.mkdtemp(prefix=".json_handoff_zip_work_", dir=str(temp_parent)))
+    output_stage = Path(tempfile.mkdtemp(prefix=".json_handoff_zip_stage_", dir=str(temp_parent)))
     created_paths: list[Path] = []
     try:
         timestamp_value(timestamp)
-        artifacts = ordered_export_paths(context, include_runtime_trace)
-        specs = package_specs(context, artifacts)
         warnings: list[str] = []
         zip_records: list[dict[str, Any]] = []
         packages: list[dict[str, Any]] = []
+
+        source_archive = write_source_archive_parts(
+            context,
+            output_stage,
+            temp_root,
+            part_size_mb=part_size_mb,
+            part_size_bytes=resolved_part_size_bytes,
+        )
+        created_paths.extend(Path(str(path)) for path in source_archive.get("created_paths", []))
+        source_manifest_path = Path(str(source_archive.get("manifest_path", "")))
+        source_zip_records = list(source_archive.get("zip_parts", []))
+        zip_records.extend(source_zip_records)
+        packages.append(
+            {
+                "name": "source_archive",
+                "stem": context.project_slug + "__source_archive",
+                "purpose": "Exact source-tree reconstruction as standalone ZIP parts for the selected Project root.",
+                "zip_count": len(source_zip_records),
+                "artifact_count": sum(int(item.get("artifact_count", 0)) for item in source_zip_records),
+                "zip_parts": source_zip_records,
+            }
+        )
+
+        _finalize_ai_context_artifacts_for_handoff(context, destination)
+        artifacts = ordered_export_paths(context, include_runtime_trace)
+        if source_manifest_path.exists():
+            artifacts.append(source_manifest_path)
+        specs = package_specs(context, artifacts)
 
         for spec in specs:
             records, package_warnings, package_paths = write_package_parts(
                 spec,
                 context,
-                destination,
+                output_stage,
                 temp_root,
                 part_size_mb,
                 resolved_part_size_bytes,
@@ -167,6 +309,12 @@ def export_json_handoff_zip_parts(
                 }
             )
 
+        readme_file = write_external_readme(output_stage, context, part_size_mb)
+        _assert_no_forbidden_outputs(output_stage)
+        published_paths = _publish_stage_outputs(output_stage, destination)
+        retargeted_packages = _retarget_record_paths(packages, output_stage, destination)
+        retargeted_zip_records = _retarget_record_paths(zip_records, output_stage, destination)
+        retargeted_readme = _retarget_record_paths(readme_file, output_stage, destination)
         return {
             "ok": True,
             "kind": _EXPORT_KIND,
@@ -179,9 +327,10 @@ def export_json_handoff_zip_parts(
             "zip_count": len(zip_records),
             "artifact_count": len(artifacts),
             "package_count": len(packages),
-            "packages": packages,
-            "zip_parts": zip_records,
-            "readme_file": write_external_readme(destination, context, part_size_mb),
+            "packages": retargeted_packages,
+            "zip_parts": retargeted_zip_records,
+            "readme_file": retargeted_readme,
+            "published_paths": [str(path) for path in published_paths],
             "warnings": warnings,
             "failures": [],
         }
@@ -195,13 +344,14 @@ def export_json_handoff_zip_parts(
         }
     finally:
         shutil.rmtree(temp_root, ignore_errors=True)
+        shutil.rmtree(output_stage, ignore_errors=True)
 
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Export JSON handoff artifacts as ZIP profiles.")
     parser.add_argument("--root", required=True, help="Active project root.")
     parser.add_argument("--destination", required=True, help="Destination folder outside project root.")
-    parser.add_argument("--part-size-mb", type=int, choices=[25, 40], default=DEFAULT_PART_SIZE_MB)
+    parser.add_argument("--part-size-mb", type=int, choices=list(ALLOWED_PART_SIZE_MB_OPTIONS), default=DEFAULT_PART_SIZE_MB)
     parser.add_argument("--timestamp", default=None)
     parser.add_argument("--compact", action="store_true")
     parser.add_argument("--no-runtime-trace", action="store_true")

@@ -22,35 +22,35 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "bundle_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.bundle_manifest_builder"
-GENERATOR_VERSION = "1.1.0"
+GENERATOR_VERSION = "1.4.0"
 
 BUNDLE_ARTIFACT_ORDER = (
-    "complete_json",
+    "ai_briefing_json",
+    "routing_manifest_json",
+    "patch_safety_routes_json",
     "exclusion_rules_json",
     "file_manifest_json",
-    "active_snapshot_json",
     "validation_state_json",
-    "reconstruction_payload_json",
     "bundle_manifest_json",
 )
 
 _ARTIFACT_KIND_BY_NAME = {
-    "complete_json": "complete_graph",
+    "ai_briefing_json": "ai_briefing",
+    "routing_manifest_json": "routing_manifest",
+    "patch_safety_routes_json": "patch_safety_routes",
     "exclusion_rules_json": "exclusion_rules",
     "file_manifest_json": "file_manifest",
-    "active_snapshot_json": "active_snapshot",
     "validation_state_json": "validation_state",
-    "reconstruction_payload_json": "reconstruction_payload",
     "bundle_manifest_json": "bundle_manifest",
 }
 
 _REQUIRED_BY_NAME = {
-    "complete_json": True,
+    "ai_briefing_json": True,
+    "routing_manifest_json": True,
+    "patch_safety_routes_json": True,
     "exclusion_rules_json": True,
     "file_manifest_json": True,
-    "active_snapshot_json": True,
     "validation_state_json": True,
-    "reconstruction_payload_json": True,
     "bundle_manifest_json": True,
 }
 
@@ -85,9 +85,12 @@ def _artifact_record(
     if is_self_manifest:
         record["self_reference"] = True
         record["hash_status"] = "self_hash_not_embedded"
+        record["size_status"] = "self_size_not_embedded"
+        record["size_bytes"] = 0
         record["reason"] = (
-            "The bundle manifest cannot embed its own final sha256 without "
-            "changing that sha256. Existence is verified by the bundle checker."
+            "The bundle manifest cannot embed its own final sha256 or final "
+            "size without changing that artifact. Existence is verified by "
+            "the bundle checker."
         )
         return record
     if exists:
@@ -100,12 +103,12 @@ def _artifact_record(
 
 def _artifact_paths_by_name(paths: BundleArtifactPaths) -> dict[str, Path]:
     return {
-        "complete_json": paths.complete_json,
+        "ai_briefing_json": paths.ai_briefing_json,
+        "routing_manifest_json": paths.routing_manifest_json,
+        "patch_safety_routes_json": paths.patch_safety_routes_json,
         "exclusion_rules_json": paths.exclusion_rules_json,
         "file_manifest_json": paths.file_manifest_json,
-        "active_snapshot_json": paths.active_snapshot_json,
         "validation_state_json": paths.validation_state_json,
-        "reconstruction_payload_json": paths.reconstruction_payload_json,
         "bundle_manifest_json": paths.bundle_manifest_json,
     }
 
@@ -131,16 +134,6 @@ def _counts(artifacts: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
-def _complete_json_contract() -> dict[str, Any]:
-    return {
-        "status": "protected_existing_consumer",
-        "consumer_box": "engineering_safety",
-        "mode": "read_hash_reference_only",
-        "schema_changed_by_this_bundle": False,
-        "engineering_safety_impact": "none_in_additive_mode",
-    }
-
-
 def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[str, Any]:
     """Build the bundle manifest payload for one active project."""
     context = _context(project)
@@ -157,16 +150,37 @@ def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
+            "dynamic_output_contract": "<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files",
         },
         "compatibility": {
             "additive_bundle": True,
-            "complete_json_unchanged_by_contract": True,
+            "complete_json_generated_by_second_prompt_files": False,
+            "active_snapshot_generated_by_second_prompt_files": False,
             "project_specific_dynamic_rules": True,
             "hardcoded_project_root": False,
         },
-        "complete_json_contract": _complete_json_contract(),
+        "source_context_contract": {
+            "status": "hybrid_manifest_source_archive",
+            "complete_json_removed_from_normal_output": True,
+            "active_snapshot_removed_from_normal_output": True,
+            "exact_reconstruction_authority": "source_archive_manifest_json plus standalone source_archive_part ZIPs",
+        },
+        "source_truth_policy": {
+            "source_files_are_truth": True,
+            "json_is_evidence_not_truth": True,
+            "inspect_exact_source_before_editing": True,
+        },
+        "section_loading_policy": {
+            "ai_briefing_json": "always_read",
+            "routing_manifest_json": "always_read",
+            "bundle_manifest_json": "read_for_routing",
+            "file_manifest_json": "read_for_routing",
+            "patch_safety_routes_json": "read_for_subsystem_edit",
+            "source_archive_manifest_json": "read_for_exact_reconstruction_map",
+            "runtime_trace_raw": "read_only_on_request",
+        },
         "counts": _counts(artifacts),
         "artifacts": artifacts,
     }

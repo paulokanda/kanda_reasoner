@@ -114,7 +114,7 @@ Examples:
 ```text
 08_python_engineering_core - required IF Python source code, generator code, validation code, installer logic, or validation scripts may be modified.
 09_python_quality_security_observability - required IF the task affects validation robustness, error handling, logs, security posture, release safety, or regression detection.
-paste_if_modify_startup_delivery.md - required IF the task modifies startup delivery, startup ZIP generation, first_AI_deliver, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, startup naming, startup validation, or paste-after files.
+paste_if_modify_startup_delivery.md - required IF the task modifies startup delivery, startup ZIP generation, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, startup naming, startup validation, or paste-after files.
 active project freeze context - required IF the task touches frozen behavior, protected paths, freeze workflow, project memory, governance artifacts, or asks whether something is already frozen.
 Relevant folder card or _FOLDER_ASSIMILATION - required IF the task changes a prompt-library folder, app box, or workflow area whose local placement/ownership rules may matter.
 Validation command or manual validation steps - required IF implementation, freeze, patch delivery, or behavior canonization is requested.
@@ -258,13 +258,13 @@ The AI must detect stale names and stale paths when the project has already rena
 Examples of stale references:
 
 ```text
-paste_after_uploading_startup_zip.md
+retired startup paste filename
 ```
 
 Current replacement:
 
 ```text
-paste_after_first_prompts_to_ai.md
+tell_AI_read_before_all.md
 ```
 
 A response that requests or modifies a stale file when the current file is known should usually fail Phase 2 precision.
@@ -278,7 +278,7 @@ Examples:
 ```text
 prompt_library = canonical prompts and routing tests
 prompt_tools = generators and tools
-first_AI_deliver = generated startup delivery artifacts
+first_prompt_files = generated startup delivery artifacts
 project_freeze_after_update/frozen_features_memory = project-specific freeze entries
 project_freeze_ledger = not for active project-specific freeze memory
 ```
@@ -356,7 +356,7 @@ current generated startup paste file
 when they clearly refer to:
 
 ```text
-paste_after_first_prompts_to_ai.md
+tell_AI_read_before_all.md
 ```
 
 Forbidden stale aliases include names already replaced by a validated rename.

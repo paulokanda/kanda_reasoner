@@ -32,44 +32,45 @@ def _as_posix(path: Path) -> str:
 class ProjectAnalysisEvidencePathsTests(unittest.TestCase):
     def test_project_analysis_evidence_root_lives_outside_project_root(self) -> None:
         """The active generated evidence root must be outside project source."""
-        root = Path(r"E:\any_project")
+        root = Path("/tmp/any_project")
 
         evidence_root = project_analysis_evidence_root(root)
 
         self.assertTrue(
             _as_posix(evidence_root).endswith(
-                "any_project_architecture_audit/current"
+                "any_project_show_project_to_AI"
             )
         )
         self.assertNotIn("project_analysis_evidence", _as_posix(evidence_root))
-        self.assertEqual(analysis_json_complete_dir(root), evidence_root / "json_complete")
+        self.assertNotIn("architecture_audit", _as_posix(evidence_root))
+        self.assertEqual(analysis_json_complete_dir(root), evidence_root / "second_prompt_files")
         self.assertEqual(analysis_json_parts_dir(root), evidence_root / "json_splitted")
 
     def test_generated_file_names_follow_selected_project_root(self) -> None:
         """Generated JSON filenames must use the selected project root name."""
-        root = Path(r"E:\some_other_project")
+        root = Path("/tmp/some_other_project")
 
         self.assertTrue(
             _as_posix(primary_evidence_json_path(root)).endswith(
-                "some_other_project_architecture_audit/current/json_complete/"
+                "some_other_project_show_project_to_AI/second_prompt_files/"
                 "some_other_project__complete.json"
             )
         )
         self.assertTrue(
             _as_posix(secondary_evidence_json_path(root)).endswith(
-                "some_other_project_architecture_audit/current/json_complete/"
+                "some_other_project_show_project_to_AI/second_prompt_files/"
                 "some_other_project__complete_runtime_trace.json"
             )
         )
         self.assertTrue(
             _as_posix(parts_manifest_file_path(root)).endswith(
-                "some_other_project_architecture_audit/current/json_splitted/"
+                "some_other_project_show_project_to_AI/json_splitted/"
                 "some_other_project_split_manifest.json"
             )
         )
         self.assertTrue(
             _as_posix(parts_index_file_path(root)).endswith(
-                "some_other_project_architecture_audit/current/json_splitted/"
+                "some_other_project_show_project_to_AI/json_splitted/"
                 "some_other_project_split_index.json"
             )
         )
@@ -78,7 +79,7 @@ class ProjectAnalysisEvidencePathsTests(unittest.TestCase):
         """Relative helpers remain stable for manifests and compatibility."""
         self.assertEqual(
             relative_primary_evidence_json_path("alpha_project"),
-            "project_analysis_evidence/json_complete/alpha_project__complete.json",
+            "show_project_to_AI/second_prompt_files/alpha_project__complete.json",
         )
 
     def test_project_name_from_root_sanitizes_unstable_characters(self) -> None:
@@ -103,7 +104,7 @@ class ProjectAnalysisEvidencePathsTests(unittest.TestCase):
 
     def test_normalize_empty_evidence_artifact_path_uses_dynamic_default(self) -> None:
         """Empty path normalization should fall back to the dynamic default."""
-        root = Path(r"E:\another_project")
+        root = Path("/tmp/another_project")
 
         path = normalize_evidence_artifact_path(root, "")
 

@@ -35,7 +35,7 @@ _DEPRECATED_PATH_MARKERS = {
     "archive",
     "archives",
     "legacy_cleanup",
-    "developer_tools_older",
+    "legacy_project_older",
 }
 
 _OLD_VALIDATION_MARKERS = (

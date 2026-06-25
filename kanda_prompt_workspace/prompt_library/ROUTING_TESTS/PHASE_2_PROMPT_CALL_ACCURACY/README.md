@@ -79,7 +79,7 @@ Do not modify these files or areas as part of the initial scaffold:
 kanda_prompt_workspace/prompt_tools/audit_startup_candidates.py
 kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py
 kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json
-kanda_prompt_workspace/first_AI_deliver/
+kanda_prompt_workspace/first_prompt_files/
 kanda_prompt_workspace/prompt_library/ROUTING_TESTS/context_routing_expected_outputs.json
 project_freeze_after_update/frozen_features_memory/existing entries
 project_freeze_ledger

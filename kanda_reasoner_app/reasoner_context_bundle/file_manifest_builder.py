@@ -19,6 +19,7 @@ __all__ = [
     "TEXT_FILE_EXTENSIONS",
     "build_file_manifest_payload",
     "iter_active_project_files",
+    "is_ignored_project_archive",
     "GENERATED_EVIDENCE_PREFIXES",
     "write_file_manifest_json",
 ]
@@ -26,11 +27,12 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "file_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.file_manifest_builder"
-GENERATOR_VERSION = "1.0.2"
+GENERATOR_VERSION = "1.0.4"
 
 GENERATED_EVIDENCE_PREFIXES = (
-    "project_analysis_evidence/json_complete/",
-    "project_analysis_evidence/json_splitted/",
+    "show_project_to_AI/",
+    "show_project_to_AI/second_prompt_files/",
+    "show_project_to_AI/json_splitted/",
 )
 
 TEXT_FILE_EXTENSIONS = (
@@ -54,6 +56,57 @@ TEXT_FILE_EXTENSIONS = (
 )
 
 _TEXT_READ_ENCODINGS = ("utf-8", "utf-8-sig")
+
+
+def is_ignored_project_archive(path: Path, context: ProjectContext) -> bool:
+    """Return True for stray full-project/handoff ZIP archives to omit from AI handoff.
+
+    The Show Project to AI handoff must not recursively package an uploaded or
+    copied full-project archive such as ``<project_slug>.zip``. Such archives can
+    make the reconstruction payload huge and cause downstream ZIP parts to exceed
+    the selected size. This is deliberately narrow: ordinary project ZIP assets
+    are preserved unless their name is the selected project slug or a generated
+    AI handoff package name.
+    """
+    if not path.is_file() or path.suffix.lower() != ".zip":
+        return False
+    name = path.name.lower()
+    slug = context.project_slug.lower()
+    return (
+        name == slug + ".zip"
+        or (name.startswith(slug + "__ai_handoff_") and name.endswith(".zip"))
+    )
+
+
+
+
+def is_ignored_legacy_delivery_noise(path: Path) -> bool:
+    """Return True for archived/temp prompt artifacts that must not be delivered."""
+    parts = {part.lower() for part in path.parts}
+    return "_bundle_temp" in parts or "_temp_archived_installers" in parts
+
+
+def _ignored_legacy_delivery_noise_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    relative = relative_posix_path(path, context.root)
+    return {
+        "path": relative,
+        "included": False,
+        "excluded": True,
+        "matched_rule": "legacy_delivery_noise_guard",
+        "rule_type": "folder",
+        "reason": "Legacy/temp prompt-delivery artifacts are excluded from Show Project to AI handoff files.",
+    }
+
+def _ignored_project_archive_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    relative = relative_posix_path(path, context.root)
+    return {
+        "path": relative,
+        "included": False,
+        "excluded": True,
+        "matched_rule": "show_project_to_ai_recursive_archive_guard",
+        "rule_type": "file",
+        "reason": "Stray full-project or generated handoff ZIP archives are ignored while building Show Project to AI ZIP handoff files.",
+    }
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
@@ -216,6 +269,10 @@ def iter_active_project_files(
                 continue
             if _is_generated_evidence_path(entry, context):
                 continue
+            if is_ignored_project_archive(entry, context):
+                continue
+            if is_ignored_legacy_delivery_noise(entry):
+                continue
             decision = decide_path_exclusion(entry, context, active_rules)
             if decision.excluded:
                 continue
@@ -243,6 +300,14 @@ def _iter_manifest_rows(
             if _is_generated_evidence_path(entry, context):
                 if len(generated_artifact_samples) < 50:
                     generated_artifact_samples.append(_generated_artifact_decision(entry, context))
+                continue
+            if is_ignored_project_archive(entry, context):
+                if len(excluded_samples) < 50:
+                    excluded_samples.append(_ignored_project_archive_decision(entry, context))
+                continue
+            if is_ignored_legacy_delivery_noise(entry):
+                if len(excluded_samples) < 50:
+                    excluded_samples.append(_ignored_legacy_delivery_noise_decision(entry, context))
                 continue
             decision = decide_path_exclusion(entry, context, rules)
             if decision.excluded:
@@ -295,8 +360,8 @@ def build_file_manifest_payload(project: str | Path | ProjectContext) -> dict[st
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
         },
         "source": {
             "exclusion_rules": rules.as_dict(),

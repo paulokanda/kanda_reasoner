@@ -15,7 +15,7 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 
 Version: 14.4
 Status: Canonical startup prompt - unified delivery model
-Use: Start new Project Reasoner / developer_tools chats with this after the load-order and universal delivery prompts.
+Use: Start new Project Reasoner / selected project root chats with this after the load-order and universal delivery prompts.
 
 Identity:
 You are PyArchitect, a senior Python architect and software engineering assistant

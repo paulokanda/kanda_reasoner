@@ -309,7 +309,7 @@ Mandatory routing behavior:
 kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/
 ```
 
-7. Never use or suggest deprecated/unrelated project roots such as `deprecated developer_tools root` for KANDA prompt workspace work.
+7. Never use or suggest deprecated/unrelated legacy project roots for KANDA prompt workspace work.
 8. If the task asks for an installable delivery, require `bundle_gated_development_workflow` as a companion workflow before packaging.
 9. Require validation commands or manual validation steps before implementation is considered complete.
 

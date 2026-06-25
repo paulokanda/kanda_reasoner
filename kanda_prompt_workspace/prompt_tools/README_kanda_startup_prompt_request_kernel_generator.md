@@ -5,9 +5,9 @@ This generator creates the human-facing startup delivery package for new AI chat
 ## Required generated delivery
 
 ```text
-first_AI_deliver/
+first_prompt_files/
   first_prompts_to_ai.zip
-  paste_after_first_prompts_to_ai.md
+  tell_AI_read_before_all.md
   paste_if_modify_startup_delivery.md
 ```
 
@@ -53,8 +53,8 @@ The handoff must preserve completed work, validation evidence, freeze state, cur
 
 ## Human startup workflow
 
-1. Upload `first_AI_deliver/first_prompts_to_ai.zip` to the AI chat.
-2. Open `first_AI_deliver/paste_after_first_prompts_to_ai.md`.
+1. Upload `first_prompt_files/first_prompts_to_ai.zip` to the AI chat.
+2. Open `first_prompt_files/tell_AI_read_before_all.md`.
 3. Paste its command into the AI chat.
 4. Wait for `STARTUP PACK LOAD CHECK`.
 5. Confirm `00`, `01` to `08`, `README`, and `MANIFEST` are all loaded.
@@ -62,7 +62,7 @@ The handoff must preserve completed work, validation evidence, freeze state, cur
 
 ## Startup delivery maintenance workflow
 
-Use `first_AI_deliver/paste_if_modify_startup_delivery.md` only when asking an AI to modify the startup delivery system itself.
+Use `first_prompt_files/paste_if_modify_startup_delivery.md` only when asking an AI to modify the startup delivery system itself.
 
 Do not use the maintenance file for normal startup sessions.
 
@@ -74,7 +74,7 @@ The stable boot file inside the ZIP must be named:
 00_START_HERE_FOR_AI.md
 ```
 
-The boot command in `paste_after_first_prompts_to_ai.md` must require the receiving AI to inspect and report:
+The boot command in `tell_AI_read_before_all.md` must require the receiving AI to inspect and report:
 
 ```text
 0. 00_START_HERE_FOR_AI.md
@@ -95,7 +95,7 @@ The boot command in `paste_after_first_prompts_to_ai.md` must require the receiv
 - `prompt_library/` is canonical source.
 - `prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json` remains the source map.
 - `prompt_tools/sync_startup_routing_kernel_pack.py` remains the generator.
-- `first_AI_deliver/` remains human delivery output.
+- `first_prompt_files/` remains human delivery output.
 - `07_daily_patch_delivery_guardrails.md` is a generated startup copy of the canonical daily delivery guardrail.
 - `08_handoff_at_end_of_work.md` is a generated startup copy of the canonical end-of-work handoff guardrail.
 - Generated delivery files are not canonical source.
@@ -104,10 +104,10 @@ The boot command in `paste_after_first_prompts_to_ai.md` must require the receiv
 
 Older human-facing delivery filenames were retired during the startup-delivery rename.
 
-They should not remain in `first_AI_deliver/` after sync, and active instructions should use only:
+They should not remain in `first_prompt_files/` after sync, and active instructions should use only:
 
 ```text
-paste_after_first_prompts_to_ai.md
+tell_AI_read_before_all.md
 paste_if_modify_startup_delivery.md
 ```
 

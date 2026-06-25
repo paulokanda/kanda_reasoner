@@ -124,6 +124,22 @@ STARTER_PLACEHOLDER_PATTERNS = (
     "starter fallback",
 )
 
+STALE_LOCAL_VALIDATION_PENDING_PATTERNS = (
+    "local validation pending",
+    "pre-validation sidecar only",
+    "pre validation sidecar only",
+    "user-local validation must be run",
+    "user local validation must be run",
+    "user-local validation remains required",
+    "user local validation remains required",
+    "run the delivered validation block",
+    "run the provided validation block",
+    "run scripts/validate_release_guard_zip_contract_v1.py after installation",
+    "before confirm and write",
+    "before freeze confirmation",
+    "before freezing",
+)
+
 MANDATORY_FORM_FIELDS = (
     "feature_title",
     "primary_box",
@@ -258,7 +274,7 @@ def scan_and_save_latest_freeze_hint(
             stale_skipped.append(candidate.name)
             continue
 
-        if newest_consumed_blocked and not _has_recognizable_validation_marker(
+        if newest_consumed_blocked and not _has_safe_validation_evidence_marker(
             str(hint.get("validation_evidence_summary") or "")
         ):
             stale_skipped.append(candidate.name)
@@ -605,7 +621,7 @@ def _merge_record_form_inputs_with_fallback(
         + source_name
         + ".",
     )
-    return merged
+    return _clean_stale_pending_text_after_local_validation(merged)
 
 def _merge_form_inputs_with_fallback(
     inputs: Mapping[str, Any],
@@ -627,7 +643,7 @@ def _merge_form_inputs_with_fallback(
         merged.get("do_not_regress_rules", ""),
         MANDATORY_RULES,
     )
-    return merged
+    return _clean_stale_pending_text_after_local_validation(merged)
 
 
 def _autofill_state_result(
@@ -642,6 +658,7 @@ def _autofill_state_result(
     """Build a stable state result for the freeze form arbitration function."""
 
     normalized = _normalize_form_inputs(dict(form_inputs))
+    normalized = _clean_stale_pending_text_after_local_validation(normalized)
     has_validation = _form_has_recognizable_validation_marker(normalized)
     has_mandatory = _form_has_mandatory_freeze_fields(normalized)
     is_starter = source_kind == "starter_fallback"
@@ -663,9 +680,9 @@ def _autofill_state_result(
 
 
 def _form_has_recognizable_validation_marker(form_inputs: Mapping[str, Any]) -> bool:
-    """Return True when form inputs contain recognizer-friendly validation."""
+    """Return True when form inputs contain safe validation evidence."""
 
-    return _has_recognizable_validation_marker(
+    return _has_safe_validation_evidence_marker(
         str(form_inputs.get("validation_evidence_summary") or "")
     )
 
@@ -716,7 +733,7 @@ def merge_validation_evidence_into_latest_hint(
         }
 
     warnings = []
-    if not _has_recognizable_validation_marker(evidence):
+    if not _has_safe_validation_evidence_marker(evidence):
         warnings.append(RECOGNIZABLE_VALIDATION_HINT)
 
     record = dict(loaded.get("record") or {})
@@ -754,6 +771,8 @@ def merge_validation_evidence_into_latest_hint(
 
     hint["validation_evidence_summary"] = evidence
     form_inputs["validation_evidence_summary"] = evidence
+    hint = _clean_stale_pending_text_after_local_validation(hint)
+    form_inputs = _clean_stale_pending_text_after_local_validation(form_inputs)
     record["hint"] = hint
     record["form_inputs"] = form_inputs
     record["validation_evidence_merged_at_utc"] = _utc_now()
@@ -935,7 +954,7 @@ def _preserve_existing_validated_record_if_same_hint(
     )
     incoming_evidence = str(incoming_hint.get("validation_evidence_summary") or "")
 
-    if _has_recognizable_validation_marker(existing_evidence) and not _has_recognizable_validation_marker(incoming_evidence):
+    if _has_safe_validation_evidence_marker(existing_evidence) and not _has_safe_validation_evidence_marker(incoming_evidence):
         return dict(existing)
 
     return None
@@ -997,7 +1016,7 @@ def _record_has_recognizable_validation_evidence(record: Mapping[str, Any]) -> b
     if isinstance(form_inputs, Mapping):
         evidence_parts.append(str(form_inputs.get("validation_evidence_summary") or ""))
     evidence = "\n".join(part for part in evidence_parts if part.strip())
-    return _has_recognizable_validation_marker(evidence)
+    return _has_safe_validation_evidence_marker(evidence)
 
 
 def _find_matching_frozen_feature(project_root: Path, record: Mapping[str, Any]) -> dict[str, Any] | None:
@@ -1432,7 +1451,7 @@ def _hint_to_form_inputs(hint: Mapping[str, Any]) -> dict[str, str]:
     )
     inputs["protected_paths"] = _append_missing_lines(inputs.get("protected_paths", ""), MANDATORY_PROTECTED_PATHS)
     inputs["do_not_regress_rules"] = _append_missing_lines(inputs.get("do_not_regress_rules", ""), MANDATORY_RULES)
-    return inputs
+    return _clean_stale_pending_text_after_local_validation(inputs)
 
 
 def _normalize_form_inputs(inputs: Mapping[str, Any]) -> dict[str, str]:
@@ -1509,6 +1528,68 @@ def _has_recognizable_validation_marker(value: Any) -> bool:
     if any(marker in folded for marker in markers):
         return True
     return "installed" in folded and "validated" in folded and "closed" in folded
+
+
+def _has_stale_local_validation_pending_text(value: Any) -> bool:
+    folded = str(value or "").casefold()
+    return any(pattern in folded for pattern in STALE_LOCAL_VALIDATION_PENDING_PATTERNS)
+
+
+def _has_local_validation_completion_marker(value: Any) -> bool:
+    for raw_line in str(value or "").splitlines():
+        line = raw_line.strip()
+        folded = line.casefold()
+        if not line:
+            continue
+        if folded.startswith("sandbox validation ok"):
+            continue
+        if folded.startswith("validation ok:"):
+            return True
+        if folded.startswith("local validation passed"):
+            return True
+        if folded.startswith("freeze hint merge ok"):
+            return True
+    return False
+
+
+def _has_safe_validation_evidence_marker(value: Any) -> bool:
+    text = str(value or "")
+    if _has_stale_local_validation_pending_text(text) and not _has_local_validation_completion_marker(text):
+        return False
+    return _has_recognizable_validation_marker(text)
+
+
+def _clean_stale_pending_text_after_local_validation(inputs: Mapping[str, Any]) -> dict[str, str]:
+    cleaned = _normalize_form_inputs(dict(inputs))
+    evidence = cleaned.get("validation_evidence_summary", "")
+    if not _has_local_validation_completion_marker(evidence):
+        return cleaned
+    for key in ("validation_evidence_summary", "known_warnings", "planned_next_step", "notes"):
+        cleaned[key] = _strip_stale_pending_validation_text(cleaned.get(key, ""))
+    return cleaned
+
+
+def _strip_stale_pending_validation_text(value: Any) -> str:
+    text = str(value or "")
+    if not text.strip():
+        return ""
+    kept_lines: list[str] = []
+    for raw_line in text.splitlines():
+        cleaned_line = _strip_stale_pending_validation_sentences(raw_line)
+        if cleaned_line.strip():
+            kept_lines.append(cleaned_line.strip())
+    return "\n".join(kept_lines).strip()
+
+
+def _strip_stale_pending_validation_sentences(line: str) -> str:
+    text = str(line or "").strip()
+    if not text:
+        return ""
+    if not _has_stale_local_validation_pending_text(text):
+        return text
+    parts = re.split(r"(?<=[.!?])\s+", text)
+    kept = [part.strip() for part in parts if part.strip() and not _has_stale_local_validation_pending_text(part)]
+    return " ".join(kept).strip()
 
 
 def _normalize_line(value: str) -> str:

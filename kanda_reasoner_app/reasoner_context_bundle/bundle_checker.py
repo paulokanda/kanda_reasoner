@@ -92,8 +92,8 @@ def _check_payload_project_contract(
         return
     if project.get("project_root_marker") != "<PROJECT_ROOT>":
         failures.append(expected_kind + " must use <PROJECT_ROOT> marker")
-    if project.get("evidence_root_relative") != "project_analysis_evidence":
-        failures.append(expected_kind + " evidence root must be project_analysis_evidence")
+    if project.get("evidence_root_relative") != "show_project_to_AI":
+        failures.append(expected_kind + " evidence root must be show_project_to_AI")
     if "_project" + "_reference" in json.dumps(project, sort_keys=True):
         failures.append(expected_kind + " project metadata must not use " + "_project" + "_reference")
 
@@ -171,48 +171,6 @@ def _check_manifest_snapshot_alignment(context: ProjectContext, failures: list[s
         )
 
 
-def _check_reconstruction_payload(context: ProjectContext, failures: list[str]) -> None:
-    paths = bundle_artifact_paths(context)
-    if not paths.reconstruction_payload_json.exists():
-        failures.append("reconstruction_payload artifact is missing")
-        return
-    payload = _load_json(paths.reconstruction_payload_json)
-    _check_payload_project_contract(payload, "reconstruction_payload", failures)
-    policy = payload.get("reconstruction_policy")
-    if not isinstance(policy, dict):
-        failures.append("reconstruction_payload.reconstruction_policy must be an object")
-        return
-    if policy.get("exact_binary_reconstruction") is not True:
-        failures.append("reconstruction_payload must support exact binary reconstruction")
-    if policy.get("exact_active_project_file_reconstruction") is not True:
-        failures.append("reconstruction_payload must support exact active project file reconstruction")
-    if policy.get("internet_or_ai_contact") is not False:
-        failures.append("reconstruction_payload must declare no internet or AI contact")
-
-    if not paths.file_manifest_json.exists():
-        return
-    manifest = _load_json(paths.file_manifest_json)
-    manifest_files = manifest.get("files", [])
-    payload_files = payload.get("files", [])
-    if not isinstance(manifest_files, list):
-        failures.append("file_manifest.files must be a list")
-        return
-    if not isinstance(payload_files, list):
-        failures.append("reconstruction_payload.files must be a list")
-        return
-    manifest_paths = {
-        str(item.get("path", "")): str(item.get("sha256_raw", ""))
-        for item in manifest_files
-        if isinstance(item, dict)
-    }
-    payload_paths = {
-        str(item.get("path", "")): str(item.get("sha256_raw", ""))
-        for item in payload_files
-        if isinstance(item, dict)
-    }
-    if manifest_paths != payload_paths:
-        failures.append("reconstruction_payload files do not match file_manifest active files")
-
 def _check_validation_state(context: ProjectContext, failures: list[str]) -> None:
     paths = bundle_artifact_paths(context)
     if not paths.validation_state_json.exists():
@@ -251,9 +209,10 @@ def check_ai_context_bundle(project: str | Path | ProjectContext) -> dict[str, A
     _check_payload_project_contract(manifest, "bundle_manifest", failures)
     _check_manifest_artifacts(context, manifest, failures)
     _check_manifest_paths(context, failures)
-    _check_snapshot_paths(context, failures)
-    _check_manifest_snapshot_alignment(context, failures)
-    _check_reconstruction_payload(context, failures)
+    # Hybrid Source Archive mode deliberately does not require the old heavy
+    # active_snapshot artifact. Exact source reconstruction is handled by the
+    # source_archive_manifest and source_archive_part ZIPs written after this
+    # lightweight bundle check passes.
     _check_validation_state(context, failures)
 
     return {

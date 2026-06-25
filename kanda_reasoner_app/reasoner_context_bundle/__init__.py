@@ -50,12 +50,31 @@ from .bundle_checker import (
 from .bundle_orchestrator import generate_ai_context_bundle
 from .bundle_zipper import zip_ai_context_bundle
 
-from .handoff_zip_exporter import (
-    CONSERVATIVE_PART_SIZE_MB,
-    DEFAULT_PART_SIZE_MB,
-    export_json_handoff_zip_parts,
-    is_destination_inside_project_root,
-)
+
+_HANDOFF_ZIP_EXPORTER_PUBLIC_NAMES = {
+    "CONSERVATIVE_PART_SIZE_MB",
+    "DEFAULT_PART_SIZE_MB",
+    "export_json_handoff_zip_parts",
+    "is_destination_inside_project_root",
+}
+
+
+def __getattr__(name: str):
+    """Lazily expose handoff ZIP exporter names without preloading its CLI module.
+
+    ``handoff_zip_exporter`` is executable via ``python -m``.  Eagerly
+    importing it from this package ``__init__`` preloads the target module
+    before runpy executes it and triggers the runtime warning:
+
+    ``found in sys.modules after import of package ... but prior to execution``.
+
+    Keep the public package surface compatible while avoiding that eager import.
+    """
+    if name in _HANDOFF_ZIP_EXPORTER_PUBLIC_NAMES:
+        from . import handoff_zip_exporter as exporter
+
+        return getattr(exporter, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 from .cli import main as run_reasoner_context_bundle_cli
 
 run_project_context_bundle_cli = run_reasoner_context_bundle_cli

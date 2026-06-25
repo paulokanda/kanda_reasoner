@@ -138,7 +138,7 @@ first_prompts_to_ai.zip
 Then the human pastes:
 
 ```text
-paste_after_first_prompts_to_ai.md
+tell_AI_read_before_all.md
 ```
 
 That paste file is intentionally a bootloader, not a master prompt.
@@ -508,14 +508,14 @@ If the user asks to modify startup delivery, the AI must request:
 paste_if_modify_startup_delivery.md
 sync_startup_routing_kernel_pack.py
 STARTUP_ROUTING_KERNEL_SOURCES.json
-current first_AI_deliver artifacts
+current first_prompt_files artifacts
 startup delivery validation steps
 ```
 
 It must recognize:
 
 ```text
-paste_after_first_prompts_to_ai.md
+tell_AI_read_before_all.md
 ```
 
 as the current friendly startup paste file.

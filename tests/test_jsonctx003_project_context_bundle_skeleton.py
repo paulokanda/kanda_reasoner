@@ -46,7 +46,7 @@ from kanda_reasoner_app.reasoner_context_bundle.schema_models import (  # noqa: 
 )
 
 
-def test_resolve_project_context_uses_dynamic_external_architecture_audit_path() -> None:
+def test_resolve_project_context_uses_dynamic_show_project_to_ai_path() -> None:
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir) / "alpha project"
         root.mkdir()
@@ -55,11 +55,10 @@ def test_resolve_project_context_uses_dynamic_external_architecture_audit_path()
 
         assert context.root == root
         assert context.project_slug == "alpha_project"
-        assert context.evidence_root.name == "current"
-        assert context.evidence_root.parent.name == "alpha_project_architecture_audit"
-        assert context.json_complete_dir == context.evidence_root / "json_complete"
+        assert context.evidence_root.name == "alpha_project_show_project_to_AI"
+        assert context.json_complete_dir == context.evidence_root
         assert str(context.evidence_root).replace("\\", "/").endswith(
-            "alpha_project_architecture_audit/current"
+            "alpha_project_show_project_to_AI"
         )
         assert "_project_reference" not in str(context.evidence_root)
         assert "project_analysis_evidence" not in str(context.evidence_root)
@@ -71,14 +70,14 @@ def test_bundle_artifact_paths_are_additive_and_do_not_change_complete_json() ->
     paths = bundle_artifact_paths(root)
 
     assert paths.complete_json.as_posix().endswith(
-        "demo_project_architecture_audit/current/json_complete/demo_project__complete.json"
+        "demo_project_show_project_to_AI/demo_project__complete.json"
     )
     assert paths.active_snapshot_json.name == "demo_project__active_snapshot.json"
     assert paths.file_manifest_json.name == "demo_project__file_manifest.json"
     assert paths.exclusion_rules_json.name == "demo_project__exclusion_rules.json"
     assert paths.validation_state_json.name == "demo_project__validation_state.json"
     assert paths.bundle_manifest_json.name == "demo_project__bundle_manifest.json"
-    assert len(paths.required_paths()) == 7
+    assert len(paths.required_paths()) == 10
 
 
 def test_relative_posix_path_rejects_paths_outside_project_root() -> None:
@@ -158,7 +157,7 @@ def test_project_context_bundle_sources_do_not_hardcode_current_project_root() -
 
 
 if __name__ == "__main__":
-    test_resolve_project_context_uses_dynamic_external_architecture_audit_path()
+    test_resolve_project_context_uses_dynamic_show_project_to_ai_path()
     test_bundle_artifact_paths_are_additive_and_do_not_change_complete_json()
     test_relative_posix_path_rejects_paths_outside_project_root()
     test_write_json_atomic_creates_valid_json_without_partial_file()

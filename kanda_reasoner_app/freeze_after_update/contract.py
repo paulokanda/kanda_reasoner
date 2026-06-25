@@ -117,6 +117,8 @@ def write_confirmed_freeze_entry(
             message=str(exc),
         )
 
+from kanda_reasoner_app.project_analysis_evidence_paths import analysis_first_prompt_files_dir
+
 
 def refresh_freeze_exposure(project_root: str | Path, *, max_items: int = 40) -> dict[str, Any]:
     """Return current freeze-memory exposure for the active project.
@@ -172,12 +174,14 @@ def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 
         app_root = Path(__file__).resolve().parents[2]
         workspace_root = app_root / "kanda_prompt_workspace"
         script = workspace_root / "prompt_tools" / "sync_startup_routing_kernel_pack.py"
-        startup_zip = workspace_root / "first_AI_deliver" / "first_prompts_to_ai.zip"
-        paste_after = workspace_root / "first_AI_deliver" / "paste_after_first_prompts_to_ai.md"
+        startup_delivery_dir = analysis_first_prompt_files_dir(resolved_project_root)
+        startup_zip = startup_delivery_dir / "first_prompts_to_ai.zip"
+        read_before_all = startup_delivery_dir / "tell_AI_read_before_all.md"
+        prompt_library_zip = startup_delivery_dir / "prompt_library.zip"
 
-        # Refresh files_to_send_ai first so the final read-only exposure audit
-        # does not report stale AI-send artifacts immediately after a successful
-        # local freeze write.
+        # Deprecated project-local files_to_send_ai ZIPs are cleaned, not regenerated.
+        # Freeze context now travels through the external Show Project to AI startup
+        # and source-archive delivery.
         ai_send_result = generate_freeze_after_update_ai_files(resolved_project_root)
 
         if not script.is_file():
@@ -228,14 +232,17 @@ def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 
             "ai_send_refreshed": ai_send_ok,
             "ai_send_status": getattr(getattr(ai_send_result, "status", None), "value", str(getattr(ai_send_result, "status", ""))),
             "ai_send_message": str(getattr(ai_send_result, "message", "")),
-            "ai_send_zip": str(getattr(ai_send_result, "output_zip", "") or ""),
-            "ai_send_instruction": str(getattr(ai_send_result, "output_instruction", "") or ""),
+            "ai_send_zip": "",
+            "ai_send_instruction": "",
             "startup_context_refreshed": startup_ok,
             "startup_sync_stdout": completed_stdout,
             "startup_sync_stderr": completed_stderr,
             "startup_sync_returncode": completed_returncode,
             "startup_zip": str(startup_zip),
-            "paste_after_uploading": str(paste_after),
+            "read_before_all_instruction": str(read_before_all),
+            "paste_after_uploading": str(read_before_all),  # Backward-compatible key; active file is tell_AI_read_before_all.md.
+            "prompt_library_zip": str(prompt_library_zip),
+            "project_local_ai_send_generation_deprecated": True,
             "generated_context_filename": "09_active_project_freeze_context.md",
             "errors": errors,
             "warnings": warnings,
@@ -258,6 +265,17 @@ def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 
         result["startup_sync_stdout"] = completed_stdout
         result["startup_sync_stderr"] = completed_stderr
         result["startup_sync_returncode"] = completed_returncode
+        try:
+            app_root = Path(__file__).resolve().parents[2]
+            workspace_root = app_root / "kanda_prompt_workspace"
+            startup_delivery_dir = analysis_first_prompt_files_dir(resolved_project_root)
+            result["startup_zip"] = str(startup_delivery_dir / "first_prompts_to_ai.zip")
+            result["read_before_all_instruction"] = str(startup_delivery_dir / "tell_AI_read_before_all.md")
+            result["paste_after_uploading"] = str(startup_delivery_dir / "tell_AI_read_before_all.md")
+            result["prompt_library_zip"] = str(startup_delivery_dir / "prompt_library.zip")
+            result["generated_context_filename"] = "09_active_project_freeze_context.md"
+        except Exception:
+            pass
         return result
 
 

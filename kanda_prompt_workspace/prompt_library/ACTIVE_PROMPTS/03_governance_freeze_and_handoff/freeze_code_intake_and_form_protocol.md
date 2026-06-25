@@ -89,6 +89,31 @@ FREEZE BLOCKED - validation evidence marker missing.
 
 Freeze-form JSON must be strict parser-ready output between the exact KANDA markers, without markdown fences, comments, trailing commas, or explanatory text inside the markers.
 
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
+## Canonical freeze-ready patch delivery sequence
+
+For every freezeable KANDA/PyArchitect patch, the delivery order is mandatory and must not be inverted, skipped, or diluted:
+
+1. **Send the patch ZIP only after contract validation.** The ZIP must contain only the changed project files plus a root-level `KANDA_FREEZE_HINT.json` sidecar. If the ZIP contract cannot be verified, block delivery with `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
+2. **Send the install PowerShell after the ZIP.** The install block must stage the ZIP from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project_name>_delete_after_daily_work\`, delete the root-drive ZIP copy after successful staging, extract only from the staged ZIP, and install only changed project files.
+3. **Do not install the freeze sidecar into the project root.** `KANDA_FREEZE_HINT.json` is freeze-intake delivery metadata. It may be scanned or consumed from the staged ZIP / daily-work intake location, but it must not be copied as a normal project source file.
+4. **Send the validation PowerShell after the install block.** Validation must be a separate local action after install and must emit recognizable evidence, including `VALIDATION OK: <feature_id>`. When startup delivery, generated evidence, or sync state is validated, it must also emit `STATUS: IN_SYNC`.
+5. **Freeze only after local validation passes.** The Freeze Feature After Update flow must use the feature-specific `KANDA_FREEZE_HINT.json` / freeze-intake data plus current validation evidence, then require Preview and explicit human Confirm and Write.
+6. **Refresh AI exposure after freeze.** A successful local freeze write must refresh AI-send exposure and startup freeze context so the next startup pack knows the frozen behavior.
+
+Short form:
+
+```text
+patch ZIP with root KANDA_FREEZE_HINT.json
+-> install changed files only, keeping KANDA_FREEZE_HINT.json out of project root
+-> run local validation with VALIDATION OK and STATUS: IN_SYNC when applicable
+-> freeze through Preview + Confirm and Write
+-> refresh AI-send and startup freeze context
+```
+
+Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
+
 ## Required behavior for freeze form review
 
 When reviewing a freeze formulary, verify that:

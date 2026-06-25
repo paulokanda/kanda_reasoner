@@ -25,7 +25,7 @@ GENERATOR_VERSION = "1.0.0"
 
 _SAMPLE_PATHS = (
     "<PRODUCT_PACKAGE>/example.py",
-    "project_analysis_evidence/json_complete/example.json",
+    "show_project_to_AI/second_prompt_files/example.json",
     "_project" + "_reference/example.md",
     "tests/test_example.py",
     "temp/example.py",
@@ -72,8 +72,8 @@ def build_exclusion_rules_payload(
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",
-            "evidence_root_relative": "project_analysis_evidence",
-            "json_complete_relative": "project_analysis_evidence/json_complete",
+            "evidence_root_relative": "show_project_to_AI",
+            "json_complete_relative": "show_project_to_AI/second_prompt_files",
         },
         "source": {
             "kind": "central_project_exclusion_policy",

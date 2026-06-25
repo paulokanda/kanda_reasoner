@@ -26,7 +26,7 @@ DEFAULT_PROJECT_EXCLUDED_EXTENSIONS = (
     ".pyc", ".pyo", ".log", ".tmp", ".bak", ".swp",
 )
 REASONER_PROJECT_EXCLUDED_FOLDERS = (
-    "developer_tools_older",
+    "legacy_project_older",
     "snippets",
     "legacy_cleanup",
     "oldies_deprecated",

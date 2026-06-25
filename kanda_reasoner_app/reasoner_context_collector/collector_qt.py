@@ -1,6 +1,6 @@
 """Support static evidence collection for Project Reasoner."""
 
-# developer_tools/kanda_reasoner_app/reasoner_context_collector/collector_qt.py
+# kanda_reasoner/kanda_reasoner_app/reasoner_context_collector/collector_qt.py
 
 from __future__ import annotations
 

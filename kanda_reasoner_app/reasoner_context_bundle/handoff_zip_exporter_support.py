@@ -9,13 +9,13 @@ from typing import Any
 
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
-from .path_normalization import relative_posix_path, safe_resolve
+from .path_normalization import artifact_logical_posix_path, resolve_logical_artifact_path, safe_resolve
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
 
 _EXPORT_KIND = "json_handoff_zip_parts"
 _EXPORT_GENERATOR = "reasoner_context_bundle.handoff_zip_exporter"
-_EXPORT_GENERATOR_VERSION = "1.1.0"
+_EXPORT_GENERATOR_VERSION = "2.2.0"
 _DEFAULT_PART_SIZE_MB = 40
 _CONSERVATIVE_PART_SIZE_MB = 25
 _BYTES_PER_MB = 1024 * 1024
@@ -55,14 +55,36 @@ def load_json_object(path: Path) -> dict[str, Any]:
 
 
 def resolve_project_artifact(context: ProjectContext, relative_path: str) -> Path:
-    """Resolve an artifact and reject paths that escape the project root."""
-    artifact = safe_resolve(context.root / relative_path)
-    root = safe_resolve(context.root)
+    """Resolve a bundle artifact path from project or architecture-audit roots."""
+    return resolve_logical_artifact_path(context, relative_path)
+
+
+def _final_delivery_logical_path(logical_path: str) -> str:
+    """Return a stable final-delivery logical path for handoff members."""
+    text = logical_path.replace("\\", "/")
+    text = text.replace(
+        "show_project_to_AI/second_prompt_files_building/",
+        "show_project_to_AI/second_prompt_files/",
+    )
+    if "/.json_handoff_zip_stage_" in text:
+        return "show_project_to_AI/second_prompt_files/" + Path(text).name
+    if "/.json_handoff_zip_work_" in text:
+        return "show_project_to_AI/second_prompt_files/" + Path(text).name
+    return text
+
+
+def _handoff_artifact_logical_path(path: Path, context: ProjectContext) -> str:
+    """Return a final-delivery logical path for handoff artifacts.
+
+    ZIPs are often assembled while artifacts live in ``second_prompt_files_building``
+    or in a temporary staging folder.  The delivered ZIP must never expose those
+    transactional paths.  It always reports members under the final
+    ``show_project_to_AI/second_prompt_files`` contract.
+    """
     try:
-        artifact.relative_to(root)
-    except ValueError as exc:
-        raise ValueError("Artifact path escapes project root: " + relative_path) from exc
-    return artifact
+        return _final_delivery_logical_path(artifact_logical_posix_path(path, context))
+    except ValueError:
+        return "show_project_to_AI/second_prompt_files/" + path.name
 
 
 def _is_destination_inside_project_root(project_root: str | Path, destination: str | Path) -> bool:
@@ -129,13 +151,9 @@ def ordered_export_paths(context: ProjectContext, include_runtime_trace: bool) -
     def rank(path: Path) -> int:
         name = path.name
         order = [
-            "__complete.json",
-            _RUNTIME_TRACE_SUFFIX,
             "__exclusion_rules.json",
             "__file_manifest.json",
-            "__active_snapshot.json",
             "__validation_state.json",
-            _RECONSTRUCTION_SUFFIX,
             "__bundle_manifest.json",
         ]
         for index, suffix in enumerate(order):
@@ -143,7 +161,8 @@ def ordered_export_paths(context: ProjectContext, include_runtime_trace: bool) -
                 return index
         return len(order)
 
-    combined = list(required_paths)
+    forbidden_suffixes = ("__complete.json", "__active_snapshot.json", "__reconstruction_payload.json")
+    combined = [path for path in required_paths if not path.name.endswith(forbidden_suffixes)]
     if runtime_trace is not None and runtime_trace not in combined:
         combined.append(runtime_trace)
     return sorted(combined, key=lambda item: (rank(item), item.name))
@@ -161,31 +180,41 @@ def timestamp_value(timestamp: str | None) -> str:
 
 def safe_zip_member_name(base_folder: str, path: Path, context: ProjectContext) -> str:
     """Return a ZIP member name scoped under base_folder."""
-    relative = relative_posix_path(path, context.root)
-    if relative.startswith("../") or relative == "..":
-        raise ValueError("ZIP artifact path escapes project root: " + str(path))
+    relative = _handoff_artifact_logical_path(path, context)
+    if relative.startswith("../") or relative == ".." or Path(relative).is_absolute():
+        raise ValueError("ZIP artifact path escapes allowed roots: " + str(path))
     return base_folder + "/" + relative
 
 
 def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
     """Return the plain-text external upload README."""
+    slug = context.project_slug
     return "\n".join(
         [
-            "Kanda Reasoner JSON handoff export",
-            "Project slug: " + context.project_slug,
+            "Kanda Reasoner second upload group - read this first",
+            "Project slug: " + slug,
             "Project root marker: <PROJECT_ROOT>",
             "Target standalone ZIP part size: " + str(part_size_mb) + " MB",
+            "The AI-readable JSON handoff is delivered as ZIP package(s) that respect the selected Show Project to AI size cap.",
+            "Loose JSON files may exist for local inspection, but the normal AI upload should use the JSON handoff ZIP package.",
             "",
-            "Created packages:",
-            "1. " + context.project_slug + "__ai_handoff_upload.zip",
-            "   Upload this first to ChatGPT. It contains AI-readable project context.",
-            "2. " + context.project_slug + "__ai_handoff_reconstruction.zip",
-            "   Upload only when exact active-project reconstruction is needed.",
-            "3. " + context.project_slug + "__ai_handoff_all_in_one.zip",
-            "   Archive/convenience package containing every handoff artifact.",
+            "Second-upload reading order:",
+            "1. _RUN_COLLECTOR_STATUS.txt, if present, to confirm generation status.",
+            "2. " + slug + "__ai_handoff_upload_readme.txt, this file.",
+            "3. " + slug + "__ai_handoff_upload*.zip, in numeric order if split. This is the zipped JSON handoff package.",
+            "4. Inside the JSON handoff ZIP, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state.",
+            "5. " + slug + "__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed. Use source_archive_manifest to choose needed parts.",
+            "6. " + slug + "__ai_handoff_all_in_one*.zip only as convenience/archive fallback if the upload ZIP package is missing.",
             "",
-            "If a package is split, upload its part files in numeric order.",
-            "Each part is a normal standalone ZIP file.",
+            "Created package families:",
+            "1. " + slug + "__ai_handoff_upload*.zip",
+            "   Upload/read this JSON handoff package before source archive parts. It may be split to respect the selected size cap.",
+            "2. " + slug + "__source_archive_partXX_of_YY.zip",
+            "   Upload only when exact source-tree reconstruction is needed.",
+            "3. " + slug + "__ai_handoff_all_in_one*.zip",
+            "   Archive/convenience package containing AI-readable handoff artifacts, not nested source ZIPs.",
+            "",
+            "Each part is a normal standalone ZIP file. Source archive parts are independent ZIPs with disjoint file subsets.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
             "No internet or AI service is contacted during ZIP creation.",
             "",
@@ -204,7 +233,7 @@ def package_readme_text(
     """Return the per-package README text stored inside each ZIP."""
     return "\n".join(
         [
-            "Kanda Reasoner JSON handoff ZIP package",
+            "Kanda Reasoner AI handoff ZIP package",
             "Project slug: " + context.project_slug,
             "Project root marker: <PROJECT_ROOT>",
             "Package: " + package_name,
@@ -213,6 +242,9 @@ def package_readme_text(
             "Target standalone ZIP part size: " + str(part_size_mb) + " MB",
             "",
             "Each part is a normal standalone ZIP file.",
+            "If this package is split, read/upload parts in numeric order.",
+            "For ai_handoff_upload packages, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state.",
+            "Source archive part ZIPs should be opened only when exact source inspection is needed.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
             "No internet or AI service is contacted during ZIP creation.",
             "",
@@ -223,38 +255,31 @@ def package_readme_text(
 def artifact_record(path: Path, context: ProjectContext) -> dict[str, Any]:
     """Return stable metadata for one handoff artifact."""
     return {
-        "path": relative_posix_path(path, context.root),
+        "path": _handoff_artifact_logical_path(path, context),
         "size_bytes": path.stat().st_size,
         "sha256": sha256_file(path),
     }
 
 
 def package_specs(context: ProjectContext, artifacts: list[Path]) -> list[dict[str, Any]]:
-    """Return the three handoff package specifications."""
-    reconstruction = [path for path in artifacts if path.name.endswith(_RECONSTRUCTION_SUFFIX)]
-    if not reconstruction:
-        raise ValueError("reconstruction_payload artifact is missing from handoff bundle")
+    """Return AI-readable handoff package specifications.
 
-    upload_artifacts = [path for path in artifacts if not path.name.endswith(_RECONSTRUCTION_SUFFIX)]
+    Exact source reconstruction is exported separately as standalone source
+    archive ZIP parts plus a source_archive_manifest JSON file.  Do not place
+    source archive ZIPs inside these AI context packages.
+    """
     return [
         {
             "name": "upload",
             "stem": context.project_slug + "__ai_handoff_upload",
-            "purpose": "AI-readable project context for first ChatGPT upload.",
-            "artifacts": upload_artifacts,
+            "purpose": "AI-readable project context plus source-archive manifest for first ChatGPT upload.",
+            "artifacts": artifacts,
             "readme_name": "UPLOAD_README.txt",
-        },
-        {
-            "name": "reconstruction",
-            "stem": context.project_slug + "__ai_handoff_reconstruction",
-            "purpose": "Lossless active-project raw-byte reconstruction payload.",
-            "artifacts": reconstruction,
-            "readme_name": "RECONSTRUCTION_README.txt",
         },
         {
             "name": "all_in_one",
             "stem": context.project_slug + "__ai_handoff_all_in_one",
-            "purpose": "Archive convenience package containing every handoff artifact.",
+            "purpose": "Archive convenience package containing AI-readable handoff artifacts and source-archive manifest.",
             "artifacts": artifacts,
             "readme_name": "UPLOAD_README.txt",
         },

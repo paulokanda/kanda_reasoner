@@ -30,7 +30,7 @@ Date:
 - <YYYY-MM-DD>
 
 Project:
-- Project Reasoner / developer_tools
+- Project Reasoner / selected project root
 
 Project root:
 - <PROJECT_ROOT>

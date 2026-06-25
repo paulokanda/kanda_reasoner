@@ -3,10 +3,10 @@
   "box_name": "Freeze Hint Intake",
   "box_type": "domain_state_bridge",
   "box_size": "small",
-  "version": "1.2.0",
-  "contract_version": "1.2",
+  "version": "1.3.0",
+  "contract_version": "1.3",
   "health_state": "draft",
-  "responsibility": "Read KANDA_FREEZE_HINT.json sidecars from staged patch ZIPs, normalize both flat and nested patch-boundary metadata into complete freeze-form inputs, repair legacy saved form records from the raw hint when needed, merge post-validation evidence after local validation passes, and provide mandatory-field-safe freeze-form inputs to the Freeze Feature After Update tab before heuristic fallback.",
+  "responsibility": "Read KANDA_FREEZE_HINT.json sidecars from staged patch ZIPs, normalize both flat and nested patch-boundary metadata into complete freeze-form inputs, repair legacy saved form records from the raw hint when needed, merge post-validation evidence after local validation passes, safely remove stale LOCAL VALIDATION PENDING wording once real local validation markers exist, and provide mandatory-field-safe freeze-form inputs to the Freeze Feature After Update tab before heuristic fallback.",
   "owner_paths": [
     "kanda_reasoner_app/freeze_hint_intake/"
   ],
@@ -36,6 +36,9 @@
     "freeze_warning_populates_known_warnings",
     "protected_architecture_characteristics_populate_do_not_regress_rules",
     "legacy_saved_records_are_repaired_from_raw_hint",
-    "confirm_write_enabled_requires_mandatory_non_placeholder_fields"
+    "confirm_write_enabled_requires_mandatory_non_placeholder_fields",
+    "sandbox_only_validation_with_local_pending_keeps_confirm_write_disabled",
+    "local_validation_merge_removes_stale_pending_warnings",
+    "legacy_mixed_local_evidence_is_cleaned_during_autofill"
   ]
 }

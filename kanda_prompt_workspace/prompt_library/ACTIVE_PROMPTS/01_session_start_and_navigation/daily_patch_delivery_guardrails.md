@@ -1,6 +1,6 @@
 # Daily Patch Delivery Guardrails
 
-Version: 1.6
+Version: 1.9
 Status: startup guardrail
 Prompt ID: daily_patch_delivery_guardrails
 Load mode: always_startup
@@ -41,7 +41,8 @@ before extracting or installing anything.
 9. Install failure and validation failure must show the log/error before cleanup so the user can copy or send the output if needed.
 10. Do not close the terminal from any install, validation, error, or diagnostic block. Do not replace this behavior with the old generic footer that always waits 5 seconds and then asks for Enter twice.
 11. If the AI forgets the terminal cleanup rule, it must not guess. It must return to this guardrail and the router canon first, then ask the human if still uncertain.
-12. Remind the user to use Freeze Feature After Update only at meaningful regression-risk checkpoints, not after every small update.
+12. Install blocks must contain a fail-safe error cleanup path. A successful install uses 5 seconds then `Clear-Host`; any install error must show the error, wait for Enter, `Clear-Host`, wait for Enter again, and `Clear-Host` again. The terminal must never be closed.
+13. Remind the user to use Freeze Feature After Update only at meaningful regression-risk checkpoints, not after every small update.
 
 
 
@@ -55,14 +56,64 @@ Minimum startup hook:
 
 1. Terminal output must be classified as install success, validation, diagnostic, install error, validation error, or other terminal before writing the footer.
 2. Install success uses the 5-second Clear-Host footer and no Enter prompts.
-3. Validation, diagnostic, and error terminal blocks use Enter, Clear-Host, Enter, Clear-Host.
+3. Validation, diagnostic, install-error, validation-error, and other non-install-success terminal blocks use Enter, Clear-Host, Enter, Clear-Host.
 4. Patch ZIP delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first at `<drive>:\PATCH_NAME.zip`, stage the ZIP into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, extract only from staging, and must freshly extract.
 5. Freeze-form JSON must use exact markers and valid JSON only.
 6. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes.
 7. Freeze-ready patch ZIPs must include root-level `KANDA_FREEZE_HINT.json` unless intentionally non-freezeable.
-8. Freeze-intake and frozen memory paths must use the selected active project root.
+8. Any patch ZIP link must be blocked unless the ZIP passes `python scripts/validate_patch_zip.py <zip_path>` in the sandbox or local release pipeline.
+9. The root sidecar and the freeze-form JSON must be rendered from the same freeze payload source. Do not hand-type them separately.
+10. Freeze-intake and frozen memory paths must use the selected active project root.
 
 This hook is output-time compliance. It does not replace the router and must not over-route simple Fast Path explanation-only tasks.
+
+
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
+## Canonical freeze-ready patch delivery sequence
+
+For every freezeable KANDA/PyArchitect patch, the delivery order is mandatory and must not be inverted, skipped, or diluted:
+
+1. **Send the patch ZIP only after contract validation.** The ZIP must contain only the changed project files plus a root-level `KANDA_FREEZE_HINT.json` sidecar. If the ZIP contract cannot be verified, block delivery with `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
+2. **Send the install PowerShell after the ZIP.** The install block must stage the ZIP from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project_name>_delete_after_daily_work\`, delete the root-drive ZIP copy after successful staging, extract only from the staged ZIP, and install only changed project files.
+3. **Do not install the freeze sidecar into the project root.** `KANDA_FREEZE_HINT.json` is freeze-intake delivery metadata. It may be scanned or consumed from the staged ZIP / daily-work intake location, but it must not be copied as a normal project source file.
+4. **Send the validation PowerShell after the install block.** Validation must be a separate local action after install and must emit recognizable evidence, including `VALIDATION OK: <feature_id>`. When startup delivery, generated evidence, or sync state is validated, it must also emit `STATUS: IN_SYNC`.
+5. **Freeze only after local validation passes.** The Freeze Feature After Update flow must use the feature-specific `KANDA_FREEZE_HINT.json` / freeze-intake data plus current validation evidence, then require Preview and explicit human Confirm and Write.
+6. **Refresh AI exposure after freeze.** A successful local freeze write must refresh AI-send exposure and startup freeze context so the next startup pack knows the frozen behavior.
+
+Short form:
+
+```text
+patch ZIP with root KANDA_FREEZE_HINT.json
+-> install changed files only, keeping KANDA_FREEZE_HINT.json out of project root
+-> run local validation with VALIDATION OK and STATUS: IN_SYNC when applicable
+-> freeze through Preview + Confirm and Write
+-> refresh AI-send and startup freeze context
+```
+
+Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
+<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
+
+## Startup-loaded install error register hook
+
+The startup pack must also load `patch_install_delivery_error_register`.
+
+Before emitting a patch ZIP link, install block, validation block, or freeze-ready patch metadata, the AI must apply both:
+
+1. `daily_patch_delivery_guardrails`
+2. `patch_install_delivery_error_register`
+
+This exists because PIR-001 showed that correct feature implementation can still fail at the final delivery wrapper.
+
+Hard rule from PIR-001:
+
+- User saves the patch ZIP at `<drive>:\PATCH_NAME.zip`.
+- Installer stages it into `<drive>:\<project_name>_delete_after_daily_work\`.
+- Installer deletes the root-drive ZIP copy after successful staging.
+- Installer extracts only from the staged ZIP.
+- Installer must not use a Downloads/Desktop-first search fallback.
+- Installer must not require the user to manually place the ZIP directly in `_delete_after_daily_work`.
+
+If a future install delivery error occurs, pause feature implementation and append a new PIR entry to `patch_install_delivery_error_register.md` before continuing.
 
 ## Required KANDA terminal cleanup behavior
 
@@ -129,6 +180,24 @@ Required sandbox checks before delivery:
 
 If the AI cannot run a sandbox check, it must say which check could not be run and why, then reduce the claim accordingly.
 
+
+## PATCH_DELIVERY_RELEASE fail-closed contract
+
+Patch ZIP delivery is an output-time release event. Before the AI provides any patch ZIP download link, install block, validation block, or freeze metadata, it must run the governed release gate:
+
+1. Build the ZIP in the sandbox.
+2. Confirm `KANDA_FREEZE_HINT.json` is at ZIP root, not inside the payload folder.
+3. Confirm every mandatory freeze-hint field is present, non-empty, and not placeholder text.
+4. Run or simulate the checked-in validator:
+
+```text
+python scripts/validate_patch_zip.py <zip_path>
+```
+
+5. Confirm the install block follows the root-drive staging template and contains no Downloads/Desktop fallback.
+6. If any check fails, do not emit the ZIP link. Return `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` with the failed check.
+
+This rule exists because prior failures occurred after correct routing, during final ZIP/link/PowerShell output. Treat it as a hard gate, not a reminder.
 
 ## Installer ZIP staging rule
 
@@ -228,7 +297,7 @@ Patch delivery must respect the active box:
 ```text
 prompt_library/      = canonical prompt source
 prompt_tools/        = generators and source maps
-first_AI_deliver/    = generated human-facing startup delivery artifacts
+first_prompt_files/    = generated human-facing startup delivery artifacts
 delete_after_daily_work folder = temporary patch ZIPs and extracted patch helpers
 ```
 
@@ -321,3 +390,33 @@ Validation requirement:
 
 Before delivery, the AI must inspect the ZIP and confirm that `KANDA_FREEZE_HINT.json` exists, is valid JSON, includes the required keys, and names the same feature as the patch being delivered. If the patch is intentionally non-freezeable, the AI must say why no freeze hint is included.
 
+
+## Install error fail-safe footer
+
+Every install block must protect the install body with a `try { ... } catch { ... }` or text-equivalent wrapper. This prevents install failures from bypassing cleanup.
+
+Install error behavior:
+
+* Show `INSTALL ERROR` and the error message.
+* Wait for Enter.
+* Clear the terminal.
+* Wait for Enter again.
+* Clear the terminal again.
+* Keep the terminal open.
+* Do not use `exit`, `Stop-Process`, or any command that closes the terminal.
+
+Install error footer:
+
+```powershell
+Write-Host ""
+Write-Host "INSTALL ERROR. Review the error below before clearing the terminal."
+Write-Host $_.Exception.Message
+Write-Host ""
+Read-Host "Press Enter to clear terminal"
+Clear-Host
+
+Read-Host "Press Enter again to finish"
+Clear-Host
+$global:LASTEXITCODE = 1
+return
+```

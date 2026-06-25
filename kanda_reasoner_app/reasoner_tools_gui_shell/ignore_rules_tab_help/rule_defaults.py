@@ -25,7 +25,7 @@ class IgnoreRulesDefaultsMixin:
             return []
 
         return [
-            "DEVELOPER_TOOLS_older",
+            "LEGACY_PROJECT_older",
             "snippets",
             "legacy_cleanup",
             "oldies_deprecated",

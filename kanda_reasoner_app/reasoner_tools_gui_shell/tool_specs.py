@@ -71,7 +71,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="docstring_assistant",
     ),
     ToolSpec(
-        step_title="Project Structure Map",
+        step_title="Show Project to AI",
         module_candidates=(
             _module_path("reasoner_context_collector", "runner"),
         ),

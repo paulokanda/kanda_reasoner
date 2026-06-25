@@ -106,7 +106,7 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "occipital_lobe",
         "Occipital lobe",
-        "Project Structure Map",
+        "Show Project to AI",
         "Seeing the whole project",
         "Helps visualize the project layout, source organization, and structural relationships.",
         "Ready to open through the injected Tab Navigation Controller callback.",

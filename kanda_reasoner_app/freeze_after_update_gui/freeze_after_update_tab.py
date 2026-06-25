@@ -1538,7 +1538,9 @@ class FreezeAfterUpdateTab(QWidget):
             compliance = refresh_ai_compliance_context(project_root)
             self._append_log("")
             self._append_log("AI COMPLIANCE REFRESH AFTER LOCAL WRITE")
-            if compliance.get("ai_send_refreshed"):
+            if compliance.get("project_local_ai_send_generation_deprecated"):
+                self._append_log("Project-local files_to_send_ai ZIP generation is deprecated; using Show Project to AI startup/source-archive exposure instead.")
+            elif compliance.get("ai_send_refreshed"):
                 self._append_log("AI-send exposure refreshed for current freeze memory.")
                 if compliance.get("ai_send_zip"):
                     self._append_log(f"- AI-send ZIP: {compliance.get('ai_send_zip')}")
@@ -1550,7 +1552,10 @@ class FreezeAfterUpdateTab(QWidget):
             if compliance.get("startup_context_refreshed"):
                 self._append_log("Startup freeze context refreshed for next AI programming session.")
                 self._append_log(f"- Startup ZIP: {compliance.get('startup_zip')}")
-                self._append_log(f"- Paste-after file: {compliance.get('paste_after_uploading')}")
+                read_before_all = compliance.get('read_before_all_instruction') or compliance.get('paste_after_uploading')
+                self._append_log(f"- Read-before-all file: {read_before_all}")
+                if compliance.get('prompt_library_zip'):
+                    self._append_log(f"- Prompt library ZIP: {compliance.get('prompt_library_zip')}")
                 self._append_log(f"- Context file inside startup ZIP: {compliance.get('generated_context_filename')}")
             else:
                 self._append_log("Startup freeze context refresh failed or was unavailable.")

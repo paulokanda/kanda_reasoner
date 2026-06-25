@@ -25,7 +25,7 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 
 Version: 1.0
 Status: Optional special-purpose hardening protocol
-Project: Project Reasoner / developer_tools / kanda_reasoner_app
+Project: Project Reasoner / selected project root / kanda_reasoner_app
 Use: Upload this prompt only when the task is an architecture-hardening campaign,
 not for normal daily implementation.
 

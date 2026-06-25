@@ -14,8 +14,8 @@ __all__ = [
     "classify_loaded_json_track",
 ]
 
-CANONICAL_COMPLETE_JSON_NAME = "developer_tools__complete.json"
-LOCAL_AI_COMPLETE_JSON_NAME = "developer_tools__complete_local_AI.json"
+CANONICAL_COMPLETE_JSON_NAME = "<project_slug>__complete.json"
+LOCAL_AI_COMPLETE_JSON_NAME = "<project_slug>__complete_local_AI.json"
 
 
 def classify_loaded_json_track(file_path: str) -> str:
