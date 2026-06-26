@@ -57,6 +57,7 @@ _CANONICAL_PACKAGE_NAME = "kanda_reasoner_app"
 _ARCHITECTURE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_architecture/manage_architecture_gui.py"
 _WORKFLOWS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_workflows/manage_workflows_gui.py"
 _DOCSTRINGS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py"
+_ERROR_MEMORY_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/error_memory_gui/error_memory_tab.py"
 
 from kanda_reasoner_app.templates.floating_windows.float_window import attach_floating_window
 
@@ -256,6 +257,18 @@ class LazyToolTab(QWidget):
         insert_index = getattr(self, "_status_source_insert_index", None)
         mover(self.status_source_row, insert_index)
 
+
+    def _move_error_memory_project_root_controls_to_status_row(self, widget: QWidget) -> None:
+        """Move Error Memory Project Root controls beside LOADED / Source."""
+        if self.spec.source_hint != _ERROR_MEMORY_GUI_SOURCE:
+            return
+
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
+        if not callable(mover):
+            return
+
+        mover(self.status_source_row, self._status_source_insert_index)
+
     def load_tool(self) -> bool:
         if self._loaded:
             return True
@@ -272,6 +285,7 @@ class LazyToolTab(QWidget):
             self._move_tab2_worker_script_selector_to_status_row(widget)
             self._move_tab1_worker_script_selector_to_status_row(widget)
             self._move_tab3_safe_mode_radio_to_status_row(widget)
+            self._move_error_memory_project_root_controls_to_status_row(widget)
             self.content_layout.addWidget(widget)
             self._embedded_widget = widget
 
@@ -281,6 +295,16 @@ class LazyToolTab(QWidget):
 
             self._loaded = True
             self._on_loaded(self.spec, widget)
+
+            pending_loader = getattr(widget, "load_pending_ai_assisted_error_lesson_intake_now", None)
+            if callable(pending_loader):
+                try:
+                    pending_loader()
+                except Exception:
+                    pass
+                QTimer.singleShot(0, pending_loader)
+                QTimer.singleShot(250, pending_loader)
+
             return True
 
         except (ImportError, AttributeError, RuntimeError, TypeError):

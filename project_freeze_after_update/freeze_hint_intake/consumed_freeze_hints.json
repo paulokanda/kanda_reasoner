@@ -4710,9 +4710,464 @@
         "source_size_bytes": 96404
       },
       "used_freeze_id": "freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T04:58:33Z",
+      "feature_id": "error-memory-core-gui-ai-send-canon-v1",
+      "feature_title": "Error Memory core, GUI tab, and AI-send canon v1",
+      "source": {
+        "source_mtime_ns": 1782363459402770800,
+        "source_name": "kanda_error_memory_core_gui_ai_send_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_core_gui_ai_send_canon_v1_patch.zip",
+        "source_size_bytes": 41861
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-core-gui-tab-and-ai-send-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T05:26:10Z",
+      "feature_id": "error-memory-ai-formulary-startup-canon-v1",
+      "feature_title": "Error Memory AI Formulary Startup Canon v1",
+      "source": {
+        "source_mtime_ns": 1782365034685273600,
+        "source_name": "kanda_error_memory_ai_formulary_startup_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_ai_formulary_startup_canon_v1_patch.zip",
+        "source_size_bytes": 7314
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-ai-formulary-startup-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T05:38:05Z",
+      "feature_id": "error-memory-zip-import-repair-v1",
+      "feature_title": "Error Memory ZIP Import Repair v1",
+      "source": {
+        "source_mtime_ns": 1782365834130178500,
+        "source_name": "kanda_error_memory_zip_import_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_zip_import_repair_v1_patch.zip",
+        "source_size_bytes": 9451
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-zip-import-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:02:45Z",
+      "feature_id": "error-memory-active-status-and-fingerprint-repair-v1",
+      "feature_title": "Error Memory Active Status and Fingerprint Repair v1",
+      "source": {
+        "source_mtime_ns": 1782367321336531300,
+        "source_name": "kanda_error_memory_active_status_and_fingerprint_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_active_status_and_fingerprint_repair_v1_patch.zip",
+        "source_size_bytes": 11823
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-active-status-and-fingerprint-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:02:54Z",
+      "feature_id": "error-memory-plain-text-intake-repair-v1",
+      "feature_title": "Error Memory Plain Text Intake Repair v1",
+      "source": {
+        "source_mtime_ns": 1782367023433959100,
+        "source_name": "kanda_error_memory_plain_text_intake_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_plain_text_intake_repair_v1_patch.zip",
+        "source_size_bytes": 16018
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-plain-text-intake-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:03:09Z",
+      "feature_id": "error-memory-zip-import-dependency-repair-v1",
+      "feature_title": "Error Memory ZIP Import Dependency Repair v1",
+      "source": {
+        "source_mtime_ns": 1782366134891404800,
+        "source_name": "kanda_error_memory_zip_import_dependency_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_zip_import_dependency_repair_v1_patch.zip",
+        "source_size_bytes": 16105
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-zip-import-dependency-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:25:22Z",
+      "feature_id": "error-memory-gui-two-column-lesson-actions-v1",
+      "feature_title": "Error Memory GUI Two Column Lesson Actions v1",
+      "source": {
+        "source_mtime_ns": 1782368529143617000,
+        "source_name": "kanda_error_memory_gui_two_column_lesson_actions_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_two_column_lesson_actions_v1_patch.zip",
+        "source_size_bytes": 31327
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-two-column-lesson-actions-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:40:32Z",
+      "feature_id": "error-memory-zip-import-filter-v1",
+      "feature_title": "Error Memory ZIP Import Filter v1",
+      "source": {
+        "source_mtime_ns": 1782369206216735500,
+        "source_name": "kanda_error_memory_zip_import_filter_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_zip_import_filter_v1_patch.zip",
+        "source_size_bytes": 6460
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-zip-import-filter-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T06:46:39Z",
+      "feature_id": "error-memory-gui-status-workflow-v1",
+      "feature_title": "Error Memory GUI Status Workflow v1",
+      "source": {
+        "source_mtime_ns": 1782369969535157100,
+        "source_name": "kanda_error_memory_gui_status_workflow_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_status_workflow_v1_patch.zip",
+        "source_size_bytes": 9873
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-status-workflow-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T07:27:06Z",
+      "feature_id": "error-memory-repeat-error-guard-v1",
+      "feature_title": "Error Memory Repeat Error Guard v1",
+      "source": {
+        "source_mtime_ns": 1782372377979609600,
+        "source_name": "kanda_error_memory_repeat_error_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_repeat_error_guard_v1_patch.zip",
+        "source_size_bytes": 14355
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-repeat-error-guard-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T19:34:42Z",
+      "feature_id": "error-memory-second-prompt-export-v1",
+      "feature_title": "Error Memory Second Prompt Export v1",
+      "source": {
+        "source_mtime_ns": 1782372736975935300,
+        "source_name": "kanda_error_memory_second_prompt_export_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_second_prompt_export_v1_patch.zip",
+        "source_size_bytes": 9961
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-second-prompt-export-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T19:58:14Z",
+      "feature_id": "prompt-error-memory-two-track-closure-v2",
+      "feature_title": "Prompt Error Memory Two-Track Closure v2",
+      "source": {
+        "source_name": "prompt-error-memory-two-track-closure-v2",
+        "source_path": "E:\\kanda_reasoner\\kanda_prompt_workspace\\prompt_library",
+        "source_type": "manual_terminal_freeze_intake"
+      },
+      "used_freeze_id": "freeze-20260625-prompt-error-memory-two-track-closure-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T20:48:47Z",
+      "feature_id": "error-memory-receive-formulary-freeze-intake-syntaxerror-guard-v2",
+      "feature_title": "Error Memory Receive Formulary Freeze Intake SyntaxError Guard v2",
+      "source": {
+        "source_mtime_ns": 1782420257761310200,
+        "source_name": "kanda_error_memory_receive_formulary_freeze_intake_syntaxerror_guard_v2.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_receive_formulary_freeze_intake_syntaxerror_guard_v2.zip",
+        "source_size_bytes": 5919
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-receive-formulary-freeze-intake-syntaxerror-guard-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T21:28:19Z",
+      "feature_id": "error-memory-gui-memorize-formatted-import-flow-v1",
+      "feature_title": "Error Memory GUI Memorize Formatted Import Flow v1",
+      "source": {
+        "source_mtime_ns": 1782422855008406900,
+        "source_name": "kanda_error_memory_gui_memorize_formatted_import_flow_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_memorize_formatted_import_flow_v1_patch.zip",
+        "source_size_bytes": 19170
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-memorize-formatted-import-flow-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T21:54:01Z",
+      "feature_id": "error-memory-gui-header-project-root-v3",
+      "feature_title": "Error Memory GUI Header Project Root v3",
+      "source": {
+        "source_mtime_ns": 1782424408016361100,
+        "source_name": "kanda_error_memory_gui_header_project_root_v3_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_header_project_root_v3_patch.zip",
+        "source_size_bytes": 12081
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-header-project-root-v3"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T22:03:34Z",
+      "feature_id": "error-memory-gui-loaded-row-project-root-v4",
+      "feature_title": "Error Memory GUI Loaded Row Project Root v4",
+      "source": {
+        "source_mtime_ns": 1782424979658291300,
+        "source_name": "kanda_error_memory_gui_loaded_row_project_root_v4_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_loaded_row_project_root_v4_patch.zip",
+        "source_size_bytes": 42301
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-loaded-row-project-root-v4"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T22:22:03Z",
+      "feature_id": "error-memory-gui-error-editor-memorize-active-v5",
+      "feature_title": "Error Memory GUI Error Editor Memorize Active v5",
+      "source": {
+        "source_mtime_ns": 1782426051369197100,
+        "source_name": "kanda_error_memory_gui_error_editor_memorize_active_v5_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_error_editor_memorize_active_v5_patch.zip",
+        "source_size_bytes": 11043
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-error-editor-memorize-active-v5"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T22:49:11Z",
+      "feature_id": "error-memory-gui-ai-draft-zip-workflow-v6",
+      "feature_title": "Error Memory GUI AI Draft ZIP Workflow v6",
+      "source": {
+        "source_mtime_ns": 1782427699722818900,
+        "source_name": "kanda_error_memory_gui_ai_draft_zip_workflow_v6_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_ai_draft_zip_workflow_v6_patch.zip",
+        "source_size_bytes": 18653
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-ai-draft-zip-workflow-v6"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T23:01:42Z",
+      "feature_id": "prompt-error-lesson-zip-router-canon-v1",
+      "feature_title": "Prompt Error Lesson ZIP Router Canon v1",
+      "source": {
+        "source_mtime_ns": 1782428454011003100,
+        "source_name": "kanda_prompt_error_lesson_zip_router_canon_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_prompt_error_lesson_zip_router_canon_v1_patch.zip",
+        "source_size_bytes": 17137
+      },
+      "used_freeze_id": "freeze-20260625-prompt-error-lesson-zip-router-canon-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-25T23:42:32Z",
+      "feature_id": "error-memory-gui-memorize-clean-editor-flow-v7",
+      "feature_title": "Error Memory GUI Memorize Clean Editor Flow v7",
+      "source": {
+        "source_mtime_ns": 1782430885037791300,
+        "source_name": "kanda_error_memory_gui_memorize_clean_editor_flow_v7_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_memorize_clean_editor_flow_v7_patch.zip",
+        "source_size_bytes": 13264
+      },
+      "used_freeze_id": "freeze-20260625-error-memory-gui-memorize-clean-editor-flow-v7"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T00:06:13Z",
+      "feature_id": "error-memory-gui-pending-intake-autoload-v9",
+      "feature_title": "Error Memory GUI Pending Intake Autoload v9",
+      "source": {
+        "source_mtime_ns": 1782432283869360500,
+        "source_name": "kanda_error_memory_gui_pending_intake_autoload_v9_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_pending_intake_autoload_v9_patch.zip",
+        "source_size_bytes": 14664
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-gui-pending-intake-autoload-v9"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T00:52:34Z",
+      "feature_id": "prompt-error-memory-default-insertion-autoload-v2",
+      "feature_title": "Prompt Error Memory Default Insertion Autoload v2",
+      "source": {
+        "source_mtime_ns": 1782435096137386400,
+        "source_name": "kanda_prompt_error_memory_default_insertion_autoload_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_prompt_error_memory_default_insertion_autoload_v2_patch.zip",
+        "source_size_bytes": 8779
+      },
+      "used_freeze_id": "freeze-20260626-prompt-error-memory-default-insertion-autoload-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T00:53:15Z",
+      "feature_id": "error-memory-gui-pending-intake-root-sync-v10",
+      "feature_title": "Error Memory GUI Pending Intake Root Sync v10",
+      "source": {
+        "source_mtime_ns": 1782432630732301400,
+        "source_name": "kanda_error_memory_gui_pending_intake_root_sync_v10_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_pending_intake_root_sync_v10_patch.zip",
+        "source_size_bytes": 16547
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-gui-pending-intake-root-sync-v10"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T00:53:44Z",
+      "feature_id": "error-memory-gui-manifest-zip-import-v8",
+      "feature_title": "Error Memory GUI Manifest ZIP Import v8",
+      "source": {
+        "source_mtime_ns": 1782431806997144100,
+        "source_name": "kanda_error_memory_gui_manifest_zip_import_v8_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_gui_manifest_zip_import_v8_patch.zip",
+        "source_size_bytes": 13012
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-gui-manifest-zip-import-v8"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T02:08:07Z",
+      "feature_id": "show-project-error-memory-path-guard-v1",
+      "feature_title": "Show Project and Error Memory path guard",
+      "source": {
+        "source_mtime_ns": 1782437236522567800,
+        "source_name": "kanda_show_project_error_memory_path_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_show_project_error_memory_path_guard_v1_patch.zip",
+        "source_size_bytes": 22311
+      },
+      "used_freeze_id": "freeze-20260626-show-project-and-error-memory-path-guard"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T02:32:01Z",
+      "feature_id": "startup-delivery-maintenance-filename-sort-v2",
+      "feature_title": "Startup delivery maintenance filename sorts after normal upload files",
+      "source": {
+        "source_mtime_ns": 1782441060472871300,
+        "source_name": "kanda_startup_delivery_maintenance_filename_sort_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_delivery_maintenance_filename_sort_v2_patch.zip",
+        "source_size_bytes": 37076
+      },
+      "used_freeze_id": "freeze-20260626-startup-delivery-maintenance-filename-sorts-after-normal-upload-files"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T02:47:18Z",
+      "feature_id": "error-memory-memorize-clears-intake-only-v2",
+      "feature_title": "Error Memory Memorize Error clears AI-assisted intake only",
+      "source": {
+        "source_mtime_ns": 1782442000291320500,
+        "source_name": "kanda_error_memory_memorize_clears_intake_only_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_memorize_clears_intake_only_v2_patch.zip",
+        "source_size_bytes": 20221
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-memorize-error-clears-ai-assisted-intake-only"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T03:02:56Z",
+      "feature_id": "error-memory-packaged-lesson-schema-guard-v1",
+      "feature_title": "Error Memory packaged lesson active-ready schema guard",
+      "source": {
+        "source_mtime_ns": 1782442917778263200,
+        "source_name": "kanda_error_memory_packaged_lesson_schema_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_packaged_lesson_schema_guard_v1_patch.zip",
+        "source_size_bytes": 12929
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-packaged-lesson-active-ready-schema-guard"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T03:19:19Z",
+      "feature_id": "error-memory-packaged-lesson-schema-guard-v2",
+      "feature_title": "Error Memory packaged lesson active-ready schema guard v2",
+      "source": {
+        "source_mtime_ns": 1782443898619452400,
+        "source_name": "kanda_error_memory_packaged_lesson_schema_guard_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_packaged_lesson_schema_guard_v2_patch.zip",
+        "source_size_bytes": 15775
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-packaged-lesson-active-ready-schema-guard-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T03:51:04Z",
+      "feature_id": "startup-artifact-read-order-guard-v2",
+      "feature_title": "Startup artifact read-order guard v2",
+      "source": {
+        "source_mtime_ns": 1782445813395411400,
+        "source_name": "kanda_startup_artifact_read_order_guard_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v2_patch.zip",
+        "source_size_bytes": 9957
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T04:56:55Z",
+      "feature_id": "startup-artifact-read-order-guard-v9",
+      "feature_title": "Startup artifact read-order guard v9",
+      "source": {
+        "source_mtime_ns": 1782449769679098800,
+        "source_name": "kanda_startup_artifact_read_order_guard_v9_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v9_patch.zip",
+        "source_size_bytes": 13128
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-v9"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:43:26Z",
+      "feature_id": "startup-artifact-read-order-guard-v8",
+      "feature_title": "Startup artifact read-order guard v8",
+      "source": {
+        "source_mtime_ns": 1782449270822275800,
+        "source_name": "kanda_startup_artifact_read_order_guard_v8_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v8_patch.zip",
+        "source_size_bytes": 12475
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-v8"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:54:34Z",
+      "feature_id": "startup-artifact-read-order-guard-v7",
+      "feature_title": "Startup artifact read-order guard v7",
+      "source": {
+        "source_mtime_ns": 1782448944264503500,
+        "source_name": "kanda_startup_artifact_read_order_guard_v7_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v7_patch.zip",
+        "source_size_bytes": 12683
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-v7"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:54:45Z",
+      "feature_id": "startup-artifact-read-order-guard-v6",
+      "feature_title": "Startup artifact read-order guard replacing stale generated notice blocks v6",
+      "source": {
+        "source_mtime_ns": 1782448446927412500,
+        "source_name": "kanda_startup_artifact_read_order_guard_v6_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v6_patch.zip",
+        "source_size_bytes": 10494
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-replacing-stale-generated-notice-blocks-v6"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:54:54Z",
+      "feature_id": "startup-artifact-read-order-guard-v5",
+      "feature_title": "Startup artifact read-order guard replacing stale generated notice blocks v5",
+      "source": {
+        "source_mtime_ns": 1782448197493307200,
+        "source_name": "kanda_startup_artifact_read_order_guard_v5_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v5_patch.zip",
+        "source_size_bytes": 7790
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-replacing-stale-generated-notice-blocks-v5"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:55:02Z",
+      "feature_id": "startup-artifact-read-order-guard-v4",
+      "feature_title": "Startup artifact read-order guard with tell-file optional maintenance wording v4",
+      "source": {
+        "source_mtime_ns": 1782447250941101800,
+        "source_name": "kanda_startup_artifact_read_order_guard_v4_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v4_patch.zip",
+        "source_size_bytes": 9558
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-with-tell-file-optional-maintenance-wording-v4"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:55:10Z",
+      "feature_id": "startup-artifact-read-order-guard-v3",
+      "feature_title": "Startup artifact read-order guard with optional maintenance file v3",
+      "source": {
+        "source_mtime_ns": 1782446748726908900,
+        "source_name": "kanda_startup_artifact_read_order_guard_v3_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v3_patch.zip",
+        "source_size_bytes": 8911
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard-with-optional-maintenance-file-v3"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T05:55:18Z",
+      "feature_id": "startup-artifact-read-order-guard-v1",
+      "feature_title": "Startup artifact read order guard",
+      "source": {
+        "source_mtime_ns": 1782445279319558100,
+        "source_name": "kanda_startup_artifact_read_order_guard_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v1_patch.zip",
+        "source_size_bytes": 10174
+      },
+      "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-25T03:26:26Z"
+  "updated_at_utc": "2026-06-26T05:55:18Z"
 }

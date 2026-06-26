@@ -8,6 +8,21 @@ from PySide6.QtWidgets import QComboBox, QLineEdit, QWidget
 
 from kanda_reasoner_app.project_root_resolver import normalize_project_root_text
 
+_OUTPUT_ROOT_SUFFIXES = ("_show_project_to_AI", "_delete_after_daily_work")
+_SHOW_PROJECT_CHILD_NAMES = {
+    "first_prompt_files",
+    "second_prompt_files",
+    "second_prompt_files_building",
+    "project_error_memory",
+    "json_splitted",
+}
+_ERROR_MEMORY_CHILD_NAMES = {
+    "pending_ai_assisted_error_lesson_intake",
+    "lessons",
+    "exports",
+    "schemas",
+}
+
 __all__: list[str] = []
 
 
@@ -112,6 +127,67 @@ class _WindowProjectRootMixin:
         self._propagate_project_root(project_root)
 
     @staticmethod
-    def _normalize_project_root(text: str) -> Path | None:
-        """Normalize a user-provided project root path."""
-        return normalize_project_root_text(text)
+    def _source_root_peer_from_suffixed_output(path: Path) -> Path | None:
+        """Return an existing source-root sibling for a generated output root."""
+        for suffix in _OUTPUT_ROOT_SUFFIXES:
+            if not path.name.endswith(suffix):
+                continue
+            base_name = path.name[: -len(suffix)].strip()
+            if not base_name:
+                return None
+            peer = (path.parent / base_name).expanduser().resolve(strict=False)
+            if peer.exists() and peer.is_dir():
+                return peer
+            return None
+        return None
+
+    @classmethod
+    def _project_root_from_output_hint(cls, path: Path) -> Path | None:
+        """Resolve generated-output hints back to the real project root.
+
+        The shell-level project root must be the source project folder, not
+        ``*_show_project_to_AI``, ``project_error_memory``, a child output
+        folder, or ``*_delete_after_daily_work``.  Returning ``None`` for
+        unmatched output hints prevents stale typo output folders from becoming
+        the active project.
+        """
+        candidate = path
+        if candidate.name in _ERROR_MEMORY_CHILD_NAMES:
+            parent = candidate.parent
+            if parent.name == "project_error_memory":
+                candidate = parent
+
+        if candidate.name in _SHOW_PROJECT_CHILD_NAMES:
+            parent = candidate.parent
+            if parent.name.endswith("_show_project_to_AI"):
+                candidate = parent
+
+        return cls._source_root_peer_from_suffixed_output(candidate)
+
+    @classmethod
+    def _normalize_project_root(cls, text: str) -> Path | None:
+        """Normalize a user-provided project root path.
+
+        Live GUI text changes must not create project output roots for partial
+        or misspelled paths.  Only existing directories, or generated-output
+        hints that can be resolved back to an existing sibling source root, are
+        accepted as the shared project root.
+        """
+        root = normalize_project_root_text(text)
+        if root is None:
+            return None
+
+        output_root = cls._project_root_from_output_hint(root)
+        if output_root is not None:
+            return output_root
+
+        if root.name.endswith(_OUTPUT_ROOT_SUFFIXES):
+            return None
+
+        if root.name in (_SHOW_PROJECT_CHILD_NAMES | _ERROR_MEMORY_CHILD_NAMES):
+            return None
+
+        if not root.exists() or not root.is_dir():
+            return None
+
+        return root

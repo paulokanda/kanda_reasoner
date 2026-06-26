@@ -711,3 +711,111 @@ When a bundle is created from another project's prompts or canon, the bundle mus
 - include install code but not official governance freeze.
 
 This is subordinate to the normal bundle-gated workflow: no direct source mutation, validate-before-freeze, and one concern per bundle.
+
+---
+<!-- KANDA_ADDENDUM:error_driven_repair_bundle_to_error_memory:v1 -->
+
+## Error-Driven Repair Bundle to Error Memory Bridge
+
+When a user pastes an error from a terminal, app error window, GUI popup, validation run, install run, traceback, or chat-reported AI mistake, keep this workflow as the owner of the repair bundle and call the Error Memory AI formulary as the companion output.
+
+Do not jump directly to a patch. First classify the error source and Operation phase, extract the useful evidence, inspect the exact source files, and test the narrow correction in sandbox when possible.
+
+Before delivery, the repair ZIP must install only the corrected code and must not include unrelated files. After delivery, include install and validation commands. If the patch corrected an error, also include a receive-ready Error Memory lesson block using error_memory_ai_formulary_startup_canon.
+
+Use real evidence only. Separate sandbox validation from user-local validation. If local validation has not been run by the user, say local validation is pending. If the correction is not fully proven, mark the Error Memory lesson as draft. Never freeze automatically.
+
+---
+<!-- KANDA_ADDENDUM:corrected_error_two_track_closure:v2 -->
+
+## Corrected-Error Two-Track Closure Contract
+
+When the user pastes an error and the AI corrects code, the AI must close the task in two linked tracks.
+
+Track A is the code correction.
+
+Track B is the Error Memory lesson that teaches the system what happened, how the code was corrected, and how not to repeat the same mistake.
+
+The AI must not deliver only the code patch. It must also prepare the Error Memory intake material.
+
+For every corrected-error patch, final delivery must include:
+
+1. Code correction summary.
+2. Changed files and reason for each change.
+3. Installable repair ZIP or exact install instructions.
+4. Code validation command and result.
+5. Error Memory intake block for the AI-assisted Error lesson intake group.
+6. Error Memory validation command or manual validation steps.
+7. Freeze-ready summary for the code correction.
+8. Freeze-ready summary for the Error Memory lesson.
+9. Clear statement that local freeze is not automatic and still requires human Preview and Confirm and Write.
+
+The Error Memory intake block must explicitly connect the error to the code correction.
+
+It must include raw error summary, operation phase, symptom, root cause, wrong assumption, corrected code files, corrected functions or workflow areas, patch ZIP name when available, install command summary, validation command summary, validation evidence, do-not-repeat rule, prevention triggers, regression check, and freeze-readiness status.
+
+The AI must not invent validation evidence.
+
+If sandbox validation passed but local validation has not been run, the AI must say: Sandbox validation passed. Local validation is still pending.
+
+If the Error Memory lesson has not yet been accepted or written through the Error Memory tab, the AI must say: Error Memory intake is prepared, but Error Memory write is still pending human review.
+
+If freeze is not complete, the AI must say: Freeze-ready material is prepared, but freeze is not complete until Preview and Confirm and Write are performed by the user.
+
+A corrected-error task is not complete unless both tracks are addressed:
+
+Track A: code correction installed and validated or pending local validation.
+
+Track B: Error Memory intake prepared and validated or pending local Error Memory validation.
+
+Never automatically freeze.
+
+Never claim that Error Memory was written unless the user provides local write evidence or the app reports LOCAL FREEZE WRITE OK / Error Memory write success.
+
+Never claim the startup freeze context refreshed unless the local freeze writer output shows it.
+
+---
+<!-- KANDA_ADDENDUM:error_memory_default_autoload_patch_delivery:v2 -->
+
+## Error Memory default insertion package delivery
+
+When delivering the default Error Memory insertion workflow, use the normal guarded ZIP delivery pattern. In plain trigger language, this is the zip install validate routine:
+
+```text
+ZIP at project drive root -> installer stages ZIP in <project>_delete_after_daily_work -> install/update needed files and stage pending lesson -> validation -> full app restart/open Error Memory tab
+```
+
+Default Error Memory insertion package responsibilities:
+
+```text
+1. Include a formatted KANDA_ERROR_LESSON_JSON pending lesson file.
+2. Stage that file under:
+   <drive>:\<project>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake
+3. If source support is missing or stale, update error_memory_tab.py and lazy_tabs.py so the pending-intake loader is called after the tab is embedded and after project-root propagation.
+4. validation must check py_compile, the staged dynamic pending file, and the source contract that loads the pending lesson into AI-assisted error lesson intake and Error Editor.
+5. State that Lessons is not changed until the human clicks Memorize Error.
+```
+
+This default mode is different from Direct Error Lesson ZIP. Direct Error Lesson ZIP is manual import only. The default mode is the correct response when the user asks for `zip, install, validate, error appear in AI-assisted error lesson intake`.
+
+---
+<!-- KANDA_ADDENDUM:bundle_error_memory_packaged_lesson_gate:v1 -->
+
+## Bundle gate for packaged Error Memory lessons
+
+When the bundle corrects an error or includes Error Memory receive blocks, the
+bundle is not ready for release until each packaged active Error Memory lesson
+passes the active-ready contract in `error_memory_ai_formulary_startup_canon`.
+
+The bundle validator or manual preflight must inspect:
+
+```text
+payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_*.txt
+```
+
+and confirm parseable marker-wrapped JSON, required active fields, meaningful
+prevention triggers, real validation evidence, regression check, exception
+metadata, fingerprint metadata, and redaction metadata.
+
+Do not shift this cleanup to the user. If the lesson is not active-ready, fix the
+package before emitting the ZIP link.

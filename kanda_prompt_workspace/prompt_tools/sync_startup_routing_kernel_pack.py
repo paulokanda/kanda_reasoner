@@ -147,7 +147,7 @@ Fast Path or Routed Work Path:
 Routed Work Path.
 
 Required prompts/groups:
-1. paste_if_modify_startup_delivery.md
+1. zz_read_only_if_modifying_startup_delivery.md
 2. sync_startup_routing_kernel_pack.py
 3. STARTUP_ROUTING_KERNEL_SOURCES.json
 4. Current first_prompt_files artifacts, including first_prompts_to_ai.zip and tell_AI_read_before_all.md
@@ -166,7 +166,7 @@ Recommended prompts/groups:
 5. 09_active_project_freeze_context, if frozen startup behavior or protected paths are affected
 
 Missing context:
-paste_if_modify_startup_delivery.md, the current active tell_AI_read_before_all.md file, sync_startup_routing_kernel_pack.py, STARTUP_ROUTING_KERNEL_SOURCES.json, current first_prompt_files artifacts, the methodology prompt/freeze metadata proving its current on-request status, and validation steps for startup ZIP regeneration and load-check behavior.
+zz_read_only_if_modifying_startup_delivery.md, the current active tell_AI_read_before_all.md file, sync_startup_routing_kernel_pack.py, STARTUP_ROUTING_KERNEL_SOURCES.json, current first_prompt_files artifacts, the methodology prompt/freeze metadata proving its current on-request status, and validation steps for startup ZIP regeneration and load-check behavior.
 
 Missing behavior:
 The request names `paste_after_uploading_startup_zip.md`, which is stale/deprecated. The active file is `tell_AI_read_before_all.md`. The request also changes methodology prompt load behavior by making an on-request methodology prompt load automatically at beginning of day. That is a governed startup-delivery behavior change, not a direct generated-file edit.
@@ -181,12 +181,12 @@ Reason:
 Startup delivery is generated from canonical prompt sources, a source map, and generator logic. Directly modifying a stale/generated startup paste file would bypass the startup delivery maintenance protocol and may regress the frozen on-request behavior of cooperative_implementation_methodology.
 
 Next safe action:
-Request and inspect paste_if_modify_startup_delivery.md, sync_startup_routing_kernel_pack.py, STARTUP_ROUTING_KERNEL_SOURCES.json, current first_prompt_files artifacts including tell_AI_read_before_all.md, the methodology prompt/freeze metadata, and validation command or manual validation steps before proposing any startup-delivery patch.
+Request and inspect zz_read_only_if_modifying_startup_delivery.md, sync_startup_routing_kernel_pack.py, STARTUP_ROUTING_KERNEL_SOURCES.json, current first_prompt_files artifacts including tell_AI_read_before_all.md, the methodology prompt/freeze metadata, and validation command or manual validation steps before proposing any startup-delivery patch.
 
 FAIL CONDITIONS FOR RG-029:
 - FAIL if the response does not explicitly say `paste_after_uploading_startup_zip.md` is stale/deprecated.
 - FAIL if the response does not explicitly identify `tell_AI_read_before_all.md` as the active startup paste file.
-- FAIL if Required prompts/groups omits paste_if_modify_startup_delivery.md.
+- FAIL if Required prompts/groups omits zz_read_only_if_modifying_startup_delivery.md.
 - FAIL if Required prompts/groups omits sync_startup_routing_kernel_pack.py.
 - FAIL if Required prompts/groups omits STARTUP_ROUTING_KERNEL_SOURCES.json.
 - FAIL if Required prompts/groups omits current first_prompt_files artifacts.
@@ -244,7 +244,12 @@ This hook is output-time compliance. Do not use it to over-route simple Fast Pat
 PASTE_AFTER_UPLOAD_FILENAME = "tell_AI_read_before_all.md"
 OLD_PASTE_AFTER_UPLOAD_FILENAME = "paste_after_uploading_" + "startup_zip.md"
 LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME = "paste_after_" + "first_prompts_to_ai.md"
-MODIFY_STARTUP_DELIVERY_FILENAME = "paste_if_modify_startup_delivery.md"
+MODIFY_STARTUP_DELIVERY_FILENAME = "zz_read_only_if_modifying_startup_delivery.md"
+LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME = "paste_if_modify" + "_startup_delivery.md"
+
+# STARTUP_ARTIFACT_READ_ORDER_GUARD_V1 constants
+READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME = "000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md"
+STARTUP_ARTIFACT_READ_ORDER_MARKER = "STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST"
 
 BOOT_COMMAND_TEXT = """This file is the first startup instruction. Read this instruction before opening ZIP contents.
 
@@ -332,6 +337,37 @@ def _prepend_startup_first_position_overrides(content: str) -> str:
         content = "\n\n".join(blocks_to_prepend) + "\n\n" + content.lstrip()
     return content
 
+# STARTUP_ARTIFACT_READ_ORDER_GUARD_V4 helpers
+def make_startup_artifact_read_order_notice(artifact_name: str = "") -> str:
+    """Return a visible guard telling AI to read tell_AI first."""
+    artifact_label = artifact_name or "this startup artifact"
+    return f"""# STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST
+
+You are seeing `{artifact_label}`.
+
+Mandatory reading order for this startup delivery:
+
+```text
+1. tell_AI_read_before_all.md - read this file first, before any ZIP contents.
+2. first_prompts_to_ai.zip - after step 1, open this ZIP and read 00_START_HERE_FOR_AI.md first, then the numbered startup files in order.
+3. prompt_library.zip - keep available, but open it only when startup routing selects a specific prompt_path that is not already inside first_prompts_to_ai.zip.
+4. zz_read_only_if_modifying_startup_delivery.md - optional. Read only when modifying startup delivery. If this file is missing, pass and continue normal startup.
+```
+
+If you opened this file from inside a ZIP before reading `tell_AI_read_before_all.md`, stop using the ZIP now, read `tell_AI_read_before_all.md`, then resume with the correct order.
+
+This guard is generated by `sync_startup_routing_kernel_pack.py` and must remain at the top of generated startup artifacts.
+
+"""
+
+
+def add_read_order_block(content: str, artifact_name: str) -> str:
+    """Prepend the read-order guard to generated markdown artifacts."""
+    if STARTUP_ARTIFACT_READ_ORDER_MARKER in content:
+        return content
+    return make_startup_artifact_read_order_notice(artifact_name).rstrip() + "\n\n" + content.lstrip()
+
+
 def make_boot_command_text(expected_filenames: Iterable[str]) -> str:
     expected = list(expected_filenames)
     numbered_file_list = "\n".join(expected)
@@ -395,9 +431,9 @@ Do not send this file during normal startup sessions.
 For normal startup, use only:
 
 ```text
+{PASTE_AFTER_UPLOAD_FILENAME}
 {zip_filename}
 {PROMPT_LIBRARY_ZIP_NAME}
-{PASTE_AFTER_UPLOAD_FILENAME}
 ```
 
 ## Purpose
@@ -419,7 +455,7 @@ STARTUP_ROUTING_KERNEL_SOURCES.json
 sync_startup_routing_kernel_pack.py
 first_prompts_to_ai.zip
 tell_AI_read_before_all.md
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 startup delivery naming/content/validation
 ```
 
@@ -554,7 +590,7 @@ Allowed work:
 ```text
 update generated startup ZIP
 update tell_AI_read_before_all.md
-update paste_if_modify_startup_delivery.md
+update zz_read_only_if_modifying_startup_delivery.md
 inspect delivery artifact names
 ```
 
@@ -575,7 +611,7 @@ do not create a compiled mega-prompt unless Kanda explicitly asks
 - Preserve `STARTUP_ROUTING_KERNEL_SOURCES.json` as the source map.
 - Preserve `--check`, `--dry-run`, and `--sync`.
 - Preserve `first_prompt_files/tell_AI_read_before_all.md`.
-- Preserve `first_prompt_files/paste_if_modify_startup_delivery.md`.
+- Preserve `first_prompt_files/zz_read_only_if_modifying_startup_delivery.md`.
 - Keep `00_START_HERE_FOR_AI.md` as the stable boot filename inside the ZIP.
 - Keep certificate/build metadata in the manifest or logs, not in the human-facing filename.
 - Do not include all 12 folder cards in `first_prompts_to_ai.zip` unless Kanda explicitly opens a separate phase for that.
@@ -607,7 +643,7 @@ Current human-facing startup delivery names are:
 ```text
 first_prompts_to_ai.zip
 tell_AI_read_before_all.md
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 ```
 
 Old names should not remain in active instructions except in historical changelogs.
@@ -873,6 +909,7 @@ def make_prompt_library_zip(workspace_root: Path, output_dir: Path, generated_at
     manifest_bytes = json.dumps(manifest, indent=2, ensure_ascii=False).encode("utf-8")
 
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.writestr(READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME, make_startup_artifact_read_order_notice(PROMPT_LIBRARY_ZIP_NAME).encode("utf-8"))
         for path in files:
             z.write(path, arcname=_prompt_library_relpath(workspace_root, path))
         z.writestr(PROMPT_LIBRARY_MANIFEST_FILENAME, manifest_bytes)
@@ -891,11 +928,16 @@ def validate_prompt_library_zip_contract(zip_path: Path, workspace_root: Path | 
             "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md",
             "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
         }
+        required.add(READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME)
+
         missing = sorted(required - names)
         if missing:
             raise ValueError("prompt_library.zip is missing required files: " + str(missing))
         if any(name.startswith("prompt_library/") for name in names):
             raise ValueError("prompt_library.zip must use direct roots such as ACTIVE_PROMPTS/, not prompt_library/ACTIVE_PROMPTS/.")
+        notice_text = z.read(READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME).decode("utf-8-sig")
+        if STARTUP_ARTIFACT_READ_ORDER_MARKER not in notice_text:
+            raise ValueError("prompt_library.zip read-order notice is missing the tell_AI first instruction.")
         manifest = json.loads(z.read(PROMPT_LIBRARY_MANIFEST_FILENAME).decode("utf-8-sig"))
 
     if manifest.get("kind") != "prompt_library_zip_manifest":
@@ -1190,9 +1232,9 @@ Before implementation, I will need:
 Normal startup uses three generated startup delivery files:
 
 ```text
+{PASTE_AFTER_UPLOAD_FILENAME}
 first_prompts_to_ai.zip
 {PROMPT_LIBRARY_ZIP_NAME}
-{PASTE_AFTER_UPLOAD_FILENAME}
 ```
 
 The read-before-all file is the human boot command and must be read/pasted first before the AI opens any ZIP contents.
@@ -1283,7 +1325,7 @@ I will not bypass the startup routing system.
 
 ## Startup delivery maintenance rule
 
-The maintenance file `{MODIFY_STARTUP_DELIVERY_FILENAME}` is used only when the task modifies the startup delivery system.
+The maintenance file `{MODIFY_STARTUP_DELIVERY_FILENAME}` is optional and used only when the task modifies the startup delivery system. If it is missing during normal startup, pass and continue.
 
 Startup delivery system work includes:
 
@@ -1334,14 +1376,14 @@ Do not confuse generated delivery files with canonical prompt sources.
 For normal AI startup, the user should use all three generated startup delivery files:
 
 ```text
+{PASTE_AFTER_UPLOAD_FILENAME}
 first_prompts_to_ai.zip
 {PROMPT_LIBRARY_ZIP_NAME}
-{PASTE_AFTER_UPLOAD_FILENAME}
 ```
 
-Supply all three files before any task. Attach/upload `{DEFAULT_ZIP_NAME}` and `{PROMPT_LIBRARY_ZIP_NAME}`, then attach/read/paste `{PASTE_AFTER_UPLOAD_FILENAME}` as the first chat instruction.
+Supply all three files before any task. Read/paste `{PASTE_AFTER_UPLOAD_FILENAME}` as the first chat instruction, then attach/upload `{DEFAULT_ZIP_NAME}` and `{PROMPT_LIBRARY_ZIP_NAME}`.
 
-The file `{MODIFY_STARTUP_DELIVERY_FILENAME}` is not required for normal startup.
+The file `{MODIFY_STARTUP_DELIVERY_FILENAME}` is optional, is not required for normal startup, and may be absent without blocking startup. Read it only for startup-delivery maintenance tasks. Read it only for startup-delivery maintenance tasks. Read it only for startup-delivery maintenance tasks.
 
 If it is present anyway, do not use it unless startup delivery maintenance is explicitly requested.
 
@@ -1390,12 +1432,22 @@ def make_paste_after_uploading_file(
     dynamic_boot_command = make_boot_command_text(expected_filenames).strip()
     content = f"""# TELL AI: READ BEFORE ALL STARTUP ZIP CONTENTS
 
+## Mandatory reading order
+
+```text
+1. tell_AI_read_before_all.md - read this file first, before any ZIP contents.
+2. first_prompts_to_ai.zip - after step 1, open this ZIP and start with 00_START_HERE_FOR_AI.md.
+3. prompt_library.zip - keep available, but open only for a specific routed prompt_path.
+4. zz_read_only_if_modifying_startup_delivery.md - optional. Read only when modifying startup delivery. If this file is missing, pass and continue normal startup.
+```
+
+
 Use this file with the complete startup delivery:
 
 ```text
+{PASTE_AFTER_UPLOAD_FILENAME}
 {zip_filename}
 {PROMPT_LIBRARY_ZIP_NAME}
-{PASTE_AFTER_UPLOAD_FILENAME}
 ```
 
 ## Purpose
@@ -1405,9 +1457,9 @@ This file contains the first instruction the human should paste/read in an AI ch
 Required startup delivery files:
 
 ```text
+{PASTE_AFTER_UPLOAD_FILENAME}
 {zip_filename}
 {PROMPT_LIBRARY_ZIP_NAME}
-{PASTE_AFTER_UPLOAD_FILENAME}
 ```
 
 The startup ZIP contains the routing/startup files.
@@ -1430,7 +1482,7 @@ Prompt-library ZIP direct retrieval rule:
 The uploaded `{PROMPT_LIBRARY_ZIP_NAME}` is the canonical on-demand prompt source for this chat. Do not read every prompt at startup. Do not open `{PROMPT_LIBRARY_ZIP_NAME}` merely because startup began. First use the startup ZIP routing logic to select prompt_code / prompt_id / prompt_path. Then open only the specific addressed file from `{PROMPT_LIBRARY_ZIP_NAME}` when that specific prompt is needed and is not already present in `{DEFAULT_ZIP_NAME}`. Apply the loaded prompt text directly in this chat. Do not depend on the local Prompt Router Reasoner tab.
 
 Startup delivery maintenance rule:
-If the task involves modifying prompt_tools, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, tell_AI_read_before_all.md, paste_if_modify_startup_delivery.md, or startup delivery naming/content/validation, request paste_if_modify_startup_delivery.md before implementing.
+If the task involves modifying prompt_tools, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, tell_AI_read_before_all.md, zz_read_only_if_modifying_startup_delivery.md, or startup delivery naming/content/validation, request zz_read_only_if_modifying_startup_delivery.md before implementing.
 
 Second-upload project handoff rule:
 After STARTUP PACK LOAD CHECK is COMPLETE and Next action is WAIT_FOR_TASK, the user may send a second upload group from second_prompt_files. Do not ask for it during startup unless it is already needed for the task. When the second group arrives, read in this order:
@@ -1480,6 +1532,7 @@ Use it only if the task modifies the startup delivery system itself.
             "```text\n" + startup_overrides + "\n\n",
             1,
         )
+    content = add_read_order_block(content, filename)
     return filename, content
 
 
@@ -1607,6 +1660,7 @@ def clean_delivery_folder(output_dir: Path) -> None:
         PASTE_AFTER_UPLOAD_FILENAME,
         OLD_PASTE_AFTER_UPLOAD_FILENAME,
         LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME,
+        LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME,
         MODIFY_STARTUP_DELIVERY_FILENAME,
     ]
     for pattern in patterns:
@@ -1662,7 +1716,7 @@ def command_check(workspace_root: Path, output_dir: Path, active_project_root: P
     try:
         expected_generated = [entry.generated_filename for entry in entries] + [ACTIVE_FREEZE_CONTEXT_FILENAME]
         validate_generated_zip_contract(latest_zip, expected_generated)
-    except ValueError as exc:
+    except (ValueError, KeyError) as exc:
         print("STATUS: ZIP_CONTRACT_INVALID")
         print(str(exc))
         return 1
@@ -1707,9 +1761,7 @@ def command_check(workspace_root: Path, output_dir: Path, active_project_root: P
 
     maintenance_file = output_dir / MODIFY_STARTUP_DELIVERY_FILENAME
     if not maintenance_file.exists():
-        print("STATUS: STALE")
-        print(f"ZIP is in sync, but {MODIFY_STARTUP_DELIVERY_FILENAME} is missing from first_prompt_files.")
-        return 1
+        print(f"OPTIONAL: {MODIFY_STARTUP_DELIVERY_FILENAME} is missing from first_prompt_files; normal startup may continue.")
 
     prompt_library_zip = output_dir / PROMPT_LIBRARY_ZIP_NAME
     if not prompt_library_zip.exists():
@@ -1819,6 +1871,8 @@ def make_zip(workspace_root: Path, output_dir: Path, active_project_root: Path, 
         start_here_name, start_here_text = make_start_here_file(cert, generated_at, source_files)
         start_here_bytes = start_here_text.encode("utf-8")
         generated_payloads.insert(0, (start_here_name, start_here_bytes))
+        read_order_notice_bytes = make_startup_artifact_read_order_notice(zip_name).encode("utf-8")
+        generated_payloads.insert(0, (READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME, read_order_notice_bytes))
 
         readme_text = make_readme(cert, generated_at, zip_name, file_manifest_records, paste_name)
         readme_bytes = readme_text.encode("utf-8")
@@ -1863,8 +1917,8 @@ def make_zip(workspace_root: Path, output_dir: Path, active_project_root: Path, 
 
     zip_hash = sha256_file(zip_path)
     prompt_library_zip_hash = sha256_file(prompt_library_zip_path)
-    paste_path.write_text(paste_content, encoding="utf-8", newline="\n")
-    maintenance_path.write_text(maintenance_content, encoding="utf-8", newline="\n")
+    paste_path.write_text(add_read_order_block(paste_content, PASTE_AFTER_UPLOAD_FILENAME), encoding="utf-8", newline="\n")
+    maintenance_path.write_text(add_read_order_block(maintenance_content, MODIFY_STARTUP_DELIVERY_FILENAME), encoding="utf-8", newline="\n")
 
     print("")
     print("SYNC COMPLETE")
@@ -1874,7 +1928,7 @@ def make_zip(workspace_root: Path, output_dir: Path, active_project_root: Path, 
     print(f"Startup delivery maintenance file: {maintenance_path}")
     print(f"Startup ZIP SHA-256: {zip_hash}")
     print(f"Prompt library ZIP SHA-256: {prompt_library_zip_hash}")
-    print("Use all three generated startup delivery files: tell_AI_read_before_all.md, first_prompts_to_ai.zip, and prompt_library.zip. Read/paste tell_AI_read_before_all.md before the AI opens ZIP contents. Open prompt_library.zip only when a specific prompt is needed and is not already in first_prompts_to_ai.zip.")
+    print("Use all three normal startup files: tell_AI_read_before_all.md, first_prompts_to_ai.zip, and prompt_library.zip. Read/paste tell_AI_read_before_all.md before the AI opens ZIP contents. Open prompt_library.zip only when a specific prompt is needed and is not already in first_prompts_to_ai.zip. The zz_read_only_if_modifying_startup_delivery.md maintenance file is generated too, but it is optional to read and used only when modifying startup delivery.")
     print(f"Use {MODIFY_STARTUP_DELIVERY_FILENAME} only when asking AI to modify the startup delivery system.")
     return 0, zip_path
 
@@ -1916,15 +1970,19 @@ def validate_generated_zip_contract(
         if MODIFY_STARTUP_DELIVERY_FILENAME in names:
             raise ValueError(f"{MODIFY_STARTUP_DELIVERY_FILENAME} must stay outside the normal startup ZIP.")
 
+        notice_text = z.read(READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME).decode("utf-8-sig")
         boot_text = z.read(STABLE_BOOT_FILENAME).decode("utf-8-sig")
         manifest_text = z.read(MANIFEST_FILENAME).decode("utf-8-sig")
         freeze_context_text = z.read(ACTIVE_FREEZE_CONTEXT_FILENAME).decode("utf-8-sig") if ACTIVE_FREEZE_CONTEXT_FILENAME in names else ""
+
+    if STARTUP_ARTIFACT_READ_ORDER_MARKER not in notice_text:
+        raise ValueError("Startup ZIP read-order notice is missing the tell_AI first instruction.")
 
     required_boot_phrases = [
         "Anti-bypass rule",
         "Do not implement anything",
         "Do not create a patch",
-        "paste_if_modify_startup_delivery.md",
+        "zz_read_only_if_modifying_startup_delivery.md",
         "Routed Work Path",
         "07_daily_patch_delivery_guardrails.md",
     ]
@@ -2075,6 +2133,56 @@ def main(argv: list[str]) -> int:
     print("ERROR: no mode selected")
     return 3
 
+
+
+
+# STARTUP_ARTIFACT_READ_ORDER_GUARD_V9 canonical helpers BEGIN
+READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME = "000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md"
+STARTUP_ARTIFACT_READ_ORDER_MARKER = "STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST"
+
+
+def make_startup_artifact_read_order_notice(artifact_name: str = "") -> str:
+    artifact_label = artifact_name or "this startup artifact"
+    return f"""# STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST
+
+You are seeing `{artifact_label}`.
+
+Mandatory reading order for this startup delivery:
+
+```text
+1. tell_AI_read_before_all.md - read this file first, before any ZIP contents.
+2. first_prompts_to_ai.zip - after step 1, open this ZIP and read 00_START_HERE_FOR_AI.md first, then the numbered startup files in order.
+3. prompt_library.zip - keep available, but open it only when startup routing selects a specific prompt_path that is not already inside first_prompts_to_ai.zip.
+4. zz_read_only_if_modifying_startup_delivery.md - optional. Read only when modifying startup delivery. If this file is missing, pass and continue normal startup.
+```
+
+If you opened this file from inside a ZIP before reading `tell_AI_read_before_all.md`, stop using the ZIP now, read `tell_AI_read_before_all.md`, then resume with the correct order.
+
+This guard is generated by `sync_startup_routing_kernel_pack.py` and must remain at the top of generated startup artifacts.
+
+"""
+
+
+def strip_startup_artifact_read_order_block(content: str) -> str:
+    if not content.startswith("# " + STARTUP_ARTIFACT_READ_ORDER_MARKER):
+        return content
+    end_phrase = "This guard is generated by `sync_startup_routing_kernel_pack.py` and must remain at the top of generated startup artifacts."
+    end_index = content.find(end_phrase)
+    if end_index >= 0:
+        after = content.find("\n", end_index + len(end_phrase))
+        if after >= 0:
+            return content[after + 1 :].lstrip()
+        return ""
+    matches = list(re.finditer("\\n# (?!STARTUP DELIVERY READ ORDER)", content))
+    if matches:
+        return content[matches[0].start() + 1 :].lstrip()
+    return content
+
+
+def add_read_order_block(content: str, artifact_name: str) -> str:
+    body = strip_startup_artifact_read_order_block(content)
+    return make_startup_artifact_read_order_notice(artifact_name).rstrip() + "\n\n" + body.lstrip()
+# STARTUP_ARTIFACT_READ_ORDER_GUARD_V9 canonical helpers END
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv[1:]))

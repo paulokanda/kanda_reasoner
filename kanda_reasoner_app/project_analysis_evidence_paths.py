@@ -23,7 +23,6 @@ import re
 from pathlib import Path
 
 from kanda_reasoner_app.storage_policy.path_resolver import (
-    get_app_drive_or_anchor,
     make_safe_slug,
     normalize_path,
 )
@@ -35,14 +34,19 @@ __all__ = [
     "SECOND_PROMPT_FILES_DIR",
     "SECOND_PROMPT_FILES_BUILDING_DIR",
     "FIRST_PROMPT_FILES_DIR",
+    "PROJECT_ERROR_MEMORY_DIR",
     "SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV",
     "SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV",
+    "SHOW_PROJECT_TO_AI_SUFFIX",
+    "DELETE_AFTER_DAILY_WORK_SUFFIX",
     "JSON_PARTS_DIR",
     "project_name_from_root",
+    "show_project_to_ai_root_from_hint",
     "project_analysis_evidence_root",
     "analysis_json_complete_dir",
     "analysis_json_building_dir",
     "analysis_first_prompt_files_dir",
+    "analysis_project_error_memory_dir",
     "analysis_json_parts_dir",
     "ensure_project_analysis_evidence_dirs",
     "primary_evidence_json_path",
@@ -65,9 +69,12 @@ __all__ = [
 
 PROJECT_REFERENCE_DIR = "project_freeze_ledger"
 PROJECT_ANALYSIS_EVIDENCE_DIR = "show_project_to_AI"
+SHOW_PROJECT_TO_AI_SUFFIX = "_show_project_to_AI"
+DELETE_AFTER_DAILY_WORK_SUFFIX = "_delete_after_daily_work"
 SECOND_PROMPT_FILES_DIR = "second_prompt_files"
 SECOND_PROMPT_FILES_BUILDING_DIR = "second_prompt_files_building"
 FIRST_PROMPT_FILES_DIR = "first_prompt_files"
+PROJECT_ERROR_MEMORY_DIR = "project_error_memory"
 SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV = "KANDA_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR"
 SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV = "KANDA_SHOW_PROJECT_TO_AI_PROJECT_ROOT"
 JSON_COMPLETE_DIR = SECOND_PROMPT_FILES_DIR
@@ -84,17 +91,71 @@ def project_name_from_root(project_root: str | Path) -> str:
     return cleaned or "project"
 
 
+def _folder_name_for_slug(root: Path, slug: str) -> Path:
+    """Return the external show-project folder for a safe project slug."""
+    folder_name = f"{slug}{SHOW_PROJECT_TO_AI_SUFFIX}"
+
+    if root.drive:
+        return Path(root.anchor) / folder_name
+
+    return root.parent / folder_name
+
+
+def _base_slug_from_suffixed_name(name: str, suffix: str) -> str:
+    """Return a safe base slug after removing a known generated-folder suffix."""
+    if name.endswith(suffix):
+        return make_safe_slug(name[: -len(suffix)])
+    return make_safe_slug(name)
+
+
+def show_project_to_ai_root_from_hint(project_root: str | Path) -> Path:
+    """Return the canonical show-project root for a project or output hint.
+
+    Accepted hints include the real project root, the already generated
+    ``*_show_project_to_AI`` root, its direct children, Error Memory child
+    folders, and the daily-work maintenance folder.  This prevents accidental
+    sibling folders such as ``project_error_memory_show_project_to_AI`` or
+    ``<partial_typo>_show_project_to_AI`` from being derived from output paths.
+    """
+    root = normalize_path(project_root)
+
+    error_memory_children = {
+        "pending_ai_assisted_error_lesson_intake",
+        "lessons",
+        "exports",
+        "schemas",
+    }
+    if root.name in error_memory_children:
+        parent = root.parent
+        if parent.name == PROJECT_ERROR_MEMORY_DIR and parent.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+            return parent.parent
+
+    if root.name == PROJECT_ERROR_MEMORY_DIR and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        return root.parent
+
+    show_children = {
+        FIRST_PROMPT_FILES_DIR,
+        SECOND_PROMPT_FILES_DIR,
+        SECOND_PROMPT_FILES_BUILDING_DIR,
+        PROJECT_ERROR_MEMORY_DIR,
+        JSON_PARTS_DIR,
+    }
+    if root.name in show_children and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        return root.parent
+
+    if root.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        return root
+
+    if root.name.endswith(DELETE_AFTER_DAILY_WORK_SUFFIX):
+        slug = _base_slug_from_suffixed_name(root.name, DELETE_AFTER_DAILY_WORK_SUFFIX)
+        return _folder_name_for_slug(root, slug)
+
+    return _folder_name_for_slug(root, make_safe_slug(root.name))
+
+
 def _show_project_to_ai_root(project_root: str | Path) -> Path:
     """Return <drive>/<project>_show_project_to_AI without creating it."""
-    root = normalize_path(project_root)
-    drive_or_anchor = get_app_drive_or_anchor(root)
-    slug = make_safe_slug(root.name)
-    folder_name = f"{slug}_show_project_to_AI"
-
-    if drive_or_anchor.endswith(":"):
-        return Path(f"{drive_or_anchor}\\{folder_name}")
-
-    return Path(drive_or_anchor) / folder_name
+    return show_project_to_ai_root_from_hint(project_root)
 
 
 def project_analysis_evidence_root(project_root: str | Path) -> Path:
@@ -196,6 +257,17 @@ def analysis_json_complete_dir(project_root: str | Path) -> Path:
     return project_analysis_evidence_root(project_root) / SECOND_PROMPT_FILES_DIR
 
 
+
+def analysis_project_error_memory_dir(project_root: str | Path) -> Path:
+    """Return the external canonical Error Memory folder for the selected project.
+
+    The folder is a sibling of first_prompt_files and second_prompt_files under
+    the dynamic ``*_show_project_to_AI`` root:
+    ``<project_drive>:/<project_name>_show_project_to_AI/project_error_memory``.
+    It is persistent project-specific memory, not disposable upload output.
+    """
+    return project_analysis_evidence_root(project_root) / PROJECT_ERROR_MEMORY_DIR
+
 def analysis_first_prompt_files_dir(project_root: str | Path) -> Path:
     """Return the external first_prompt_files folder for startup delivery artifacts.
 
@@ -216,6 +288,7 @@ def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     """Create and return the external evidence root and child folders."""
     evidence_root = project_analysis_evidence_root(project_root)
     analysis_first_prompt_files_dir(project_root).mkdir(parents=True, exist_ok=True)
+    analysis_project_error_memory_dir(project_root).mkdir(parents=True, exist_ok=True)
     analysis_json_complete_dir(project_root).mkdir(parents=True, exist_ok=True)
     # Normal Show Project to AI root must only contain first_prompt_files and
     # second_prompt_files after a successful run. The temporary building folder

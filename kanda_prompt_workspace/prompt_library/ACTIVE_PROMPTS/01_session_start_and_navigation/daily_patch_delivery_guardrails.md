@@ -1,6 +1,6 @@
 # Daily Patch Delivery Guardrails
 
-Version: 1.9
+Version: 2.1
 Status: startup guardrail
 Prompt ID: daily_patch_delivery_guardrails
 Load mode: always_startup
@@ -420,3 +420,42 @@ Clear-Host
 $global:LASTEXITCODE = 1
 return
 ```
+
+<!-- KANDA_GUARDRAIL:error_event_owner_canon_pointer:v2 -->
+## Error Memory owner-canon pointer for corrected-error patch delivery
+
+If a patch corrects a reported or detected error, do not treat code validation alone as closure. Apply `error_memory_ai_formulary_startup_canon` as the owner of the Error Memory intake track. The patch must include/stage a pending lesson through the dynamic `<drive>:\<project>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake` path, or clearly state the Error Memory track is still pending human review. Do not write directly into Lessons.
+
+---
+<!-- KANDA_ADDENDUM:daily_guardrail_error_memory_active_ready_packaging:v1 -->
+
+## Error Memory packaged lesson active-ready gate
+
+When a patch ZIP, installer, validator, or delivery bundle includes
+`payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_*.txt`, the AI must
+validate each packaged lesson before delivery.
+
+Block delivery and repair the package when an active lesson is missing any of:
+
+```text
+schema_version
+lesson_id
+status
+operation_phase
+symptom
+root_cause
+correct_fix
+long_term_prevention
+do_not_repeat_rule
+exception
+fingerprint
+prevention_triggers
+regression_check
+validation_evidence
+redaction
+raw_error_snapshot_scrubbed
+```
+
+`redaction.applied` and `redaction.export_safe` must both be true for active
+lessons. Missing redaction metadata is a packaging error, not something the user
+should fix manually after install.

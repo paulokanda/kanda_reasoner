@@ -196,7 +196,7 @@ prompt_library.zip
 The maintenance file must be reported when relevant:
 
 ```text
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 ```
 
 Do not treat old startup paste filenames as active current files.

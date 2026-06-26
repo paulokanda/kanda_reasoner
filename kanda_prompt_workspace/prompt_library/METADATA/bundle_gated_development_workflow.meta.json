@@ -16,10 +16,17 @@
     "one patch one problem",
     "safe patch",
     "installable bundle",
-    "AI patch workflow"
+    "AI patch workflow",
+    "Error Memory default insertion package",
+    "pending AI-assisted error lesson intake",
+    "zip install validate populate EM tab"
   ],
   "required_companion_prompts": [
     "box_architecture_canon",
     "evidence_freshness_gate"
+  ],
+  "do_not_regress": [
+    "Installer must stage pending Error Memory lessons under the dynamic Show Project project_error_memory folder.",
+    "Validation must check GUI autoload/host trigger when code support is involved."
   ]
 }

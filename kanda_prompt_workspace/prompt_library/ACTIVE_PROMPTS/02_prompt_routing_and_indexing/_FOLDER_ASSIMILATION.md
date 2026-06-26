@@ -82,3 +82,54 @@ Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
 
 ## Boundary Rule
 This card may point to prompt files, but must not copy specialist rules from them.
+
+<!-- KANDA_FOLDER_TRIGGER:error_memory_direct_error_lesson_zip:v1 -->
+
+## Additional trigger: Direct Error Lesson ZIP route
+
+Use this routing folder when deciding whether a user request is a normal patch ZIP delivery or a Direct Error Lesson ZIP for the Error Memory tab.
+
+Signals:
+
+```text
+Error Lesson ZIP
+formatted Error Memory lesson ZIP
+direct import ZIP
+new error and solution JSON
+AI-assisted error lesson intake
+Error Editor
+Memorize Error
+```
+
+Routing boundary:
+
+```text
+Direct Error Lesson ZIP packages are not code patches. They are imported through the Error Memory tab and must use the canonical payload/error_memory_receive_blocks structure.
+```
+
+<!-- KANDA_FOLDER_TRIGGER:error_memory_default_autoload_insertion:v2 -->
+
+## Error Memory default insertion autoload trigger
+
+This routing folder recognizes Error Memory insertion requests and separates three modes:
+
+```text
+Mode 1 default: ZIP -> install -> validate -> populate AI-assisted error lesson intake and Error Editor.
+Mode 2 explicit: Direct Error Lesson ZIP -> manual Import Error Lesson ZIP.
+Mode 3 clipboard: Copy error/draft to AI -> Paste error formatted from AI.
+```
+
+Default trigger language includes:
+
+```text
+zip install validate error appear in AI assisted error lesson intake
+send to EM tab
+populate Error Memory tab automatically
+zipped error install and validation code
+```
+
+The default mode must derive the dynamic project Error Memory folder from PROJECT_ROOT:
+
+```text
+<drive>:\<project>_show_project_to_AI\project_error_memory
+```

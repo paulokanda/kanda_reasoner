@@ -622,13 +622,13 @@ This index routes to prompts; the specialist prompts still own their detailed ru
 
 Startup delivery modification specificity rule:
 
-Startup delivery modification requests are governed patch requests plus startup delivery maintenance. Do not list only paste_if_modify_startup_delivery.md in Required prompts/groups. Do not summarize the patch requirements generically.
+Startup delivery modification requests are governed patch requests plus startup delivery maintenance. Do not list only zz_read_only_if_modifying_startup_delivery.md in Required prompts/groups. Do not summarize the patch requirements generically.
 
 Name these startup delivery modification requirements explicitly in the ROUTING RESPONSE.
 
 Required prompts/groups must explicitly include:
 
-1. paste_if_modify_startup_delivery.md
+1. zz_read_only_if_modifying_startup_delivery.md
 2. 05_patch_delivery_and_validation
 3. Relevant project source files
 4. Validation command or manual validation steps
@@ -646,14 +646,14 @@ For startup delivery modification requests, May proceed now must remain NO until
 Strict RG-010 output rule:
 In the ROUTING RESPONSE for startup delivery modification requests, put all six startup delivery requirements under Required prompts/groups, not under Recommended prompts/groups.
 Do not move 05_patch_delivery_and_validation, relevant project source files, validation command or manual validation steps, relevant folder card or specialist prompt for startup delivery, or 04_box_architecture_and_boundaries into Recommended prompts/groups.
-May proceed now must be NO, not PARTIAL, until paste_if_modify_startup_delivery.md plus the required source files and validation path are available.
+May proceed now must be NO, not PARTIAL, until zz_read_only_if_modifying_startup_delivery.md plus the required source files and validation path are available.
 Next safe action must request all missing required items before any patch creation or implementation.
 
 Mandatory RG-010 exact response skeleton:
 When the user scenario is a startup delivery modification request, the ROUTING RESPONSE must not use substitutes or softened labels. Use this structure exactly or semantically equivalent with the same labels under the same fields:
 
 Required prompts/groups:
-1. paste_if_modify_startup_delivery.md
+1. zz_read_only_if_modifying_startup_delivery.md
 2. 05_patch_delivery_and_validation
 3. Relevant project source files
 4. Validation command or manual validation steps
@@ -924,3 +924,80 @@ If the response omits 07_prompt_authoring_and_audit, prompt_canon_reconciliation
 ## Terminal cleanup canon route
 
 When the next answer will emit any PowerShell or terminal block, the router must apply the terminal cleanup canon before output. Successful install blocks use `INSTALL_SUCCESS`: wait 5 seconds, `Clear-Host`, keep terminal open, and no Enter prompts. Install errors, validation, validation errors, diagnostics, and all other terminal blocks use `Enter`, `Clear-Host`, `Enter`, `Clear-Host`, and keep terminal open. Install blocks must include a fail-safe `try/catch` or text-equivalent error path so failures cannot skip cleanup.
+
+
+<!-- KANDA_NAV:error_event_to_error_memory_owner_canon:v2 -->
+## Error event companion route to Error Memory owner canon
+
+When any implementation, install, validation, GUI, startup, prompt-routing, ZIP contract, freeze-intake, or patch-delivery error appears, route the Error Memory prevention track to:
+
+```text
+error_memory_ai_formulary_startup_canon
+```
+
+For a correction patch, keep the correction track in the normal repair/bundle route and require the Error Memory owner canon's default autoload path. Router/navigation prompts must point to this owner canon rather than creating a parallel Error Memory doctrine.
+
+<!-- KANDA_NAV:error_memory_direct_error_lesson_zip:v1 -->
+## Direct Error Lesson ZIP route
+
+When the user asks for an Error Lesson ZIP, formatted Error Memory lesson ZIP, direct ZIP to import into Error Memory, or ZIP containing a new error and solution JSON, route to:
+
+```text
+error_memory_ai_formulary_startup_canon
+```
+
+Classification:
+
+```text
+Fast Path or Routed Work Path: Fast Path when only packaging the formatted Error Lesson ZIP from already-known error evidence and no project files are changed.
+Routed Work Path when the request also changes GUI/source/prompt/router/freeze behavior.
+```
+
+Required output for Fast Path Direct Error Lesson ZIP:
+
+```text
+1. Download link to the Error Lesson ZIP.
+2. Short GUI import steps.
+3. State that this is not a code patch and does not use install/validation PowerShell.
+```
+
+Canonical ZIP structure:
+
+```text
+bundle_manifest.json
+payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_<lesson_slug>.txt
+payload/error_memory_receive_blocks/RAW_ERROR_EVIDENCE_<lesson_slug>.txt
+```
+
+Default routine reminder:
+
+```text
+For code, GUI, prompt, startup, validation, freeze, or project-source changes, use the normal patch ZIP -> install -> validate workflow.
+```
+
+<!-- KANDA_NAV:error_memory_default_autoload_insertion:v2 -->
+## Error Memory default insertion autoload route
+
+When the user wants a new error inserted with the routine `ZIP -> install -> validate -> populate EM tab`, select:
+
+```text
+error_memory_ai_formulary_startup_canon
+bundle_gated_development_workflow
+```
+
+The expected package stages a formatted pending lesson under:
+
+```text
+<drive>:\<project>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake
+```
+
+It must make the error appear in:
+
+```text
+AI-assisted error lesson intake
+Error Editor
+```
+
+and must not save it into Lessons until `Memorize Error` is clicked.
+
+Use Direct Error Lesson ZIP only when the user asks for a manual import package. Use Copy/Paste formatted AI flow only when the user asks for or uses those GUI buttons.

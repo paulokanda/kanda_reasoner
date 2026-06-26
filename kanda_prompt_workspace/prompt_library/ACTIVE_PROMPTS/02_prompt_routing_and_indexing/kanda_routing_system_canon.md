@@ -532,7 +532,7 @@ The project explicitly decided:
 If the user asks to modify startup delivery, the AI must request:
 
 ```text
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 sync_startup_routing_kernel_pack.py
 STARTUP_ROUTING_KERNEL_SOURCES.json
 current first_prompt_files artifacts

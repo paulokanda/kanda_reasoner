@@ -16,10 +16,19 @@
     "prompt router",
     "intent router",
     "messy request to prompt",
-    "which stack"
+    "which stack",
+    "Error Lesson ZIP",
+    "direct Error Memory import ZIP",
+    "formatted error lesson package",
+    "new error and solution JSON",
+    "zip install validate error appears in AI-assisted error lesson intake",
+    "error must appear in AI-assisted error lesson intake",
+    "default insertion of error in Error Memory logic"
   ],
   "required_companion_prompts": [
     "general_prompt_stack_load_order",
-    "prompt_substitution_map"
+    "prompt_substitution_map",
+    "error_memory_ai_formulary_startup_canon",
+    "bundle_gated_development_workflow"
   ]
 }

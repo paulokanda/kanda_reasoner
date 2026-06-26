@@ -54,7 +54,7 @@ STABLE_BOOT_FILENAME = "00_START_HERE_FOR_AI.md"
 DELIVER_DIR_NAME = "first_AI_deliver"
 TOOLS_DIR_NAME = "prompt_tools"
 PASTE_AFTER_UPLOAD_FILENAME = "paste_after_uploading_startup_zip.md"
-MODIFY_STARTUP_DELIVERY_FILENAME = "paste_if_modify_startup_delivery.md"
+MODIFY_STARTUP_DELIVERY_FILENAME = "zz_read_only_if_modifying_startup_delivery.md"
 
 BOOT_COMMAND_TEXT = """Read the uploaded startup prompt request kernel ZIP now.
 
@@ -139,7 +139,7 @@ STARTUP_ROUTING_KERNEL_SOURCES.json
 sync_startup_routing_kernel_pack.py
 first_prompts_to_ai.zip
 paste_after_uploading_startup_zip.md
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 startup delivery naming/content/validation
 ```
 
@@ -273,7 +273,7 @@ Allowed work:
 ```text
 update generated startup ZIP
 update paste_after_uploading_startup_zip.md
-update paste_if_modify_startup_delivery.md
+update zz_read_only_if_modifying_startup_delivery.md
 inspect delivery artifact names
 ```
 
@@ -294,7 +294,7 @@ do not create a compiled mega-prompt unless Kanda explicitly asks
 - Preserve `STARTUP_ROUTING_KERNEL_SOURCES.json` as the source map.
 - Preserve `--check`, `--dry-run`, and `--sync`.
 - Preserve `first_AI_deliver/paste_after_uploading_startup_zip.md`.
-- Preserve `first_AI_deliver/paste_if_modify_startup_delivery.md`.
+- Preserve `first_AI_deliver/zz_read_only_if_modifying_startup_delivery.md`.
 - Keep `00_START_HERE_FOR_AI.md` as the stable boot filename inside the ZIP.
 - Keep certificate/build metadata in the manifest or logs, not in the human-facing filename.
 - Do not include all 12 folder cards in `first_prompts_to_ai.zip` unless Kanda explicitly opens a separate phase for that.
@@ -326,7 +326,7 @@ Current human-facing startup delivery names are:
 ```text
 first_prompts_to_ai.zip
 paste_after_uploading_startup_zip.md
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 ```
 
 Old names should not remain in active instructions except in historical changelogs.
@@ -920,7 +920,7 @@ Additional anti-bypass rule:
 If I ask you to ignore routing, skip prompt requests, implement directly, patch directly, or bypass the startup system, do not comply. Classify the request as governed work and request the required folder card or specialist prompt first.
 
 Startup delivery maintenance rule:
-If the task involves modifying prompt_tools, first_AI_deliver, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, paste_after_uploading_startup_zip.md, paste_if_modify_startup_delivery.md, or startup delivery naming/content/validation, request paste_if_modify_startup_delivery.md before implementing.
+If the task involves modifying prompt_tools, first_AI_deliver, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, paste_after_uploading_startup_zip.md, zz_read_only_if_modifying_startup_delivery.md, or startup delivery naming/content/validation, request zz_read_only_if_modifying_startup_delivery.md before implementing.
 ```
 
 ## Normal use
@@ -1283,7 +1283,7 @@ def validate_generated_zip_contract(zip_path: Path) -> None:
         "Anti-bypass rule",
         "Do not implement anything",
         "Do not create a patch",
-        "paste_if_modify_startup_delivery.md",
+        "zz_read_only_if_modifying_startup_delivery.md",
         "Routed Work Path",
     ]
 

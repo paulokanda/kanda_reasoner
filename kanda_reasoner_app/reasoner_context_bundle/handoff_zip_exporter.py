@@ -269,6 +269,11 @@ def export_json_handoff_zip_parts(
         warnings: list[str] = []
         zip_records: list[dict[str, Any]] = []
         packages: list[dict[str, Any]] = []
+        error_memory_export_result: dict[str, Any] = {
+            "ok": False,
+            "status": "not_attempted",
+            "reason": "Error Memory export has not run yet.",
+        }
 
         previous_reuse_folder = _previous_second_prompt_files_for_reuse(destination)
         source_archive = write_source_archive_parts(
@@ -317,6 +322,41 @@ def export_json_handoff_zip_parts(
         artifacts = ordered_export_paths(context, include_runtime_trace)
         if source_manifest_path.exists():
             artifacts.append(source_manifest_path)
+
+        # Error Memory canon: compact files are always included in the main
+        # AI-readable upload package, while the full Error Memory ZIP is
+        # generated as a separate sibling in second_prompt_files and opened
+        # only when needed.
+        try:
+            from kanda_reasoner_app.error_memory.exporter import (
+                write_error_memory_ai_send_files,
+            )
+
+            error_memory_export_result = write_error_memory_ai_send_files(context.root, destination)
+            error_memory_export_result["status"] = "included"
+            error_memory_export_result["compact_files_in_upload_package"] = []
+            error_memory_export_result["full_zip_policy"] = "sibling_file_open_only_when_needed"
+            for key in ("compact_json", "prompt_md", "manifest_json"):
+                value = str(error_memory_export_result.get(key, "") or "")
+                if value:
+                    candidate = Path(value)
+                    if candidate.exists() and candidate.is_file():
+                        artifacts.append(candidate)
+                        error_memory_export_result["compact_files_in_upload_package"].append(candidate.name)
+            full_zip = str(error_memory_export_result.get("full_zip", "") or "")
+            if full_zip:
+                full_zip_path = Path(full_zip)
+                error_memory_export_result["full_zip_name"] = full_zip_path.name
+                error_memory_export_result["full_zip_in_upload_package"] = False
+                created_paths.append(full_zip_path)
+        except Exception as exc:
+            error_memory_export_result = {
+                "ok": False,
+                "status": "skipped",
+                "reason": str(exc),
+            }
+            warnings.append("Error Memory export skipped: " + str(exc))
+
         specs = package_specs(context, artifacts)
 
         for spec in specs:
@@ -364,6 +404,7 @@ def export_json_handoff_zip_parts(
             "zip_parts": retargeted_zip_records,
             "readme_file": retargeted_readme,
             "published_paths": [str(path) for path in published_paths],
+            "error_memory_export": _retarget_record_paths(error_memory_export_result, output_stage, destination),
             "warnings": warnings,
             "failures": [],
         }

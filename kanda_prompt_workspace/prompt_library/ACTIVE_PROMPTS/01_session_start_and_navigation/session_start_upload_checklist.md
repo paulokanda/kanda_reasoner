@@ -39,7 +39,7 @@ STARTUP_KERNEL_STALENESS_REVIEW
 ```
 
 This warning does not automatically fail startup and does not authorize automatic repair.
-It means the AI should avoid relying on stale startup assumptions and should request startup regeneration, active freeze context refresh, or `paste_if_modify_startup_delivery.md` before modifying startup delivery, source maps, freeze-context generation, or governed routing behavior.
+It means the AI should avoid relying on stale startup assumptions and should request startup regeneration, active freeze context refresh, or `zz_read_only_if_modifying_startup_delivery.md` before modifying startup delivery, source maps, freeze-context generation, or governed routing behavior.
 
 Do not inject full freeze memory into the normal startup. Keep compact startup freeze context plus on-demand full freeze review.
 

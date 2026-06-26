@@ -766,3 +766,41 @@ freeze_memory_context_publish_v1_1 may be designed only as a separate governed p
 - 2026-06-25 | freeze-20260625-show-project-to-ai-remove-ai-import-builder-v1 | Show Project to AI Remove AI Import Builder v1 | frozen
 - 2026-06-25 | freeze-20260625-show-project-to-ai-project-independent-png-assets-reuse-v1 | Show Project to AI Project-Independent PNG Assets Reuse v1 | frozen
 - 2026-06-25 | freeze-20260625-project-tool-boundary-canon-routed-for-coding-tasks | Project/tool boundary canon routed for coding tasks | frozen
+- 2026-06-25 | freeze-20260625-error-memory-core-gui-tab-and-ai-send-canon-v1 | Error Memory core, GUI tab, and AI-send canon v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-ai-formulary-startup-canon-v1 | Error Memory AI Formulary Startup Canon v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-zip-import-repair-v1 | Error Memory ZIP Import Repair v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-active-status-and-fingerprint-repair-v1 | Error Memory Active Status and Fingerprint Repair v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-plain-text-intake-repair-v1 | Error Memory Plain Text Intake Repair v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-zip-import-dependency-repair-v1 | Error Memory ZIP Import Dependency Repair v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-two-column-lesson-actions-v1 | Error Memory GUI Two Column Lesson Actions v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-zip-import-filter-v1 | Error Memory ZIP Import Filter v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-status-workflow-v1 | Error Memory GUI Status Workflow v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-repeat-error-guard-v1 | Error Memory Repeat Error Guard v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-second-prompt-export-v1 | Error Memory Second Prompt Export v1 | frozen
+- 2026-06-25 | freeze-20260625-prompt-error-memory-two-track-closure-v2 | Prompt Error Memory Two-Track Closure v2 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-receive-formulary-freeze-intake-syntaxerror-guard-v2 | Error Memory Receive Formulary Freeze Intake SyntaxError Guard v2 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-memorize-formatted-import-flow-v1 | Error Memory GUI Memorize Formatted Import Flow v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-header-project-root-v3 | Error Memory GUI Header Project Root v3 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-loaded-row-project-root-v4 | Error Memory GUI Loaded Row Project Root v4 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-error-editor-memorize-active-v5 | Error Memory GUI Error Editor Memorize Active v5 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-ai-draft-zip-workflow-v6 | Error Memory GUI AI Draft ZIP Workflow v6 | frozen
+- 2026-06-25 | freeze-20260625-prompt-error-lesson-zip-router-canon-v1 | Prompt Error Lesson ZIP Router Canon v1 | frozen
+- 2026-06-25 | freeze-20260625-error-memory-gui-memorize-clean-editor-flow-v7 | Error Memory GUI Memorize Clean Editor Flow v7 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-gui-pending-intake-autoload-v9 | Error Memory GUI Pending Intake Autoload v9 | frozen
+- 2026-06-26 | freeze-20260626-prompt-error-memory-default-insertion-autoload-v2 | Prompt Error Memory Default Insertion Autoload v2 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-gui-pending-intake-root-sync-v10 | Error Memory GUI Pending Intake Root Sync v10 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-gui-manifest-zip-import-v8 | Error Memory GUI Manifest ZIP Import v8 | frozen
+- 2026-06-26 | freeze-20260626-show-project-and-error-memory-path-guard | Show Project and Error Memory path guard | frozen
+- 2026-06-26 | freeze-20260626-startup-delivery-maintenance-filename-sorts-after-normal-upload-files | Startup delivery maintenance filename sorts after normal upload files | frozen
+- 2026-06-26 | freeze-20260626-error-memory-memorize-error-clears-ai-assisted-intake-only | Error Memory Memorize Error clears AI-assisted intake only | frozen
+- 2026-06-26 | freeze-20260626-error-memory-packaged-lesson-active-ready-schema-guard | Error Memory packaged lesson active-ready schema guard | frozen
+- 2026-06-26 | freeze-20260626-error-memory-packaged-lesson-active-ready-schema-guard-v2 | Error Memory packaged lesson active-ready schema guard v2 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-v2 | Startup artifact read-order guard v2 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-v9 | Startup artifact read-order guard v9 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-v8 | Startup artifact read-order guard v8 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-v7 | Startup artifact read-order guard v7 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-replacing-stale-generated-notice-blocks-v6 | Startup artifact read-order guard replacing stale generated notice blocks v6 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-replacing-stale-generated-notice-blocks-v5 | Startup artifact read-order guard replacing stale generated notice blocks v5 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-with-tell-file-optional-maintenance-wording-v4 | Startup artifact read-order guard with tell-file optional maintenance wording v4 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-with-optional-maintenance-file-v3 | Startup artifact read-order guard with optional maintenance file v3 | frozen
+- 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard | Startup artifact read order guard | frozen

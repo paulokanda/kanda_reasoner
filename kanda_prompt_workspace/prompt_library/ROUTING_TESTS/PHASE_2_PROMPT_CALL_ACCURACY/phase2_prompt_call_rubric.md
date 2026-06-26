@@ -114,7 +114,7 @@ Examples:
 ```text
 08_python_engineering_core - required IF Python source code, generator code, validation code, installer logic, or validation scripts may be modified.
 09_python_quality_security_observability - required IF the task affects validation robustness, error handling, logs, security posture, release safety, or regression detection.
-paste_if_modify_startup_delivery.md - required IF the task modifies startup delivery, startup ZIP generation, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, startup naming, startup validation, or paste-after files.
+zz_read_only_if_modifying_startup_delivery.md - required IF the task modifies startup delivery, startup ZIP generation, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, startup naming, startup validation, or paste-after files.
 active project freeze context - required IF the task touches frozen behavior, protected paths, freeze workflow, project memory, governance artifacts, or asks whether something is already frozen.
 Relevant folder card or _FOLDER_ASSIMILATION - required IF the task changes a prompt-library folder, app box, or workflow area whose local placement/ownership rules may matter.
 Validation command or manual validation steps - required IF implementation, freeze, patch delivery, or behavior canonization is requested.

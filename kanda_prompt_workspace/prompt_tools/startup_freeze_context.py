@@ -136,7 +136,7 @@ Freeze context status: `UNAVAILABLE`
 ## Purpose
 
 This generated startup file is the AI access channel for project-specific frozen
-feature memory.  It is an exposure copy only.  The source of truth remains under
+feature memory.  It is a generated exposure copy only.  The source of truth remains under
 the selected active project root.
 
 ## Exposure error

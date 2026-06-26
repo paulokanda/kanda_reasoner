@@ -79,13 +79,13 @@ Recommended prompts/groups must explicitly include:
 
 Startup delivery modification specificity rule:
 
-Startup delivery modification requests are governed patch requests plus startup delivery maintenance. Do not list only paste_if_modify_startup_delivery.md in Required prompts/groups. Do not summarize the patch requirements generically.
+Startup delivery modification requests are governed patch requests plus startup delivery maintenance. Do not list only zz_read_only_if_modifying_startup_delivery.md in Required prompts/groups. Do not summarize the patch requirements generically.
 
 Name these startup delivery modification requirements explicitly in the ROUTING RESPONSE.
 
 Required prompts/groups must explicitly include:
 
-1. paste_if_modify_startup_delivery.md
+1. zz_read_only_if_modifying_startup_delivery.md
 2. 05_patch_delivery_and_validation
 3. Relevant project source files
 4. Validation command or manual validation steps
@@ -103,14 +103,14 @@ For startup delivery modification requests, May proceed now must remain NO until
 Strict RG-010 output rule:
 In the ROUTING RESPONSE for startup delivery modification requests, put all six startup delivery requirements under Required prompts/groups, not under Recommended prompts/groups.
 Do not move 05_patch_delivery_and_validation, relevant project source files, validation command or manual validation steps, relevant folder card or specialist prompt for startup delivery, or 04_box_architecture_and_boundaries into Recommended prompts/groups.
-May proceed now must be NO, not PARTIAL, until paste_if_modify_startup_delivery.md plus the required source files and validation path are available.
+May proceed now must be NO, not PARTIAL, until zz_read_only_if_modifying_startup_delivery.md plus the required source files and validation path are available.
 Next safe action must request all missing required items before any patch creation or implementation.
 
 Mandatory RG-010 exact response skeleton:
 When the user scenario is a startup delivery modification request, the ROUTING RESPONSE must not use substitutes or softened labels. Use this structure exactly or semantically equivalent with the same labels under the same fields:
 
 Required prompts/groups:
-1. paste_if_modify_startup_delivery.md
+1. zz_read_only_if_modifying_startup_delivery.md
 2. 05_patch_delivery_and_validation
 3. Relevant project source files
 4. Validation command or manual validation steps

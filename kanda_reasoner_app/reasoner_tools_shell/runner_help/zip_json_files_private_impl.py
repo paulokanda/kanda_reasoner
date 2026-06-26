@@ -89,7 +89,7 @@ def _clear_dir_contents(resolved_dir: Path) -> int:
 
 
 
-_ALLOWED_SHOW_PROJECT_CHILD_DIRS = {"first_prompt_files", "second_prompt_files"}
+_ALLOWED_SHOW_PROJECT_CHILD_DIRS = {"first_prompt_files", "second_prompt_files", "project_error_memory"}
 _STALE_SHOW_PROJECT_DIR_NAMES = {"second_prompt_files_building", "json_splitted"}
 _STALE_SHOW_PROJECT_DIR_PREFIXES = (
     "json_handoff_zip_export_",
@@ -343,6 +343,8 @@ def cleanup_loose_json_files_after_success(final_path: str | Path) -> list[str]:
         return removed
     for child in sorted(resolved_dir.iterdir(), key=lambda item: item.name.lower()):
         if not child.is_file() or child.suffix.lower() != ".json":
+            continue
+        if "__error_" in child.name or "__error_memory" in child.name:
             continue
         try:
             child.unlink()

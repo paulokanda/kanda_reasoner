@@ -90,6 +90,14 @@
       "prompt_id": "chatgpt_kanda_routing_choice_output_protocol",
       "load_mode": "always_startup",
       "role": "Teaches browser ChatGPT to emit safe advisory KANDA_ROUTING_CHOICE JSON blocks for manual Prompt Router Reasoner capture."
+    },
+    {
+      "load_order": 12,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
+      "generated_filename": "12_error_memory_ai_formulary_startup_canon.md",
+      "prompt_id": "error_memory_ai_formulary_startup_canon",
+      "load_mode": "always_startup",
+      "role": "Teaches AI to emit KANDA_ERROR_LESSON_JSON receive blocks for the Error Memory tab after errors, correction patches, install failures, and validation repairs."
     }
   ]
 }

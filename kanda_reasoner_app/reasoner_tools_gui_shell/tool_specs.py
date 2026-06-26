@@ -81,6 +81,15 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="project_structure_map",
     ),
     ToolSpec(
+        step_title="Error Memory",
+        module_candidates=(
+            _module_path("error_memory_gui", "error_memory_tab"),
+        ),
+        class_candidates=("ErrorMemoryTab",),
+        source_hint=_source_path("error_memory_gui", "error_memory_tab.py"),
+        tab_id="error_memory",
+    ),
+    ToolSpec(
         step_title="Refactor Report",
         module_candidates=(
             _module_path("daily_rfctr_report", "daily_refactor_report"),

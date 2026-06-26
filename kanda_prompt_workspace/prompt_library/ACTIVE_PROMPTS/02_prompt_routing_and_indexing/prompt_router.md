@@ -13,7 +13,7 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 - Validate the active box and any touched external box.
 
 
-Version: 1.0.2
+Version: 1.0.4
 Status: Reusable beginning-of-day prompt router
 Prompt ID: kanda_prompt_router
 Prompt type: conditional prompt router
@@ -1032,3 +1032,110 @@ Route to:
 ## Terminal cleanup canon
 
 For any response that emits a terminal block, classify the terminal output before writing the footer. Successful install blocks must use the 5-second `Clear-Host` success footer and must not ask for Enter. Install errors, validation, validation errors, diagnostics, and any other terminal output must use the Enter/Clear-Host/Enter/Clear-Host cleanup footer. The terminal must be cleaned, not closed. Install blocks must include a fail-safe `try/catch` or text-equivalent wrapper so an install error cannot bypass cleanup.
+
+
+<!-- KANDA_ROUTE:error_event_to_error_memory_owner_canon:v2 -->
+### Error event companion route to Error Memory owner canon
+
+Trigger this route whenever the user reports, or the AI detects, an error event such as traceback, validation failure, install failure, GUI crash, startup failure, ZIP contract failure, wrong patch, prompt-routing mistake, freeze-intake mistake, or repeated AI implementation mistake.
+
+Route decision:
+
+```text
+Apply error_memory_ai_formulary_startup_canon as the owner canon for the Error Memory intake track.
+```
+
+Routing boundary:
+
+```text
+- Use the normal repair/source route for the correction track.
+- Use error_memory_ai_formulary_startup_canon for the Error Memory intake track.
+- Do not duplicate the full Error Memory doctrine in this router.
+- Do not bypass the Error Memory box by writing directly into Lessons.
+```
+
+If the repair delivers a patch ZIP, the patch must satisfy the owner canon's default autoload mode unless the user explicitly asks for Direct Error Lesson ZIP. That means the ZIP includes a formatted lesson block and the installer stages it under the dynamic pending intake folder derived from `$PROJECT_ROOT`.
+
+<!-- KANDA_ROUTE:error_memory_direct_error_lesson_zip:v1 -->
+### Direct Error Lesson ZIP for Error Memory import
+
+Trigger:
+
+```text
+Error Lesson ZIP
+formatted Error Memory lesson ZIP
+direct ZIP to import into Error Memory
+ZIP with new error and solution JSON
+send/gimme Error Lesson ZIP
+import into AI-assisted error lesson intake
+import into Error Editor
+Memorize Error lesson package
+```
+
+Route decision:
+
+```text
+Use error_memory_ai_formulary_startup_canon.
+Do not use kanda_bundle_gated_development_workflow as the primary route unless project/source code is being changed.
+```
+
+Default-vs-direct rule:
+
+```text
+Default routine remains patch ZIP -> install -> validate for code, GUI, prompt, startup, validation, or freeze changes.
+Direct Error Lesson ZIP is explicit and limited to formatted Error Memory lesson packages.
+```
+
+Required Direct Error Lesson ZIP structure:
+
+```text
+bundle_manifest.json
+payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_<lesson_slug>.txt
+payload/error_memory_receive_blocks/RAW_ERROR_EVIDENCE_<lesson_slug>.txt
+```
+
+The ZIP is imported through the Error Memory tab. It does not directly write lessons, patch code, update prompts, or freeze behavior. The human reviews/edits in Error Editor and clicks Memorize Error.
+
+<!-- KANDA_ROUTE:error_memory_default_autoload_insertion:v2 -->
+### Error Memory default insertion autoload route
+
+Trigger this route when the user asks for any of:
+
+```text
+zip, install, validate, error appears in AI-assisted error lesson intake
+send the error to EM tab with install and validation
+zipped error install and validate codes
+error must appear in AI-assisted error lesson intake
+default insertion of error in Error Memory logic
+populate EM tab automatically
+```
+
+Route decision:
+
+```text
+Use default Error Memory insertion package workflow.
+Required prompts/groups:
+1. error_memory_ai_formulary_startup_canon
+2. bundle_gated_development_workflow
+3. prompt_router / prompt_navigation_index context when updating routing/canon
+4. Current Error Memory GUI source if behavior is being patched
+5. validation command or manual validation steps
+```
+
+Default output shape:
+
+The package must stage the pending lesson under `<drive>:\<project>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake`.
+
+```text
+1. Patch/staging ZIP download link.
+2. Install PowerShell that looks for ZIP at project drive root and stages into <project>_delete_after_daily_work.
+3. Validation PowerShell.
+4. Expected GUI result: AI-assisted error lesson intake populated first; Error Editor populated second; Lessons unchanged until Memorize Error.
+```
+
+Boundary:
+
+```text
+Do not route this as Direct Error Lesson ZIP unless the user explicitly asks for manual Import Error Lesson ZIP.
+Do not route this as clipboard/formulary flow unless the user explicitly uses Copy error/draft to AI or Paste error formatted from AI.
+```

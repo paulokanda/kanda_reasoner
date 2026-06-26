@@ -8,7 +8,7 @@ This generator creates the human-facing startup delivery package for new AI chat
 first_prompt_files/
   first_prompts_to_ai.zip
   tell_AI_read_before_all.md
-  paste_if_modify_startup_delivery.md
+  zz_read_only_if_modifying_startup_delivery.md
 ```
 
 ## Required ZIP contract
@@ -62,7 +62,7 @@ The handoff must preserve completed work, validation evidence, freeze state, cur
 
 ## Startup delivery maintenance workflow
 
-Use `first_prompt_files/paste_if_modify_startup_delivery.md` only when asking an AI to modify the startup delivery system itself.
+Use `first_prompt_files/zz_read_only_if_modifying_startup_delivery.md` only when asking an AI to modify the startup delivery system itself.
 
 Do not use the maintenance file for normal startup sessions.
 
@@ -108,7 +108,7 @@ They should not remain in `first_prompt_files/` after sync, and active instructi
 
 ```text
 tell_AI_read_before_all.md
-paste_if_modify_startup_delivery.md
+zz_read_only_if_modifying_startup_delivery.md
 ```
 
 The retired name `paste_after_uploading_startup_zip.md` may appear only as historical context or stale-name rejection evidence. It must not be treated as the current active startup paste file.
