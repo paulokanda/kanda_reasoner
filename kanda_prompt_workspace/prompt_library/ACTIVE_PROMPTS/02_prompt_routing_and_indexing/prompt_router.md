@@ -1139,3 +1139,43 @@ Boundary:
 Do not route this as Direct Error Lesson ZIP unless the user explicitly asks for manual Import Error Lesson ZIP.
 Do not route this as clipboard/formulary flow unless the user explicitly uses Copy error/draft to AI or Paste error formatted from AI.
 ```
+
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_ROUTE_V1_START -->
+### Error Memory active-ready correction route
+
+Trigger:
+
+```text
+correct this Error Memory draft
+make this lesson active-ready
+convert draft to active lesson
+KANDA_ERROR_LESSON_JSON status draft
+This lesson is not ready for active status
+Memorize Error says missing active-ready fields
+validation_command_summary is empty
+source_patch_zip is empty
+install_command_summary is empty
+regression_check.type must be validation_command
+regression_check.command is empty
+regression_check.expected_marker is empty
+```
+
+Load or recommend:
+
+```text
+error_memory_active_ready_correction_blueprint
+prompt_navigation_index
+prompt_router
+```
+
+Group to open:
+
+```text
+12_generalized_project_canons
+02_prompt_routing_and_indexing, if router/navigation files must be changed
+07_prompt_authoring_and_audit, if the prompt-library itself is being updated
+```
+
+Rule:
+This is a routed bridge only. Do not load the full blueprint at every startup. Do not output `status: active` for an Error Memory lesson unless the blueprint active-ready checklist passes. If validation evidence, source_patch_zip, install summary, validation command, or expected marker is missing, keep the lesson draft/needs_ai_review and list missing fields.
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_ROUTE_V1_END -->

@@ -15,11 +15,60 @@ It prevents loading the full prompt library at session start.
 ## What this file does not do
 
 - It does not replace specialist prompts.
-- It does not define implementation rules.
-- It does not define validation rules.
+- It does not replace specialist implementation rules.
+- It does not replace specialist validation rules.
+- It carries only short startup bridges for high-risk invariants.
 - It does not create folder assimilation cards.
 - It does not integrate with the live app.
 - It does not touch kanda_reasoner_app or Tab Prompt Library GUI.
+
+## Box Logic Startup Bridge
+
+At the beginning of every session, carry this lightweight Box Logic rule into
+all implementation, repair, refactor, prompt update, governance update, bundle,
+GUI, validation, freeze, and artifact-delivery work:
+
+- Identify the active box before implementation.
+- State owner paths.
+- State files allowed to change.
+- State files explicitly out of scope.
+- Declare cross-box touches before touching more than one box.
+- Preserve public contracts and avoid private reach-in.
+- Validate the active box and any touched external box.
+- Do not proceed from memory when box ownership, owner paths, public contracts,
+  or allowed supporting touches are unclear; inspect the needed source, prompt,
+  manifest, or validation context first.
+
+This bridge is only the startup enforcement layer. It does not replace the full
+Box Architecture canon. When a task involves implementation, repair, refactor,
+prompt update, governance update, bundle creation, GUI ownership, public
+contracts, cross-box behavior, mutable-state ownership, or architecture-boundary
+risk, route to `box_architecture_canon.md` before doing the risky step.
+
+Do not load the full Box Architecture prompt during normal startup unless the
+current task requires it.
+
+## Code Module Size Bridge
+
+At the beginning of every session, carry this lightweight module-size rule into
+all code creation and refactor work:
+
+- Ideal code module size: 400 lines or fewer.
+- Maximum code module size: 500 lines or fewer.
+- When creating a new code module, do not create a file above 500 lines; split
+  the module by responsibility before delivery.
+- When refactoring an existing code module above 500 lines, use the approved
+  large-module protocol and split by responsibility.
+- Prefer cohesive helper modules with clear ownership over large mixed-purpose
+  files.
+- This rule applies to code/source modules, especially `.py` files.
+- This rule does not apply to plain text, Markdown, documentation, prompt,
+  manifest, JSON, log, report, or other non-code content files. Files such as
+  `.txt`, `.md`, `.json`, documentation artifacts, prompt files, manifests,
+  and logs may be larger when their purpose requires it.
+
+If a task needs the full methodology, route to `large_module_refactor_protocol.md`;
+do not load the full prompt during normal startup unless needed.
 
 ## Tier model
 

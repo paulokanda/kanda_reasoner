@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "generated_by": "project_freeze_ledger.freeze_tools.freeze_after_update_generator",
-  "generated_at_utc": "2026-06-26T05:55:18Z",
+  "generated_at_utc": "2026-06-27T01:52:45Z",
   "freezes": [
     {
       "freeze_id": "freeze-20260612-phase7a-v24",
@@ -15483,6 +15483,800 @@
         "Normal startup order is tell_AI_read_before_all.md, then first_prompts_to_ai.zip, then prompt_library.zip.",
         "prompt_library.zip is opened only for a specific routed prompt_path, not during normal startup.",
         "Do not restore paste_if_modify_startup_delivery.md as the active maintenance filename.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-freeze-gui-ignore-this-freeze-and-get-frozen-snippet-controls",
+      "feature_title": "Freeze GUI Ignore this Freeze and Get Frozen snippet controls",
+      "box": "kanda_reasoner_app/freeze_after_update_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-freeze-gui-ignore-this-freeze-and-get-frozen-snippet-controls.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory",
+        "project_freeze_after_update/freeze_hint_intake"
+      ],
+      "do_not_touch_summary": [
+        "Preserve Confirm and Write as the only write path for frozen memory.",
+        "Ignore this Freeze must not write a freeze entry.",
+        "Ignore this Freeze may mark the current freeze hint ignored/used so it does not refill the dialog.",
+        "Get Last Freeze and Get All Frozen must copy read-only snippets only.",
+        "Project Root/Search controls must remain compatible with outer shell project-root propagation.",
+        "Do not store project-specific freeze memory inside project_freeze_ledger.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-startup-code-module-size-bridge",
+      "feature_title": "Startup Code Module Size Bridge",
+      "box": "kanda_prompt_workspace/prompt_library",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-startup-code-module-size-bridge.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json",
+        "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS",
+        "kanda_prompt_workspace/prompt_library/ROUTING",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Normal startup must load only the lightweight Code Module Size Bridge, not the full large module protocol.",
+        "New code/source modules must be split before delivery if they would exceed 500 lines.",
+        "Existing code/source modules over 500 lines must route to large_module_refactor_protocol.md before implementation.",
+        "The 400/500 line law must not be applied to .txt, .md, .json, documentation, prompt, manifest, log, report, or other non-code files.",
+        "Startup delivery regeneration must continue using STARTUP_ROUTING_KERNEL_SOURCES.json and sync_startup_routing_kernel_pack.py.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-freeze-validation-evidence-merge-by-patch-zip",
+      "feature_title": "Freeze Validation Evidence Merge By Patch ZIP",
+      "box": "kanda_reasoner_app/freeze_hint_intake",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-freeze-validation-evidence-merge-by-patch-zip.md",
+      "protected_paths": [
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Validation evidence merge must use the current patch ZIP sidecar when latest_freeze_hint.json points to a different feature.",
+        "Do not merge evidence into a stale latest freeze hint for a previous feature.",
+        "Require --patch-zip in freeze-capable validation commands that update freeze hint intake.",
+        "Require VALIDATION OK: <feature_id> and FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id> before freeze-ready status.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-lesson-block-schema-gate",
+      "feature_title": "Error Memory Lesson Block Schema Gate",
+      "box": "kanda_reasoner_app/patch_governance",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-lesson-block-schema-gate.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "kanda_reasoner_app/patch_governance",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Patch ZIP validation must inspect every packaged KANDA_ERROR_LESSON_JSON_*.txt block.",
+        "Do not release Error Memory lesson blocks missing schema_version or project_slug.",
+        "Active Error Memory lesson blocks must include redaction, exception, fingerprint, prevention_triggers, and validation_evidence.",
+        "Do not answer with only corrected manual text when the creation path is missing a schema gate.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json",
+      "feature_title": "Error Memory Export Clipboard Complete JSON",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-clipboard-complete-json.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Export Error Memory for AI must copy complete Error Memory JSON to the clipboard, not the destination folder path.",
+        "Complete clipboard export must include all lesson objects and must not be capped by the compact export limit.",
+        "The compact AI-send files and full ZIP should still be written for normal second-prompt handoff use.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Validation evidence merge must use --patch-zip for freeze-capable validation commands.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json-v2",
+      "feature_title": "Error Memory Export Clipboard Complete JSON v2",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-clipboard-complete-json-v2.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Export Error Memory for AI must copy complete Error Memory JSON to the clipboard, not destination_folder or second_prompt_files path.",
+        "The export handler must use a JSON-only clipboard helper and reject path-looking payloads.",
+        "The GUI message must not say Destination path copied to clipboard.",
+        "Complete clipboard export must include all lessons and must not be capped by the compact export limit.",
+        "Compact AI-send files and full ZIP should still be written for normal second-prompt handoff use.",
+        "Validation evidence merge must use --patch-zip for freeze-capable validation commands.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-complete-json-windows-isolated-validation-v5",
+      "feature_title": "Error Memory Export Complete JSON Windows-Isolated Validation v5",
+      "box": "kanda_reasoner_app/error_memory",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-complete-json-windows-isolated-validation-v5.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Export Error Memory for AI must copy complete JSON, not second_prompt_files path.",
+        "Complete Error Memory JSON export must include saved active, draft, deprecated, and superseded lessons when include_inactive is true.",
+        "Validation tests using Show Project to AI generated folders must isolate and clean the resolved generated root on Windows.",
+        "Patch ZIP validation must keep the Error Memory lesson block schema gate active.",
+        "Patches must include only updated files and must not overwrite unrelated governance validators accidentally.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-startup-box-logic-bridge",
+      "feature_title": "Startup Box Logic Bridge",
+      "box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-startup-box-logic-bridge.md",
+      "protected_paths": [
+        "<PROJECT_ROOT>/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
+        "<PROJECT_ROOT>/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
+        "<drive>:/<project>_show_project_to_AI/first_prompt_files",
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "The startup kernel must include the compact Box Logic Startup Bridge.",
+        "The full box_architecture_canon.md must remain on-demand and must not be loaded as a Tier 0 startup file.",
+        "Risky project work must identify active box, owner paths, allowed files, out-of-scope files, cross-box touches, public contracts, and validation responsibilities before implementation.",
+        "If box ownership or public contract is unclear, AI must inspect required source/prompt/manifest context instead of proceeding from memory.",
+        "Startup sync must expose the bridge in first_prompts_to_ai.zip and keep the full Box canon available in prompt_library.zip.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-cursor-start-guard-v6",
+      "feature_title": "Error Memory Export Cursor Start Guard v6",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-cursor-start-guard-v6.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Export Error Memory for AI must not crash after copying complete JSON into the Error Editor.",
+        "Do not use textCursor().Start in PySide6 cursor movement code.",
+        "Use cursor.movePosition(cursor.MoveOperation.Start) and setTextCursor(cursor) for this handler.",
+        "Export Error Memory for AI must continue copying complete JSON, not second_prompt_files path.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-complete-json-all-statuses-v4",
+      "feature_title": "Error Memory Export Complete JSON All Statuses v4",
+      "box": "kanda_reasoner_app/error_memory",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-complete-json-all-statuses-v4.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Complete Error Memory clipboard export must include every saved lesson JSON file, including draft, deprecated, and superseded lessons.",
+        "Do not implement complete Error Memory export through compact export or list/index helpers that can filter by status.",
+        "The compact second-prompt export may remain capped to active lessons, but the manual clipboard export must be complete.",
+        "The EM export button must not copy second_prompt_files or any folder path to the clipboard.",
+        "Validation evidence merge must use --patch-zip for freeze-capable validation commands.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json-v3",
+      "feature_title": "Error Memory Export Clipboard Complete JSON v3",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-export-clipboard-complete-json-v3.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "The Error Memory tab complete-JSON export button must not call write_error_memory_ai_send_files.",
+        "The Error Memory tab complete-JSON export button must not resolve or copy second_prompt_files.",
+        "The complete-JSON export writer must not return destination_folder.",
+        "Complete clipboard export must include all lessons and must not be capped by the compact export limit.",
+        "The second-prompt handoff export writer remains separate for Show Project to AI exports.",
+        "Validation evidence merge must use --patch-zip for freeze-capable validation commands.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-copy-error-draft-editor-only-v7",
+      "feature_title": "Error Memory Copy Error Draft Editor Only v7",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-copy-error-draft-editor-only-v7.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Copy Error Editor text to AI must copy exactly the Error Editor text and no prompt wrapper.",
+        "Do not call build_error_lesson_ai_form_prompt from the Error Editor copy button handler.",
+        "Do not inject operation_phase, project root, or KANDA_ERROR_LESSON_JSON_BEGIN/END instructions into this clipboard action.",
+        "Preserve previous complete Error Memory JSON export fixes: no second_prompt_files path and no QTextCursor Start attribute access.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-copy-error-draft-latest-editor-payload-v8",
+      "feature_title": "Error Memory Copy Error Draft Latest Editor Payload v8",
+      "box": "kanda_reasoner_app/error_memory_gui",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-copy-error-draft-latest-editor-payload-v8.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Copy Last Error/Draft to AI must copy only the latest error/draft payload extracted from Error Editor.",
+        "If Error Editor contains an old AI formulary prompt, strip the prompt wrapper and copy raw_error_text from the last Current error/draft JSON section.",
+        "Do not copy You are a specialist, Task, Critical rules, Return format, or Current error/draft JSON marker text from this button.",
+        "Preserve plain Error Editor text when no prompt wrapper is present.",
+        "Preserve previous complete Error Memory JSON export fixes: no second_prompt_files path and no QTextCursor Start attribute access.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-copy-error-editor-exact-json-v12",
+      "feature_title": "Error Memory Copy Error Editor Exact JSON v12",
+      "box": "Error Memory GUI clipboard wiring",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-copy-error-editor-exact-json-v12.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Copy Current Error Editor JSON must copy received_preview_edit text directly.",
+        "Do not call AI formulary prompt builders from this button.",
+        "Do not call extraction helpers or parse raw_error_text for this button.",
+        "Preserve previous complete Error Memory JSON export fixes: no second_prompt_files path and no QTextCursor Start attribute access.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-copy-error-draft-button-recreated-v13",
+      "feature_title": "Error Memory Copy Error Draft Button Recreated v13",
+      "box": "Error Memory GUI clipboard button wiring",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-copy-error-draft-button-recreated-v13.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "The old Copy error/draft to AI button path must not remain.",
+        "The new Copy error/draft button must copy received_preview_edit text directly.",
+        "Do not call prompt builders, parsers, wrappers, extraction helpers, or raw_error_text logic from this button.",
+        "Preserve previous complete Error Memory JSON export fixes: no second_prompt_files path and no QTextCursor Start attribute access.",
+        "Error Memory lessons must be staged to pending intake and not saved directly into Lessons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-memorize-auto-loads-next-pending-v14",
+      "feature_title": "Error Memory Memorize Auto Loads Next Pending v14",
+      "box": "AI-assisted pending-intake loader after Memorize Error",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-memorize-auto-loads-next-pending-v14.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/project_freeze_after_update/freeze_hint_intake",
+        "<PROJECT_ROOT>/project_freeze_after_update/frozen_features_memory",
+        "<PROJECT_ROOT>/project_freeze_ledger",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "After Memorize Error successfully saves a loaded pending lesson, the matching pending-intake source file must be consumed before reloading.",
+        "After consuming the current pending lesson, the AI-assisted intake and Error Editor windows must be cleared and the next pending lesson must be loaded immediately when one exists.",
+        "The user must not need to change tabs and return to Error Memory to advance to the next AI-assisted pending lesson.",
+        "This post-memorize refresh must stay inside the pending-intake loader box and must not change clipboard, freeze, ZIP staging, or storage-schema behavior.",
+        "Preserve the recreated Copy error/draft button direct-copy contract from v13.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-router-terminal-footer-contract-v15",
+      "feature_title": "Router Terminal Footer Contract v15",
+      "box": "router/prompt terminal-output contract enforcement",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-router-terminal-footer-contract-v15.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/patch_install_delivery_error_register.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Never deliver a KANDA install block without the 5-second success clear footer.",
+        "Validation, diagnostic, staging-check, repair, freeze/evidence-merge, and all non-install-success terminal blocks must use Enter, Clear-Host, Enter, Clear-Host.",
+        "Do not change Error Memory GUI behavior from this router/prompt patch.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-memorize-next-syncs-editor-v17",
+      "feature_title": "Error Memory Memorize Next Syncs Editor v17",
+      "box": "Error Memory post-Memorize window synchronization",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-memorize-next-syncs-editor-v17.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/kanda_reasoner_app/error_memory_gui/error_memory_tab.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "After Memorize Error consumes the current pending intake lesson, the next pending lesson must load without tab switching.",
+        "When that next pending JSON is loaded after Memorize Error, AI-assisted intake and Error Editor must be updated from the same parsed lesson JSON in the same action.",
+        "Current intake and Error Editor clear behavior before next pending load must remain preserved.",
+        "Do not change Copy error/draft exact Error Editor copy behavior.",
+        "Do not change Heuristic Correction Level 1 versus Need AI to Correct Level 2/3 behavior.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-ai-intake-copy-error-draft-button-v18",
+      "feature_title": "Error Memory AI Intake Copy Error Draft Button v18",
+      "box": "Error Memory AI-assisted intake clipboard button",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-ai-intake-copy-error-draft-button-v18.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/kanda_reasoner_app/error_memory_gui/error_memory_tab.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "AI-assisted error lesson intake group must have its own Copy error/draft button.",
+        "The AI-assisted intake Copy error/draft button must copy exactly raw_error_edit visible text.",
+        "The AI-assisted intake Copy error/draft button must not read Error Editor text.",
+        "The AI-assisted intake Copy error/draft button must not parse JSON, build prompts, convert wrappers, save lessons, or change pending intake state.",
+        "Existing Error Editor Copy error/draft, heuristic correction, and post-Memorize pending sync behavior must remain preserved.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-ai-intake-pending-format-v19",
+      "feature_title": "Error Memory AI Intake Pending Format v19",
+      "box": "Error Memory AI-assisted intake rendering/layout box",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-ai-intake-pending-format-v19.md",
+      "protected_paths": [
+        "<drive>:/<project>_show_project_to_AI/project_error_memory",
+        "<PROJECT_ROOT>/kanda_reasoner_app/error_memory_gui/error_memory_tab.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "AI-assisted intake auto-load must populate raw_error_edit from pending formatted_text, preserving KANDA_ERROR_LESSON_JSON_BEGIN / END wrapper.",
+        "Error Editor must remain normalized editable JSON from parsed lesson.",
+        "Post-Memorize auto-load must not mirror the same raw JSON text into both windows.",
+        "The previous v18 AI-assisted intake Copy error/draft button must remain preserved.",
+        "Existing Error Editor Copy error/draft, heuristic correction, and pending consume behavior must remain preserved.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-pending-intake-del-draft",
+      "feature_title": "Error Memory Pending Intake Del Draft",
+      "box": "kanda_reasoner_app/error_memory_gui + validation + bundle_manifest.json + KANDA_FREEZE_HINT.json",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-pending-intake-del-draft.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-file-send-smoke-test-v1",
+      "feature_title": "Error Memory file-send smoke test v1",
+      "box": "patch delivery smoke test / Error Memory pending intake staging",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-file-send-smoke-test-v1.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not use finally-based user-facing PowerShell footers.",
+        "Do not emit Error Memory JSON commands with backslashes.",
+        "Do not claim source-code behavior was frozen from this smoke-test package.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-heuristic-mark-draft-saveable-v25",
+      "feature_title": "Error Memory heuristic Mark Draft saveable v25",
+      "box": "Error Memory GUI and heuristic normalizer",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-heuristic-mark-draft-saveable-v25.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Mark Draft must canonicalize partial older lesson JSON before save_lesson.",
+        "Heuristic Correction must not output an unsaveable draft when raw_error_text is missing but raw_error_snapshot_scrubbed exists.",
+        "Mark Active must show exact active-ready missing reasons.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-state-machine-separates-draft-normalization-from-active-memorization",
+      "feature_title": "Error Memory state machine separates draft normalization from active memorization",
+      "box": "Error Memory GUI state machine and persistence workflow",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-state-machine-separates-draft-normalization-from-active-memorization.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not let Heuristic Correction imply active correction when only draft normalization occurred.",
+        "Do not let Memorize Error save draft lessons as if they were active memory.",
+        "Use Mark Draft to preserve draft lessons without active promotion.",
+        "Show exact active-ready missing items before Mark Active or Memorize Error can save as active.",
+        "Pending intake loader must skip and delete pending files whose lesson_id already exists in Lessons.",
+        "Do not reintroduce stale pending intake loops for saved drafts.",
+        "Do not use finally in user-facing PowerShell blocks.",
+        "Use forward slashes in JSON validation command paths.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-del-draft-complete-delete",
+      "feature_title": "Error Memory Del Draft Complete Delete",
+      "box": "kanda_reasoner_app/error_memory_gui + validation + bundle_manifest.json + KANDA_FREEZE_HINT.json",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-del-draft-complete-delete.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260626-error-memory-active-ready-output-hard-gate-v21",
+      "feature_title": "Error Memory Active-Ready Output Hard Gate v21",
+      "box": "Error Memory / AI lesson generation prompt and output guardrails",
+      "status": "frozen",
+      "date": "2026-06-26",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260626-error-memory-active-ready-output-hard-gate-v21.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/patch_install_delivery_error_register.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
+        "project_error_memory/pending_ai_assisted_error_lesson_intake",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not emit active KANDA_ERROR_LESSON_JSON unless raw_error_text, raw_error_snapshot_scrubbed, and redaction are present and meaningful.",
+        "Do not use older minimal active Error Memory lesson shapes for AI-assisted error lesson intake.",
+        "Do not answer with only a corrected pasted JSON block when the prompt/guardrail path allowed malformed active lessons.",
+        "Block patch ZIP, Direct Error Lesson ZIP, pending intake, or marker block output if an active lesson is not active-ready.",
+        "Lessons must remain pending for human review until Memorize Error is clicked.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-error-memory-strict-heuristic-correction-active-ready-transition",
+      "feature_title": "Error Memory strict Heuristic Correction active-ready transition",
+      "box": "Error Memory GUI heuristic/state-machine logic",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-error-memory-strict-heuristic-correction-active-ready-transition.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not return Heuristic Correction can_apply=True while active_ready_missing_reasons is non-empty.",
+        "Do not present draft-only normalization as correction success.",
+        "Do not allow regression_check.type not_available for active-ready lessons.",
+        "Do not let Memorize Error re-save draft-only lessons as progress.",
+        "Draft-only lessons must route to Need AI to Correct, AI/manual completion, or Mark Draft preservation.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-stage-active-ready-replacement-lesson-for-ml-pilot-activation-state-draft",
+      "feature_title": "Stage active-ready replacement lesson for ml_pilot_activation_state draft",
+      "box": "Error Memory lesson intake staging",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-stage-active-ready-replacement-lesson-for-ml-pilot-activation-state-draft.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not write active lessons directly into Lessons from installer. Stage receive-ready lessons into pending_ai_assisted_error_lesson_intake for human review and Memorize Error.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint",
+      "feature_title": "Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint",
+      "box": "prompt-library/router box",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint.md",
+      "protected_paths": [
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not route Error Memory draft-to-active correction from memory alone",
+        "use error_memory_active_ready_correction_blueprint.",
+        "Do not make the full blueprint always_startup without explicit governed approval.",
+        "Do not invent folder assimilation card files when current source uses GROUP_ASSIMILATION_INDEX.",
+        "Do not use backslashes in regression_check.command examples.",
+        "Do not let prompt-router bridge logic leak into Error Memory GUI/source boxes.",
         "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
         "Do not store project-specific frozen memory inside project_freeze_ledger.",
         "Preview Freeze Entry must remain read-only and must not write files.",

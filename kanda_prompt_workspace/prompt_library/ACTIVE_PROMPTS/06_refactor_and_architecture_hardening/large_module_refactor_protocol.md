@@ -1,4 +1,4 @@
-# Large Module Refactor Protocol
+# Large Module Creation and Refactor Protocol
 
 ## Box Logic Requirement
 
@@ -13,19 +13,22 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 - Validate the active box and any touched external box.
 
 
-Version: 5.8
-Status: Large-module refactor protocol, unified delivery model
-Use: Invoke when a relevant Python file is above 500 lines or the user opens a refactor pass.
+Version: 5.9
+Status: Large-module creation and refactor protocol, unified delivery model
+Use: Invoke when creating or refactoring a relevant code module that is above 500 lines, would exceed 500 lines, or the user opens a large-module creation/refactor pass.
 
-Module-size law:
+Module-size law for code modules:
 - Ideal: <= 400 lines.
 - Maximum: <= 500 lines.
-- Above 500 lines: split by responsibility.
+- When creating a new code module, do not create a file above 500 lines; split by responsibility before delivery.
+- When refactoring an existing code module above 500 lines, split by responsibility.
+- This rule applies to code/source modules, especially `.py` files.
+- This rule does not apply to plain text, Markdown, documentation, prompt, manifest, JSON, log, report, or other non-code content files. Files such as `.txt`, `.md`, `.json`, documentation artifacts, prompt files, manifests, and logs may be larger when their purpose requires it.
 
 Mandatory phases:
 Task 0 - Audit only:
-- inspect actual file;
-- line count;
+- inspect actual file or planned new code module;
+- line count or projected line count;
 - public API;
 - imports;
 - side effects;
@@ -170,3 +173,6 @@ user validates locally
 
 - v5.8: Added post-refactor fragmentation audit requirement for helper-folder and
   source-preserving facade refactors.
+- v5.9: Extended module-size law to new code module creation and clarified that
+  the 400/500 line limit applies to code/source modules, not text, Markdown,
+  documentation, prompt, manifest, JSON, log, report, or other non-code files.

@@ -819,3 +819,33 @@ metadata, fingerprint metadata, and redaction metadata.
 
 Do not shift this cleanup to the user. If the lesson is not active-ready, fix the
 package before emitting the ZIP link.
+
+<!-- BUNDLE_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_BEGIN -->
+
+## Bundle Error Memory active-ready output gate - v21
+
+Any bundle that corrects an error or carries Error Memory intake material must
+validate the exact packaged `KANDA_ERROR_LESSON_JSON` block before release.
+
+A bundle is not ready if an active lesson is missing `raw_error_text`,
+`raw_error_snapshot_scrubbed`, `redaction`, `exception`, `fingerprint`,
+`prevention_triggers`, `regression_check`, `validation_command_summary`,
+`validation_evidence`, `install_command_summary`, or `notes`.
+
+When this gate fails, fix the lesson-generation prompt/package first. Do not ask
+the user to repair malformed active-ready metadata in the GUI.
+
+<!-- BUNDLE_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_END -->
+
+<!-- BUNDLE_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_BEGIN -->
+
+## Bundle Error Memory JSON forward-slash gate - v22
+
+Any bundle that contains Error Memory lesson material must validate the exact
+packaged `KANDA_ERROR_LESSON_JSON` blocks before release.
+
+An active packaged lesson is invalid when `regression_check.command` contains a
+backslash or control character. Use forward slashes in commands and paths inside
+Error Memory JSON. A bundle that fails this check must not be delivered.
+
+<!-- BUNDLE_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_END -->

@@ -1,6 +1,6 @@
 # Daily Patch Delivery Guardrails
 
-Version: 2.1
+Version: 2.2
 Status: startup guardrail
 Prompt ID: daily_patch_delivery_guardrails
 Load mode: always_startup
@@ -162,6 +162,76 @@ Clear-Host
 Do not close the terminal from any install, validation, error, or diagnostic block.
 Do not substitute the old generic footer that always waits 5 seconds and then asks for Enter twice.
 
+
+
+
+<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_START -->
+
+## Terminal footer self-audit - v15
+
+Before emitting any KANDA/PyArchitect PowerShell or terminal block, the AI must
+perform a footer self-audit on the exact command text it is about to show. This
+is an output-time gate, not a reminder.
+
+First classify the command as one of:
+
+```text
+INSTALL
+VALIDATION
+DIAGNOSTIC
+INSTALL_ERROR_PATH
+VALIDATION_ERROR_PATH
+OTHER_TERMINAL
+```
+
+Hard fail-closed rules:
+
+1. Never deliver a KANDA install block without the 5-second success clear footer.
+2. A successful install block must end its success path with the exact behavior:
+   show `INSTALL OK. Terminal will clear in 5 seconds...`, run
+   `Start-Sleep -Seconds 5`, then run `Clear-Host`, with no success-path
+   `Read-Host` prompt.
+3. Every install block must also include an error path that shows the install
+   error, waits for Enter, runs `Clear-Host`, waits for Enter again, and runs
+   `Clear-Host` again.
+4. Every validation command, validation-error command, diagnostic command,
+   staging check, repair check, freeze/evidence-merge command, and all other
+   non-install-success terminal code must use the Enter, `Clear-Host`, Enter,
+   `Clear-Host` footer.
+5. If the command cannot be confidently classified as successful install output,
+   classify it as `OTHER_TERMINAL` and use Enter, `Clear-Host`, Enter,
+   `Clear-Host`.
+6. If the generated block is missing the required footer, mixes the install
+   success footer with Enter Enter cleanup, or auto-clears validation output
+   after 5 seconds, the answer must be blocked and repaired before the command
+   is shown.
+
+Required exact install-success footer:
+
+```powershell
+if (-not $InstallFailed) {
+    Write-Host ""
+    Write-Host "INSTALL OK. Terminal will clear in 5 seconds..."
+    Start-Sleep -Seconds 5
+    Clear-Host
+}
+```
+
+Required exact non-install-success footer:
+
+```powershell
+Write-Host ""
+Read-Host "Press Enter to clear terminal"
+Clear-Host
+Read-Host "Press Enter again to finish"
+Clear-Host
+```
+
+This rule applies to install/validation blocks shown in ChatGPT answers even if
+the patch code itself is correct. A correct feature patch with a wrong terminal
+footer is still a delivery regression.
+
+<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_END -->
 
 ## Mandatory sandbox pre-delivery validation rule
 
@@ -459,3 +529,172 @@ raw_error_snapshot_scrubbed
 `redaction.applied` and `redaction.export_safe` must both be true for active
 lessons. Missing redaction metadata is a packaging error, not something the user
 should fix manually after install.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_BEGIN -->
+
+## Patch validation evidence merge paradigm
+
+For every freeze-capable patch ZIP delivery, validation is not complete until the
+local validation evidence is also merged into the project-local freeze hint
+intake record.
+
+Required validation command shape after all validators pass:
+
+```text
+run ZIP contract validation
+run feature validators
+capture the passed local validation output in a short evidence file or here-string
+run scripts\merge_freeze_validation_evidence.py with --project-root, --feature-id,
+--feature-title, and --evidence-file
+require FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>
+```
+
+This is mandatory when the ZIP includes root-level `KANDA_FREEZE_HINT.json` and
+is intended to be frozen through Freeze Feature After Update.
+
+Do not rely on the pre-validation sidecar to populate `validation_evidence_summary`.
+`KANDA_FREEZE_HINT.json` is delivered before local validation and may contain
+sandbox evidence or a local-validation-pending note. The saved freeze-intake
+record must be upgraded after validation passes so New Local Freeze Entry loads
+recognizer-friendly evidence.
+
+A freeze-ready validation log should include:
+
+```text
+ZIP CONTRACT: PASS
+VALIDATION OK: <feature_id>
+FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>
+VALIDATION COMMAND COMPLETE
+```
+
+If startup sync is part of the validation, keep the exact marker:
+
+```text
+STATUS: IN_SYNC
+```
+
+If the merge helper is unavailable or fails, do not tell the user to freeze from
+the stale preview. Provide the validation evidence text and instruct the user to
+merge or paste it into the freeze form before Confirm and Write.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_END -->
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_BEGIN -->
+
+## Patch ZIP keyed validation evidence merge - v2
+
+When a validation block merges local validation evidence into freeze hint intake,
+it must not assume `latest_freeze_hint.json` already belongs to the feature that
+was just validated. A previous patch can leave a stale latest hint for another
+feature.
+
+For every freeze-capable patch validation block:
+
+1. Capture local validation markers after the validator passes.
+2. Call `scripts/merge_freeze_validation_evidence.py` with `--patch-zip` pointing
+   to the staged patch ZIP and with the current `--feature-id`.
+3. Require the merge helper to load the matching root-level `KANDA_FREEZE_HINT.json`
+   from that patch ZIP before merging evidence if the current latest hint is for
+   another feature.
+4. Treat a feature-id mismatch without a matching `--patch-zip` as a validation
+   failure, not as a reason to merge evidence into the wrong freeze form.
+5. Freeze-ready evidence must include `VALIDATION OK: <feature_id>` and
+   `FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>`.
+
+This prevents stale freeze-intake data from causing `FREEZE BLOCKED - no
+recognizable validation evidence found` after local validation already passed.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_END -->
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_BEGIN -->
+
+## Error Memory lesson block schema gate - v1
+
+Any ZIP, patch, direct Error Lesson ZIP, or clipboard receive block that carries
+`KANDA_ERROR_LESSON_JSON` must be schema-valid before delivery.
+
+Machine gate:
+
+```text
+python scripts\validate_patch_zip.py <staged_patch_zip>
+```
+
+must inspect every packaged `KANDA_ERROR_LESSON_JSON_*.txt` file and block the
+ZIP if the lesson JSON lacks `schema_version`, `project_slug`, required active
+lesson fields, `redaction`, `exception`, `fingerprint`, `prevention_triggers`,
+or `validation_evidence` when `status` is `active`.
+
+Required minimum for every packaged lesson block:
+
+```text
+schema_version: "1.0"
+project_slug: non-empty selected project slug
+lesson_id: present
+status: draft, active, deprecated, or superseded
+redaction.applied: true
+redaction.export_safe: true
+```
+
+Do not answer with only a corrected manual JSON block when an Error Memory
+lesson was generated with missing schema fields. Correct the creation/validation
+path so the next generated package is blocked before release.
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_END -->
+
+
+<!-- DAILY_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_BEGIN -->
+
+## Daily Error Memory active-ready output gate - v21
+
+Before emitting any ZIP link, patch package, Direct Error Lesson ZIP,
+marker-wrapped `KANDA_ERROR_LESSON_JSON`, or terminal instructions that stage an
+Error Memory lesson, the AI must apply the Error Memory active-ready output gate
+from `error_memory_ai_formulary_startup_canon`.
+
+Block and repair the answer before delivery if an active lesson is missing any
+of these high-risk fields:
+
+```text
+raw_error_text
+raw_error_snapshot_scrubbed
+redaction
+exception
+fingerprint
+prevention_triggers
+regression_check
+validation_command_summary
+validation_evidence
+install_command_summary
+notes
+```
+
+The exact regression phrase to catch is:
+
+```text
+This lesson is not active-ready. Required fields, prevention triggers, and redaction metadata must be present before saving as active.
+```
+
+Do not emit a corrected manual JSON block alone when the prompt/guardrail path is
+what allowed AI to generate the malformed lesson.
+
+<!-- DAILY_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_END -->
+
+<!-- DAILY_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_BEGIN -->
+
+## Daily Error Memory JSON forward-slash gate - v22
+
+Before emitting any patch ZIP, Direct Error Lesson ZIP, pending intake file,
+validation evidence, or marker-wrapped `KANDA_ERROR_LESSON_JSON`, apply the v22
+Error Memory JSON forward-slash active-ready gate.
+
+Block delivery if an active lesson has `regression_check.command` with any
+backslash or control character. Use slash-only commands such as:
+
+```text
+python validation/test_name.py
+```
+
+Do not correct only the final pasted text. Correct the generation prompt/package
+and validate the exact outgoing JSON before delivery.
+
+<!-- DAILY_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_END -->

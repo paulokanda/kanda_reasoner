@@ -25,6 +25,24 @@ If the active box, owner paths, public contract, or allowed supporting touches a
 
 ---
 
+## Startup Bridge Canon
+
+The startup prompt may load only a compact Box Logic Startup Bridge, not this
+complete canon. That bridge must preserve these minimum enforcement points:
+identify the active box, state owner paths, state allowed files, state files out
+of scope, declare cross-box touches, preserve public contracts, avoid private
+reach-in, and validate the active box plus any touched external box.
+
+If any of those points cannot be answered from loaded context, the AI must stop,
+inspect the relevant source, prompt, manifest, or validation context, or request
+the missing context before implementation.
+
+The compact bridge is allowed at startup because it enforces boundaries without
+loading the full specialist prompt. This complete `box_architecture_canon.md`
+remains on-demand for implementation, repair, refactor, prompt update,
+governance update, bundle creation, GUI ownership changes, public contracts,
+cross-box behavior, mutable-state ownership, and architecture-boundary risk.
+
 ## 0. Core Definition
 
 Box Architecture is a contract-based modular architecture discipline.

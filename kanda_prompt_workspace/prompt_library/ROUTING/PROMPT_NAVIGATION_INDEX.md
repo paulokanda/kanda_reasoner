@@ -472,6 +472,17 @@ This file maps natural human requests to the correct clean prompt ID and compani
 
 ## Prompt Authoring And Audit (`07_prompt_authoring_and_audit`)
 
+### `prompt_insertion_and_router_registration_protocol` - Prompt Insertion and Router Registration Protocol
+
+- **File:** `ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md`
+- **Priority:** `36`
+- **Trigger phrases:** `insert a new prompt`; `add a new prompt`; `create a new prompt`; `register a prompt in the router`; `make the router call this prompt`; `activate a prompt in router logic`; `connect a prompt to the router`; `bridge a prompt to prompt router logic`; `add prompt to ACTIVE_PROMPTS`; `prompt insertion protocol`; `prompt router registration`
+- **User intent examples:** `Create a new prompt and connect it to the router.`; `Bridge this prompt to prompt router logic without making it always-startup.`; `Add this prompt to ACTIVE_PROMPTS with metadata and routing validation.`
+- **Aliases:** `prompt insertion and router registration protocol`; `prompt_insertion_and_router_registration_protocol`; `prompt bridge insertion protocol`; `prompt router registration`
+- **When to load:** When the task asks to create, insert, update, route, bridge, register, or make available a prompt in the KANDA prompt workspace.
+- **When not to load:** Do not load for ordinary implementation tasks that do not change prompt-library files or routing awareness.
+- **Required companion prompts:** `prompt_canon_reconciliation_protocol`; `prompt_audit_canon`; `project_specific_prompt_generalization`; `prompt_identity_code_registry_canon`; `prompt_navigation_index`; `prompt_router`
+
 ### `project_specific_prompt_generalization` — Project-Specific Prompt Generalization
 
 - **File:** `ACTIVE_PROMPTS/07_prompt_authoring_and_audit/project_specific_prompt_generalization.md`
@@ -833,6 +844,18 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
 
 ## Generalized Project Canons (`12_generalized_project_canons`)
+
+### `error_memory_active_ready_correction_blueprint` - Error Memory Active-Ready Correction Blueprint
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md`
+- **Prompt code:** `KPR-12-002`
+- **Priority:** `32`
+- **Trigger phrases:** `correct this Error Memory draft`; `make this lesson active-ready`; `convert draft to active lesson`; `KANDA_ERROR_LESSON_JSON status draft`; `This lesson is not ready for active status`; `Memorize Error says missing active-ready fields`; `validation_command_summary is empty`; `source_patch_zip is empty`; `install_command_summary is empty`; `regression_check.type must be validation_command`; `regression_check.command is empty`; `regression_check.expected_marker is empty`
+- **User intent examples:** `Convert this KANDA_ERROR_LESSON_JSON draft into an active-ready lesson.`; `Memorize Error rejects this lesson because active-ready fields are missing; correct it safely.`; `Make this Error Memory draft active only if validation evidence is complete.`
+- **Aliases:** `error memory active-ready correction blueprint`; `error_memory_active_ready_correction_blueprint`; `draft to active error memory blueprint`; `active-ready Error Memory schema`
+- **When to load:** When a task asks to correct, promote, validate, or convert a `KANDA_ERROR_LESSON_JSON` draft into active-ready or active status.
+- **When not to load:** Do not load for ordinary code patches, generic Error Memory GUI behavior, or non-Error-Memory tasks unless an Error Memory lesson is being corrected or promoted.
+- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`; `prompt_navigation_index`; `prompt_router`
 
 ### `project_tool_boundary_canon` - Project Tool Boundary Canon
 

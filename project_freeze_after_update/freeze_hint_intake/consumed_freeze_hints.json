@@ -5165,9 +5165,357 @@
         "source_size_bytes": 10174
       },
       "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T06:01:56Z",
+      "feature_id": "freeze-gui-ignore-and-get-frozen-v12",
+      "feature_title": "Freeze GUI Ignore this Freeze and Get Frozen snippet controls",
+      "source": {
+        "source_mtime_ns": 1782453671967360500,
+        "source_name": "kanda_freeze_gui_ignore_and_get_frozen_v12_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_freeze_gui_ignore_and_get_frozen_v12_patch.zip",
+        "source_size_bytes": 9018
+      },
+      "used_freeze_id": "freeze-20260626-freeze-gui-ignore-this-freeze-and-get-frozen-snippet-controls"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T12:32:11Z",
+      "feature_id": "startup-code-module-size-bridge-v1",
+      "feature_title": "Startup Code Module Size Bridge",
+      "source": {
+        "source_mtime_ns": 1782476955407901600,
+        "source_name": "kanda_startup_code_module_size_bridge_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_code_module_size_bridge_v1_patch.zip",
+        "source_size_bytes": 34609
+      },
+      "used_freeze_id": "freeze-20260626-startup-code-module-size-bridge"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T13:05:02Z",
+      "feature_id": "",
+      "feature_title": "Freeze Validation Evidence Merge By Patch ZIP",
+      "source": {
+        "source_mtime_ns": 1782479052869077200,
+        "source_name": "kanda_freeze_validation_evidence_merge_by_patch_zip_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_freeze_validation_evidence_merge_by_patch_zip_v2_patch.zip",
+        "source_size_bytes": 29796
+      },
+      "used_freeze_id": "freeze-20260626-freeze-validation-evidence-merge-by-patch-zip"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T13:16:28Z",
+      "feature_id": "error-memory-lesson-block-schema-gate-v1",
+      "feature_title": "Error Memory Lesson Block Schema Gate",
+      "source": {
+        "source_mtime_ns": 1782479725955168300,
+        "source_name": "kanda_error_memory_lesson_block_schema_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_lesson_block_schema_gate_v1_patch.zip",
+        "source_size_bytes": 40143
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-lesson-block-schema-gate"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T13:31:25Z",
+      "feature_id": "error-memory-export-clipboard-complete-json-v1",
+      "feature_title": "Error Memory Export Clipboard Complete JSON",
+      "source": {
+        "source_mtime_ns": 1782480643948183900,
+        "source_name": "kanda_error_memory_export_clipboard_complete_json_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_clipboard_complete_json_v1_patch.zip",
+        "source_size_bytes": 23154
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T13:41:09Z",
+      "feature_id": "error-memory-export-clipboard-complete-json-v2",
+      "feature_title": "Error Memory Export Clipboard Complete JSON v2",
+      "source": {
+        "source_mtime_ns": 1782481217652635300,
+        "source_name": "kanda_error_memory_export_clipboard_complete_json_v2_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_clipboard_complete_json_v2_patch.zip",
+        "source_size_bytes": 24764
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json-v2"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:02:40Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Export Complete JSON Windows-Isolated Validation v5",
+      "source": {
+        "source_mtime_ns": 1782482525543424300,
+        "source_name": "kanda_error_memory_export_complete_json_windows_isolated_v5_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_complete_json_windows_isolated_v5_patch.zip",
+        "source_size_bytes": 30965
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-complete-json-windows-isolated-validation-v5"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:14:47Z",
+      "feature_id": "",
+      "feature_title": "Startup Box Logic Bridge",
+      "source": {
+        "source_mtime_ns": 1782483168852806400,
+        "source_name": "kanda_startup_box_logic_bridge_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_box_logic_bridge_v1_patch.zip",
+        "source_size_bytes": 45875
+      },
+      "used_freeze_id": "freeze-20260626-startup-box-logic-bridge"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:28:57Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Export Cursor Start Guard v6",
+      "source": {
+        "source_mtime_ns": 1782484085510220300,
+        "source_name": "kanda_error_memory_export_cursor_start_guard_v6_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_cursor_start_guard_v6_patch.zip",
+        "source_size_bytes": 20395
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-cursor-start-guard-v6"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:29:08Z",
+      "feature_id": "error-memory-export-complete-json-all-statuses-v4",
+      "feature_title": "Error Memory Export Complete JSON All Statuses v4",
+      "source": {
+        "source_mtime_ns": 1782481995107624000,
+        "source_name": "kanda_error_memory_export_complete_json_all_statuses_v4_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_complete_json_all_statuses_v4_patch.zip",
+        "source_size_bytes": 10026966
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-complete-json-all-statuses-v4"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:29:16Z",
+      "feature_id": "error-memory-export-clipboard-complete-json-v3",
+      "feature_title": "Error Memory Export Clipboard Complete JSON v3",
+      "source": {
+        "source_mtime_ns": 1782481683157221500,
+        "source_name": "kanda_error_memory_export_clipboard_complete_json_v3_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_export_clipboard_complete_json_v3_patch.zip",
+        "source_size_bytes": 25042
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-export-clipboard-complete-json-v3"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:43:37Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Copy Error Draft Editor Only v7",
+      "source": {
+        "source_mtime_ns": 1782484777258534700,
+        "source_name": "kanda_error_memory_copy_error_draft_editor_only_v7_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_copy_error_draft_editor_only_v7_patch.zip",
+        "source_size_bytes": 20702
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-copy-error-draft-editor-only-v7"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T14:59:14Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Copy Error Draft Latest Editor Payload v8",
+      "source": {
+        "source_mtime_ns": 1782485904049320200,
+        "source_name": "kanda_error_memory_copy_error_draft_latest_payload_v8_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_copy_error_draft_latest_payload_v8_patch.zip",
+        "source_size_bytes": 23511
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-copy-error-draft-latest-editor-payload-v8"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T15:29:21Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Copy Error Editor Exact JSON v12",
+      "source": {
+        "source_mtime_ns": 1782487718964592200,
+        "source_name": "kanda_error_memory_copy_error_editor_exact_json_v12_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_copy_error_editor_exact_json_v12_patch.zip",
+        "source_size_bytes": 22868
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-copy-error-editor-exact-json-v12"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T15:39:21Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Copy Error Draft Button Recreated v13",
+      "source": {
+        "source_mtime_ns": 1782488278305827500,
+        "source_name": "kanda_error_memory_copy_error_draft_button_recreated_v13_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_copy_error_draft_button_recreated_v13_patch.zip",
+        "source_size_bytes": 20773
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-copy-error-draft-button-recreated-v13"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T18:07:48Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Memorize Auto Loads Next Pending v14",
+      "source": {
+        "source_mtime_ns": 1782496961109701700,
+        "source_name": "kanda_error_memory_memorize_auto_loads_next_pending_v14_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_memorize_auto_loads_next_pending_v14_patch.zip",
+        "source_size_bytes": 22694
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-memorize-auto-loads-next-pending-v14"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T18:15:26Z",
+      "feature_id": "router-terminal-footer-contract-v15",
+      "feature_title": "Router Terminal Footer Contract v15",
+      "source": {
+        "source_mtime_ns": 1782497667660347200,
+        "source_name": "kanda_router_terminal_footer_contract_v15_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_router_terminal_footer_contract_v15_patch.zip",
+        "source_size_bytes": 44624
+      },
+      "used_freeze_id": "freeze-20260626-router-terminal-footer-contract-v15"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T19:13:44Z",
+      "feature_id": "",
+      "feature_title": "Error Memory Memorize Next Syncs Editor v17",
+      "source": {
+        "source_mtime_ns": 1782501175167003000,
+        "source_name": "kanda_error_memory_memorize_next_syncs_editor_v17_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_memorize_next_syncs_editor_v17_patch.zip",
+        "source_size_bytes": 24754
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-memorize-next-syncs-editor-v17"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T19:36:22Z",
+      "feature_id": "",
+      "feature_title": "Error Memory AI Intake Copy Error Draft Button v18",
+      "source": {
+        "source_mtime_ns": 1782502300869328900,
+        "source_name": "kanda_error_memory_ai_intake_copy_error_draft_button_v18_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_ai_intake_copy_error_draft_button_v18_patch.zip",
+        "source_size_bytes": 23750
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-ai-intake-copy-error-draft-button-v18"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T19:50:53Z",
+      "feature_id": "",
+      "feature_title": "Error Memory AI Intake Pending Format v19",
+      "source": {
+        "source_mtime_ns": 1782503391202243000,
+        "source_name": "kanda_error_memory_ai_intake_pending_format_v19_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_ai_intake_pending_format_v19_patch.zip",
+        "source_size_bytes": 64939
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-ai-intake-pending-format-v19"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T21:39:15Z",
+      "feature_id": "error-memory-pending-intake-del-draft-v23",
+      "feature_title": "Error Memory Pending Intake Del Draft",
+      "source": {
+        "source_mtime_ns": 1782509890488083300,
+        "source_name": "kanda_error_memory_pending_intake_del_draft_v23_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_pending_intake_del_draft_v23_patch.zip",
+        "source_size_bytes": 21751
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-pending-intake-del-draft"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T22:55:40Z",
+      "feature_id": "error-memory-file-send-smoke-test-v1",
+      "feature_title": "Error Memory file-send smoke test v1",
+      "source": {
+        "source_mtime_ns": 1782514493591729900,
+        "source_name": "kanda_error_memory_file_send_smoke_test_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_file_send_smoke_test_v1_patch.zip",
+        "source_size_bytes": 9268
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-file-send-smoke-test-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T23:09:21Z",
+      "feature_id": "error-memory-heuristic-mark-draft-saveable-v25",
+      "feature_title": "Error Memory heuristic Mark Draft saveable v25",
+      "source": {
+        "source_mtime_ns": 1782515314327754600,
+        "source_name": "kanda_error_memory_heuristic_mark_draft_saveable_v25_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_heuristic_mark_draft_saveable_v25_patch.zip",
+        "source_size_bytes": 34095
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-heuristic-mark-draft-saveable-v25"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T23:55:08Z",
+      "feature_id": "error-memory-state-machine-guidance-v27",
+      "feature_title": "Error Memory state machine separates draft normalization from active memorization",
+      "source": {
+        "source_mtime_ns": 1782518060317387600,
+        "source_name": "kanda_error_memory_state_machine_guidance_v27_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_state_machine_guidance_v27_patch.zip",
+        "source_size_bytes": 32207
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-state-machine-separates-draft-normalization-from-active-memorization"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T23:55:20Z",
+      "feature_id": "error-memory-del-draft-complete-delete-v24",
+      "feature_title": "Error Memory Del Draft Complete Delete",
+      "source": {
+        "source_mtime_ns": 1782510484486374600,
+        "source_name": "kanda_error_memory_del_draft_complete_delete_v24_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_del_draft_complete_delete_v24_patch.zip",
+        "source_size_bytes": 23285
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-del-draft-complete-delete"
+    },
+    {
+      "consumed_at_utc": "2026-06-26T23:55:30Z",
+      "feature_id": "error-memory-active-ready-output-hard-gate-v21",
+      "feature_title": "Error Memory Active-Ready Output Hard Gate v21",
+      "source": {
+        "source_mtime_ns": 1782507070640787800,
+        "source_name": "kanda_error_memory_active_ready_output_hard_gate_v21_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_active_ready_output_hard_gate_v21_patch.zip",
+        "source_size_bytes": 13440
+      },
+      "used_freeze_id": "freeze-20260626-error-memory-active-ready-output-hard-gate-v21"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T00:25:41Z",
+      "feature_id": "error-memory-strict-heuristic-correction-active-ready-transition",
+      "feature_title": "Error Memory strict Heuristic Correction active-ready transition",
+      "source": {
+        "source_mtime_ns": 1782519895294277600,
+        "source_name": "kanda_error_memory_strict_heuristic_active_transition_v29_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_strict_heuristic_active_transition_v29_patch.zip",
+        "source_size_bytes": 35438
+      },
+      "used_freeze_id": "freeze-20260627-error-memory-strict-heuristic-correction-active-ready-transition"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T00:52:25Z",
+      "feature_id": "error-memory-stage-ml-pilot-active-lesson-v30",
+      "feature_title": "Stage active-ready replacement lesson for ml_pilot_activation_state draft",
+      "source": {
+        "source_mtime_ns": 1782521467571828700,
+        "source_name": "kanda_error_memory_stage_ml_pilot_active_lesson_v30_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_error_memory_stage_ml_pilot_active_lesson_v30_patch.zip",
+        "source_size_bytes": 7478
+      },
+      "used_freeze_id": "freeze-20260627-stage-active-ready-replacement-lesson-for-ml-pilot-activation-state-draft"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T01:52:45Z",
+      "feature_id": "prompt-router-bridge-active-ready-blueprint-v32",
+      "feature_title": "Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint",
+      "source": {
+        "source_mtime_ns": 1782525098064495000,
+        "source_name": "kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+        "source_size_bytes": 109884
+      },
+      "used_freeze_id": "freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-26T05:55:18Z"
+  "updated_at_utc": "2026-06-27T01:52:45Z"
 }

@@ -1,7 +1,7 @@
 ---
 prompt_id: pre_output_contract_gates
 title: Pre-Output Contract Gates
-version: 1.1
+version: 1.2
 status: active_candidate
 load_type: on_request
 owner_group: 03_governance_freeze_and_handoff
@@ -110,6 +110,45 @@ Never close the terminal from install, validation, diagnostic, or error blocks.
 Never ask for Enter after a successful install unless the user explicitly asked to keep the log visible.
 Never auto-clear validation or diagnostic output after 5 seconds.
 
+
+
+
+<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_START -->
+
+## Terminal footer self-audit gate - v15
+
+Before emitting the final answer that contains any PowerShell or terminal code,
+inspect the exact block text. Do not rely on memory and do not infer that the
+footer is present. Check the text that will be shown to the user.
+
+Pass criteria for an install block:
+
+- It has `$InstallFailed = $false` or an equivalent checked success flag.
+- It has a `try { ... } catch { ... }` or text-equivalent guarded error path.
+- The install error path includes `INSTALL ERROR`, the error message,
+  `Read-Host "Press Enter to clear terminal"`, `Clear-Host`,
+  `Read-Host "Press Enter again to finish"`, and `Clear-Host`.
+- The success path includes `INSTALL OK. Terminal will clear in 5 seconds...`,
+  `Start-Sleep -Seconds 5`, and `Clear-Host`.
+- The success path does not ask for Enter.
+
+Pass criteria for validation, diagnostic, repair, staging-check, freeze-merge,
+and every other non-install-success terminal block:
+
+- It includes `Read-Host "Press Enter to clear terminal"`.
+- It includes `Read-Host "Press Enter again to finish"`.
+- It includes `Clear-Host` after each prompt.
+- It does not use `Start-Sleep -Seconds 5` as the cleanup behavior.
+- It does not claim install success.
+
+Fail-closed rule:
+
+Never deliver a KANDA install block without the 5-second success clear footer.
+Never deliver a validation, diagnostic, staging-check, repair, or other terminal
+block without Enter, `Clear-Host`, Enter, `Clear-Host`. If the footer check
+fails, repair the command before output.
+
+<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_END -->
 
 ### INSTALL_ERROR fail-safe wrapper
 
@@ -386,3 +425,134 @@ Use this prompt only when output-time contracts matter.
 A prompt rule that controls a machine-consumed artifact must be treated as a contract, not as advice.
 
 If the artifact cannot satisfy the relevant contract, block the artifact and state the missing contract requirement.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_BEGIN -->
+
+## Mandatory validation evidence merge gate
+
+Before emitting any validation command for a freeze-capable patch ZIP, include a
+post-validation merge step unless the patch is explicitly non-freezeable.
+
+The validation command must:
+
+1. Run the ZIP contract validator.
+2. Run the feature-specific validators.
+3. Store the recognizer-friendly local validation evidence in a small evidence
+   text file or here-string.
+4. Run `python scripts\merge_freeze_validation_evidence.py` with the active
+   project root, the same feature ID as `KANDA_FREEZE_HINT.json`, the feature
+   title, and the evidence file.
+5. Treat a missing `FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>` line as a
+   validation failure for freeze-readiness.
+
+The merge step prevents New Local Freeze Entry from showing the old
+pre-validation sidecar text after validation has passed.
+
+Do not output a freeze-ready answer if the user-local validation passed but the
+freeze form still shows only sandbox evidence or a local-validation-pending note.
+The correct action is to refresh or merge validation evidence, then preview and
+Confirm and Write.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_END -->
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_BEGIN -->
+
+## Patch ZIP keyed validation evidence merge - v2
+
+When a validation block merges local validation evidence into freeze hint intake,
+it must not assume `latest_freeze_hint.json` already belongs to the feature that
+was just validated. A previous patch can leave a stale latest hint for another
+feature.
+
+For every freeze-capable patch validation block:
+
+1. Capture local validation markers after the validator passes.
+2. Call `scripts/merge_freeze_validation_evidence.py` with `--patch-zip` pointing
+   to the staged patch ZIP and with the current `--feature-id`.
+3. Require the merge helper to load the matching root-level `KANDA_FREEZE_HINT.json`
+   from that patch ZIP before merging evidence if the current latest hint is for
+   another feature.
+4. Treat a feature-id mismatch without a matching `--patch-zip` as a validation
+   failure, not as a reason to merge evidence into the wrong freeze form.
+5. Freeze-ready evidence must include `VALIDATION OK: <feature_id>` and
+   `FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>`.
+
+This prevents stale freeze-intake data from causing `FREEZE BLOCKED - no
+recognizable validation evidence found` after local validation already passed.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_END -->
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_BEGIN -->
+
+## Error Memory lesson block schema gate - v1
+
+Any ZIP, patch, direct Error Lesson ZIP, or clipboard receive block that carries
+`KANDA_ERROR_LESSON_JSON` must be schema-valid before delivery.
+
+Machine gate:
+
+```text
+python scripts\validate_patch_zip.py <staged_patch_zip>
+```
+
+must inspect every packaged `KANDA_ERROR_LESSON_JSON_*.txt` file and block the
+ZIP if the lesson JSON lacks `schema_version`, `project_slug`, required active
+lesson fields, `redaction`, `exception`, `fingerprint`, `prevention_triggers`,
+or `validation_evidence` when `status` is `active`.
+
+Required minimum for every packaged lesson block:
+
+```text
+schema_version: "1.0"
+project_slug: non-empty selected project slug
+lesson_id: present
+status: draft, active, deprecated, or superseded
+redaction.applied: true
+redaction.export_safe: true
+```
+
+Do not answer with only a corrected manual JSON block when an Error Memory
+lesson was generated with missing schema fields. Correct the creation/validation
+path so the next generated package is blocked before release.
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_END -->
+
+
+<!-- PRE_OUTPUT_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_BEGIN -->
+
+## Error Memory active-ready output gate - v21
+
+Apply this gate before outputting any artifact that contains or stages
+`KANDA_ERROR_LESSON_JSON`.
+
+The gate checks the exact outgoing JSON object, not a summary. If `status` is
+`active`, the object must include `raw_error_text`,
+`raw_error_snapshot_scrubbed`, `redaction`, `exception`, `fingerprint`,
+`prevention_triggers`, `regression_check`, `validation_command_summary`,
+`validation_evidence`, `install_command_summary`, and `notes`, with meaningful
+values. `redaction.applied` and `redaction.export_safe` must be true and
+`redaction.rules` must be a non-empty list.
+
+If the exact outgoing active lesson would trigger the GUI message `This lesson is
+not active-ready`, block the output and repair the prompt/package before showing
+the ZIP link, terminal command, direct lesson ZIP, or marker-wrapped block.
+
+<!-- PRE_OUTPUT_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_END -->
+
+<!-- PRE_OUTPUT_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_BEGIN -->
+
+## Error Memory JSON forward-slash pre-output gate - v22
+
+Apply this before outputting anything that contains or stages
+`KANDA_ERROR_LESSON_JSON`.
+
+The exact outgoing active lesson must parse as JSON, include the full
+active-ready schema, include `redaction.rules`, and have a slash-only
+`regression_check.command`. Backslashes and control characters in that command
+are release blockers.
+
+If sandbox/tool validation is available, validate the exact JSON before showing
+it, linking a ZIP, or providing install commands. If validation cannot be done,
+do not emit an active lesson block.
+
+<!-- PRE_OUTPUT_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_END -->
