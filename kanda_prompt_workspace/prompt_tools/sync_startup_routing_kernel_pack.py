@@ -246,6 +246,19 @@ OLD_PASTE_AFTER_UPLOAD_FILENAME = "paste_after_uploading_" + "startup_zip.md"
 LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME = "paste_after_" + "first_prompts_to_ai.md"
 MODIFY_STARTUP_DELIVERY_FILENAME = "zz_read_only_if_modifying_startup_delivery.md"
 LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME = "paste_if_modify" + "_startup_delivery.md"
+FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION = "Waiting for all files (Project Files) from second_prompt_files folder"
+SECOND_UPLOAD_READY_ACTION = "WAIT_FOR_TASK"
+PROJECT_READY_CHECK_TITLE = "PROJECT READY CHECK"
+PROJECT_READY_CHECK_REQUIRED_FIELDS = (
+    "Project slug:",
+    "Active project root:",
+    "KANDA tool root:",
+    "Same physical root: YES / NO",
+    "Compact Error Memory loaded:",
+    "Second-upload handoff loaded:",
+    "Tier-1 gates active:",
+    "Next action:",
+)
 
 # STARTUP_ARTIFACT_READ_ORDER_GUARD_V1 constants
 READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME = "000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md"
@@ -299,11 +312,13 @@ Routing behavior:
 [one paragraph]
 
 Next action:
-WAIT_FOR_TASK or REQUEST_MISSING_FILES
+Waiting for all files (Project Files) from second_prompt_files folder or REQUEST_MISSING_FILES
 
 Do not solve any project task yet.
 
 If any required file above is missing or unreadable, mark Startup status as INCOMPLETE and request the missing files.
+
+If all startup files are complete, do not answer the project task yet. Wait for all files from the second_prompt_files folder. After the second upload group is read, return PROJECT READY CHECK and end with Next action: WAIT_FOR_TASK.
 """
 
 
@@ -413,9 +428,17 @@ Routing behavior:
 [one paragraph]
 
 Next action:
-WAIT_FOR_TASK or REQUEST_MISSING_FILES
+{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION} or REQUEST_MISSING_FILES
 
 Do not solve any project task yet.
+
+If all required startup files are present and readable, use:
+
+Startup status:
+COMPLETE
+
+Next action:
+{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}
 
 If any required file above is missing or unreadable, mark Startup status as INCOMPLETE and request the missing files.
 """
@@ -1143,7 +1166,7 @@ Routing behavior:
 [one paragraph explaining how you will use Fast Path, Routed Work Path, group routing, folder cards, and specialist prompts]
 
 Next action:
-WAIT_FOR_TASK or REQUEST_MISSING_FILES
+{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION} or REQUEST_MISSING_FILES
 ```
 
 If all required startup files are present and readable, use:
@@ -1153,7 +1176,7 @@ Startup status:
 COMPLETE
 
 Next action:
-WAIT_FOR_TASK
+Waiting for all files (Project Files) from second_prompt_files folder
 ```
 
 If any required startup file is missing or unreadable, use:
@@ -1165,6 +1188,31 @@ INCOMPLETE
 Next action:
 REQUEST_MISSING_FILES
 ```
+
+## Required second-upload project readiness behavior
+
+After the first startup load check is complete, the AI is not ready for project work yet.
+The next expected human action is to upload all available files from the `second_prompt_files` folder.
+
+When the second upload group arrives, read it using the second-upload order from `{PASTE_AFTER_UPLOAD_FILENAME}`.
+After the second upload group has been read, return exactly this readiness structure:
+
+```text
+{PROJECT_READY_CHECK_TITLE}
+Project slug:
+Active project root:
+KANDA tool root:
+Same physical root: YES / NO
+Compact Error Memory loaded:
+Second-upload handoff loaded:
+Tier-1 gates active:
+Next action:
+{SECOND_UPLOAD_READY_ACTION}
+```
+
+Use `Same physical root: YES` only when the active project root and KANDA tool root are intentionally the same root; otherwise use `NO`. For this project, `kanda_reasoner` can be both the active project and the KANDA tool, so the distinction must be stated explicitly instead of merged silently.
+
+Only after `{PROJECT_READY_CHECK_TITLE}` ends with `Next action: {SECOND_UPLOAD_READY_ACTION}` should the AI handle the real project task.
 
 ## Startup routing behavior
 
@@ -1485,12 +1533,30 @@ Startup delivery maintenance rule:
 If the task involves modifying prompt_tools, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, tell_AI_read_before_all.md, zz_read_only_if_modifying_startup_delivery.md, or startup delivery naming/content/validation, request zz_read_only_if_modifying_startup_delivery.md before implementing.
 
 Second-upload project handoff rule:
-After STARTUP PACK LOAD CHECK is COMPLETE and Next action is WAIT_FOR_TASK, the user may send a second upload group from second_prompt_files. Do not ask for it during startup unless it is already needed for the task. When the second group arrives, read in this order:
+After STARTUP PACK LOAD CHECK is COMPLETE and Next action is {FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}, the user should send the second upload group from second_prompt_files before any real project task. When the second group arrives, read in this order:
 1. _RUN_COLLECTOR_STATUS.txt, if present, to confirm generation status.
 2. <project_slug>__ai_handoff_upload_readme.txt.
-3. <project_slug>__ai_handoff_upload*.zip, in numeric order if split. Treat this as the zipped JSON handoff package. Inside it, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state.
-4. <project_slug>__source_archive_partXX_of_YY.zip only if exact source inspection or reconstruction is needed. Use source_archive_manifest to choose the needed part files.
-5. <project_slug>__ai_handoff_all_in_one*.zip is convenience/archive only; do not prefer it over the upload ZIP unless the upload ZIP is missing.
+3. Compact Error Memory files when present: <project_slug>__error_memory_ai_prompt.md, <project_slug>__error_lessons_compact.json, and <project_slug>__error_memory_manifest.json.
+4. <project_slug>__ai_handoff_upload*.zip, in numeric order if split. Treat this as the zipped JSON handoff package. Inside it, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files.
+5. <project_slug>__error_memory_full.zip only when compact Error Memory says full context is needed, repeated-error debugging is the task, the user asks for Error Memory audit, compact lessons are insufficient, or the current plan conflicts with a prior lesson.
+6. <project_slug>__source_archive_partXX_of_YY.zip only if exact source inspection or reconstruction is needed. Use source_archive_manifest to choose the needed part files.
+7. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets.
+8. <project_slug>__ai_handoff_all_in_one*.zip is convenience/archive only; do not prefer it over the upload ZIP unless the upload ZIP is missing.
+
+After reading the second upload group, return `{PROJECT_READY_CHECK_TITLE}` and include these fields exactly:
+
+```text
+{PROJECT_READY_CHECK_TITLE}
+Project slug:
+Active project root:
+KANDA tool root:
+Same physical root: YES / NO
+Compact Error Memory loaded:
+Second-upload handoff loaded:
+Tier-1 gates active:
+Next action:
+{SECOND_UPLOAD_READY_ACTION}
+```
 ```
 
 ## Normal use
@@ -1500,9 +1566,10 @@ After STARTUP PACK LOAD CHECK is COMPLETE and Next action is WAIT_FOR_TASK, the 
 3. Attach/upload `{PROMPT_LIBRARY_ZIP_NAME}`.
 4. The AI must read this file before opening ZIP contents, then open the startup ZIP and wait to open prompt_library.zip until a specific prompt is needed.
 5. Wait for `STARTUP PACK LOAD CHECK`.
-6. Confirm that every required startup file is reported as loaded.
-7. Only after `COMPLETE / WAIT_FOR_TASK`, send the real task.
-8. For project/source work, send the second upload group from `second_prompt_files` only after startup is complete. Include `_RUN_COLLECTOR_STATUS.txt`, `<project_slug>__ai_handoff_upload_readme.txt`, the zipped JSON handoff package `<project_slug>__ai_handoff_upload*.zip`, and source archive ZIP parts only when exact source inspection is needed.
+6. Confirm that every required startup file is reported as loaded and that Next action is `{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}`.
+7. Upload all available project files from `second_prompt_files`, including `_RUN_COLLECTOR_STATUS.txt`, `<project_slug>__ai_handoff_upload_readme.txt`, compact Error Memory files, the zipped JSON handoff package `<project_slug>__ai_handoff_upload*.zip`, and source archive ZIP parts when exact source inspection may be needed.
+8. Wait for the AI to return `{PROJECT_READY_CHECK_TITLE}` ending with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
+9. Only after `{PROJECT_READY_CHECK_TITLE}` ends with `{SECOND_UPLOAD_READY_ACTION}`, send the real project task.
 
 ## Second upload group from second_prompt_files
 
@@ -1511,13 +1578,16 @@ When the user sends the second upload group, the AI should read it in this order
 ```text
 1. _RUN_COLLECTOR_STATUS.txt, if present
 2. <project_slug>__ai_handoff_upload_readme.txt
-3. <project_slug>__ai_handoff_upload*.zip, in numeric order if split
-4. Inside the JSON handoff ZIP: UPLOAD_README.txt, ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state
-5. <project_slug>__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed
-6. <project_slug>__ai_handoff_all_in_one*.zip only as convenience/archive fallback
+3. Compact Error Memory files when present: <project_slug>__error_memory_ai_prompt.md, <project_slug>__error_lessons_compact.json, and <project_slug>__error_memory_manifest.json
+4. <project_slug>__ai_handoff_upload*.zip, in numeric order if split
+5. Inside the JSON handoff ZIP: UPLOAD_README.txt, ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files
+6. <project_slug>__error_memory_full.zip only when compact Error Memory says full context is needed, repeated-error debugging is the task, the user asks for Error Memory audit, compact lessons are insufficient, or the current plan conflicts with a prior lesson
+7. <project_slug>__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed
+8. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets
+9. <project_slug>__ai_handoff_all_in_one*.zip only as convenience/archive fallback
 ```
 
-The JSON handoff should be consumed from the ZIP package, not by relying on loose JSON uploads. Source archive ZIP parts are independent project-source packages and should be opened only when the routing/source manifests indicate they are needed.
+The JSON handoff should be consumed from the ZIP package, not by relying on loose JSON uploads. Source archive ZIP parts are independent project-source packages and should be opened only when the routing/source manifests indicate they are needed. After this second-upload read is complete, the AI should return `{PROJECT_READY_CHECK_TITLE}` and end with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
 
 ## Do not use maintenance file unless needed
 
@@ -1570,7 +1640,9 @@ Use `--sync --yes` when you intentionally want to force regeneration even if the
 3. Upload `{PROMPT_LIBRARY_ZIP_NAME}` to the same ChatGPT session.
 4. The AI reads `{paste_after_uploading_name}` before opening ZIP contents, then opens this startup ZIP.
 5. Wait for `STARTUP PACK LOAD CHECK`.
-6. Only then provide the project task.
+6. After the first load check completes, upload the project handoff files from `second_prompt_files`.
+7. Wait for `{PROJECT_READY_CHECK_TITLE}` to end with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
+8. Only then provide the project task.
 
 ## Companion prompt library ZIP
 

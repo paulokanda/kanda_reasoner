@@ -50,6 +50,44 @@ You are working on my Windows 11 Python project. Follow this complete surgical�
 
         Prefer standard library unless a clear reason for external dependencies exists.
 
+
+
+
+
+<!-- GOVERNED_IMPLEMENTATION_GATE_V1_START -->
+## Mandatory Governed Implementation Gate
+
+Before any governed implementation begins, the AI must route to or apply `router_bridge_governed_implementation` and emit this visible gate:
+
+```text
+IMPLEMENTATION GATE
+Task domain:
+Router bridge selected:
+Required prompt path:
+Target box:
+Forbidden box:
+Source files inspected:
+Generated-vs-canonical status:
+Project/tool disambiguation needed:
+Line-count risk:
+GUI-resolution risk, if GUI:
+May implement: YES / NO
+```
+
+Rules:
+
+- Do not start governed implementation unless `May implement: YES`.
+- Do not code from memory or from earlier conversation alone.
+- List actual inspected files.
+- If a target file is generated output, identify the canonical generator/source and edit that instead.
+- Keep KANDA Reasoner tool logic separate from active project logic, even when the active project is `kanda_reasoner`.
+- If Python modules are touched, mention line-count risk and avoid growing already-large modules without a refactor note.
+- If GUI files are touched, mention laptop-to-4K resolution risk.
+<!-- GOVERNED_IMPLEMENTATION_GATE_V1_END -->
+
+
+
+
 1.1 Mandatory sandbox pre-delivery gate
 
 Before sending any patch ZIP download link, install block, validation block, or final patch delivery to the user, the AI must validate the deliverable inside its own sandbox/environment first.
@@ -446,21 +484,46 @@ Do not say a patch is frozen until I paste successful validation output.
 
 10. Final response format for patch delivery (default)
 
-Use this exact format:
+Use this exact order. A patch ZIP link must not appear before the Patch Delivery Gate.
 
-    Patch name
+<!-- NO_ISOLATED_ZIP_DELIVERY_FORMAT_V1_START -->
+1. Patch name.
+2. `PATCH DELIVERY GATE` with `GATE STATUS: PASS`.
+3. What it changes.
+4. What this ZIP is.
+5. What this ZIP is not.
+6. Download ZIP link.
+7. Where to place the ZIP.
+8. Install PowerShell script, full script in a code block.
+9. Validation PowerShell script, full script in a code block.
+10. Expected validation markers and clean validation output.
+11. Freeze/freeze-intake instructions when applicable.
+12. Error Memory intake or staging instructions when the patch corrects a user-detected AI mistake.
+13. What not to do.
+14. What to paste back if something fails.
+<!-- NO_ISOLATED_ZIP_DELIVERY_FORMAT_V1_END -->
 
-    What it changes (bulleted list or short paragraph)
+<!-- USER_DETECTED_CORRECTION_DELIVERY_FORMAT_V1_START -->
+## Mandatory user-detected correction format
 
-    Download ZIP link (or instructions to obtain the ZIP)
+When the user identifies an AI mistake, failed validation, blocked freeze, incomplete delivery, wrong file/path, missing install code, missing validation code, missing Error Memory, missing freeze hint, box leak, or generated-file edit, the response must first route through `router_bridge_user_detected_correction` and include:
 
-    Install PowerShell script (full script in a code block)
+```text
+USER-DETECTED CORRECTION GATE
+Reported mistake:
+Exact cause audited:
+Files inspected:
+Patch needed: YES / NO
+Install code needed: YES / NO
+Validation code needed: YES / NO
+Error Memory intake needed: YES / NO
+Freeze/freeze-intake needed: YES / NO
+May deliver: YES / NO
+```
 
-    Validation PowerShell script (full script in a code block)
+If a corrective patch is delivered, it must also pass the `IMPLEMENTATION GATE` and `PATCH DELIVERY GATE`. Do not answer a governed correction with apology-only text. Do not invent validation evidence. Do not stage Error Memory or freeze readiness from memory alone.
+<!-- USER_DETECTED_CORRECTION_DELIVERY_FORMAT_V1_END -->
 
-    Expected result (copy the clean validation output table/values)
-
-    What to paste back to me if something fails (e.g., “Paste the output of the failed command”)
 
 Do not include a separate manual surgical restore script in the default response.
 11. Ongoing communication

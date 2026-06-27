@@ -185,6 +185,51 @@ patch ZIP with root KANDA_FREEZE_HINT.json
 Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
 <!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
 
+
+<!-- NO_ISOLATED_ZIP_RESPONSE_CONTRACT_V1_START -->
+## NO_ISOLATED_ZIP_RESPONSE_CONTRACT
+
+Apply before any response that contains a patch ZIP link, including sandbox links, local file links, or download links ending in `.zip`.
+
+A patch ZIP link is forbidden unless the response includes this visible gate before the link:
+
+```text
+PATCH DELIVERY GATE
+ZIP purpose:
+ZIP placement path:
+What this ZIP is:
+What this ZIP is not:
+Install code present: YES
+Validation code present: YES
+Expected validation markers:
+Changed files:
+Allowed write paths:
+Forbidden write paths:
+Freeze/freeze-intake:
+Error Memory payload:
+Post-validation steps:
+What not to do:
+Beginner-safe: YES
+GATE STATUS: PASS
+```
+
+The response must also include:
+
+1. A complete install PowerShell block.
+2. A complete validation PowerShell block.
+3. Expected markers, including `VALIDATION OK: <feature_id>` and `STATUS: IN_SYNC` when startup sync was touched.
+4. Freeze/freeze-intake instructions for freezeable patches.
+5. Error Memory intake or staging instructions when the patch corrects a user-detected AI mistake.
+
+If any required item is missing, uncertain, or contradicted by the ZIP contract, output exactly:
+
+```text
+CONTRACT NOT MET - PATCH DELIVERY BLOCKED
+```
+
+and do not provide the ZIP link.
+<!-- NO_ISOLATED_ZIP_RESPONSE_CONTRACT_V1_END -->
+
 ## PATCH_DELIVERY_CONTRACT
 
 Apply before delivering any patch ZIP or install instructions.

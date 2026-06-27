@@ -128,6 +128,27 @@ Group to open in Tab 9:
 high_risk_engineering
 ```
 
+
+
+
+
+<!-- GOVERNED_IMPLEMENTATION_ROUTER_BRIDGE_V1_START -->
+### Governed implementation router bridge hard gate
+
+Before any governed code, prompt, startup, validation, GUI, Error Memory, freeze, or patch-source edit, also load or recommend:
+
+```text
+router_bridge_governed_implementation
+```
+
+The router bridge must produce a visible `IMPLEMENTATION GATE` before implementation begins. The answer is non-compliant if governed implementation starts without a gate that identifies the task domain, selected router bridge, required prompt path, target box, forbidden box, Source files inspected, Generated-vs-canonical status, project/tool disambiguation need, line-count risk, GUI-resolution risk when applicable, and `May implement: YES`.
+
+If the gate cannot truthfully pass, do not implement. Inspect the missing source, request the missing project files, or load the required prompt first.
+<!-- GOVERNED_IMPLEMENTATION_ROUTER_BRIDGE_V1_END -->
+
+
+
+
 ### Python implementation, repair, or tests
 
 Trigger:
@@ -272,6 +293,39 @@ Group to open in Tab 9:
 Rule:
 
 Classify as `PATCH_DELIVERY_RELEASE`. This is a governed output-time release event. The AI must not emit a ZIP download link, install block, validation block, `KANDA_FREEZE_HINT.json`, or freeze-form JSON until the ZIP contract validator has passed or the patch is explicitly declared non-freezeable. If the contract is not verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and state the missing requirement.
+
+<!-- NO_ISOLATED_ZIP_ROUTER_BRIDGE_V1_START -->
+### No isolated ZIP router bridge hard gate
+
+For every governed patch delivery, also load or recommend:
+
+```text
+router_bridge_patch_delivery_contract
+```
+
+The router bridge must produce a visible `PATCH DELIVERY GATE` before any ZIP link appears. The answer is non-compliant if the ZIP link appears without the gate, install code, validation code, expected markers, freeze/freeze-intake handling when applicable, and Error Memory handling when the patch corrects a user-detected AI mistake.
+
+If the gate cannot truthfully pass, block delivery with:
+
+```text
+CONTRACT NOT MET - PATCH DELIVERY BLOCKED
+```
+<!-- NO_ISOLATED_ZIP_ROUTER_BRIDGE_V1_END -->
+
+<!-- USER_DETECTED_CORRECTION_ROUTER_BRIDGE_V1_START -->
+### User-detected correction router bridge hard gate
+
+When the user reports an AI mistake, failed validation, blocked freeze, incomplete patch delivery, wrong file/path, guessed implementation, box leak, generated-file edit, missing Error Memory, missing freeze hint, or missing validation marker, also load or recommend:
+
+```text
+router_bridge_user_detected_correction
+```
+
+The bridge must produce a visible `USER-DETECTED CORRECTION GATE` before any corrective implementation or corrective patch delivery begins. The answer is non-compliant if the correction skips exact cause audit, real file/output inspection, patch/install/validate decision, Error Memory handling for user-detected AI mistakes, or freeze/freeze-intake handling when applicable.
+
+If the gate cannot truthfully pass, do not deliver a patch. State the blocker and next safe action.
+<!-- USER_DETECTED_CORRECTION_ROUTER_BRIDGE_V1_END -->
+
 
 
 

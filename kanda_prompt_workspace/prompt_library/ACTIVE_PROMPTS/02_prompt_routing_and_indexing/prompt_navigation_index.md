@@ -328,14 +328,47 @@ Install success is not validation. A freeze hint is not validation evidence. Old
 <!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
 
 
+
+
+
+
+<!-- GOVERNED_IMPLEMENTATION_NAVIGATION_GATE_V1_START -->
+### Governed implementation gate
+
+When the next answer may create, edit, repair, refactor, validate, or package source, prompt-library, startup-delivery, GUI, Error Memory, freeze, or patch-governance files, classify the route as `GOVERNED_IMPLEMENTATION`.
+
+Required prompts/groups:
+
+1. router_bridge_governed_implementation
+2. implementation_and_delivery_protocol
+3. Relevant folder card or specialist prompt for the target box
+4. box_architecture_canon when boundary risk exists
+5. project_tool_boundary_canon when project/tool identity can be confused
+6. pre_output_contract_gates when terminal, ZIP, freeze, or validation artifacts will be emitted
+
+Mandatory behavior:
+
+- Emit `IMPLEMENTATION GATE` before governed implementation begins.
+- Do not code from memory.
+- Inspect actual source files and list Source files inspected in the gate.
+- Declare Generated-vs-canonical status before editing generated artifacts.
+- Declare target box and forbidden boxes.
+- If the gate cannot pass, stop before implementation and inspect or request missing context.
+<!-- GOVERNED_IMPLEMENTATION_NAVIGATION_GATE_V1_END -->
+
+
+
+
+
 When the next answer will emit an installable patch ZIP link, an install PowerShell block, a validation block for a patch, `KANDA_FREEZE_HINT.json`, or freeze-form JSON, classify the output route as `PATCH_DELIVERY_RELEASE`.
 
 Required prompts/groups:
 
 1. 05_patch_delivery_and_validation
-2. pre_output_contract_gates from 03_governance_freeze_and_handoff
-3. freeze_code_intake_and_form_protocol when the patch can be frozen later
-4. Relevant source files and validation command
+2. router_bridge_patch_delivery_contract
+3. pre_output_contract_gates from 03_governance_freeze_and_handoff
+4. freeze_code_intake_and_form_protocol when the patch can be frozen later
+5. Relevant source files and validation command
 
 Mandatory behavior:
 
@@ -345,6 +378,39 @@ Mandatory behavior:
 - Do keep root-level `KANDA_FREEZE_HINT.json` outside the install payload folder.
 - Do generate freeze sidecar and freeze-form JSON from the same payload source.
 - If any of these checks cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and do not present the ZIP.
+
+<!-- NO_ISOLATED_ZIP_NAVIGATION_GATE_V1_START -->
+### No isolated ZIP delivery gate
+
+For patch ZIP delivery, also route to:
+
+```text
+router_bridge_patch_delivery_contract
+```
+
+A ZIP link is forbidden unless the same response includes a visible `PATCH DELIVERY GATE` with `GATE STATUS: PASS`, user-facing install code, user-facing validation code, expected validation markers, changed files, freeze/freeze-intake handling when applicable, Error Memory handling for user-detected corrections, and beginner-safe do-not-do instructions.
+
+If the gate is incomplete, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` instead of a ZIP link.
+<!-- NO_ISOLATED_ZIP_NAVIGATION_GATE_V1_END -->
+
+<!-- USER_DETECTED_CORRECTION_NAVIGATION_GATE_V1_START -->
+### User-detected correction gate
+
+When the user reports a defect in the AI's previous work or delivery, route to:
+
+```text
+router_bridge_user_detected_correction
+```
+
+Required behavior:
+
+- Emit `USER-DETECTED CORRECTION GATE` before corrective implementation or patch delivery.
+- Audit the exact cause from real source, response text, validation output, ZIP contents, or freeze sidecar.
+- If a patch is needed, route through `router_bridge_governed_implementation` and `router_bridge_patch_delivery_contract`.
+- Include Error Memory intake for user-detected AI mistakes unless a specific N/A reason is stated.
+- Include freeze/freeze-intake handling for freezeable corrections without bypassing Preview or Confirm and Write.
+<!-- USER_DETECTED_CORRECTION_NAVIGATION_GATE_V1_END -->
+
 
 - Before outputting any PowerShell or terminal block, apply `TERMINAL_FOOTER_SELF_AUDIT`: install blocks require the 5-second `INSTALL OK. Terminal will clear in 5 seconds...` footer; validation, diagnostic, staging-check, repair, freeze/evidence-merge, and all other terminal blocks require Enter, `Clear-Host`, Enter, `Clear-Host`.
 - If terminal cleanup cannot be verified from the exact text being emitted, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and repair the command before showing it.

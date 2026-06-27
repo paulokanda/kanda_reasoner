@@ -5513,9 +5513,57 @@
         "source_size_bytes": 109884
       },
       "used_freeze_id": "freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T03:43:28Z",
+      "feature_id": "no-isolated-zip-freeze-hint-readiness-repair-v1",
+      "feature_title": "No Isolated ZIP Freeze Hint Readiness Repair v1",
+      "source": {
+        "source_mtime_ns": 1782531754655245400,
+        "source_name": "kanda_no_isolated_zip_freeze_hint_readiness_repair_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_no_isolated_zip_freeze_hint_readiness_repair_v1_patch.zip",
+        "source_size_bytes": 8855
+      },
+      "used_freeze_id": "freeze-20260627-no-isolated-zip-freeze-hint-readiness-repair-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T03:49:49Z",
+      "feature_id": "kanda-router-bridge-governed-implementation-gate-v1",
+      "feature_title": "Governed Implementation Router Bridge Gate v1",
+      "source": {
+        "source_mtime_ns": 1782532125099719400,
+        "source_name": "kanda_router_bridge_governed_implementation_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_router_bridge_governed_implementation_gate_v1_patch.zip",
+        "source_size_bytes": 42828
+      },
+      "used_freeze_id": "freeze-20260627-governed-implementation-router-bridge-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T04:07:42Z",
+      "feature_id": "kanda-router-bridge-user-detected-correction-gate-v1",
+      "feature_title": "User-Detected Correction Router Bridge Gate v1",
+      "source": {
+        "source_mtime_ns": 1782532637806755200,
+        "source_name": "kanda_router_bridge_user_detected_correction_gate_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_router_bridge_user_detected_correction_gate_v1_patch.zip",
+        "source_size_bytes": 44447
+      },
+      "used_freeze_id": "freeze-20260627-user-detected-correction-router-bridge-gate-v1"
+    },
+    {
+      "consumed_at_utc": "2026-06-27T04:15:06Z",
+      "feature_id": "kanda-startup-project-ready-check-v1",
+      "feature_title": "Startup Project Ready Check after second upload v1",
+      "source": {
+        "source_mtime_ns": 1782533542354017200,
+        "source_name": "kanda_startup_project_ready_check_v1_patch.zip",
+        "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_project_ready_check_v1_patch.zip",
+        "source_size_bytes": 30746
+      },
+      "used_freeze_id": "freeze-20260627-startup-project-ready-check-after-second-upload-v1"
     }
   ],
   "kind": "kanda_consumed_freeze_hints",
   "schema_version": "1.0",
-  "updated_at_utc": "2026-06-27T01:52:45Z"
+  "updated_at_utc": "2026-06-27T04:15:06Z"
 }

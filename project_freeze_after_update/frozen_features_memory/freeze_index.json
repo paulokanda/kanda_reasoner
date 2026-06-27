@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "generated_by": "project_freeze_ledger.freeze_tools.freeze_after_update_generator",
-  "generated_at_utc": "2026-06-27T01:52:45Z",
+  "generated_at_utc": "2026-06-27T04:15:06Z",
   "freezes": [
     {
       "freeze_id": "freeze-20260612-phase7a-v24",
@@ -16277,6 +16277,126 @@
         "Do not invent folder assimilation card files when current source uses GROUP_ASSIMILATION_INDEX.",
         "Do not use backslashes in regression_check.command examples.",
         "Do not let prompt-router bridge logic leak into Error Memory GUI/source boxes.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-no-isolated-zip-freeze-hint-readiness-repair-v1",
+      "feature_title": "No Isolated ZIP Freeze Hint Readiness Repair v1",
+      "box": "scripts/update_no_isolated_zip_freeze_hint_after_validation.py",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-no-isolated-zip-freeze-hint-readiness-repair-v1.md",
+      "protected_paths": [
+        "scripts/update_no_isolated_zip_freeze_hint_after_validation.py",
+        "validation/test_no_isolated_zip_freeze_hint_readiness_repair_v1.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Do not freeze a pre-validation freeze hint that still says local validation is required.",
+        "Do not invent validation evidence for a freeze sidecar.",
+        "Update freeze hint readiness only after required local validation markers are captured.",
+        "Preview Freeze Entry must remain read-only.",
+        "Confirm and Write must require explicit human confirmation.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-governed-implementation-router-bridge-gate-v1",
+      "feature_title": "Governed Implementation Router Bridge Gate v1",
+      "box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_governed_implementation.md",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-governed-implementation-router-bridge-gate-v1.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation",
+        "kanda_prompt_workspace/prompt_library/METADATA/router_bridge_governed_implementation.meta.json",
+        "validation/test_governed_implementation_gate_v1.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "Governed implementation must route through router_bridge_governed_implementation.",
+        "Do not start governed implementation without a visible IMPLEMENTATION GATE.",
+        "Do not code from memory or from previous conversation alone.",
+        "The IMPLEMENTATION GATE must list actual Source files inspected.",
+        "Generated files must identify canonical generator/source before editing.",
+        "When active project is kanda_reasoner, separate active project role from KANDA tool role.",
+        "Preview Freeze Entry must remain read-only.",
+        "Confirm and Write must require explicit human confirmation.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-user-detected-correction-router-bridge-gate-v1",
+      "feature_title": "User-Detected Correction Router Bridge Gate v1",
+      "box": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-user-detected-correction-router-bridge-gate-v1.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
+        "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation",
+        "kanda_prompt_workspace/prompt_library/METADATA/router_bridge_user_detected_correction.meta.json",
+        "validation/test_user_detected_correction_gate_v1.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "User-detected AI mistakes must route through router_bridge_user_detected_correction.",
+        "Do not answer a governed correction with apology-only text.",
+        "Do not deliver a correction patch without auditing exact cause and inspected files.",
+        "Correction patches must include install and validation code in the same response.",
+        "User-detected AI mistakes must include Error Memory intake unless a specific N/A reason is stated.",
+        "Freezeable correction patches must include freeze/freeze-intake handling without bypassing Preview or Confirm and Write.",
+        "Do not invent validation evidence or freeze-readiness evidence.",
+        "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+        "Do not store project-specific frozen memory inside project_freeze_ledger.",
+        "Preview Freeze Entry must remain read-only and must not write files.",
+        "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+        "After a local freeze write, the AI startup freeze context must be refreshed.",
+        "External AI review remains advanced/fallback, not the normal local freeze path."
+      ],
+      "superseded_by": null
+    },
+    {
+      "freeze_id": "freeze-20260627-startup-project-ready-check-after-second-upload-v1",
+      "feature_title": "Startup Project Ready Check after second upload v1",
+      "box": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py",
+      "status": "frozen",
+      "date": "2026-06-27",
+      "entry": "project_freeze_after_update/frozen_features_memory/entries/freeze-20260627-startup-project-ready-check-after-second-upload-v1.md",
+      "protected_paths": [
+        "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py",
+        "validation/test_startup_project_ready_check_v1.py",
+        "project_freeze_after_update/frozen_features_memory"
+      ],
+      "do_not_touch_summary": [
+        "First startup upload must not end with WAIT_FOR_TASK before second_prompt_files are loaded.",
+        "First STARTUP PACK LOAD CHECK must end with Waiting for all files (Project Files) from second_prompt_files folder when complete.",
+        "Second upload must end with PROJECT READY CHECK and Next action: WAIT_FOR_TASK.",
+        "PROJECT READY CHECK must include Project slug, Active project root, KANDA tool root, Same physical root, Compact Error Memory loaded, Second-upload handoff loaded, Tier-1 gates active, and Next action.",
+        "When active project is kanda_reasoner, separate active project role from KANDA tool role instead of silently merging them.",
+        "prompt_library.zip remains on-demand and must not be fully opened at startup.",
+        "Full Error Memory ZIP remains fallback only",
+        "compact Error Memory is the normal startup intake.",
         "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
         "Do not store project-specific frozen memory inside project_freeze_ledger.",
         "Preview Freeze Entry must remain read-only and must not write files.",

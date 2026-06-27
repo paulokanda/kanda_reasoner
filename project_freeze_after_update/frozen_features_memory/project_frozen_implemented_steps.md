@@ -833,3 +833,7 @@ freeze_memory_context_publish_v1_1 may be designed only as a separate governed p
 - 2026-06-27 | freeze-20260627-error-memory-strict-heuristic-correction-active-ready-transition | Error Memory strict Heuristic Correction active-ready transition | frozen
 - 2026-06-27 | freeze-20260627-stage-active-ready-replacement-lesson-for-ml-pilot-activation-state-draft | Stage active-ready replacement lesson for ml_pilot_activation_state draft | frozen
 - 2026-06-27 | freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint | Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint | frozen
+- 2026-06-27 | freeze-20260627-no-isolated-zip-freeze-hint-readiness-repair-v1 | No Isolated ZIP Freeze Hint Readiness Repair v1 | frozen
+- 2026-06-27 | freeze-20260627-governed-implementation-router-bridge-gate-v1 | Governed Implementation Router Bridge Gate v1 | frozen
+- 2026-06-27 | freeze-20260627-user-detected-correction-router-bridge-gate-v1 | User-Detected Correction Router Bridge Gate v1 | frozen
+- 2026-06-27 | freeze-20260627-startup-project-ready-check-after-second-upload-v1 | Startup Project Ready Check after second upload v1 | frozen
