@@ -1563,3 +1563,26 @@ Then restore the method:
 13. Validate.
 14. Freeze.
 15. Continue only after freeze.
+
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_BRIDGE_V1_START -->
+## Error Memory active-ready correction bridge
+
+When the task asks to correct, convert, promote, or validate a `KANDA_ERROR_LESSON_JSON` draft so it can become active, the routing system must request:
+
+```text
+error_memory_active_ready_correction_blueprint
+```
+
+This is a routed prompt, not an always-startup prompt.
+
+The bridge must not copy the full prompt body into startup. It must only point to the prompt and enforce these guards:
+
+```text
+Do not output status active unless active-ready evidence is complete.
+Do not invent source_patch_zip, validation evidence, regression_check.command, or expected_marker.
+If evidence is missing, keep the lesson draft/needs_ai_review.
+Use forward slashes in regression_check.command.
+```
+
+If the task is only about Error Memory GUI code behavior, use the owning GUI/source prompts instead. This bridge governs lesson JSON correction, not GUI implementation.
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_BRIDGE_V1_END -->

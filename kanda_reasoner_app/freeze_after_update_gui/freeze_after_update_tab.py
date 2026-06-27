@@ -44,6 +44,7 @@ from kanda_reasoner_app.freeze_hint_intake import (
     mark_latest_freeze_hint_used,
 )
 from kanda_reasoner_app.freeze_after_update.paths import build_paths
+from kanda_reasoner_app.freeze_after_update.freeze_state import entry_files, parse_frontmatter
 from kanda_reasoner_app.freeze_after_update.result import FreezeAfterUpdateResult
 from kanda_reasoner_app.freeze_after_update_gui.local_freeze_preview_log import (
     build_local_freeze_preview_log_text,
@@ -262,6 +263,7 @@ class FreezeAfterUpdateTab(QWidget):
         self._local_freeze_dialog: QDialog | None = None
         self._what_to_say_dialog: QDialog | None = None
         self._what_to_say_text_edit: QTextEdit | None = None
+        self._project_root_controls_moved = False
         self._local_freeze_ai_thread: threading.Thread | None = None
         self._local_freeze_ai_result_queue: queue.Queue | None = None
         self._local_freeze_ai_request_id: object | None = None
@@ -288,6 +290,14 @@ class FreezeAfterUpdateTab(QWidget):
         self.help_button = QPushButton("Help")
         self.help_button.setToolTip("Open practical help for the Freeze Feature After Update tab")
         header_layout.addWidget(self.help_button, 0)
+
+        self.get_last_freeze_button = QPushButton("Get Last Freeze")
+        self.get_last_freeze_button.setToolTip("Copy the latest frozen feature entry snippet for pasting to AI")
+        header_layout.addWidget(self.get_last_freeze_button, 0)
+
+        self.get_all_frozen_button = QPushButton("Get All Frozen")
+        self.get_all_frozen_button.setToolTip("Copy all frozen feature entry snippets for pasting to AI")
+        header_layout.addWidget(self.get_all_frozen_button, 0)
 
         root_layout.addLayout(header_layout)
 
@@ -321,13 +331,19 @@ class FreezeAfterUpdateTab(QWidget):
         project_layout = QGridLayout(project_group)
         project_layout.setColumnStretch(1, 1)
 
-        project_layout.addWidget(QLabel("Project root:"), 0, 0)
+        self.project_root_header_label = QLabel("Project Root:")
+        project_layout.addWidget(self.project_root_header_label, 0, 0)
         self.project_root_edit = QLineEdit()
-        self.project_root_edit.setPlaceholderText("Select or receive the current project root")
+        self.project_root_edit.setObjectName("freeze_after_update_project_root_edit")
+        self.project_root_edit.setPlaceholderText("Project root")
+        self.project_root_edit.setMinimumWidth(180)
+        self.project_root_edit.setMaximumWidth(320)
         project_layout.addWidget(self.project_root_edit, 0, 1)
 
-        self.choose_project_button = QPushButton("Choose Project Folder")
-        project_layout.addWidget(self.choose_project_button, 0, 2)
+        self.search_project_button = QPushButton("Search")
+        self.search_project_button.setToolTip("Select the active project root")
+        self.choose_project_button = self.search_project_button
+        project_layout.addWidget(self.search_project_button, 0, 2)
 
         project_layout.addWidget(QLabel("Box folder:"), 1, 0)
         self.box_folder_edit = QLineEdit()
@@ -455,6 +471,108 @@ class FreezeAfterUpdateTab(QWidget):
         self.copy_output_path_button.clicked.connect(self._copy_output_folder_path)
         self.show_instruction_button.clicked.connect(self._show_what_to_say_window)
         self.help_button.clicked.connect(self._show_help_window)
+        self.get_last_freeze_button.clicked.connect(self._copy_last_freeze_snippet)
+        self.get_all_frozen_button.clicked.connect(self._copy_all_frozen_snippets)
+
+    def set_project_root(self, project_root: str | Path) -> None:
+        """Accept project-root updates from host shells when available."""
+        root = Path(project_root).expanduser().resolve(strict=False)
+        root_text = str(root)
+        if self.project_root_edit.text().strip() != root_text:
+            self.project_root_edit.setText(root_text)
+        self._refresh_derived_paths()
+
+    def move_project_root_controls_to_layout(self, target_layout: QHBoxLayout, insert_index: int | None = None) -> None:
+        """Move Project Root controls into the outer LOADED/Source row."""
+        if self._project_root_controls_moved:
+            return
+        controls = [
+            self.project_root_header_label,
+            self.project_root_edit,
+            self.search_project_button,
+        ]
+        if insert_index is None:
+            target_layout.addSpacing(24)
+            for control in controls:
+                target_layout.addWidget(control, 0)
+        else:
+            current_index = insert_index
+            target_layout.insertSpacing(current_index, 24)
+            current_index += 1
+            for control in controls:
+                target_layout.insertWidget(current_index, control, 0)
+                current_index += 1
+        self._project_root_controls_moved = True
+
+    def _freeze_entry_sort_key(self, entry_path: Path) -> tuple[str, int, str]:
+        """Return a stable sort key for freeze entries."""
+        try:
+            meta = parse_frontmatter(entry_path.read_text(encoding="utf-8"))
+        except Exception:
+            meta = {}
+        date_text = str(meta.get("date") or "")
+        try:
+            mtime_ns = entry_path.stat().st_mtime_ns
+        except OSError:
+            mtime_ns = 0
+        return (date_text, mtime_ns, entry_path.name)
+
+    def _freeze_entry_candidates(self) -> list[Path]:
+        """Return freeze entry files for the active project, newest last."""
+        project_root = self._require_project_root()
+        if project_root is None:
+            return []
+        try:
+            return sorted(entry_files(project_root), key=self._freeze_entry_sort_key)
+        except Exception as exc:
+            QMessageBox.critical(self, "Could not read frozen entries", str(exc))
+            return []
+
+    def _build_freeze_snippet_text(self, entries: list[Path], *, title: str) -> str:
+        """Build a copy/paste-safe freeze-memory snippet for AI."""
+        project_root = self._project_root()
+        project_text = str(project_root) if project_root is not None else ""
+        lines: list[str] = []
+        lines.append("KANDA_FROZEN_FEATURE_MEMORY_SNIPPET_BEGIN")
+        lines.append("Title: " + title)
+        lines.append("Project root: " + project_text)
+        lines.append("Entry count: " + str(len(entries)))
+        lines.append("Instruction: Use this as read-only frozen feature memory. Do not edit these entries directly. Do not write project-specific memory into project_freeze_ledger.")
+        lines.append("")
+        for index, entry_path in enumerate(entries, start=1):
+            lines.append("--- FROZEN ENTRY " + str(index) + " OF " + str(len(entries)) + " ---")
+            lines.append("Path: " + str(entry_path))
+            lines.append("")
+            try:
+                lines.append(entry_path.read_text(encoding="utf-8").rstrip())
+            except Exception as exc:
+                lines.append("[Could not read entry: " + str(exc) + "]")
+            lines.append("")
+        lines.append("KANDA_FROZEN_FEATURE_MEMORY_SNIPPET_END")
+        return "\n".join(lines).rstrip() + "\n"
+
+    def _copy_last_freeze_snippet(self) -> None:
+        """Copy the latest freeze entry as an AI-ready snippet."""
+        entries = self._freeze_entry_candidates()
+        if not entries:
+            QMessageBox.information(self, "No frozen entries", "No freeze entries were found for the active project.")
+            return
+        latest = entries[-1]
+        snippet = self._build_freeze_snippet_text([latest], title="Last frozen feature entry")
+        QApplication.clipboard().setText(snippet)
+        self._append_log("Copied latest frozen feature snippet to clipboard: " + str(latest))
+        QMessageBox.information(self, "Get Last Freeze", "Latest frozen feature snippet copied to clipboard.")
+
+    def _copy_all_frozen_snippets(self) -> None:
+        """Copy all freeze entries as an AI-ready snippet."""
+        entries = self._freeze_entry_candidates()
+        if not entries:
+            QMessageBox.information(self, "No frozen entries", "No freeze entries were found for the active project.")
+            return
+        snippet = self._build_freeze_snippet_text(entries, title="All frozen feature entries")
+        QApplication.clipboard().setText(snippet)
+        self._append_log("Copied all frozen feature snippets to clipboard. Entry count: " + str(len(entries)))
+        QMessageBox.information(self, "Get All Frozen", "All frozen feature snippets copied to clipboard.")
 
     def _project_root(self) -> Path | None:
         text = self.project_root_edit.text().strip()
@@ -835,8 +953,10 @@ class FreezeAfterUpdateTab(QWidget):
         receive_from_ai_button = QPushButton("Receive Formulary from AI")
         preview_button = QPushButton("Preview Freeze Entry")
         confirm_write_button = QPushButton("Confirm and Write Freeze Entry")
+        ignore_freeze_button = QPushButton("Ignore this Freeze")
         cancel_button = QPushButton("Cancel")
         confirm_write_button.setEnabled(False)
+        ignore_freeze_button.setToolTip("Discard this local freeze draft and mark the current freeze hint as ignored/used. No freeze entry is written.")
         copy_to_ai_button.setToolTip("Copy a strict review prompt with the current auto-filled freeze form for an AI specialist")
         receive_from_ai_button.setToolTip("Paste the strict AI JSON answer and apply it back into this form")
         autofill_button.setToolTip("Fill using the selected mode: Heuristics by default, or optional Local AI.")
@@ -845,6 +965,7 @@ class FreezeAfterUpdateTab(QWidget):
         button_row.addWidget(receive_from_ai_button)
         button_row.addWidget(preview_button)
         button_row.addWidget(confirm_write_button)
+        button_row.addWidget(ignore_freeze_button)
         button_row.addStretch(1)
         button_row.addWidget(cancel_button)
         layout.addLayout(button_row)
@@ -1482,6 +1603,40 @@ class FreezeAfterUpdateTab(QWidget):
             receive_dialog.raise_()
             receive_dialog.activateWindow()
 
+        def ignore_this_freeze() -> None:
+            reply = QMessageBox.question(
+                self,
+                "Ignore this freeze",
+                "This will discard the current local freeze draft and will not write any frozen memory entry.\n\n"
+                "If a KANDA_FREEZE_HINT intake record filled this form, it will be marked as ignored/used so it does not keep refilling this same draft.\n\n"
+                "Continue?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No,
+            )
+            if reply != QMessageBox.Yes:
+                self._append_log("Ignore this Freeze cancelled by human.")
+                return
+
+            self._local_freeze_preview = None
+            preview_text_edit.clear()
+            confirm_write_button.setEnabled(False)
+            intake_used = mark_latest_freeze_hint_used(project_root, freeze_id="ignored-by-human")
+            self.status_label.setText("Local freeze draft ignored. No freeze entry was written.")
+            self._append_log("IGNORE THIS FREEZE selected. No frozen memory entry was written.")
+            if intake_used.get("ok"):
+                self._append_log("Freeze hint intake record marked ignored/used so it will not refill this draft.")
+            elif intake_used.get("warnings"):
+                self._append_log("Freeze hint intake ignore warning:")
+                for warning in intake_used.get("warnings") or []:
+                    self._append_log("- " + str(warning))
+            elif intake_used.get("errors"):
+                self._append_log("Freeze hint intake ignore warning:")
+                for error in intake_used.get("errors") or []:
+                    self._append_log("- " + str(error))
+            else:
+                self._append_log("No current freeze hint intake record was found to mark ignored.")
+            dialog.close()
+
         def confirm_and_write_local_freeze() -> None:
             preview = self._local_freeze_preview
             if not preview:
@@ -1591,6 +1746,7 @@ class FreezeAfterUpdateTab(QWidget):
         receive_from_ai_button.clicked.connect(receive_formulary_from_ai)
         preview_button.clicked.connect(preview_local_freeze)
         confirm_write_button.clicked.connect(confirm_and_write_local_freeze)
+        ignore_freeze_button.clicked.connect(ignore_this_freeze)
         cancel_button.clicked.connect(dialog.close)
         dialog.finished.connect(lambda _result=0: stop_local_ai_polling())
 

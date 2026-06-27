@@ -79,6 +79,14 @@ It routes context; it does not replace the real prompts.
 - It does not create folder assimilation cards in Phase 1.
 - It does not route to the live app or Tab Prompt Library GUI.
 
+## Startup Box Logic bridge rule
+
+The start-of-day kernel carries only the compact Box Logic Startup Bridge. It
+must not load the full Box Architecture canon at session start. For any risky
+implementation, repair, refactor, prompt update, governance update, bundle, GUI
+ownership, public-contract, cross-box, or mutable-state task, route to
+`box_architecture_canon.md` before the risky step.
+
 ## Routing authority
 
 This file is the primary readable router for exact prompt selection and route verification.
@@ -338,6 +346,10 @@ Mandatory behavior:
 - Do generate freeze sidecar and freeze-form JSON from the same payload source.
 - If any of these checks cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and do not present the ZIP.
 
+- Before outputting any PowerShell or terminal block, apply `TERMINAL_FOOTER_SELF_AUDIT`: install blocks require the 5-second `INSTALL OK. Terminal will clear in 5 seconds...` footer; validation, diagnostic, staging-check, repair, freeze/evidence-merge, and all other terminal blocks require Enter, `Clear-Host`, Enter, `Clear-Host`.
+- If terminal cleanup cannot be verified from the exact text being emitted, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and repair the command before showing it.
+
+
 ## Pre-output contract gates routing hook
 
 Request `pre_output_contract_gates.md` from `03_governance_freeze_and_handoff` immediately before the AI emits terminal code, patch ZIP delivery instructions, validation commands, freeze-form JSON, validation evidence intended for freezing, `KANDA_FREEZE_HINT.json`, or multi-project freeze path decisions.
@@ -514,9 +526,9 @@ Do not downgrade the context load to medium/medium-high for this confirmation-by
 |---|---|---|---|
 | start day / continue session | 01, 02 | 03 if continuing from handoff | STEP PAUSE if kernel missing |
 | explain / discuss / brainstorm | none beyond loaded kernel | selected group only if needed | DEGRADED WARNING if evidence thin |
-| create or modify code | 05 plus source files and validation steps; 04 if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08, 09, 10 depending on task | HARD STOP before implementation |
+| create or modify code | 05 plus source files and validation steps; 04 if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08, 09, 10 depending on task | HARD STOP before implementation; new code modules must stay <=500 lines |
 | create a new folder with a databank | 04, 05, 09, 10 | 11 if production-ready storage | HARD STOP before implementation |
-| large module / file over 500 lines | 04, 05, 06 | 08, 09 | HARD STOP before implementation |
+| large code module / code file over 500 lines, or new code module expected to exceed 500 lines | 04, 05, 06 | 08, 09 | HARD STOP before implementation |
 | architecture decision | 04 | 06, 11, 12 | STEP PAUSE before canon/patch |
 | Pilot/Copilot Phase 0 / post-M35 / P0 / Pilot projection / Copilot boundary | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for read-only planning; P0 only until frozen |
 | semantic readiness / embeddings / ML retrieval / routing_signal_scorer v3 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_semantic_readiness_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for architecture discussion |
@@ -579,7 +591,7 @@ If the human explicitly asks to bypass routing, the bypass request does not redu
 | box shield, KBSC, meaningful milestone, stronger ML preparation, authority boundary protection | kanda_box_shielding_canon plus box_architecture_canon |
 | code/file delivery, ZIP, install, validation, or freeze | bundle_gated_development_workflow or delivery/validation protocol |
 | prompt audit, split, merge, deprecate, conflict, or generalization | prompt_audit_canon plus related prompt files |
-| file above 500 lines | large_module_refactor_protocol |
+| code file above 500 lines, or new code module expected to exceed 500 lines | large_module_refactor_protocol |
 | governance update | governance/freeze prompt plus validation evidence |
 | continuation across sessions | current_workflow_handoff_template or latest handoff |
 
@@ -1001,3 +1013,30 @@ Error Editor
 and must not save it into Lessons until `Memorize Error` is clicked.
 
 Use Direct Error Lesson ZIP only when the user asks for a manual import package. Use Copy/Paste formatted AI flow only when the user asks for or uses those GUI buttons.
+
+## Prompt Authoring And Audit (`07_prompt_authoring_and_audit`)
+
+### `prompt_insertion_and_router_registration_protocol` - Prompt Insertion and Router Registration Protocol
+
+- **File:** `ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md`
+- **Priority:** `36`
+- **Trigger phrases:** `insert a new prompt`; `add a new prompt`; `create a new prompt`; `register a prompt in the router`; `make the router call this prompt`; `activate a prompt in router logic`; `connect a prompt to the router`; `bridge a prompt to prompt router logic`; `add prompt to ACTIVE_PROMPTS`; `prompt insertion protocol`; `prompt router registration`
+- **User intent examples:** `Create a new prompt and connect it to the router.`; `Bridge this prompt to prompt router logic without making it always-startup.`; `Add this prompt to ACTIVE_PROMPTS with metadata and routing validation.`
+- **Aliases:** `prompt insertion and router registration protocol`; `prompt_insertion_and_router_registration_protocol`; `prompt bridge insertion protocol`; `prompt router registration`
+- **When to load:** When the task asks to create, insert, update, route, bridge, register, or make available a prompt in the KANDA prompt workspace.
+- **When not to load:** Do not load for ordinary implementation tasks that do not change prompt-library files or routing awareness.
+- **Required companion prompts:** `prompt_canon_reconciliation_protocol`; `prompt_audit_canon`; `project_specific_prompt_generalization`; `prompt_identity_code_registry_canon`; `prompt_navigation_index`; `prompt_router`
+
+## Generalized Project Canons (`12_generalized_project_canons`)
+
+### `error_memory_active_ready_correction_blueprint` - Error Memory Active-Ready Correction Blueprint
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md`
+- **Prompt code:** `KPR-12-002`
+- **Priority:** `32`
+- **Trigger phrases:** `correct this Error Memory draft`; `make this lesson active-ready`; `convert draft to active lesson`; `KANDA_ERROR_LESSON_JSON status draft`; `This lesson is not ready for active status`; `Memorize Error says missing active-ready fields`; `validation_command_summary is empty`; `source_patch_zip is empty`; `install_command_summary is empty`; `regression_check.type must be validation_command`; `regression_check.command is empty`; `regression_check.expected_marker is empty`
+- **User intent examples:** `Convert this KANDA_ERROR_LESSON_JSON draft into an active-ready lesson.`; `Memorize Error rejects this lesson because active-ready fields are missing; correct it safely.`; `Make this Error Memory draft active only if validation evidence is complete.`
+- **Aliases:** `error memory active-ready correction blueprint`; `error_memory_active_ready_correction_blueprint`; `draft to active error memory blueprint`; `active-ready Error Memory schema`
+- **When to load:** When a task asks to correct, promote, validate, or convert a `KANDA_ERROR_LESSON_JSON` draft into active-ready or active status.
+- **When not to load:** Do not load for ordinary code patches, generic Error Memory GUI behavior, or non-Error-Memory tasks unless an Error Memory lesson is being corrected or promoted.
+- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`; `prompt_navigation_index`; `prompt_router`

@@ -4,7 +4,7 @@
   "generated_at": "2026-06-12",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use trigger_phrases and user_intent_examples to detect intent; load the highest-priority matching prompt plus required companions; if uncertain, ask one focused clarification or load prompt_router + prompt_navigation_index.",
-  "prompt_count": 82,
+  "prompt_count": 84,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -279,48 +279,53 @@
       ]
     },
     {
-      "prompt_id": "kanda_routing_system_canon",
-      "display_name": "KANDA Routing System Canon",
-      "filename": "kanda_routing_system_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+      "prompt_id": "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+      "display_name": "RG-LAB-000 ML LAB Phase Entry Router Canon",
+      "filename": "routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
       "category": "02_prompt_routing_and_indexing",
-      "priority": 3,
+      "priority": 1,
       "trigger_phrases": [
-        "routing system canon",
-        "KANDA Routing System Canon",
-        "canonize routing system",
-        "routing logic canon",
-        "context selection operating system",
-        "Prompt-Call Accuracy",
-        "Context Package Manifest",
-        "Prompt Registration v2",
-        "register prompt as routable context asset",
-        "prompt-call accuracy",
-        "routing-system update",
-        "startup routing behavior",
-        "prompt insertion rule",
-        "similarity advisory routing",
-        "freeze-aware routing",
-        "routing canon registration"
+        "RG-LAB-000",
+        "LAB phase",
+        "ML LAB",
+        "ML lab/test",
+        "lab/test logic",
+        "start LAB after P12",
+        "continue after P12",
+        "go next after P12",
+        "LAB-0",
+        "lab charter",
+        "test lab charter",
+        "router prompt logic lab",
+        "test ML router prompt logic",
+        "prompt choosing reliability",
+        "prompt selection reliability",
+        "ML router prompt logic reliability",
+        "continue ML implementation after lab",
+        "canonize LAB phase",
+        "canonize lab/test logic"
       ],
       "user_intent_examples": [
-        "Canonize the routing system itself.",
-        "Update the way prompts are registered into the routing system.",
-        "Define the Context Package Manifest before routing automation.",
-        "Review whether this task needs Fast Path or Routed Work Path context."
+        "Canonize the LAB phase entry before implementing lab tests.",
+        "After P12, what is the next safe step?",
+        "Start LAB-0 for the ML router prompt logic test lab.",
+        "Continue ML logic after the lab fulfills its mission."
       ],
       "aliases": [
-        "kanda_routing_system_canon",
-        "kanda_routing_system_canon.md",
-        "routing canon",
-        "routing system canon",
-        "prompt-call canon",
-        "context package manifest canon"
+        "RG-LAB-000",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+        "LAB phase entry canon",
+        "ML LAB router canon",
+        "post-P12 LAB canon",
+        "LAB-0 router canon"
       ],
-      "when_to_load": "When routing-system behavior, prompt-call accuracy, context package manifests, prompt registration, startup routing, or routing indexes are being audited, changed, canonized, or frozen.",
-      "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.",
+      "when_to_load": "When KANDA work involves post-P12 LAB/test phase entry, LAB-0, ML router prompt logic reliability testing, lab/test implementation planning, or any request to continue ML implementation after P12.",
+      "when_not_to_load": "Do not load for ordinary Fast Path explanations, simple non-KANDA ML discussion, or as a substitute for current project files and freeze evidence during implementation.",
       "required_companion_prompts": [
-        "ai_prompt_request_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
+        "kanda_routing_system_canon",
+        "kanda_box_shielding_canon",
         "prompt_navigation_index",
         "GROUP_ASSIMILATION_INDEX"
       ]
@@ -374,58 +379,6 @@
       "when_to_load": "When KANDA work involves post-M35 Pilot/Copilot scope, P0, P-series milestones, Pilot projection/simulation, Copilot boundary, reproduction-before-disagreement, or any request that could grant Pilot/Copilot authority, prompt loading, persistence, training-data use, batch mode, or runtime shadow behavior.",
       "when_not_to_load": "Do not load for ordinary lexical routing-scorer patches unrelated to Pilot/Copilot, simple Fast Path explanation-only tasks, or as a substitute for current project files and freeze evidence during implementation.",
       "required_companion_prompts": [
-        "kanda_routing_system_canon",
-        "kanda_box_shielding_canon",
-        "prompt_navigation_index",
-        "GROUP_ASSIMILATION_INDEX"
-      ]
-    },
-    {
-      "prompt_id": "routing_signal_scorer_v3_lab_phase_entry_router_canon",
-      "display_name": "RG-LAB-000 ML LAB Phase Entry Router Canon",
-      "filename": "routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
-      "category": "02_prompt_routing_and_indexing",
-      "priority": 1,
-      "trigger_phrases": [
-        "RG-LAB-000",
-        "LAB phase",
-        "ML LAB",
-        "ML lab/test",
-        "lab/test logic",
-        "start LAB after P12",
-        "continue after P12",
-        "go next after P12",
-        "LAB-0",
-        "lab charter",
-        "test lab charter",
-        "router prompt logic lab",
-        "test ML router prompt logic",
-        "prompt choosing reliability",
-        "prompt selection reliability",
-        "ML router prompt logic reliability",
-        "continue ML implementation after lab",
-        "canonize LAB phase",
-        "canonize lab/test logic"
-      ],
-      "user_intent_examples": [
-        "Canonize the LAB phase entry before implementing lab tests.",
-        "After P12, what is the next safe step?",
-        "Start LAB-0 for the ML router prompt logic test lab.",
-        "Continue ML logic after the lab fulfills its mission."
-      ],
-      "aliases": [
-        "RG-LAB-000",
-        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
-        "LAB phase entry canon",
-        "ML LAB router canon",
-        "post-P12 LAB canon",
-        "LAB-0 router canon"
-      ],
-      "when_to_load": "When KANDA work involves post-P12 LAB/test phase entry, LAB-0, ML router prompt logic reliability testing, lab/test implementation planning, or any request to continue ML implementation after P12.",
-      "when_not_to_load": "Do not load for ordinary Fast Path explanations, simple non-KANDA ML discussion, or as a substitute for current project files and freeze evidence during implementation.",
-      "required_companion_prompts": [
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
         "kanda_routing_system_canon",
         "kanda_box_shielding_canon",
         "prompt_navigation_index",
@@ -498,6 +451,53 @@
       ]
     },
     {
+      "prompt_id": "kanda_routing_system_canon",
+      "display_name": "KANDA Routing System Canon",
+      "filename": "kanda_routing_system_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+      "category": "02_prompt_routing_and_indexing",
+      "priority": 3,
+      "trigger_phrases": [
+        "routing system canon",
+        "KANDA Routing System Canon",
+        "canonize routing system",
+        "routing logic canon",
+        "context selection operating system",
+        "Prompt-Call Accuracy",
+        "Context Package Manifest",
+        "Prompt Registration v2",
+        "register prompt as routable context asset",
+        "prompt-call accuracy",
+        "routing-system update",
+        "startup routing behavior",
+        "prompt insertion rule",
+        "similarity advisory routing",
+        "freeze-aware routing",
+        "routing canon registration"
+      ],
+      "user_intent_examples": [
+        "Canonize the routing system itself.",
+        "Update the way prompts are registered into the routing system.",
+        "Define the Context Package Manifest before routing automation.",
+        "Review whether this task needs Fast Path or Routed Work Path context."
+      ],
+      "aliases": [
+        "kanda_routing_system_canon",
+        "kanda_routing_system_canon.md",
+        "routing canon",
+        "routing system canon",
+        "prompt-call canon",
+        "context package manifest canon"
+      ],
+      "when_to_load": "When routing-system behavior, prompt-call accuracy, context package manifests, prompt registration, startup routing, or routing indexes are being audited, changed, canonized, or frozen.",
+      "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.",
+      "required_companion_prompts": [
+        "ai_prompt_request_canon",
+        "prompt_navigation_index",
+        "GROUP_ASSIMILATION_INDEX"
+      ]
+    },
+    {
       "prompt_id": "project_overlay_selector",
       "display_name": "Project Overlay Selector",
       "filename": "project_overlay_selector.md",
@@ -547,7 +547,7 @@
         "find correct prompt"
       ],
       "user_intent_examples": [
-        "I say \u201cmodule too big\u201d; which prompt should that trigger?"
+        "I say “module too big”; which prompt should that trigger?"
       ],
       "aliases": [
         "index",
@@ -580,7 +580,7 @@
         "which stack"
       ],
       "user_intent_examples": [
-        "Route \u201cok freeze\u201d to the correct governance prompt."
+        "Route “ok freeze” to the correct governance prompt."
       ],
       "aliases": [
         "index",
@@ -663,6 +663,45 @@
         "evidence_freshness_gate",
         "patch_registry_validation_freeze",
         "current_workflow_handoff_template"
+      ]
+    },
+    {
+      "prompt_id": "cooperative_implementation_methodology",
+      "display_name": "Cooperative Implementation Methodology",
+      "filename": "cooperative_implementation_methodology.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 25,
+      "trigger_phrases": [
+        "implementation methodology",
+        "AI assisted programming workflow",
+        "cooperative implementation",
+        "proposal before code",
+        "methodology improvement",
+        "when should we use handoff",
+        "web research before implementation",
+        "book research before implementation",
+        "partnership health check"
+      ],
+      "user_intent_examples": [
+        "Let's discuss methodology before implementing this KANDA Reasoner feature.",
+        "Should this be local-first, AI-assisted, or hybrid before we code?",
+        "When should we ask another specialist AI for review?"
+      ],
+      "aliases": [
+        "cooperative implementation methodology",
+        "cooperative_implementation_methodology",
+        "cooperative_implementation_methodology.md",
+        "AI-human implementation methodology",
+        "methodology prompt",
+        "proposal before code",
+        "human AI workflow"
+      ],
+      "when_to_load": "When consequential implementation work needs discussion of cooperation method, escalation, proposal-before-code, handoff/research triggers, or methodology improvement before coding.",
+      "when_not_to_load": "Do not load for simple explanations, small edits, pure patch delivery, pure freeze review, pure Box Architecture review, or prompt-authoring tasks where specialist prompts are sufficient.",
+      "required_companion_prompts": [
+        "current_workflow_handoff_template",
+        "active_governance_freeze_update"
       ]
     },
     {
@@ -837,42 +876,126 @@
       ]
     },
     {
-      "prompt_id": "cooperative_implementation_methodology",
-      "display_name": "Cooperative Implementation Methodology",
-      "filename": "cooperative_implementation_methodology.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+      "prompt_id": "freeze_code_intake_and_form_protocol",
+      "display_name": "Freeze Code Intake and Form Protocol",
+      "filename": "freeze_code_intake_and_form_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
       "category": "03_governance_freeze_and_handoff",
-      "priority": 25,
+      "priority": 30,
       "trigger_phrases": [
-        "implementation methodology",
-        "AI assisted programming workflow",
-        "cooperative implementation",
-        "proposal before code",
-        "methodology improvement",
-        "when should we use handoff",
-        "web research before implementation",
-        "book research before implementation",
-        "partnership health check"
+        "freeze code",
+        "freeze this feature",
+        "Freeze Feature After Update",
+        "New Local Freeze Entry",
+        "freeze form",
+        "freeze formulary",
+        "KANDA_FREEZE_HINT.json",
+        "prepare freeze entry",
+        "review freeze JSON",
+        "after validation freeze it",
+        "patch ZIP should be freeze-ready"
       ],
       "user_intent_examples": [
-        "Let's discuss methodology before implementing this KANDA Reasoner feature.",
-        "Should this be local-first, AI-assisted, or hybrid before we code?",
-        "When should we ask another specialist AI for review?"
+        "Create the freeze JSON for the feature I just validated.",
+        "The Freeze Feature After Update form still has the wrong feature name.",
+        "Make this patch freeze-ready with the correct KANDA_FREEZE_HINT.json sidecar.",
+        "Review this local freeze entry before I click Confirm and Write."
+      ],
+      "required_companions": [
+        "active_governance_freeze_update",
+        "daily_patch_delivery_guardrails"
+      ],
+      "recommended_companions": [
+        "cooperative_implementation_methodology",
+        "box_architecture_canon",
+        "implementation_and_delivery_protocol"
+      ],
+      "missing_behavior": "HARD_STOP if validation evidence is missing, stale, or copied from another feature; correct stale heuristic freeze data before freeze approval.",
+      "load_type": "on_request"
+    },
+    {
+      "prompt_id": "pre_output_contract_gates",
+      "display_name": "Pre-Output Contract Gates",
+      "filename": "pre_output_contract_gates.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 35,
+      "trigger_phrases": [
+        "pre-output contract",
+        "terminal cleanup contract",
+        "PowerShell install block",
+        "PowerShell validation block",
+        "patch delivery contract",
+        "freeze JSON strict output",
+        "validation evidence marker",
+        "KANDA_FREEZE_HINT.json sidecar contract",
+        "output-time compliance",
+        "make AI follow the canon"
+      ],
+      "user_intent_examples": [
+        "Before giving the install block, make sure it follows KANDA terminal cleanup canon.",
+        "Make the freeze JSON parser-safe and include the exact validation marker.",
+        "Create a patch ZIP delivery response that follows the staging and sidecar contract."
+      ],
+      "required_companions": [
+        "daily_patch_delivery_guardrails"
+      ],
+      "recommended_companions": [
+        "freeze_code_intake_and_form_protocol",
+        "implementation_and_delivery_protocol",
+        "python_validation_serialisation_type_safety"
+      ],
+      "missing_behavior": "HARD_STOP if a high-risk artifact would violate terminal cleanup, patch staging, freeze JSON, validation evidence, sidecar, monotonic intake, or multi-project path canon.",
+      "load_type": "on_request"
+    },
+    {
+      "prompt_id": "kanda_box_shielding_canon",
+      "display_name": "KANDA Box Shielding Canon",
+      "filename": "kanda_box_shielding_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 4,
+      "trigger_phrases": [
+        "box shield",
+        "box shielding",
+        "shield logic",
+        "shielding method",
+        "KBSC",
+        "KANDA Box Shielding Canon",
+        "canonize shielding",
+        "architectural fitness function",
+        "bounded context shield",
+        "do not invade other box logic",
+        "authority creep",
+        "forbidden authority escalation",
+        "truth source priority ladder",
+        "dependency direction",
+        "no placeholder commitment",
+        "shield before stronger ML",
+        "routing signal scorer shield",
+        "similarity box shield"
+      ],
+      "user_intent_examples": [
+        "Create the shield before continuing to stronger ML.",
+        "Canonize the shielding method and insert it into the routing system.",
+        "Audit this box for authority creep and no-invasion behavior before the next patch."
       ],
       "aliases": [
-        "cooperative implementation methodology",
-        "cooperative_implementation_methodology",
-        "cooperative_implementation_methodology.md",
-        "AI-human implementation methodology",
-        "methodology prompt",
-        "proposal before code",
-        "human AI workflow"
+        "KBSC",
+        "box shield",
+        "box shielding canon",
+        "kanda box shielding canon",
+        "kanda_box_shielding_canon",
+        "kanda_box_shielding_canon.md",
+        "architectural fitness function",
+        "bounded context shield",
+        "shield before stronger ML"
       ],
-      "when_to_load": "When consequential implementation work needs discussion of cooperation method, escalation, proposal-before-code, handoff/research triggers, or methodology improvement before coding.",
-      "when_not_to_load": "Do not load for simple explanations, small edits, pure patch delivery, pure freeze review, pure Box Architecture review, or prompt-authoring tasks where specialist prompts are sufficient.",
+      "when_to_load": "When a meaningful box milestone must be protected before stronger/cross-box work, when shielding logic is being created or updated, or when advisory output risks becoming authority.",
+      "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, or implementation tasks with no boundary, authority, or regression-shield risk.",
       "required_companion_prompts": [
-        "current_workflow_handoff_template",
-        "active_governance_freeze_update"
+        "box_architecture_canon",
+        "bundle_gated_development_workflow"
       ]
     },
     {
@@ -1028,56 +1151,6 @@
       "required_companion_prompts": [
         "bundle_gated_development_workflow",
         "implementation_roadmap_builder"
-      ]
-    },
-    {
-      "prompt_id": "kanda_box_shielding_canon",
-      "display_name": "KANDA Box Shielding Canon",
-      "filename": "kanda_box_shielding_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 4,
-      "trigger_phrases": [
-        "box shield",
-        "box shielding",
-        "shield logic",
-        "shielding method",
-        "KBSC",
-        "KANDA Box Shielding Canon",
-        "canonize shielding",
-        "architectural fitness function",
-        "bounded context shield",
-        "do not invade other box logic",
-        "authority creep",
-        "forbidden authority escalation",
-        "truth source priority ladder",
-        "dependency direction",
-        "no placeholder commitment",
-        "shield before stronger ML",
-        "routing signal scorer shield",
-        "similarity box shield"
-      ],
-      "user_intent_examples": [
-        "Create the shield before continuing to stronger ML.",
-        "Canonize the shielding method and insert it into the routing system.",
-        "Audit this box for authority creep and no-invasion behavior before the next patch."
-      ],
-      "aliases": [
-        "KBSC",
-        "box shield",
-        "box shielding canon",
-        "kanda box shielding canon",
-        "kanda_box_shielding_canon",
-        "kanda_box_shielding_canon.md",
-        "architectural fitness function",
-        "bounded context shield",
-        "shield before stronger ML"
-      ],
-      "when_to_load": "When a meaningful box milestone must be protected before stronger/cross-box work, when shielding logic is being created or updated, or when advisory output risks becoming authority.",
-      "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, or implementation tasks with no boundary, authority, or regression-shield risk.",
-      "required_companion_prompts": [
-        "box_architecture_canon",
-        "bundle_gated_development_workflow"
       ]
     },
     {
@@ -1635,6 +1708,48 @@
         "prompt_navigation_index",
         "prompt_router",
         "prompt_substitution_map"
+      ]
+    },
+    {
+      "prompt_id": "prompt_insertion_and_router_registration_protocol",
+      "display_name": "Prompt Insertion and Router Registration Protocol",
+      "filename": "prompt_insertion_and_router_registration_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md",
+      "category": "07_prompt_authoring_and_audit",
+      "priority": 36,
+      "trigger_phrases": [
+        "insert a new prompt",
+        "add a new prompt",
+        "create a new prompt",
+        "register a prompt in the router",
+        "make the router call this prompt",
+        "activate a prompt in router logic",
+        "connect a prompt to the router",
+        "bridge a prompt to prompt router logic",
+        "add prompt to ACTIVE_PROMPTS",
+        "prompt insertion protocol",
+        "prompt router registration"
+      ],
+      "user_intent_examples": [
+        "Create a new prompt and connect it to the router.",
+        "Bridge this prompt to prompt router logic without making it always-startup.",
+        "Add this prompt to ACTIVE_PROMPTS with metadata and routing validation."
+      ],
+      "aliases": [
+        "prompt insertion and router registration protocol",
+        "prompt_insertion_and_router_registration_protocol",
+        "prompt bridge insertion protocol",
+        "prompt router registration"
+      ],
+      "when_to_load": "When the task asks to create, insert, update, route, bridge, register, or make available a prompt in the KANDA prompt workspace.",
+      "when_not_to_load": "Do not load for ordinary implementation tasks that do not change prompt-library files or routing awareness.",
+      "required_companion_prompts": [
+        "prompt_canon_reconciliation_protocol",
+        "prompt_audit_canon",
+        "project_specific_prompt_generalization",
+        "prompt_identity_code_registry_canon",
+        "prompt_navigation_index",
+        "prompt_router"
       ]
     },
     {
@@ -2674,6 +2789,90 @@
       ]
     },
     {
+      "prompt_id": "error_memory_active_ready_correction_blueprint",
+      "display_name": "Error Memory Active-Ready Correction Blueprint",
+      "filename": "error_memory_active_ready_correction_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md",
+      "category": "12_generalized_project_canons",
+      "priority": 32,
+      "prompt_code": "KPR-12-002",
+      "trigger_phrases": [
+        "correct this Error Memory draft",
+        "make this lesson active-ready",
+        "convert draft to active lesson",
+        "KANDA_ERROR_LESSON_JSON status draft",
+        "This lesson is not ready for active status",
+        "Memorize Error says missing active-ready fields",
+        "validation_command_summary is empty",
+        "source_patch_zip is empty",
+        "install_command_summary is empty",
+        "regression_check.type must be validation_command",
+        "regression_check.command is empty",
+        "regression_check.expected_marker is empty"
+      ],
+      "user_intent_examples": [
+        "Convert this KANDA_ERROR_LESSON_JSON draft into an active-ready lesson.",
+        "Memorize Error rejects this lesson because active-ready fields are missing; correct it safely.",
+        "Make this Error Memory draft active only if validation evidence is complete."
+      ],
+      "aliases": [
+        "error memory active-ready correction blueprint",
+        "error_memory_active_ready_correction_blueprint",
+        "draft to active error memory blueprint",
+        "active-ready Error Memory schema"
+      ],
+      "when_to_load": "When a task asks to correct, promote, validate, or convert a KANDA_ERROR_LESSON_JSON draft into active-ready or active status.",
+      "when_not_to_load": "Do not load for ordinary code patches, generic Error Memory GUI behavior, or non-Error-Memory tasks unless an Error Memory lesson is being corrected or promoted.",
+      "required_companion_prompts": [
+        "prompt_insertion_and_router_registration_protocol",
+        "prompt_navigation_index",
+        "prompt_router"
+      ]
+    },
+    {
+      "prompt_id": "project_tool_boundary_canon",
+      "prompt_code": "KPR-12-001",
+      "display_name": "Project Tool Boundary Canon",
+      "filename": "project_tool_boundary_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 35,
+      "trigger_phrases": [
+        "project versus tool",
+        "project vs tool",
+        "tool identity",
+        "active project identity",
+        "project in use",
+        "selected project root",
+        "active project root",
+        "target project",
+        "my_project",
+        "PROJECT_ROOT",
+        "do not hardcode kanda_reasoner",
+        "freeze paths active project",
+        "handoff path active project",
+        "patch staging active project"
+      ],
+      "user_intent_examples": [
+        "Keep KANDA Reasoner separate from the active project in every coding task.",
+        "Make sure freeze paths use the project in use, not always kanda_reasoner.",
+        "Canonize the distinction between the tool and <my_project>."
+      ],
+      "aliases": [
+        "project tool boundary",
+        "project_tool_boundary_canon",
+        "tool target boundary",
+        "active project boundary",
+        "selected project boundary"
+      ],
+      "when_to_load": "When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.",
+      "when_not_to_load": "Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.",
+      "required_companion_prompts": [
+        "box_architecture_canon",
+        "bundle_gated_development_workflow"
+      ]
+    },
+    {
       "prompt_id": "data_transform_pipeline_invariants",
       "display_name": "Data Transform Pipeline Invariants",
       "filename": "data_transform_pipeline_invariants.md",
@@ -2976,122 +3175,6 @@
       "required_companion_prompts": [
         "box_architecture_canon",
         "project_specific_prompt_generalization"
-      ]
-    },
-    {
-      "prompt_id": "freeze_code_intake_and_form_protocol",
-      "display_name": "Freeze Code Intake and Form Protocol",
-      "filename": "freeze_code_intake_and_form_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 30,
-      "trigger_phrases": [
-        "freeze code",
-        "freeze this feature",
-        "Freeze Feature After Update",
-        "New Local Freeze Entry",
-        "freeze form",
-        "freeze formulary",
-        "KANDA_FREEZE_HINT.json",
-        "prepare freeze entry",
-        "review freeze JSON",
-        "after validation freeze it",
-        "patch ZIP should be freeze-ready"
-      ],
-      "user_intent_examples": [
-        "Create the freeze JSON for the feature I just validated.",
-        "The Freeze Feature After Update form still has the wrong feature name.",
-        "Make this patch freeze-ready with the correct KANDA_FREEZE_HINT.json sidecar.",
-        "Review this local freeze entry before I click Confirm and Write."
-      ],
-      "required_companions": [
-        "active_governance_freeze_update",
-        "daily_patch_delivery_guardrails"
-      ],
-      "recommended_companions": [
-        "cooperative_implementation_methodology",
-        "box_architecture_canon",
-        "implementation_and_delivery_protocol"
-      ],
-      "missing_behavior": "HARD_STOP if validation evidence is missing, stale, or copied from another feature; correct stale heuristic freeze data before freeze approval.",
-      "load_type": "on_request"
-    },
-    {
-      "prompt_id": "pre_output_contract_gates",
-      "display_name": "Pre-Output Contract Gates",
-      "filename": "pre_output_contract_gates.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 35,
-      "trigger_phrases": [
-        "pre-output contract",
-        "terminal cleanup contract",
-        "PowerShell install block",
-        "PowerShell validation block",
-        "patch delivery contract",
-        "freeze JSON strict output",
-        "validation evidence marker",
-        "KANDA_FREEZE_HINT.json sidecar contract",
-        "output-time compliance",
-        "make AI follow the canon"
-      ],
-      "user_intent_examples": [
-        "Before giving the install block, make sure it follows KANDA terminal cleanup canon.",
-        "Make the freeze JSON parser-safe and include the exact validation marker.",
-        "Create a patch ZIP delivery response that follows the staging and sidecar contract."
-      ],
-      "required_companions": [
-        "daily_patch_delivery_guardrails"
-      ],
-      "recommended_companions": [
-        "freeze_code_intake_and_form_protocol",
-        "implementation_and_delivery_protocol",
-        "python_validation_serialisation_type_safety"
-      ],
-      "missing_behavior": "HARD_STOP if a high-risk artifact would violate terminal cleanup, patch staging, freeze JSON, validation evidence, sidecar, monotonic intake, or multi-project path canon.",
-      "load_type": "on_request"
-    },
-    {
-      "prompt_id": "project_tool_boundary_canon",
-      "prompt_code": "KPR-12-001",
-      "display_name": "Project Tool Boundary Canon",
-      "filename": "project_tool_boundary_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 35,
-      "trigger_phrases": [
-        "project versus tool",
-        "project vs tool",
-        "tool identity",
-        "active project identity",
-        "project in use",
-        "selected project root",
-        "active project root",
-        "target project",
-        "my_project",
-        "PROJECT_ROOT",
-        "do not hardcode kanda_reasoner",
-        "freeze paths active project",
-        "handoff path active project",
-        "patch staging active project"
-      ],
-      "user_intent_examples": [
-        "Keep KANDA Reasoner separate from the active project in every coding task.",
-        "Make sure freeze paths use the project in use, not always kanda_reasoner.",
-        "Canonize the distinction between the tool and <my_project>."
-      ],
-      "aliases": [
-        "project tool boundary",
-        "project_tool_boundary_canon",
-        "tool target boundary",
-        "active project boundary",
-        "selected project boundary"
-      ],
-      "when_to_load": "When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.",
-      "when_not_to_load": "Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.",
-      "required_companion_prompts": [
-        "box_architecture_canon",
-        "bundle_gated_development_workflow"
       ]
     }
   ]

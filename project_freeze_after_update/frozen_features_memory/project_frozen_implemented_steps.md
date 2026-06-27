@@ -804,3 +804,32 @@ freeze_memory_context_publish_v1_1 may be designed only as a separate governed p
 - 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-with-tell-file-optional-maintenance-wording-v4 | Startup artifact read-order guard with tell-file optional maintenance wording v4 | frozen
 - 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard-with-optional-maintenance-file-v3 | Startup artifact read-order guard with optional maintenance file v3 | frozen
 - 2026-06-26 | freeze-20260626-startup-artifact-read-order-guard | Startup artifact read order guard | frozen
+- 2026-06-26 | freeze-20260626-freeze-gui-ignore-this-freeze-and-get-frozen-snippet-controls | Freeze GUI Ignore this Freeze and Get Frozen snippet controls | frozen
+- 2026-06-26 | freeze-20260626-startup-code-module-size-bridge | Startup Code Module Size Bridge | frozen
+- 2026-06-26 | freeze-20260626-freeze-validation-evidence-merge-by-patch-zip | Freeze Validation Evidence Merge By Patch ZIP | frozen
+- 2026-06-26 | freeze-20260626-error-memory-lesson-block-schema-gate | Error Memory Lesson Block Schema Gate | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-clipboard-complete-json | Error Memory Export Clipboard Complete JSON | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-clipboard-complete-json-v2 | Error Memory Export Clipboard Complete JSON v2 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-complete-json-windows-isolated-validation-v5 | Error Memory Export Complete JSON Windows-Isolated Validation v5 | frozen
+- 2026-06-26 | freeze-20260626-startup-box-logic-bridge | Startup Box Logic Bridge | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-cursor-start-guard-v6 | Error Memory Export Cursor Start Guard v6 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-complete-json-all-statuses-v4 | Error Memory Export Complete JSON All Statuses v4 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-export-clipboard-complete-json-v3 | Error Memory Export Clipboard Complete JSON v3 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-copy-error-draft-editor-only-v7 | Error Memory Copy Error Draft Editor Only v7 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-copy-error-draft-latest-editor-payload-v8 | Error Memory Copy Error Draft Latest Editor Payload v8 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-copy-error-editor-exact-json-v12 | Error Memory Copy Error Editor Exact JSON v12 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-copy-error-draft-button-recreated-v13 | Error Memory Copy Error Draft Button Recreated v13 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-memorize-auto-loads-next-pending-v14 | Error Memory Memorize Auto Loads Next Pending v14 | frozen
+- 2026-06-26 | freeze-20260626-router-terminal-footer-contract-v15 | Router Terminal Footer Contract v15 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-memorize-next-syncs-editor-v17 | Error Memory Memorize Next Syncs Editor v17 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-ai-intake-copy-error-draft-button-v18 | Error Memory AI Intake Copy Error Draft Button v18 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-ai-intake-pending-format-v19 | Error Memory AI Intake Pending Format v19 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-pending-intake-del-draft | Error Memory Pending Intake Del Draft | frozen
+- 2026-06-26 | freeze-20260626-error-memory-file-send-smoke-test-v1 | Error Memory file-send smoke test v1 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-heuristic-mark-draft-saveable-v25 | Error Memory heuristic Mark Draft saveable v25 | frozen
+- 2026-06-26 | freeze-20260626-error-memory-state-machine-separates-draft-normalization-from-active-memorization | Error Memory state machine separates draft normalization from active memorization | frozen
+- 2026-06-26 | freeze-20260626-error-memory-del-draft-complete-delete | Error Memory Del Draft Complete Delete | frozen
+- 2026-06-26 | freeze-20260626-error-memory-active-ready-output-hard-gate-v21 | Error Memory Active-Ready Output Hard Gate v21 | frozen
+- 2026-06-27 | freeze-20260627-error-memory-strict-heuristic-correction-active-ready-transition | Error Memory strict Heuristic Correction active-ready transition | frozen
+- 2026-06-27 | freeze-20260627-stage-active-ready-replacement-lesson-for-ml-pilot-activation-state-draft | Stage active-ready replacement lesson for ml_pilot_activation_state draft | frozen
+- 2026-06-27 | freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint | Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint | frozen

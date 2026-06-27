@@ -287,7 +287,7 @@
     {
       "group_id": "12_generalized_project_canons",
       "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons",
-      "responsibility": "Store generalized reusable project canons, project/tool boundary rules, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references.",
+      "responsibility": "Store generalized reusable project canons, project/tool boundary rules, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references, and routed Error Memory active-ready lesson correction blueprints.",
       "use_when": "When extracting project-agnostic rules from specific projects, preserving active-project versus tool identity, or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules.",
       "do_not_use_when": "Do not place project-specific facts here.",
       "required_for": [
@@ -298,16 +298,18 @@
         "help document layout",
         "help quick start",
         "non-technical help explanation",
-        "book-grounded help references"
+        "book-grounded help references",
+        "Error Memory active-ready lesson correction"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompts": [
         "data_transform_pipeline_invariants.md",
         "desktop_help_document_layout_canon.md",
         "domain_decision_table_template.md",
         "plugin_package_import_canon.md",
         "shared_visual_render_engine_canon.md",
-        "transform_resolver_architecture_contract.md"
+        "transform_resolver_architecture_contract.md",
+        "error_memory_active_ready_correction_blueprint.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     }

@@ -1,72 +1,65 @@
 {
   "form_inputs": {
-    "box_type": "startup delivery generator and generated artifact contract",
-    "do_not_regress_rules": "Generated startup artifacts must instruct AI to read tell_AI_read_before_all.md before opening any ZIP contents or maintenance file.\nfirst_prompts_to_ai.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.\nprompt_library.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.\ntell_AI_read_before_all.md must start with the mandatory reading-order block.\nzz_read_only_if_modifying_startup_delivery.md must start with the mandatory reading-order block and must remain maintenance-only.\nNormal startup order is tell_AI_read_before_all.md, then first_prompts_to_ai.zip, then prompt_library.zip.\nprompt_library.zip is opened only for a specific routed prompt_path, not during normal startup.\nDo not restore paste_if_modify_startup_delivery.md as the active maintenance filename.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
-    "feature_title": "Startup artifact read order guard",
-    "generated_files": "KANDA_FREEZE_HINT.json\nbundle_manifest.json\npayload/patch_apply/apply_startup_artifact_read_order_guard_v1.py\npayload/validation/test_startup_artifact_read_order_guard_v1.py\npayload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_startup_artifact_read_order_guard_v1.txt\npayload/error_memory_receive_blocks/RAW_ERROR_EVIDENCE_startup_artifact_read_order_guard_v1.txt",
+    "box_type": "project source update",
+    "do_not_regress_rules": "Do not route Error Memory draft-to-active correction from memory alone; use error_memory_active_ready_correction_blueprint.\nDo not make the full blueprint always_startup without explicit governed approval.\nDo not invent folder assimilation card files when current source uses GROUP_ASSIMILATION_INDEX.\nDo not use backslashes in regression_check.command examples.\nDo not let prompt-router bridge logic leak into Error Memory GUI/source boxes.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.\nDo not store project-specific frozen memory inside project_freeze_ledger.\nPreview Freeze Entry must remain read-only and must not write files.\nConfirm and Write must require explicit human confirmation before writing governed freeze memory.\nAfter a local freeze write, the AI startup freeze context must be refreshed.\nExternal AI review remains advanced/fallback, not the normal local freeze path.",
+    "feature_title": "Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint",
+    "generated_files": "payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_prompt_router_bridge_active_ready_blueprint_v32.txt",
     "known_warnings": "",
     "notes": "",
-    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for Startup artifact read order guard.",
-    "primary_box": "Startup Delivery / Prompt Tools",
-    "protected_paths": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py\n<drive>/<project>_show_project_to_AI/first_prompt_files\nproject_freeze_after_update/frozen_features_memory\n<drive>/<project>_show_project_to_AI/project_error_memory\nproject_freeze_after_update/frozen_features_memory/",
-    "validated_files": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py\nvalidation/test_startup_artifact_read_order_guard_v1.py\n<drive>/<project>_show_project_to_AI/first_prompt_files/first_prompts_to_ai.zip\n<drive>/<project>_show_project_to_AI/first_prompt_files/prompt_library.zip\n<drive>/<project>_show_project_to_AI/first_prompt_files/tell_AI_read_before_all.md\n<drive>/<project>_show_project_to_AI/first_prompt_files/zz_read_only_if_modifying_startup_delivery.md",
-    "validation_evidence_summary": "Validation command: python validation\\test_startup_artifact_read_order_guard_v1.py. Successful markers: VALIDATION OK: startup-artifact-read-order-guard-v1 and STATUS: IN_SYNC. Static and generated-artifact validation covers generator compile, startup sync, first_prompt_files sort order, tell_AI first read-order block, maintenance read-order block, first_prompts_to_ai.zip first-entry read-order guard, prompt_library.zip first-entry read-order guard, and absence of the retired active maintenance filename."
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after local validation confirms the same markers.",
+    "primary_box": "prompt-library/router box",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory\nproject_freeze_after_update/frozen_features_memory/",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md\nkanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_correction_blueprint.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nvalidation/test_prompt_router_bridge_active_ready_blueprint_v32.py\nbundle_manifest.json",
+    "validation_evidence_summary": "Sandbox validation passed with VALIDATION OK: prompt-router-bridge-active-ready-blueprint-v32, STATUS: IN_SYNC, and ZIP CONTRACT: PASS."
   },
   "hint": {
-    "box": "Startup Delivery / Prompt Tools",
-    "box_type": "startup delivery generator and generated artifact contract",
-    "do_not_regress_rules": "Generated startup artifacts must instruct AI to read tell_AI_read_before_all.md before opening any ZIP contents or maintenance file.\nfirst_prompts_to_ai.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.\nprompt_library.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.\ntell_AI_read_before_all.md must start with the mandatory reading-order block.\nzz_read_only_if_modifying_startup_delivery.md must start with the mandatory reading-order block and must remain maintenance-only.\nNormal startup order is tell_AI_read_before_all.md, then first_prompts_to_ai.zip, then prompt_library.zip.\nprompt_library.zip is opened only for a specific routed prompt_path, not during normal startup.\nDo not restore paste_if_modify_startup_delivery.md as the active maintenance filename.\nProject-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
-    "do_not_touch_summary": [
-      "Generated startup artifacts must instruct AI to read tell_AI_read_before_all.md before opening any ZIP contents or maintenance file.",
-      "first_prompts_to_ai.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.",
-      "prompt_library.zip must contain 000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md as the first ZIP entry.",
-      "tell_AI_read_before_all.md must start with the mandatory reading-order block.",
-      "zz_read_only_if_modifying_startup_delivery.md must start with the mandatory reading-order block and must remain maintenance-only.",
-      "Normal startup order is tell_AI_read_before_all.md, then first_prompts_to_ai.zip, then prompt_library.zip.",
-      "prompt_library.zip is opened only for a specific routed prompt_path, not during normal startup.",
-      "Do not restore paste_if_modify_startup_delivery.md as the active maintenance filename.",
-      "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory."
+    "box": "prompt-library/router box",
+    "box_type": "project source update",
+    "do_not_regress": [
+      "Do not route Error Memory draft-to-active correction from memory alone; use error_memory_active_ready_correction_blueprint.",
+      "Do not make the full blueprint always_startup without explicit governed approval.",
+      "Do not invent folder assimilation card files when current source uses GROUP_ASSIMILATION_INDEX.",
+      "Do not use backslashes in regression_check.command examples.",
+      "Do not let prompt-router bridge logic leak into Error Memory GUI/source boxes."
     ],
-    "error_memory_pending_intake": [
-      "payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_startup_artifact_read_order_guard_v1.txt"
-    ],
-    "feature_id": "startup-artifact-read-order-guard-v1",
-    "feature_title": "Startup artifact read order guard",
-    "freeze_id": "freeze-20260626-startup-artifact-read-order-guard-v1",
-    "generated_files": "KANDA_FREEZE_HINT.json\nbundle_manifest.json\npayload/patch_apply/apply_startup_artifact_read_order_guard_v1.py\npayload/validation/test_startup_artifact_read_order_guard_v1.py\npayload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_startup_artifact_read_order_guard_v1.txt\npayload/error_memory_receive_blocks/RAW_ERROR_EVIDENCE_startup_artifact_read_order_guard_v1.txt",
+    "do_not_regress_rules": "Do not route Error Memory draft-to-active correction from memory alone; use error_memory_active_ready_correction_blueprint.\nDo not make the full blueprint always_startup without explicit governed approval.\nDo not invent folder assimilation card files when current source uses GROUP_ASSIMILATION_INDEX.\nDo not use backslashes in regression_check.command examples.\nDo not let prompt-router bridge logic leak into Error Memory GUI/source boxes.",
+    "feature_id": "prompt-router-bridge-active-ready-blueprint-v32",
+    "feature_title": "Prompt Router Bridge for Error Memory Active-Ready Correction Blueprint",
+    "generated_files": "payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_prompt_router_bridge_active_ready_blueprint_v32.txt",
     "kind": "kanda_freeze_hint",
     "known_warnings": "",
     "notes": "",
-    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after human review for Startup artifact read order guard.",
-    "primary_box": "Startup Delivery / Prompt Tools",
-    "protected_paths": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py\n<drive>/<project>_show_project_to_AI/first_prompt_files\nproject_freeze_after_update/frozen_features_memory\n<drive>/<project>_show_project_to_AI/project_error_memory",
+    "planned_next_step": "Preview Freeze Entry, then Confirm and Write after local validation confirms the same markers.",
+    "primary_box": "prompt-library/router box",
+    "protected_paths": "project_freeze_after_update/frozen_features_memory",
     "schema_version": "1.0",
     "source": {
-      "source_mtime_ns": 1782445279319558100,
-      "source_name": "kanda_startup_artifact_read_order_guard_v1_patch.zip",
-      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v1_patch.zip",
-      "source_size_bytes": 10174
+      "source_mtime_ns": 1782525098064495000,
+      "source_name": "kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+      "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+      "source_size_bytes": 109884
     },
-    "source_patch_zip": "kanda_startup_artifact_read_order_guard_v1_patch.zip",
-    "status": "ready_after_local_validation",
-    "validated_files": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py\nvalidation/test_startup_artifact_read_order_guard_v1.py\n<drive>/<project>_show_project_to_AI/first_prompt_files/first_prompts_to_ai.zip\n<drive>/<project>_show_project_to_AI/first_prompt_files/prompt_library.zip\n<drive>/<project>_show_project_to_AI/first_prompt_files/tell_AI_read_before_all.md\n<drive>/<project>_show_project_to_AI/first_prompt_files/zz_read_only_if_modifying_startup_delivery.md",
-    "validation_command": "python validation\\test_startup_artifact_read_order_guard_v1.py",
-    "validation_evidence_summary": "Validation command: python validation\\test_startup_artifact_read_order_guard_v1.py. Successful markers: VALIDATION OK: startup-artifact-read-order-guard-v1 and STATUS: IN_SYNC. Static and generated-artifact validation covers generator compile, startup sync, first_prompt_files sort order, tell_AI first read-order block, maintenance read-order block, first_prompts_to_ai.zip first-entry read-order guard, prompt_library.zip first-entry read-order guard, and absence of the retired active maintenance filename.",
-    "validation_markers": [
-      "VALIDATION OK: startup-artifact-read-order-guard-v1",
-      "STATUS: IN_SYNC"
-    ]
+    "source_patch_zip": "kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+    "status": "freeze_ready",
+    "validated_files": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md\nkanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_correction_blueprint.meta.json\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md\nkanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md\nkanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json\nkanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md\nkanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json\nvalidation/test_prompt_router_bridge_active_ready_blueprint_v32.py\nbundle_manifest.json",
+    "validation_command_summary": "Run python validation/test_prompt_router_bridge_active_ready_blueprint_v32.py and confirm VALIDATION OK: prompt-router-bridge-active-ready-blueprint-v32 plus STATUS: IN_SYNC.",
+    "validation_evidence": [
+      "Sandbox validation passed with VALIDATION OK: prompt-router-bridge-active-ready-blueprint-v32.",
+      "Sandbox validation passed with STATUS: IN_SYNC.",
+      "ZIP contract validation passed."
+    ],
+    "validation_evidence_summary": "Sandbox validation passed with VALIDATION OK: prompt-router-bridge-active-ready-blueprint-v32, STATUS: IN_SYNC, and ZIP CONTRACT: PASS."
   },
   "kind": "kanda_saved_freeze_hint",
   "project_root": "E:\\kanda_reasoner",
-  "saved_at_utc": "2026-06-26T05:55:15Z",
+  "saved_at_utc": "2026-06-27T01:52:33Z",
   "schema_version": "1.0",
   "source": {
-    "source_mtime_ns": 1782445279319558100,
-    "source_name": "kanda_startup_artifact_read_order_guard_v1_patch.zip",
-    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_startup_artifact_read_order_guard_v1_patch.zip",
-    "source_size_bytes": 10174
+    "source_mtime_ns": 1782525098064495000,
+    "source_name": "kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+    "source_path": "E:\\kanda_reasoner_delete_after_daily_work\\kanda_prompt_router_bridge_active_ready_blueprint_v32_patch.zip",
+    "source_size_bytes": 109884
   },
-  "used_at_utc": "2026-06-26T05:55:18Z",
-  "used_freeze_id": "freeze-20260626-startup-artifact-read-order-guard"
+  "used_at_utc": "2026-06-27T01:52:45Z",
+  "used_freeze_id": "freeze-20260627-prompt-router-bridge-for-error-memory-active-ready-correction-blueprint"
 }

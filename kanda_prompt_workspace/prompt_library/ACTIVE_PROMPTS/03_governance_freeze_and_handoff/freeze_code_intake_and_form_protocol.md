@@ -200,3 +200,110 @@ When a staged ZIP sidecar and the latest saved freeze hint describe the same fea
 
 This preserves the local validation evidence needed by Confirm and Write while keeping `KANDA_FREEZE_HINT.json` as pre-validation delivery metadata.
 
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_BEGIN -->
+
+## Validate-code paradigm for freeze evidence
+
+Local validation evidence is a state transition, not just terminal text. When a
+patch has a root-level `KANDA_FREEZE_HINT.json`, passed validation must be merged
+into the saved freeze hint intake record before the freeze form is considered
+ready.
+
+Required invariant:
+
+```text
+local validation passed
+-> validation output contains VALIDATION OK: <feature_id>
+-> merge_validation_evidence_into_latest_hint updates latest_freeze_hint.json
+-> New Local Freeze Entry loads the current validation_evidence_summary
+-> Preview remains read-only
+-> Confirm and Write remains human-confirmed
+```
+
+The current patch's validation evidence must not remain only in chat or terminal
+output while the freeze form still contains a pre-validation sidecar note. If the
+form says local validation must still confirm the feature after validation has
+already passed, the form is stale and must be corrected before freezing.
+
+The Error Memory pending-intake state is independent from this. An Error Memory
+lesson package may be frozen as a pending-intake package after staging and local
+validation. The lesson does not need to be saved into active Lessons unless the
+intended frozen feature is the saved Lesson itself.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_END -->
+
+For command-line validation flows, the preferred implementation path is:
+
+```text
+python scripts\merge_freeze_validation_evidence.py --project-root <PROJECT_ROOT> --feature-id <feature_id> --feature-title <feature_title> --evidence-file <evidence_file>
+```
+
+Require the output marker:
+
+```text
+FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>
+```
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_BEGIN -->
+
+## Patch ZIP keyed validation evidence merge - v2
+
+When a validation block merges local validation evidence into freeze hint intake,
+it must not assume `latest_freeze_hint.json` already belongs to the feature that
+was just validated. A previous patch can leave a stale latest hint for another
+feature.
+
+For every freeze-capable patch validation block:
+
+1. Capture local validation markers after the validator passes.
+2. Call `scripts/merge_freeze_validation_evidence.py` with `--patch-zip` pointing
+   to the staged patch ZIP and with the current `--feature-id`.
+3. Require the merge helper to load the matching root-level `KANDA_FREEZE_HINT.json`
+   from that patch ZIP before merging evidence if the current latest hint is for
+   another feature.
+4. Treat a feature-id mismatch without a matching `--patch-zip` as a validation
+   failure, not as a reason to merge evidence into the wrong freeze form.
+5. Freeze-ready evidence must include `VALIDATION OK: <feature_id>` and
+   `FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>`.
+
+This prevents stale freeze-intake data from causing `FREEZE BLOCKED - no
+recognizable validation evidence found` after local validation already passed.
+
+<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_END -->
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_BEGIN -->
+
+## Error Memory lesson block schema gate - v1
+
+Any ZIP, patch, direct Error Lesson ZIP, or clipboard receive block that carries
+`KANDA_ERROR_LESSON_JSON` must be schema-valid before delivery.
+
+Machine gate:
+
+```text
+python scripts\validate_patch_zip.py <staged_patch_zip>
+```
+
+must inspect every packaged `KANDA_ERROR_LESSON_JSON_*.txt` file and block the
+ZIP if the lesson JSON lacks `schema_version`, `project_slug`, required active
+lesson fields, `redaction`, `exception`, `fingerprint`, `prevention_triggers`,
+or `validation_evidence` when `status` is `active`.
+
+Required minimum for every packaged lesson block:
+
+```text
+schema_version: "1.0"
+project_slug: non-empty selected project slug
+lesson_id: present
+status: draft, active, deprecated, or superseded
+redaction.applied: true
+redaction.export_safe: true
+```
+
+Do not answer with only a corrected manual JSON block when an Error Memory
+lesson was generated with missing schema fields. Correct the creation/validation
+path so the next generated package is blocked before release.
+
+<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_END -->
+

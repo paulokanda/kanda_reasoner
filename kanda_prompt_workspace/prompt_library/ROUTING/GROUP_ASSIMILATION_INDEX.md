@@ -516,3 +516,13 @@ Request and inspect 07_prompt_authoring_and_audit, prompt_canon_reconciliation_p
 Negative test rule:
 If the response omits 07_prompt_authoring_and_audit, prompt_canon_reconciliation_protocol, prompt_audit_canon, or project_specific_prompt_generalization from Required prompts/groups, the response fails RG-015 even if it refuses implementation.
 <!-- T9T013_KANDA_PROMPT_AUTHORING_RG015_HARD_OVERRIDE_V7_END -->
+
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_GROUP_ROUTE_V1_START -->
+## Error Memory active-ready correction group route
+
+Use `error_memory_active_ready_correction_blueprint` from `12_generalized_project_canons` when a task asks to convert, correct, promote, or validate a `KANDA_ERROR_LESSON_JSON` draft so it can become active-ready or active.
+
+This route is a routed bridge. It must not become an always-loaded startup prompt. Pair it with `prompt_navigation_index` and `prompt_router`. If the task also changes prompt-library assets, also use `07_prompt_authoring_and_audit` and the prompt insertion/router registration protocol.
+
+Do not use this route for Error Memory GUI implementation patches unless the task also involves lesson JSON draft-to-active correction.
+<!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_GROUP_ROUTE_V1_END -->
