@@ -102,11 +102,10 @@ TOOLS: tuple[ToolSpec, ...] = (
     ToolSpec(
         step_title="Project Q&A",
         module_candidates=(
-            _module_path("project_reasoner_v10", "kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window"),
-            "kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window",
+            _module_path("reasoner_engine", "ai_reasoner_main_window"),
         ),
         class_candidates=("JsonProjectReasonerV10",),
-        source_hint=_source_path("project_reasoner_v10", "ai_reasoner_main_window.py"),
+        source_hint=_source_path("reasoner_engine", "ai_reasoner_main_window.py"),
         tab_id="project_qa",
     ),
     ToolSpec(

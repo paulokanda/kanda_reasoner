@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .blueprint_adapter import generate_ai_send_files
+from .paths import build_paths
 from .result import FreezeAfterUpdateResult, FreezeAfterUpdateStatus
 
 
@@ -73,13 +74,13 @@ def generate_freeze_after_update_ai_files(project_root: Path | str) -> FreezeAft
             return FreezeAfterUpdateResult(
                 status=FreezeAfterUpdateStatus.ERROR,
                 project_root=root,
-                box_root=root / "project_freeze_after_update",
+                box_root=build_paths(root).box_root,
                 message="Failed to clean deprecated AI-send files: " + str(cleanup.get("errors")),
             )
         return FreezeAfterUpdateResult(
             status=FreezeAfterUpdateStatus.VALID,
             project_root=root,
-            box_root=root / "project_freeze_after_update",
+            box_root=build_paths(root).box_root,
             message=(
                 "Deprecated project-local files_to_send_ai ZIP generation skipped. "
                 "Freeze context is delivered through Show Project to AI first_prompt_files "
@@ -92,6 +93,6 @@ def generate_freeze_after_update_ai_files(project_root: Path | str) -> FreezeAft
         return FreezeAfterUpdateResult(
             status=FreezeAfterUpdateStatus.ERROR,
             project_root=root,
-            box_root=root / "project_freeze_after_update",
+            box_root=build_paths(root).box_root,
             message="Failed to clean deprecated files_to_send_ai output: " + str(exc),
         )

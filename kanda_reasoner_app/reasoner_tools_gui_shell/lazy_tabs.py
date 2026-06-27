@@ -39,7 +39,6 @@ from PySide6.QtWidgets import (
 from .error_panels import ToolLoadErrorPanel
 from .gui_support import (
     _architecture_worker_script_path,
-    _docstring_worker_script_path,
     _first_existing_attr,
     _first_imported_module,
     _format_help_catalog_text,
@@ -58,6 +57,8 @@ _ARCHITECTURE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_architecture/manag
 _WORKFLOWS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_workflows/manage_workflows_gui.py"
 _DOCSTRINGS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py"
 _ERROR_MEMORY_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/error_memory_gui/error_memory_tab.py"
+_ENGINEERING_SAFETY_GUI_SOURCE = "reasoner_tools_gui_engineering_safety_panel.py"
+_FREEZE_AFTER_UPDATE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/freeze_after_update_gui/freeze_after_update_tab.py"
 
 from kanda_reasoner_app.templates.floating_windows.float_window import attach_floating_window
 
@@ -94,6 +95,9 @@ class LazyToolTab(QWidget):
             )
             self.python_executable_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
             self.python_executable_label.setWordWrap(False)
+            self.python_executable_label.setStyleSheet(
+                "border: 1px solid black; padding: 2px 6px;"
+            )
             header_row.addWidget(self.python_executable_label, 0)
             header_row.addSpacing(24)
 
@@ -136,8 +140,7 @@ class LazyToolTab(QWidget):
             _WORKFLOWS_GUI_SOURCE: (
                 "Workflow Review:\n"
                 f"Source: {_CANONICAL_PACKAGE_NAME}/manage_workflows/"
-                "manage_workflows_gui.py\n"
-                "Worker script: manage_workflows.py"
+                "manage_workflows_gui.py"
             ),
         }.get(spec.source_hint)
         self._source_hover_window = None
@@ -148,22 +151,6 @@ class LazyToolTab(QWidget):
                 message=source_hover_message,
                 delay_ms=4000,
             )
-
-        worker_script_text: str | None = None
-        if spec.source_hint == _DOCSTRINGS_GUI_SOURCE:
-            worker_script_text = f"Worker Script: {_docstring_worker_script_path()}"
-
-        if worker_script_text:
-            status_source_row.addSpacing(24)
-
-            self.worker_script_label = QLabel(worker_script_text)
-            self.worker_script_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
-            self.worker_script_label.setWordWrap(False)
-            self.worker_script_label.setStyleSheet(
-                "border: 1px solid #0B3D91; color: #0B3D91; "
-                "font-weight: bold; padding: 2px 6px;"
-            )
-            status_source_row.addWidget(self.worker_script_label, 0)
 
         self._status_source_insert_index = status_source_row.count()
         status_source_row.addStretch(1)
@@ -221,29 +208,41 @@ class LazyToolTab(QWidget):
         self._help_dialog = dialog
 
 
-    def _move_tab1_worker_script_selector_to_status_row(self, widget) -> None:
-        """Move Tab 1 worker-script controls beside LOADED / Source."""
+    def _move_tab1_project_root_controls_to_status_row(self, widget) -> None:
+        """Move Tab 1 Project Root controls beside LOADED / Source."""
         if self.spec.source_hint != _ARCHITECTURE_GUI_SOURCE:
             return
 
-        mover = getattr(widget, "move_script_selector_to_layout", None)
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
         if not callable(mover):
             return
 
         insert_index = getattr(self, "_status_source_insert_index", None)
         mover(self.status_source_row, insert_index)
 
-    def _move_tab2_worker_script_selector_to_status_row(self, widget: QWidget) -> None:
-        """Move Tab 2 worker-script controls beside LOADED / Source."""
+    def _move_tab2_project_root_controls_to_status_row(self, widget: QWidget) -> None:
+        """Move Tab 2 Project Root controls beside LOADED / Source."""
         if self.spec.source_hint != _WORKFLOWS_GUI_SOURCE:
             return
 
-        mover = getattr(widget, "move_script_selector_to_layout", None)
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
         if not callable(mover):
             return
 
         mover(self.status_source_row, self._status_source_insert_index)
 
+
+    def _move_tab3_project_root_controls_to_status_row(self, widget) -> None:
+        """Move Tab 3 Project Root controls beside LOADED / Source."""
+        if self.spec.source_hint != _DOCSTRINGS_GUI_SOURCE:
+            return
+
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
+        if not callable(mover):
+            return
+
+        insert_index = getattr(self, "_status_source_insert_index", None)
+        mover(self.status_source_row, insert_index)
 
     def _move_tab3_safe_mode_radio_to_status_row(self, widget) -> None:
         """Move Tab 3 Safe Mode control beside LOADED / Source."""
@@ -269,6 +268,28 @@ class LazyToolTab(QWidget):
 
         mover(self.status_source_row, self._status_source_insert_index)
 
+    def _move_engineering_safety_project_root_controls_to_status_row(self, widget: QWidget) -> None:
+        """Move Engineering Safety Project Root controls beside LOADED / Source."""
+        if self.spec.source_hint != _ENGINEERING_SAFETY_GUI_SOURCE:
+            return
+
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
+        if not callable(mover):
+            return
+
+        mover(self.status_source_row, self._status_source_insert_index)
+
+    def _move_freeze_after_update_project_root_controls_to_status_row(self, widget: QWidget) -> None:
+        """Move Freeze Feature After Update path controls beside LOADED / Source."""
+        if self.spec.source_hint != _FREEZE_AFTER_UPDATE_GUI_SOURCE:
+            return
+
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
+        if not callable(mover):
+            return
+
+        mover(self.status_source_row, self._status_source_insert_index)
+
     def load_tool(self) -> bool:
         if self._loaded:
             return True
@@ -282,10 +303,13 @@ class LazyToolTab(QWidget):
             widget_class = _first_existing_attr(module, self.spec.class_candidates)
             widget = widget_class()
             widget = _prepare_embedded_widget(widget)
-            self._move_tab2_worker_script_selector_to_status_row(widget)
-            self._move_tab1_worker_script_selector_to_status_row(widget)
+            self._move_tab2_project_root_controls_to_status_row(widget)
+            self._move_tab1_project_root_controls_to_status_row(widget)
             self._move_tab3_safe_mode_radio_to_status_row(widget)
+            self._move_tab3_project_root_controls_to_status_row(widget)
             self._move_error_memory_project_root_controls_to_status_row(widget)
+            self._move_engineering_safety_project_root_controls_to_status_row(widget)
+            self._move_freeze_after_update_project_root_controls_to_status_row(widget)
             self.content_layout.addWidget(widget)
             self._embedded_widget = widget
 

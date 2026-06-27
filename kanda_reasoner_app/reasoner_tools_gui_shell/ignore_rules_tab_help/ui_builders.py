@@ -14,8 +14,14 @@ class IgnoreRulesUiMixin:
 
     def _build_ui(self) -> None:
         main_layout = QVBoxLayout(self)
-        main_layout.addWidget(self.project_label)
-        main_layout.addWidget(self.project_scope_label)
+
+        project_scope_row = QHBoxLayout()
+        project_scope_row.addWidget(self.project_root_label, 0)
+        project_scope_row.addWidget(self.project_root_edit, 0)
+        project_scope_row.addWidget(self.project_root_search_button, 0)
+        project_scope_row.addSpacing(16)
+        project_scope_row.addWidget(self.project_scope_label, 1)
+        main_layout.addLayout(project_scope_row)
 
         folder_group = QGroupBox(
             "These folders are not part of the project and must be ignored"

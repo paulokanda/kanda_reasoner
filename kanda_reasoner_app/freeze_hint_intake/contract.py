@@ -6,7 +6,8 @@ Feature After Update tab can fill the New Local Freeze Entry form with the
 feature that was just implemented, instead of guessing from older local files.
 
 This box owns code only. Project-specific intake state is stored under the
-selected active project at project_freeze_after_update/freeze_hint_intake.
+selected project external support root at
+<project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake.
 It does not store project-specific memory in project_freeze_ledger.
 """
 
@@ -22,8 +23,13 @@ import tempfile
 from typing import Any, Iterable, Mapping
 import zipfile
 
+from kanda_reasoner_app.project_analysis_evidence_paths import (
+    analysis_project_freeze_after_update_dir,
+    legacy_project_freeze_after_update_dir,
+)
+
 FREEZE_HINT_FILENAME = "KANDA_FREEZE_HINT.json"
-INTAKE_REL = Path("project_freeze_after_update") / "freeze_hint_intake"
+INTAKE_REL = Path("freeze_hint_intake")
 HISTORY_REL = INTAKE_REL / "history"
 LATEST_NAME = "latest_freeze_hint.json"
 CONSUMED_NAME = "consumed_freeze_hints.json"
@@ -55,7 +61,7 @@ MANDATORY_PROTECTED_PATHS = (
 )
 
 MANDATORY_RULES = (
-    "Project-specific frozen memory must remain under project_freeze_after_update/frozen_features_memory.",
+    "Project-specific frozen memory must remain under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.",
     "Do not store project-specific frozen memory inside project_freeze_ledger.",
     "Preview Freeze Entry must remain read-only and must not write files.",
     "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
@@ -103,6 +109,13 @@ HINT_FIELD_ALIASES = {
         "known_warnings",
         "freeze_warning",
         "warnings",
+    ),
+    "validation_evidence_summary": (
+        "validation_evidence_summary",
+        "validation_evidence",
+        "validation_output",
+        "validation_log",
+        "validation_summary",
     ),
     "planned_next_step": (
         "planned_next_step",
@@ -210,7 +223,7 @@ def scan_and_save_latest_freeze_hint(
     """Scan the project staging folder for the newest unused freeze hint.
 
     If a valid unconsumed hint is found, it is saved under the selected
-    project's project_freeze_after_update/freeze_hint_intake box and returned.
+    project's external project_freeze_after_update/freeze_hint_intake box and returned.
     If none is found, the function returns ok=False and does not change files.
     Consumed or already-frozen sidecars are skipped, not terminal blockers, so
     a newer frozen patch ZIP cannot hide the next current unconsumed patch ZIP.
@@ -617,7 +630,7 @@ def _merge_record_form_inputs_with_fallback(
     )
     merged["notes"] = _append_text(
         merged.get("notes", ""),
-        "Freeze-intake data was loaded from project_freeze_after_update/freeze_hint_intake. Source patch ZIP: "
+        "Freeze-intake data was loaded from <project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake. Source patch ZIP: "
         + source_name
         + ".",
     )
@@ -857,14 +870,15 @@ def _consume_latest_hint_if_already_frozen(project_root: Path) -> bool:
     return True
 
 def build_freeze_hint_intake_paths(project_root: str | Path) -> FreezeHintIntakePaths:
-    """Build project-local paths for the freeze hint intake box."""
+    """Build external project-support paths for freeze hint intake."""
 
     root = _resolve_project_root(project_root)
-    intake_root = root / INTAKE_REL
+    box_root = analysis_project_freeze_after_update_dir(root)
+    intake_root = box_root / INTAKE_REL
     return FreezeHintIntakePaths(
         project_root=root,
         intake_root=intake_root,
-        history_root=root / HISTORY_REL,
+        history_root=box_root / HISTORY_REL,
         latest_hint=intake_root / LATEST_NAME,
         consumed_hints=intake_root / CONSUMED_NAME,
     )
@@ -1058,7 +1072,11 @@ def _candidate_feature_slugs_from_record(record: Mapping[str, Any]) -> set[str]:
 
 
 def _find_matching_frozen_feature_in_index(project_root: Path, candidate_slugs: set[str]) -> dict[str, Any] | None:
-    index_path = project_root / "project_freeze_after_update" / "frozen_features_memory" / "freeze_index.json"
+    freeze_root = analysis_project_freeze_after_update_dir(project_root)
+    index_path = freeze_root / "frozen_features_memory" / "freeze_index.json"
+    if not index_path.exists():
+        legacy_index = legacy_project_freeze_after_update_dir(project_root) / "frozen_features_memory" / "freeze_index.json"
+        index_path = legacy_index
     if not index_path.exists():
         return None
 
@@ -1110,7 +1128,11 @@ def _freeze_index_item_slugs(item: Mapping[str, Any]) -> set[str]:
 
 
 def _find_matching_frozen_feature_in_entry_files(project_root: Path, candidate_slugs: set[str]) -> dict[str, Any] | None:
-    entries_root = project_root / "project_freeze_after_update" / "frozen_features_memory" / "entries"
+    freeze_root = analysis_project_freeze_after_update_dir(project_root)
+    entries_root = freeze_root / "frozen_features_memory" / "entries"
+    if not entries_root.exists() or not entries_root.is_dir():
+        legacy_entries = legacy_project_freeze_after_update_dir(project_root) / "frozen_features_memory" / "entries"
+        entries_root = legacy_entries
     if not entries_root.exists() or not entries_root.is_dir():
         return None
 

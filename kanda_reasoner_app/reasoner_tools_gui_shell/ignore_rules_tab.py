@@ -8,7 +8,8 @@ __all__ = [
 
 from pathlib import Path
 
-from PySide6.QtWidgets import QLabel, QListWidget, QWidget
+from PySide6.QtCore import QSignalBlocker
+from PySide6.QtWidgets import QFileDialog, QLabel, QLineEdit, QListWidget, QPushButton, QWidget
 
 from .ignore_rules_tab_help.browse_state import IgnoreRulesBrowseStateMixin
 from .ignore_rules_tab_help.list_actions import IgnoreRulesListActionsMixin
@@ -43,8 +44,18 @@ class IgnoreRulesTab(
 
         self.project_label = QLabel()
         self.project_label.setWordWrap(True)
+        self.project_label.hide()
+        self.project_root_label = QLabel("Project Root:")
+        self.project_root_label.setStyleSheet("color: #0B3D91; font-weight: bold;")
+        self.project_root_edit = QLineEdit()
+        self.project_root_edit.setPlaceholderText("Select project root for exclusion rules")
+        self.project_root_edit.setMinimumWidth(260)
+        self.project_root_edit.setMaximumWidth(310)
+        self.project_root_edit.editingFinished.connect(self._apply_project_root_from_edit)
+        self.project_root_search_button = QPushButton("Search")
+        self.project_root_search_button.clicked.connect(self._browse_project_root)
         self.project_scope_label = QLabel()
-        self.project_scope_label.setWordWrap(True)
+        self.project_scope_label.setWordWrap(False)
         self.project_scope_label.setStyleSheet(
             "border: 1px solid #0B3D91; "
             "color: #0B3D91; "
@@ -62,8 +73,44 @@ class IgnoreRulesTab(
         """Switch the active project and load its exclusion rules."""
         self._project_root = project_root
         self._project_key = self._project_key_from_root(project_root)
+        self._sync_project_root_edit(project_root)
         self._refresh_project_label()
         self._load_rules()
+
+    def _sync_project_root_edit(self, project_root: Path | None) -> None:
+        """Mirror the active project root into the editable Project Root field."""
+        text = "" if project_root is None else str(project_root)
+        if self.project_root_edit.text().strip() == text:
+            return
+
+        blocker = QSignalBlocker(self.project_root_edit)
+        try:
+            self.project_root_edit.setText(text)
+        finally:
+            del blocker
+
+    def _apply_project_root_from_edit(self) -> None:
+        """Apply a manually typed project root to the exclusion-rule scope."""
+        text = self.project_root_edit.text().strip()
+        if not text:
+            self.set_project_root(None)
+            return
+        self.set_project_root(Path(text).expanduser())
+
+    def _browse_project_root(self) -> None:
+        """Browse for the project root used by this exclusion-rule profile."""
+        start = self.project_root_edit.text().strip() or self._get_last_browse_path()
+        selected = QFileDialog.getExistingDirectory(
+            self,
+            "Select Project Root",
+            start,
+        )
+        if not selected:
+            return
+
+        self._set_last_browse_path(selected)
+        self.project_root_edit.setText(selected)
+        self.set_project_root(Path(selected).expanduser())
 
     @staticmethod
     def _project_key_from_root(project_root: Path | None) -> str:
@@ -77,9 +124,10 @@ class IgnoreRulesTab(
             return str(project_root.expanduser())
 
     def _refresh_project_label(self) -> None:
-        """Update the project label shown above the rule lists."""
+        """Update the scope label shown beside the Project Root controls."""
+        self.project_label.setText("")
+        self.project_label.hide()
         if self._project_key == "__global__":
-            self.project_label.setText("Active project: global fallback")
             self.project_scope_label.setText(
                 "Scope: no project root is selected. These rules are fallback "
                 "rules only. Select a project root to save exclusions for that "
@@ -91,7 +139,6 @@ class IgnoreRulesTab(
         if self._is_reasoner_project_root():
             profile_text = "Reasoner project defaults: active"
 
-        self.project_label.setText("Active project: " + self._project_key)
         self.project_scope_label.setText(
             "Scope: exclusions on this tab are saved only for this project root. "
             "Other project roots keep separate exclusion lists. " + profile_text

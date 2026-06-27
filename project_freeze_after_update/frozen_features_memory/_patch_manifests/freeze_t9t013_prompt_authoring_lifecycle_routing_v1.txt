@@ -1,8 +1,0 @@
-Freeze patch manifest
-Patch: freeze_t9t013_prompt_authoring_lifecycle_routing_v1
-Freeze ID: freeze-20260614-t9t013-prompt-authoring-lifecycle-routing-v1
-Entry: project_freeze_after_update/frozen_features_memory/entries/freeze-20260614-t9t013-prompt-authoring-lifecycle-routing-v1.md
-Changed files:
-- project_freeze_after_update/frozen_features_memory/entries/freeze-20260614-t9t013-prompt-authoring-lifecycle-routing-v1.md
-- project_freeze_after_update/frozen_features_memory/freeze_index.json
-- project_freeze_after_update/frozen_features_memory/project_frozen_implemented_steps.md

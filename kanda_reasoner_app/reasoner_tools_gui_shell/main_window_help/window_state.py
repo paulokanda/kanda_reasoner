@@ -34,6 +34,13 @@ class _WindowStateMixin:
         payload = {
             "last_project_root": str(self.current_project_root) if self.current_project_root else "",
         }
+        tab_order = getattr(self, "_prefs", {}).get("tab_order", [])
+        if isinstance(tab_order, list):
+            payload["tab_order"] = [
+                str(tab_id)
+                for tab_id in tab_order
+                if str(tab_id).strip()
+            ]
         # Note: project_ignore_rules are saved directly by IgnoreRulesTab; we do not overwrite them here.
         try:
             # merge with existing prefs to preserve ignore_rules

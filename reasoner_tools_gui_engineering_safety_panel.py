@@ -237,25 +237,40 @@ def create_engineering_safety_panel():
     from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
     from PySide6.QtWidgets import (  # type: ignore[import-not-found]
 
+        QFileDialog,
+        QGridLayout,
         QGroupBox,
         QHBoxLayout,
         QLabel,
+        QLineEdit,
         QPushButton,
         QScrollArea,
+        QSizePolicy,
         QTextEdit,
         QVBoxLayout,
         QWidget,
     )
 
-    root = str(resolve_active_project_root())
     panel = QWidget()
     outer = QVBoxLayout(panel)
 
-    heading = QLabel("Engineering Safety")
-    outer.addWidget(heading)
+    project_root_label = QLabel("Project Root:")
+    project_root_label.setStyleSheet(
+        "color: #0B3D91; font-weight: bold; padding-left: 4px;"
+    )
+    project_root_edit = QLineEdit(str(resolve_active_project_root()))
+    project_root_edit.setObjectName("engineering_safety_project_root_edit")
+    project_root_edit.setPlaceholderText("Project root")
+    project_root_edit.setMinimumWidth(180)
+    project_root_edit.setMaximumWidth(360)
 
-    status_label = QLabel("Ready.")
-    outer.addWidget(status_label)
+    search_project_button = QPushButton("Search")
+    search_project_button.setToolTip("Select the active project root for Engineering Safety commands")
+
+    project_root_controls_moved_to_host = {"moved": False}
+
+    status_label = QLabel("")
+    status_label.setVisible(False)
 
     output_box = QTextEdit()
     output_box.setReadOnly(True)
@@ -264,7 +279,36 @@ def create_engineering_safety_panel():
     scroll = QScrollArea()
     scroll.setWidgetResizable(True)
     button_host = QWidget()
-    button_layout = QVBoxLayout(button_host)
+    button_layout = QGridLayout(button_host)
+    button_layout.setContentsMargins(0, 0, 0, 0)
+    button_layout.setHorizontalSpacing(12)
+    button_layout.setVerticalSpacing(10)
+    button_layout.setColumnStretch(0, 1)
+    button_layout.setColumnStretch(1, 1)
+
+    def current_project_root_text() -> str:
+        """Return the current project root selected in the panel."""
+        text = project_root_edit.text().strip()
+        if text:
+            return text
+        return str(resolve_active_project_root())
+
+    def search_project_root() -> None:
+        """Let the user select the project root used by safety commands."""
+        start = project_root_edit.text().strip() or str(resolve_active_project_root())
+        selected = QFileDialog.getExistingDirectory(
+            panel,
+            "Select project root",
+            start,
+        )
+        if selected:
+            project_root_edit.setText(selected)
+            output_box.setPlainText(
+                "Project root selected for Engineering Safety commands:\n"
+                + selected
+            )
+
+    search_project_button.clicked.connect(search_project_root)
 
     # BEGIN PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
     from concurrent.futures import ThreadPoolExecutor
@@ -315,27 +359,81 @@ def create_engineering_safety_panel():
         future = command_executor.submit(
             run_engineering_safety_panel_cli_command,
             command_name,
-            root,
+            current_project_root_text(),
         )
         QTimer.singleShot(150, lambda: poll_command(command_name, future))
     # END PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
 
-    for section, tools in _group_tools_by_section(get_engineering_safety_panel_catalog()).items():
+    def move_project_root_controls_to_layout(
+        destination_layout,
+        insert_index: int | None = None,
+    ) -> None:
+        """Move Engineering Safety Project Root controls into the host source row."""
+        if project_root_controls_moved_to_host["moved"]:
+            return
+
+        project_root_label.setParent(None)
+        project_root_edit.setParent(None)
+        search_project_button.setParent(None)
+
+        if insert_index is None:
+            destination_layout.addSpacing(12)
+            destination_layout.addWidget(project_root_label, 0)
+            destination_layout.addWidget(project_root_edit, 0)
+            destination_layout.addWidget(search_project_button, 0)
+        else:
+            destination_layout.insertSpacing(insert_index, 12)
+            destination_layout.insertWidget(insert_index + 1, project_root_label, 0)
+            destination_layout.insertWidget(insert_index + 2, project_root_edit, 0)
+            destination_layout.insertWidget(insert_index + 3, search_project_button, 0)
+
+        project_root_controls_moved_to_host["moved"] = True
+
+    panel.move_project_root_controls_to_layout = move_project_root_controls_to_layout
+
+    button_width = 170
+    grouped_sections = _group_tools_by_section(get_engineering_safety_panel_catalog())
+
+    def build_group(section: str, tools: list[EngineeringSafetyPanelTool]) -> QGroupBox:
+        """Build one symmetric two-column tool group."""
         group = QGroupBox(section)
-        group_layout = QVBoxLayout(group)
-        row = QHBoxLayout()
-        for index, tool in enumerate(tools, start=1):
+        group_layout = QGridLayout(group)
+        group_layout.setContentsMargins(8, 8, 8, 8)
+        group_layout.setHorizontalSpacing(8)
+        group_layout.setVerticalSpacing(6)
+        group_layout.setColumnStretch(0, 1)
+        group_layout.setColumnStretch(1, 1)
+
+        for index, tool in enumerate(tools):
             button = QPushButton(tool.label)
             button.setToolTip(tool.description)
+            button.setMinimumWidth(button_width)
+            button.setMaximumWidth(button_width)
+            button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
             button.clicked.connect(lambda checked=False, name=tool.command_name: run_command(name))
-            row.addWidget(button)
-            if index % 3 == 0:
-                group_layout.addLayout(row)
-                row = QHBoxLayout()
-        group_layout.addLayout(row)
-        button_layout.addWidget(group)
+            group_layout.addWidget(button, index // 2, index % 2)
 
-    button_layout.addStretch(1)
+        return group
+
+    def build_stack(sections_to_stack: tuple[str, ...]) -> QWidget:
+        """Build a compact vertical stack used to balance the two columns."""
+        host = QWidget()
+        stack = QVBoxLayout(host)
+        stack.setContentsMargins(0, 0, 0, 0)
+        stack.setSpacing(10)
+        for section_name in sections_to_stack:
+            stack.addWidget(build_group(section_name, grouped_sections[section_name]))
+        stack.addStretch(1)
+        return host
+
+    button_layout.addWidget(build_group("Source Hygiene", grouped_sections["Source Hygiene"]), 0, 0)
+    button_layout.addWidget(build_group("Engineering Safety", grouped_sections["Engineering Safety"]), 0, 1)
+    button_layout.addWidget(build_group("Governance Automation", grouped_sections["Governance Automation"]), 1, 0)
+    button_layout.addWidget(build_group("Stack Compatibility", grouped_sections["Stack Compatibility"]), 1, 1)
+    button_layout.addWidget(build_stack(("Draft Reliability", "Utilities")), 2, 0)
+    button_layout.addWidget(build_group("Project Symbol Atlas", grouped_sections["Project Symbol Atlas"]), 2, 1)
+
+    button_layout.setRowStretch(3, 1)
     scroll.setWidget(button_host)
     outer.addWidget(scroll)
     outer.addWidget(output_box)

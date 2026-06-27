@@ -15,6 +15,7 @@ from typing import Any, Mapping
 from .box_bootstrapper import ensure_freeze_after_update_box, inspect_freeze_after_update_box
 from .result import FreezeAfterUpdateResult, FreezeAfterUpdateStatus
 from .send_pack_builder import generate_freeze_after_update_ai_files
+from kanda_reasoner_app.project_analysis_evidence_paths import project_analysis_evidence_root
 
 __all__ = [
     "FreezeAfterUpdateResult",
@@ -30,6 +31,32 @@ __all__ = [
 ]
 
 
+
+def _resolved_project_root(project_root: str | Path) -> Path:
+    """Return the real selected project root used for user-facing metadata."""
+    return Path(project_root).expanduser().resolve(strict=False)
+
+
+def _freeze_state_owner_root(project_root: str | Path) -> Path:
+    """Return the external freeze-state owner root used by the ledger engine."""
+    return project_analysis_evidence_root(project_root)
+
+
+def _preview_for_ledger_engine(preview: Mapping[str, Any], owner_root: Path) -> dict[str, Any]:
+    """Return an engine-facing preview with the owner root as project_root.
+
+    The reusable local freeze writer from project_freeze_ledger validates that
+    the preview was produced for the same active root passed to validation and
+    write calls. After the external-root migration, that engine root is the
+    external project-support root, while the public contract still reports the
+    real selected project source root to the GUI. This adapter keeps both
+    boundaries true without mutating the read-only preview shown to the user.
+    """
+    engine_preview = dict(preview)
+    engine_preview["project_root"] = str(owner_root)
+    engine_preview["freeze_state_owner_root"] = str(owner_root)
+    return engine_preview
+
 def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) -> dict[str, Any]:
     """Return a local freeze-entry preview without writing project memory.
 
@@ -43,8 +70,18 @@ def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) ->
             preview_freeze_entry as _engine_preview_freeze_entry,
         )
 
-        preview = _engine_preview_freeze_entry(project_root, inputs)
-        return _with_contract_status(preview, operation="preview_freeze_entry")
+        resolved_project_root = _resolved_project_root(project_root)
+        owner_root = _freeze_state_owner_root(resolved_project_root)
+        preview = _engine_preview_freeze_entry(owner_root, inputs)
+        result = _with_contract_status(preview, operation="preview_freeze_entry")
+        # Project root is an engine-facing contract field. After the external-root
+        # migration it must equal the freeze-state owner root, while the selected
+        # source project remains available through explicit display/provenance fields.
+        result["project_root"] = str(owner_root)
+        result["freeze_state_owner_root"] = str(owner_root)
+        result["selected_project_root"] = str(resolved_project_root)
+        result["display_project_root"] = str(resolved_project_root)
+        return result
     except Exception as exc:
         return _contract_error(
             operation="preview_freeze_entry",
@@ -64,13 +101,19 @@ def validate_freeze_entry_preview(
             validate_freeze_entry_preview as _engine_validate_freeze_entry_preview,
         )
 
-        validation = _engine_validate_freeze_entry_preview(project_root, preview)
+        resolved_project_root = _resolved_project_root(project_root)
+        owner_root = _freeze_state_owner_root(resolved_project_root)
+        engine_preview = _preview_for_ledger_engine(preview, owner_root)
+        validation = _engine_validate_freeze_entry_preview(owner_root, engine_preview)
         result = dict(validation)
         result.setdefault("ok", bool(result.get("ok")))
         result.setdefault("errors", [])
         result.setdefault("warnings", [])
         result["operation"] = "validate_freeze_entry_preview"
-        result["project_root"] = str(Path(project_root).expanduser().resolve())
+        result["project_root"] = str(owner_root)
+        result["freeze_state_owner_root"] = str(owner_root)
+        result["selected_project_root"] = str(resolved_project_root)
+        result["display_project_root"] = str(resolved_project_root)
         return result
     except Exception as exc:
         return _contract_error(
@@ -98,9 +141,12 @@ def write_confirmed_freeze_entry(
             write_confirmed_freeze_entry as _engine_write_confirmed_freeze_entry,
         )
 
+        resolved_project_root = _resolved_project_root(project_root)
+        owner_root = _freeze_state_owner_root(resolved_project_root)
+        engine_preview = _preview_for_ledger_engine(preview, owner_root)
         result = _engine_write_confirmed_freeze_entry(
-            project_root,
-            preview,
+            owner_root,
+            engine_preview,
             confirmation=confirmation,
         )
         output = dict(result)
@@ -108,7 +154,10 @@ def write_confirmed_freeze_entry(
         output.setdefault("errors", [])
         output.setdefault("warnings", [])
         output["operation"] = "write_confirmed_freeze_entry"
-        output["project_root"] = str(Path(project_root).expanduser().resolve())
+        output["project_root"] = str(owner_root)
+        output["freeze_state_owner_root"] = str(owner_root)
+        output["selected_project_root"] = str(resolved_project_root)
+        output["display_project_root"] = str(resolved_project_root)
         return output
     except Exception as exc:
         return _contract_error(
@@ -133,12 +182,14 @@ def refresh_freeze_exposure(project_root: str | Path, *, max_items: int = 40) ->
             render_text_report,
         )
 
-        audit = audit_freeze_memory(str(Path(project_root).expanduser().resolve()))
+        owner_root = project_analysis_evidence_root(project_root)
+        audit = audit_freeze_memory(str(owner_root))
         report = render_text_report(audit, max_items=max(1, int(max_items)))
         return {
             "ok": audit.status in {"OK", "STALE_EXPOSURE", "INDEX_MISMATCH"},
             "operation": "refresh_freeze_exposure",
             "project_root": str(Path(project_root).expanduser().resolve()),
+            "freeze_state_owner_root": str(owner_root),
             "status": audit.status,
             "report": report,
             "audit": audit.to_dict(),
@@ -156,7 +207,7 @@ def refresh_freeze_exposure(project_root: str | Path, *, max_items: int = 40) ->
 def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 40) -> dict[str, Any]:
     """Refresh all AI-visible freeze context after a local freeze write.
 
-    The canonical freeze memory remains inside the selected active project.
+    The canonical freeze memory remains in the selected project external support root.
     This function refreshes the generated AI-send pack and the startup upload
     channel that the external AI reads at the beginning of a programming
     session.  It does not write project-specific memory into

@@ -211,8 +211,8 @@ WHEN THE USER ASKS TO FREEZE CODE, FREEZE A VALIDATED FEATURE, REVIEW A FREEZE F
 Required behavior:
 1. Use feature-specific freeze data from the current implementation, patch, validation output, handoff, or `KANDA_FREEZE_HINT.json`.
 2. Do not approve a freeze form that reused a stale heuristic feature title or validation list from an older feature.
-3. Verify that project-specific freeze-intake state belongs under `<active_project_root>/project_freeze_after_update/freeze_hint_intake`.
-4. Verify that project-specific frozen memory belongs under `<active_project_root>/project_freeze_after_update/frozen_features_memory`.
+3. Verify that project-specific freeze-intake state belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake`.
+4. Verify that project-specific frozen memory belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory`.
 5. Do not store project-specific freeze-intake state or frozen memory inside `project_freeze_ledger`.
 6. Preserve Preview as read-only and Confirm and Write as explicitly human-confirmed.
 7. After local freeze write, startup freeze context must be refreshed.
@@ -2079,6 +2079,10 @@ def validate_generated_zip_contract(
         "Post-validation freeze awareness rule",
         "Freeze Feature After Update tab",
         "generated exposure copy",
+        "First-prompt delivery certification",
+        "Create First Prompt Files must insert this file into first_prompts_to_ai.zip",
+        "<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory/",
+        "Runtime source is completely correct",
     ]
     missing_freeze_context_phrases = [
         phrase for phrase in required_freeze_context_phrases if phrase not in freeze_context_text
@@ -2086,6 +2090,20 @@ def validate_generated_zip_contract(
     if missing_freeze_context_phrases:
         raise ValueError(
             f"Active freeze context file is missing required phrases: {missing_freeze_context_phrases}"
+        )
+
+    forbidden_freeze_context_phrases = [
+        "<active_project_root>/project_freeze_after_update/frozen_features_memory/",
+        "E:\\kanda_reasoner\\project_freeze_after_update\\frozen_features_memory",
+        "E:/kanda_reasoner/project_freeze_after_update/frozen_features_memory",
+    ]
+    present_forbidden_freeze_context_phrases = [
+        phrase for phrase in forbidden_freeze_context_phrases if phrase in freeze_context_text
+    ]
+    if present_forbidden_freeze_context_phrases:
+        raise ValueError(
+            "Active freeze context file contains stale freeze-memory path phrase(s): "
+            + str(present_forbidden_freeze_context_phrases)
         )
 
 

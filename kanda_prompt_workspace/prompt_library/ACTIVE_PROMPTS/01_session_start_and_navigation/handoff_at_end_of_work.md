@@ -171,7 +171,7 @@ If a validated feature was completed but not frozen, say:
 
 ```text
 Feature appears validation-ready but is not frozen yet.
-Next safe action: prepare Freeze Feature After Update entry under project_freeze_after_update/frozen_features_memory after confirming validation evidence.
+Next safe action: prepare Freeze Feature After Update entry under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory after confirming validation evidence.
 ```
 
 If a feature was frozen and validation passed, say:

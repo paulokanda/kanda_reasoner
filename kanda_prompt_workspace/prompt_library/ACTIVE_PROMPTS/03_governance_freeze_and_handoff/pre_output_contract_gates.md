@@ -442,8 +442,8 @@ The selected active project root owns project-specific state.
 State paths must be relative to the selected active project root:
 
 ```text
-<active_project_root>/project_freeze_after_update/freeze_hint_intake
-<active_project_root>/project_freeze_after_update/frozen_features_memory
+<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake
+<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 If KANDA Reasoner itself is the active project, these paths are inside KANDA Reasoner.

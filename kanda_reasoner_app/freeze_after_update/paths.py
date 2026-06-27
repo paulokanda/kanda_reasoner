@@ -1,9 +1,14 @@
-"""Path helpers for the project-local Freeze Feature After Update box."""
+"""Path helpers for the external Freeze Feature After Update state box."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+
+from kanda_reasoner_app.project_analysis_evidence_paths import (
+    analysis_project_freeze_after_update_dir,
+    legacy_project_freeze_after_update_dir,
+)
 
 
 BOX_DIR_NAME = "project_freeze_after_update"
@@ -26,6 +31,7 @@ class FreezeAfterUpdatePaths:
 
     project_root: Path
     box_root: Path
+    legacy_box_root: Path
     memory_root: Path
     entries_root: Path
     send_root: Path
@@ -42,16 +48,28 @@ def normalize_project_root(project_root: Path | str) -> Path:
     return Path(project_root).expanduser().resolve()
 
 
+def legacy_box_root(project_root: Path | str) -> Path:
+    """Return the legacy in-source freeze box path."""
+    return legacy_project_freeze_after_update_dir(project_root)
+
+
 def build_paths(project_root: Path | str) -> FreezeAfterUpdatePaths:
-    """Build all public box paths for a project root."""
+    """Build all public box paths for a project root.
+
+    New writes resolve to the external project-support root:
+    ``<drive>/<project>_show_project_to_AI/project_freeze_after_update``.
+    The legacy in-source path is kept only for migration and compatibility
+    checks, not for new writes.
+    """
     root = normalize_project_root(project_root)
-    box_root = root / BOX_DIR_NAME
+    box_root = analysis_project_freeze_after_update_dir(root)
     memory_root = box_root / MEMORY_DIR_NAME
     entries_root = memory_root / ENTRIES_DIR_NAME
     send_root = box_root / SEND_DIR_NAME
     return FreezeAfterUpdatePaths(
         project_root=root,
         box_root=box_root,
+        legacy_box_root=legacy_box_root(root),
         memory_root=memory_root,
         entries_root=entries_root,
         send_root=send_root,
@@ -65,8 +83,15 @@ def build_paths(project_root: Path | str) -> FreezeAfterUpdatePaths:
 
 
 def relative_to_project(path: Path, project_root: Path) -> Path:
-    """Return project-relative path when possible."""
+    """Return a stable logical project-freeze relative path when possible."""
+    resolved = path.resolve(strict=False)
+    paths = build_paths(project_root)
     try:
-        return path.resolve().relative_to(project_root.resolve())
+        rel_to_box = resolved.relative_to(paths.box_root.resolve(strict=False))
+        return Path(BOX_DIR_NAME) / rel_to_box
+    except Exception:
+        pass
+    try:
+        return resolved.relative_to(project_root.resolve(strict=False))
     except Exception:
         return path

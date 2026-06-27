@@ -6,9 +6,9 @@ This module belongs to the startup delivery tool box:
     kanda_prompt_workspace/prompt_tools/
 
 It creates a generated exposure copy for AI startup sessions from the active
-project's canonical freeze memory:
+project's canonical external freeze memory:
 
-    <active_project_root>/project_freeze_after_update/frozen_features_memory/
+    <project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory/
 
 It does not write or repair freeze memory.  It only produces a compact Markdown
 payload and a source fingerprint for sync/staleness checks.
@@ -25,7 +25,9 @@ from types import ModuleType
 from typing import Any
 
 ACTIVE_FREEZE_CONTEXT_FILENAME = "09_active_project_freeze_context.md"
-FREEZE_MEMORY_RELATIVE = Path("project_freeze_after_update") / "frozen_features_memory"
+SHOW_PROJECT_TO_AI_SUFFIX = "_show_project_to_AI"
+FREEZE_BOX_NAME = "project_freeze_after_update"
+FREEZE_MEMORY_RELATIVE = Path(FREEZE_BOX_NAME) / "frozen_features_memory"
 FREEZE_ENTRIES_RELATIVE = FREEZE_MEMORY_RELATIVE / "entries"
 FREEZE_INDEX_RELATIVE = FREEZE_MEMORY_RELATIVE / "freeze_index.json"
 FREEZE_STEPS_RELATIVE = FREEZE_MEMORY_RELATIVE / "project_frozen_implemented_steps.md"
@@ -39,6 +41,32 @@ def resolve_active_project_root(workspace_root: Path, explicit_project_root: Pat
     # kanda_prompt_workspace lives directly under the active KANDA project root.
     return workspace_root.resolve(strict=False).parent
 
+
+
+
+def _show_project_root_from_project_root(project_root: Path) -> Path:
+    """Return <drive>/<project>_show_project_to_AI for a source project."""
+    root = project_root.expanduser().resolve(strict=False)
+    if root.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        return root
+    if root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        return root.parent
+    if root.parent.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX) and root.parent.name == FREEZE_BOX_NAME:
+        return root.parent.parent
+    folder_name = root.name + SHOW_PROJECT_TO_AI_SUFFIX
+    if root.drive:
+        return Path(root.anchor) / folder_name
+    return root.parent / folder_name
+
+
+def freeze_state_owner_root(project_root: Path) -> Path:
+    """Return the root passed to legacy freeze engines for external storage."""
+    return _show_project_root_from_project_root(project_root)
+
+
+def freeze_memory_root(project_root: Path) -> Path:
+    """Return canonical external freeze memory root for a source project."""
+    return freeze_state_owner_root(project_root) / FREEZE_MEMORY_RELATIVE
 
 def _sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -56,11 +84,12 @@ def _read_bytes_if_file(path: Path) -> bytes:
 def _iter_freeze_source_files(project_root: Path) -> list[Path]:
     """Return source files that affect the generated startup freeze context."""
     files: list[Path] = []
-    freeze_index = project_root / FREEZE_INDEX_RELATIVE
-    steps = project_root / FREEZE_STEPS_RELATIVE
+    memory_root = freeze_memory_root(project_root)
+    freeze_index = memory_root / "freeze_index.json"
+    steps = memory_root / "project_frozen_implemented_steps.md"
     if freeze_index.is_file():
         files.append(freeze_index)
-    entries_root = project_root / FREEZE_ENTRIES_RELATIVE
+    entries_root = memory_root / "entries"
     if entries_root.is_dir():
         files.extend(sorted(path for path in entries_root.glob("freeze-*.md") if path.is_file()))
     if steps.is_file():
@@ -73,7 +102,7 @@ def freeze_context_source_fingerprint(project_root: Path) -> str:
     root = project_root.resolve(strict=False)
     digest = hashlib.sha256()
     digest.update(f"project_root={root}\n".encode("utf-8", errors="replace"))
-    memory_root = root / FREEZE_MEMORY_RELATIVE
+    memory_root = freeze_memory_root(root)
     digest.update(f"memory_exists={memory_root.exists()}\n".encode("utf-8"))
     for source in _iter_freeze_source_files(root):
         try:
@@ -130,14 +159,32 @@ def _render_fallback_context(project_root: Path, generated_at: str, error: str) 
 
 Generated: `{generated_at}`
 Project root: `{project_root}`
-Freeze memory source: `{FREEZE_MEMORY_RELATIVE.as_posix()}`
+Freeze memory source: `{freeze_memory_root(project_root).as_posix()}`
 Freeze context status: `UNAVAILABLE`
 
 ## Purpose
 
 This generated startup file is the AI access channel for project-specific frozen
-feature memory.  It is a generated exposure copy only.  The source of truth remains under
-the selected active project root.
+feature memory.  It is a generated exposure copy only.  The source of truth remains:
+
+```text
+<project_drive>/<project_name>_show_project_to_AI/{FREEZE_MEMORY_RELATIVE.as_posix()}/
+```
+
+## First-prompt delivery certification
+
+Create First Prompt Files must insert this file into first_prompts_to_ai.zip as:
+
+```text
+{ACTIVE_FREEZE_CONTEXT_FILENAME}
+```
+
+The freeze memory source exposed here must be the selected project's external
+support-root freeze folder, not the legacy in-source compatibility folder.
+
+Runtime source is completely correct: new freeze writes and startup awareness use
+the external support root, while the in-source project_freeze_after_update path is
+legacy-only migration and compatibility state.
 
 ## Exposure error
 
@@ -175,7 +222,8 @@ def build_active_project_freeze_context(
 
     try:
         exposure = _load_expose_freeze_memory_module(engine_root)
-        result = exposure.audit_freeze_memory(str(project_root), engine_root=str(engine_root))
+        owner_root = freeze_state_owner_root(project_root)
+        result = exposure.audit_freeze_memory(str(owner_root), engine_root=str(engine_root))
         report = _sanitize_startup_freeze_exposure_text(exposure.render_text_report(result, max_items=max_items))
         status = str(getattr(result, "status", "UNKNOWN"))
         index_entry_count = int(getattr(result, "index_entry_count", 0) or 0)
@@ -185,7 +233,7 @@ def build_active_project_freeze_context(
 
 Generated: `{generated_at}`
 Project root: `{project_root}`
-Freeze memory source: `{FREEZE_MEMORY_RELATIVE.as_posix()}`
+Freeze memory source: `{freeze_memory_root(project_root).as_posix()}`
 Freeze context status: `{status}`
 Index entries: `{index_entry_count}`
 Entry files: `{entry_file_count}`
@@ -200,8 +248,23 @@ feature memory at the beginning of a programming interaction.
 This file is a generated exposure copy only.  The source of truth remains:
 
 ```text
-<active_project_root>/{FREEZE_MEMORY_RELATIVE.as_posix()}/
+<project_drive>/<project_name>_show_project_to_AI/{FREEZE_MEMORY_RELATIVE.as_posix()}/
 ```
+
+## First-prompt delivery certification
+
+Create First Prompt Files must insert this file into first_prompts_to_ai.zip as:
+
+```text
+{ACTIVE_FREEZE_CONTEXT_FILENAME}
+```
+
+The freeze memory source exposed here must be the selected project's external
+support-root freeze folder, not the legacy in-source compatibility folder.
+
+Runtime source is completely correct: new freeze writes and startup awareness use
+the external support root, while the in-source project_freeze_after_update path is
+legacy-only migration and compatibility state.
 
 ## Compact freeze report
 
@@ -245,8 +308,8 @@ Do not treat project_freeze_ledger as active project memory.
         "prompt_id": "active_project_freeze_context",
         "load_mode": "always_startup_dynamic_context",
         "role": "Generated active-project freeze memory context and post-validation freeze-awareness rule for AI programming compliance.",
-        "canonical_source": f"dynamic:{FREEZE_MEMORY_RELATIVE.as_posix()}",
-        "resolved_source": str((project_root / FREEZE_MEMORY_RELATIVE).resolve(strict=False)),
+        "canonical_source": f"dynamic:<project>_show_project_to_AI/{FREEZE_MEMORY_RELATIVE.as_posix()}",
+        "resolved_source": freeze_memory_root(project_root).resolve(strict=False).as_posix(),
         "generated_filename": ACTIVE_FREEZE_CONTEXT_FILENAME,
         "source_fingerprint": source_fingerprint,
         "generated_sha256": _sha256_bytes(payload),

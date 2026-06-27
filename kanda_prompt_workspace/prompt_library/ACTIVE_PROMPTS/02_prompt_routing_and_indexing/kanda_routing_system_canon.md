@@ -566,7 +566,7 @@ It may proceed with freeze entry creation if the task is otherwise sufficiently 
 It must use:
 
 ```text
-project_freeze_after_update/frozen_features_memory
+<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 for active project-specific freeze memory.
@@ -909,7 +909,7 @@ It is not the place for active project-specific memory.
 ## Active project memory
 
 ```text
-<active_project_root>/project_freeze_after_update/frozen_features_memory
+<active_project_root>/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 This is the source of truth for active frozen memory for that selected project.
@@ -917,7 +917,7 @@ This is the source of truth for active frozen memory for that selected project.
 Example:
 
 ```text
-E:/kanda_reasoner/project_freeze_after_update/frozen_features_memory
+E:/kanda_reasoner/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 is the active memory only when the selected project is KANDA Reasoner itself.
@@ -925,7 +925,7 @@ is the active memory only when the selected project is KANDA Reasoner itself.
 For another project:
 
 ```text
-D:/client_project/project_freeze_after_update/frozen_features_memory
+D:/client_project/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 belongs to that other project.
@@ -933,7 +933,7 @@ belongs to that other project.
 ## Generated review/exposure artifacts
 
 ```text
-<active_project_root>/project_freeze_after_update/files_to_send_ai
+<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/files_to_send_ai
 ```
 
 This is generated output only.
@@ -1010,7 +1010,7 @@ Important rules:
 * Preview must remain read-only.
 * Confirm and Write must require valid preview and human confirmation.
 * GUI must call the public freeze_after_update contract, not private internals.
-* Project-specific frozen memory stays under project_freeze_after_update/frozen_features_memory.
+* Project-specific frozen memory stays under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.
 * project_freeze_ledger remains reusable engine / blueprint logic.
 * AI may suggest freeze fields, but human confirmation remains mandatory.
 
@@ -1308,7 +1308,7 @@ When auditing or updating the routing system, check these risks sincerely:
 5. Should Context Package Manifest become a formal standard before more manual pilots?
 6. Should manual pilots remain chat-only for now, or should they become a controlled registry?
 7. Is active freeze context in startup a good idea, or should freeze context always be requested on demand?
-8. Is `project_freeze_ledger` vs `project_freeze_after_update/frozen_features_memory` a sound separation?
+8. Is `project_freeze_ledger` vs `<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory` a sound separation?
 9. Is local freeze workflow better than AI-send freeze workflow as the default?
 10. Are there missing guardrails against stale generated artifacts?
 11. Is the current system too dependent on human discipline?

@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QListWidgetItem
 
-from kanda_reasoner_app.reasoner_engine.main_window_help.ui_components import (
+from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.ui_components import (
     shorten_path,
 )
 from kanda_reasoner_app.reasoner_engine.v10_models import ConversationTurn, RetrievalBundle

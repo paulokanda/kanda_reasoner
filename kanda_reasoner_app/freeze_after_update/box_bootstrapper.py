@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .blueprint_adapter import ensure_box, inspect_box
+from .paths import build_paths
 from .result import FreezeAfterUpdateResult, FreezeAfterUpdateStatus
 
 
@@ -63,7 +64,7 @@ def inspect_freeze_after_update_box(project_root: Path | str) -> FreezeAfterUpda
         return FreezeAfterUpdateResult(
             status=FreezeAfterUpdateStatus.ERROR,
             project_root=root,
-            box_root=root / "project_freeze_after_update",
+            box_root=build_paths(root).box_root,
             message="Failed to inspect Freeze Feature After Update box: " + str(exc),
         )
 
@@ -77,6 +78,6 @@ def ensure_freeze_after_update_box(project_root: Path | str) -> FreezeAfterUpdat
         return FreezeAfterUpdateResult(
             status=FreezeAfterUpdateStatus.ERROR,
             project_root=root,
-            box_root=root / "project_freeze_after_update",
+            box_root=build_paths(root).box_root,
             message="Failed to create Freeze Feature After Update box: " + str(exc),
         )

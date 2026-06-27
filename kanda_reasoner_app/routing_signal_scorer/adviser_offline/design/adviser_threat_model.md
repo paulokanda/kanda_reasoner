@@ -15,7 +15,7 @@ This threat model records the highest-risk ways a future Adviser could degrade p
 
 - deterministic prompt-router authority;
 - freeze confirmation gate;
-- project-specific frozen memory under project_freeze_after_update/frozen_features_memory;
+- project-specific frozen memory under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory;
 - box boundaries;
 - startup delivery behavior;
 - prompt-library audit and duplicate checks;

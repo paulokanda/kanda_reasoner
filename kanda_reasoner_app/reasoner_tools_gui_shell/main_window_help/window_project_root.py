@@ -14,6 +14,7 @@ _SHOW_PROJECT_CHILD_NAMES = {
     "second_prompt_files",
     "second_prompt_files_building",
     "project_error_memory",
+    "project_freeze_after_update",
     "json_splitted",
 }
 _ERROR_MEMORY_CHILD_NAMES = {
@@ -21,6 +22,9 @@ _ERROR_MEMORY_CHILD_NAMES = {
     "lessons",
     "exports",
     "schemas",
+    "freeze_hint_intake",
+    "frozen_features_memory",
+    "files_to_send_ai",
 }
 
 __all__: list[str] = []
@@ -146,7 +150,7 @@ class _WindowProjectRootMixin:
         """Resolve generated-output hints back to the real project root.
 
         The shell-level project root must be the source project folder, not
-        ``*_show_project_to_AI``, ``project_error_memory``, a child output
+        ``*_show_project_to_AI``, persistent state children, a child output
         folder, or ``*_delete_after_daily_work``.  Returning ``None`` for
         unmatched output hints prevents stale typo output folders from becoming
         the active project.

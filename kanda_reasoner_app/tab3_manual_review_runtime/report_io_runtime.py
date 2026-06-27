@@ -262,9 +262,12 @@ def _append_output(owner: object, text: str) -> None:
 
 
 def _show_info(owner: object, title: str, message: str) -> None:
-    """Show an information dialog."""
-    QMessageBox = _qt_widget("QMessageBox")
-    QMessageBox.information(owner, title, message)
+    """Show a silent auto-closing post-action information window."""
+    from kanda_reasoner_app.templates.floating_windows import (
+        show_auto_close_action_window,
+    )
+
+    show_auto_close_action_window(owner, title=title, message=message)
 
 
 def _show_warning(owner: object, title: str, message: str) -> None:

@@ -19,7 +19,6 @@ def _build_ui(window: object) -> None:
     left_column = QWidget()
     _relieve_horizontal_size_pressure(left_column, QSizePolicy)
     left_layout = QVBoxLayout(left_column)
-    left_layout.addWidget(_build_project_group(window))
     left_layout.addWidget(_build_options_group(window))
     left_layout.addWidget(_build_ai_group(window))
     left_layout.addWidget(window._progress)
@@ -97,16 +96,11 @@ def _set_ai_controls_enabled(window: object, enabled: bool) -> None:
             setter(bool(enabled))
 
 def _build_project_group(window: object) -> Any:
-    """Return the project root selection controls group."""
-    QGroupBox, QHBoxLayout, QPushButton = _qt_widgets(
-        "QGroupBox", "QHBoxLayout", "QPushButton"
-    )
+    """Return a hidden compatibility placeholder for the retired body Project group."""
+    QWidget = _qt_widgets("QWidget")[0]
 
-    group = QGroupBox("Project")
-    layout = QHBoxLayout(group)
-    layout.addWidget(window._root_path_edit, 1)
-    window._browse_root_button = QPushButton("Browse")
-    layout.addWidget(window._browse_root_button)
+    group = QWidget()
+    group.setVisible(False)
     return group
 
 def _build_options_group(window: object) -> Any:

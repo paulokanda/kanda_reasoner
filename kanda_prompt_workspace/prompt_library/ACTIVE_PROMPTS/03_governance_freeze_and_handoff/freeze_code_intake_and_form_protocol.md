@@ -122,8 +122,8 @@ When reviewing a freeze formulary, verify that:
 2. validation_evidence_summary uses only validation that is actually present in the chat or user output.
 3. protected_paths match the feature's actual source, prompt, generated, or state paths.
 4. generated_files are not mislabeled as canonical source of truth.
-5. project-specific frozen memory remains under project_freeze_after_update/frozen_features_memory.
-6. project-specific freeze-intake state remains under project_freeze_after_update/freeze_hint_intake.
+5. project-specific frozen memory remains under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.
+6. project-specific freeze-intake state remains under <project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake.
 7. project-specific memory is never stored inside project_freeze_ledger.
 8. Preview Freeze Entry remains read-only.
 9. Confirm and Write remains explicitly human-confirmed.
@@ -138,13 +138,13 @@ KANDA Reasoner can operate on multiple active projects.
 For the active project root:
 
 ```text
-<active_project_root>/project_freeze_after_update/freeze_hint_intake
-<active_project_root>/project_freeze_after_update/frozen_features_memory
+<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake
+<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 are the correct project-local locations.
 
-When KANDA Reasoner itself is the active project, those folders are under the KANDA Reasoner project root. When another project is active, those folders are under that other project's root.
+When KANDA Reasoner itself is the active project, those folders are under the KANDA Reasoner external project-support root. When another project is active, those folders are under that other project's external project-support root.
 
 Do not hardcode KANDA Reasoner as the only active project. Do not store another project's freeze intake or frozen memory inside the KANDA Reasoner root.
 
@@ -188,13 +188,13 @@ STATUS: IN_SYNC
 
 Do not write `STATUS IN_SYNC` without the colon.
 
-For future validation blocks, after successful validation the AI should update the saved freeze hint intake record when the `freeze_hint_intake` contract is available by calling `merge_validation_evidence_into_latest_hint(project_root, validation_evidence_summary, feature_id=...)`. This updates `<active_project_root>/project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json` so `New Local Freeze Entry` can fill `validation_evidence_summary` with the actual validation output rather than the pre-validation sidecar placeholder.
+For future validation blocks, after successful validation the AI should update the saved freeze hint intake record when the `freeze_hint_intake` contract is available by calling `merge_validation_evidence_into_latest_hint(project_root, validation_evidence_summary, feature_id=...)`. This updates `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json` so `New Local Freeze Entry` can fill `validation_evidence_summary` with the actual validation output rather than the pre-validation sidecar placeholder.
 
 A freeze form must not be approved when `validation_evidence_summary` contains only sandbox evidence, a malformed startup status line, or a pending-validation note. If the form lacks `VALIDATION OK: <feature_id>` after validation has passed, correct the form before Confirm and Write.
 
 ## Freeze hint rescan preservation rule
 
-After validation evidence has been merged into `<active_project_root>/project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json`, the app must not downgrade that saved record by rescanning the same staged patch ZIP and reloading the pre-validation `KANDA_FREEZE_HINT.json` placeholder.
+After validation evidence has been merged into `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake/latest_freeze_hint.json`, the app must not downgrade that saved record by rescanning the same staged patch ZIP and reloading the pre-validation `KANDA_FREEZE_HINT.json` placeholder.
 
 When a staged ZIP sidecar and the latest saved freeze hint describe the same feature or source ZIP, and the saved record already contains recognizer-friendly local validation evidence such as `VALIDATION OK: <feature_id>` or `STATUS: IN_SYNC`, keep the saved record.
 

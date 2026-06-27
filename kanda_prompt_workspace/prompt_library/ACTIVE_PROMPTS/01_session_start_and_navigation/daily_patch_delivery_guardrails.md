@@ -446,7 +446,7 @@ When the user later provides local validation output, the AI must correct the fr
 
 The sidecar must preserve these boundaries:
 
-- project-specific frozen memory belongs under `project_freeze_after_update/frozen_features_memory`.
+- project-specific frozen memory belongs under `<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory`.
 - project-specific frozen memory must not be stored inside `project_freeze_ledger`.
 - generated startup artifacts are not source of truth.
 - external AI review remains advanced/fallback and not the normal freeze path.

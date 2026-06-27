@@ -18,14 +18,12 @@ architecture-audit ``current/json_complete`` subfolder.
 
 from __future__ import annotations
 
+import json
 import os
 import re
+import tempfile
 from pathlib import Path
-
-from kanda_reasoner_app.storage_policy.path_resolver import (
-    make_safe_slug,
-    normalize_path,
-)
+from typing import Any
 
 __all__ = [
     "PROJECT_REFERENCE_DIR",
@@ -35,6 +33,8 @@ __all__ = [
     "SECOND_PROMPT_FILES_BUILDING_DIR",
     "FIRST_PROMPT_FILES_DIR",
     "PROJECT_ERROR_MEMORY_DIR",
+    "PROJECT_FREEZE_AFTER_UPDATE_DIR",
+    "LIFECYCLE_MANIFEST_NAME",
     "SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV",
     "SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV",
     "SHOW_PROJECT_TO_AI_SUFFIX",
@@ -47,6 +47,13 @@ __all__ = [
     "analysis_json_building_dir",
     "analysis_first_prompt_files_dir",
     "analysis_project_error_memory_dir",
+    "analysis_project_freeze_after_update_dir",
+    "legacy_project_freeze_after_update_dir",
+    "show_project_lifecycle_manifest_path",
+    "ensure_show_project_lifecycle_manifest",
+    "load_show_project_lifecycle_manifest",
+    "is_show_project_disposable_child",
+    "is_show_project_persistent_child",
     "analysis_json_parts_dir",
     "ensure_project_analysis_evidence_dirs",
     "primary_evidence_json_path",
@@ -75,12 +82,29 @@ SECOND_PROMPT_FILES_DIR = "second_prompt_files"
 SECOND_PROMPT_FILES_BUILDING_DIR = "second_prompt_files_building"
 FIRST_PROMPT_FILES_DIR = "first_prompt_files"
 PROJECT_ERROR_MEMORY_DIR = "project_error_memory"
+PROJECT_FREEZE_AFTER_UPDATE_DIR = "project_freeze_after_update"
+LIFECYCLE_MANIFEST_NAME = "_lifecycle_manifest.json"
 SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV = "KANDA_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR"
 SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV = "KANDA_SHOW_PROJECT_TO_AI_PROJECT_ROOT"
 JSON_COMPLETE_DIR = SECOND_PROMPT_FILES_DIR
 JSON_PARTS_DIR = "json_splitted"
 
 _SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]+")
+_SAFE_SLUG_RE = re.compile(r"[^a-z0-9_]+")
+_REPEATED_UNDERSCORE_RE = re.compile(r"_+")
+
+
+def normalize_path(path: str | Path) -> Path:
+    """Return an absolute normalized path without creating it."""
+    return Path(path).expanduser().resolve(strict=False)
+
+
+def make_safe_slug(name: str, fallback: str = "project") -> str:
+    """Return a lowercase ASCII-safe slug for generated folder names."""
+    stripped = str(name).strip().lower()
+    slug = _SAFE_SLUG_RE.sub("_", stripped)
+    slug = _REPEATED_UNDERSCORE_RE.sub("_", slug).strip("_")
+    return slug or fallback
 
 
 def project_name_from_root(project_root: str | Path) -> str:
@@ -119,18 +143,21 @@ def show_project_to_ai_root_from_hint(project_root: str | Path) -> Path:
     """
     root = normalize_path(project_root)
 
-    error_memory_children = {
+    state_children = {
         "pending_ai_assisted_error_lesson_intake",
         "lessons",
         "exports",
         "schemas",
+        "freeze_hint_intake",
+        "frozen_features_memory",
+        "files_to_send_ai",
     }
-    if root.name in error_memory_children:
+    if root.name in state_children:
         parent = root.parent
-        if parent.name == PROJECT_ERROR_MEMORY_DIR and parent.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+        if parent.name in {PROJECT_ERROR_MEMORY_DIR, PROJECT_FREEZE_AFTER_UPDATE_DIR} and parent.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
             return parent.parent
 
-    if root.name == PROJECT_ERROR_MEMORY_DIR and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
+    if root.name in {PROJECT_ERROR_MEMORY_DIR, PROJECT_FREEZE_AFTER_UPDATE_DIR} and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
         return root.parent
 
     show_children = {
@@ -138,6 +165,7 @@ def show_project_to_ai_root_from_hint(project_root: str | Path) -> Path:
         SECOND_PROMPT_FILES_DIR,
         SECOND_PROMPT_FILES_BUILDING_DIR,
         PROJECT_ERROR_MEMORY_DIR,
+        PROJECT_FREEZE_AFTER_UPDATE_DIR,
         JSON_PARTS_DIR,
     }
     if root.name in show_children and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
@@ -268,6 +296,128 @@ def analysis_project_error_memory_dir(project_root: str | Path) -> Path:
     """
     return project_analysis_evidence_root(project_root) / PROJECT_ERROR_MEMORY_DIR
 
+
+def analysis_project_freeze_after_update_dir(project_root: str | Path) -> Path:
+    """Return the external canonical Freeze Feature After Update state folder.
+
+    The folder is a persistent project-specific state sibling of
+    ``project_error_memory`` under the dynamic ``*_show_project_to_AI`` root:
+    ``<project_drive>:/<project_name>_show_project_to_AI/project_freeze_after_update``.
+    """
+    return project_analysis_evidence_root(project_root) / PROJECT_FREEZE_AFTER_UPDATE_DIR
+
+
+def legacy_project_freeze_after_update_dir(project_root: str | Path) -> Path:
+    """Return the legacy in-source freeze folder for compatibility reads."""
+    return normalize_path(project_root) / PROJECT_FREEZE_AFTER_UPDATE_DIR
+
+
+def show_project_lifecycle_manifest_path(project_root: str | Path) -> Path:
+    """Return the lifecycle manifest path for the external project-support root."""
+    return project_analysis_evidence_root(project_root) / LIFECYCLE_MANIFEST_NAME
+
+
+def _default_show_project_lifecycle_manifest() -> dict[str, Any]:
+    """Return the default persistent/disposable child-folder policy."""
+    return {
+        "schema_version": "1.0",
+        "persistent": [
+            PROJECT_ERROR_MEMORY_DIR,
+            PROJECT_FREEZE_AFTER_UPDATE_DIR,
+        ],
+        "disposable": [
+            FIRST_PROMPT_FILES_DIR,
+            SECOND_PROMPT_FILES_DIR,
+            SECOND_PROMPT_FILES_BUILDING_DIR,
+            "install_and_patch",
+            JSON_PARTS_DIR,
+        ],
+    }
+
+
+def _atomic_write_text(path: Path, text: str) -> None:
+    """Write a UTF-8 text file atomically in its target directory."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    handle = tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        delete=False,
+        dir=str(path.parent),
+        prefix="." + path.name + ".",
+        suffix=".tmp",
+    )
+    tmp_name = handle.name
+    try:
+        with handle:
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, path)
+    finally:
+        tmp_path = Path(tmp_name)
+        if tmp_path.exists():
+            try:
+                tmp_path.unlink()
+            except OSError:
+                pass
+
+
+def _dedupe_preserve_order(values: list[str]) -> list[str]:
+    """Return stripped unique string values in first-seen order."""
+    result: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        item = str(value).strip()
+        if not item or item in seen:
+            continue
+        result.append(item)
+        seen.add(item)
+    return result
+
+
+def load_show_project_lifecycle_manifest(project_root: str | Path) -> dict[str, Any]:
+    """Load the external project-support lifecycle manifest, or defaults."""
+    manifest_path = show_project_lifecycle_manifest_path(project_root)
+    if not manifest_path.is_file():
+        return _default_show_project_lifecycle_manifest()
+    try:
+        loaded = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return _default_show_project_lifecycle_manifest()
+    if not isinstance(loaded, dict):
+        return _default_show_project_lifecycle_manifest()
+    default = _default_show_project_lifecycle_manifest()
+    persistent = loaded.get("persistent") if isinstance(loaded.get("persistent"), list) else []
+    disposable = loaded.get("disposable") if isinstance(loaded.get("disposable"), list) else []
+    return {
+        "schema_version": str(loaded.get("schema_version") or default["schema_version"]),
+        "persistent": _dedupe_preserve_order([*default["persistent"], *[str(item) for item in persistent]]),
+        "disposable": _dedupe_preserve_order([*default["disposable"], *[str(item) for item in disposable]]),
+    }
+
+
+def ensure_show_project_lifecycle_manifest(project_root: str | Path) -> Path:
+    """Create or repair the lifecycle manifest for persistent-state safety."""
+    manifest_path = show_project_lifecycle_manifest_path(project_root)
+    manifest = load_show_project_lifecycle_manifest(project_root)
+    _atomic_write_text(
+        manifest_path,
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+    )
+    return manifest_path
+
+
+def is_show_project_persistent_child(project_root: str | Path, child_name: str) -> bool:
+    """Return True if child_name is explicitly persistent."""
+    manifest = load_show_project_lifecycle_manifest(project_root)
+    return str(child_name) in set(str(item) for item in manifest.get("persistent", []))
+
+
+def is_show_project_disposable_child(project_root: str | Path, child_name: str) -> bool:
+    """Return True if child_name is explicitly disposable."""
+    manifest = load_show_project_lifecycle_manifest(project_root)
+    return str(child_name) in set(str(item) for item in manifest.get("disposable", []))
+
 def analysis_first_prompt_files_dir(project_root: str | Path) -> Path:
     """Return the external first_prompt_files folder for startup delivery artifacts.
 
@@ -289,7 +439,9 @@ def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     evidence_root = project_analysis_evidence_root(project_root)
     analysis_first_prompt_files_dir(project_root).mkdir(parents=True, exist_ok=True)
     analysis_project_error_memory_dir(project_root).mkdir(parents=True, exist_ok=True)
+    analysis_project_freeze_after_update_dir(project_root).mkdir(parents=True, exist_ok=True)
     analysis_json_complete_dir(project_root).mkdir(parents=True, exist_ok=True)
+    ensure_show_project_lifecycle_manifest(project_root)
     # Normal Show Project to AI root must only contain first_prompt_files and
     # second_prompt_files after a successful run. The temporary building folder
     # is created only by the runner while work is active, and legacy

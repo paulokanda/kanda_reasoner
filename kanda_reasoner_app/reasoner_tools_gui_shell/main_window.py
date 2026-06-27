@@ -151,8 +151,9 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
 
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
-        self.tabs.setMovable(False)
+        self.tabs.setMovable(True)
         self.tabs.currentChanged.connect(self._on_tab_changed)
+        self.tabs.tabBar().tabMoved.connect(self._on_tab_moved)
         root.addWidget(self.tabs, 1)
 
         self._pages: list[LazyToolTab] = []
@@ -164,21 +165,95 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         )
         self.setUpdatesEnabled(False)
         try:
-            for spec in TOOLS:
+            for spec in self._ordered_tool_specs(TOOLS):
                 self._add_registered_tab(spec)
         finally:
             self.setUpdatesEnabled(True)
 
-        self._tab_navigation_controller.refresh_tab_index_map(
-            self._tab_index_by_tab_id
-        )
+        self._refresh_tab_indexes_from_widgets()
         self.tabs.setCurrentIndex(0)
         _qt_core_attr("QTimer").singleShot(0, self._load_initial_tab)
+
+    def _ordered_tool_specs(self, specs: Iterable[ToolSpec]) -> tuple[ToolSpec, ...]:
+        """Return registered tool specs in the persisted user tab order.
+
+        Saved tab order is advisory. Unknown tab IDs are ignored and newly added
+        tabs are appended in the canonical registry order so future releases do
+        not hide new tools.
+        """
+        canonical_specs = tuple(specs)
+        saved_order = self._prefs.get("tab_order", [])
+        if not isinstance(saved_order, list):
+            return canonical_specs
+
+        specs_by_id = {
+            str(spec.tab_id): spec
+            for spec in canonical_specs
+            if spec.tab_id
+        }
+        selected_ids: set[str] = set()
+        ordered_specs: list[ToolSpec] = []
+
+        for raw_tab_id in saved_order:
+            tab_id = str(raw_tab_id).strip()
+            spec = specs_by_id.get(tab_id)
+            if spec is None or tab_id in selected_ids:
+                continue
+            ordered_specs.append(spec)
+            selected_ids.add(tab_id)
+
+        for spec in canonical_specs:
+            tab_id = str(spec.tab_id or "").strip()
+            if tab_id and tab_id in selected_ids:
+                continue
+            ordered_specs.append(spec)
+
+        return tuple(ordered_specs)
 
     def _register_tab_index(self, spec: ToolSpec, index: int) -> None:
         """Register one visible notebook index by stable tab ID."""
         if spec.tab_id:
+            self.tabs.tabBar().setTabData(index, spec.tab_id)
             self._tab_index_by_tab_id[spec.tab_id] = index
+
+    def _refresh_tab_indexes_from_widgets(self) -> None:
+        """Refresh tab ID and lazy-page maps after user reordering."""
+        tab_index_by_id: dict[str, int] = {}
+        lazy_pages_by_tab_index: dict[int, LazyToolTab] = {}
+
+        for index in range(self.tabs.count()):
+            tab_id = str(self.tabs.tabBar().tabData(index) or "").strip()
+            if tab_id:
+                tab_index_by_id[tab_id] = index
+
+            widget = self.tabs.widget(index)
+            if isinstance(widget, LazyToolTab):
+                lazy_pages_by_tab_index[index] = widget
+
+        self._tab_index_by_tab_id = tab_index_by_id
+        self._lazy_pages_by_tab_index = lazy_pages_by_tab_index
+        self._tab_navigation_controller.refresh_tab_index_map(
+            self._tab_index_by_tab_id
+        )
+
+    def _current_tab_order(self) -> list[str]:
+        """Return the current visible tab order as stable tab IDs."""
+        tab_order: list[str] = []
+        for index in range(self.tabs.count()):
+            tab_id = str(self.tabs.tabBar().tabData(index) or "").strip()
+            if tab_id:
+                tab_order.append(tab_id)
+        return tab_order
+
+    def _remember_tab_order(self) -> None:
+        """Persist the current user-visible tab order."""
+        self._prefs["tab_order"] = self._current_tab_order()
+        self._save_prefs()
+
+    def _on_tab_moved(self, _from_index: int, _to_index: int) -> None:
+        """Persist tab reordering and keep tab navigation maps current."""
+        self._refresh_tab_indexes_from_widgets()
+        self._remember_tab_order()
 
     def _add_registered_tab(self, spec: ToolSpec) -> None:
         """Add one registered tab to the notebook."""
@@ -201,6 +276,13 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         if spec.tab_kind == "builtin_ignore_rules":
             self.ignore_rules_tab = IgnoreRulesTab(self._prefs_path())
             self.ignore_rules_tab.set_project_root(self.current_project_root)
+            if hasattr(self.ignore_rules_tab, "project_root_edit"):
+                self._bind_project_root_field(self.ignore_rules_tab.project_root_edit)
+                if self.current_project_root is not None:
+                    self._set_project_root_field_text(
+                        self.ignore_rules_tab.project_root_edit,
+                        self.current_project_root,
+                    )
             index = self.tabs.addTab(self.ignore_rules_tab, spec.step_title)
             self._register_tab_index(spec, index)
             return

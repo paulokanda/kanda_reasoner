@@ -159,7 +159,7 @@ Then help me create or update the appropriate freeze entry for this project.
 
 Important rules:
 - Do not assume KANDA Reasoner stores this project's freeze memory centrally.
-- The project's freeze memory lives inside project_freeze_after_update/frozen_features_memory/.
+- The project's freeze memory lives inside <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory/.
 - Do not copy freeze entries from another project.
 - Do not freeze unvalidated behavior.
 - Ask for validation evidence if it is not included in my message.

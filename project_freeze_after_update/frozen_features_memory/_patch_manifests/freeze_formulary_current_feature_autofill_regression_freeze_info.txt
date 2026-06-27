@@ -1,6 +1,0 @@
-Freeze info install package: freeze_formulary_current_feature_autofill_regression
-
-Installs one frozen-feature memory entry:
-project_freeze_after_update/frozen_features_memory/entries/freeze-20260616-freeze-formulary-current-feature-autofill-regression-v1.md
-
-Does not install KANDA_FREEZE_HINT.json into project root.

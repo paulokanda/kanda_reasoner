@@ -1,6 +1,12 @@
-"""Source-preserving compatibility facade."""
+"""Public entry point for the Workflow Review GUI.
+
+This module is a normal readable facade. The older encoded backend payload
+loader is deprecated for Workflow Review and is no longer used here.
+"""
 
 from __future__ import annotations
+
+
 def _install_deleted_legacy_root_importlib_aliases():
     """Install in-process aliases for deleted legacy payload imports."""
     import importlib
@@ -24,8 +30,35 @@ def _install_deleted_legacy_root_importlib_aliases():
 _install_deleted_legacy_root_importlib_aliases()
 
 
-from kanda_reasoner_app.backend_payloads.loader import load_payload
+from .manage_workflows_gui_help.workflow_gui_constants import (
+    _WORKFLOW_GUI_DEFAULT_MANAGER_NAME,
+    _WORKFLOW_GUI_DEFAULT_PROJECT_ROOT,
+)
+from .manage_workflows_gui_help import (
+    WorkflowManagerWindow,
+    WorkflowRunWorker,
+    get_recent_roots,
+    get_recent_scripts,
+    main,
+    record_root,
+    record_script,
+)
 
-load_payload(__name__, globals(), 'v')
-DEFAULT_MANAGER_NAME = globals()['DEFAULT_MANAGER_NAME']; WorkflowManagerWindow = globals()['WorkflowManagerWindow']; WorkflowRunWorker = globals()['WorkflowRunWorker']; get_recent_roots = globals()['get_recent_roots']; get_recent_scripts = globals()['get_recent_scripts']; main = globals()['main']; record_root = globals()['record_root']; record_script = globals()['record_script']
-__all__ = ['DEFAULT_MANAGER_NAME', 'WorkflowManagerWindow', 'WorkflowRunWorker', 'get_recent_roots', 'get_recent_scripts', 'main', 'record_root', 'record_script']
+DEFAULT_MANAGER_NAME = _WORKFLOW_GUI_DEFAULT_MANAGER_NAME
+DEFAULT_PROJECT_ROOT = _WORKFLOW_GUI_DEFAULT_PROJECT_ROOT
+
+__all__ = [
+    "DEFAULT_MANAGER_NAME",
+    "DEFAULT_PROJECT_ROOT",
+    "WorkflowManagerWindow",
+    "WorkflowRunWorker",
+    "get_recent_roots",
+    "get_recent_scripts",
+    "main",
+    "record_root",
+    "record_script",
+]
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

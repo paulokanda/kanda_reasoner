@@ -7,7 +7,13 @@ import re
 from pathlib import Path
 from typing import Any
 
-from .paths import build_paths, relative_to_project
+from .paths import (
+    ENTRIES_DIR_NAME,
+    FREEZE_INDEX_NAME,
+    MEMORY_DIR_NAME,
+    build_paths,
+    relative_to_project,
+)
 from .templates import SCHEMA_VERSION, utc_now_iso
 
 _FRONTMATTER_RE = re.compile(r"\A---\s*\n(?P<body>.*?)\n---\s*\n", re.DOTALL)
@@ -61,13 +67,38 @@ def parse_frontmatter(text: str) -> dict[str, Any]:
     return data
 
 
-def entry_files(project_root: Path | str) -> list[Path]:
-    """Return project freeze entry files. Non-freeze Markdown is ignored."""
+def _legacy_entries_root(project_root: Path | str) -> Path:
+    """Return legacy in-source freeze entries path."""
     paths = build_paths(project_root)
-    if not paths.entries_root.is_dir():
+    return paths.legacy_box_root / MEMORY_DIR_NAME / ENTRIES_DIR_NAME
+
+
+def _legacy_freeze_index(project_root: Path | str) -> Path:
+    """Return legacy in-source freeze index path."""
+    paths = build_paths(project_root)
+    return paths.legacy_box_root / MEMORY_DIR_NAME / FREEZE_INDEX_NAME
+
+
+def entry_files(project_root: Path | str) -> list[Path]:
+    """Return project freeze entry files. Non-freeze Markdown is ignored.
+
+    New canonical external state is read first. The legacy in-source folder is
+    read only as a transition fallback when the new entries folder is absent or
+    empty.
+    """
+    paths = build_paths(project_root)
+    if paths.entries_root.is_dir():
+        entries = sorted(
+            path for path in paths.entries_root.glob("freeze-*.md")
+            if path.is_file()
+        )
+        if entries:
+            return entries
+    legacy_entries = _legacy_entries_root(project_root)
+    if not legacy_entries.is_dir():
         return []
     return sorted(
-        path for path in paths.entries_root.glob("freeze-*.md")
+        path for path in legacy_entries.glob("freeze-*.md")
         if path.is_file()
     )
 
@@ -128,9 +159,14 @@ def write_freeze_index(project_root: Path | str) -> dict[str, Any]:
 
 
 def load_freeze_index(project_root: Path | str) -> dict[str, Any]:
-    """Load and minimally validate freeze_index.json."""
+    """Load and minimally validate freeze_index.json.
+
+    New canonical external state is read first. The legacy in-source freeze
+    index is read only as a transition fallback.
+    """
     paths = build_paths(project_root)
-    data = json.loads(paths.freeze_index.read_text(encoding="utf-8"))
+    index_path = paths.freeze_index if paths.freeze_index.is_file() else _legacy_freeze_index(project_root)
+    data = json.loads(index_path.read_text(encoding="utf-8"))
     if data.get("schema_version") != SCHEMA_VERSION:
         raise ValueError("freeze_index.json schema_version must be 1.0")
     if not isinstance(data.get("freezes"), list):

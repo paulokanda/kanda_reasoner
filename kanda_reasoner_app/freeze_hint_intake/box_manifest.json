@@ -21,7 +21,7 @@
       "mark_latest_freeze_hint_used"
     ]
   },
-  "state_owner": "The selected project's project_freeze_after_update/freeze_hint_intake folder",
+  "state_owner": "The selected project's <project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake folder",
   "forbidden_dependencies": [
     "project_freeze_ledger as project-specific state owner",
     "GUI private internals",
