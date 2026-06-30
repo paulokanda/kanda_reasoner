@@ -14,6 +14,13 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_no_critical_failure',
+    'evaluate_candidate_risk',
+    'evaluate_guard_result',
+    'SeverityResult',
+]
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 

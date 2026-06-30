@@ -26,6 +26,12 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_shadow_mode_assistant_transition_design_valid',
+    'build_shadow_mode_assistant_transition_design',
+    'validate_shadow_mode_assistant_transition_design',
+]
 import hashlib
 import json
 from collections.abc import Mapping

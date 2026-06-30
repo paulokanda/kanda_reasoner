@@ -6,6 +6,9 @@ or creates folders when an explicit ``ensure_*`` function is called.
 
 from __future__ import annotations
 
+__all__ = []
+
+
 from pathlib import Path
 from typing import Iterable
 

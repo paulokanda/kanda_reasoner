@@ -37,7 +37,66 @@ def _build_ui(self) -> None:
     project_root_row.addWidget(self.project_root_edit)
     self.browse_project_button = QPushButton("Browse...")
     project_root_row.addWidget(self.browse_project_button)
+    project_root_row.addWidget(QLabel("AI answer Routine Blueprint:"))
+    self.copy_patch_validate_freeze_routine_button = QPushButton(
+        "Copy Patch Validate Freeze Recovery Routine"
+    )
+    project_root_row.addWidget(self.copy_patch_validate_freeze_routine_button)
+    project_root_row.addWidget(QLabel("Bridge List:"))
+    self.copy_complete_bridge_list_button = QPushButton("Complete Bridge List")
+    project_root_row.addWidget(self.copy_complete_bridge_list_button)
     collector_layout.addLayout(project_root_row)
+
+    def _copy_patch_validate_freeze_recovery_routine() -> None:
+        try:
+            from pathlib import Path
+            from PySide6.QtWidgets import QApplication
+
+            raw_root = self.project_root_edit.text().strip()
+            project_root = Path(raw_root).expanduser().resolve()
+            prompt_rel = Path(
+                "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
+                "05_patch_delivery_and_validation/"
+                "patch_validate_freeze_error_memory_routine_blueprint.md"
+            )
+            prompt_path = project_root / prompt_rel
+            if not prompt_path.is_file():
+                app_root = Path(__file__).resolve().parents[3]
+                prompt_path = app_root / prompt_rel
+            if not prompt_path.is_file():
+                raise FileNotFoundError("Prompt not found: " + str(prompt_rel))
+            QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
+            message = "Copied Patch Validate Freeze Recovery Routine"
+            try:
+                self.first_prompt_status_label.setText(message)
+            except Exception:
+                pass
+            try:
+                self._append_log(message)
+            except Exception:
+                pass
+        except Exception as exc:
+            message = "[ERROR] Could not copy Patch Validate Freeze Recovery Routine: " + str(exc)
+            try:
+                self.first_prompt_status_label.setText(message)
+            except Exception:
+                pass
+            try:
+                self._append_log(message)
+            except Exception:
+                pass
+
+    self.copy_patch_validate_freeze_routine_button.clicked.connect(
+        _copy_patch_validate_freeze_recovery_routine
+    )
+
+    try:
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import complete_bridge_list_private_impl as _bridge_list_impl
+        self.copy_complete_bridge_list_button.clicked.connect(
+            lambda: _bridge_list_impl.copy_complete_bridge_list_to_clipboard(self)
+        )
+    except Exception:
+        pass
 
     left_group = QGroupBox("Show Project to AI First Prompt Files")
     left_layout = QVBoxLayout(left_group)

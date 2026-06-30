@@ -3,6 +3,12 @@
 
 from __future__ import annotations
 
+
+__all__ = [
+    'validate_fresh_project',
+    'validate_invalid_inputs',
+    'validate_no_kanda_contamination',
+]
 import json
 import sys
 import tempfile
@@ -10,16 +16,39 @@ import zipfile
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
 
-from kanda_reasoner_app.freeze_after_update.contract import (  # noqa: E402
-    ensure_freeze_after_update_box,
-    generate_freeze_after_update_ai_files,
-    inspect_freeze_after_update_box,
-)
-from kanda_reasoner_app.freeze_after_update.paths import build_paths  # noqa: E402
-from kanda_reasoner_app.freeze_after_update.result import FreezeAfterUpdateStatus  # noqa: E402
+
+def _ensure_project_root_on_path() -> None:
+    """Add the project root only when this command is executed."""
+    project_root_text = str(PROJECT_ROOT)
+    if project_root_text not in sys.path:
+        sys.path.insert(0, project_root_text)
+
+
+def _load_freeze_after_update_api() -> None:
+    """Load project imports at command time, not module import time."""
+    global ensure_freeze_after_update_box
+    global generate_freeze_after_update_ai_files
+    global inspect_freeze_after_update_box
+    global build_paths
+    global FreezeAfterUpdateStatus
+
+    _ensure_project_root_on_path()
+    from kanda_reasoner_app.freeze_after_update.contract import (
+        ensure_freeze_after_update_box as ensure_box,
+        generate_freeze_after_update_ai_files as generate_files,
+        inspect_freeze_after_update_box as inspect_box,
+    )
+    from kanda_reasoner_app.freeze_after_update.paths import build_paths as build_freeze_paths
+    from kanda_reasoner_app.freeze_after_update.result import (
+        FreezeAfterUpdateStatus as FreezeStatus,
+    )
+
+    ensure_freeze_after_update_box = ensure_box
+    generate_freeze_after_update_ai_files = generate_files
+    inspect_freeze_after_update_box = inspect_box
+    build_paths = build_freeze_paths
+    FreezeAfterUpdateStatus = FreezeStatus
 
 
 def assert_true(condition: bool, message: str) -> None:
@@ -171,6 +200,7 @@ def validate_no_kanda_contamination() -> None:
 
 
 def main() -> int:
+    _load_freeze_after_update_api()
     tests = [
         validate_fresh_project,
         validate_existing_freeze_entry,

@@ -2,6 +2,14 @@
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_paths',
+    'FreezeAfterUpdatePaths',
+    'legacy_box_root',
+    'normalize_project_root',
+    'relative_to_project',
+]
 from dataclasses import dataclass
 from pathlib import Path
 

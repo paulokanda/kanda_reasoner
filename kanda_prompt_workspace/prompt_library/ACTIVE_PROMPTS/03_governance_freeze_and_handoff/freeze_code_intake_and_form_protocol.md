@@ -307,3 +307,121 @@ path so the next generated package is blocked before release.
 
 <!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_END -->
 
+
+
+<!-- FREEZE_AND_ERROR_MEMORY_RECEIVER_BLUEPRINT_V1_START -->
+## Freeze and Error Memory receiver blueprints - v1
+
+This protocol already governs freeze code, freeze forms, freeze hints, and local freeze confirmation. This section prevents the AI from mixing receiver routes.
+
+### Freeze route A - patch sidecar
+
+Use for a freezeable source patch. Required: root-level `KANDA_FREEZE_HINT.json` in the patch ZIP; installer keeps the sidecar out of the active project root; sidecar is staged under `<project_drive>\<project_name>_show_project_to_AI\project_freeze_after_update\freeze_hint_intake`; local validation prints `VALIDATION OK: <feature_id>`; local validation prints `STATUS: IN_SYNC` when startup/sync state is validated; ZIP validation prints `ZIP CONTRACT: PASS` when a patch ZIP is delivered; freeze uses Preview then explicit Confirm and Write.
+
+### Freeze route B - latest hint with merged validation evidence
+
+Use only when the latest saved freeze hint belongs to the current feature and is not consumed/stale. After validation, merge evidence into the latest hint through the freeze-hint intake contract. The saved `validation_evidence_summary` must contain the real local markers. Do not freeze sandbox-only or pending-validation text.
+
+### Freeze route C - manual freeze form
+
+Use when the latest hint is stale, consumed, absent, or not feature-specific. Receiver-ready text:
+
+```text
+KANDA_FREEZE_FORM_JSON_BEGIN
+{ one valid JSON object }
+KANDA_FREEZE_FORM_JSON_END
+```
+
+Required fields: `feature_title`, `primary_box`, `box_type`, `validated_files`, `generated_files`, `protected_paths`, `do_not_regress_rules`, `validation_evidence_summary`, `known_warnings`, `planned_next_step`, and `notes`.
+
+`validation_evidence_summary` must contain local validation markers. If the app preview shows starter placeholders such as `Current validated feature - replace with exact feature title`, the manual form was not consumed and Confirm and Write must not proceed.
+
+### Error Memory route A - text receiver
+
+Receiver-ready text:
+
+```text
+KANDA_ERROR_LESSON_JSON_BEGIN
+{ active-ready JSON object }
+KANDA_ERROR_LESSON_JSON_END
+```
+
+Do not use code fences, writing blocks, or plain JSON. Use the active-ready Error Memory blueprint. Active lessons must include the `redaction` object.
+
+### Error Memory route B - installable intake ZIP
+
+Valid only when the install block copies the active-ready lesson JSON into `<project_drive>\<project_name>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake`. If a ZIP only extracts a marker-wrapped lesson or freeze form into daily-work, it is a manual helper, not an installed intake. Label it accordingly.
+<!-- FREEZE_AND_ERROR_MEMORY_RECEIVER_BLUEPRINT_V1_END -->
+
+<!-- FREEZE_AND_ERROR_MEMORY_RECEIVER_BLUEPRINT_V2_START -->
+
+## Freeze and Error Memory receiver blueprints - v3 hardening
+
+The v1 blueprint remains valid. V2 adds machine-checkable receiver proof and
+schema proof.
+
+### Freeze manual receiver form
+
+Use only when the saved latest hint is stale, consumed, absent, or not tied to
+the current feature.
+
+```text
+KANDA_FREEZE_FORM_JSON_BEGIN
+{ one valid JSON object }
+KANDA_FREEZE_FORM_JSON_END
+```
+
+The JSON must include all form fields required by the Freeze Feature receiver:
+`feature_title`, `primary_box`, `box_type`, `validated_files`,
+`generated_files`, `protected_paths`, `do_not_regress_rules`,
+`validation_evidence_summary`, `known_warnings`, `planned_next_step`, and
+`notes`.
+
+`validation_evidence_summary` must include real local validation markers:
+`VALIDATION OK: <feature_id>` and `STATUS: IN_SYNC` when validation completed.
+Do not use sandbox-only evidence or pending-local-validation wording.
+
+### Freeze hint intake
+
+A freezeable patch ZIP must include root-level `KANDA_FREEZE_HINT.json`. The
+install block stages that file under the selected project's external support
+root:
+
+```text
+<project_drive>\<project_name>_show_project_to_AI\project_freeze_after_update\freeze_hint_intake
+```
+
+After local validation, the validation block must merge the current patch ZIP's
+validation evidence into the matching freeze hint record or instruct the user to
+use the manual receiver form. Do not let stale latest hints supply the preview.
+
+### Error Memory AI-assisted intake
+
+Text route:
+
+```text
+KANDA_ERROR_LESSON_JSON_BEGIN
+{ active-ready JSON object }
+KANDA_ERROR_LESSON_JSON_END
+```
+
+ZIP route is valid only when the install block copies the active-ready lesson
+JSON into:
+
+```text
+<project_drive>\<project_name>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake
+```
+
+Active-ready JSON must include `redaction` as an object with
+`applied: true`, `export_safe: true`, and non-empty `rules`. It must also include
+`regression_check.type: validation_command`.
+
+A ZIP that only extracts marker-wrapped files to daily-work is a manual helper,
+not Error Memory intake or freeze intake.
+
+<!-- FREEZE_AND_ERROR_MEMORY_RECEIVER_BLUEPRINT_V2_END -->
+
+## Error Memory package marker correction - v3
+
+If a freeze-capable patch also stages an Error Memory lesson into AI-assisted intake, the packaged `KANDA_ERROR_LESSON_JSON_*` file must be marker-wrapped. Raw JSON-only lesson files are invalid for the patch ZIP contract even if they are active-ready JSON internally.
+

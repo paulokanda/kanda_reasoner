@@ -10,8 +10,67 @@ def _qt_core_attr(name: str):
 from PySide6.QtWidgets import QMessageBox
 from kanda_reasoner_app.templates.floating_windows import show_auto_close_action_window
 from .constants import DEFAULT_MODEL
+from kanda_reasoner_app.templates.green_sonar_monitor import GreenSonarActivityMonitor
 from .worker_thread import DocstringRunWorker
-__all__ = ['run_selected_mode', 'stop_running_selected_mode', 'effective_report_path', 'run_mode', 'append_text', 'handle_worker_success', 'handle_worker_error', 'cleanup_worker']
+__all__ = [
+    'run_selected_mode',
+    'stop_running_selected_mode',
+    'effective_report_path',
+    'run_mode',
+    'append_text',
+    'handle_worker_progress',
+    'handle_worker_success',
+    'handle_worker_error',
+    'cleanup_worker',
+]
+
+
+def _tab3_sonar_monitor(self):
+    """Return the Docstring Assistant floating sonar monitor."""
+    monitor = getattr(self, '_tab3_sonar_monitor', None)
+    if monitor is None:
+        monitor = GreenSonarActivityMonitor(self, title='Docstring Assistant')
+        self._tab3_sonar_monitor = monitor
+    return monitor
+
+def _start_tab3_sonar(self, mode: str, target_label: str) -> None:
+    """Start contextual Docstring Assistant processing feedback."""
+    monitor = _tab3_sonar_monitor(self)
+    normalized = str(mode or 'audit').strip().lower()
+    monitor.start(
+        'Running ' + normalized + ' mode',
+        (
+            'Scanning Python symbols and docstring gaps',
+            'Target: ' + str(target_label or '*'),
+            'Progress and final output stay in this tab',
+        ),
+    )
+
+def _finish_tab3_sonar_success(self, mode: str) -> None:
+    """Show successful Docstring Assistant completion feedback."""
+    monitor = getattr(self, '_tab3_sonar_monitor', None)
+    if monitor is not None:
+        monitor.finish_success(
+            'Complete: ' + str(mode or 'run') + ' finished',
+            (
+                'Docstring run finished successfully',
+                'Review generated report rows if needed',
+                'Ready for another selected-mode run',
+            ),
+        )
+
+def _finish_tab3_sonar_error(self, mode: str, *, stopped: bool = False) -> None:
+    """Show stopped/error Docstring Assistant completion feedback."""
+    monitor = getattr(self, '_tab3_sonar_monitor', None)
+    if monitor is not None:
+        monitor.finish_error(
+            ('Stopped: ' if stopped else 'Needs review: ') + str(mode or 'run'),
+            (
+                'Docstring run did not finish cleanly',
+                'Check the output panel for details',
+                'No hidden write is performed by this monitor',
+            ),
+        )
 
 def run_selected_mode(self) -> None:
     """Run  selected mode.
@@ -55,7 +114,8 @@ def stop_running_selected_mode(self) -> None:
         request_interruption()
     _set_stop_button_enabled(self, False)
     self.statusBar().showMessage('Stopping selected mode...')
-    self._progress.setRange(0, 0)
+    self._progress.setRange(0, 1)
+    self._progress.setValue(0)
     self._progress.setFormat('Stopping...')
     self._append_text('\n[stop requested] waiting for the current safe checkpoint.\n')
 
@@ -127,8 +187,10 @@ def run_mode(self, mode: str) -> None:
     self._review_list.clear()
     self._review_details.clear()
     self._review_summary.setText('Run in progress...')
-    self._progress.setRange(0, 0)
+    self._progress.setRange(0, 1)
+    self._progress.setValue(0)
     self._progress.setFormat('Running...')
+    _start_tab3_sonar(self, mode, target_label)
     self._save_prefs()
     self._output.appendPlainText(f'> in-process run: {worker_path} --root {root_path} --{mode} [module={self._module_checkbox.isChecked()} class={self._class_checkbox.isChecked()} function={self._function_checkbox.isChecked()} file_address={self._file_address_checkbox.isChecked()} ai={self._ai_enabled_checkbox.isChecked()} model={self._model_combo.currentText().strip() or DEFAULT_MODEL} private={self._include_private_checkbox.isChecked()} min_conf={self._min_confidence_combo.currentText()} workers={self._workers_spin.value()} scope={self._scope_combo.currentText()} target={target_label} report={report_path}]\n')
     self._run_button.setEnabled(False)
@@ -211,6 +273,7 @@ def handle_worker_success(self, mode: str) -> None:
     self._progress.setValue(1)
     self._progress.setFormat('Finished')
     self._load_report_rows()
+    _finish_tab3_sonar_success(self, mode)
     show_auto_close_action_window(self, title='Work done', message=f'{mode.capitalize()} completed successfully.')
 
 def handle_worker_error(self, mode: str, details: str) -> None:
@@ -236,6 +299,7 @@ def handle_worker_error(self, mode: str, details: str) -> None:
         self._progress.setValue(1)
         self._progress.setFormat('Stopped')
         self._load_report_rows()
+        _finish_tab3_sonar_error(self, mode, stopped=True)
         return
     self.statusBar().showMessage(f'Finished {mode} with issues')
     if getattr(self, '_tab3_live_progress_active', False):
@@ -246,6 +310,7 @@ def handle_worker_error(self, mode: str, details: str) -> None:
     self._progress.setValue(1)
     self._progress.setFormat('Finished with issues')
     self._load_report_rows()
+    _finish_tab3_sonar_error(self, mode)
     QMessageBox.warning(self, 'Work finished with issues', f'{mode.capitalize()} finished with issues.\nCheck the output panel for details.')
 
 def cleanup_worker(self) -> None:

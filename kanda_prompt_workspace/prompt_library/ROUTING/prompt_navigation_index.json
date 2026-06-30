@@ -4,7 +4,7 @@
   "generated_at": "2026-06-12",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use trigger_phrases and user_intent_examples to detect intent; load the highest-priority matching prompt plus required companions; if uncertain, ask one focused clarification or load prompt_router + prompt_navigation_index.",
-  "prompt_count": 84,
+  "prompt_count": 85,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -577,7 +577,11 @@
         "prompt router",
         "intent router",
         "messy request to prompt",
-        "which stack"
+        "which stack",
+        "large module refactor",
+        "MODULE_TOO_LARGE",
+        "AST Split Audit",
+        "patch train"
       ],
       "user_intent_examples": [
         "Route “ok freeze” to the correct governance prompt."
@@ -594,7 +598,10 @@
       "when_not_to_load": "Do not load when the exact specialist prompt is already explicitly chosen.",
       "required_companion_prompts": [
         "general_prompt_stack_load_order",
-        "prompt_substitution_map"
+        "prompt_substitution_map",
+        "large_module_refactor_protocol",
+        "large_module_refactor_template",
+        "router_bridge_governed_implementation"
       ]
     },
     {
@@ -1330,6 +1337,53 @@
       ]
     },
     {
+      "prompt_id": "patch_validate_freeze_error_memory_routine_blueprint",
+      "display_name": "Patch Validate Freeze Error Memory Routine Blueprint",
+      "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 17,
+      "trigger_phrases": [
+        "Copy Patch Validate Freeze Recovery Routine",
+        "Copy Patch Delivery Routine for AI",
+        "patch validate freeze routine",
+        "zip validate freeze error memory routine",
+        "Show Project to AI file creation failed",
+        "Show Project to AI ZIP creation failed",
+        "handoff ZIP generation failed",
+        "first prompt files failed",
+        "second prompt files failed",
+        "if file creation fails give this to AI",
+        "beginning of work recovery routine"
+      ],
+      "user_intent_examples": [
+        "Copy the routine to give AI when Show Project to AI file creation fails.",
+        "Give me the ZIP -> validate -> freeze -> Error Memory routine as one blueprint.",
+        "Add a Show Project to AI button that copies the patch delivery recovery routine."
+      ],
+      "aliases": [
+        "patch validate freeze routine",
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "Show Project to AI recovery blueprint",
+        "ZIP validate freeze Error Memory blueprint",
+        "patch delivery recovery routine"
+      ],
+      "when_to_load": "When the user asks for a copyable AI handoff routine for Show Project to AI file/ZIP creation failures, patch ZIP delivery failures, validation/freeze failures, or the install -> validate -> freeze -> Error Memory recovery sequence.",
+      "when_not_to_load": "Do not load for ordinary patch delivery unless the user asks for the reusable handoff blueprint or a Show Project to AI / recovery copy button.",
+      "required_companion_prompts": [
+        "router_bridge_governed_implementation",
+        "implementation_and_delivery_protocol",
+        "router_bridge_patch_delivery_contract",
+        "pre_output_contract_gates",
+        "patch_install_delivery_error_register",
+        "freeze_code_intake_and_form_protocol",
+        "error_memory_active_ready_correction_blueprint",
+        "error_memory_active_ready_json_template",
+        "error_memory_model_template",
+        "project_tool_boundary_canon"
+      ]
+    },
+    {
       "prompt_id": "universal_delivery_protocol",
       "display_name": "Universal Delivery Protocol",
       "filename": "universal_delivery_protocol.md",
@@ -1432,7 +1486,7 @@
     },
     {
       "prompt_id": "large_module_refactor_protocol",
-      "display_name": "Large Module Refactor Protocol",
+      "display_name": "Large Module Creation and Refactor Protocol v7.2",
       "filename": "large_module_refactor_protocol.md",
       "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
       "category": "06_refactor_and_architecture_hardening",
@@ -1442,7 +1496,15 @@
         "file too large",
         "split module",
         "refactor large file",
-        "reduce module size"
+        "reduce module size",
+        "AST Split Audit",
+        "candidate-island queue",
+        "multi-island patch",
+        "patch train",
+        "module above 500 lines",
+        "double refactor train",
+        "sequential refactor train",
+        "large module protocol v7.2"
       ],
       "user_intent_examples": [
         "This file is too big; split it safely without breaking API."
@@ -1455,14 +1517,18 @@
         "large_module_refactor_protocol",
         "large_module_refactor_protocol.md",
         "module",
-        "refactor"
+        "refactor",
+        "large module protocol v7.2",
+        "sequential double-refactor delivery train",
+        "double refactor train"
       ],
-      "when_to_load": "When a module/file is too large or has mixed responsibilities.",
+      "when_to_load": "When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v7.2 routing or a sequential double-refactor delivery train.",
       "when_not_to_load": "Do not load for small local edits.",
       "required_companion_prompts": [
         "box_architecture_canon",
         "bundle_gated_development_workflow",
-        "python_refactoring"
+        "python_refactoring",
+        "large_module_refactor_template"
       ]
     },
     {
@@ -1495,7 +1561,8 @@
       "required_companion_prompts": [
         "box_architecture_canon",
         "bundle_gated_development_workflow",
-        "python_refactoring"
+        "python_refactoring",
+        "large_module_refactor_protocol"
       ]
     },
     {

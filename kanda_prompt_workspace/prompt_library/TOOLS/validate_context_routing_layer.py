@@ -8,6 +8,19 @@ Compatible with Python 3.10+ on standard CPython and Windows/PyCharm.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'iter_json_files',
+    'validate',
+    'validate_folder_cards',
+    'validate_forbidden_paths',
+    'validate_group_index',
+    'validate_metadata_json',
+    'validate_required_files',
+    'validate_routing_tests',
+    'ValidationState',
+    'word_count',
+]
 import argparse
 import json
 from pathlib import Path

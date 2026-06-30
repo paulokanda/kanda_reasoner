@@ -64,7 +64,10 @@
       "purpose": "Support V10 project reasoning and evidence handling.",
       "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
       "stability": "stable",
-      "exports": [],
+      "exports": [
+        "ProfileRefreshResult",
+        "ProfileController"
+      ],
       "depends_on": [],
       "consumed_by": []
     },
@@ -72,7 +75,9 @@
       "purpose": "Runtime controls and JSON loading for the Project Reasoner main window.",
       "reason": "Helper module owned by the canonical reasoner_engine main window helper folder.",
       "stability": "stable",
-      "exports": [],
+      "exports": [
+        "RuntimeController"
+      ],
       "depends_on": [],
       "consumed_by": []
     },

@@ -15,6 +15,13 @@ validated and frozen.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'AuxiliarAssistantAssistanceReadinessGatePilotBoundaryDesign',
+    'build_auxiliar_assistant_assistance_readiness_gate_pilot_boundary_design',
+    'PilotBoundaryReadinessBoundaryDesign',
+    'PilotBoundaryReadinessCriterionDesign',
+]
 from dataclasses import dataclass
 from typing import Final
 

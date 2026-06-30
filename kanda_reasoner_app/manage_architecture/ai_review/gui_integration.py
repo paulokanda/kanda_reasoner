@@ -231,7 +231,11 @@ def _run_ai_review_first_check(window: Any) -> None:
         "> selected advisory model: " + display_model + "\n"
     )
     _set_ai_review_controls_enabled(window, False)
-    window._run_button.setEnabled(False)
+    window._operation_cancel_requested = False
+    if hasattr(window, "_set_operation_buttons_running"):
+        window._set_operation_buttons_running(True)
+    else:
+        window._run_button.setEnabled(False)
     indicator = getattr(window, "_tab1_activity_indicator", None)
     if indicator is not None:
         indicator.start_ai_review(display_model)
@@ -262,6 +266,11 @@ def _handle_ai_review_result(window: Any, result: object) -> None:
     error_message = str(getattr(result, "error_message", "") or "")
     model_name = str(getattr(result, "model_name", "") or "")
     indicator = getattr(window, "_tab1_activity_indicator", None)
+
+    if getattr(window, "_operation_cancel_requested", False):
+        window._append_text("\n[canceled] advisory AI review late result ignored\n")
+        window.statusBar().showMessage("AI review canceled")
+        return
 
     if success:
         window._append_text("\n" + text + "\n")
@@ -297,5 +306,8 @@ def _cleanup_ai_review_worker(window: Any) -> None:
     if window._ai_review_thread is not None:
         window._ai_review_thread.deleteLater()
         window._ai_review_thread = None
-    window._run_button.setEnabled(True)
+    if hasattr(window, "_set_operation_buttons_running"):
+        window._set_operation_buttons_running(False)
+    else:
+        window._run_button.setEnabled(True)
     _set_ai_review_controls_enabled(window, True)

@@ -12,9 +12,35 @@ import subprocess
 import sys
 from typing import Any, Mapping
 
-from .box_bootstrapper import ensure_freeze_after_update_box, inspect_freeze_after_update_box
-from .result import FreezeAfterUpdateResult, FreezeAfterUpdateStatus
-from .send_pack_builder import generate_freeze_after_update_ai_files
+from .box_bootstrapper import (
+    ensure_freeze_after_update_box as _ensure_freeze_after_update_box,
+    inspect_freeze_after_update_box as _inspect_freeze_after_update_box,
+)
+from .result import (
+    FreezeAfterUpdateResult as _FreezeAfterUpdateResult,
+    FreezeAfterUpdateStatus as _FreezeAfterUpdateStatus,
+)
+from .send_pack_builder import (
+    generate_freeze_after_update_ai_files as _generate_freeze_after_update_ai_files,
+)
+
+FreezeAfterUpdateResult = _FreezeAfterUpdateResult
+FreezeAfterUpdateStatus = _FreezeAfterUpdateStatus
+
+
+def inspect_freeze_after_update_box(project_root: str | Path) -> FreezeAfterUpdateResult:
+    """Inspect the selected project external support box."""
+    return _inspect_freeze_after_update_box(project_root)
+
+
+def ensure_freeze_after_update_box(project_root: str | Path) -> FreezeAfterUpdateResult:
+    """Create or repair the selected project external support box."""
+    return _ensure_freeze_after_update_box(project_root)
+
+
+def generate_freeze_after_update_ai_files(project_root: str | Path) -> FreezeAfterUpdateResult:
+    """Build or refresh Freeze Feature After Update AI-send files."""
+    return _generate_freeze_after_update_ai_files(project_root)
 from kanda_reasoner_app.project_analysis_evidence_paths import project_analysis_evidence_root
 
 __all__ = [

@@ -9,6 +9,14 @@ reviewed.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_gold_manifest_valid',
+    'build_case_manifest_entry',
+    'build_gold_manifest_record',
+    'GoldManifestValidationResult',
+    'validate_gold_manifest_record',
+]
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 

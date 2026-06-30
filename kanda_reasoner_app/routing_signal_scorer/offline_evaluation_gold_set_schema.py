@@ -9,6 +9,15 @@ exist before semantic/embedding evidence can be evaluated.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_disabled_gold_set_schema_status',
+    'build_minimal_valid_gold_set_case',
+    'build_minimal_valid_gold_set_template',
+    'classify_gold_set_case_category',
+    'validate_gold_set_case',
+    'validate_offline_evaluation_gold_set',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

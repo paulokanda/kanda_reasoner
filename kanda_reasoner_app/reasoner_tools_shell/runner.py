@@ -100,3 +100,121 @@ def _install_deleted_legacy_runtime_collector_aliases():
 _install_deleted_legacy_runtime_collector_aliases()
 
 load_payload(__name__, globals(), 'zp')
+
+# Green sonar process monitor override. Keep the legacy payload class intact, but
+# replace the old text-spinner busy animation with a floating status panel.
+def _kanda_show_project_sonar(self):
+    from kanda_reasoner_app.templates.green_sonar_monitor import GreenSonarActivityMonitor
+
+    monitor = getattr(self, "_show_project_sonar_monitor", None)
+    if monitor is None:
+        monitor = GreenSonarActivityMonitor(self, title="Show Project to AI")
+        self._show_project_sonar_monitor = monitor
+    return monitor
+
+
+def _kanda_show_project_details(stage_text: str) -> tuple[str, str, str]:
+    stage = str(stage_text or "Running")
+    normalized = stage.lower()
+    if "runtime" in normalized:
+        return (
+            "Collecting runtime validation evidence",
+            "Preparing trace data for the AI handoff",
+            "Generated files stay under Show Project to AI folders",
+        )
+    if "collector" in normalized:
+        return (
+            "Building source archive and project maps",
+            "Collecting prompt, freeze, and Error Memory context",
+            "Second prompt files remain staged until publish succeeds",
+        )
+    if "enriching" in normalized:
+        return (
+            "Checking complete JSON evidence sections",
+            "Adding deterministic compact context for review",
+            "No source files are modified during enrichment",
+        )
+    if "bundle" in normalized:
+        return (
+            "Generating the AI context companion bundle",
+            "Preparing startup and handoff artifacts",
+            "ZIP output remains delivery packaging only",
+        )
+    if "zipping" in normalized:
+        return (
+            "Packaging second prompt files for upload",
+            "Validating manifest and archive boundaries",
+            "Loose JSON files are cleaned only after success",
+        )
+    return (
+        "Running Show Project to AI processing",
+        "Preparing source evidence for the next AI handoff",
+        "Status details remain visible in the log panel",
+    )
+
+
+def _kanda_start_busy_animation(self, stage_text: str) -> None:
+    self._busy_index = 0
+    self._active_stage = stage_text
+    for attr_name in (
+        "run_button",
+        "browse_project_button",
+        "browse_output_button",
+        "create_first_and_second_prompt_files_button",
+        "create_first_prompt_files_button",
+    ):
+        widget = getattr(self, attr_name, None)
+        setter = getattr(widget, "setEnabled", None)
+        if callable(setter):
+            setter(False)
+    status = str(stage_text or "Running") + "..."
+    self.status_label.setText(status)
+    self.setWindowTitle("Project Reasoner v10 - Data Collector")
+    _kanda_show_project_sonar(self).start(status, _kanda_show_project_details(stage_text))
+
+
+def _kanda_stop_busy_animation(self, status_text: str) -> None:
+    timer = getattr(self, "_busy_timer", None)
+    stop = getattr(timer, "stop", None)
+    if callable(stop):
+        stop()
+    for attr_name in (
+        "run_button",
+        "browse_project_button",
+        "browse_output_button",
+        "create_first_and_second_prompt_files_button",
+        "create_first_prompt_files_button",
+    ):
+        widget = getattr(self, attr_name, None)
+        setter = getattr(widget, "setEnabled", None)
+        if callable(setter):
+            setter(True)
+    status = str(status_text or "Idle")
+    self.status_label.setText(status)
+    self.setWindowTitle("Project Reasoner v10 - Data Collector")
+    monitor = getattr(self, "_show_project_sonar_monitor", None)
+    if monitor is not None:
+        failed = "fail" in status.lower() or "error" in status.lower()
+        details = (
+            "Show Project to AI processing stopped",
+            "Review the log panel and generated folder state",
+            "No additional spinner animation is running",
+        )
+        if failed:
+            monitor.finish_error("Needs review: " + status, details)
+        else:
+            monitor.finish_success("Complete: " + status, details)
+    self._active_stage = ""
+
+
+def _kanda_tick_busy_animation(self) -> None:
+    stage_text = getattr(self, "_active_stage", "") or "Running"
+    self.status_label.setText(str(stage_text) + "...")
+
+
+try:
+    CollectorRunnerWindow._start_busy_animation = _kanda_start_busy_animation
+    CollectorRunnerWindow._stop_busy_animation = _kanda_stop_busy_animation
+    CollectorRunnerWindow._tick_busy_animation = _kanda_tick_busy_animation
+except NameError:
+    pass

@@ -1,7 +1,16 @@
-"""Text templates for the project-local Freeze Feature After Update box."""
+"""Text templates for the external Freeze Feature After Update support box."""
 
 from __future__ import annotations
 
+
+__all__ = [
+    'entries_readme',
+    'initial_freeze_index',
+    'initial_frozen_steps',
+    'root_readme',
+    'send_readme',
+    'what_to_say',
+]
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,17 +40,14 @@ def initial_freeze_index() -> str:
 
 
 def root_readme() -> str:
-    """Return the human README for the project-local box."""
+    """Return the human README for the external project support box."""
     return """# Project Freeze After Update
 
-This folder is a project-local closed box used by KANDA Reasoner.
+This folder is an external support box for one selected project.
 
-It belongs to this project only. KANDA Reasoner reads this folder when you use
-the **Freeze Feature After Update** tab, then it writes fresh AI-send files into
-`files_to_send_ai/`.
+It lives under `<project>_show_project_to_AI/project_freeze_after_update`, not inside the selected project source root. KANDA Reasoner reads this folder when you use the **Freeze Feature After Update** tab, then it writes fresh AI-send files into `files_to_send_ai/`.
 
-Do not move this folder into KANDA Reasoner. Do not merge it with another
-project. Each project keeps its own freeze memory here.
+Do not move this folder into the KANDA Reasoner tool source. Do not merge it with another project. Each selected project keeps its own freeze memory here.
 
 ## Folder roles
 
@@ -53,7 +59,7 @@ files_to_send_ai/
   Fresh output files that you upload to AI after updating the project.
 ```
 
-Generated ZIP files may be recreated. The persistent source of truth is inside
+Generated ZIP files may be recreated. The persistent source of truth for this selected project is inside
 `frozen_features_memory/`.
 """
 
@@ -158,8 +164,8 @@ Use the frozen feature memory in the ZIP to understand what is already frozen.
 Then help me create or update the appropriate freeze entry for this project.
 
 Important rules:
-- Do not assume KANDA Reasoner stores this project's freeze memory centrally.
-- The project's freeze memory lives inside <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory/.
+- Do not assume KANDA Reasoner stores this project's freeze memory centrally or inside the reusable tool source.
+- The project's freeze memory lives under <project_drive>/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory/.
 - Do not copy freeze entries from another project.
 - Do not freeze unvalidated behavior.
 - Ask for validation evidence if it is not included in my message.

@@ -135,7 +135,7 @@
         "validation",
         "freeze evidence"
       ],
-      "prompt_count": 6,
+      "prompt_count": 10,
       "main_prompts": [
         "bundle_gated_development_workflow.md",
         "evidence_freshness_gate.md",

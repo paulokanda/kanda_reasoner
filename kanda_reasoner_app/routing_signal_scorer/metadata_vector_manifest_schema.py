@@ -8,6 +8,15 @@ providers may consume only after a separate governed generation phase.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_empty_metadata_vector_manifest',
+    'ManifestValidation',
+    'metadata_manifest_item_eligibility_reasons',
+    'render_metadata_vector_manifest_validation_text',
+    'validate_metadata_vector_manifest',
+    'validate_metadata_vector_manifest_item',
+]
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any

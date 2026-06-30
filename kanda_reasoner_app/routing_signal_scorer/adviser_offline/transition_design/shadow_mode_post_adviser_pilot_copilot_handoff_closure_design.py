@@ -17,6 +17,13 @@ implementation milestone and no activation path.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_post_adviser_pilot_copilot_handoff_closure_design',
+    'HandoffClosureCheckpointDesign',
+    'HandoffClosureRuleDesign',
+    'PostAdviserPilotCopilotHandoffClosureDesign',
+]
 from dataclasses import dataclass
 from typing import Final
 

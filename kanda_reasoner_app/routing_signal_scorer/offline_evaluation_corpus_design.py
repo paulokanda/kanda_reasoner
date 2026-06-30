@@ -9,6 +9,15 @@ corpus that must exist before any real semantic/embedding provider is used.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_disabled_offline_evaluation_corpus_status',
+    'build_minimal_valid_evaluation_case',
+    'build_minimal_valid_evaluation_corpus_template',
+    'classify_evaluation_case_category',
+    'validate_evaluation_case',
+    'validate_offline_evaluation_corpus_plan',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

@@ -284,7 +284,11 @@ def _run_tab2_ai_review(window: Any, review_kind: str) -> None:
     window._append_text("\n> " + request_label + " for latest Tab 2 output\n")
     window._append_text("> selected advisory model: " + display_model + "\n")
     _set_ai_review_controls_enabled(window, False)
-    window._run_button.setEnabled(False)
+    window._operation_cancel_requested = False
+    if hasattr(window, "_set_operation_buttons_running"):
+        window._set_operation_buttons_running(True)
+    else:
+        window._run_button.setEnabled(False)
     indicator = getattr(window, "_tab2_activity_indicator", None)
     if indicator is not None:
         indicator.start_ai_review(activity_label)
@@ -322,6 +326,11 @@ def _handle_tab2_ai_review_result(window: Any, result: object) -> None:
     error_message = str(getattr(result, "error_message", "") or "")
     model_name = str(getattr(result, "model_name", "") or "")
     indicator = getattr(window, "_tab2_activity_indicator", None)
+
+    if getattr(window, "_operation_cancel_requested", False):
+        window._append_text("\n[canceled] advisory Tab 2 AI review late result ignored\n")
+        window.statusBar().showMessage("Tab 2 AI review canceled")
+        return
 
     if success:
         window._append_text("\n" + text + "\n")
@@ -362,7 +371,10 @@ def _cleanup_tab2_ai_review_worker(window: Any) -> None:
         window._tab2_ai_review_thread = None
 
     window._tab2_ai_review_worker = None
-    window._run_button.setEnabled(True)
+    if hasattr(window, "_set_operation_buttons_running"):
+        window._set_operation_buttons_running(False)
+    else:
+        window._run_button.setEnabled(True)
     _set_ai_review_controls_enabled(window, True)
 
 
@@ -395,12 +407,18 @@ def create_tab2_ai_review_window_class(base_class: type[Any]) -> type[Any]:
                 indicator.start_deterministic(_deterministic_label(mode))
 
         def _handle_worker_success(self, mode: str) -> None:  # type: ignore[override]
+            if getattr(self, "_operation_cancel_requested", False):
+                super()._handle_worker_success(mode)
+                return
             indicator = getattr(self, "_tab2_activity_indicator", None)
             if indicator is not None:
                 indicator.finish_success(_deterministic_label(mode) + " finished")
             super()._handle_worker_success(mode)
 
         def _handle_worker_error(self, mode: str, details: str) -> None:  # type: ignore[override]
+            if getattr(self, "_operation_cancel_requested", False):
+                super()._handle_worker_error(mode, details)
+                return
             indicator = getattr(self, "_tab2_activity_indicator", None)
             if indicator is not None:
                 indicator.finish_error(_deterministic_label(mode) + " needs review")

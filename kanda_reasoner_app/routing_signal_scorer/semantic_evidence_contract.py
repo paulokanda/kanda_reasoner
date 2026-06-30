@@ -8,6 +8,14 @@ advisory-only evidence shape before any real ML dependency is introduced.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_disabled_semantic_evidence_report',
+    'build_mock_semantic_evidence_report',
+    'CandidateValidation',
+    'render_mock_semantic_evidence_report_text',
+    'validate_semantic_candidate',
+]
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from typing import Any

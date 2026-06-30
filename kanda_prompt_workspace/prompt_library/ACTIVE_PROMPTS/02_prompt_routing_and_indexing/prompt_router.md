@@ -76,7 +76,9 @@ Before coding, patching, validating, freezing, staging files, or producing a han
 ```text
 tool_project_slug = kanda_reasoner
 active_project_slug = selected project in use
-active_project_root = selected project root
+active_project_root = selected project source root
+active_project_support_root = <project_drive>/<active_project_slug>_show_project_to_AI
+active_project_daily_work_root = <project_drive>/<active_project_slug>_delete_after_daily_work
 ```
 
 KANDA Reasoner may be the tool that performs the work, but `<my_project>` is the target project in use. Even when the selected target project is KANDA Reasoner itself, the AI must still reason with separate tool identity and target project identity so the logic continues to work for any other selected project.
@@ -92,7 +94,7 @@ whenever implementation, patch delivery, freeze memory, handoff output, validati
 Rule:
 
 ```text
-Do not hardcode kanda_reasoner as the active project unless KANDA Reasoner is explicitly the selected active project. Project-specific writes use active_project_root. Reusable tool writes use the owning tool path.
+Do not hardcode kanda_reasoner as the active project unless KANDA Reasoner is explicitly the selected active project. Project-specific support writes use active_project_support_root or active_project_daily_work_root. Selected project source edits use active_project_root only when the task intentionally edits that project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden.
 ```
 
 ## Router table
@@ -188,15 +190,39 @@ class too large
 mixed responsibility
 extract helper
 preserve public imports
+MODULE_TOO_LARGE
+code file above 500 lines
+large module protocol v7
+large module protocol v7.2
+double refactor train
+sequential refactor train
+AST Split Audit
+candidate-island queue
+multi-island patch
+patch train
 ```
 
 Load or recommend:
 
 ```text
+router_bridge_governed_implementation
 kanda_bundle_gated_development_workflow
 python_clean_code_overlay
-large_module_overlay_profile_template
-0000_5_5_large_module_refactor_protocol_template
+large_module_refactor_protocol
+large_module_refactor_template
+project_tool_boundary_canon, when project-root, staging, freeze, handoff, or validation paths are involved
+```
+
+Required routing behavior:
+
+```text
+Use Large Module Creation and Refactor Protocol Version 7.2. Apply the v7.2 granularity rule: cohesive helpers near 400 lines are acceptable, avoid unnecessary micro-files, and use normal importable .py files for runtime/source logic rather than ZIP payload structures.
+Before implementation, prefer Architecture Review -> Run AST Split Audit and require/paste the Split Handoff for AI when the tool is available.
+Use the AST-assisted candidate-island queue, independence matrix, and patch composition decision before implementing.
+Choose one of: single-island patch, approved two-island patch, or sequential double-refactor delivery train with serial inner patches.
+Do not stack multiple inner patches before validation/freeze.
+A sequential double-refactor train may prepare up to four ordered patch ZIPs in one response, each normally containing at most two related refactor slices.
+Keep every inner patch on install -> validate -> freeze before proceeding to the next patch.
 ```
 
 Group to open in Tab 9:
@@ -204,6 +230,7 @@ Group to open in Tab 9:
 ```text
 large_module_refactor
 ```
+
 
 ### Architecture warning cleanup
 
@@ -273,6 +300,11 @@ KANDA_FREEZE_HINT.json
 freeze-form JSON
 release gate
 patch delivery
+Show Project to AI file creation failed
+Show Project to AI ZIP creation failed
+handoff ZIP generation failed
+Copy Patch Validate Freeze Recovery Routine
+patch validate freeze routine
 ```
 
 Load or recommend:
@@ -281,6 +313,7 @@ Load or recommend:
 05_patch_delivery_and_validation
 pre_output_contract_gates
 freeze_code_intake_and_form_protocol
+patch_validate_freeze_error_memory_routine_blueprint, when the user asks for a reusable Show Project to AI or patch recovery handoff blueprint
 ```
 
 Group to open in Tab 9:
@@ -365,6 +398,40 @@ Boundary:
 Browser ChatGPT is advisory only. The block must not claim final local authority, write files, apply patches, write freeze memory, activate ML, or bypass validation. Local KANDA remains responsible for validating prompt addresses and loading canonical ACTIVE_PROMPTS text.
 ```
 <!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_END -->
+
+### Show Project to AI patch/freeze recovery blueprint
+
+Trigger:
+
+```text
+Show Project to AI file creation failed
+Show Project to AI ZIP creation failed
+handoff ZIP generation failed
+first prompt files failed
+second prompt files failed
+copy patch validate freeze recovery routine
+patch validate freeze routine
+zip validate freeze error memory routine
+if file creation fails give this to AI
+```
+
+Load or recommend:
+
+```text
+patch_validate_freeze_error_memory_routine_blueprint
+router_bridge_patch_delivery_contract
+pre_output_contract_gates
+freeze_code_intake_and_form_protocol
+error_memory_active_ready_json_template, if an Error Memory lesson will be produced
+error_memory_model_template, after error_memory_active_ready_json_template
+project_tool_boundary_canon
+```
+
+Boundary:
+
+```text
+This route is a copyable recovery blueprint route. It does not replace the owner canons and it does not make the wrapper always-startup.
+```
 
 ### Prompt creation or prompt update
 
@@ -1085,7 +1152,8 @@ Route to:
 
 ## Terminal cleanup canon
 
-For any response that emits a terminal block, classify the terminal output before writing the footer. Successful install blocks must use the 5-second `Clear-Host` success footer and must not ask for Enter. Install errors, validation, validation errors, diagnostics, and any other terminal output must use the Enter/Clear-Host/Enter/Clear-Host cleanup footer. The terminal must be cleaned, not closed. Install blocks must include a fail-safe `try/catch` or text-equivalent wrapper so an install error cannot bypass cleanup.
+For any response that emits a terminal block, classify the terminal output before writing the footer. Successful install blocks must use the 2-second `Clear-Host` success footer and must not ask for Enter. Install errors, validation, freeze, validation errors, freeze errors, diagnostics, and any other terminal output must use the Enter/Enter/Clear-Host cleanup footer. The terminal must be cleaned, not closed, and must keep the terminal open. Install blocks must include a fail-safe `try/catch` or text-equivalent wrapper so an install error cannot bypass cleanup.
+Freeze-prep and validation-evidence merge commands must not use inline `python -c`; use a temporary UTF-8 `.py` helper under `_delete_after_daily_work` to avoid Windows quote stripping. The PowerShell block must set `$env:PYTHONPATH = $PROJECT_ROOT` before running the helper, and the helper must insert `project_root` into `sys.path` before importing `kanda_reasoner_app`.
 
 
 <!-- KANDA_ROUTE:error_event_to_error_memory_owner_canon:v2 -->
@@ -1218,6 +1286,8 @@ Load or recommend:
 
 ```text
 error_memory_active_ready_correction_blueprint
+error_memory_active_ready_json_template
+error_memory_model_template
 prompt_navigation_index
 prompt_router
 ```
@@ -1231,5 +1301,5 @@ Group to open:
 ```
 
 Rule:
-This is a routed bridge only. Do not load the full blueprint at every startup. Do not output `status: active` for an Error Memory lesson unless the blueprint active-ready checklist passes. If validation evidence, source_patch_zip, install summary, validation command, or expected marker is missing, keep the lesson draft/needs_ai_review and list missing fields.
+This is a routed bridge only. Do not load the full blueprint or templates at every startup. When the output is meant for the Error Memory tab -> AI-assisted intake text window, read `error_memory_active_ready_json_template` first and `error_memory_model_template` second before writing the final marker-wrapped lesson. Do not output `status: active` for an Error Memory lesson unless the blueprint active-ready checklist passes. If validation evidence, source_patch_zip, install summary, validation command, or expected marker is missing, keep the lesson draft/needs_ai_review and list missing fields.
 <!-- ERROR_MEMORY_ACTIVE_READY_CORRECTION_ROUTE_V1_END -->

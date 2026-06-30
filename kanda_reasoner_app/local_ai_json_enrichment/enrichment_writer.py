@@ -23,7 +23,7 @@ from kanda_reasoner_app.live_source_verification import (
     extract_live_source_snippet,
     verify_live_source_path,
 )
-from kanda_reasoner_app.local_ai_json_working_copy import build_default_paths
+from kanda_reasoner_app.local_ai_json_contract import build_default_paths
 
 DEFAULT_ENRICHMENT_KEY = "local_ai_enrichment"
 

@@ -36,13 +36,14 @@ before extracting or installing anything.
 4. Install commands and validation commands must be sent as separate copy-paste terminal blocks.
 5. Terminal commands must target Windows 11 and the PyCharm terminal.
 6. Install and validation blocks must use the KANDA terminal cleanup behavior unless the user explicitly asks to keep the log visible. Successful install commands use the install-success cleanup footer. Validation commands, validation failures, install errors, and diagnostic/error cases use the diagnostic cleanup footer.
-7. Successful install cleanup means: show the install success message, wait 5 seconds, clear the terminal, keep the terminal open, and do not ask for Enter Enter.
-8. Validation, install-error, validation-error, and diagnostic cleanup means: keep the terminal open, wait for Enter, clear the terminal, wait for Enter again, and clear the terminal again.
+7. Successful install cleanup means: show the install success message, wait about 2 seconds, clear the terminal, keep the terminal open, and do not ask for Enter Enter.
+8. Validation, freeze, install-error, validation-error, freeze-error, diagnostic, and other terminal cleanup means: keep the terminal open, wait for Enter twice, then clear the terminal once.
 9. Install failure and validation failure must show the log/error before cleanup so the user can copy or send the output if needed.
-10. Do not close the terminal from any install, validation, error, or diagnostic block. Do not replace this behavior with the old generic footer that always waits 5 seconds and then asks for Enter twice.
+10. Do not close the terminal from any install, validation, error, or diagnostic block. Do not replace this behavior with the old generic footer that always waits before asking and then asks for Enter twice.
 11. If the AI forgets the terminal cleanup rule, it must not guess. It must return to this guardrail and the router canon first, then ask the human if still uncertain.
-12. Install blocks must contain a fail-safe error cleanup path. A successful install uses 5 seconds then `Clear-Host`; any install error must show the error, wait for Enter, `Clear-Host`, wait for Enter again, and `Clear-Host` again. The terminal must never be closed.
+12. Install blocks must contain a fail-safe error cleanup path. A successful install uses about 2 seconds then `Clear-Host`; any install error must show the error, wait for Enter twice, then run one final `Clear-Host`. The terminal must never be closed.
 13. Remind the user to use Freeze Feature After Update only at meaningful regression-risk checkpoints, not after every small update.
+14. Freeze-prep or validation-evidence merge commands must not use inline `python -c` in user-facing PowerShell. Write the Python helper as a temporary UTF-8 `.py` file under `_delete_after_daily_work`, execute that file, and keep the terminal open.
 
 
 
@@ -54,9 +55,9 @@ For detailed rules, request or apply `pre_output_contract_gates` from `03_govern
 
 Minimum startup hook:
 
-1. Terminal output must be classified as install success, validation, diagnostic, install error, validation error, or other terminal before writing the footer.
-2. Install success uses the 5-second Clear-Host footer and no Enter prompts.
-3. Validation, diagnostic, install-error, validation-error, and other non-install-success terminal blocks use Enter, Clear-Host, Enter, Clear-Host.
+1. Terminal output must be classified as install success, validation, freeze, diagnostic, install error, validation error, freeze error, or other terminal before writing the footer.
+2. Install success uses the 2-second Clear-Host footer and no Enter prompts.
+3. Validation, freeze, diagnostic, install-error, validation-error, freeze-error, and other non-install-success terminal blocks use Enter, Enter, Clear-Host.
 4. Patch ZIP delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first at `<drive>:\PATCH_NAME.zip`, stage the ZIP into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, extract only from staging, and must freshly extract.
 5. Freeze-form JSON must use exact markers and valid JSON only.
 6. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes.
@@ -64,6 +65,7 @@ Minimum startup hook:
 8. Any patch ZIP link must be blocked unless the ZIP passes `python scripts/validate_patch_zip.py <zip_path>` in the sandbox or local release pipeline.
 9. The root sidecar and the freeze-form JSON must be rendered from the same freeze payload source. Do not hand-type them separately.
 10. Freeze-intake and frozen memory paths must use the selected active project root.
+11. Freeze-prep and validation-evidence merge commands must not use inline `python -c`; use a temporary UTF-8 `.py` helper under `_delete_after_daily_work` to prevent PowerShell quote stripping. The helper runner must make the active project importable by setting `$env:PYTHONPATH = $PROJECT_ROOT` before `python $HELPER_PY` and the helper file should insert `project_root` into `sys.path` before importing `kanda_reasoner_app`.
 
 This hook is output-time compliance. It does not replace the router and must not over-route simple Fast Path explanation-only tasks.
 
@@ -124,7 +126,7 @@ Use the successful install footer only after an install command completes succes
 Successful install behavior:
 
 * Show the install success message.
-* Wait 5 seconds.
+* Wait about 2 seconds.
 * Clear the terminal.
 * Keep the terminal open.
 * Do not ask for Enter Enter.
@@ -133,34 +135,32 @@ Successful install footer:
 
 ```powershell
 Write-Host ""
-Write-Host "INSTALL OK. Terminal will clear in 5 seconds..."
-Start-Sleep -Seconds 5
+Write-Host "INSTALL OK. Terminal will clear in 2 seconds..."
+Start-Sleep -Seconds 2
 Clear-Host
 ```
 
 Use the diagnostic cleanup footer after validation commands, validation failures, install errors, or any other diagnostic/error case.
 
-Validation, install-error, validation-error, and diagnostic behavior:
+Validation, freeze, install-error, validation-error, freeze-error, diagnostic, and other terminal behavior:
 
 * Keep the terminal open.
 * Wait for Enter.
-* Clear the terminal.
 * Wait for Enter again.
-* Clear the terminal again.
+* Clear the terminal once.
+* Do not close the terminal.
 
-Validation, install-error, validation-error, and diagnostic footer:
+Validation, freeze, install-error, validation-error, freeze-error, diagnostic, and other terminal footer:
 
 ```powershell
 Write-Host ""
 Read-Host "Press Enter to clear terminal"
-Clear-Host
-
-Read-Host "Press Enter again to finish"
+Read-Host "Press Enter again to clear"
 Clear-Host
 ```
 
 Do not close the terminal from any install, validation, error, or diagnostic block.
-Do not substitute the old generic footer that always waits 5 seconds and then asks for Enter twice.
+Do not substitute the old generic footer that always waits before asking and then asks for Enter twice.
 
 
 
@@ -186,33 +186,35 @@ OTHER_TERMINAL
 
 Hard fail-closed rules:
 
-1. Never deliver a KANDA install block without the 5-second success clear footer.
+1. Never deliver a KANDA install block without the 2-second success clear footer.
 2. A successful install block must end its success path with the exact behavior:
-   show `INSTALL OK. Terminal will clear in 5 seconds...`, run
-   `Start-Sleep -Seconds 5`, then run `Clear-Host`, with no success-path
+   show `INSTALL OK. Terminal will clear in 2 seconds...`, run
+   `Start-Sleep -Seconds 2`, then run `Clear-Host`, with no success-path
    `Read-Host` prompt.
 3. Every install block must also include an error path that shows the install
-   error, waits for Enter, runs `Clear-Host`, waits for Enter again, and runs
-   `Clear-Host` again.
+   error, waits for Enter twice, and then runs one final `Clear-Host`.
 4. Every validation command, validation-error command, diagnostic command,
    staging check, repair check, freeze/evidence-merge command, and all other
-   non-install-success terminal code must use the Enter, `Clear-Host`, Enter,
-   `Clear-Host` footer.
+   non-install-success terminal code must use the Enter, Enter, `Clear-Host` footer.
 5. If the command cannot be confidently classified as successful install output,
-   classify it as `OTHER_TERMINAL` and use Enter, `Clear-Host`, Enter,
-   `Clear-Host`.
+   classify it as `OTHER_TERMINAL` and use Enter, Enter, `Clear-Host`.
 6. If the generated block is missing the required footer, mixes the install
    success footer with Enter Enter cleanup, or auto-clears validation output
-   after 5 seconds, the answer must be blocked and repaired before the command
+   after 2 seconds, the answer must be blocked and repaired before the command
    is shown.
+7. If a freeze-prep, freeze-hint merge, validation-evidence merge, repair, or
+   other KANDA operational command uses `python -c`, block and repair it before
+   output. Write a temporary UTF-8 `.py` helper under `_delete_after_daily_work`
+   with `Set-Content -Encoding UTF8`, run `python $HELPER_PY`, then use the
+   Enter, Enter, `Clear-Host` footer.
 
 Required exact install-success footer:
 
 ```powershell
 if (-not $InstallFailed) {
     Write-Host ""
-    Write-Host "INSTALL OK. Terminal will clear in 5 seconds..."
-    Start-Sleep -Seconds 5
+    Write-Host "INSTALL OK. Terminal will clear in 2 seconds..."
+    Start-Sleep -Seconds 2
     Clear-Host
 }
 ```
@@ -222,8 +224,7 @@ Required exact non-install-success footer:
 ```powershell
 Write-Host ""
 Read-Host "Press Enter to clear terminal"
-Clear-Host
-Read-Host "Press Enter again to finish"
+Read-Host "Press Enter again to clear"
 Clear-Host
 ```
 
@@ -469,9 +470,8 @@ Install error behavior:
 
 * Show `INSTALL ERROR` and the error message.
 * Wait for Enter.
-* Clear the terminal.
 * Wait for Enter again.
-* Clear the terminal again.
+* Clear the terminal once.
 * Keep the terminal open.
 * Do not use `exit`, `Stop-Process`, or any command that closes the terminal.
 
@@ -483,9 +483,7 @@ Write-Host "INSTALL ERROR. Review the error below before clearing the terminal."
 Write-Host $_.Exception.Message
 Write-Host ""
 Read-Host "Press Enter to clear terminal"
-Clear-Host
-
-Read-Host "Press Enter again to finish"
+Read-Host "Press Enter again to clear"
 Clear-Host
 $global:LASTEXITCODE = 1
 return

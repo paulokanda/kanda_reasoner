@@ -14,6 +14,13 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_candidate_answer_valid',
+    'ContractValidationResult',
+    'load_contract_schema',
+    'validate_candidate_answer',
+]
 from dataclasses import dataclass
 import json
 from pathlib import Path

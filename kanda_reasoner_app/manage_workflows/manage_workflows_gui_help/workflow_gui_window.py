@@ -9,7 +9,7 @@ from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_
 import sys
 from importlib import import_module
 from pathlib import Path
-from PySide6.QtCore import QThread
+from PySide6.QtCore import QThread, QTimer
 from PySide6.QtGui import QAction, QFont
 from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QFileDialog, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QPlainTextEdit, QSizePolicy, QStatusBar, QToolBar, QVBoxLayout, QWidget
 from .workflow_gui_constants import _WORKFLOW_GUI_DEFAULT_MANAGER_NAME, _WORKFLOW_GUI_DEFAULT_PROJECT_ROOT
@@ -26,6 +26,8 @@ class WorkflowManagerWindow(QMainWindow):
         self.resize(1200, 820)
         self._worker_thread: QThread | None = None
         self._worker: WorkflowRunWorker | None = None
+        self._operation_cancel_requested = False
+        self._cancel_operation_button: QPushButton | None = None
         self._script_row_label: QLabel | None = None
         self._script_row_widget: QWidget | None = None
         self._browse_script_btn: QPushButton | None = None
@@ -103,6 +105,16 @@ class WorkflowManagerWindow(QMainWindow):
             btn.clicked.connect(lambda _=False, m=mode: self.run_mode(m))
             self._mode_quick_buttons[mode] = btn
             mode_action_toolbar_layout.addWidget(btn)
+        self._cancel_operation_button = QPushButton('Cancel')
+        self._cancel_operation_button.setObjectName('workflow_review_cancel_operation_button')
+        self._cancel_operation_button.setToolTip('Cancel the currently running Workflow Review operation. Hard cancellation may stop a worker thread mid-run.')
+        self._cancel_operation_button.setStyleSheet(
+            'QPushButton { color: #C2185B; font-weight: bold; } '
+            'QPushButton:disabled { color: #9A9A9A; }'
+        )
+        self._cancel_operation_button.setEnabled(False)
+        self._cancel_operation_button.clicked.connect(self.cancel_running_operation)
+        mode_action_toolbar_layout.addWidget(self._cancel_operation_button)
         toolbar.addWidget(self._mode_action_toolbar_widget)
         toolbar.addSeparator()
         self._run_options_toolbar_widget = QWidget(self)
@@ -193,14 +205,15 @@ class WorkflowManagerWindow(QMainWindow):
         if mode == 'write' and self._strict_write_checkbox.isChecked():
             if not self._confirm_write(script_path.name):
                 return
-        if self._worker_thread is not None:
-            QMessageBox.warning(self, 'Work running', 'Wait for the current work to finish first.')
+        if self._worker_thread is not None or getattr(self, '_tab2_ai_review_thread', None) is not None:
+            QMessageBox.warning(self, 'Work running', 'Cancel or wait for the current work to finish first.')
             return
+        self._operation_cancel_requested = False
+        self._set_operation_buttons_running(True)
         record_root(str(root_path.resolve()))
         record_script(str(script_path.resolve()))
         self._output.clear()
         self._output.appendPlainText(f'> {script_path.name} --root {root_path} --{mode}\n')
-        self._run_button.setEnabled(False)
         self.statusBar().showMessage(f'Running {mode}...')
         self._worker_thread = QThread(self)
         self._worker = WorkflowRunWorker(manager_script_path=str(script_path), project_root=str(root_path), mode=mode)
@@ -232,13 +245,21 @@ class WorkflowManagerWindow(QMainWindow):
         self._output.moveCursor(self._output.textCursor().MoveOperation.End)
 
     def _handle_worker_success(self, mode: str) -> None:
-        self._run_button.setEnabled(True)
+        if self._operation_cancel_requested:
+            self.statusBar().showMessage(f'Canceled {mode}')
+            self._output.appendPlainText(f'\n[canceled] mode={mode} late success ignored\n')
+            return
+        self._set_operation_buttons_running(False)
         self.statusBar().showMessage(f'OK Finished {mode}')
         self._output.appendPlainText(f'\n[finished] mode={mode} exit_code=0\n')
         show_auto_close_action_window(self, title='Done', message=f'{mode.capitalize()} completed successfully.')
 
     def _handle_worker_error(self, mode: str, details: str) -> None:
-        self._run_button.setEnabled(True)
+        if self._operation_cancel_requested:
+            self.statusBar().showMessage(f'Canceled {mode}')
+            self._output.appendPlainText(f'\n[canceled] mode={mode} late error ignored\n')
+            return
+        self._set_operation_buttons_running(False)
         self.statusBar().showMessage(f'ERROR Finished {mode} with issues')
         self._output.appendPlainText(f'\n[finished] mode={mode} exit_code=1\n{details}\n')
         QMessageBox.warning(self, 'Finished with issues', f'{mode.capitalize()} finished with issues.\nCheck the output panel for details.')
@@ -250,6 +271,64 @@ class WorkflowManagerWindow(QMainWindow):
         if self._worker_thread is not None:
             self._worker_thread.deleteLater()
             self._worker_thread = None
+        self._set_operation_buttons_running(False)
+
+    def _set_operation_buttons_running(self, running: bool) -> None:
+        """Synchronize deterministic Workflow Review run/cancel controls."""
+        run_button = getattr(self, '_run_button', None)
+        if run_button is not None:
+            run_button.setEnabled(not running)
+        for button in getattr(self, '_mode_quick_buttons', {}).values():
+            button.setEnabled(not running)
+        cancel_button = getattr(self, '_cancel_operation_button', None)
+        if cancel_button is not None:
+            cancel_button.setEnabled(running)
+
+    def cancel_running_operation(self) -> None:
+        """Cancel the active Workflow Review worker or advisory review thread."""
+        if self._worker_thread is not None:
+            self._operation_cancel_requested = True
+            self._set_operation_buttons_running(True)
+            cancel_button = getattr(self, '_cancel_operation_button', None)
+            if cancel_button is not None:
+                cancel_button.setEnabled(False)
+            mode = self._mode_combo.currentText()
+            self.statusBar().showMessage(f'Cancel requested for {mode}...')
+            self._output.appendPlainText(f'\n[cancel requested] mode={mode}\n')
+            indicator = getattr(self, '_tab2_activity_indicator', None)
+            if indicator is not None:
+                indicator.finish_error(f'{mode} canceled')
+            self._worker_thread.requestInterruption()
+            self._worker_thread.quit()
+            QTimer.singleShot(300, self._force_cancel_worker_thread)
+            return
+        ai_thread = getattr(self, '_tab2_ai_review_thread', None)
+        if ai_thread is not None:
+            self._operation_cancel_requested = True
+            self.statusBar().showMessage('Cancel requested for Tab 2 AI review...')
+            self._output.appendPlainText('\n[cancel requested] advisory Tab 2 AI review\n')
+            indicator = getattr(self, '_tab2_activity_indicator', None)
+            if indicator is not None:
+                indicator.finish_error('AI review canceled')
+            ai_thread.requestInterruption()
+            ai_thread.quit()
+            QTimer.singleShot(300, self._force_cancel_ai_review_thread)
+            return
+        self.statusBar().showMessage('No running Workflow Review operation to cancel')
+
+    def _force_cancel_worker_thread(self) -> None:
+        thread = self._worker_thread
+        if thread is not None and thread.isRunning():
+            self._output.appendPlainText('[cancel] terminating Workflow Review worker thread.\n')
+            thread.terminate()
+            thread.wait(1000)
+
+    def _force_cancel_ai_review_thread(self) -> None:
+        thread = getattr(self, '_tab2_ai_review_thread', None)
+        if thread is not None and thread.isRunning():
+            self._output.appendPlainText('[cancel] terminating Workflow Review AI review thread.\n')
+            thread.terminate()
+            thread.wait(1000)
 
     def show_history(self) -> None:
         roots = get_recent_roots()

@@ -13,6 +13,12 @@ proposed.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_actual_human_decision_recording_boundary_contract',
+    'classify_actual_human_decision_recording_boundary_request',
+    'validate_actual_human_decision_recording_boundary_contract',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

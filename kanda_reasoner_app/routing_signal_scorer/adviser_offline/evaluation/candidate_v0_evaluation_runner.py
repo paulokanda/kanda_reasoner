@@ -19,6 +19,8 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = ['evaluate_candidate_v0_against_gold_cases', 'EvaluationCaseResult']
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass
 from typing import Any

@@ -12,6 +12,12 @@ scoring, does not modify router authority, and does not change runtime behavior.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_generator_candidate_preparation_closure_shield_contract',
+    'classify_generator_candidate_preparation_closure_shield_request',
+    'validate_generator_candidate_preparation_closure_shield_contract',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

@@ -1,29 +1,31 @@
 {
-  "prompt_id": "large_module_refactor_protocol",
-  "display_name": "Large Module Creation and Refactor Protocol",
-  "filename": "large_module_refactor_protocol.md",
-  "category": "06_refactor_and_architecture_hardening",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Guides safe creation and splitting of code modules so new and refactored source files stay within the 400/500 line module-size law without breaking public contracts.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 30,
-  "trigger_phrases": [
-    "module too big",
-    "file too large",
-    "split module",
-    "refactor large file",
-    "reduce module size",
-    "create large module",
-    "new module above 500 lines",
-    "module size limit"
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
+  "do_not_regress": [
+    "Use AST-assisted heuristic split audit as read-only evidence when available.",
+    "Keep AST audit outputs in daily-work staging, not project root.",
+    "Use multi-island candidate queue at module start.",
+    "Allow at most two independent islands in one patch.",
+    "Use non-conflicting write checks rather than impossible no-shared-read checks.",
+    "Do not stack multiple ZIP patches before validation/freeze.",
+    "Allow outer patch-train delivery bundles only as packaging for separate governed patch ZIPs.",
+    "Keep every inner patch in a patch train on its own install -> validate -> freeze sequence.",
+    "Do not freeze a patch train as one vague outer-bundle entry.",
+    "Do not proceed to later train patches if an earlier inner patch fails.",
+    "Allow up to four ordered patch ZIPs in one sequential double-refactor delivery train only when each inner ZIP is independently installable, validatable, contract-checkable, freeze-preppable, previewable, and freezeable.",
+    "Keep the default maximum at two related refactor slices per inner ZIP.",
+    "Individually validate and individually freeze every inner ZIP before the next ZIP is installed.",
+    "Do not freeze a sequential delivery train as one outer-bundle memory entry.",
+    "Treat the 400-line ideal as a practical target band, not a mandate to atomize files.",
+    "Avoid unnecessary micro-files; do not create tiny helper modules merely to reduce line count.",
+    "Prefer cohesive helper modules around 250-400 lines when the responsibility naturally fits.",
+    "Use ordinary importable .py files for runtime/source logic; ZIP payload folders are delivery packaging only.",
+    "Stop a refactor train with a completion guard when remaining helper modules are cohesive and below the 400-line ideal."
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "bundle_gated_development_workflow",
-    "python_refactoring"
-  ]
+  "owner_group": "06_refactor_and_architecture_hardening",
+  "prompt_id": "large_module_refactor_protocol",
+  "schema_version": "1.0",
+  "status": "active",
+  "title": "Large Module Creation and Refactor Protocol",
+  "updated_for": "large-module-refactor-practical-granularity-v7-2",
+  "version": "7.2"
 }

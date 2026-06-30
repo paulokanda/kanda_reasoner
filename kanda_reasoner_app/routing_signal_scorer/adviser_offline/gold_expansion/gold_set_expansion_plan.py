@@ -23,6 +23,12 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_gold_set_expansion_plan_valid',
+    'build_gold_set_expansion_plan',
+    'validate_gold_set_expansion_plan',
+]
 from collections.abc import Mapping
 from typing import Any
 

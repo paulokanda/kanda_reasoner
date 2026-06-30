@@ -21,6 +21,8 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = ['ActiveReviewQueueItem', 'build_active_review_queue']
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from typing import Any

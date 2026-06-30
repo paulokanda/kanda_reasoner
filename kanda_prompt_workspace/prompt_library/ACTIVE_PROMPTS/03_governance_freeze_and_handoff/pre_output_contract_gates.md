@@ -1,7 +1,7 @@
 ---
 prompt_id: pre_output_contract_gates
 title: Pre-Output Contract Gates
-version: 1.2
+version: 1.3
 status: active_candidate
 load_type: on_request
 owner_group: 03_governance_freeze_and_handoff
@@ -53,7 +53,10 @@ First classify the terminal artifact as one of:
 - `INSTALL_SUCCESS`
 - `INSTALL_ERROR`
 - `VALIDATION`
+- `FREEZE`
 - `DIAGNOSTIC`
+- `VALIDATION_ERROR`
+- `FREEZE_ERROR`
 - `OTHER_TERMINAL`
 
 ### INSTALL_SUCCESS contract
@@ -63,7 +66,7 @@ Use only after an install command completes successfully.
 Required footer behavior:
 
 - Show a success message.
-- Wait 5 seconds.
+- Wait about 2 seconds.
 - Clear the terminal.
 - Keep the terminal open.
 - Do not ask for Enter.
@@ -73,22 +76,21 @@ PowerShell shape:
 
 ```powershell
 Write-Host ""
-Write-Host "INSTALL OK. Terminal will clear in 5 seconds..."
-Start-Sleep -Seconds 5
+Write-Host "INSTALL OK. Terminal will clear in 2 seconds..."
+Start-Sleep -Seconds 2
 Clear-Host
 ```
 
-### VALIDATION, DIAGNOSTIC, INSTALL_ERROR, VALIDATION_ERROR, and OTHER_TERMINAL contract
+### VALIDATION, FREEZE, DIAGNOSTIC, INSTALL_ERROR, VALIDATION_ERROR, FREEZE_ERROR, and OTHER_TERMINAL contract
 
-Use this cleanup behavior for validation blocks, diagnostic blocks, install failures, validation failures, and any terminal block that is not a successful install.
+Use this cleanup behavior for validation blocks, freeze blocks, diagnostic blocks, install failures, validation failures, freeze failures, and any terminal block that is not a successful install.
 
 Required footer behavior:
 
 - Keep the terminal open.
 - Wait for Enter.
-- Clear the terminal.
 - Wait for Enter again.
-- Clear the terminal again.
+- Clear the terminal once.
 - Do not close the terminal.
 
 PowerShell shape:
@@ -96,19 +98,18 @@ PowerShell shape:
 ```powershell
 Write-Host ""
 Read-Host "Press Enter to clear terminal"
-Clear-Host
-
-Read-Host "Press Enter again to finish"
+Read-Host "Press Enter again to clear"
 Clear-Host
 ```
 
 ### Terminal forbidden patterns
 
-Never mix the install-success 5-second footer with the Enter Enter cleanup footer.
-Never use the old generic footer that waits 5 seconds and then asks for Enter twice.
+Never mix the install-success 2-second footer with the Enter Enter cleanup footer.
+Never use the old generic footer that waits before asking for Enter twice.
 Never close the terminal from install, validation, diagnostic, or error blocks.
 Never ask for Enter after a successful install unless the user explicitly asked to keep the log visible.
-Never auto-clear validation or diagnostic output after 5 seconds.
+Never auto-clear validation or diagnostic output after 2 seconds.
+Never use inline `python -c` for freeze-prep, freeze-hint merge, validation-evidence merge, repair, or other KANDA operational PowerShell blocks; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work` and run that file. Before executing it, set `$env:PYTHONPATH = $PROJECT_ROOT`; inside the helper, insert `project_root` into `sys.path` before importing `kanda_reasoner_app`.
 
 
 
@@ -126,27 +127,29 @@ Pass criteria for an install block:
 - It has `$InstallFailed = $false` or an equivalent checked success flag.
 - It has a `try { ... } catch { ... }` or text-equivalent guarded error path.
 - The install error path includes `INSTALL ERROR`, the error message,
-  `Read-Host "Press Enter to clear terminal"`, `Clear-Host`,
-  `Read-Host "Press Enter again to finish"`, and `Clear-Host`.
-- The success path includes `INSTALL OK. Terminal will clear in 5 seconds...`,
-  `Start-Sleep -Seconds 5`, and `Clear-Host`.
+  `Read-Host "Press Enter to clear terminal"`,
+  `Read-Host "Press Enter again to clear"`, and one final `Clear-Host`.
+- The success path includes `INSTALL OK. Terminal will clear in 2 seconds...`,
+  `Start-Sleep -Seconds 2`, and `Clear-Host`.
 - The success path does not ask for Enter.
 
 Pass criteria for validation, diagnostic, repair, staging-check, freeze-merge,
 and every other non-install-success terminal block:
 
 - It includes `Read-Host "Press Enter to clear terminal"`.
-- It includes `Read-Host "Press Enter again to finish"`.
-- It includes `Clear-Host` after each prompt.
-- It does not use `Start-Sleep -Seconds 5` as the cleanup behavior.
+- It includes `Read-Host "Press Enter again to clear"`.
+- It includes one final `Clear-Host` after both prompts.
+- It does not use `Start-Sleep -Seconds 2` as the cleanup behavior.
 - It does not claim install success.
+- If it executes Python helper logic for freeze-prep, freeze-hint merge, validation-evidence merge, or repair, it does not use `python -c`; it writes a temporary UTF-8 `.py` helper under `_delete_after_daily_work` and executes that file.
 
 Fail-closed rule:
 
-Never deliver a KANDA install block without the 5-second success clear footer.
+Never deliver a KANDA install block without the 2-second success clear footer.
 Never deliver a validation, diagnostic, staging-check, repair, or other terminal
-block without Enter, `Clear-Host`, Enter, `Clear-Host`. If the footer check
+block without Enter, Enter, `Clear-Host`. If the footer check
 fails, repair the command before output.
+Never deliver freeze-prep or validation-evidence merge code that calls `python -c`. PowerShell can strip embedded quotes and create invalid Python such as `raise SystemExit(FREEZE...)`. Use a temporary `.py` helper file in `_delete_after_daily_work` instead, and make the project importable with `$env:PYTHONPATH = $PROJECT_ROOT` plus `sys.path.insert(0, str(project_root))` in the helper before project imports.
 
 <!-- TERMINAL_FOOTER_SELF_AUDIT_V15_END -->
 
@@ -154,11 +157,73 @@ fails, repair the command before output.
 
 Every install PowerShell block must wrap the install body in `try { ... } catch { ... }` or use a text-equivalent checked wrapper so that install errors cannot bypass terminal cleanup.
 
-If installation succeeds, the script must show `INSTALL OK. Terminal will clear in 5 seconds...`, wait 5 seconds, run `Clear-Host`, and keep the terminal open with no `Read-Host`.
+If installation succeeds, the script must show `INSTALL OK. Terminal will clear in 2 seconds...`, wait about 2 seconds, run `Clear-Host`, and keep the terminal open with no `Read-Host`.
 
-If installation fails at any point before success, the `catch` block must show `INSTALL ERROR`, show the error message, wait for Enter, run `Clear-Host`, wait for Enter again, run `Clear-Host` again, keep the terminal open, and must not call `exit`, `Stop-Process`, `Restart-Computer`, or any command that closes the terminal.
+If installation fails at any point before success, the `catch` block must show `INSTALL ERROR`, show the error message, wait for Enter twice, run one final `Clear-Host`, keep the terminal open, and must not call `exit`, `Stop-Process`, `Restart-Computer`, or any command that closes the terminal.
 
 The installer must not rely on an uncaught `throw` for install failures because an uncaught error can skip the diagnostic cleanup footer.
+
+
+
+<!-- RECEIVER_DELIVERY_OUTPUT_GATE_V1_START -->
+## RECEIVER_DELIVERY_OUTPUT_GATE - v1
+
+Apply this gate before emitting any artifact that mentions or contains `KANDA_FREEZE_HINT.json`, `KANDA_FREEZE_FORM_JSON_BEGIN`, `KANDA_ERROR_LESSON_JSON_BEGIN`, governance intake bundle, manual receiver bundle, Error Memory intake ZIP, or freeze form ZIP.
+
+Classify the receiver before writing the response:
+
+```text
+SOURCE_PATCH
+FREEZE_HINT_INTAKE
+MANUAL_FREEZE_FORM_RECEIVER
+ERROR_MEMORY_AI_ASSISTED_INTAKE
+STORAGE_ONLY_MANUAL_HELPER
+```
+
+### Source patch receiver
+
+A source patch installs changed project files only. A root-level `KANDA_FREEZE_HINT.json` is a sidecar, not a source file, and must not be installed into the active project root.
+
+### Freeze hint intake receiver
+
+A freeze-hint delivery is valid only when the install or validation flow stages or updates feature-specific freeze intake under `<project_drive>\<project_name>_show_project_to_AI\project_freeze_after_update\freeze_hint_intake`. After local validation, `validation_evidence_summary` must contain recognizable local evidence such as `VALIDATION OK: <feature_id>`, `STATUS: IN_SYNC`, and `ZIP CONTRACT: PASS`. Sandbox-only text or pending-validation wording is not acceptable for Confirm and Write.
+
+### Manual freeze form receiver
+
+Use this only when the latest freeze hint is stale, consumed, or unavailable. The receiver-ready text must be exactly:
+
+```text
+KANDA_FREEZE_FORM_JSON_BEGIN
+{ one valid freeze form JSON object }
+KANDA_FREEZE_FORM_JSON_END
+```
+
+The JSON object must include `feature_title`, `primary_box`, `box_type`, `validated_files`, `generated_files`, `protected_paths`, `do_not_regress_rules`, `validation_evidence_summary`, `known_warnings`, `planned_next_step`, and `notes`.
+
+If the text is packaged in a ZIP but not imported automatically by the app, label it `STORAGE_ONLY_MANUAL_HELPER` and state that manual paste into the Freeze Feature receiver is required. Do not call it installed freeze intake.
+
+### Error Memory AI-assisted intake receiver
+
+For text output, the receiver-ready lesson must be exactly:
+
+```text
+KANDA_ERROR_LESSON_JSON_BEGIN
+{ active-ready JSON object }
+KANDA_ERROR_LESSON_JSON_END
+```
+
+Do not wrap the markers in markdown code fences. Do not output plain JSON only. Do not use writing blocks. Active-ready lessons require the current Error Memory blueprint fields including `redaction`, where `redaction.applied` and `redaction.export_safe` are true and `redaction.rules` is a non-empty list.
+
+For ZIP delivery, the install block must stage the active-ready lesson into `<project_drive>\<project_name>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake`. A ZIP that only stores the lesson in daily-work is storage/manual helper only.
+
+### Fail-closed rule
+
+If the response cannot prove the actual receiver path or manual receiver action, block the artifact and output:
+
+```text
+CONTRACT NOT MET - RECEIVER DELIVERY BLOCKED
+```
+<!-- RECEIVER_DELIVERY_OUTPUT_GATE_V1_END -->
 
 <!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
 ## Canonical freeze-ready patch delivery sequence
@@ -286,8 +351,8 @@ PATCH DELIVERY PRE-FLIGHT VERIFICATION:
 [PASS] Installer uses no Downloads/Desktop fallback.
 [PASS] patch_install_delivery_error_register was applied before output.
 [PASS] Long validation evidence uses a here-string or short statements, not one giant quoted Write-Host line.
-[PASS] Install success uses 5-second Clear-Host and no Enter prompts.
-[PASS] Install errors use Enter, Clear-Host, Enter, Clear-Host and keep the terminal open.
+[PASS] Install success uses 2-second Clear-Host and no Enter prompts.
+[PASS] Install errors use Enter, Enter, one final Clear-Host and keep the terminal open.
 [PASS] Freeze-form JSON is emitted from the same payload source, or the response explicitly states why it is withheld until user-local validation.
 ```
 
@@ -601,3 +666,67 @@ it, linking a ZIP, or providing install commands. If validation cannot be done,
 do not emit an active lesson block.
 
 <!-- PRE_OUTPUT_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_END -->
+
+<!-- RECEIVER_DELIVERY_OUTPUT_GATE_V2_START -->
+
+## Receiver delivery output gate - v2
+
+Before outputting any freeze, Error Memory, governance intake, manual receiver,
+or patch ZIP artifact, the response must prove the real receiver chain:
+
+```text
+artifact -> declared receiver -> install or manual action -> validation proof
+```
+
+Do not treat a file stored under `<project>_delete_after_daily_work` as consumed
+by the app. Daily-work storage is transient staging only.
+
+Required visible block when receiver-bearing ZIPs are mentioned:
+
+```text
+RECEIVER DELIVERY CHECK
+Receiver classification:
+Actual receiver path or action:
+Installer stages to receiver: YES / NO
+Manual paste required: YES / NO
+Storage-only helper: YES / NO
+Receiver proof:
+RECEIVER STATUS: PASS / FAIL
+```
+
+Hard blocks:
+
+- If `ERROR_MEMORY_AI_ASSISTED_INTAKE` is claimed, the install block must copy
+  the lesson into `project_error_memory\pending_ai_assisted_error_lesson_intake`.
+- If `FREEZE_HINT_INTAKE` is claimed, the install or validation block must copy
+  or merge the current feature's `KANDA_FREEZE_HINT.json` into
+  `project_freeze_after_update\freeze_hint_intake`.
+- If only marker-wrapped text is provided for manual paste, the receiver must be
+  `MANUAL_FREEZE_FORM_RECEIVER` or `STORAGE_ONLY_MANUAL_HELPER`; do not call it
+  installed intake.
+- If Error Memory text is output, it must use `KANDA_ERROR_LESSON_JSON_BEGIN` /
+  `KANDA_ERROR_LESSON_JSON_END` and must be active-ready JSON, not code-fenced
+  plain JSON.
+- If manual freeze form text is output, it must use `KANDA_FREEZE_FORM_JSON_BEGIN`
+  / `KANDA_FREEZE_FORM_JSON_END` and must include current local validation
+  evidence markers.
+
+Install blocks that extract ZIPs must validate ZIP member names before
+`Expand-Archive` and reject traversal paths.
+
+<!-- RECEIVER_DELIVERY_OUTPUT_GATE_V2_END -->
+
+## Receiver delivery package marker gate - v3
+
+When a patch ZIP includes any Error Memory lesson archive member whose basename starts with `KANDA_ERROR_LESSON_JSON_`, the archive member content must be receiver-block text, not raw JSON only.
+
+Required package-time shape:
+
+```text
+KANDA_ERROR_LESSON_JSON_BEGIN
+{ one active-ready JSON object }
+KANDA_ERROR_LESSON_JSON_END
+```
+
+This applies even when the archive member suffix is `.json`. The suffix is not permission to omit the markers. `scripts/validate_patch_zip.py` is the source-of-truth ZIP contract check and must pass before delivery.
+

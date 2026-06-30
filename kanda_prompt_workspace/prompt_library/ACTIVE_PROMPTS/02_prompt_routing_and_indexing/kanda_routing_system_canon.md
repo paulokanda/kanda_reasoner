@@ -909,7 +909,7 @@ It is not the place for active project-specific memory.
 ## Active project memory
 
 ```text
-<active_project_root>/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
+<project_drive>/<active_project_slug>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 This is the source of truth for active frozen memory for that selected project.
@@ -917,7 +917,7 @@ This is the source of truth for active frozen memory for that selected project.
 Example:
 
 ```text
-E:/kanda_reasoner/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
+E:/kanda_reasoner_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 is the active memory only when the selected project is KANDA Reasoner itself.
@@ -925,10 +925,12 @@ is the active memory only when the selected project is KANDA Reasoner itself.
 For another project:
 
 ```text
-D:/client_project/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
+D:/client_project_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
 belongs to that other project.
+
+The `_show_project_to_AI` folder is a sibling/external support root derived from the selected project. It is not nested inside the selected project source root. The `second_prompt_files` folder belongs to the selected project handoff output, and its file families may vary by project.
 
 ## Generated review/exposure artifacts
 
@@ -1571,17 +1573,20 @@ When the task asks to correct, convert, promote, or validate a `KANDA_ERROR_LESS
 
 ```text
 error_memory_active_ready_correction_blueprint
+error_memory_active_ready_json_template, when the output is for the Error Memory tab AI-assisted intake window
+error_memory_model_template, after the JSON template and before final lesson output
 ```
 
 This is a routed prompt, not an always-startup prompt.
 
-The bridge must not copy the full prompt body into startup. It must only point to the prompt and enforce these guards:
+The bridge must not copy the full prompt body into startup. It must point to the correction blueprint and, for AI-assisted intake output, to the two active-ready templates. It must enforce these guards:
 
 ```text
 Do not output status active unless active-ready evidence is complete.
 Do not invent source_patch_zip, validation evidence, regression_check.command, or expected_marker.
 If evidence is missing, keep the lesson draft/needs_ai_review.
 Use forward slashes in regression_check.command.
+When building text for the Error Memory tab AI-assisted intake, read error_memory_active_ready_json_template before error_memory_model_template and output exactly one marker-wrapped lesson block.
 ```
 
 If the task is only about Error Memory GUI code behavior, use the owning GUI/source prompts instead. This bridge governs lesson JSON correction, not GUI implementation.

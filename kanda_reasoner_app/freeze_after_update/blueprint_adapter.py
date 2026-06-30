@@ -8,6 +8,15 @@ project_freeze_after_update templates live in KANDA's blueprint freeze box:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'ensure_box',
+    'generate_ai_send_files',
+    'generator_path',
+    'inspect_box',
+    'kanda_project_root',
+    'load_generator',
+]
 import importlib.util
 import sys
 from pathlib import Path
@@ -51,34 +60,95 @@ def freeze_state_owner_root(project_root: str | Path) -> Path:
     return project_analysis_evidence_root(project_root)
 
 
+def _selected_project_root(project_root: str | Path) -> Path:
+    """Return the real selected source project root."""
+    return Path(project_root).expanduser().resolve(strict=False)
+
+
+def _base_payload(status: str, project_root: str | Path, owner_root: Path, message: str) -> dict[str, Any]:
+    """Build a generator-shaped payload without calling the blueprint module."""
+    return {
+        "status": status,
+        "project_root": str(_selected_project_root(project_root)),
+        "freeze_state_owner_root": str(owner_root),
+        "box_root": str(owner_root / "project_freeze_after_update"),
+        "message": message,
+        "missing_paths": [],
+        "created_paths": [],
+        "output_zip": "",
+        "output_instruction": "",
+        "freeze_count": 0,
+    }
+
+
 def _rewrite_payload_project(payload: dict[str, Any], project_root: str | Path, owner_root: Path) -> dict[str, Any]:
     """Expose active project identity while keeping external state paths."""
     result = dict(payload)
-    result["project_root"] = str(Path(project_root).expanduser().resolve(strict=False))
+    result["project_root"] = str(_selected_project_root(project_root))
     result["freeze_state_owner_root"] = str(owner_root)
     if "box_root" in result:
         result["box_root"] = str(owner_root / "project_freeze_after_update")
     return result
 
 def inspect_box(project_root: str | Path) -> dict[str, Any]:
-    """Inspect the project-local box through the blueprint generator."""
-    module = load_generator()
+    """Inspect the selected project external support box through the blueprint generator."""
+    selected_root = _selected_project_root(project_root)
     owner_root = freeze_state_owner_root(project_root)
+    if not selected_root.exists() or not selected_root.is_dir():
+        return _base_payload(
+            "invalid_project_root",
+            selected_root,
+            owner_root,
+            "Project root does not exist or is not a directory.",
+        )
+    if not owner_root.exists():
+        payload = _base_payload(
+            "incomplete",
+            selected_root,
+            owner_root,
+            "Freeze Feature After Update box is missing required paths.",
+        )
+        payload["missing_paths"] = [
+            "project_freeze_after_update",
+            "project_freeze_after_update/frozen_features_memory",
+            "project_freeze_after_update/frozen_features_memory/entries",
+            "project_freeze_after_update/files_to_send_ai",
+        ]
+        return payload
+    module = load_generator()
     payload = module.inspect_freeze_after_update_box(owner_root)
     return _rewrite_payload_project(payload, project_root, owner_root)
 
 
 def ensure_box(project_root: str | Path) -> dict[str, Any]:
-    """Create or validate the project-local box through the blueprint generator."""
-    module = load_generator()
+    """Create or validate the selected project external support box through the blueprint generator."""
+    selected_root = _selected_project_root(project_root)
     owner_root = freeze_state_owner_root(project_root)
+    if not selected_root.exists() or not selected_root.is_dir():
+        return _base_payload(
+            "invalid_project_root",
+            selected_root,
+            owner_root,
+            "Project root does not exist or is not a directory.",
+        )
+    owner_root.mkdir(parents=True, exist_ok=True)
+    module = load_generator()
     payload = module.ensure_freeze_after_update_box(owner_root)
     return _rewrite_payload_project(payload, project_root, owner_root)
 
 
 def generate_ai_send_files(project_root: str | Path) -> dict[str, Any]:
     """Generate AI-send files through the blueprint generator."""
-    module = load_generator()
+    selected_root = _selected_project_root(project_root)
     owner_root = freeze_state_owner_root(project_root)
+    if not selected_root.exists() or not selected_root.is_dir():
+        return _base_payload(
+            "invalid_project_root",
+            selected_root,
+            owner_root,
+            "Project root does not exist or is not a directory.",
+        )
+    owner_root.mkdir(parents=True, exist_ok=True)
+    module = load_generator()
     payload = module.generate_freeze_after_update_ai_files(owner_root)
     return _rewrite_payload_project(payload, project_root, owner_root)

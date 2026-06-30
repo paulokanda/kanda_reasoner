@@ -1,24 +1,11 @@
 {
+  "aligned_with": "large_module_refactor_protocol_v7.2",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
+  "owner_group": "06_refactor_and_architecture_hardening",
   "prompt_id": "large_module_refactor_template",
-  "display_name": "Large Module Refactor Template",
-  "filename": "large_module_refactor_template.md",
-  "category": "06_refactor_and_architecture_hardening",
+  "schema_version": "1.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Reusable template for large-module refactor planning.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 30,
-  "trigger_phrases": [
-    "large module template",
-    "refactor template",
-    "split file template"
-  ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "bundle_gated_development_workflow",
-    "python_refactoring"
-  ]
+  "title": "Large Module Refactor Template",
+  "updated_for": "large-module-refactor-practical-granularity-v7-2",
+  "version": "7.2"
 }

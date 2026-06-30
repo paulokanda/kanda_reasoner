@@ -11,6 +11,12 @@ shape for future human review of precomputed semantic evidence artifacts.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_disabled_schema_example_status',
+    'build_minimal_schema_only_precomputed_artifact_example',
+    'validate_schema_only_precomputed_artifact_example',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

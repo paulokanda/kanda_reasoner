@@ -1,4 +1,4 @@
-"""Bootstrap and inspect the project-local Freeze Feature After Update box.
+"""Bootstrap and inspect the selected project external Freeze Feature After Update support box.
 
 This app-facing module delegates box creation/inspection to the blueprint
 freeze generator under project_freeze_ledger/freeze_tools. The GUI/app box does
@@ -56,7 +56,7 @@ def _from_payload(payload: dict[str, Any]) -> FreezeAfterUpdateResult:
 
 
 def inspect_freeze_after_update_box(project_root: Path | str) -> FreezeAfterUpdateResult:
-    """Inspect the project-local box without creating or modifying files."""
+    """Inspect the selected project external support box without creating or modifying files."""
     try:
         return _from_payload(inspect_box(project_root))
     except Exception as exc:

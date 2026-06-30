@@ -1,7 +1,16 @@
-"""Freeze-state parsing and indexing for the project-local box."""
+"""Freeze-state parsing and indexing for the selected project external support box."""
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_freezes',
+    'build_index_payload',
+    'entry_files',
+    'load_freeze_index',
+    'parse_frontmatter',
+    'write_freeze_index',
+]
 import json
 import re
 from pathlib import Path
@@ -137,7 +146,7 @@ def build_freezes(project_root: Path | str) -> list[dict[str, Any]]:
 
 
 def build_index_payload(project_root: Path | str) -> dict[str, Any]:
-    """Build the freeze_index.json payload for the project-local box."""
+    """Build the freeze_index.json payload for the selected project external support box."""
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_by": "kanda_reasoner.freeze_after_update",

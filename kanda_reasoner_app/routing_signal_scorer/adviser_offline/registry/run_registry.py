@@ -8,6 +8,14 @@ candidates, write registry files, scan source trees, or change runtime routing.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_run_registry_record_review_eligible',
+    'assert_run_registry_record_valid',
+    'build_run_registry_record',
+    'RunRegistryValidationResult',
+    'validate_run_registry_record',
+]
 from dataclasses import dataclass
 from typing import Any, Mapping
 

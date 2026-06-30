@@ -28,7 +28,7 @@ from .handoff_zip_exporter_support import (
     timestamp_value,
 )
 from .handoff_zip_exporter_writer import write_external_readme, write_package_parts
-from .source_archive_exporter import write_source_archive_parts
+from .source_tree_exporter import write_source_archive_parts
 from .schema_models import ProjectContext
 
 DEFAULT_PART_SIZE_MB = 500

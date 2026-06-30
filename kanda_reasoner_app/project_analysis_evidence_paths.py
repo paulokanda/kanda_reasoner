@@ -20,10 +20,59 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import tempfile
 from pathlib import Path
 from typing import Any
+
+from kanda_reasoner_app._project_analysis_evidence_path_resolution import (
+    PROJECT_REFERENCE_DIR,
+    PROJECT_ANALYSIS_EVIDENCE_DIR,
+    SHOW_PROJECT_TO_AI_SUFFIX,
+    DELETE_AFTER_DAILY_WORK_SUFFIX,
+    SECOND_PROMPT_FILES_DIR,
+    SECOND_PROMPT_FILES_BUILDING_DIR,
+    FIRST_PROMPT_FILES_DIR,
+    PROJECT_ERROR_MEMORY_DIR,
+    PROJECT_FREEZE_AFTER_UPDATE_DIR,
+    LIFECYCLE_MANIFEST_NAME,
+    SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV,
+    SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV,
+    JSON_COMPLETE_DIR,
+    JSON_PARTS_DIR,
+    _SAFE_NAME_RE,
+    _SAFE_SLUG_RE,
+    _REPEATED_UNDERSCORE_RE,
+    normalize_path,
+    make_safe_slug,
+    project_name_from_root,
+    _folder_name_for_slug,
+    _base_slug_from_suffixed_name,
+    show_project_to_ai_root_from_hint,
+    _show_project_to_ai_root,
+    project_analysis_evidence_root,
+    _normalize_project_analysis_evidence_dir_casing,
+    _paths_refer_to_same_location,
+    analysis_json_building_dir,
+    _show_project_to_ai_override_project_root,
+    _active_artifact_project_root,
+    _analysis_json_complete_dir_override,
+    analysis_json_complete_dir,
+    analysis_project_error_memory_dir,
+    analysis_project_freeze_after_update_dir,
+    legacy_project_freeze_after_update_dir,
+    show_project_lifecycle_manifest_path,
+    analysis_first_prompt_files_dir,
+    analysis_json_parts_dir,
+    _project_name,
+    primary_evidence_json_path,
+    secondary_evidence_json_path,
+    working_copy_json_path,
+    working_copy_metadata_path,
+    parts_manifest_file_path,
+    parts_index_file_path,
+    route_manifest_file_path,
+    normalize_evidence_artifact_path,
+)
 
 __all__ = [
     "PROJECT_REFERENCE_DIR",
@@ -73,249 +122,6 @@ __all__ = [
     "relative_working_copy_metadata_path",
     "normalize_evidence_artifact_path",
 ]
-
-PROJECT_REFERENCE_DIR = "project_freeze_ledger"
-PROJECT_ANALYSIS_EVIDENCE_DIR = "show_project_to_AI"
-SHOW_PROJECT_TO_AI_SUFFIX = "_show_project_to_AI"
-DELETE_AFTER_DAILY_WORK_SUFFIX = "_delete_after_daily_work"
-SECOND_PROMPT_FILES_DIR = "second_prompt_files"
-SECOND_PROMPT_FILES_BUILDING_DIR = "second_prompt_files_building"
-FIRST_PROMPT_FILES_DIR = "first_prompt_files"
-PROJECT_ERROR_MEMORY_DIR = "project_error_memory"
-PROJECT_FREEZE_AFTER_UPDATE_DIR = "project_freeze_after_update"
-LIFECYCLE_MANIFEST_NAME = "_lifecycle_manifest.json"
-SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV = "KANDA_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR"
-SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV = "KANDA_SHOW_PROJECT_TO_AI_PROJECT_ROOT"
-JSON_COMPLETE_DIR = SECOND_PROMPT_FILES_DIR
-JSON_PARTS_DIR = "json_splitted"
-
-_SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]+")
-_SAFE_SLUG_RE = re.compile(r"[^a-z0-9_]+")
-_REPEATED_UNDERSCORE_RE = re.compile(r"_+")
-
-
-def normalize_path(path: str | Path) -> Path:
-    """Return an absolute normalized path without creating it."""
-    return Path(path).expanduser().resolve(strict=False)
-
-
-def make_safe_slug(name: str, fallback: str = "project") -> str:
-    """Return a lowercase ASCII-safe slug for generated folder names."""
-    stripped = str(name).strip().lower()
-    slug = _SAFE_SLUG_RE.sub("_", stripped)
-    slug = _REPEATED_UNDERSCORE_RE.sub("_", slug).strip("_")
-    return slug or fallback
-
-
-def project_name_from_root(project_root: str | Path) -> str:
-    """Return a stable project name derived from a selected project root."""
-    raw = str(project_root).replace("\\", "/").rstrip("/")
-    name = raw.rsplit("/", 1)[-1].strip() or "project"
-    cleaned = _SAFE_NAME_RE.sub("_", name).strip("._-")
-    return cleaned or "project"
-
-
-def _folder_name_for_slug(root: Path, slug: str) -> Path:
-    """Return the external show-project folder for a safe project slug."""
-    folder_name = f"{slug}{SHOW_PROJECT_TO_AI_SUFFIX}"
-
-    if root.drive:
-        return Path(root.anchor) / folder_name
-
-    return root.parent / folder_name
-
-
-def _base_slug_from_suffixed_name(name: str, suffix: str) -> str:
-    """Return a safe base slug after removing a known generated-folder suffix."""
-    if name.endswith(suffix):
-        return make_safe_slug(name[: -len(suffix)])
-    return make_safe_slug(name)
-
-
-def show_project_to_ai_root_from_hint(project_root: str | Path) -> Path:
-    """Return the canonical show-project root for a project or output hint.
-
-    Accepted hints include the real project root, the already generated
-    ``*_show_project_to_AI`` root, its direct children, Error Memory child
-    folders, and the daily-work maintenance folder.  This prevents accidental
-    sibling folders such as ``project_error_memory_show_project_to_AI`` or
-    ``<partial_typo>_show_project_to_AI`` from being derived from output paths.
-    """
-    root = normalize_path(project_root)
-
-    state_children = {
-        "pending_ai_assisted_error_lesson_intake",
-        "lessons",
-        "exports",
-        "schemas",
-        "freeze_hint_intake",
-        "frozen_features_memory",
-        "files_to_send_ai",
-    }
-    if root.name in state_children:
-        parent = root.parent
-        if parent.name in {PROJECT_ERROR_MEMORY_DIR, PROJECT_FREEZE_AFTER_UPDATE_DIR} and parent.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
-            return parent.parent
-
-    if root.name in {PROJECT_ERROR_MEMORY_DIR, PROJECT_FREEZE_AFTER_UPDATE_DIR} and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
-        return root.parent
-
-    show_children = {
-        FIRST_PROMPT_FILES_DIR,
-        SECOND_PROMPT_FILES_DIR,
-        SECOND_PROMPT_FILES_BUILDING_DIR,
-        PROJECT_ERROR_MEMORY_DIR,
-        PROJECT_FREEZE_AFTER_UPDATE_DIR,
-        JSON_PARTS_DIR,
-    }
-    if root.name in show_children and root.parent.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
-        return root.parent
-
-    if root.name.endswith(SHOW_PROJECT_TO_AI_SUFFIX):
-        return root
-
-    if root.name.endswith(DELETE_AFTER_DAILY_WORK_SUFFIX):
-        slug = _base_slug_from_suffixed_name(root.name, DELETE_AFTER_DAILY_WORK_SUFFIX)
-        return _folder_name_for_slug(root, slug)
-
-    return _folder_name_for_slug(root, make_safe_slug(root.name))
-
-
-def _show_project_to_ai_root(project_root: str | Path) -> Path:
-    """Return <drive>/<project>_show_project_to_AI without creating it."""
-    return show_project_to_ai_root_from_hint(project_root)
-
-
-def project_analysis_evidence_root(project_root: str | Path) -> Path:
-    """Return the active external show-project-to-AI root."""
-    return _show_project_to_ai_root(project_root)
-
-
-def _normalize_project_analysis_evidence_dir_casing(project_root: str | Path) -> None:
-    """Retained compatibility no-op for legacy callers.
-
-    The active evidence root is external to the project source tree, so this
-    helper must not rename or create in-source folders anymore.
-    """
-    return None
-
-
-def _paths_refer_to_same_location(first: Path, second: Path) -> bool:
-    """Return True when two paths resolve to the same filesystem entry."""
-    try:
-        return first.samefile(second)
-    except OSError:
-        return False
-
-
-def analysis_json_building_dir(project_root: str | Path) -> Path:
-    """Return the guarded temporary Run Collector build folder.
-
-    The GUI writes new second-prompt artifacts here first so the previously
-    published ``second_prompt_files`` delivery remains visible while long JSON
-    collection and bundle generation are running. Only after successful JSON
-    generation are the files published into ``second_prompt_files``.
-    """
-    return project_analysis_evidence_root(project_root) / SECOND_PROMPT_FILES_BUILDING_DIR
-
-
-def _show_project_to_ai_override_project_root(project_root: str | Path) -> Path:
-    """Return the selected project root that owns an active output override.
-
-    Some collector child processes can be imported from the tool package while
-    operating on a user-selected project.  The output-folder override must be
-    validated against that selected project, not against a stale/default package
-    root that may still exist in inherited process state.
-    """
-    raw = os.environ.get(SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV, "").strip()
-    if raw:
-        return Path(raw).expanduser().resolve(strict=False)
-    return Path(project_root).expanduser().resolve(strict=False)
-
-
-def _active_artifact_project_root(project_root: str | Path) -> Path:
-    """Return the project root used for generated evidence filenames."""
-    if os.environ.get(SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, "").strip():
-        return _show_project_to_ai_override_project_root(project_root)
-    return Path(project_root).expanduser().resolve(strict=False)
-
-
-def _analysis_json_complete_dir_override(project_root: str | Path) -> Path | None:
-    """Return a guarded child-process output override, when explicitly set."""
-    raw = os.environ.get(SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, "").strip()
-    if not raw:
-        return None
-    override = Path(raw).expanduser().resolve(strict=False)
-    selected_project_root = _show_project_to_ai_override_project_root(project_root)
-    evidence_root = project_analysis_evidence_root(selected_project_root).expanduser().resolve(strict=False)
-    try:
-        override.relative_to(evidence_root)
-    except ValueError as exc:
-        raise ValueError(
-            SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV
-            + " must stay under the selected project's show_project_to_AI folder: "
-            + str(evidence_root)
-            + "; received: "
-            + str(override)
-        ) from exc
-    if override.name not in {SECOND_PROMPT_FILES_DIR, SECOND_PROMPT_FILES_BUILDING_DIR}:
-        raise ValueError(
-            SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV
-            + " must target second_prompt_files or second_prompt_files_building: "
-            + str(override)
-        )
-    return override
-
-
-def analysis_json_complete_dir(project_root: str | Path) -> Path:
-    """Return the external second_prompt_files folder for AI-delivery artifacts.
-
-    Compatibility note: the function name is retained because many callers
-    already ask for the complete JSON artifact directory, but the normal
-    returned folder is the Run Collector delivery child folder:
-    ``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
-
-    A child-process-only guarded environment override may point generation to
-    ``second_prompt_files_building`` during a rebuild. The GUI later publishes
-    those files back to ``second_prompt_files`` before ZIP export.
-    """
-    override = _analysis_json_complete_dir_override(project_root)
-    if override is not None:
-        return override
-    return project_analysis_evidence_root(project_root) / SECOND_PROMPT_FILES_DIR
-
-
-
-def analysis_project_error_memory_dir(project_root: str | Path) -> Path:
-    """Return the external canonical Error Memory folder for the selected project.
-
-    The folder is a sibling of first_prompt_files and second_prompt_files under
-    the dynamic ``*_show_project_to_AI`` root:
-    ``<project_drive>:/<project_name>_show_project_to_AI/project_error_memory``.
-    It is persistent project-specific memory, not disposable upload output.
-    """
-    return project_analysis_evidence_root(project_root) / PROJECT_ERROR_MEMORY_DIR
-
-
-def analysis_project_freeze_after_update_dir(project_root: str | Path) -> Path:
-    """Return the external canonical Freeze Feature After Update state folder.
-
-    The folder is a persistent project-specific state sibling of
-    ``project_error_memory`` under the dynamic ``*_show_project_to_AI`` root:
-    ``<project_drive>:/<project_name>_show_project_to_AI/project_freeze_after_update``.
-    """
-    return project_analysis_evidence_root(project_root) / PROJECT_FREEZE_AFTER_UPDATE_DIR
-
-
-def legacy_project_freeze_after_update_dir(project_root: str | Path) -> Path:
-    """Return the legacy in-source freeze folder for compatibility reads."""
-    return normalize_path(project_root) / PROJECT_FREEZE_AFTER_UPDATE_DIR
-
-
-def show_project_lifecycle_manifest_path(project_root: str | Path) -> Path:
-    """Return the lifecycle manifest path for the external project-support root."""
-    return project_analysis_evidence_root(project_root) / LIFECYCLE_MANIFEST_NAME
-
 
 def _default_show_project_lifecycle_manifest() -> dict[str, Any]:
     """Return the default persistent/disposable child-folder policy."""
@@ -418,21 +224,6 @@ def is_show_project_disposable_child(project_root: str | Path, child_name: str) 
     manifest = load_show_project_lifecycle_manifest(project_root)
     return str(child_name) in set(str(item) for item in manifest.get("disposable", []))
 
-def analysis_first_prompt_files_dir(project_root: str | Path) -> Path:
-    """Return the external first_prompt_files folder for startup delivery artifacts.
-
-    Compatibility helper for Freeze Feature After Update and first-prompt
-    delivery callers. The folder is a sibling of second_prompt_files under the
-    selected project's dynamic show_project_to_AI root:
-    ``<project_drive>:/<project_name>_show_project_to_AI/first_prompt_files``.
-    """
-    return project_analysis_evidence_root(project_root) / FIRST_PROMPT_FILES_DIR
-
-
-def analysis_json_parts_dir(project_root: str | Path) -> Path:
-    """Return the legacy external folder for generated split JSON artifacts."""
-    return project_analysis_evidence_root(project_root) / JSON_PARTS_DIR
-
 
 def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     """Create and return the external evidence root and child folders."""
@@ -447,59 +238,6 @@ def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     # is created only by the runner while work is active, and legacy
     # json_splitted is not created by normal directory preparation.
     return evidence_root
-
-
-def _project_name(project_root: str | Path) -> str:
-    """Return the sanitized project name used in generated filenames."""
-    return project_name_from_root(_active_artifact_project_root(project_root))
-
-
-def primary_evidence_json_path(project_root: str | Path) -> Path:
-    """Return the primary complete generated JSON path."""
-    return analysis_json_complete_dir(project_root) / f"{_project_name(project_root)}__complete.json"
-
-
-def secondary_evidence_json_path(project_root: str | Path) -> Path:
-    """Return the runtime-trace JSON path paired with the primary file."""
-    name = f"{_project_name(project_root)}__complete_runtime_trace.json"
-    return analysis_json_complete_dir(project_root) / name
-
-
-def working_copy_json_path(project_root: str | Path) -> Path:
-    """Return the local-AI working-copy JSON path."""
-    name = f"{_project_name(project_root)}__complete_local_AI.json"
-    return analysis_json_complete_dir(project_root) / name
-
-
-def working_copy_metadata_path(project_root: str | Path) -> Path:
-    """Return the local-AI working-copy metadata path."""
-    name = f"{_project_name(project_root)}__complete_local_AI.meta.json"
-    return analysis_json_complete_dir(project_root) / name
-
-
-def parts_manifest_file_path(project_root: str | Path) -> Path:
-    """Return the normalized generated split manifest path."""
-    name = f"{_project_name(project_root)}_split_manifest.json"
-    return analysis_json_parts_dir(project_root) / name
-
-
-def parts_index_file_path(project_root: str | Path) -> Path:
-    """Return the normalized generated split index path."""
-    return analysis_json_parts_dir(project_root) / f"{_project_name(project_root)}_split_index.json"
-
-
-def route_manifest_file_path(project_root: str | Path) -> Path:
-    """Return the deterministic route manifest path for split artifacts."""
-    name = f"{_project_name(project_root)}__complete__web_ai_route_manifest.json"
-    return analysis_json_parts_dir(project_root) / name
-
-
-def normalize_evidence_artifact_path(project_root: str | Path, raw_path: str | Path) -> Path:
-    """Return a Path for raw_path or the canonical primary JSON path."""
-    raw_text = str(raw_path).strip()
-    if raw_text:
-        return Path(raw_path)
-    return primary_evidence_json_path(project_root)
 
 
 def relative_evidence_path(*parts: str) -> str:

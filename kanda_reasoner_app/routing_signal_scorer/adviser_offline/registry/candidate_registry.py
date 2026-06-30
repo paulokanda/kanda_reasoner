@@ -23,6 +23,12 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_candidate_registry_record_valid',
+    'build_candidate_registry_record',
+    'validate_candidate_registry_record',
+]
 from collections.abc import Mapping
 from typing import Any
 

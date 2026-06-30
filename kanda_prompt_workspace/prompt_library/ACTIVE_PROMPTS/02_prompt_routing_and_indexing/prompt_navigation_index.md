@@ -256,10 +256,12 @@ Required behavior:
 ```text
 tool_project_slug = kanda_reasoner
 active_project_slug = selected project in use
-active_project_root = selected project root
+active_project_root = selected project source root
+active_project_support_root = <project_drive>/<active_project_slug>_show_project_to_AI
+active_project_daily_work_root = <project_drive>/<active_project_slug>_delete_after_daily_work
 ```
 
-Do not hardcode `kanda_reasoner` as the active target project unless KANDA Reasoner is explicitly the selected active project. Project-specific writes use `<active_project_root>`. Reusable tool writes use the owning KANDA Reasoner tool path. This route is a boundary invariant and must be paired with the relevant implementation, box, patch, validation, freeze, or handoff prompt; it does not replace those prompts.
+Do not hardcode `kanda_reasoner` as the active target project unless KANDA Reasoner is explicitly the selected active project. Project-specific support writes use `<active_project_support_root>` or `<active_project_daily_work_root>`. Selected project source edits use `<active_project_root>` only when the task intentionally edits that selected project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden. This route is a boundary invariant and must be paired with the relevant implementation, box, patch, validation, freeze, or handoff prompt; it does not replace those prompts.
 <!-- PROJECT_TOOL_BOUNDARY_CANON_V1_END -->
 
 ## Fast Path
@@ -290,7 +292,7 @@ Fast Path is not allowed for:
 | 02_prompt_routing_and_indexing | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 03_governance_freeze_and_handoff | 9 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 04_box_architecture_and_boundaries | 5 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
-| 05_patch_delivery_and_validation | 6 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
+| 05_patch_delivery_and_validation | 10 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 06_refactor_and_architecture_hardening | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 07_prompt_authoring_and_audit | 3 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 08_python_engineering_core | 12 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
@@ -412,7 +414,8 @@ Required behavior:
 <!-- USER_DETECTED_CORRECTION_NAVIGATION_GATE_V1_END -->
 
 
-- Before outputting any PowerShell or terminal block, apply `TERMINAL_FOOTER_SELF_AUDIT`: install blocks require the 5-second `INSTALL OK. Terminal will clear in 5 seconds...` footer; validation, diagnostic, staging-check, repair, freeze/evidence-merge, and all other terminal blocks require Enter, `Clear-Host`, Enter, `Clear-Host`.
+- Before outputting any PowerShell or terminal block, apply `TERMINAL_FOOTER_SELF_AUDIT`: install blocks require the 2-second `INSTALL OK. Terminal will clear in 2 seconds...` footer; validation, diagnostic, staging-check, repair, freeze/evidence-merge, error, and all other terminal blocks require Enter, Enter, then one final `Clear-Host`, and must keep the terminal open.
+- Freeze-prep and validation-evidence merge commands must not use inline `python -c`; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work`, set `$env:PYTHONPATH = $PROJECT_ROOT`, insert `project_root` into `sys.path` in the helper before importing `kanda_reasoner_app`, and then run that file.
 - If terminal cleanup cannot be verified from the exact text being emitted, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` and repair the command before showing it.
 
 
@@ -594,7 +597,8 @@ Do not downgrade the context load to medium/medium-high for this confirmation-by
 | explain / discuss / brainstorm | none beyond loaded kernel | selected group only if needed | DEGRADED WARNING if evidence thin |
 | create or modify code | 05 plus source files and validation steps; 04 if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08, 09, 10 depending on task | HARD STOP before implementation; new code modules must stay <=500 lines |
 | create a new folder with a databank | 04, 05, 09, 10 | 11 if production-ready storage | HARD STOP before implementation |
-| large code module / code file over 500 lines, or new code module expected to exceed 500 lines | 04, 05, 06 | 08, 09 | HARD STOP before implementation |
+| large code module / code file over 500 lines, or new code module expected to exceed 500 lines | 04, 05, 06 with large_module_refactor_protocol v7.2 plus large_module_refactor_template; AST Split Audit handoff when available | 08, 09 | HARD STOP before implementation; require candidate-island queue and patch composition decision before code changes |
+| several independent or dependency-ordered large-module refactor patches can be prepared together | 04, 05, 06 with large_module_refactor_protocol v7.2 and router_bridge_governed_implementation | 08, 09 | May prepare up to four ordered patch ZIPs, each normally with at most two related slices; every ZIP must install, validate, ZIP-contract-check, freeze-prep, preview, and freeze before the next ZIP; v7.2 also forbids needless micro-files and requires normal .py source logic |
 | architecture decision | 04 | 06, 11, 12 | STEP PAUSE before canon/patch |
 | Pilot/Copilot Phase 0 / post-M35 / P0 / Pilot projection / Copilot boundary | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for read-only planning; P0 only until frozen |
 | semantic readiness / embeddings / ML retrieval / routing_signal_scorer v3 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_semantic_readiness_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for architecture discussion |
@@ -657,7 +661,7 @@ If the human explicitly asks to bypass routing, the bypass request does not redu
 | box shield, KBSC, meaningful milestone, stronger ML preparation, authority boundary protection | kanda_box_shielding_canon plus box_architecture_canon |
 | code/file delivery, ZIP, install, validation, or freeze | bundle_gated_development_workflow or delivery/validation protocol |
 | prompt audit, split, merge, deprecate, conflict, or generalization | prompt_audit_canon plus related prompt files |
-| code file above 500 lines, or new code module expected to exceed 500 lines | large_module_refactor_protocol |
+| code file above 500 lines, or new code module expected to exceed 500 lines | large_module_refactor_protocol plus large_module_refactor_template |
 | governance update | governance/freeze prompt plus validation evidence |
 | continuation across sessions | current_workflow_handoff_template or latest handoff |
 
@@ -1001,8 +1005,35 @@ If the response omits 07_prompt_authoring_and_audit, prompt_canon_reconciliation
 
 ## Terminal cleanup canon route
 
-When the next answer will emit any PowerShell or terminal block, the router must apply the terminal cleanup canon before output. Successful install blocks use `INSTALL_SUCCESS`: wait 5 seconds, `Clear-Host`, keep terminal open, and no Enter prompts. Install errors, validation, validation errors, diagnostics, and all other terminal blocks use `Enter`, `Clear-Host`, `Enter`, `Clear-Host`, and keep terminal open. Install blocks must include a fail-safe `try/catch` or text-equivalent error path so failures cannot skip cleanup.
+When the next answer will emit any PowerShell or terminal block, the router must apply the terminal cleanup canon before output. Successful install blocks use `INSTALL_SUCCESS`: wait about 2 seconds, `Clear-Host`, keep terminal open, and no Enter prompts. Install errors, validation, freeze, validation errors, freeze errors, diagnostics, and all other terminal blocks use `Enter`, `Enter`, one final `Clear-Host`, and keep terminal open. Install blocks must include a fail-safe `try/catch` or text-equivalent error path so failures cannot skip cleanup.
+Freeze-prep and validation-evidence merge commands must not use inline `python -c`; use a temporary UTF-8 `.py` helper under `_delete_after_daily_work` to avoid Windows quote stripping, and ensure project imports work by setting `$env:PYTHONPATH = $PROJECT_ROOT` and inserting `project_root` into `sys.path` inside the helper before importing `kanda_reasoner_app`.
 
+
+<!-- KANDA_NAV:show_project_to_ai_patch_validate_freeze_recovery_blueprint:v1 -->
+## Show Project to AI patch/freeze recovery blueprint
+
+When the user asks for a copyable routine or button for Show Project to AI file/ZIP creation failure, handoff ZIP generation failure, first/second prompt files failure, or the combined ZIP -> validate -> freeze -> Error Memory recovery routine, route to:
+
+```text
+patch_validate_freeze_error_memory_routine_blueprint
+```
+
+Required companion prompts/groups:
+
+```text
+router_bridge_patch_delivery_contract
+pre_output_contract_gates
+freeze_code_intake_and_form_protocol
+error_memory_active_ready_json_template, if Error Memory intake will be produced
+error_memory_model_template, after error_memory_active_ready_json_template
+project_tool_boundary_canon
+```
+
+Boundary:
+
+```text
+The wrapper is for copyable handoff/recovery. It must not duplicate or replace patch delivery, freeze, pre-output, or Error Memory owner canons.
+```
 
 <!-- KANDA_NAV:error_event_to_error_memory_owner_canon:v2 -->
 ## Error event companion route to Error Memory owner canon
@@ -1105,4 +1136,28 @@ Use Direct Error Lesson ZIP only when the user asks for a manual import package.
 - **Aliases:** `error memory active-ready correction blueprint`; `error_memory_active_ready_correction_blueprint`; `draft to active error memory blueprint`; `active-ready Error Memory schema`
 - **When to load:** When a task asks to correct, promote, validate, or convert a `KANDA_ERROR_LESSON_JSON` draft into active-ready or active status.
 - **When not to load:** Do not load for ordinary code patches, generic Error Memory GUI behavior, or non-Error-Memory tasks unless an Error Memory lesson is being corrected or promoted.
-- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`; `prompt_navigation_index`; `prompt_router`
+- **Required companion prompts:** `error_memory_active_ready_json_template`; `error_memory_model_template`; `prompt_insertion_and_router_registration_protocol`; `prompt_navigation_index`; `prompt_router`
+### `error_memory_active_ready_json_template` - Error Memory Active-Ready JSON Template
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_json_template.md`
+- **Prompt code:** `KPR-12-003`
+- **Priority:** `33`
+- **Trigger phrases:** `Error Memory tab AI-assisted intake`; `KANDA_ERROR_LESSON_JSON_BEGIN`; `create Error Memory lesson intake`; `correct Error Memory intake JSON`; `Memorize Error active-ready fields`; `copy error draft to AI`; `AI-assisted error lesson intake`
+- **User intent examples:** `Create one active-ready KANDA Error Memory intake block for the Error Memory tab.`; `Correct this failed Error Memory intake so Memorize Error can accept it.`; `Use the Error Memory active-ready JSON template.`
+- **Aliases:** `error memory active-ready json template`; `error_memory_active_ready_json_template`; `Error Memory AI intake JSON template`; `KANDA_ERROR_LESSON_JSON template`
+- **When to load:** When AI must produce or correct marker-wrapped JSON text for the Error Memory tab -> AI-assisted error lesson intake window.
+- **When not to load:** Do not load for ordinary code patches unless an Error Memory intake lesson is being written or corrected.
+- **Required companion prompts:** `error_memory_model_template`; `error_memory_active_ready_correction_blueprint`
+
+### `error_memory_model_template` - Error Memory Model Template
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md`
+- **Prompt code:** `KPR-12-004`
+- **Priority:** `34`
+- **Trigger phrases:** `Error Memory model template`; `active-ready lesson model`; `fill every placeholder`; `error_memory_model_template`; `field-by-field Error Memory lesson`; `KANDA Error Memory lesson model`
+- **User intent examples:** `Use the reusable model to produce one complete Error Memory lesson.`; `Fill the Error Memory model template with the real error evidence.`; `Make the lesson active-ready without missing exception, fingerprint, redaction, or regression_check fields.`
+- **Aliases:** `error memory model template`; `error_memory_model_template`; `active-ready lesson model`; `Error Memory reusable JSON model`
+- **When to load:** After `error_memory_active_ready_json_template` whenever AI must build the actual marker-wrapped Error Memory intake lesson.
+- **When not to load:** Do not load alone without the active-ready JSON template unless a routed prompt explicitly already loaded that output contract.
+- **Required companion prompts:** `error_memory_active_ready_json_template`; `error_memory_active_ready_correction_blueprint`
+

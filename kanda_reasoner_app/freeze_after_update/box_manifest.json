@@ -3,10 +3,10 @@
   "box_name": "Freeze Feature After Update",
   "box_type": "domain",
   "box_size": "domain",
-  "version": "1.4.0",
-  "contract_version": "1.4",
+  "version": "1.4.1",
+  "contract_version": "1.4.1",
   "health_state": "draft",
-  "responsibility": "Create and operate a project-local project_freeze_after_update box, expose current freeze state, refresh AI-visible startup freeze context, generate optional AI review files, and provide the public contract for confirmed local freeze writes.",
+  "responsibility": "Create and operate the selected project external project_freeze_after_update support box under <project>_show_project_to_AI, expose current freeze state, refresh AI-visible startup freeze context, generate optional AI review files, and provide the public contract for confirmed local freeze writes.",
   "owner_paths": [
     "kanda_reasoner_app/freeze_after_update/",
     "kanda_reasoner_app/freeze_after_update_gui/"
@@ -27,8 +27,10 @@
   "forbidden_dependencies": [
     "central per-project registry inside kanda_reasoner",
     "other project freeze histories",
-    "private GUI internals"
+    "private GUI internals",
+    "merging the KANDA Reasoner tool box with the selected project box",
+    "writing new freeze memory into the selected project source root"
   ],
-  "state_owner": "The selected project's <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory folder",
+  "state_owner": "The selected project external support root: <project_drive>/<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.",
   "fallback_behavior": "If unavailable, the GUI tab reports the failure and other KANDA tabs keep working."
 }

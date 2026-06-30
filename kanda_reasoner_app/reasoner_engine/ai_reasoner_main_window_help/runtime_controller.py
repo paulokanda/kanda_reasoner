@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from typing import Any
 from PySide6.QtWidgets import QFileDialog, QMessageBox
-from kanda_reasoner_app.local_ai_json_working_copy import ensure_local_ai_copy, refresh_local_ai_copy
+from kanda_reasoner_app.local_ai_json_contract import ensure_local_ai_copy, refresh_local_ai_copy
 from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.ui_components import shorten_path
 from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.json_track import classify_loaded_json_track
 from kanda_reasoner_app.templates.floating_windows import show_auto_close_action_window

@@ -8,6 +8,12 @@ no routing behavior is changed.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'AdviserHarnessRunSummary',
+    'assert_summary_has_no_critical_failures',
+    'build_run_summary',
+]
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 

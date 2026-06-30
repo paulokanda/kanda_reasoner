@@ -19,6 +19,8 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = ['build_candidate_answer', 'classify_input', 'LexicalClassification']
 from dataclasses import dataclass
 import hashlib
 import re

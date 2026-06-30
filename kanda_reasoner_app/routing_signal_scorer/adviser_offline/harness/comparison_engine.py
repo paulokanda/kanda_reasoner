@@ -15,6 +15,8 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = ['AdviserComparisonResult', 'compare_many', 'compare_teacher_and_candidate']
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 

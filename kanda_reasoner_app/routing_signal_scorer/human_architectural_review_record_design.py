@@ -12,6 +12,12 @@ proposal can even be discussed.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_human_architectural_review_record_contract',
+    'classify_human_architectural_review_request',
+    'validate_human_architectural_review_record_contract',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

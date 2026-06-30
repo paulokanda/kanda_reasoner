@@ -380,6 +380,17 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** Do not load when no patch or versioned change exists.
 - **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`; `bundle_gated_development_workflow`; `current_workflow_handoff_template`
 
+### `patch_validate_freeze_error_memory_routine_blueprint` - Patch Validate Freeze Error Memory Routine Blueprint
+
+- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md`
+- **Priority:** `17`
+- **Trigger phrases:** `Copy Patch Validate Freeze Recovery Routine`; `Copy Patch Delivery Routine for AI`; `patch validate freeze routine`; `zip validate freeze error memory routine`; `Show Project to AI file creation failed`; `Show Project to AI ZIP creation failed`; `handoff ZIP generation failed`; `first prompt files failed`; `second prompt files failed`; `if file creation fails give this to AI`; `beginning of work recovery routine`
+- **User intent examples:** `Copy the routine to give AI when Show Project to AI file creation fails.`; `Give me the ZIP -> validate -> freeze -> Error Memory routine as one blueprint.`; `Add a Show Project to AI button that copies the patch delivery recovery routine.`
+- **Aliases:** `patch validate freeze routine`; `patch_validate_freeze_error_memory_routine_blueprint`; `Show Project to AI recovery blueprint`; `ZIP validate freeze Error Memory blueprint`; `patch delivery recovery routine`
+- **When to load:** When the user asks for a copyable AI handoff routine for Show Project to AI file/ZIP creation failures, patch ZIP delivery failures, validation/freeze failures, or the install -> validate -> freeze -> Error Memory recovery sequence.
+- **When not to load:** Do not load for ordinary patch delivery unless the user asks for the reusable handoff blueprint or a Show Project to AI / recovery copy button.
+- **Required companion prompts:** `router_bridge_governed_implementation`; `implementation_and_delivery_protocol`; `router_bridge_patch_delivery_contract`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `freeze_code_intake_and_form_protocol`; `error_memory_active_ready_correction_blueprint`; `error_memory_active_ready_json_template`; `error_memory_model_template`; `project_tool_boundary_canon`
+
 ### `universal_delivery_protocol` — Universal Delivery Protocol
 
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/universal_delivery_protocol.md`
@@ -415,14 +426,14 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** Do not load as the main protocol when actual hardening work is underway.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
 
-### `large_module_refactor_protocol` — Large Module Refactor Protocol
+### `large_module_refactor_protocol` — Large Module Refactor Protocol v7.2
 
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md`
 - **Priority:** `30`
-- **Trigger phrases:** `module too big`; `file too large`; `split module`; `refactor large file`; `reduce module size`
+- **Trigger phrases:** `module too big`; `file too large`; `split module`; `refactor large file`; `reduce module size`; `double refactor train`; `sequential refactor train`
 - **User intent examples:** `This file is too big; split it safely without breaking API.`
 - **Aliases:** `architecture`; `hardening`; `large`; `large module refactor protocol`; `large_module_refactor_protocol`; `large_module_refactor_protocol.md`; `module`; `refactor`
-- **When to load:** When a module/file is too large or has mixed responsibilities.
+- **When to load:** When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v7.2 routing or a sequential double-refactor delivery train, practical helper granularity, and normal .py source-file ownership.
 - **When not to load:** Do not load for small local edits.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
 

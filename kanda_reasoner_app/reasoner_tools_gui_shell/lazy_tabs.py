@@ -56,6 +56,7 @@ _CANONICAL_PACKAGE_NAME = "kanda_reasoner_app"
 _ARCHITECTURE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_architecture/manage_architecture_gui.py"
 _WORKFLOWS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/manage_workflows/manage_workflows_gui.py"
 _DOCSTRINGS_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py"
+_CONTEXT_COLLECTOR_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_context_collector/runner.py"
 _ERROR_MEMORY_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/error_memory_gui/error_memory_tab.py"
 _ENGINEERING_SAFETY_GUI_SOURCE = "reasoner_tools_gui_engineering_safety_panel.py"
 _FREEZE_AFTER_UPDATE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/freeze_after_update_gui/freeze_after_update_tab.py"
@@ -257,6 +258,17 @@ class LazyToolTab(QWidget):
         mover(self.status_source_row, insert_index)
 
 
+    def _move_show_project_project_root_controls_to_status_row(self, widget: QWidget) -> None:
+        """Move Show Project to AI Project Root controls beside LOADED / Source."""
+        if self.spec.source_hint != _CONTEXT_COLLECTOR_GUI_SOURCE:
+            return
+
+        mover = getattr(widget, "move_project_root_controls_to_layout", None)
+        if not callable(mover):
+            return
+
+        mover(self.status_source_row, self._status_source_insert_index)
+
     def _move_error_memory_project_root_controls_to_status_row(self, widget: QWidget) -> None:
         """Move Error Memory Project Root controls beside LOADED / Source."""
         if self.spec.source_hint != _ERROR_MEMORY_GUI_SOURCE:
@@ -307,6 +319,7 @@ class LazyToolTab(QWidget):
             self._move_tab1_project_root_controls_to_status_row(widget)
             self._move_tab3_safe_mode_radio_to_status_row(widget)
             self._move_tab3_project_root_controls_to_status_row(widget)
+            self._move_show_project_project_root_controls_to_status_row(widget)
             self._move_error_memory_project_root_controls_to_status_row(widget)
             self._move_engineering_safety_project_root_controls_to_status_row(widget)
             self._move_freeze_after_update_project_root_controls_to_status_row(widget)

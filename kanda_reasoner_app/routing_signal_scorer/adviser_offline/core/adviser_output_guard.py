@@ -9,6 +9,8 @@ This module is standard-library-only, deterministic, and side-effect free.
 
 from __future__ import annotations
 
+
+__all__ = ['assert_guard_passed', 'guard_candidate_output', 'GuardResult']
 from dataclasses import dataclass
 import re
 from typing import Any, Mapping

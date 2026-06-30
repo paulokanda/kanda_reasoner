@@ -8,6 +8,14 @@ anything. This keeps M6 safe as registry-record infrastructure only.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'canonical_json',
+    'hash_mapping',
+    'hash_record_without_field',
+    'hash_sequence',
+    'hash_value',
+]
 import hashlib
 import json
 from typing import Any, Mapping, Sequence

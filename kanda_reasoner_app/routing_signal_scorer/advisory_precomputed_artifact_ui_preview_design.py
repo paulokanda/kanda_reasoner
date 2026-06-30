@@ -11,6 +11,12 @@ semantic evidence artifact preview.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_advisory_artifact_ui_preview_contract',
+    'classify_artifact_ui_preview_activation_request',
+    'validate_advisory_artifact_ui_preview_contract',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

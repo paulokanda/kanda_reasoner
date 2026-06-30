@@ -9,6 +9,7 @@ import unittest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 GUI_SOURCE = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "freeze_after_update_tab.py"
+BOX_ACTIONS_SOURCE = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "_box_actions.py"
 RENDERER_SOURCE = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "local_freeze_preview_log.py"
 
 spec = importlib.util.spec_from_file_location("local_freeze_preview_log_under_test", RENDERER_SOURCE)
@@ -79,9 +80,11 @@ class FreezeTabLocalPreviewLogVisibilityTests(unittest.TestCase):
 
     def test_gui_preview_button_mirrors_preview_to_visible_log(self) -> None:
         source = GUI_SOURCE.read_text(encoding="utf-8")
+        box_actions_source = BOX_ACTIONS_SOURCE.read_text(encoding="utf-8")
 
         self.assertIn("build_local_freeze_preview_log_text", source)
-        self.assertIn("def _append_log_block", source)
+        self.assertIn("FreezeBoxActionsMixin", source)
+        self.assertIn("def _append_log_block", box_actions_source)
         self.assertIn("preview_text_edit.setPlainText", source)
         self.assertIn("self._append_log_block(build_local_freeze_preview_log_text(result, validation_result))", source)
         self.assertIn("Local freeze entry preview is ready and writable. No files were written.", source)

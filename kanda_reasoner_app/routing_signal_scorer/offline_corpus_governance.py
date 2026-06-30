@@ -8,6 +8,13 @@ validation helpers for a future human-governed corpus-generation plan.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_disabled_offline_corpus_governance_status',
+    'build_minimal_valid_governance_plan_template',
+    'classify_corpus_governance_trigger',
+    'validate_offline_corpus_governance_plan',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

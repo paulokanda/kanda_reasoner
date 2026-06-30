@@ -26,6 +26,12 @@ Authority boundary:
 
 from __future__ import annotations
 
+
+__all__ = [
+    'assert_promotion_criteria_gate_report_valid',
+    'build_promotion_criteria_gate_report',
+    'validate_promotion_criteria_gate_report',
+]
 from collections.abc import Mapping
 from typing import Any
 

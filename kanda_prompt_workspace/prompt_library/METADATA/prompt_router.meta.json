@@ -23,12 +23,45 @@
     "new error and solution JSON",
     "zip install validate error appears in AI-assisted error lesson intake",
     "error must appear in AI-assisted error lesson intake",
-    "default insertion of error in Error Memory logic"
+    "default insertion of error in Error Memory logic",
+    "large module refactor",
+    "module above 500 lines",
+    "module too large",
+    "split large module",
+    "mixed responsibility refactor",
+    "large module protocol v6",
+    "MODULE_TOO_LARGE",
+    "large module protocol v7",
+    "AST Split Audit",
+    "candidate-island queue",
+    "two-island patch",
+    "multi-island patch",
+    "patch train",
+    "split handoff for AI",
+    "large module protocol v7.2",
+    "double refactor train",
+    "sequential refactor train"
   ],
   "required_companion_prompts": [
     "general_prompt_stack_load_order",
     "prompt_substitution_map",
     "error_memory_ai_formulary_startup_canon",
-    "bundle_gated_development_workflow"
+    "bundle_gated_development_workflow",
+    "large_module_refactor_protocol",
+    "large_module_refactor_template",
+    "router_bridge_governed_implementation",
+    "project_tool_boundary_canon"
+  ],
+  "updated_at_utc": "2026-06-28T20:50:00Z",
+  "large_module_router_binding": {
+    "version": "7.0",
+    "requires_ast_split_audit_when_available": true,
+    "requires_candidate_island_queue": true,
+    "max_islands_per_inner_patch": 2,
+    "patch_train_delivery_requires_serial_inner_patches": true
+  },
+  "updated_for": "large-module-refactor-practical-granularity-v7-2",
+  "tags": [
+    "large module protocol v7.2"
   ]
 }

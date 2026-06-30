@@ -11,6 +11,12 @@ considered.
 
 from __future__ import annotations
 
+
+__all__ = [
+    'build_dry_run_artifact_generation_plan_contract',
+    'classify_dry_run_artifact_generation_plan_request',
+    'validate_dry_run_artifact_generation_plan_contract',
+]
 from collections.abc import Mapping, Sequence
 from typing import Any
 

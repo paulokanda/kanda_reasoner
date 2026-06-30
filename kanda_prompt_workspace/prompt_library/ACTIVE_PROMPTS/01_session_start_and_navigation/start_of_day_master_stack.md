@@ -50,6 +50,11 @@ current task requires it.
 
 ## Code Module Size Bridge
 
+BEGINNING_OF_DAY_CODE_MODULE_SIZE_BRIDGE: This bridge is mandatory
+beginning-of-day context. Startup load/readiness reporting must make clear that
+the module-size guardrail is available from the start of the session, without
+loading the full large-module protocol unless a task actually needs it.
+
 At the beginning of every session, carry this lightweight module-size rule into
 all code creation and refactor work:
 
@@ -68,6 +73,38 @@ all code creation and refactor work:
   and logs may be larger when their purpose requires it.
 
 If a task needs the full methodology, route to `large_module_refactor_protocol.md`;
+do not load the full prompt during normal startup unless needed.
+
+## Terminal Cleanup Bridge
+
+BEGINNING_OF_DAY_TERMINAL_CLEANUP_BRIDGE: This bridge is mandatory
+beginning-of-day context. Startup load/readiness reporting must make clear that
+terminal cleanup behavior is available from the start of the session, because it
+applies to install, validation, freeze, error, diagnostic, and other terminal
+blocks.
+
+At the beginning of every session, carry this lightweight terminal cleanup rule
+into every KANDA/PyArchitect terminal command:
+
+- Install success: show `INSTALL OK: ...`, wait about 2 seconds, run
+  `Clear-Host`, and keep the terminal open. Do not ask for Enter on the install
+  success path.
+- Validation success: show validation markers, then ask for Enter twice, then
+  run one final `Clear-Host`, and keep the terminal open.
+- Freeze success or freeze-ready commands: show freeze or evidence-merge
+  markers, then ask for Enter twice, then run one final `Clear-Host`, and keep
+  the terminal open.
+- Any error: show `INSTALL ERROR`, `VALIDATION ERROR`, or `FREEZE ERROR` with
+  the error details, then ask for Enter twice, then run one final `Clear-Host`,
+  and keep the terminal open.
+- Any other terminal situation: ask for Enter twice, then run one final
+  `Clear-Host`, and keep the terminal open.
+- Do not use `exit`, `Stop-Process`, or any terminal-closing command in install,
+  validation, freeze, error, diagnostic, or other terminal blocks.
+- Do not clear validation, freeze, diagnostic, or error output after the first
+  Enter; preserve the output until the second Enter, then clear once.
+
+If a task needs the full output-time gate, route to `pre_output_contract_gates.md`;
 do not load the full prompt during normal startup unless needed.
 
 ## Tier model
