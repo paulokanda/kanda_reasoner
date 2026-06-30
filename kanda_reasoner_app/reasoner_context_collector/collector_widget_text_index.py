@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_text_index.py
 """Support static evidence collection for Project Reasoner."""
 
 # =====================================================
@@ -224,6 +225,19 @@ def _iter_widget_text_values(record: dict[str, Any]) -> list[tuple[str, str]]:
 
 
 def _iter_tab_text_values(tab_texts: Any) -> list[str]:
+    """Support iter tab text values behavior.
+    
+    Parameters
+    ----------
+    tab_texts : Any
+        The tab texts value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     results: list[str] = []
 
     if not isinstance(tab_texts, list):
@@ -243,6 +257,19 @@ def _iter_tab_text_values(tab_texts: Any) -> list[str]:
 
 
 def _string_list(values: Any) -> list[str]:
+    """Support string list behavior.
+    
+    Parameters
+    ----------
+    values : Any
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     results: list[str] = []
 
     if not isinstance(values, list):
@@ -259,6 +286,19 @@ def _string_list(values: Any) -> list[str]:
 def _build_duplicate_texts(
     text_entries: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
+    """Support build duplicate texts behavior.
+    
+    Parameters
+    ----------
+    text_entries : dict[str, dict[str, Any]]
+        The text entries value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     duplicates: list[dict[str, Any]] = []
 
     for text_value, payload in text_entries.items():
@@ -296,6 +336,21 @@ def _build_top_text_rows(
     text_entries: dict[str, dict[str, Any]],
     limit: int,
 ) -> list[dict[str, Any]]:
+    """Support build top text rows behavior.
+    
+    Parameters
+    ----------
+    text_entries : dict[str, dict[str, Any]]
+        The text entries value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for text_value, payload in text_entries.items():
@@ -325,10 +380,36 @@ def _build_top_text_rows(
 
 
 def _normalize_text(text_value: str) -> str:
+    """Support normalize text behavior.
+    
+    Parameters
+    ----------
+    text_value : str
+        The text value value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return " ".join(_safe_str(text_value).lower().split())
 
 
 def _safe_str(value: Any) -> str:
+    """Support safe str behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     try:

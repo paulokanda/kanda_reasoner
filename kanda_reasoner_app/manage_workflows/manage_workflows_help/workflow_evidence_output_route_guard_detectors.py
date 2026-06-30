@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_evidence_output_route_guard_detectors.py
 """Workflow detector for evidence output route regressions.
 
 This detector keeps workflow validation aware of the storage-policy migration

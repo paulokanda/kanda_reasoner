@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/local_ai_json_enrichment/enrichment_writer.py
 """Write controlled local-only enrichment to the local-AI JSON.
 
 This module belongs to the Local-AI JSON Enrichment Box.

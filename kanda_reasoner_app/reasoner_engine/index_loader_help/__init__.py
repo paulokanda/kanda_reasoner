@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/index_loader_help/__init__.py
 from .index_builders import (
     build_boundary_indexes,
     build_core_file_and_symbol_indexes,

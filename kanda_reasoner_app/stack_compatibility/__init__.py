@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/stack_compatibility/__init__.py
 """Stack compatibility report helpers."""
 
 from .stack_briefs import (

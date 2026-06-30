@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/review_support.py
 """Support helpers for the manual docstring review editor."""
 
 from __future__ import annotations

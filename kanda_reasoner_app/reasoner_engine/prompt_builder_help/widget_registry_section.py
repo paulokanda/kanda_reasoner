@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder_help/widget_registry_section.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -13,6 +14,16 @@ def _iter_filtered_widgets(
     widget_registry: dict[str, Any],
     subsystem_filters: list[str],
 ):
+    """Support iter filtered widgets behavior.
+    
+    Parameters
+    ----------
+    widget_registry : dict[str, Any]
+        The widget registry value.
+    subsystem_filters : list[str]
+        The subsystem filters value.
+    """
+    
     for widget_id, record in widget_registry.items():
         widget_type = str(record.get("widget_type", "")).strip()
         if not widget_type:
@@ -35,6 +46,18 @@ def append_widget_registry_section(
     question: str,
     widget_registry: dict[str, Any] | None,
 ) -> None:
+    """Support append widget registry section behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    question : str
+        The question value.
+    widget_registry : dict[str, Any] | None
+        The widget registry value.
+    """
+    
     if not widget_registry:
         return
 

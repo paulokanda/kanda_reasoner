@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui.py
 """Public entry point for the Workflow Review GUI.
 
 This module is a normal readable facade. The older encoded backend payload

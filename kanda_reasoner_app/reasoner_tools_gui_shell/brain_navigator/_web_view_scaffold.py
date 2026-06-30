@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_web_view_scaffold.py
 """Internal QWebEngine scaffold for Brain Navigator web content.
 
 This module owns the safe, test-page WebView scaffold for the Brain Navigator

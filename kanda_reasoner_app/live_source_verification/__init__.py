@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/live_source_verification/__init__.py
 """Live source verification box for Project Reasoner.
 
 This package verifies current files under a selected PROJECT_ROOT.

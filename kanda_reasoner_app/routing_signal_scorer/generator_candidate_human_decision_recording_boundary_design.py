@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_recording_boundary_design.py
 """Generator candidate human decision recording boundary design for routing scorer v3.
 
 This module is intentionally standard-library-only and recording-boundary-schema-only.
@@ -229,6 +230,19 @@ FORBIDDEN_BOUNDARY_FIELDS = REQUIRED_PROHIBITED_BOUNDARY_OUTPUTS.union(
 
 
 def _freeze_sorted(values: Sequence[str] | frozenset[str]) -> tuple[str, ...]:
+    """Support freeze sorted behavior.
+    
+    Parameters
+    ----------
+    values : Sequence[str] | frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(sorted(values))
 
 

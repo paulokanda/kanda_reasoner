@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/context_builder_validate_manifests.py
 """Validate context builder helper manifest artifacts."""
 
 from __future__ import annotations
@@ -27,10 +28,36 @@ REQUIRED_HEADER_FIELDS = [
 
 
 def _read(path: Path) -> str:
+    """Support read behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8")
 
 
 def _has_module_docstring(path: Path) -> bool:
+    """Support has module docstring behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         tree = ast.parse(_read(path))
     except SyntaxError:
@@ -39,6 +66,19 @@ def _has_module_docstring(path: Path) -> bool:
 
 
 def _has_all(path: Path) -> bool:
+    """Support has all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         tree = ast.parse(_read(path))
     except SyntaxError:
@@ -52,11 +92,34 @@ def _has_all(path: Path) -> bool:
 
 
 def _header_has_field(text: str, field: str) -> bool:
+    """Support header has field behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     needle = field + ":"
     return any(needle in line for line in text.splitlines()[:40])
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors = []
     if not MANIFEST.exists():
         errors.append("context_builder_help.json is missing")

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_state.py
 """Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
 
 from __future__ import annotations
@@ -15,12 +16,28 @@ class _WindowStateMixin:
 
     @staticmethod
     def _prefs_path() -> Path:
+        """Support prefs path behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         try:
             return _PROJECT_ROOT / _PREFS_FILENAME
         except Exception:
             return _PROJECT_ROOT / _PREFS_FILENAME
 
     def _load_prefs(self) -> dict:
+        """Support load prefs behavior.
+        
+        Returns
+        -------
+        dict
+            The mapped values.
+        """
+        
         path = self._prefs_path()
         try:
             if path.exists():
@@ -30,6 +47,9 @@ class _WindowStateMixin:
         return {}
 
     def _save_prefs(self) -> None:
+        """Support save prefs behavior.
+        """
+        
         path = self._prefs_path()
         payload = {
             "last_project_root": str(self.current_project_root) if self.current_project_root else "",

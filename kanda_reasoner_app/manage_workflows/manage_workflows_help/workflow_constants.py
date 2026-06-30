@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_constants.py
 """Own workflow validator constants and import probe code."""
 
 from __future__ import annotations

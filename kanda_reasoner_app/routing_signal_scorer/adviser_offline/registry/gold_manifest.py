@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/registry/gold_manifest.py
 """Offline Adviser gold-manifest record builder and validator.
 
 M6 defines manifest metadata mechanics only. It does not create a gold set, load
@@ -30,6 +31,8 @@ APPROVED_REVIEW_STATUSES = frozenset({"human_reviewed", "approved_as_gold"})
 
 @dataclass(frozen=True)
 class GoldManifestValidationResult:
+    """Represent gold manifest validation result."""
+    
     ok: bool
     errors: tuple[str, ...]
     warnings: tuple[str, ...]
@@ -40,6 +43,14 @@ class GoldManifestValidationResult:
     schema_version: str = SCHEMA_VERSION
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "errors": list(self.errors),
@@ -205,4 +216,17 @@ def assert_gold_manifest_valid(manifest: Mapping[str, Any]) -> Mapping[str, Any]
 
 
 def _looks_like_sha256(value: str) -> bool:
+    """Support looks like sha256 behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, str) and len(value) == 64 and all(ch in "0123456789abcdef" for ch in value.lower())

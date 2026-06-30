@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_web_bridge.py
 """Internal Qt WebChannel bridge for the Brain Navigator box.
 
 This module isolates the future QWebChannel and QObject wiring for the

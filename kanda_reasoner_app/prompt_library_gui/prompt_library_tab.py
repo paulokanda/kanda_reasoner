@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/prompt_library_tab.py
 """Read-only Prompt Library tab with 3D cube dashboard launchers."""
 
 from __future__ import annotations

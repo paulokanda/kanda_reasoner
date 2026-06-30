@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_web_ai_contract.py
 """Web-AI collector output contract audit helpers.
 
 This module is an audit/contract gate for the canonical Project Reasoner

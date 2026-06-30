@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/session_service.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -24,11 +25,15 @@ __all__ = ["SessionExecutionError", "SessionExecutionResult", "SessionService"]
 
 
 class SessionExecutionError(RuntimeError):
+    """Represent session execution error."""
+    
     pass
 
 
 @dataclass
 class SessionExecutionResult:
+    """Represent session execution result."""
+    
     route: str
     question: str
     selected_model: str
@@ -40,7 +45,26 @@ class SessionExecutionResult:
 
 
 class SessionService:
+    """Represent session service."""
+    
     def execute(self, window, question: str, selected_model: str) -> SessionExecutionResult:
+        """Support execute behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        question : str
+            The question value.
+        selected_model : str
+            The selected model value.
+        
+        Returns
+        -------
+        SessionExecutionResult
+            The session execution result result.
+        """
+        
         if not window.project_index.index_data:
             raise SessionExecutionError("Please load a JSON file first.")
         if not question:

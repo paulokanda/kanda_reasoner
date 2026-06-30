@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/index_loader_help/path_resolution.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -10,6 +11,21 @@ from typing import Any
 
 
 def resolve_runtime_source_file(index: Any, source_file: str) -> str:
+    """Resolve the runtime source file.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    source_file : str
+        The source file value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     source_file = index._safe_text(source_file)
     if not source_file:
         return ""

@@ -1,3 +1,4 @@
+# project-path: tools/project_reasoner_v10_deletion_dry_run.py
 """Dry-run removal check for the retired reasoner engine package.
 
 The script temporarily moves the old package folder out of the import path,
@@ -47,6 +48,14 @@ def run_command(command: list[str], cwd: Path) -> int:
 
 
 def _build_argument_parser() -> argparse.ArgumentParser:
+    """Support build argument parser behavior.
+    
+    Returns
+    -------
+    argparse.ArgumentParser
+        The argument parser result.
+    """
+    
     parser = argparse.ArgumentParser(
         description="Dry-run deletion of kanda_reasoner_app/project_reasoner_v10."
     )
@@ -59,6 +68,19 @@ def _build_argument_parser() -> argparse.ArgumentParser:
 
 
 def _dry_run_backup_path(project_root: Path) -> Path:
+    """Support dry run backup path behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     drive_root = Path(os.path.splitdrive(str(project_root))[0] + os.sep)
     backup_root = drive_root / "_kanda_dry_run_backups"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

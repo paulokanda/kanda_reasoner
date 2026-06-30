@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_hint_intake/contract.py
 """Public contract for freeze hint intake records.
 
 Patch ZIPs produced by the AI may contain a root-level KANDA_FREEZE_HINT.json

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collectors/static_context/collector_packaging_metadata.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -11,6 +12,19 @@ from ...parsers import parse_packaging_metadata
 
 
 def _empty_packaging_metadata(enabled: bool) -> dict[str, Any]:
+    """Support empty packaging metadata behavior.
+    
+    Parameters
+    ----------
+    enabled : bool
+        The enabled value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "enabled": enabled,
         "project_name": "",
@@ -32,6 +46,21 @@ def collect_packaging_metadata(
     project_root: Path,
     config: CollectorConfig,
 ) -> dict[str, Any]:
+    """Support collect packaging metadata behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    config : CollectorConfig
+        The configuration data.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     if not config.enable_packaging_metadata:
         return _empty_packaging_metadata(enabled=False)
 

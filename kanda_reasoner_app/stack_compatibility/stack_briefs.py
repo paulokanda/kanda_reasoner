@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/stack_compatibility/stack_briefs.py
 """Build read-only stack compatibility briefs."""
 
 from __future__ import annotations
@@ -70,6 +71,19 @@ class StackCompatibilityReport:
 
 
 def _normalize_requirement_name(line: str) -> str:
+    """Support normalize requirement name behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     cleaned = line.strip().split("#", 1)[0].strip()
     for separator in ("==", ">=", "<=", "~=", "!=", ">", "<"):
         if separator in cleaned:
@@ -78,11 +92,37 @@ def _normalize_requirement_name(line: str) -> str:
 
 
 def _is_relevant_line(line: str) -> bool:
+    """Support is relevant line behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     stripped = line.strip()
     return bool(stripped and not stripped.startswith("#") and not stripped.startswith("-"))
 
 
 def _risk_for_requirement(line: str) -> StackCompatibilityFinding | None:
+    """Support risk for requirement behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    StackCompatibilityFinding | None
+        The stack compatibility finding result.
+    """
+    
     name = _normalize_requirement_name(line)
     if not name:
         return None
@@ -120,6 +160,19 @@ def _risk_for_requirement(line: str) -> StackCompatibilityFinding | None:
 
 
 def _overall_risk(findings: Iterable[StackCompatibilityFinding]) -> str:
+    """Support overall risk behavior.
+    
+    Parameters
+    ----------
+    findings : Iterable[StackCompatibilityFinding]
+        The findings value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     levels = [finding.risk_level for finding in findings]
     if "high" in levels:
         return "high"

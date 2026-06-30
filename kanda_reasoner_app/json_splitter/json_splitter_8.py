@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_8.py
 """Public facade for the JSON splitter implementation."""
 
 from __future__ import annotations

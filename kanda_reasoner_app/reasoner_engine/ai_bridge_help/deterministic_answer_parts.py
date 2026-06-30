@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/deterministic_answer_parts.py
 """Internal deterministic answer helpers."""
 
 from __future__ import annotations
@@ -19,6 +20,19 @@ from .prompt_extraction import (
 from .prompt_modes import is_one_line_prompt
 
 def _answer_one_line_from_prompt_impl(prompt: str) -> str | None:
+        """Support answer one line from prompt impl behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        str | None
+            The string result.
+        """
+        
         q = extract_user_question(prompt)
         files = extract_file_score_map(prompt)
         symbols = extract_symbol_score_map(prompt)
@@ -211,6 +225,21 @@ def _score_file_locator_candidate_impl(
 
     return score
 def _repair_one_line_symbol_ids_impl(prompt: str, answer_text: str) -> str:
+        """Support repair one line symbol ids impl behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         parts = [p.strip() for p in answer_text.split("|")]
         if len(parts) != 3:
             return answer_text

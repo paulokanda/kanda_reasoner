@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/runner_help/zip_json_files_private_impl.py
 """Tab 4 JSON ZIP export helpers.
 
 This module keeps ZIP-export GUI behavior outside the collector process helper
@@ -24,6 +25,21 @@ def second_prompt_files_building_dir(project_root: str | Path) -> Path:
     return analysis_json_building_dir(project_root).expanduser().resolve(strict=False)
 
 def _require_show_project_child_dir(output_dir: str | Path, expected_name: str) -> Path:
+    """Support require show project child dir behavior.
+    
+    Parameters
+    ----------
+    output_dir : str | Path
+        The output dir value.
+    expected_name : str
+        The expected name value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     resolved_dir = Path(output_dir).expanduser().resolve(strict=False)
     if resolved_dir.name != expected_name:
         raise ValueError('Refusing output-folder operation because folder is not ' + expected_name + ': ' + str(resolved_dir))
@@ -33,6 +49,19 @@ def _require_show_project_child_dir(output_dir: str | Path, expected_name: str) 
     return resolved_dir
 
 def _clear_dir_contents(resolved_dir: Path) -> int:
+    """Support clear dir contents behavior.
+    
+    Parameters
+    ----------
+    resolved_dir : Path
+        The resolved dir value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     resolved_dir.mkdir(parents=True, exist_ok=True)
     removed = 0
     for child in resolved_dir.iterdir():
@@ -354,16 +383,38 @@ def clear_second_prompt_files_dir(output_dir: str | Path) -> int:
     return _clear_dir_contents(resolved_dir)
 
 def _qt_widgets():
+    """Support qt widgets behavior.
+    """
+    
     return importlib.import_module('PySide6' + '.QtWidgets')
 
 def _process_helpers():
+    """Support process helpers behavior.
+    """
+    
     from kanda_reasoner_app.reasoner_tools_shell.runner_help import window_process_private_impl as helpers
     return helpers
 
 def _prefs_path() -> Path:
+    """Support prefs path behavior.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return Path(__file__).resolve().parent / '.zip_json_export_prefs.json'
 
 def _load_prefs_payload() -> dict[str, Any]:
+    """Support load prefs payload behavior.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     try:
         prefs_path = _prefs_path()
         if prefs_path.exists():
@@ -375,6 +426,14 @@ def _load_prefs_payload() -> dict[str, Any]:
     return {}
 
 def _save_prefs_payload(payload: dict[str, Any]) -> None:
+    """Support save prefs payload behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    """
+    
     try:
         prefs_path = _prefs_path()
         prefs_path.parent.mkdir(parents=True, exist_ok=True)
@@ -383,11 +442,27 @@ def _save_prefs_payload(payload: dict[str, Any]) -> None:
         pass
 
 def _load_destination() -> str:
+    """Support load destination behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = _load_prefs_payload()
     destination = str(payload.get('destination_folder', '')).strip()
     return destination
 
 def _save_destination(destination_folder: str) -> None:
+    """Support save destination behavior.
+    
+    Parameters
+    ----------
+    destination_folder : str
+        The destination folder value.
+    """
+    
     payload = _load_prefs_payload()
     payload['destination_folder'] = destination_folder
     _save_prefs_payload(payload)
@@ -413,6 +488,21 @@ def save_selected_part_size_mb(part_size_mb: int) -> None:
     _save_prefs_payload(payload)
 
 def _destination_inside_project_root(project_root: Path, destination: Path) -> bool:
+    """Support destination inside project root behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    destination : Path
+        The destination path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         resolved_root = project_root.expanduser().resolve()
         resolved_destination = destination.expanduser().resolve()
@@ -438,9 +528,32 @@ def selected_part_size_mb(window: Any) -> int:
     return saved
 
 def _selected_part_size_mb(window: Any) -> int:
+    """Support selected part size mb behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return selected_part_size_mb(window)
 
 def _set_controls_enabled(window: Any, enabled: bool) -> None:
+    """Support set controls enabled behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    enabled : bool
+        The enabled value.
+    """
+    
     for attribute in ('run_button', 'browse_project_button', 'browse_output_button', 'zip_size_100_radio', 'zip_size_200_radio', 'zip_size_300_radio', 'zip_size_400_radio', 'zip_size_500_radio'):
         try:
             getattr(window, attribute).setEnabled(enabled)
@@ -448,12 +561,30 @@ def _set_controls_enabled(window: Any, enabled: bool) -> None:
             pass
 
 def _append_log(window: Any, text: str) -> None:
+    """Support append log behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    text : str
+        The text value.
+    """
+    
     try:
         window._append_log(text)
     except Exception:
         pass
 
 def _start_zip_status(window: Any) -> None:
+    """Support start zip status behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    """
+    
     try:
         window._start_busy_animation('Zipping JSON files')
     except Exception:
@@ -464,6 +595,16 @@ def _start_zip_status(window: Any) -> None:
     _set_controls_enabled(window, False)
 
 def _finish_zip_status(window: Any, status_text: str) -> None:
+    """Support finish zip status behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    status_text : str
+        The status text value.
+    """
+    
     try:
         window._stop_busy_animation(status_text)
     except Exception:
@@ -474,11 +615,36 @@ def _finish_zip_status(window: Any, status_text: str) -> None:
     _set_controls_enabled(window, True)
 
 def _decode_process_output(process: Any) -> tuple[str, str]:
+    """Support decode process output behavior.
+    
+    Parameters
+    ----------
+    process : Any
+        The process value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     stdout_text = bytes(process.readAllStandardOutput()).decode('utf-8', errors='replace').strip()
     stderr_text = bytes(process.readAllStandardError()).decode('utf-8', errors='replace').strip()
     return (stdout_text, stderr_text)
 
 def _on_zip_process_finished(window: Any, exit_code: int, _exit_status: Any) -> None:
+    """Support on zip process finished behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    exit_code : int
+        The exit code value.
+    _exit_status : Any
+        The exit status value.
+    """
+    
     process = getattr(window, '_process', None)
     stdout_text = ''
     stderr_text = ''
@@ -561,6 +727,16 @@ def _on_zip_process_finished(window: Any, exit_code: int, _exit_status: Any) -> 
     window._process = None
 
 def _on_zip_process_error(window: Any, _process_error: Any) -> None:
+    """Support on zip process error behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    _process_error : Any
+        The process error value.
+    """
+    
     _finish_zip_status(window, 'Failed')
     _append_log(window, '[ERROR] JSON ZIP export process could not start.')
     QMessageBox = _qt_widgets().QMessageBox
@@ -568,6 +744,20 @@ def _on_zip_process_error(window: Any, _process_error: Any) -> None:
     window._process = None
 
 def _start_zip_process(window: Any, project_root: Path, destination_folder: Path, part_size_mb: int) -> None:
+    """Support start zip process behavior.
+    
+    Parameters
+    ----------
+    window : Any
+        The window value.
+    project_root : Path
+        The project root path.
+    destination_folder : Path
+        The destination folder value.
+    part_size_mb : int
+        The part size mb value.
+    """
+    
     helpers = _process_helpers()
     process = helpers.QProcess(window)
     window._process = process
@@ -632,6 +822,19 @@ def resolve_zip_dialog_start_folder(project_root: str | Path, last_destination: 
     return _fallback_dialog_start_folder(root_path)
 
 def _start_folder_for_dialog(project_root: Path) -> str:
+    """Support start folder for dialog behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return resolve_zip_dialog_start_folder(project_root)
 
 def auto_zip_json_complete(window: Any, project_root: str | Path | None=None) -> None:

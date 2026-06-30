@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/workflow_gui_history.py
 """Recent-root and worker-script history for the workflow manager GUI."""
 
 from __future__ import annotations
@@ -20,6 +21,19 @@ __all__ = [
 
 
 def _load_json_file(path: Path) -> dict:
+    """Support load json file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     if not path.exists():
         return {}
     try:
@@ -30,6 +44,16 @@ def _load_json_file(path: Path) -> dict:
 
 
 def _save_json_file(path: Path, data: dict) -> None:
+    """Support save json file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    data : dict
+        The input data.
+    """
+    
     try:
         path.write_text(
             json.dumps(data, indent=2, ensure_ascii=True) + "\n",
@@ -40,10 +64,33 @@ def _save_json_file(path: Path, data: dict) -> None:
 
 
 def _get_roots_from_file(history_file: Path) -> list[str]:
+    """Support get roots from file behavior.
+    
+    Parameters
+    ----------
+    history_file : Path
+        The history file value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return _load_json_file(history_file).get("roots", [])
 
 
 def _record_root_to_file(history_file: Path, root: str) -> None:
+    """Support record root to file behavior.
+    
+    Parameters
+    ----------
+    history_file : Path
+        The history file value.
+    root : str
+        The root path.
+    """
+    
     data = _load_json_file(history_file)
     roots: list[str] = [r for r in data.get("roots", []) if r != root]
     roots.insert(0, root)
@@ -93,6 +140,14 @@ def get_recent_roots() -> list[str]:
 
 
 def record_root(root: str) -> None:
+    """Support record root behavior.
+    
+    Parameters
+    ----------
+    root : str
+        The root path.
+    """
+    
     _record_root_to_file(_GUI_HISTORY_FILE, root)
 
 
@@ -110,6 +165,14 @@ def get_recent_scripts(history_file: Path | None = None) -> list[str]:
 
 
 def record_script(script: str) -> None:
+    """Support record script behavior.
+    
+    Parameters
+    ----------
+    script : str
+        The script value.
+    """
+    
     data = _load_json_file(_GUI_HISTORY_FILE)
     scripts: list[str] = [s for s in data.get("scripts", []) if s != script]
     scripts.insert(0, script)

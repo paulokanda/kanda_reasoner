@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap_help/scoring.py
 """Private scoring helpers for collector_responsibility_overlap."""
 
 from __future__ import annotations
@@ -17,6 +18,21 @@ from typing import Any
 __all__: list[str] = []
 
 def _jaccard(a: set[str], b: set[str]) -> float:
+    """Support jaccard behavior.
+    
+    Parameters
+    ----------
+    a : set[str]
+        The a value.
+    b : set[str]
+        The b value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     if not a or not b:
         return 0.0
     union = a | b
@@ -31,6 +47,27 @@ def _strong_signal_count(
     symbol_score: float,
     call_score: float,
 ) -> int:
+    """Support strong signal count behavior.
+    
+    Parameters
+    ----------
+    base_name_score : float
+        The base name score value.
+    semantic_role_score : float
+        The semantic role score value.
+    summary_term_score : float
+        The summary term score value.
+    symbol_score : float
+        The symbol score value.
+    call_score : float
+        The call score value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     count = 0
     if base_name_score >= 0.55:
         count += 1
@@ -53,6 +90,31 @@ def _passes_gate(
     overlap_score: float,
     strong_signal_count: int,
 ) -> bool:
+    """Support passes gate behavior.
+    
+    Parameters
+    ----------
+    base_name_score : float
+        The base name score value.
+    semantic_role_score : float
+        The semantic role score value.
+    summary_term_score : float
+        The summary term score value.
+    symbol_score : float
+        The symbol score value.
+    call_score : float
+        The call score value.
+    overlap_score : float
+        The overlap score value.
+    strong_signal_count : int
+        The strong signal count value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if base_name_score >= 0.60 and summary_term_score >= 0.30:
         return True
 

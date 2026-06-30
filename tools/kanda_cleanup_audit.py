@@ -1,3 +1,4 @@
+# project-path: tools/kanda_cleanup_audit.py
 """Read-only cleanup candidate audit for Kanda Reasoner.
 
 This script prints cleanup candidates but does not delete anything.
@@ -20,7 +21,6 @@ __all__ = [
     "iter_canonical_status",
     "iter_cleanup_candidates",
     "main",
-    "parse_args",
     "print_report",
 ]
 
@@ -82,10 +82,40 @@ class CleanupCandidate:
 
 
 def _normalize_relative(path: Path, root: Path) -> str:
+    """Support normalize relative behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.relative_to(root).as_posix()
 
 
 def _is_inside_ignored_directory(path: Path, root: Path) -> bool:
+    """Support is inside ignored directory behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         relative_parts = path.relative_to(root).parts
     except ValueError:
@@ -100,6 +130,21 @@ def _is_inside_ignored_directory(path: Path, root: Path) -> bool:
 
 
 def _looks_like_patch_archive(path: Path, root: Path) -> bool:
+    """Support looks like patch archive behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if path.suffix.lower() != ".zip":
         return False
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/tab_navigation_controller.py
 """Tab Navigation Controller Box for stable tab-id based navigation.
 
 This module is intentionally free of PySide6 imports. It owns the pure

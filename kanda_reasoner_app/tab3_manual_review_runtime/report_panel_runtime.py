@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/report_panel_runtime.py
 """Runtime implementation for the Tab 3 report review panel."""
 
 from __future__ import annotations

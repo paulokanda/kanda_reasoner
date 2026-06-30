@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter_writer.py
 """Internal ZIP writer helpers for AI handoff export."""
 
 from __future__ import annotations
@@ -136,6 +137,23 @@ def zip_record(
 
 
 def _artifact_over_cap_error(artifact: Path, context: ProjectContext, part_size_bytes: int) -> ValueError:
+    """Support artifact over cap error behavior.
+    
+    Parameters
+    ----------
+    artifact : Path
+        The artifact value.
+    context : ProjectContext
+        The context value.
+    part_size_bytes : int
+        The part size bytes value.
+    
+    Returns
+    -------
+    ValueError
+        The value error result.
+    """
+    
     return ValueError(
         "A single AI-readable handoff artifact cannot fit under the selected ZIP size cap without byte-splitting: "
         + artifact_logical_posix_path(artifact, context)

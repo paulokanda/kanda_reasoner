@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/manage_architecture_help/manage_architecture_source_part_21_private_impl.py
 """Encoded source shard 21 for manage_architecture."""
 
 MANAGE_ARCHITECTURE_SOURCE_PART_21 = (

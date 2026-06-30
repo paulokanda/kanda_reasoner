@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_visual_floating_window_template.py
 """Floating Remember Box CSS and JavaScript template fragments."""
 
 from __future__ import annotations

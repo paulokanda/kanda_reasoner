@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_config.py
 """Configuration dataclass for the local AI docstring generator."""
 
 from __future__ import annotations
@@ -37,6 +38,19 @@ class AIConfig:
 
     @classmethod
     def from_json(cls, path: str | Path) -> "AIConfig":
+        """Support from json behavior.
+        
+        Parameters
+        ----------
+        path : str | Path
+            The file or folder path.
+        
+        Returns
+        -------
+        'AIConfig'
+            The 'aiconfig' result.
+        """
+        
         config_path = Path(path)
         if not config_path.exists():
             raise FileNotFoundError(f"AI config not found: {config_path}")
@@ -53,9 +67,25 @@ class AIConfig:
 
     @classmethod
     def default(cls) -> "AIConfig":
+        """Support default behavior.
+        
+        Returns
+        -------
+        'AIConfig'
+            The 'aiconfig' result.
+        """
+        
         return cls()
 
     def to_json(self, path: str | Path) -> None:
+        """Support to json behavior.
+        
+        Parameters
+        ----------
+        path : str | Path
+            The file or folder path.
+        """
+        
         output_path = Path(path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         data = {key: value for key, value in asdict(self).items() if not key.startswith("_")}

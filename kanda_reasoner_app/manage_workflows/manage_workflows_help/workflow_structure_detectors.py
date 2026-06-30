@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_structure_detectors.py
 """Private workflow structure detectors for Tab 2.
 
 These detectors are additive. They make malformed workflow manifests fail in

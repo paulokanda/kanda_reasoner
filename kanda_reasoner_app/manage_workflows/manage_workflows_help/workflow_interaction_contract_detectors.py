@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_interaction_contract_detectors.py
 """Detect Tab 2 workflow interface button/action and state-label mismatches."""
 
 from __future__ import annotations

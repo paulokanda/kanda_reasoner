@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/candidate_v0/__init__.py
 """Offline Adviser Candidate v0 package.
 
 This package is intentionally not exported by runtime routing modules. It is an

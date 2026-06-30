@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reliability_guidance/__init__.py
 """Reliability guidance tools for reviewable engineering drafts."""
 
 from .api_contract_guidance import (

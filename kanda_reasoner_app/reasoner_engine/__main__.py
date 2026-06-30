@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/__main__.py
 """Run the canonical reasoner engine entry point."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: reasoner_tools_gui.py
 """
 Root public launcher for the KANDA Reasoner tools GUI.
 
@@ -28,6 +29,14 @@ _EXPORTS = {
 
 
 def __getattr__(name: str):
+    """Support getattr behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    """
+    
     if name not in _EXPORTS:
         raise AttributeError(name)
     module_name = _EXPORTS[name]
@@ -41,10 +50,26 @@ def __getattr__(name: str):
 
 
 def __dir__() -> list[str]:
+    """Support dir behavior.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(list(globals()) + __all__)
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     from kanda_reasoner_app.reasoner_tools_gui_shell.launch import main as launch_main
 
     return launch_main()

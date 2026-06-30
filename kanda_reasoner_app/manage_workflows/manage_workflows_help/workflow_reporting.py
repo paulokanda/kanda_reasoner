@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_reporting.py
 """Own terminal result rendering and summary aggregation."""
 
 from __future__ import annotations
@@ -31,6 +32,14 @@ __all__ = [
 ]
 
 def print_results(results: list[CheckResult]) -> None:
+    """Support print results behavior.
+    
+    Parameters
+    ----------
+    results : list[CheckResult]
+        The results value.
+    """
+    
     if not results:
         print("No workflow results.")
         return
@@ -55,6 +64,19 @@ def print_results(results: list[CheckResult]) -> None:
                 print(f"        {line}")
 
 def summarize_results(results: list[CheckResult]) -> dict[str, int]:
+    """Support summarize results behavior.
+    
+    Parameters
+    ----------
+    results : list[CheckResult]
+        The results value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     summary = {"pass": 0, "fail": 0, "warn": 0, "skip": 0}
     for result in results:
         summary[result.status] = summary.get(result.status, 0) + 1

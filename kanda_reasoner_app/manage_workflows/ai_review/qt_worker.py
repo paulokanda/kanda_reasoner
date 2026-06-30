@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/qt_worker.py
 """Qt worker for Tab 2 advisory AI review."""
 
 from __future__ import annotations
@@ -37,6 +38,22 @@ class Tab2AIReviewWorker(QObject):
         model_name: str = "",
         mode_label: str = "",
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        review_kind : str
+            The review kind value.
+        check_output_text : str
+            The check output text value.
+        project_root : str
+            The project root path.
+        model_name : str, optional
+            The optional model name value.
+        mode_label : str, optional
+            The optional mode label value.
+        """
+        
         super().__init__()
         self._review_kind = str(review_kind or "check")
         self._check_output_text = str(check_output_text or "")

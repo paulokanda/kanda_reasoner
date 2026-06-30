@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/compilation_readiness_validator.py
 """Compilation-readiness validator for Kanda Reasoner storage policy.
 
 This module combines report-only source-cleanliness and secret-scan reports

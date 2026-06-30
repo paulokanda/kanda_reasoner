@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/path_normalization.py
 """Path normalization helpers for the reasoner context bundle box."""
 
 from __future__ import annotations

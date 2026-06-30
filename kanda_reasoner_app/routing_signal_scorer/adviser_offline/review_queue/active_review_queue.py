@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/review_queue/active_review_queue.py
 """Pure in-memory active review queue for Adviser Candidate v0 reports.
 
 The queue builder converts a caller-supplied M12-style evaluation report into a
@@ -54,6 +55,14 @@ class ActiveReviewQueueItem:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "queue_item_id": self.queue_item_id,
             "case_id": self.case_id,
@@ -119,6 +128,19 @@ def build_active_review_queue(
 
 
 def _as_mappings(value: object) -> Iterable[Mapping[str, Any]]:
+    """Support as mappings behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    Iterable[Mapping[str, Any]]
+        The sequence of values.
+    """
+    
     if isinstance(value, Iterable) and not isinstance(value, (str, bytes, bytearray, Mapping)):
         for item in value:
             if isinstance(item, Mapping):
@@ -126,6 +148,19 @@ def _as_mappings(value: object) -> Iterable[Mapping[str, Any]]:
 
 
 def _needs_review(result: Mapping[str, Any]) -> bool:
+    """Support needs review behavior.
+    
+    Parameters
+    ----------
+    result : Mapping[str, Any]
+        The result value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(
         (
             bool(result.get("review_required")),
@@ -139,6 +174,21 @@ def _needs_review(result: Mapping[str, Any]) -> bool:
 
 
 def _build_item(result: Mapping[str, Any], *, queue_id: str) -> ActiveReviewQueueItem:
+    """Support build item behavior.
+    
+    Parameters
+    ----------
+    result : Mapping[str, Any]
+        The result value.
+    queue_id : str
+        The queue id value.
+    
+    Returns
+    -------
+    ActiveReviewQueueItem
+        The active review queue item result.
+    """
+    
     case_id = str(result.get("case_id") or result.get("gold_case_id") or "case-not-recorded")
     reasons = tuple(_reason_codes(result))
     priority = _priority(result, reasons)
@@ -159,6 +209,19 @@ def _build_item(result: Mapping[str, Any], *, queue_id: str) -> ActiveReviewQueu
 
 
 def _reason_codes(result: Mapping[str, Any]) -> list[str]:
+    """Support reason codes behavior.
+    
+    Parameters
+    ----------
+    result : Mapping[str, Any]
+        The result value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     reasons: list[str] = []
     proceed = str(result.get("candidate_advisory_proceed_recommendation") or "UNKNOWN")
     severity = str(result.get("severity") or "P4_INFO")
@@ -186,6 +249,21 @@ def _reason_codes(result: Mapping[str, Any]) -> list[str]:
 
 
 def _priority(result: Mapping[str, Any], reasons: tuple[str, ...]) -> str:
+    """Support priority behavior.
+    
+    Parameters
+    ----------
+    result : Mapping[str, Any]
+        The result value.
+    reasons : tuple[str, ...]
+        The reasons value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     severity = str(result.get("severity") or "P4_INFO")
     if "unsafe_proceed_recommendation" in reasons or "critical_failure" in reasons or severity.startswith("P0"):
         return "P0_CRITICAL_REVIEW"
@@ -197,6 +275,19 @@ def _priority(result: Mapping[str, Any], reasons: tuple[str, ...]) -> str:
 
 
 def _sort_key(item: Mapping[str, Any]) -> tuple[int, str]:
+    """Support sort key behavior.
+    
+    Parameters
+    ----------
+    item : Mapping[str, Any]
+        The item value.
+    
+    Returns
+    -------
+    tuple[int, str]
+        The tuple of values.
+    """
+    
     order = {
         "P0_CRITICAL_REVIEW": 0,
         "P1_HIGH_REVIEW": 1,
@@ -207,6 +298,23 @@ def _sort_key(item: Mapping[str, Any]) -> tuple[int, str]:
 
 
 def _aggregate(*, queue_items: list[Mapping[str, Any]], total_cases: int, source_report: Mapping[str, Any]) -> dict[str, object]:
+    """Support aggregate behavior.
+    
+    Parameters
+    ----------
+    queue_items : list[Mapping[str, Any]]
+        The queue items value.
+    total_cases : int
+        The total cases value.
+    source_report : Mapping[str, Any]
+        The source report value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "source_total_cases": total_cases,
         "queued_review_items": len(queue_items),
@@ -221,11 +329,39 @@ def _aggregate(*, queue_items: list[Mapping[str, Any]], total_cases: int, source
 
 
 def _source_aggregate(source_report: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Support source aggregate behavior.
+    
+    Parameters
+    ----------
+    source_report : Mapping[str, Any]
+        The source report value.
+    
+    Returns
+    -------
+    Mapping[str, Any]
+        The mapped values.
+    """
+    
     aggregate = source_report.get("aggregate")
     return aggregate if isinstance(aggregate, Mapping) else {}
 
 
 def _queue_recommendation(*, queue_items: list[Mapping[str, Any]], total_cases: int) -> str:
+    """Support queue recommendation behavior.
+    
+    Parameters
+    ----------
+    queue_items : list[Mapping[str, Any]]
+        The queue items value.
+    total_cases : int
+        The total cases value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if total_cases == 0:
         return "blocked_no_cases_supplied"
     if any(str(item.get("review_priority")) == "P0_CRITICAL_REVIEW" for item in queue_items):
@@ -236,4 +372,19 @@ def _queue_recommendation(*, queue_items: list[Mapping[str, Any]], total_cases: 
 
 
 def _count_priority(items: list[Mapping[str, Any]], priority: str) -> int:
+    """Support count priority behavior.
+    
+    Parameters
+    ----------
+    items : list[Mapping[str, Any]]
+        The item values.
+    priority : str
+        The priority value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return sum(1 for item in items if item.get("review_priority") == priority)

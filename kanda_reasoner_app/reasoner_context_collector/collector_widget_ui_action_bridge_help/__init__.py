@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge_help/__init__.py
 """Helper functions for widget UI-action bridge collection."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/app_constants.py
 """Application constants for the root Reasoner tools GUI shell."""
 
 from __future__ import annotations

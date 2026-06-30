@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_implementation_gate_design.py
 """Design-only M30 Auxiliar/Assistant implementation gate design.
 
 M30 defines static implementation-gate requirements that must be satisfied before

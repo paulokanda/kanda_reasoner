@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/lazy_tabs.py
 """Lazy loading tab host for embedded Reasoner tools."""
 
 from __future__ import annotations
@@ -64,7 +65,19 @@ _FREEZE_AFTER_UPDATE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/freeze_after_updat
 from kanda_reasoner_app.templates.floating_windows.float_window import attach_floating_window
 
 class LazyToolTab(QWidget):
+    """Represent lazy tool tab."""
+    
     def __init__(self, spec: ToolSpec, on_loaded) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        spec : ToolSpec
+            The spec value.
+        on_loaded : object
+            The on loaded value.
+        """
+        
         super().__init__()
         self.spec = spec
         self._loaded = False
@@ -170,6 +183,9 @@ class LazyToolTab(QWidget):
         outer.addWidget(self.content_host, 1)
 
     def _open_help_catalog(self) -> None:
+        """Support open help catalog behavior.
+        """
+        
         if not self.spec.help_catalog:
             return
 
@@ -303,6 +319,14 @@ class LazyToolTab(QWidget):
         mover(self.status_source_row, self._status_source_insert_index)
 
     def load_tool(self) -> bool:
+        """Load the tool.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         if self._loaded:
             return True
 
@@ -359,6 +383,14 @@ class LazyToolTab(QWidget):
             return False
 
     def ensure_loaded(self) -> bool:
+        """Support ensure loaded behavior.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         if not self._loaded:
             return self.load_tool()
         return True

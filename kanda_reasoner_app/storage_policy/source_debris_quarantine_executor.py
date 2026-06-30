@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_quarantine_executor.py
 """Executor for reviewed source debris quarantine moves.
 
 This module performs only one kind of operation: moving items that were already

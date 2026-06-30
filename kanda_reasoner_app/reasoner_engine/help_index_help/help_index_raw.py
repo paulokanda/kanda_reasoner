@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/help_index_help/help_index_raw.py
 """Public facade for the raw help index payload."""
 
 from __future__ import annotations

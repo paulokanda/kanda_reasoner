@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_subsystems.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from collections import defaultdict
 
 
 def build_subsystem_summaries(files_payload: list[dict]) -> list[dict]:
+    """Build a subsystem summaries.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     groups: dict[str, list[dict]] = defaultdict(list)
 
     for file_record in files_payload:

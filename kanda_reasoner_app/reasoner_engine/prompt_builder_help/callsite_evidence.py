@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder_help/callsite_evidence.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -14,6 +15,19 @@ __all__ = [
 
 
 def extract_exact_call_targets(question: str) -> list[str]:
+    """Extract the exact call targets.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     q = norm_text(question)
     if not is_which_method_calls_question(q):
         return []
@@ -29,6 +43,21 @@ def prioritize_callsite_snippets(
     question: str,
     snippet_evidence: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
+    """Support prioritize callsite snippets behavior.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    snippet_evidence : list[dict[str, Any]]
+        The snippet evidence value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     exact_call_targets = extract_exact_call_targets(question)
     if not exact_call_targets:
         return []
@@ -98,6 +127,16 @@ def append_callsite_evidence_section(
     lines: list[str],
     prioritized_callsite_snippets: list[dict[str, Any]],
 ) -> None:
+    """Support append callsite evidence section behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    prioritized_callsite_snippets : list[dict[str, Any]]
+        The prioritized callsite snippets value.
+    """
+    
     if not prioritized_callsite_snippets:
         return
 

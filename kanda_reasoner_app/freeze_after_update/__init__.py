@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/__init__.py
 """Freeze Feature After Update box public exports."""
 
 from .contract import (

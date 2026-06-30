@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/__init__.py
 """Storage policy owner box for Kanda Reasoner.
 
 This package owns non-source storage policy helpers such as maintenance

@@ -1,9 +1,25 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_chains.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
 
 
 def _find_matching_symbols(files_payload: list[dict], terms: list[str]) -> list[dict]:
+    """Support find matching symbols behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    terms : list[str]
+        The terms value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     matches: list[dict] = []
 
     for file_record in files_payload:
@@ -42,6 +58,21 @@ def _find_matching_symbols(files_payload: list[dict], terms: list[str]) -> list[
 
 
 def derive_startup_chain(files_payload: list[dict], entry_files: list[str]) -> list[dict]:
+    """Support derive startup chain behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    entry_files : list[str]
+        The entry files value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     steps: list[dict] = []
 
     for idx, entry in enumerate(entry_files[:8], start=1):
@@ -68,6 +99,19 @@ def derive_startup_chain(files_payload: list[dict], entry_files: list[str]) -> l
 
 
 def derive_timeline_chain(files_payload: list[dict]) -> list[dict]:
+    """Support derive timeline chain behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     matches = _find_matching_symbols(files_payload, ["timeline"])
     return [
         {
@@ -81,6 +125,19 @@ def derive_timeline_chain(files_payload: list[dict]) -> list[dict]:
 
 
 def derive_topomap_chain(files_payload: list[dict]) -> list[dict]:
+    """Support derive topomap chain behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     matches = _find_matching_symbols(files_payload, ["topomap", "amplitude_map", "mcrvlt"])
     return [
         {
@@ -94,6 +151,19 @@ def derive_topomap_chain(files_payload: list[dict]) -> list[dict]:
 
 
 def derive_reset_chain(files_payload: list[dict]) -> list[dict]:
+    """Support derive reset chain behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     matches = _find_matching_symbols(files_payload, ["reset", "snapshot", "cleanup", "close"])
     return [
         {
@@ -107,6 +177,21 @@ def derive_reset_chain(files_payload: list[dict]) -> list[dict]:
 
 
 def build_execution_chains(files_payload: list[dict], entry_files: list[str]) -> dict:
+    """Build a execution chains.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    entry_files : list[str]
+        The entry files value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return {
         "startup_chain": derive_startup_chain(files_payload, entry_files),
         "timeline_chain": derive_timeline_chain(files_payload),

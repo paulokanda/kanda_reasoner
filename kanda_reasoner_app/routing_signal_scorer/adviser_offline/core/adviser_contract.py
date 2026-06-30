@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/core/adviser_contract.py
 """Offline Adviser contract validator.
 
 This module validates JSON-like dictionaries against the Adviser v0 candidate
@@ -71,6 +72,14 @@ class ContractValidationResult:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "errors": list(self.errors),
@@ -164,6 +173,20 @@ def assert_candidate_answer_valid(answer: Mapping[str, Any]) -> Mapping[str, Any
 
 
 def _validate_enum(answer: Mapping[str, Any], field: str, enums: Mapping[str, object], errors: list[str]) -> None:
+    """Support validate enum behavior.
+    
+    Parameters
+    ----------
+    answer : Mapping[str, Any]
+        The answer value.
+    field : str
+        The field value.
+    enums : Mapping[str, object]
+        The enums value.
+    errors : list[str]
+        The error values.
+    """
+    
     if field not in answer:
         return
     allowed_obj = enums.get(field)
@@ -176,6 +199,18 @@ def _validate_enum(answer: Mapping[str, Any], field: str, enums: Mapping[str, ob
 
 
 def _validate_list_field(answer: Mapping[str, Any], field: str, errors: list[str]) -> None:
+    """Support validate list field behavior.
+    
+    Parameters
+    ----------
+    answer : Mapping[str, Any]
+        The answer value.
+    field : str
+        The field value.
+    errors : list[str]
+        The error values.
+    """
+    
     if field not in answer:
         return
     value = answer.get(field)
@@ -184,6 +219,16 @@ def _validate_list_field(answer: Mapping[str, Any], field: str, errors: list[str
 
 
 def _validate_context_requirements(value: object, errors: list[str]) -> None:
+    """Support validate context requirements behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     required_keys = ("required", "recommended", "optional", "missing_required", "missing_recommended")
     if not isinstance(value, Mapping):
         errors.append("context_requirements must be a mapping")
@@ -196,6 +241,16 @@ def _validate_context_requirements(value: object, errors: list[str]) -> None:
 
 
 def _validate_risk_assessment(value: object, errors: list[str]) -> None:
+    """Support validate risk assessment behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     if not isinstance(value, Mapping):
         errors.append("risk_assessment must be a mapping")
         return
@@ -207,6 +262,16 @@ def _validate_risk_assessment(value: object, errors: list[str]) -> None:
 
 
 def _validate_governance_flags(value: object, errors: list[str]) -> None:
+    """Support validate governance flags behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     required_keys = ("freeze", "box", "startup", "prompt_library", "patch_delivery", "authority", "adversarial")
     if not isinstance(value, Mapping):
         errors.append("governance_flags must be a mapping")
@@ -219,6 +284,18 @@ def _validate_governance_flags(value: object, errors: list[str]) -> None:
 
 
 def _validate_rationale(value: object, errors: list[str], warnings: list[str]) -> None:
+    """Support validate rationale behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    warnings : list[str]
+        The warnings value.
+    """
+    
     if not isinstance(value, Mapping):
         errors.append("rationale must be a mapping")
         return

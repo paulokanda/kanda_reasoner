@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/docstring_policy.py
 """Project-level policy for AI-generated docstrings."""
 
 from __future__ import annotations
@@ -41,10 +42,31 @@ class DocstringPolicy:
 
     @classmethod
     def default(cls) -> "DocstringPolicy":
+        """Support default behavior.
+        
+        Returns
+        -------
+        'DocstringPolicy'
+            The 'docstring policy' result.
+        """
+        
         return cls()
 
     @classmethod
     def from_json(cls, path: str | Path) -> "DocstringPolicy":
+        """Support from json behavior.
+        
+        Parameters
+        ----------
+        path : str | Path
+            The file or folder path.
+        
+        Returns
+        -------
+        'DocstringPolicy'
+            The 'docstring policy' result.
+        """
+        
         policy_path = Path(path)
         if not policy_path.exists():
             raise FileNotFoundError(f"Docstring policy not found: {policy_path}")
@@ -57,6 +79,19 @@ class DocstringPolicy:
 
     @classmethod
     def load_for_project(cls, root: str | Path) -> "DocstringPolicy":
+        """Load the for project.
+        
+        Parameters
+        ----------
+        root : str | Path
+            The root path.
+        
+        Returns
+        -------
+        'DocstringPolicy'
+            The 'docstring policy' result.
+        """
+        
         root_path = Path(root)
         for filename in ("docstring_policy.json", ".docstring_policy.json"):
             candidate = root_path / filename
@@ -65,11 +100,32 @@ class DocstringPolicy:
         return cls.default()
 
     def to_json(self, path: str | Path) -> None:
+        """Support to json behavior.
+        
+        Parameters
+        ----------
+        path : str | Path
+            The file or folder path.
+        """
+        
         out = Path(path)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(asdict(self), indent=2, ensure_ascii=False), encoding="utf-8")
 
     def prompt_rules_for_kind(self, kind: str) -> list[str]:
+        """Support prompt rules for kind behavior.
+        
+        Parameters
+        ----------
+        kind : str
+            The kind value.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         rules: list[str] = []
         if self.prefer_todo_for_unknowns:
             rules.append("If details are unclear, use TODO placeholders instead of guessing.")

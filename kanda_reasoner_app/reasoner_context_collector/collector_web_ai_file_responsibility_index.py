@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_web_ai_file_responsibility_index.py
 """Build web-AI file responsibility records for Project Reasoner.
 
 This module creates an additive file-level responsibility index for web AI. It

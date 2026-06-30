@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_api.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -95,6 +96,26 @@ def trace_event(
     object_type: str = "",
     extra: dict[str, Any] | None = None,
 ) -> None:
+    """Support trace event behavior.
+    
+    Parameters
+    ----------
+    event_type : str
+        The event type value.
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    message : str, optional
+        The message text.
+    object_name : str, optional
+        The optional object name value.
+    object_type : str, optional
+        The optional object type value.
+    extra : dict[str, Any] | None, optional
+        The optional extra value.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return
@@ -122,6 +143,30 @@ def trace_signal_connection(
     source_line: int | None = None,
     extra: dict[str, Any] | None = None,
 ) -> None:
+    """Support trace signal connection behavior.
+    
+    Parameters
+    ----------
+    sender_type : str
+        The sender type value.
+    sender_name : str
+        The sender name value.
+    signal_name : str
+        The signal name value.
+    receiver_type : str
+        The receiver type value.
+    receiver_name : str
+        The receiver name value.
+    slot_name : str
+        The slot name value.
+    source_file : str, optional
+        The optional source file value.
+    source_line : int | None, optional
+        The optional source line value.
+    extra : dict[str, Any] | None, optional
+        The optional extra value.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return
@@ -144,6 +189,16 @@ def trace_state_snapshot(
     label: str,
     state: dict[str, Any],
 ) -> None:
+    """Support trace state snapshot behavior.
+    
+    Parameters
+    ----------
+    label : str
+        The label value.
+    state : dict[str, Any]
+        The state value.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return
@@ -161,6 +216,20 @@ def trace_error(
     message: str,
     extra: dict[str, Any] | None = None,
 ) -> None:
+    """Support trace error behavior.
+    
+    Parameters
+    ----------
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    message : str
+        The message text.
+    extra : dict[str, Any] | None, optional
+        The optional extra value.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return
@@ -180,6 +249,20 @@ def trace_warning(
     message: str,
     extra: dict[str, Any] | None = None,
 ) -> None:
+    """Support trace warning behavior.
+    
+    Parameters
+    ----------
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    message : str
+        The message text.
+    extra : dict[str, Any] | None, optional
+        The optional extra value.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return
@@ -193,6 +276,14 @@ def trace_warning(
 
 
 def save_runtime_trace() -> Path | None:
+    """Save the runtime trace.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     writer = get_runtime_trace_writer()
     if writer is None:
         return None

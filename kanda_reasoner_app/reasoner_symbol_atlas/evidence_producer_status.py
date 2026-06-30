@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/evidence_producer_status.py
 """Status reporting for Project Analysis Evidence producers.
 
 This module verifies the active evidence path contract used by the project
@@ -79,6 +80,19 @@ class ProjectAnalysisEvidenceProducerStatus:
 
 
 def _normalize_root(project_root: str | Path) -> Path:
+    """Support normalize root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     if project_root is None:
         raise ValueError("project_root is required")
     root_text = str(project_root).strip()
@@ -88,6 +102,21 @@ def _normalize_root(project_root: str | Path) -> Path:
 
 
 def _is_canonical_project_evidence_path(path: Path, project_root: Path) -> bool:
+    """Support is canonical project evidence path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     text = str(path).replace("\\", "/")
     root_text = str(project_root).replace("\\", "/").rstrip("/")
     return (
@@ -97,6 +126,14 @@ def _is_canonical_project_evidence_path(path: Path, project_root: Path) -> bool:
 
 
 def _relative_paths_are_canonical() -> bool:
+    """Support relative paths are canonical behavior.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     expected_prefix = "project_analysis_evidence/"
     relative_paths = (
         relative_primary_evidence_json_path("project"),
@@ -125,6 +162,19 @@ def _current_product_package_root(project_root: Path) -> Path:
 
 
 def _tab5_window_helpers_detected(project_root: Path) -> bool:
+    """Support tab5 window helpers detected behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     source_path = (
         _current_product_package_root(project_root)
         / "reasoner_tools_gui_shell"

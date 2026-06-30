@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/logic_placement_advisor.py
 """Read-only logic placement advisor for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -199,6 +200,19 @@ def build_reasoner_symbol_atlas_logic_placement_report(
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).expanduser().resolve(strict=False)
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -208,10 +222,36 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _normalize_token_text(value: str) -> str:
+    """Support normalize token text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return normalize_project_atlas_text(value).lower().replace("-", "_").replace(" ", "_")
 
 
 def _infer_owner_box_from_text(text: str) -> str:
+    """Support infer owner box from text behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     lowered = _normalize_token_text(text)
     rules = (
         ("reasoner_symbol_atlas", ("atlas", "find_symbol", "owner_map", "pre_patch", "existing_code")),
@@ -233,6 +273,19 @@ def _infer_owner_box_from_text(text: str) -> str:
 
 
 def _infer_owner_box_from_path(path_value: str) -> str:
+    """Support infer owner box from path behavior.
+    
+    Parameters
+    ----------
+    path_value : str
+        The path value value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     lowered = str(Path(path_value)).replace("\\", "/").lower()
     path_rules = (
         ("reasoner_symbol_atlas", ("reasoner_symbol_atlas/",)),
@@ -257,6 +310,23 @@ def _find_target_record(
     modules: Iterable[ProjectModuleRecord],
     target_path: str,
 ) -> ProjectModuleRecord | None:
+    """Support find target record behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    modules : Iterable[ProjectModuleRecord]
+        The modules value.
+    target_path : str
+        The target path value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if not target_path:
         return None
     target = Path(target_path)
@@ -275,6 +345,21 @@ def _find_target_record(
 
 
 def _find_symbol_matches(symbols: Iterable[ProjectSymbol], symbol_name: str) -> tuple[ProjectSymbol, ...]:
+    """Support find symbol matches behavior.
+    
+    Parameters
+    ----------
+    symbols : Iterable[ProjectSymbol]
+        The symbols value.
+    symbol_name : str
+        The symbol name value.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     name = normalize_project_atlas_text(symbol_name)
     if not name:
         return tuple()
@@ -289,6 +374,21 @@ def _record_for_preferred_symbol(
     modules: Iterable[ProjectModuleRecord],
     matches: tuple[ProjectSymbol, ...],
 ) -> ProjectModuleRecord | None:
+    """Support record for preferred symbol behavior.
+    
+    Parameters
+    ----------
+    modules : Iterable[ProjectModuleRecord]
+        The modules value.
+    matches : tuple[ProjectSymbol, ...]
+        The matches value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if not matches:
         return None
     records_by_path = {record.path: record for record in modules}
@@ -308,6 +408,23 @@ def _choose_recommended_box(
     target_record: ProjectModuleRecord | None,
     symbol_record: ProjectModuleRecord | None,
 ) -> str:
+    """Support choose recommended box behavior.
+    
+    Parameters
+    ----------
+    task_box : str
+        The task box value.
+    target_record : ProjectModuleRecord | None
+        The target record value.
+    symbol_record : ProjectModuleRecord | None
+        The symbol record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if task_box != "unknown":
         return task_box
     if target_record is not None:
@@ -327,6 +444,25 @@ def _choose_primary_record(
     symbol_record: ProjectModuleRecord | None,
     recommended_box: str,
 ) -> ProjectModuleRecord | None:
+    """Support choose primary record behavior.
+    
+    Parameters
+    ----------
+    modules : Iterable[ProjectModuleRecord]
+        The modules value.
+    target_record : ProjectModuleRecord | None
+        The target record value.
+    symbol_record : ProjectModuleRecord | None
+        The symbol record value.
+    recommended_box : str
+        The recommended box value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if target_record is not None:
         return target_record
     if symbol_record is not None:
@@ -344,6 +480,23 @@ def _candidate_paths_for_box(
     owner_box: str,
     primary_path: str,
 ) -> tuple[str, ...]:
+    """Support candidate paths for box behavior.
+    
+    Parameters
+    ----------
+    modules : Iterable[ProjectModuleRecord]
+        The modules value.
+    owner_box : str
+        The owner box value.
+    primary_path : str
+        The primary path value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     paths: list[str] = []
     for record in modules:
         if record.path == primary_path:
@@ -354,6 +507,19 @@ def _candidate_paths_for_box(
 
 
 def _forbidden_boxes_for_owner_box(owner_box: str) -> tuple[str, ...]:
+    """Support forbidden boxes for owner box behavior.
+    
+    Parameters
+    ----------
+    owner_box : str
+        The owner box value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     all_boxes = tuple(box for box in PROJECT_SYMBOL_ATLAS_PLACEMENT_OWNER_BOXES if box != "unknown")
     if owner_box == "unknown":
         return tuple()
@@ -367,6 +533,21 @@ def _forbidden_boxes_for_owner_box(owner_box: str) -> tuple[str, ...]:
 
 
 def _tests_to_run_for_owner_box(owner_box: str, primary_path: str) -> tuple[str, ...]:
+    """Support tests to run for owner box behavior.
+    
+    Parameters
+    ----------
+    owner_box : str
+        The owner box value.
+    primary_path : str
+        The primary path value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     commands = [
         "python kanda_reasoner_app\\manage_architecture\\manage_architecture.py --root <PROJECT_ROOT> --validate",
         "python kanda_reasoner_app\\manage_workflows\\manage_workflows.py --root <PROJECT_ROOT> --validate",
@@ -385,6 +566,31 @@ def _make_decision_status(
     merge_status: str,
     evidence_status: str,
 ) -> tuple[str, str, tuple[str, ...]]:
+    """Support make decision status behavior.
+    
+    Parameters
+    ----------
+    task_box : str
+        The task box value.
+    target_record : ProjectModuleRecord | None
+        The target record value.
+    primary_record : ProjectModuleRecord | None
+        The primary record value.
+    symbol_matches : tuple[ProjectSymbol, ...]
+        The symbol matches value.
+    recommended_box : str
+        The recommended box value.
+    merge_status : str
+        The merge status value.
+    evidence_status : str
+        The evidence status value.
+    
+    Returns
+    -------
+    tuple[str, str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     reasons: list[str] = []
     if merge_status:
         reasons.append("Evidence merge status: " + merge_status)
@@ -412,6 +618,19 @@ def _make_decision_status(
 
 
 def _format_decision_summary(decision: ProjectSymbolAtlasLogicPlacementDecision) -> str:
+    """Support format decision summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasLogicPlacementDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parts = [
         "Logic placement: " + decision.status,
         "owner_box=" + decision.recommended_owner_box,

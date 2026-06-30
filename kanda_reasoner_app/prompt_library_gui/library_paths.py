@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/library_paths.py
 """Path helpers for the package-owned Prompt Library assets."""
 
 from __future__ import annotations

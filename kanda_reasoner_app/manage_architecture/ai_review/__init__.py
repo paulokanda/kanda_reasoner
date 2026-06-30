@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/ai_review/__init__.py
 """Read-only advisory AI review helpers for Tab 1 First Check."""
 
 from __future__ import annotations

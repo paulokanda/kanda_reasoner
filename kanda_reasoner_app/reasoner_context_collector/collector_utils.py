@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_utils.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -40,6 +41,21 @@ _EMOJI_PATTERN = re.compile(
 
 
 def _sanitize_text(value: str, remove_emojis: bool = True) -> str:
+    """Support sanitize text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    remove_emojis : bool, optional
+        The optional remove emojis value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not isinstance(value, str):
         value = str(value)
 
@@ -52,6 +68,21 @@ def _sanitize_text(value: str, remove_emojis: bool = True) -> str:
 
 
 def sanitize_for_json(data: Any, remove_emojis: bool = True) -> Any:
+    """Support sanitize for json behavior.
+    
+    Parameters
+    ----------
+    data : Any
+        The input data.
+    remove_emojis : bool, optional
+        The optional remove emojis value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(data, dict):
         clean_dict = {}
         for key, value in data.items():
@@ -72,22 +103,86 @@ def sanitize_for_json(data: Any, remove_emojis: bool = True) -> Any:
 
 
 def safe_read_text(path: Path) -> str:
+    """Support safe read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="replace")
 
 
 def normalize_path(path: Path, root: Path) -> str:
+    """Normalize the path.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(path.resolve().relative_to(root.resolve())).replace("\\", "/")
 
 
 def short_hash(value: str) -> str:
+    """Support short hash behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return hashlib.sha1(value.encode("utf-8", errors="replace")).hexdigest()[:12]
 
 
 def compact_whitespace(text: str) -> str:
+    """Support compact whitespace behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return " ".join(str(text).split())
 
 
 def safe_json_dump(data: Any, output_path: Path) -> None:
+    """Support safe json dump behavior.
+    
+    Parameters
+    ----------
+    data : Any
+        The input data.
+    output_path : Path
+        The output path value.
+    """
+    
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     clean_data = sanitize_for_json(data, remove_emojis=True)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_artifact_route_detectors.py
 """Detect Tab 2 generated-artifact route and dual JSON workflow mistakes."""
 
 from __future__ import annotations

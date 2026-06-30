@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/snippet_retrieval_help/snippet_retrieval_part_1_private_impl.py
 """Private snippet retrieval helper implementation part 1."""
 
 from __future__ import annotations
@@ -6,6 +7,14 @@ __all__ = []
 
 
 def _bind_root_globals(root_globals):
+    """Support bind root globals behavior.
+    
+    Parameters
+    ----------
+    root_globals : object
+        The root globals value.
+    """
+    
     skipped = {
         '__name__',
         '__package__',
@@ -21,6 +30,23 @@ def _bind_root_globals(root_globals):
 
 
 def _sr_score_runtime_anchor_for_question_impl(retriever, question: str, anchor: str) -> int:
+    """Support sr score runtime anchor for question impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    question : str
+        The question value.
+    anchor : str
+        The anchor value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     q = norm_text(question)
     anchor_low = norm_text(anchor)
     score = 0
@@ -65,6 +91,23 @@ def _sr_score_runtime_anchor_for_question_impl(retriever, question: str, anchor:
     return score
 
 def _sr_find_anchor_line_in_file_impl(retriever, abs_path: str, anchor: str) -> int | None:
+    """Support sr find anchor line in file impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    abs_path : str
+        The abs path value.
+    anchor : str
+        The anchor value.
+    
+    Returns
+    -------
+    int | None
+        The integer result.
+    """
+    
     try:
         text = safe_read_text(abs_path)
     except Exception:
@@ -80,6 +123,21 @@ def _sr_find_anchor_line_in_file_impl(retriever, abs_path: str, anchor: str) -> 
     return None
 
 def _sr_extract_runtime_anchors_from_detail_impl(retriever, detail_text: str) -> list[str]:
+    """Support sr extract runtime anchors from detail impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    detail_text : str
+        The detail text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     anchors: list[str] = []
 
     for line in detail_text.splitlines():

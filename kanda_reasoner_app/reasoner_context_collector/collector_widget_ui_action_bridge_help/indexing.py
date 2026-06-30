@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge_help/indexing.py
 """Internal indexing helpers for widget UI action bridge records."""
 
 from __future__ import annotations
@@ -13,6 +14,16 @@ def _append_widget_action_index(
     widget_action_index: dict[str, dict[str, Any]],
     bridge_record: dict[str, Any],
 ) -> None:
+    """Support append widget action index behavior.
+    
+    Parameters
+    ----------
+    widget_action_index : dict[str, dict[str, Any]]
+        The widget action index value.
+    bridge_record : dict[str, Any]
+        The bridge record value.
+    """
+    
     widget_id = _safe_str(bridge_record.get("widget_id", "")) or "<unmatched_widget>"
 
     if widget_id not in widget_action_index:
@@ -60,6 +71,16 @@ def _append_action_widget_index(
     action_widget_index: dict[str, dict[str, Any]],
     bridge_record: dict[str, Any],
 ) -> None:
+    """Support append action widget index behavior.
+    
+    Parameters
+    ----------
+    action_widget_index : dict[str, dict[str, Any]]
+        The action widget index value.
+    bridge_record : dict[str, Any]
+        The bridge record value.
+    """
+    
     action_key = _safe_str(bridge_record.get("action_key", ""))
     if not action_key:
         return
@@ -90,6 +111,23 @@ def _build_bridge_summary(
     widget_action_index: dict[str, dict[str, Any]],
     action_widget_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Support build bridge summary behavior.
+    
+    Parameters
+    ----------
+    bridge_records : list[dict[str, Any]]
+        The bridge records value.
+    widget_action_index : dict[str, dict[str, Any]]
+        The widget action index value.
+    action_widget_index : dict[str, dict[str, Any]]
+        The action widget index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     matched_widget_record_count = sum(
         1 for record in bridge_records
         if _safe_str(record.get("widget_id", ""))

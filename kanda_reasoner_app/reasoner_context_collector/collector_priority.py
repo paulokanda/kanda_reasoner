@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_priority.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -7,6 +8,21 @@ def build_file_priority_index(
     files_payload: list[dict],
     module_centrality_index: dict,
 ) -> dict:
+    """Build a file priority index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    module_centrality_index : dict
+        The module centrality index value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     out: dict = {}
 
     for record in files_payload:
@@ -59,6 +75,21 @@ def build_file_priority_index(
 
 
 def build_priority_ranking(file_priority_index: dict, limit: int = 50) -> list[dict]:
+    """Build a priority ranking.
+    
+    Parameters
+    ----------
+    file_priority_index : dict
+        The file priority index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     ranked = [
         {
             "file": path,

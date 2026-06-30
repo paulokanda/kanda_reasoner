@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/gold_expansion/gold_set_expansion_plan.py
 """Pure in-memory seed-gold expansion planning for Adviser.
 
 M15 converts caller-supplied summaries into a deterministic expansion plan for
@@ -244,6 +245,19 @@ def assert_gold_set_expansion_plan_valid(plan: Mapping[str, Any]) -> Mapping[str
 
 
 def _gold_summary(summary: Mapping[str, Any]) -> dict[str, object]:
+    """Support gold summary behavior.
+    
+    Parameters
+    ----------
+    summary : Mapping[str, Any]
+        The summary value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     case_count = _positive_int(summary.get("case_count") or summary.get("gold_case_count") or summary.get("current_case_count"), default=0, allow_zero=True)
     version = str(summary.get("gold_set_version") or summary.get("version") or "unknown")
     families = summary.get("families")
@@ -260,6 +274,19 @@ def _gold_summary(summary: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
+    """Support evaluation summary behavior.
+    
+    Parameters
+    ----------
+    report : Mapping[str, Any]
+        The report value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = report.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -278,6 +305,19 @@ def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
+    """Support queue summary behavior.
+    
+    Parameters
+    ----------
+    queue : Mapping[str, Any]
+        The queue value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = queue.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -294,6 +334,19 @@ def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _registry_summary(registry_record: Mapping[str, Any]) -> dict[str, object]:
+    """Support registry summary behavior.
+    
+    Parameters
+    ----------
+    registry_record : Mapping[str, Any]
+        The registry record value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     blockers = registry_record.get("promotion_blockers")
     if not isinstance(blockers, list):
         blockers = []
@@ -308,6 +361,19 @@ def _registry_summary(registry_record: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _target_families(policy: Mapping[str, Any]) -> tuple[str, ...]:
+    """Support target families behavior.
+    
+    Parameters
+    ----------
+    policy : Mapping[str, Any]
+        The policy value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     raw = policy.get("target_families")
     if isinstance(raw, (list, tuple)):
         values = tuple(str(item).strip() for item in raw if str(item).strip())
@@ -324,6 +390,27 @@ def _plan_item(
     evaluation_summary: Mapping[str, Any],
     queue_summary: Mapping[str, Any],
 ) -> dict[str, object]:
+    """Support plan item behavior.
+    
+    Parameters
+    ----------
+    family : str
+        The family value.
+    target_new_cases : int
+        The target new cases value.
+    gold_summary : Mapping[str, Any]
+        The gold summary value.
+    evaluation_summary : Mapping[str, Any]
+        The evaluation summary value.
+    queue_summary : Mapping[str, Any]
+        The queue summary value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     family_counts = gold_summary.get("family_counts")
     current_family_count = 0
     if isinstance(family_counts, Mapping):
@@ -356,6 +443,27 @@ def _blockers(
     registry_summary: Mapping[str, Any],
     plan_items: list[Mapping[str, Any]],
 ) -> list[str]:
+    """Support blockers behavior.
+    
+    Parameters
+    ----------
+    gold_summary : Mapping[str, Any]
+        The gold summary value.
+    evaluation_summary : Mapping[str, Any]
+        The evaluation summary value.
+    queue_summary : Mapping[str, Any]
+        The queue summary value.
+    registry_summary : Mapping[str, Any]
+        The registry summary value.
+    plan_items : list[Mapping[str, Any]]
+        The plan items value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     blockers = ["future_human_review_required", "future_governed_gold_patch_required", "m16_promotion_gate_not_yet_run"]
     if int(gold_summary.get("current_case_count") or 0) == 0:
         blockers.append("current_gold_summary_empty_or_unreported")
@@ -377,6 +485,19 @@ def _blockers(
 
 
 def _valid_plan_item(item: object) -> bool:
+    """Support valid plan item behavior.
+    
+    Parameters
+    ----------
+    item : object
+        The item value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return (
         isinstance(item, Mapping)
         and bool(str(item.get("family") or ""))
@@ -388,6 +509,23 @@ def _valid_plan_item(item: object) -> bool:
 
 
 def _positive_int(value: object, *, default: int, allow_zero: bool = False) -> int:
+    """Support positive int behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    default : int
+        The default value.
+    allow_zero : bool, optional
+        The optional allow zero value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         number = int(value)  # type: ignore[arg-type]
     except (TypeError, ValueError):

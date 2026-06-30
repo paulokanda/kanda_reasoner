@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_assistance_readiness_gate_pilot_boundary_design.py
 """M33 Auxiliar/Assistant assistance readiness gate for Pilot boundary review design.
 
 M33 defines static prerequisites for deciding whether a later M34 Pilot/Copilot

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/daily_rfctr_report/daily_refactor_report_validate_manifests.py
 """Validate daily_refactor_report helper manifest."""
 
 from __future__ import annotations
@@ -12,10 +13,36 @@ MANIFEST_PATH = BASE_DIR / "daily_refactor_report_help.json"
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="replace")
 
 
 def _extract_all(path: Path) -> list[str]:
+    """Support extract all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(_read_text(path), filename=str(path))
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -28,6 +55,14 @@ def _extract_all(path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     if not MANIFEST_PATH.exists():
         print(f"FAIL missing manifest: {MANIFEST_PATH}")
         return 1

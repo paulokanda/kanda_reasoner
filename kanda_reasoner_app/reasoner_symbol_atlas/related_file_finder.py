@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/related_file_finder.py
 """Read-only related help and support file finder for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -307,14 +308,55 @@ def build_reasoner_symbol_atlas_related_file_report(
 
 
 def _active_paths(paths: tuple[str, ...]) -> tuple[str, ...]:
+    """Support active paths behavior.
+    
+    Parameters
+    ----------
+    paths : tuple[str, ...]
+        The file or folder paths.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(path for path in paths if is_active_atlas_path(path))
 
 
 def _active_source_paths(paths: tuple[str, ...]) -> tuple[str, ...]:
+    """Support active source paths behavior.
+    
+    Parameters
+    ----------
+    paths : tuple[str, ...]
+        The file or folder paths.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(path for path in paths if is_active_project_source_path(path))
 
 
 def _active_related_source_paths(paths: tuple[str, ...], target_path: str) -> tuple[str, ...]:
+    """Support active related source paths behavior.
+    
+    Parameters
+    ----------
+    paths : tuple[str, ...]
+        The file or folder paths.
+    target_path : str
+        The target path value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(
         path
         for path in paths
@@ -324,6 +366,21 @@ def _active_related_source_paths(paths: tuple[str, ...], target_path: str) -> tu
 
 
 def _is_public_or_direct_target(path_value: str, target_path: str) -> bool:
+    """Support is public or direct target behavior.
+    
+    Parameters
+    ----------
+    path_value : str
+        The path value value.
+    target_path : str
+        The target path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     normalized_path = path_value.replace("\\", "/").lower()
     normalized_target = target_path.replace("\\", "/").lower()
     if normalized_path == normalized_target:
@@ -339,6 +396,29 @@ def _status_and_confidence(
     test_files: tuple[str, ...],
     real_owner_files: tuple[str, ...],
 ) -> tuple[str, str]:
+    """Support status and confidence behavior.
+    
+    Parameters
+    ----------
+    target_found : bool
+        The target found value.
+    related_files : tuple[str, ...]
+        The related files value.
+    main_files : tuple[str, ...]
+        The main files value.
+    helper_files : tuple[str, ...]
+        The helper files value.
+    test_files : tuple[str, ...]
+        The test files value.
+    real_owner_files : tuple[str, ...]
+        The real owner files value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     if not target_found and not related_files:
         return PROJECT_SYMBOL_ATLAS_RELATED_STATUS_TARGET_NOT_FOUND, "low"
     if not related_files:
@@ -360,6 +440,19 @@ def _status_and_confidence(
 
 
 def _format_decision_summary(decision: ProjectSymbolAtlasRelatedFileDecision) -> str:
+    """Support format decision summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasRelatedFileDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         "Related help/support files: "
         + decision.status

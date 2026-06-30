@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_documentation_drift_detectors.py
 """Detect explicit workflow documentation drift against the active manifest."""
 
 from __future__ import annotations
@@ -111,6 +112,27 @@ def _issue(
     expected: str,
     actual: str,
 ) -> WorkflowIssue:
+    """Support issue behavior.
+    
+    Parameters
+    ----------
+    issue_id : str
+        The issue id value.
+    workflow_step : str
+        The workflow step value.
+    evidence : str
+        The evidence value.
+    expected : str
+        The expected value.
+    actual : str
+        The actual value.
+    
+    Returns
+    -------
+    WorkflowIssue
+        The workflow issue result.
+    """
+    
     return WorkflowIssue(
         issue_id=issue_id,
         category="workflow_documentation_drift",

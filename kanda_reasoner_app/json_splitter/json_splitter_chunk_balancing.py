@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_chunk_balancing.py
 """Chunk balancing helpers for Project Reasoner JSON Splitter.
 
 These helpers are intentionally pure and GUI-independent so they can be tested

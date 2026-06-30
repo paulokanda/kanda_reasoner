@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/__init__.py
 from .reference_folder_policy import (
     PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS,
     build_reasoner_symbol_atlas_reference_path_markers,

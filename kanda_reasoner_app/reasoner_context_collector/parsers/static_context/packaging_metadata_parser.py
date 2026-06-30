@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/parsers/static_context/packaging_metadata_parser.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -36,10 +37,40 @@ DEFAULT_PACKAGING_FILE_PATTERNS: tuple[str, ...] = (
 
 
 def _normalize_rel_path(path: Path, root: Path) -> str:
+    """Support normalize rel path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(path.relative_to(root)).replace("\\", "/")
 
 
 def _truncate_text(value: str, max_chars: int = 200) -> str:
+    """Support truncate text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    max_chars : int, optional
+        The optional max chars value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = value.strip()
     if len(value) <= max_chars:
         return value
@@ -47,6 +78,19 @@ def _truncate_text(value: str, max_chars: int = 200) -> str:
 
 
 def _dedupe_keep_order(items: list[str]) -> list[str]:
+    """Support dedupe keep order behavior.
+    
+    Parameters
+    ----------
+    items : list[str]
+        The item values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     seen: set[str] = set()
     out: list[str] = []
     for item in items:
@@ -62,6 +106,14 @@ def _dedupe_keep_order(items: list[str]) -> list[str]:
 
 
 def _new_result() -> dict[str, Any]:
+    """Support new result behavior.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "project_name": "",
         "declared_version": "",
@@ -79,6 +131,20 @@ def _new_result() -> dict[str, Any]:
 
 
 def _append_evidence(result: dict[str, Any], source_file: str, field_name: str, value: str) -> None:
+    """Support append evidence behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    source_file : str
+        The source file value.
+    field_name : str
+        The field name value.
+    value : str
+        The input value.
+    """
+    
     result["packaging_evidence"].append(
         {
             "source_file": source_file,
@@ -89,16 +155,52 @@ def _append_evidence(result: dict[str, Any], source_file: str, field_name: str, 
 
 
 def _append_parse_warning(result: dict[str, Any], source_file: str, message: str) -> None:
+    """Support append parse warning behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    source_file : str
+        The source file value.
+    message : str
+        The message text.
+    """
+    
     warning = f"{source_file}: {message}" if source_file else message
     result["packaging_parse_warnings"].append(warning)
 
 
 def _add_package_manager_signal(result: dict[str, Any], signal: str) -> None:
+    """Support add package manager signal behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    signal : str
+        The signal value.
+    """
+    
     if signal not in result["package_manager_signals"]:
         result["package_manager_signals"].append(signal)
 
 
 def _set_if_empty(result: dict[str, Any], key: str, value: str, source_file: str) -> None:
+    """Support set if empty behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    key : str
+        The key value.
+    value : str
+        The input value.
+    source_file : str
+        The source file value.
+    """
+    
     cleaned = value.strip()
     if cleaned and not result.get(key):
         result[key] = cleaned
@@ -106,6 +208,20 @@ def _set_if_empty(result: dict[str, Any], key: str, value: str, source_file: str
 
 
 def _merge_dependencies(result: dict[str, Any], dependencies: list[str], max_dependencies: int, source_file: str) -> None:
+    """Support merge dependencies behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    dependencies : list[str]
+        The dependencies value.
+    max_dependencies : int
+        The max dependencies value.
+    source_file : str
+        The source file value.
+    """
+    
     current = list(result["declared_dependencies"])
     result["declared_dependencies"] = _dedupe_keep_order(current + dependencies)[:max_dependencies]
     for dep in dependencies[:20]:
@@ -118,6 +234,20 @@ def _merge_optional_dependencies(
     max_dependencies: int,
     source_file: str,
 ) -> None:
+    """Support merge optional dependencies behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    optional_dependencies : dict[str, list[str]]
+        The optional dependencies value.
+    max_dependencies : int
+        The max dependencies value.
+    source_file : str
+        The source file value.
+    """
+    
     current = dict(result["declared_optional_dependencies"])
     for extra_name, deps in optional_dependencies.items():
         merged = _dedupe_keep_order(current.get(extra_name, []) + deps)[:max_dependencies]
@@ -128,6 +258,18 @@ def _merge_optional_dependencies(
 
 
 def _merge_entrypoints(result: dict[str, Any], entries: list[dict[str, str]], source_file: str) -> None:
+    """Support merge entrypoints behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    entries : list[dict[str, str]]
+        The entries value.
+    source_file : str
+        The source file value.
+    """
+    
     current = list(result["declared_entrypoints"])
     seen = {(item.get("group", ""), item.get("name", ""), item.get("target", "")) for item in current if isinstance(item, dict)}
     for entry in entries:
@@ -141,6 +283,18 @@ def _merge_entrypoints(result: dict[str, Any], entries: list[dict[str, str]], so
 
 
 def _merge_tooling(result: dict[str, Any], tooling: dict[str, Any], source_file: str) -> None:
+    """Support merge tooling behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    tooling : dict[str, Any]
+        The tooling value.
+    source_file : str
+        The source file value.
+    """
+    
     current = dict(result["declared_tooling"])
     for key, value in tooling.items():
         if key not in current:
@@ -150,6 +304,19 @@ def _merge_tooling(result: dict[str, Any], tooling: dict[str, Any], source_file:
 
 
 def _looks_nul_padded(text: str) -> bool:
+    """Support looks nul padded behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not text:
         return False
     nul_count = text.count("\x00")
@@ -157,6 +324,19 @@ def _looks_nul_padded(text: str) -> bool:
 
 
 def _read_text_best_effort(path: Path) -> tuple[str, list[str]]:
+    """Support read text best effort behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    tuple[str, list[str]]
+        The tuple of values.
+    """
+    
     warnings: list[str] = []
     raw = path.read_bytes()
     if not raw:
@@ -181,6 +361,19 @@ def _read_text_best_effort(path: Path) -> tuple[str, list[str]]:
 
 
 def _clean_dependency_line(line: str) -> str:
+    """Support clean dependency line behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     cleaned = line.strip().replace("\x00", "")
     if not cleaned:
         return ""
@@ -196,6 +389,19 @@ def _clean_dependency_line(line: str) -> str:
 
 
 def _is_suspicious_dependency_line(line: str) -> bool:
+    """Support is suspicious dependency line behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not line:
         return True
     lowered = line.lower()
@@ -208,6 +414,21 @@ def _is_suspicious_dependency_line(line: str) -> bool:
 
 
 def _discover_packaging_files(project_root: Path, file_patterns: tuple[str, ...]) -> list[Path]:
+    """Support discover packaging files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    file_patterns : tuple[str, ...]
+        The file patterns value.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     found: list[Path] = []
     for pattern in file_patterns:
         for path in project_root.glob(pattern):
@@ -223,6 +444,19 @@ def _discover_packaging_files(project_root: Path, file_patterns: tuple[str, ...]
 
 
 def _parse_dependency_lines(text: str) -> list[str]:
+    """Support parse dependency lines behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     dependencies: list[str] = []
     for raw_line in text.splitlines():
         if "\x00" in raw_line:
@@ -240,6 +474,20 @@ def _parse_dependency_lines(text: str) -> list[str]:
 
 
 def _parse_pyproject(path: Path, project_root: Path, result: dict[str, Any], max_dependencies: int) -> None:
+    """Support parse pyproject behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     if _tomllib is None:
         raise RuntimeError("tomllib is not available in this Python version")
     source_file = _normalize_rel_path(path, project_root)
@@ -292,6 +540,20 @@ def _parse_pyproject(path: Path, project_root: Path, result: dict[str, Any], max
 
 
 def _parse_requirements_txt(path: Path, project_root: Path, result: dict[str, Any], max_dependencies: int) -> None:
+    """Support parse requirements txt behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     source_file = _normalize_rel_path(path, project_root)
     text, read_warnings = _read_text_best_effort(path)
     for warning in read_warnings:
@@ -304,6 +566,20 @@ def _parse_requirements_txt(path: Path, project_root: Path, result: dict[str, An
 
 
 def _parse_setup_cfg(path: Path, project_root: Path, result: dict[str, Any], max_dependencies: int) -> None:
+    """Support parse setup cfg behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     source_file = _normalize_rel_path(path, project_root)
     text, read_warnings = _read_text_best_effort(path)
     for warning in read_warnings:
@@ -348,6 +624,20 @@ def _parse_setup_cfg(path: Path, project_root: Path, result: dict[str, Any], max
 
 
 def _parse_setup_py(path: Path, project_root: Path, result: dict[str, Any], max_dependencies: int) -> None:
+    """Support parse setup py behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     source_file = _normalize_rel_path(path, project_root)
     text, read_warnings = _read_text_best_effort(path)
     for warning in read_warnings:
@@ -388,6 +678,20 @@ def _parse_setup_py(path: Path, project_root: Path, result: dict[str, Any], max_
 
 
 def _parse_pipfile(path: Path, project_root: Path, result: dict[str, Any], max_dependencies: int) -> None:
+    """Support parse pipfile behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     source_file = _normalize_rel_path(path, project_root)
     text, read_warnings = _read_text_best_effort(path)
     for warning in read_warnings:
@@ -419,6 +723,22 @@ def _parse_pipfile(path: Path, project_root: Path, result: dict[str, Any], max_d
 
 
 def _parse_lockfile_names(path: Path, project_root: Path, result: dict[str, Any], signal_name: str, max_dependencies: int) -> None:
+    """Support parse lockfile names behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    result : dict[str, Any]
+        The result value.
+    signal_name : str
+        The signal name value.
+    max_dependencies : int
+        The max dependencies value.
+    """
+    
     source_file = _normalize_rel_path(path, project_root)
     text, read_warnings = _read_text_best_effort(path)
     for warning in read_warnings:
@@ -435,6 +755,23 @@ def parse_packaging_metadata(
     file_patterns: tuple[str, ...] = DEFAULT_PACKAGING_FILE_PATTERNS,
     max_dependencies: int = 200,
 ) -> dict[str, Any]:
+    """Parse the packaging metadata.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    file_patterns : tuple[str, ...], optional
+        The optional file patterns value.
+    max_dependencies : int, optional
+        The optional max dependencies value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     result = _new_result()
     root = Path(project_root).expanduser().resolve()
 
@@ -496,5 +833,17 @@ def parse_packaging_metadata(
 
 # PASS_070B_STATIC_CONTEXT_SCOPE_OVERRIDE
 def _discover_packaging_files(root, *args, **kwargs):
+    """Support discover packaging files behavior.
+    
+    Parameters
+    ----------
+    root : object
+        The root path.
+    *args : object
+        The positional arguments.
+    **kwargs : object
+        The kwargs value.
+    """
+    
     from kanda_reasoner_app.reasoner_context_collector.collector_scope import iter_project_packaging_files
     return list(iter_project_packaging_files(root))

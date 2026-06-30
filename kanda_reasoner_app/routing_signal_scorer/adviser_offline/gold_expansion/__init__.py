@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/gold_expansion/__init__.py
 """Offline advisory gold-set expansion planning helpers.
 
 M15 exports pure in-memory plan builders only. It does not create gold cases,

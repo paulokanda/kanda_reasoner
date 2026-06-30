@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/__init__.py
 """Source hygiene tools for Kanda Reasoner."""
 
 from .bom_fixer import (

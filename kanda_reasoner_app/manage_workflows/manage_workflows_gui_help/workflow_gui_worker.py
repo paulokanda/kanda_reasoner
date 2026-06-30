@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/workflow_gui_worker.py
 """Background worker for workflow and architecture GUI commands."""
 
 from __future__ import annotations
@@ -17,17 +18,34 @@ __all__ = [
 ]
 
 class WorkflowRunWorker(QObject):
+    """Represent workflow run worker."""
+    
     output_ready = Signal(str)
     finished_ok = Signal(str)
     finished_error = Signal(str, str)
 
     def __init__(self, manager_script_path: str, project_root: str, mode: str) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        manager_script_path : str
+            The manager script path value.
+        project_root : str
+            The project root path.
+        mode : str
+            The selected mode.
+        """
+        
         super().__init__()
         self._manager_script_path = Path(manager_script_path)
         self._project_root = Path(project_root)
         self._mode = mode
 
     def run(self) -> None:
+        """Support run behavior.
+        """
+        
         try:
             module = self._load_manager_module(self._manager_script_path)
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/run_static_context_test_suite.py
 """Support the run static context test suite module for Project Reasoner."""
 
 from __future__ import annotations
@@ -34,6 +35,14 @@ TEST_MODULES = [
 
 
 def _wrap_test_function(candidate):
+    """Support wrap test function behavior.
+    
+    Parameters
+    ----------
+    candidate : object
+        The candidate value.
+    """
+    
     signature = inspect.signature(candidate)
     parameter_names = list(signature.parameters.keys())
 
@@ -54,6 +63,19 @@ def _wrap_test_function(candidate):
 
 
 def _load_module_function_tests(module: types.ModuleType) -> unittest.TestSuite:
+    """Support load module function tests behavior.
+    
+    Parameters
+    ----------
+    module : types.ModuleType
+        The module value.
+    
+    Returns
+    -------
+    unittest.TestSuite
+        The test suite result.
+    """
+    
     suite = unittest.TestSuite()
 
     for name in sorted(dir(module)):
@@ -70,6 +92,14 @@ def _load_module_function_tests(module: types.ModuleType) -> unittest.TestSuite:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
 

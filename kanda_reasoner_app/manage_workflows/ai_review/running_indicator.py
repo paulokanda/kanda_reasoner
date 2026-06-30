@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/running_indicator.py
 """Floating green sonar activity monitor for Workflow Review work."""
 
 from __future__ import annotations
@@ -29,6 +30,19 @@ _DETERMINISTIC_CONTEXT = {
 
 
 def _workflow_details(mode: str) -> tuple[str, str, str]:
+    """Support workflow details behavior.
+    
+    Parameters
+    ----------
+    mode : str
+        The selected mode.
+    
+    Returns
+    -------
+    tuple[str, str, str]
+        The tuple of values.
+    """
+    
     normalized = str(mode or "check").strip().lower()
     return _DETERMINISTIC_CONTEXT.get(normalized, (
         "Running deterministic Workflow Review work",
@@ -41,6 +55,14 @@ class Tab2ActivityIndicator:
     """Compatibility facade backed by a floating green sonar monitor."""
 
     def __init__(self, window: Any) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         self._monitor = GreenSonarActivityMonitor(
             window,
             title="Workflow Review",

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/package_migration/package_inventory.py
 """Inventory active references to the legacy implementation package.
 
 This module is intentionally non-mutating. It helps staged package migration by
@@ -100,6 +101,21 @@ def classify_owner_box(relative_path: str) -> str:
 
 
 def _is_excluded(path: Path, root: Path) -> bool:
+    """Support is excluded behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         relative_parts = path.relative_to(root).parts
     except ValueError:
@@ -121,6 +137,19 @@ def iter_candidate_files(root: Path) -> Iterable[Path]:
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="ignore")
 
 
@@ -199,6 +228,18 @@ def collect_owner_box_summary(
 
 
 def _print_entries(title: str, entries: list[InventoryEntry], limit: int) -> None:
+    """Support print entries behavior.
+    
+    Parameters
+    ----------
+    title : str
+        The title value.
+    entries : list[InventoryEntry]
+        The entries value.
+    limit : int
+        The limit value.
+    """
+    
     print(title + ":")
 
     if not entries:
@@ -213,6 +254,16 @@ def _print_entries(title: str, entries: list[InventoryEntry], limit: int) -> Non
 
 
 def _print_owner_summary(entries: list[OwnerBoxSummary], limit: int) -> None:
+    """Support print owner summary behavior.
+    
+    Parameters
+    ----------
+    entries : list[OwnerBoxSummary]
+        The entries value.
+    limit : int
+        The limit value.
+    """
+    
     print("owner box summary:")
 
     if not entries:

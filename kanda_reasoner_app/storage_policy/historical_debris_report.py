@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/historical_debris_report.py
 """Legacy debris report helpers for the Kanda Reasoner storage policy box.
 
 This module detects old top-level Kanda maintenance folders and reports where

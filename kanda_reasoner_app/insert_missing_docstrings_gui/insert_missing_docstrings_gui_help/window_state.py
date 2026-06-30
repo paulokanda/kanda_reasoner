@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/window_state.py
 # ------------------------------------------------------
 # MODULE ORIGIN : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py
 # MANIFEST      : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help.json
@@ -85,7 +86,7 @@ def initialize_window(self) -> None:
         "get missing docstring from Tab1 audit."
     )
     self._tab1_audit_docstring_radio.setChecked(
-        safe_bool(self._prefs.get("use_tab1_audit_docstring_source"), True)
+        safe_bool(self._prefs.get("use_tab1_audit_docstring_source"), False)
     )
     font = self._tab1_audit_docstring_radio.font()
     font.setBold(True)
@@ -220,4 +221,5 @@ def current_prefs_payload(self) -> dict[str, object]:
         "scope": self._scope_combo.currentText(),
         "target_path": self._target_path_edit.text().strip(),
         "report_path": self._report_path_edit.text().strip(),
+        "use_tab1_audit_docstring_source": self._tab1_audit_docstring_radio.isChecked(),
     }

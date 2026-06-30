@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/v10_static_context_inspector_widget.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -15,10 +16,38 @@ from .v10_static_context_evidence_formatter import (
     build_static_context_evidence_preview,
 )
 def _pretty_json(data: Any) -> str:
+    """Support pretty json behavior.
+    
+    Parameters
+    ----------
+    data : Any
+        The input data.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 
 def _join_preview(items: list[Any], limit: int = 5) -> str:
+    """Support join preview behavior.
+    
+    Parameters
+    ----------
+    items : list[Any]
+        The item values.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     cleaned = [str(item).strip() for item in items if str(item).strip()]
     if not cleaned:
         return "-"
@@ -33,6 +62,21 @@ def _build_static_context_summary(
     packaging_metadata: dict[str, Any],
     documentation_intent: dict[str, Any],
 ) -> str:
+    """Support build static context summary behavior.
+    
+    Parameters
+    ----------
+    packaging_metadata : dict[str, Any]
+        The packaging metadata value.
+    documentation_intent : dict[str, Any]
+        The documentation intent value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     packaging_files = packaging_metadata.get("packaging_files_found", [])
     dependencies = packaging_metadata.get("declared_dependencies", [])
     entrypoints = packaging_metadata.get("declared_entrypoints", [])
@@ -92,7 +136,17 @@ def _build_static_context_summary(
 
 
 class StaticContextInspectorWidget(QWidget):
+    """Represent static context inspector widget."""
+    
     def __init__(self, parent: QWidget | None = None) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        parent : QWidget | None, optional
+            The optional parent value.
+        """
+        
         super().__init__(parent)
 
         self._tabs = QTabWidget(self)
@@ -124,6 +178,16 @@ class StaticContextInspectorWidget(QWidget):
         packaging_metadata: dict[str, Any] | None,
         documentation_intent: dict[str, Any] | None,
     ) -> None:
+        """Set the static context.
+        
+        Parameters
+        ----------
+        packaging_metadata : dict[str, Any] | None
+            The packaging metadata value.
+        documentation_intent : dict[str, Any] | None
+            The documentation intent value.
+        """
+        
         packaging_payload = packaging_metadata or {}
         documentation_payload = documentation_intent or {}
 

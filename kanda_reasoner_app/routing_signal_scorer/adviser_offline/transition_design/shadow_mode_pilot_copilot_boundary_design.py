@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_pilot_copilot_boundary_design.py
 """M34 Pilot/Copilot boundary design.
 
 M34 defines the immutable design-only boundary for a possible later Pilot/Copilot

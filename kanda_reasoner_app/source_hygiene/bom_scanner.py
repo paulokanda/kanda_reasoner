@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/bom_scanner.py
 """Dry-run scanner for UTF-8 BOM and text decoding hygiene."""
 
 from __future__ import annotations
@@ -174,6 +175,19 @@ def scan_project_for_bom(
 
 
 def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
+    """Support normalize suffixes behavior.
+    
+    Parameters
+    ----------
+    suffixes : Iterable[str] | None
+        The suffixes value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if suffixes is None:
         return set(DEFAULT_BOM_SCAN_SUFFIXES)
     normalized: set[str] = set()
@@ -188,6 +202,21 @@ def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
 
 
 def _is_in_skipped_dir(path: Path, root: Path) -> bool:
+    """Support is in skipped dir behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         parts = path.relative_to(root).parts[:-1]
     except ValueError:
@@ -196,6 +225,21 @@ def _is_in_skipped_dir(path: Path, root: Path) -> bool:
 
 
 def _display_path(path: Path, root: Path | None) -> str:
+    """Support display path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path | None
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if root is None:
         return str(path)
     try:

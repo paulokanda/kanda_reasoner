@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/path_resolver.py
 """Path resolution helpers for the Kanda Reasoner storage policy box.
 
 This module owns side-effect-free path helpers used by later storage policy

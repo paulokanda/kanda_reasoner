@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_post_adviser_pilot_copilot_handoff_closure_design.py
 """M35 post-Adviser to Pilot/Copilot handoff closure design.
 
 M35 closes the governed post-Adviser bridge design chain after M34 has defined

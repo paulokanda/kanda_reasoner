@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/templates/floating_windows/__init__.py
 """Floating window helpers."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/reconstruction_payload_builder.py
 """Build a lossless active-project reconstruction payload."""
 
 from __future__ import annotations
@@ -34,21 +35,70 @@ _GENERATED_EVIDENCE_PREFIXES = (
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _utc_now() -> str:
+    """Support utc now behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 
 
 def _is_generated_evidence_path(path: Path, context: ProjectContext) -> bool:
+    """Support is generated evidence path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     relative = relative_posix_path(path, context.root).replace("\\", "/").lower().lstrip("/")
     return any(relative.startswith(prefix) for prefix in _GENERATED_EVIDENCE_PREFIXES)
 
 
 def _iter_project_entries(root: Path) -> Iterator[Path]:
+    """Support iter project entries behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     try:
         entries = sorted(root.iterdir(), key=lambda item: (not item.is_dir(), item.name.lower()))
     except OSError:
@@ -58,6 +108,21 @@ def _iter_project_entries(root: Path) -> Iterator[Path]:
 
 
 def _active_directories(context: ProjectContext, rules: ExclusionRules) -> list[dict[str, Any]]:
+    """Support active directories behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     root = safe_resolve(context.root)
     directories: list[dict[str, Any]] = []
 
@@ -86,6 +151,21 @@ def _active_directories(context: ProjectContext, rules: ExclusionRules) -> list[
 
 
 def _file_payload_record(record: dict[str, Any], context: ProjectContext) -> dict[str, Any]:
+    """Support file payload record behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     relative_path = str(record["path"])
     source_path = context.root / Path(relative_path)
     raw = source_path.read_bytes()
@@ -106,6 +186,21 @@ def _file_payload_record(record: dict[str, Any], context: ProjectContext) -> dic
 
 
 def _payload_files(manifest: dict[str, Any], context: ProjectContext) -> list[dict[str, Any]]:
+    """Support payload files behavior.
+    
+    Parameters
+    ----------
+    manifest : dict[str, Any]
+        The manifest value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     manifest_files = manifest.get("files", [])
     if not isinstance(manifest_files, list):
         raise ValueError("file_manifest.files must be a list")
@@ -119,6 +214,21 @@ def _payload_files(manifest: dict[str, Any], context: ProjectContext) -> list[di
 
 
 def _counts(files: list[dict[str, Any]], directories: list[dict[str, Any]]) -> dict[str, int]:
+    """Support counts behavior.
+    
+    Parameters
+    ----------
+    files : list[dict[str, Any]]
+        The files value.
+    directories : list[dict[str, Any]]
+        The directories value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     return {
         "directories": len(directories),
         "files": len(files),

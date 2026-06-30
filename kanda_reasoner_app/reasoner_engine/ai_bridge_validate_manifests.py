@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_validate_manifests.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -21,14 +22,53 @@ HEADER_FIELDS = [
 
 
 def find_manifests(root: Path) -> list[Path]:
+    """Find the manifests.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     return sorted(root.rglob("*_help.json"))
 
 
 def load_json(path: Path) -> dict:
+    """Load the json.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def parse_header_fields(path: Path) -> set[str]:
+    """Parse the header fields.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     fields: set[str] = set()
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines()[:20]:
         stripped = line.strip()
@@ -40,6 +80,19 @@ def parse_header_fields(path: Path) -> set[str]:
 
 
 def parse_module_exports(path: Path) -> tuple[list[str], set[str]]:
+    """Parse the module exports.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    tuple[list[str], set[str]]
+        The tuple of values.
+    """
+    
     source = path.read_text(encoding="utf-8-sig")
     tree = ast.parse(source, filename=str(path))
 
@@ -72,6 +125,19 @@ def parse_module_exports(path: Path) -> tuple[list[str], set[str]]:
 
 
 def helper_files(help_folder: Path) -> list[Path]:
+    """Support helper files behavior.
+    
+    Parameters
+    ----------
+    help_folder : Path
+        The help folder value.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     return sorted(
         p for p in help_folder.glob("*.py")
         if p.name != "__pycache__"
@@ -79,11 +145,37 @@ def helper_files(help_folder: Path) -> list[Path]:
 
 
 def has_ai_context_docstring(path: Path) -> bool:
+    """Return whether ai context docstring.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     text = path.read_text(encoding="utf-8", errors="replace")
     return "AI CONTEXT - REFACTORED MODULE" in text
 
 
 def validate_manifest(manifest_path: Path) -> list[str]:
+    """Validate the manifest.
+    
+    Parameters
+    ----------
+    manifest_path : Path
+        The manifest path value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     errors: list[str] = []
     data = load_json(manifest_path)
 
@@ -167,6 +259,14 @@ def validate_manifest(manifest_path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     root = Path(__file__).resolve().parent
     manifests = find_manifests(root)
 

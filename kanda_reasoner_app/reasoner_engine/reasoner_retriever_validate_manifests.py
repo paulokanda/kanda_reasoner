@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_validate_manifests.py
 """Validate the canonical reasoner_retriever helper manifest.
 
 This validator is intentionally scoped to the reasoner_retriever owner box.

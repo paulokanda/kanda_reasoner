@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_environment_contract_detectors.py
 """Detect remaining Tab 2 environment and root contract workflow errors."""
 
 from __future__ import annotations
@@ -86,6 +87,27 @@ def _issue(
     expected: str,
     actual: str,
 ) -> WorkflowIssue:
+    """Support issue behavior.
+    
+    Parameters
+    ----------
+    issue_id : str
+        The issue id value.
+    workflow_step : str
+        The workflow step value.
+    evidence : str
+        The evidence value.
+    expected : str
+        The expected value.
+    actual : str
+        The actual value.
+    
+    Returns
+    -------
+    WorkflowIssue
+        The workflow issue result.
+    """
+    
     return WorkflowIssue(
         issue_id=issue_id,
         category="workflow_environment_contract",
@@ -98,6 +120,19 @@ def _issue(
 
 
 def _iter_workflow_commands(manifest: dict[str, Any]) -> list[tuple[str, int, Any]]:
+    """Support iter workflow commands behavior.
+    
+    Parameters
+    ----------
+    manifest : dict[str, Any]
+        The manifest value.
+    
+    Returns
+    -------
+    list[tuple[str, int, Any]]
+        The list of values.
+    """
+    
     workflows = manifest.get("workflows", {})
     if not isinstance(workflows, dict):
         return []
@@ -117,12 +152,40 @@ def _iter_workflow_commands(manifest: dict[str, Any]) -> list[tuple[str, int, An
 
 
 def _command_name(spec: Any, index: int) -> str:
+    """Support command name behavior.
+    
+    Parameters
+    ----------
+    spec : Any
+        The spec value.
+    index : int
+        The index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(spec, dict) and spec.get("name"):
         return str(spec.get("name"))
     return "command_" + str(index)
 
 
 def _command_text(spec: Any) -> str:
+    """Support command text behavior.
+    
+    Parameters
+    ----------
+    spec : Any
+        The spec value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(spec, str):
         return spec
     if not isinstance(spec, dict):
@@ -145,6 +208,19 @@ def _command_text(spec: Any) -> str:
 
 
 def _dict_text(spec: Any) -> str:
+    """Support dict text behavior.
+    
+    Parameters
+    ----------
+    spec : Any
+        The spec value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return json_dumps_safe(spec)
     except Exception:
@@ -152,12 +228,38 @@ def _dict_text(spec: Any) -> str:
 
 
 def json_dumps_safe(value: Any) -> str:
+    """Support json dumps safe behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     import json
 
     return json.dumps(value, sort_keys=True, ensure_ascii=True)
 
 
 def _has_bad_encoding_marker(text: str) -> str | None:
+    """Support has bad encoding marker behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str | None
+        The string result.
+    """
+    
     lowered = text.lower()
     for marker in _BAD_ENCODING_MARKERS:
         if marker in lowered:
@@ -166,6 +268,19 @@ def _has_bad_encoding_marker(text: str) -> str | None:
 
 
 def _bad_line_ending_value(spec: dict[str, Any]) -> tuple[str, str] | None:
+    """Support bad line ending value behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    tuple[str, str] | None
+        The tuple of values.
+    """
+    
     for key in _LINE_ENDING_MARKERS:
         if key not in spec:
             continue
@@ -176,10 +291,36 @@ def _bad_line_ending_value(spec: dict[str, Any]) -> tuple[str, str] | None:
 
 
 def _has_expected_output_contract(spec: dict[str, Any]) -> bool:
+    """Support has expected output contract behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(key in spec for key in _OUTPUT_KEYS)
 
 
 def _has_non_empty_guard(spec: dict[str, Any]) -> bool:
+    """Support has non empty guard behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for key in _NON_EMPTY_GUARD_KEYS:
         value = spec.get(key)
         if value:
@@ -188,6 +329,19 @@ def _has_non_empty_guard(spec: dict[str, Any]) -> bool:
 
 
 def _allows_empty_output(spec: dict[str, Any]) -> bool:
+    """Support allows empty output behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for key in ("allow_empty_output", "allow_empty_outputs", "success_on_empty_output"):
         if spec.get(key) is True:
             return True
@@ -195,6 +349,19 @@ def _allows_empty_output(spec: dict[str, Any]) -> bool:
 
 
 def _dependency_items(value: Any) -> list[str]:
+    """Support dependency items behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if isinstance(value, str):
         return [value]
     if isinstance(value, list):
@@ -205,6 +372,19 @@ def _dependency_items(value: Any) -> list[str]:
 
 
 def _find_unpinned_dependencies(spec: dict[str, Any]) -> list[str]:
+    """Support find unpinned dependencies behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     unpinned: list[str] = []
     for key in _DEPENDENCY_KEYS:
         if key not in spec:
@@ -217,6 +397,19 @@ def _find_unpinned_dependencies(spec: dict[str, Any]) -> list[str]:
 
 
 def _path_root_drift_hits(spec: dict[str, Any]) -> list[str]:
+    """Support path root drift hits behavior.
+    
+    Parameters
+    ----------
+    spec : dict[str, Any]
+        The spec value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     hits: list[str] = []
     for key in ("cwd", "root", "project_root", "output_root", "cache_root", "workspace_root"):
         if key not in spec:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/actual_human_decision_record_design.py
 """Actual human decision record design for routing scorer v3.
 
 This module is intentionally standard-library-only and decision-record-schema-only.
@@ -46,6 +47,19 @@ from kanda_reasoner_app.routing_signal_scorer._actual_human_decision_record_cons
 
 
 def _sorted(values: Sequence[str] | set[str] | frozenset[str]) -> list[str]:
+    """Support sorted behavior.
+    
+    Parameters
+    ----------
+    values : Sequence[str] | set[str] | frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(values)
 
 

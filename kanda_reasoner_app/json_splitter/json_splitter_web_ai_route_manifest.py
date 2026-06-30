@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_web_ai_route_manifest.py
 """Build a web-AI route manifest for split Project Reasoner JSON.
 
 The route manifest is a compact navigation layer over existing split parts. It

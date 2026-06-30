@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab.py
 """Project ignore-rules tab for the Reasoner tools GUI shell."""
 
 from __future__ import annotations
@@ -35,6 +36,16 @@ class IgnoreRulesTab(
     """
 
     def __init__(self, prefs_path: Path, parent=None) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        prefs_path : Path
+            The prefs path value.
+        parent : object, optional
+            The optional parent value.
+        """
+        
         super().__init__(parent)
         self.prefs_path = prefs_path
         self._rules = {"folders": [], "files": [], "extensions": []}

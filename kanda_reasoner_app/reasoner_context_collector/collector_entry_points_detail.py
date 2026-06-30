@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_entry_points_detail.py
 """Build detailed entry point records for Project Reasoner web AI.
 
 This module creates a compact additive companion to project_summary.entry_files.

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_ast.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -14,6 +15,19 @@ from .collector_warnings import parse_python_source_with_warnings
 
 
 def _get_docstring(node: ast.AST) -> str:
+    """Support get docstring behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return ast.get_docstring(node) or ""
     except Exception:
@@ -24,6 +38,21 @@ def _extract_comments_and_strings(
     source: str,
     tree: ast.AST | None,
 ) -> tuple[list[str], list[str]]:
+    """Support extract comments and strings behavior.
+    
+    Parameters
+    ----------
+    source : str
+        The source value.
+    tree : ast.AST | None
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    tuple[list[str], list[str]]
+        The tuple of values.
+    """
+    
     comments: list[str] = []
     strings: list[str] = []
 
@@ -46,6 +75,19 @@ def _extract_comments_and_strings(
 
 
 def _name_from_node(node: ast.AST) -> str:
+    """Support name from node behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(node, ast.Name):
         return node.id
     if isinstance(node, ast.Attribute):
@@ -57,6 +99,19 @@ def _name_from_node(node: ast.AST) -> str:
 
 
 def _extract_lambda_target(node: ast.Lambda) -> str:
+    """Support extract lambda target behavior.
+    
+    Parameters
+    ----------
+    node : ast.Lambda
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     body = node.body
 
     if isinstance(body, ast.Call):
@@ -72,6 +127,19 @@ def _extract_lambda_target(node: ast.Lambda) -> str:
 
 
 def _extract_partial_target(node: ast.Call) -> str:
+    """Support extract partial target behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     func_name = _name_from_node(node.func)
     if func_name != "partial":
         return ""
@@ -83,6 +151,19 @@ def _extract_partial_target(node: ast.Call) -> str:
 
 
 def _extract_connect_target_fields(node: ast.Call) -> dict[str, Any]:
+    """Support extract connect target fields behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     fields = {
         "target": "",
         "handler_name": "",
@@ -138,10 +219,31 @@ def _extract_connect_target_fields(node: ast.Call) -> dict[str, Any]:
 
 
 def _extract_calls(body: list[ast.stmt]) -> list[dict[str, Any]]:
+    """Support extract calls behavior.
+    
+    Parameters
+    ----------
+    body : list[ast.stmt]
+        The body value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     calls: list[dict[str, Any]] = []
 
     class Visitor(ast.NodeVisitor):
         def visit_Call(self, node: ast.Call) -> None:
+            """Support visit call behavior.
+            
+            Parameters
+            ----------
+            node : ast.Call
+                The syntax tree node.
+            """
+            
             call_name = _name_from_node(node.func)
             call_record = {
                 "call_name": call_name,
@@ -159,10 +261,31 @@ def _extract_calls(body: list[ast.stmt]) -> list[dict[str, Any]]:
 
 
 def _extract_assignments(body: list[ast.stmt]) -> list[dict[str, Any]]:
+    """Support extract assignments behavior.
+    
+    Parameters
+    ----------
+    body : list[ast.stmt]
+        The body value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     items: list[dict[str, Any]] = []
 
     class Visitor(ast.NodeVisitor):
         def visit_Assign(self, node: ast.Assign) -> None:
+            """Support visit assign behavior.
+            
+            Parameters
+            ----------
+            node : ast.Assign
+                The syntax tree node.
+            """
+            
             for target in node.targets:
                 target_name = _name_from_node(target)
                 if target_name:
@@ -176,6 +299,14 @@ def _extract_assignments(body: list[ast.stmt]) -> list[dict[str, Any]]:
             self.generic_visit(node)
 
         def visit_AnnAssign(self, node: ast.AnnAssign) -> None:
+            """Support visit ann assign behavior.
+            
+            Parameters
+            ----------
+            node : ast.AnnAssign
+                The syntax tree node.
+            """
+            
             target_name = _name_from_node(node.target)
             if target_name:
                 items.append(
@@ -194,10 +325,31 @@ def _extract_assignments(body: list[ast.stmt]) -> list[dict[str, Any]]:
 
 
 def _extract_attribute_reads(body: list[ast.stmt]) -> list[dict[str, Any]]:
+    """Support extract attribute reads behavior.
+    
+    Parameters
+    ----------
+    body : list[ast.stmt]
+        The body value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     items: list[dict[str, Any]] = []
 
     class Visitor(ast.NodeVisitor):
         def visit_Attribute(self, node: ast.Attribute) -> None:
+            """Support visit attribute behavior.
+            
+            Parameters
+            ----------
+            node : ast.Attribute
+                The syntax tree node.
+            """
+            
             name = _name_from_node(node)
             if name:
                 items.append(
@@ -215,10 +367,36 @@ def _extract_attribute_reads(body: list[ast.stmt]) -> list[dict[str, Any]]:
 
 
 def _get_line_end(node: ast.AST) -> int | None:
+    """Support get line end behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    int | None
+        The integer result.
+    """
+    
     return getattr(node, "end_lineno", None) or getattr(node, "lineno", None)
 
 
 def _get_decorator_names(node: ast.AST) -> list[str]:
+    """Support get decorator names behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     decorator_list = getattr(node, "decorator_list", []) or []
     names: list[str] = []
 
@@ -234,6 +412,23 @@ def _build_function_record(
     qualname: str,
     parent_symbol: str = "",
 ) -> dict[str, Any]:
+    """Support build function record behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    qualname : str
+        The qualname value.
+    parent_symbol : str, optional
+        The optional parent symbol value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     docstring = _get_docstring(node)
     is_async = isinstance(node, ast.AsyncFunctionDef)
 
@@ -256,6 +451,19 @@ def _build_function_record(
     }
 
 def parse_python_file(path: Path) -> tuple[dict[str, Any] | None, str | None]:
+    """Parse the python file.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    tuple[dict[str, Any] | None, str | None]
+        The tuple of values.
+    """
+    
     try:
         source = safe_read_text(path)
         tree, parse_warning_error, parse_warnings = parse_python_source_with_warnings(source)

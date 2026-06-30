@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_tool_patches.py
 """Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
@@ -13,6 +14,16 @@ class _WindowToolPatchesMixin:
     """Private implementation mixin for ReasonerToolsWindow."""
 
     def _on_tool_loaded(self, spec: ToolSpec, widget: QWidget) -> None:
+        """Support on tool loaded behavior.
+        
+        Parameters
+        ----------
+        spec : ToolSpec
+            The spec value.
+        widget : QWidget
+            The widget value.
+        """
+        
         self._patch_common_project_root_fields(widget)
         if 'reasoner_context_collector' in spec.source_hint:
             self._collector_widget = widget
@@ -37,17 +48,36 @@ class _WindowToolPatchesMixin:
         return None
 
     def _load_initial_tab(self) -> None:
+        """Support load initial tab behavior.
+        """
+        
         index = self.tabs.currentIndex()
         page = self._lazy_page_for_tab_index(index)
         if page is not None:
             page.ensure_loaded()
 
     def _on_tab_changed(self, index: int) -> None:
+        """Support on tab changed behavior.
+        
+        Parameters
+        ----------
+        index : int
+            The index value.
+        """
+        
         page = self._lazy_page_for_tab_index(index)
         if page is not None:
             page.ensure_loaded()
 
     def _patch_collector_widget(self, widget: QWidget) -> None:
+        """Support patch collector widget behavior.
+        
+        Parameters
+        ----------
+        widget : QWidget
+            The widget value.
+        """
+        
         _replace_exact_label_text(widget, 'Output JSON:', 'Output folder:')
         _prune_named_subtabs(widget, _COLLECTOR_SUBTABS_TO_REMOVE)
         if hasattr(widget, 'close_button'):
@@ -72,12 +102,28 @@ class _WindowToolPatchesMixin:
             self._on_collector_project_root_changed(widget.project_root_edit.text())
 
     def _on_collector_project_root_changed(self, text: str) -> None:
+        """Support on collector project root changed behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         project_root = self._normalize_project_root(text)
         if project_root is None:
             return
         self._propagate_project_root(project_root)
 
     def _run_collector_via_wrapper(self, widget: QWidget) -> None:
+        """Support run collector via wrapper behavior.
+        
+        Parameters
+        ----------
+        widget : QWidget
+            The widget value.
+        """
+        
         project_root = self._normalize_project_root(widget.project_root_edit.text())
         if project_root is None:
             widget._original_run_collector()
@@ -111,6 +157,14 @@ class _WindowToolPatchesMixin:
         self._propagate_project_root(project_root)
 
     def _patch_daily_refactor_widget(self, widget: QWidget) -> None:
+        """Support patch daily refactor widget behavior.
+        
+        Parameters
+        ----------
+        widget : QWidget
+            The widget value.
+        """
+        
         for line_name in ('domain_edit', 'json_folder_edit', 'json_name_edit', 'ai_bundle_edit'):
             if hasattr(widget, line_name):
                 getattr(widget, line_name).setReadOnly(True)
@@ -150,6 +204,14 @@ class _WindowToolPatchesMixin:
             widget.runtime_trace_json_edit.setText(str(runtime_trace))
 
     def _apply_project_root_to_daily_refactor(self, project_root: Path) -> None:
+        """Support apply project root to daily refactor behavior.
+        
+        Parameters
+        ----------
+        project_root : Path
+            The project root path.
+        """
+        
         widget = self._daily_refactor_widget
         if widget is None:
             return

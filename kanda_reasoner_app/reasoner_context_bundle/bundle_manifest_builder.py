@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/bundle_manifest_builder.py
 """Build the additive AI context bundle manifest for one project."""
 
 from __future__ import annotations
@@ -56,12 +57,40 @@ _REQUIRED_BY_NAME = {
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _relative_artifact_path(path: Path, context: ProjectContext) -> str:
+    """Support relative artifact path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return artifact_logical_posix_path(path, context)
 
 
@@ -70,6 +99,23 @@ def _artifact_record(
     path: Path,
     context: ProjectContext,
 ) -> dict[str, Any]:
+    """Support artifact record behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     exists = path.exists() and path.is_file()
     is_self_manifest = name == "bundle_manifest_json"
     record: dict[str, Any] = {
@@ -102,6 +148,19 @@ def _artifact_record(
 
 
 def _artifact_paths_by_name(paths: BundleArtifactPaths) -> dict[str, Path]:
+    """Support artifact paths by name behavior.
+    
+    Parameters
+    ----------
+    paths : BundleArtifactPaths
+        The file or folder paths.
+    
+    Returns
+    -------
+    dict[str, Path]
+        The mapped values.
+    """
+    
     return {
         "ai_briefing_json": paths.ai_briefing_json,
         "routing_manifest_json": paths.routing_manifest_json,
@@ -114,6 +173,21 @@ def _artifact_paths_by_name(paths: BundleArtifactPaths) -> dict[str, Path]:
 
 
 def _artifact_records(context: ProjectContext, paths: BundleArtifactPaths) -> list[dict[str, Any]]:
+    """Support artifact records behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    paths : BundleArtifactPaths
+        The file or folder paths.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     by_name = _artifact_paths_by_name(paths)
     return [
         _artifact_record(name, by_name[name], context)
@@ -122,6 +196,19 @@ def _artifact_records(context: ProjectContext, paths: BundleArtifactPaths) -> li
 
 
 def _counts(artifacts: list[dict[str, Any]]) -> dict[str, int]:
+    """Support counts behavior.
+    
+    Parameters
+    ----------
+    artifacts : list[dict[str, Any]]
+        The artifacts value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     return {
         "artifacts_total": len(artifacts),
         "artifacts_existing": sum(1 for item in artifacts if item.get("exists") is True),

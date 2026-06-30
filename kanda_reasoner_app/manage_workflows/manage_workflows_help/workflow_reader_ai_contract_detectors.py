@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_reader_ai_contract_detectors.py
 """Detect reader AI ask-flow and JSON-track workflow contract issues."""
 
 from __future__ import annotations
@@ -20,6 +21,27 @@ def _issue(
     expected: str,
     actual: str,
 ) -> WorkflowIssue:
+    """Support issue behavior.
+    
+    Parameters
+    ----------
+    issue_id : str
+        The issue id value.
+    workflow_step : str
+        The workflow step value.
+    evidence : str
+        The evidence value.
+    expected : str
+        The expected value.
+    actual : str
+        The actual value.
+    
+    Returns
+    -------
+    WorkflowIssue
+        The workflow issue result.
+    """
+    
     return WorkflowIssue(
         issue_id=issue_id,
         category="workflow_reader_ai_contract",
@@ -32,6 +54,19 @@ def _issue(
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return path.read_text(encoding="utf-8", errors="replace")
     except OSError:
@@ -39,6 +74,19 @@ def _read_text(path: Path) -> str:
 
 
 def _candidate_source_roots(project_root: Path) -> list[Path]:
+    """Support candidate source roots behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     package_root = project_root / "_".join(("ask", "ai", "project", "reasoner"))
     return [
         package_root / "project_reasoner_v10",
@@ -47,6 +95,19 @@ def _candidate_source_roots(project_root: Path) -> list[Path]:
 
 
 def _combined_source_text(project_root: Path) -> str:
+    """Support combined source text behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     chunks: list[str] = []
     for source_root in _candidate_source_roots(project_root):
         if not source_root.exists():
@@ -57,6 +118,14 @@ def _combined_source_text(project_root: Path) -> str:
 
 
 def _reader_runtime_markers() -> tuple[str, ...]:
+    """Support reader runtime markers behavior.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     local_token = "local"
     ai_token = "ai"
     return (
@@ -73,10 +142,36 @@ def _reader_runtime_markers() -> tuple[str, ...]:
 
 
 def _has_reader_feature(text: str) -> bool:
+    """Support has reader feature behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(marker in text for marker in _reader_runtime_markers())
 
 
 def _ask_control_is_wired(text: str) -> bool:
+    """Support ask control is wired behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     ask_markers = (
         "ask_" + "local" + "_" + "ai",
         "ask " + "local" + " " + "ai",
@@ -98,6 +193,19 @@ def _ask_control_is_wired(text: str) -> bool:
 
 
 def _session_boundary_is_preserved(text: str) -> bool:
+    """Support session boundary is preserved behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     strong_markers = (
         "session_service",
         "ask_session_service",
@@ -111,6 +219,19 @@ def _session_boundary_is_preserved(text: str) -> bool:
 
 
 def _json_track_classifier_is_present(text: str) -> bool:
+    """Support json track classifier is present behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     local_token = "local"
     ai_token = "ai"
 

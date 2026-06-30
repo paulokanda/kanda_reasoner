@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/run_controls.py
 """Run-control helpers for the missing-docstrings GUI."""
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
@@ -129,6 +130,14 @@ def _create_progress_receiver(window):
 
         @slot_type(object)
         def receive(self, payload):
+            """Support receive behavior.
+            
+            Parameters
+            ----------
+            payload : object
+                The payload value.
+            """
+            
             handle_worker_progress(window, payload)
     return Tab3ProgressReceiver(window)
 

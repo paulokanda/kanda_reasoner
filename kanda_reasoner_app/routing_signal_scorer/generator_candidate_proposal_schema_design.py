@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_proposal_schema_design.py
 """Generator candidate proposal schema design for routing scorer v3.
 
 This module is intentionally standard-library-only and schema-design-only. It
@@ -315,6 +316,19 @@ FORBIDDEN_PROPOSAL_SCHEMA_FIELDS = frozenset(
 
 
 def _sorted(values: Sequence[str] | frozenset[str]) -> list[str]:
+    """Support sorted behavior.
+    
+    Parameters
+    ----------
+    values : Sequence[str] | frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(values)
 
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_event_propagation.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -9,6 +10,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -22,6 +38,21 @@ def _safe_role_for_file(
     file_path: str,
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe role for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -32,6 +63,21 @@ def _safe_centrality_score(
     file_path: str,
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> float:
+    """Support safe centrality score behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     payload = module_centrality_index.get(file_path, {})
     if not isinstance(payload, dict):
         return 0.0
@@ -46,6 +92,19 @@ def _safe_centrality_score(
 
 
 def _iter_qt_records(qt_signal_map: Any) -> list[dict[str, Any]]:
+    """Support iter qt records behavior.
+    
+    Parameters
+    ----------
+    qt_signal_map : Any
+        The qt signal map value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     if isinstance(qt_signal_map, list):
         return [item for item in qt_signal_map if isinstance(item, dict)]
 
@@ -63,6 +122,21 @@ def _resolve_target_file(
     target_symbol: str,
     symbol_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support resolve target file behavior.
+    
+    Parameters
+    ----------
+    target_symbol : str
+        The target symbol value.
+    symbol_index : dict[str, dict[str, Any]]
+        The symbol index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not target_symbol or target_symbol == "unknown":
         return ""
 
@@ -91,6 +165,29 @@ def build_event_propagation_index(
     boundary_index: dict[str, dict[str, Any]],
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a event propagation index.
+    
+    Parameters
+    ----------
+    qt_signal_map : Any
+        The qt signal map value.
+    ui_action_index : dict[str, dict[str, Any]]
+        The ui action index value.
+    symbol_index : dict[str, dict[str, Any]]
+        The symbol index value.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for record in files_payload:
@@ -234,6 +331,19 @@ def build_event_propagation_index(
 def build_event_propagation_summary(
     event_propagation_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a event propagation summary.
+    
+    Parameters
+    ----------
+    event_propagation_index : dict[str, dict[str, Any]]
+        The event propagation index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     bucket_frequency: dict[str, int] = {}
     role_frequency: dict[str, int] = {}
@@ -293,6 +403,21 @@ def build_event_propagation_hotspots(
     event_propagation_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a event propagation hotspots.
+    
+    Parameters
+    ----------
+    event_propagation_index : dict[str, dict[str, Any]]
+        The event propagation index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in event_propagation_index.items():

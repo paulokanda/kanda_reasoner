@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_state_lifecycle.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -62,14 +63,55 @@ STATE_REHYDRATE_HINTS = {
 
 
 def _safe_text(value: Any) -> str:
+    """Support safe text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip()
 
 
 def _safe_lower(value: Any) -> str:
+    """Support safe lower behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_text(value).lower()
 
 
 def _safe_bucket(file_path: str, files_payload: list[dict[str, Any]]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if _safe_text(record.get("path", "")) == file_path:
             bucket = _safe_lower(record.get("subsystem_bucket", ""))
@@ -83,6 +125,21 @@ def _safe_boundary_role(
     file_path: str,
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe boundary role behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -94,6 +151,21 @@ def _safe_payload(
     mapping: dict[str, dict[str, Any]],
     file_path: str,
 ) -> dict[str, Any]:
+    """Support safe payload behavior.
+    
+    Parameters
+    ----------
+    mapping : dict[str, dict[str, Any]]
+        The mapping value.
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     payload = mapping.get(file_path, {})
     if isinstance(payload, dict):
         return payload
@@ -101,6 +173,19 @@ def _safe_payload(
 
 
 def _iter_symbols(file_record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Support iter symbols behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     out: list[dict[str, Any]] = []
 
     for fn in file_record.get("functions", []):
@@ -118,10 +203,38 @@ def _iter_symbols(file_record: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _symbol_name(symbol: dict[str, Any]) -> str:
+    """Support symbol name behavior.
+    
+    Parameters
+    ----------
+    symbol : dict[str, Any]
+        The symbol value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_text(symbol.get("qualname", symbol.get("name", "")))
 
 
 def _has_any_hint(text: str, hints: set[str]) -> bool:
+    """Support has any hint behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    hints : set[str]
+        The hints value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = _safe_lower(text)
     return any(hint in lowered for hint in hints)
 
@@ -129,6 +242,19 @@ def _has_any_hint(text: str, hints: set[str]) -> bool:
 def _collect_symbol_lifecycle_counts(
     file_record: dict[str, Any],
 ) -> dict[str, Any]:
+    """Support collect symbol lifecycle counts behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     create_count = 0
     update_count = 0
     reset_count = 0
@@ -206,6 +332,27 @@ def build_state_lifecycle_index(
     persistence_io_index: dict[str, dict[str, Any]],
     attribute_state_map: dict[str, Any],
 ) -> dict[str, dict[str, Any]]:
+    """Build a state lifecycle index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    state_mutation_index : dict[str, dict[str, Any]]
+        The state mutation index value.
+    persistence_io_index : dict[str, dict[str, Any]]
+        The persistence io index value.
+    attribute_state_map : dict[str, Any]
+        The attribute state map value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for file_record in files_payload:
@@ -277,6 +424,19 @@ def build_state_lifecycle_index(
 def build_state_lifecycle_summary(
     state_lifecycle_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a state lifecycle summary.
+    
+    Parameters
+    ----------
+    state_lifecycle_index : dict[str, dict[str, Any]]
+        The state lifecycle index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     reset_candidate_count = 0
     rehydration_candidate_count = 0
@@ -324,6 +484,21 @@ def build_state_lifecycle_hotspots(
     state_lifecycle_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a state lifecycle hotspots.
+    
+    Parameters
+    ----------
+    state_lifecycle_index : dict[str, dict[str, Any]]
+        The state lifecycle index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in state_lifecycle_index.items():

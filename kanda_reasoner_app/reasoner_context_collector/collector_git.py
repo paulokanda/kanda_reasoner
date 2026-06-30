@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_git.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -46,6 +47,19 @@ def _run_git_command(repo_root: Path, args: list[str]) -> tuple[bool, str]:
 
 
 def _normalize_lines(text: str) -> list[str]:
+    """Support normalize lines behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return [line.strip() for line in text.splitlines() if line.strip()]
 
 
@@ -97,6 +111,21 @@ def _iter_git_root_candidates(repo_root: Path, file_path: Path):
 
 
 def _discover_git_root(repo_root: Path, file_path: Path) -> Path | None:
+    """Support discover git root behavior.
+    
+    Parameters
+    ----------
+    repo_root : Path
+        The repo root value.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     for candidate in _iter_git_root_candidates(repo_root, file_path):
         ok, output = _run_git_command(candidate, ["rev-parse", "--show-toplevel"])
         if not ok:
@@ -115,6 +144,21 @@ def _discover_git_root(repo_root: Path, file_path: Path) -> Path | None:
 
 
 def collect_git_metadata_for_file(repo_root: Path, file_path: Path) -> dict:
+    """Support collect git metadata for file behavior.
+    
+    Parameters
+    ----------
+    repo_root : Path
+        The repo root value.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     git_root = _discover_git_root(repo_root, file_path)
     if git_root is None:
         return {

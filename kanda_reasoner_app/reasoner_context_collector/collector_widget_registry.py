@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_registry.py
 """Collect widget registry evidence for Project Reasoner."""
 
 from __future__ import annotations
@@ -122,6 +123,16 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     """
 
     def __init__(self, source_file: str, source: str) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        source_file : str
+            The source file value.
+        source : str
+            The source value.
+        """
+        
         self.source_file = source_file
         self.source = source
         self.registry: dict[str, dict[str, Any]] = {}
@@ -136,18 +147,68 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def _current_source_symbol(self, *args, **kwargs):
+        """Support current source symbol behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__current_source_symbol_impl(self, *args, **kwargs)
 
     def _current_class_name(self, *args, **kwargs):
+        """Support current class name behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__current_class_name_impl(self, *args, **kwargs)
 
     def _current_method_name(self, *args, **kwargs):
+        """Support current method name behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__current_method_name_impl(self, *args, **kwargs)
 
     def _push_scope(self, *args, **kwargs):
+        """Support push scope behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__push_scope_impl(self, *args, **kwargs)
 
     def _pop_scope(self, *args, **kwargs):
+        """Support pop scope behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__pop_scope_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -155,21 +216,81 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def visit_ClassDef(self, *args, **kwargs):
+        """Support visit class def behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_ClassDef_impl(self, *args, **kwargs)
 
     def visit_FunctionDef(self, *args, **kwargs):
+        """Support visit function def behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_FunctionDef_impl(self, *args, **kwargs)
 
     def visit_AsyncFunctionDef(self, *args, **kwargs):
+        """Support visit async function def behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_AsyncFunctionDef_impl(self, *args, **kwargs)
 
     def visit_Assign(self, *args, **kwargs):
+        """Support visit assign behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_Assign_impl(self, *args, **kwargs)
 
     def visit_AnnAssign(self, *args, **kwargs):
+        """Support visit ann assign behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_AnnAssign_impl(self, *args, **kwargs)
 
     def visit_Call(self, *args, **kwargs):
+        """Support visit call behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg_visit_Call_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -177,9 +298,29 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def _register_assigned_widget(self, *args, **kwargs):
+        """Support register assigned widget behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__register_assigned_widget_impl(self, *args, **kwargs)
 
     def _register_inline_widget(self, *args, **kwargs):
+        """Support register inline widget behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__register_inline_widget_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -187,6 +328,16 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def _handle_widget_property_call(self, *args, **kwargs):
+        """Support handle widget property call behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__handle_widget_property_call_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -194,18 +345,68 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def _handle_layout_call(self, *args, **kwargs):
+        """Support handle layout call behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__handle_layout_call_impl(self, *args, **kwargs)
 
     def _handle_add_widget(self, *args, **kwargs):
+        """Support handle add widget behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__handle_add_widget_impl(self, *args, **kwargs)
 
     def _handle_add_row(self, *args, **kwargs):
+        """Support handle add row behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__handle_add_row_impl(self, *args, **kwargs)
 
     def _handle_add_tab(self, *args, **kwargs):
+        """Support handle add tab behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__handle_add_tab_impl(self, *args, **kwargs)
 
     def _append_layout_record(self, *args, **kwargs):
+        """Support append layout record behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__append_layout_record_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -213,15 +414,55 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
     # -------------------------------------------------
 
     def _index_widget_ref(self, *args, **kwargs):
+        """Support index widget ref behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__index_widget_ref_impl(self, *args, **kwargs)
 
     def _index_widget_var(self, *args, **kwargs):
+        """Support index widget var behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__index_widget_var_impl(self, *args, **kwargs)
 
     def _resolve_widget_id(self, *args, **kwargs):
+        """Support resolve widget id behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__resolve_widget_id_impl(self, *args, **kwargs)
 
     def _resolve_or_create_widget_from_expr(self, *args, **kwargs):
+        """Support resolve or create widget from expr behavior.
+        
+        Parameters
+        ----------
+        *args : object
+            The positional arguments.
+        **kwargs : object
+            The kwargs value.
+        """
+        
         return _wrg_methods_part_1._wrg__resolve_or_create_widget_from_expr_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
@@ -230,6 +471,19 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
 
     @staticmethod
     def _first_supported_target_ref(targets: list[ast.expr]) -> str:
+        """Support first supported target ref behavior.
+        
+        Parameters
+        ----------
+        targets : list[ast.expr]
+            The targets value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         for target in targets:
             target_ref = _expr_to_ref(target)
             if target_ref:
@@ -245,18 +499,67 @@ def _build_widget_id(
     line: int,
     col: int,
 ) -> str:
+    """Support build widget id behavior.
+    
+    Parameters
+    ----------
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    variable_name : str
+        The variable name value.
+    widget_type : str
+        The widget type value.
+    line : int
+        The line value.
+    col : int
+        The col value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if variable_name:
         return f"{source_file}::{source_symbol}::{variable_name}"
     return f"{source_file}::{source_symbol}::{widget_type}::line:{line}:col:{col}"
 
 
 def _get_widget_type_from_call(node: ast.Call) -> str:
+    """Support get widget type from call behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     call_name = _callable_name(node.func)
     base_name = call_name.split(".")[-1] if call_name else ""
     return base_name if base_name in SUPPORTED_WIDGET_TYPES else ""
 
 
 def _callable_name(node: ast.AST) -> str:
+    """Support callable name behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(node, ast.Name):
         return _safe_str(node.id)
 
@@ -271,6 +574,19 @@ def _callable_name(node: ast.AST) -> str:
 
 
 def _expr_to_ref(node: ast.AST | None) -> str:
+    """Support expr to ref behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
 
@@ -288,6 +604,19 @@ def _expr_to_ref(node: ast.AST | None) -> str:
 
 
 def _variable_name_from_ref(target_ref: str) -> str:
+    """Support variable name from ref behavior.
+    
+    Parameters
+    ----------
+    target_ref : str
+        The target ref value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     ref = _safe_str(target_ref)
     if not ref:
         return ""
@@ -295,6 +624,21 @@ def _variable_name_from_ref(target_ref: str) -> str:
 
 
 def _extract_constructor_display_text(widget_type: str, node: ast.Call) -> str:
+    """Support extract constructor display text behavior.
+    
+    Parameters
+    ----------
+    widget_type : str
+        The widget type value.
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if widget_type not in TEXT_CONSTRUCTOR_WIDGET_TYPES:
         return ""
 
@@ -310,6 +654,21 @@ def _extract_constructor_display_text(widget_type: str, node: ast.Call) -> str:
 
 
 def _extract_constructor_parent_ref(widget_type: str, node: ast.Call) -> str:
+    """Support extract constructor parent ref behavior.
+    
+    Parameters
+    ----------
+    widget_type : str
+        The widget type value.
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parent_kw = _keyword_value(node, "parent")
     parent_kw_ref = _expr_to_ref(parent_kw)
     if parent_kw_ref:
@@ -329,6 +688,19 @@ def _extract_constructor_parent_ref(widget_type: str, node: ast.Call) -> str:
 
 
 def _extract_layout_position_from_add_widget(node: ast.Call) -> dict[str, Any]:
+    """Support extract layout position from add widget behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     if len(node.args) >= 3:
         row = _node_to_number(node.args[1])
         col = _node_to_number(node.args[2])
@@ -347,12 +719,40 @@ def _extract_layout_position_from_add_widget(node: ast.Call) -> dict[str, Any]:
 
 
 def _first_arg(node: ast.Call) -> ast.AST | None:
+    """Support first arg behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    
+    Returns
+    -------
+    ast.AST | None
+        The ast result.
+    """
+    
     if node.args:
         return node.args[0]
     return None
 
 
 def _keyword_value(node: ast.Call, keyword_name: str) -> ast.AST | None:
+    """Support keyword value behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    keyword_name : str
+        The keyword name value.
+    
+    Returns
+    -------
+    ast.AST | None
+        The ast result.
+    """
+    
     for keyword in node.keywords:
         if _safe_str(keyword.arg) == keyword_name:
             return keyword.value
@@ -360,6 +760,19 @@ def _keyword_value(node: ast.Call, keyword_name: str) -> ast.AST | None:
 
 
 def _node_to_text(node: ast.AST | None) -> str:
+    """Support node to text behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
 
@@ -379,6 +792,19 @@ def _node_to_text(node: ast.AST | None) -> str:
 
 
 def _node_to_text_list(node: ast.AST | None) -> list[str]:
+    """Support node to text list behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if node is None:
         return []
 
@@ -395,6 +821,19 @@ def _node_to_text_list(node: ast.AST | None) -> list[str]:
 
 
 def _node_to_number(node: ast.AST | None) -> int | float | None:
+    """Support node to number behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    int | float | None
+        The integer result.
+    """
+    
     if node is None:
         return None
 
@@ -405,6 +844,19 @@ def _node_to_number(node: ast.AST | None) -> int | float | None:
 
 
 def _safe_str(value: Any) -> str:
+    """Support safe str behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     try:

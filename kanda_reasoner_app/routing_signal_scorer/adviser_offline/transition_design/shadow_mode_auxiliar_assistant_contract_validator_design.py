@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_contract_validator_design.py
 """Design-only M28 Auxiliar/Assistant contract validator design.
 
 M28 defines static rule descriptions for a possible later Auxiliar/Assistant

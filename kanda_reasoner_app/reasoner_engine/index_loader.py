@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/index_loader.py
 """
 JSON index loader public entry point for Project Reasoner V10.
 
@@ -42,12 +43,36 @@ class JsonProjectIndex:
     """
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         initialize_index_state(self)
 
     def _resolve_runtime_source_file(self, source_file: str) -> str:
+        """Support resolve runtime source file behavior.
+        
+        Parameters
+        ----------
+        source_file : str
+            The source file value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return resolve_runtime_source_file(self, source_file)
 
     def load_json(self, file_path: str) -> None:
+        """Load the json.
+        
+        Parameters
+        ----------
+        file_path : str
+            The file path.
+        """
+        
         with open(file_path, "r", encoding="utf-8", errors="replace") as handle:
             self.index_data = json.load(handle)
 
@@ -65,68 +90,205 @@ class JsonProjectIndex:
         self._rebuild_indexes()
 
     def load(self, file_path: str) -> None:
+        """Support load behavior.
+        
+        Parameters
+        ----------
+        file_path : str
+            The file path.
+        """
+        
         self.load_json(file_path)
 
     def _load_full_sections(self) -> None:
+        """Support load full sections behavior.
+        """
+        
         load_full_sections(self)
 
     def _rebuild_indexes(self) -> None:
+        """Support rebuild indexes behavior.
+        """
+        
         rebuild_indexes(self)
 
     def _build_snippet_lookup_index(self) -> None:
+        """Support build snippet lookup index behavior.
+        """
+        
         build_snippet_lookup_index(self)
 
     def _build_core_file_and_symbol_indexes(self) -> None:
+        """Support build core file and symbol indexes behavior.
+        """
+        
         build_core_file_and_symbol_indexes(self)
 
     def _build_import_and_call_graph_indexes(self) -> None:
+        """Support build import and call graph indexes behavior.
+        """
+        
         build_import_and_call_graph_indexes(self)
 
     def _build_widget_indexes(self) -> None:
+        """Support build widget indexes behavior.
+        """
+        
         build_widget_indexes(self)
 
     def _build_ui_action_indexes(self) -> None:
+        """Support build ui action indexes behavior.
+        """
+        
         build_ui_action_indexes(self)
 
     def _build_boundary_indexes(self) -> None:
+        """Support build boundary indexes behavior.
+        """
+        
         build_boundary_indexes(self)
 
     def _build_runtime_indexes(self) -> None:
+        """Support build runtime indexes behavior.
+        """
+        
         build_runtime_indexes(self)
 
     def _build_hotspot_indexes(self) -> None:
+        """Support build hotspot indexes behavior.
+        """
+        
         build_hotspot_indexes(self)
 
     def resolve_module_to_path(self, module_name: str) -> str | None:
+        """Resolve the module to path.
+        
+        Parameters
+        ----------
+        module_name : str
+            The module name value.
+        
+        Returns
+        -------
+        str | None
+            The string result.
+        """
+        
         record = self.files_by_module.get(module_name)
         if record:
             return self._safe_text(record.get("path"))
         return None
 
     def get_section(self, section_name: str, default: Any = None) -> Any:
+        """Return the section.
+        
+        Parameters
+        ----------
+        section_name : str
+            The section name value.
+        default : Any, optional
+            The default value.
+        
+        Returns
+        -------
+        Any
+            The any result.
+        """
+        
         if not self.index_data:
             return default
         return self.index_data.get(section_name, default)
 
     def has_section(self, section_name: str) -> bool:
+        """Return whether section.
+        
+        Parameters
+        ----------
+        section_name : str
+            The section name value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         return bool(self.section_presence_map.get(section_name, False))
 
     def get_runtime_trace_events(self) -> list[dict[str, Any]]:
+        """Return the runtime trace events.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         return self._safe_list(self.runtime_trace_raw.get("events"))
 
     def get_runtime_trace_errors(self) -> list[dict[str, Any]]:
+        """Return the runtime trace errors.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         return self._safe_list(self.runtime_trace_raw.get("errors"))
 
     def get_runtime_trace_warnings(self) -> list[dict[str, Any]]:
+        """Return the runtime trace warnings.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         return self._safe_list(self.runtime_trace_raw.get("warnings"))
 
     def get_file_record(self, path: str) -> dict[str, Any] | None:
+        """Return the file record.
+        
+        Parameters
+        ----------
+        path : str
+            The file or folder path.
+        
+        Returns
+        -------
+        dict[str, Any] | None
+            The mapped values.
+        """
+        
         return self.files_by_path.get(path)
 
     def get_symbol_record(self, symbol_name: str) -> dict[str, Any] | None:
+        """Return the symbol record.
+        
+        Parameters
+        ----------
+        symbol_name : str
+            The symbol name value.
+        
+        Returns
+        -------
+        dict[str, Any] | None
+            The mapped values.
+        """
+        
         return self.symbol_details.get(symbol_name)
 
     def get_all_known_paths(self) -> list[str]:
+        """Return the all known paths.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         keys = set(self.files_by_path.keys())
         keys.update(self.widgets_by_file.keys())
         keys.update(self.ui_actions_by_file.keys())
@@ -137,18 +299,72 @@ class JsonProjectIndex:
 
     @staticmethod
     def _safe_text(value: Any) -> str:
+        """Support safe text behavior.
+        
+        Parameters
+        ----------
+        value : Any
+            The input value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return str(value).strip() if value is not None else ""
 
     @staticmethod
     def _safe_dict(value: Any) -> dict[str, Any]:
+        """Support safe dict behavior.
+        
+        Parameters
+        ----------
+        value : Any
+            The input value.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         return value if isinstance(value, dict) else {}
 
     @staticmethod
     def _safe_list(value: Any) -> list[Any]:
+        """Support safe list behavior.
+        
+        Parameters
+        ----------
+        value : Any
+            The input value.
+        
+        Returns
+        -------
+        list[Any]
+            The list of values.
+        """
+        
         return value if isinstance(value, list) else []
 
     @staticmethod
     def _safe_int(value: Any, default: int = 0) -> int:
+        """Support safe int behavior.
+        
+        Parameters
+        ----------
+        value : Any
+            The input value.
+        default : int, optional
+            The default value.
+        
+        Returns
+        -------
+        int
+            The integer result.
+        """
+        
         try:
             return int(value)
         except Exception:

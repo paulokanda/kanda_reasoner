@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_project_root.py
 """Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
 
 from __future__ import annotations

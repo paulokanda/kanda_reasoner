@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_visible_neural_architecture_tab.py
 """Visible Neural Architecture tab factory for Brain Navigator.
 
 This module promotes the isolated Neural Architecture WebView preview into the

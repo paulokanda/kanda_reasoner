@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reliability_guidance/api_contract_guidance.py
 """Build reviewable API contract guard guidance without editing source files."""
 
 from __future__ import annotations

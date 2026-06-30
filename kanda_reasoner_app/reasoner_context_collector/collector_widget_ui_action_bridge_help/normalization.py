@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge_help/normalization.py
 """Internal normalization helpers for widget UI action bridge records."""
 
 from __future__ import annotations
@@ -8,6 +9,19 @@ __all__: list[str] = []
 
 
 def _safe_str(value: Any) -> str:
+    """Support safe str behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     try:
@@ -17,12 +31,38 @@ def _safe_str(value: Any) -> str:
 
 
 def _list_or_empty(value: Any) -> list[Any]:
+    """Support list or empty behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    list[Any]
+        The list of values.
+    """
+    
     if isinstance(value, list):
         return value
     return []
 
 
 def _normalize_qt_signal_records(qt_signal_map: Any) -> list[dict[str, Any]]:
+    """Support normalize qt signal records behavior.
+    
+    Parameters
+    ----------
+    qt_signal_map : Any
+        The qt signal map value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     records: list[dict[str, Any]] = []
 
     if isinstance(qt_signal_map, list):

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/runner_help/window_methods_private_impl.py
 """Private window methods private impl helpers for reasoner_tools_shell.runner."""
 
 from __future__ import annotations
@@ -8,6 +9,9 @@ def _bind_globals(namespace):
     globals().update(namespace)
 
 def _build_ui(self) -> None:
+    """Support build ui behavior.
+    """
+    
     from PySide6.QtCore import Qt
     from PySide6.QtGui import QFont
     from PySide6.QtWidgets import QGroupBox, QRadioButton, QSplitter

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/deterministic_answer_core_parts.py
 """Promoted deterministic answer core helpers."""
 
 from __future__ import annotations
@@ -66,6 +67,21 @@ def _extract_docstring_from_snippet(snippet_text: str, target: str) -> str:
             break
     return ""
 def _find_best_runtime_anchor(detail_text: str, question_text: str) -> str:
+    """Support find best runtime anchor behavior.
+    
+    Parameters
+    ----------
+    detail_text : str
+        The detail text value.
+    question_text : str
+        The question text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     detail_low = detail_text.lower()
     question_low = question_text.lower()
 

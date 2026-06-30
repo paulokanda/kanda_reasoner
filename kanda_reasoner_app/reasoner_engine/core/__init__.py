@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/core/__init__.py
 """Canonical reasoner engine core helpers."""
 
 from __future__ import annotations

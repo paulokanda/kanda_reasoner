@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/__init__.py
 """Facade for workflow manager GUI helper modules."""
 
 from __future__ import annotations

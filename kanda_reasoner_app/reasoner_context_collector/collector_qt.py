@@ -8,6 +8,19 @@ from typing import Any
 
 
 def _extract_target_from_call(call: dict[str, Any]) -> tuple[str, str, float]:
+    """Support extract target from call behavior.
+    
+    Parameters
+    ----------
+    call : dict[str, Any]
+        The call value.
+    
+    Returns
+    -------
+    tuple[str, str, float]
+        The tuple of values.
+    """
+    
     raw_target = call.get("target", "")
     target = str(raw_target or "").strip()
 
@@ -53,6 +66,23 @@ def _build_signal_record(
     source_symbol: str,
     call: dict[str, Any],
 ) -> dict[str, Any]:
+    """Support build signal record behavior.
+    
+    Parameters
+    ----------
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    call : dict[str, Any]
+        The call value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     signal_name = str(call.get("call_name", "") or "").strip()
     target, target_kind, target_confidence = _extract_target_from_call(call)
 
@@ -69,6 +99,19 @@ def _build_signal_record(
 
 
 def extract_qt_signal_map(files_payload: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Extract the qt signal map.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     results: list[dict[str, Any]] = []
 
     for file_record in files_payload:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/scan_target_options_runtime.py
 """Scan target option label helpers for Tab 3."""
 
 from __future__ import annotations

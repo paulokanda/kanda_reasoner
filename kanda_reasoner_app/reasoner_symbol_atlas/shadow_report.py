@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/shadow_report.py
 """Read-only duplicate public symbol reports for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -47,6 +48,19 @@ class ProjectSymbolAtlasShadowReportOptions:
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).resolve()
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -60,6 +74,23 @@ def _is_public_candidate(
     record: ProjectModuleRecord,
     options: ProjectSymbolAtlasShadowReportOptions,
 ) -> bool:
+    """Support is public candidate behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    record : ProjectModuleRecord
+        The record value.
+    options : ProjectSymbolAtlasShadowReportOptions
+        The option values.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not symbol.is_public or symbol.name.startswith("_"):
         return False
     if record.owner_role in _IGNORED_OWNER_ROLES:
@@ -76,10 +107,36 @@ def _is_public_candidate(
 
 
 def _symbol_key(symbol: ProjectSymbol) -> str:
+    """Support symbol key behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return symbol.name.strip()
 
 
 def _format_symbol_location(symbol: ProjectSymbol) -> str:
+    """Support format symbol location behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     line_text = str(symbol.line) if symbol.line is not None else "unknown"
     return (
         symbol.module
@@ -95,6 +152,19 @@ def _format_symbol_location(symbol: ProjectSymbol) -> str:
 
 
 def _duplicate_reason(symbols: tuple[ProjectSymbol, ...]) -> str:
+    """Support duplicate reason behavior.
+    
+    Parameters
+    ----------
+    symbols : tuple[ProjectSymbol, ...]
+        The symbols value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     canonical_count = sum(1 for item in symbols if item.owner_role == "canonical_owner")
     facade_count = sum(1 for item in symbols if item.owner_role in {"facade", "compatibility_facade"})
     definition_count = sum(1 for item in symbols if item.kind in _DEFINITION_KINDS)
@@ -110,6 +180,21 @@ def _duplicate_reason(symbols: tuple[ProjectSymbol, ...]) -> str:
 
 
 def _finding_from_duplicate(name: str, symbols: tuple[ProjectSymbol, ...]) -> ProjectSymbol:
+    """Support finding from duplicate behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    symbols : tuple[ProjectSymbol, ...]
+        The symbols value.
+    
+    Returns
+    -------
+    ProjectSymbol
+        The project symbol result.
+    """
+    
     locations = tuple(_format_symbol_location(symbol) for symbol in symbols)
     reason = _duplicate_reason(symbols)
     evidence = (
@@ -134,6 +219,21 @@ def _involved_records(
     records: tuple[ProjectModuleRecord, ...],
     findings: tuple[ProjectSymbol, ...],
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support involved records behavior.
+    
+    Parameters
+    ----------
+    records : tuple[ProjectModuleRecord, ...]
+        The record values.
+    findings : tuple[ProjectSymbol, ...]
+        The findings value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     involved_paths: set[str] = set()
     for finding in findings:
         for item in finding.evidence:

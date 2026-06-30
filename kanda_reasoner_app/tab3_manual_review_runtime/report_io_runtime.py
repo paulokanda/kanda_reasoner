@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/report_io_runtime.py
 """Runtime helpers for Tab 3 report save, load, and copy actions."""
 
 from __future__ import annotations

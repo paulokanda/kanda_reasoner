@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/contract.py
 """Public compatibility facade for the KANDA routing signal scorer.
 
 The implementation is split into cohesive ordinary Python modules. This facade

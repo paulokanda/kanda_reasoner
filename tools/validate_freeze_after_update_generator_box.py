@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: tools/validate_freeze_after_update_generator_box.py
 """Validate the Freeze Feature After Update blueprint generator box."""
 
 from __future__ import annotations
@@ -47,15 +48,41 @@ FORBIDDEN_WORKFLOW_MARKERS = [
 
 
 def assert_true(condition: bool, message: str) -> None:
+    """Support assert true behavior.
+    
+    Parameters
+    ----------
+    condition : bool
+        The condition value.
+    message : str
+        The message text.
+    """
+    
     if not condition:
         raise AssertionError(message)
 
 
 def read_text(path: Path) -> str:
+    """Return the text.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8")
 
 
 def validate_fresh_external_project() -> None:
+    """Validate the fresh external project.
+    """
+    
     temp_root = Path(tempfile.mkdtemp(prefix="freeze_after_update_generator_"))
     try:
         project_root = temp_root / "external_project"
@@ -94,6 +121,9 @@ def validate_fresh_external_project() -> None:
 
 
 def validate_existing_freeze_entry() -> None:
+    """Validate the existing freeze entry.
+    """
+    
     temp_root = Path(tempfile.mkdtemp(prefix="freeze_after_update_generator_existing_"))
     try:
         project_root = temp_root / "project_with_freeze"
@@ -138,6 +168,14 @@ superseded_by: null
 
 
 def validate_current_project_regeneration(project_root: Path) -> None:
+    """Validate the current project regeneration.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    """
+    
     generator_path = project_root / "project_freeze_ledger" / "freeze_tools" / "freeze_after_update_generator.py"
     assert_true(generator_path.exists(), "blueprint generator missing")
 
@@ -158,6 +196,14 @@ def validate_current_project_regeneration(project_root: Path) -> None:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     project_root = Path.cwd().resolve()
     print("Validating Freeze Feature After Update generator box...")
     print("Project root:", project_root)

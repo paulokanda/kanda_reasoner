@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/__init__.py
 """Closed-box helpers for additive reasoner context bundle generation.
 
 This package is intentionally project-agnostic. It resolves paths from the

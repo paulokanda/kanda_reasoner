@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_manifest_writer.py
 """Evidence README and manifest writer for Kanda architecture audits.
 
 This module builds small descriptive files for external architecture audit

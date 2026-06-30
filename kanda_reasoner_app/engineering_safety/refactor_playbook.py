@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/refactor_playbook.py
 """Read-only Refactor Playbook report builder."""
 
 from __future__ import annotations
@@ -96,6 +97,19 @@ def infer_refactor_playbook_risk_level(input_data: RefactorPlaybookInput) -> str
 
 
 def _default_goal(input_data: RefactorPlaybookInput) -> str:
+    """Support default goal behavior.
+    
+    Parameters
+    ----------
+    input_data : RefactorPlaybookInput
+        The input data value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if input_data.refactor_goal:
         return input_data.refactor_goal
     if input_data.target_file:
@@ -128,6 +142,19 @@ def build_refactor_playbook_steps(input_data: RefactorPlaybookInput) -> list[str
 
 
 def _playbook_tests(input_data: RefactorPlaybookInput) -> list[str]:
+    """Support playbook tests behavior.
+    
+    Parameters
+    ----------
+    input_data : RefactorPlaybookInput
+        The input data value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tests = []
     if input_data.target_file.endswith(".py"):
         tests.append("python -m py_compile " + input_data.target_file.replace("/", "\\"))
@@ -146,6 +173,21 @@ def _playbook_tests(input_data: RefactorPlaybookInput) -> list[str]:
 
 
 def _playbook_evidence(input_data: RefactorPlaybookInput, steps: list[str]) -> list[str]:
+    """Support playbook evidence behavior.
+    
+    Parameters
+    ----------
+    input_data : RefactorPlaybookInput
+        The input data value.
+    steps : list[str]
+        The steps value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     evidence = [
         "Refactor goal: " + _default_goal(input_data),
         "Target file: " + (input_data.target_file or "not provided"),

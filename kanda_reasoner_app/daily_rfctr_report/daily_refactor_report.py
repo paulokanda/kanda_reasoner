@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/daily_rfctr_report/daily_refactor_report.py
 """Public facade for the daily refactor report module."""
 
 from __future__ import annotations

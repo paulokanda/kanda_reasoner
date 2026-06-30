@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_decorators.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -13,6 +14,23 @@ def trace_runtime_event(
     source_file: str,
     source_symbol: str,
 ) -> Callable:
+    """Support trace runtime event behavior.
+    
+    Parameters
+    ----------
+    event_type : str
+        The event type value.
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    
+    Returns
+    -------
+    Callable
+        The callable result.
+    """
+    
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any):

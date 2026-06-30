@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_control_flow.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -7,6 +8,19 @@ from typing import Any
 
 
 def _name_from_node(node: ast.AST) -> str:
+    """Support name from node behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(node, ast.Name):
         return node.id
     if isinstance(node, ast.Attribute):
@@ -18,6 +32,19 @@ def _name_from_node(node: ast.AST) -> str:
 
 
 def _safe_unparse(node: ast.AST | None) -> str:
+    """Support safe unparse behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
     try:
@@ -28,15 +55,46 @@ def _safe_unparse(node: ast.AST | None) -> str:
 
 
 def _append_unique_call(call_name: str, calls: list[str]) -> None:
+    """Support append unique call behavior.
+    
+    Parameters
+    ----------
+    call_name : str
+        The call name value.
+    calls : list[str]
+        The calls value.
+    """
+    
     if call_name and call_name not in calls:
         calls.append(call_name)
 
 
 def _collect_calls_in_nodes(nodes: list[ast.stmt]) -> list[str]:
+    """Support collect calls in nodes behavior.
+    
+    Parameters
+    ----------
+    nodes : list[ast.stmt]
+        The nodes value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     found: list[str] = []
 
     class Visitor(ast.NodeVisitor):
         def visit_Call(self, node: ast.Call) -> None:
+            """Support visit call behavior.
+            
+            Parameters
+            ----------
+            node : ast.Call
+                The syntax tree node.
+            """
+            
             name = _name_from_node(node.func)
             _append_unique_call(name, found)
             self.generic_visit(node)
@@ -48,6 +106,19 @@ def _collect_calls_in_nodes(nodes: list[ast.stmt]) -> list[str]:
 
 
 def _collect_simple_statement_calls(stmt: ast.stmt) -> list[dict[str, Any]]:
+    """Support collect simple statement calls behavior.
+    
+    Parameters
+    ----------
+    stmt : ast.stmt
+        The stmt value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     if isinstance(stmt, (ast.If, ast.For, ast.While, ast.Return, ast.Try, ast.With, ast.AsyncWith)):
         return []
 
@@ -55,6 +126,14 @@ def _collect_simple_statement_calls(stmt: ast.stmt) -> list[dict[str, Any]]:
 
     class Visitor(ast.NodeVisitor):
         def visit_Call(self, node: ast.Call) -> None:
+            """Support visit call behavior.
+            
+            Parameters
+            ----------
+            node : ast.Call
+                The syntax tree node.
+            """
+            
             call_name = _name_from_node(node.func)
             if call_name:
                 calls.append(
@@ -71,11 +150,37 @@ def _collect_simple_statement_calls(stmt: ast.stmt) -> list[dict[str, Any]]:
 
 
 def _has_recursion_hint(function_name: str, node: ast.AST) -> bool:
+    """Support has recursion hint behavior.
+    
+    Parameters
+    ----------
+    function_name : str
+        The function name value.
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     class Visitor(ast.NodeVisitor):
         def __init__(self) -> None:
+            """Support init behavior.
+            """
+            
             self.found = False
 
         def visit_Call(self, call_node: ast.Call) -> None:
+            """Support visit call behavior.
+            
+            Parameters
+            ----------
+            call_node : ast.Call
+                The call node value.
+            """
+            
             call_name = _name_from_node(call_node.func)
             if call_name == function_name or call_name.endswith("." + function_name):
                 self.found = True
@@ -95,6 +200,24 @@ def _walk_statements(
     returns: list[dict[str, Any]],
     calls: list[str],
 ) -> None:
+    """Support walk statements behavior.
+    
+    Parameters
+    ----------
+    body : list[ast.stmt]
+        The body value.
+    sequence : list[dict[str, Any]]
+        The sequence value.
+    branches : list[dict[str, Any]]
+        The branches value.
+    loops : list[dict[str, Any]]
+        The loops value.
+    returns : list[dict[str, Any]]
+        The returns value.
+    calls : list[str]
+        The calls value.
+    """
+    
     for stmt in body:
         if isinstance(stmt, ast.If):
             sequence.append(
@@ -222,6 +345,21 @@ def _walk_statements(
 
 
 def build_control_flow(function_node: ast.AST, function_name: str) -> dict[str, Any]:
+    """Build a control flow.
+    
+    Parameters
+    ----------
+    function_node : ast.AST
+        The function node value.
+    function_name : str
+        The function name value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     body = getattr(function_node, "body", [])
     sequence: list[dict[str, Any]] = []
     branches: list[dict[str, Any]] = []

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_web_ai_symbol_index.py
 """Build a compact web-AI symbol index for Project Reasoner.
 
 This module is additive over the existing Step 4 collector payload. It does not

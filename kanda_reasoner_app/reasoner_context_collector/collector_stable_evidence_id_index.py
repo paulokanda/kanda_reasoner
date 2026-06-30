@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_stable_evidence_id_index.py
 """Build stable evidence IDs for Project Reasoner web AI.
 
 This module creates a compact cross-reference index of deterministic evidence IDs

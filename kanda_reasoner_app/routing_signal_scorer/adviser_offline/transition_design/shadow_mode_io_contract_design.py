@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_io_contract_design.py
 """Design-only M19 shadow-mode input/output contract.
 
 M19 defines the future non-runtime shadow observation input and output contract.

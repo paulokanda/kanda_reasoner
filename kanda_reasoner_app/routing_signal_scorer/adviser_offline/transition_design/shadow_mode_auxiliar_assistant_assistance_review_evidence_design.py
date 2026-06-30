@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_assistance_review_evidence_design.py
 """M32 Auxiliar/Assistant assistance review evidence design.
 
 M32 defines a static review-evidence envelope for later human review of M31

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/atlas_report_builder.py
 """Aggregate report builder for Project Symbol Atlas evidence."""
 
 from __future__ import annotations
@@ -298,6 +299,19 @@ def _annotate_merge_report(
 
 
 def _unique_strings(values: object) -> tuple[str, ...]:
+    """Support unique strings behavior.
+    
+    Parameters
+    ----------
+    values : object
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     output: list[str] = []
     seen: set[str] = set()
     for value in normalize_project_atlas_sequence(values):

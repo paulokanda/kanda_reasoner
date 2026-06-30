@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/signal_wiring.py
 """Signal wiring for the Project Reasoner main window."""
 
 from __future__ import annotations

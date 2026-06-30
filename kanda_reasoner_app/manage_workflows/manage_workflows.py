@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows.py
 """Public CLI entry point for workflow validation governance.
 
 AI CONTEXT - REFACTORED MODULE
@@ -13,6 +14,9 @@ from __future__ import annotations
 import sys as _workflow_stdio_sys
 
 def _workflow_reconfigure_stdio_for_utf8() -> None:
+    """Support workflow reconfigure stdio for utf8 behavior.
+    """
+    
     for _stream_name in ("stdout", "stderr"):
         _stream = getattr(_workflow_stdio_sys, _stream_name, None)
         if _stream is None:

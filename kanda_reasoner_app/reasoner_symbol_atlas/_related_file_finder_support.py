@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/_related_file_finder_support.py
 """Private helpers for the Project Symbol Atlas related file finder."""
 
 from __future__ import annotations
@@ -58,6 +59,23 @@ def _resolve_target_module(
     target_path: str,
     symbol_name: str,
 ) -> _ProjectModuleRecord | None:
+    """Support resolve target module behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[_ProjectModuleRecord, ...]
+        The modules value.
+    target_path : str
+        The target path value.
+    symbol_name : str
+        The symbol name value.
+    
+    Returns
+    -------
+    _ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     normalized_target = _normalize_path(target_path)
     if normalized_target:
         for module in modules:
@@ -75,6 +93,21 @@ def _resolve_target_module(
 
 
 def _search_terms(target_path: str, symbol_name: str) -> tuple[str, ...]:
+    """Support search terms behavior.
+    
+    Parameters
+    ----------
+    target_path : str
+        The target path value.
+    symbol_name : str
+        The symbol name value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     terms: list[str] = []
     normalized_target = _normalize_path(target_path)
     if normalized_target:
@@ -89,6 +122,19 @@ def _search_terms(target_path: str, symbol_name: str) -> tuple[str, ...]:
 
 
 def _filter_search_terms(terms: list[str]) -> list[str]:
+    """Support filter search terms behavior.
+    
+    Parameters
+    ----------
+    terms : list[str]
+        The terms value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     filtered: list[str] = []
     for term in terms:
         cleaned = _normalize_project_atlas_text(term).lower().replace("-", "_")
@@ -103,6 +149,19 @@ def _filter_search_terms(terms: list[str]) -> list[str]:
 
 
 def _stem_terms(stem: str) -> tuple[str, ...]:
+    """Support stem terms behavior.
+    
+    Parameters
+    ----------
+    stem : str
+        The stem value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     cleaned = _normalize_project_atlas_text(stem).replace("-", "_")
     if not cleaned:
         return tuple()
@@ -126,6 +185,21 @@ def _support_helpers_from_modules(
     modules: tuple[_ProjectModuleRecord, ...],
     search_terms: tuple[str, ...],
 ) -> tuple[str, ...]:
+    """Support support helpers from modules behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[_ProjectModuleRecord, ...]
+        The modules value.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     paths: list[str] = []
     for module in modules:
         normalized = _normalize_path(module.path)
@@ -145,6 +219,25 @@ def _related_test_files(
     search_terms: tuple[str, ...],
     include_tests: bool,
 ) -> tuple[str, ...]:
+    """Support related test files behavior.
+    
+    Parameters
+    ----------
+    project_root : _Path
+        The project root path.
+    modules : tuple[_ProjectModuleRecord, ...]
+        The modules value.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    include_tests : bool
+        The include tests value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if not include_tests:
         return tuple()
     paths: list[str] = []
@@ -171,6 +264,25 @@ def _related_workbench_files(
     category: str,
     include_workbench: bool,
 ) -> tuple[str, ...]:
+    """Support related workbench files behavior.
+    
+    Parameters
+    ----------
+    project_root : _Path
+        The project root path.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    category : str
+        The category value.
+    include_workbench : bool
+        The include workbench value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if not include_workbench:
         return tuple()
     workbench_root = project_root / "workbench"
@@ -186,6 +298,19 @@ def _related_workbench_files(
 
 
 def _workbench_patterns(category: str) -> tuple[str, ...]:
+    """Support workbench patterns behavior.
+    
+    Parameters
+    ----------
+    category : str
+        The category value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if category == "manifest":
         return ("BUNDLE_MANIFEST*.txt", "*manifest*.md", "*manifest*.json")
     if category == "diagnostic":
@@ -200,6 +325,23 @@ def _related_evidence_files(
     search_terms: tuple[str, ...],
     include_evidence_files: bool,
 ) -> tuple[str, ...]:
+    """Support related evidence files behavior.
+    
+    Parameters
+    ----------
+    project_root : _Path
+        The project root path.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    include_evidence_files : bool
+        The include evidence files value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if not include_evidence_files:
         return tuple()
     evidence_root = project_root / "project_analysis_evidence"
@@ -214,6 +356,21 @@ def _related_evidence_files(
 
 
 def _tests_to_run(test_files: tuple[str, ...], target_path: str) -> tuple[str, ...]:
+    """Support tests to run behavior.
+    
+    Parameters
+    ----------
+    test_files : tuple[str, ...]
+        The test files value.
+    target_path : str
+        The target path value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     commands: list[str] = []
     for path in test_files:
         if path.endswith(".py"):
@@ -239,6 +396,29 @@ def _evidence_lines(
     search_terms: tuple[str, ...],
     related_files: tuple[str, ...],
 ) -> tuple[str, ...]:
+    """Support evidence lines behavior.
+    
+    Parameters
+    ----------
+    merge_status : str
+        The merge status value.
+    target_path : str
+        The target path value.
+    main_helper_status : str
+        The main helper status value.
+    facade_status : str
+        The facade status value.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    related_files : tuple[str, ...]
+        The related files value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return (
         "related_file_finder: read_only",
         "merge_status: " + merge_status,
@@ -251,6 +431,19 @@ def _evidence_lines(
 
 
 def _looks_like_main(path_value: str) -> bool:
+    """Support looks like main behavior.
+    
+    Parameters
+    ----------
+    path_value : str
+        The path value value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     stem = _Path(_normalize_path(path_value)).stem.lower()
     if not stem:
         return False
@@ -258,6 +451,21 @@ def _looks_like_main(path_value: str) -> bool:
 
 
 def _contains_any(value: str, search_terms: tuple[str, ...]) -> bool:
+    """Support contains any behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    search_terms : tuple[str, ...]
+        The search terms value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = value.lower().replace("\\", "/")
     for term in search_terms:
         cleaned = term.lower().replace("\\", "/")
@@ -267,11 +475,39 @@ def _contains_any(value: str, search_terms: tuple[str, ...]) -> bool:
 
 
 def _normalize_path(value: str) -> str:
+    """Support normalize path behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = _normalize_project_atlas_text(value)
     return text.replace("\\", "/")
 
 
 def _relative_path(project_root: _Path, file_path: _Path) -> str:
+    """Support relative path behavior.
+    
+    Parameters
+    ----------
+    project_root : _Path
+        The project root path.
+    file_path : _Path
+        The file path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return str(file_path.resolve().relative_to(project_root.resolve()))
     except ValueError:
@@ -279,6 +515,19 @@ def _relative_path(project_root: _Path, file_path: _Path) -> str:
 
 
 def _unique_paths(paths: tuple[str, ...]) -> tuple[str, ...]:
+    """Support unique paths behavior.
+    
+    Parameters
+    ----------
+    paths : tuple[str, ...]
+        The file or folder paths.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     seen: set[str] = set()
     for path in paths:
@@ -294,6 +543,21 @@ def _unique_paths(paths: tuple[str, ...]) -> tuple[str, ...]:
 
 
 def _limited_unique_paths(paths: tuple[str, ...], max_items: int) -> tuple[str, ...]:
+    """Support limited unique paths behavior.
+    
+    Parameters
+    ----------
+    paths : tuple[str, ...]
+        The file or folder paths.
+    max_items : int
+        The max items value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     unique = _unique_paths(paths)
     if max_items <= 0:
         return unique
@@ -301,6 +565,19 @@ def _limited_unique_paths(paths: tuple[str, ...], max_items: int) -> tuple[str, 
 
 
 def _unique_strings(values: list[str] | tuple[str, ...]) -> tuple[str, ...]:
+    """Support unique strings behavior.
+    
+    Parameters
+    ----------
+    values : list[str] | tuple[str, ...]
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     result: list[str] = []
     seen: set[str] = set()
     for value in values:

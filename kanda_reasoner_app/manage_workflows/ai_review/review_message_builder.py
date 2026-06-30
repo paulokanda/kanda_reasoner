@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/review_message_builder.py
 """Prompt builders for Tab 2 advisory AI review."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab_validate_manifests.py
 """Validate the helper manifest for the ignore-rules tab."""
 
 from __future__ import annotations
@@ -16,10 +17,36 @@ MANIFEST_NAME = "ignore_rules_tab_help.json"
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _literal_all(path: Path) -> list[str]:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(_read_text(path))
 
     for node in tree.body:

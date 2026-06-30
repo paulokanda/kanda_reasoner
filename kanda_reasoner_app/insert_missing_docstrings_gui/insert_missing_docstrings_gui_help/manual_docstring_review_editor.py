@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/manual_docstring_review_editor.py
 """Manual docstring review dialog for Tab 3."""
 
 from __future__ import annotations
@@ -27,6 +28,16 @@ class _DocstringReviewEditorDialog(QDialog):
     """Review and persist one proposed docstring row."""
 
     def __init__(self, owner: object, row: dict) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        owner : object
+            The owning object.
+        row : dict
+            The row data.
+        """
+        
         super().__init__(owner)
         self._owner = owner
         self._row = row

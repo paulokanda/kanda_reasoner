@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/parsers/static_context/documentation_intent_parser.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -19,10 +20,40 @@ DEFAULT_DOCUMENTATION_GLOB_PATTERNS: tuple[str, ...] = (
 
 
 def _normalize_rel_path(path: Path, root: Path) -> str:
+    """Support normalize rel path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(path.relative_to(root)).replace("\\", "/")
 
 
 def _truncate_text(value: str, max_chars: int) -> str:
+    """Support truncate text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    max_chars : int
+        The max chars value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = value.strip()
     if len(value) <= max_chars:
         return value
@@ -30,6 +61,19 @@ def _truncate_text(value: str, max_chars: int) -> str:
 
 
 def _dedupe_keep_order(items: list[str]) -> list[str]:
+    """Support dedupe keep order behavior.
+    
+    Parameters
+    ----------
+    items : list[str]
+        The item values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     seen: set[str] = set()
     out: list[str] = []
     for item in items:
@@ -45,6 +89,14 @@ def _dedupe_keep_order(items: list[str]) -> list[str]:
 
 
 def _new_result() -> dict[str, Any]:
+    """Support new result behavior.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "project_purpose_summary": "",
         "project_purpose_summary_confidence": "unknown",
@@ -66,6 +118,22 @@ def _append_evidence(
     value: str,
     max_excerpt_chars: int,
 ) -> None:
+    """Support append evidence behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    source_file : str
+        The source file value.
+    field_name : str
+        The field name value.
+    value : str
+        The input value.
+    max_excerpt_chars : int
+        The max excerpt chars value.
+    """
+    
     result["documentation_evidence"].append(
         {
             "source_file": source_file,
@@ -76,6 +144,18 @@ def _append_evidence(
 
 
 def _append_warning(result: dict[str, Any], source_file: str, message: str) -> None:
+    """Support append warning behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    source_file : str
+        The source file value.
+    message : str
+        The message text.
+    """
+    
     warning = f"{source_file}: {message}" if source_file else message
     result["documentation_parse_warnings"].append(warning)
 
@@ -87,6 +167,22 @@ def _set_if_empty(
     source_file: str,
     max_excerpt_chars: int,
 ) -> None:
+    """Support set if empty behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    key : str
+        The key value.
+    value : str
+        The input value.
+    source_file : str
+        The source file value.
+    max_excerpt_chars : int
+        The max excerpt chars value.
+    """
+    
     cleaned = value.strip()
     if cleaned and not result.get(key):
         result[key] = cleaned
@@ -101,6 +197,24 @@ def _merge_list_field(
     max_evidence_snippets: int,
     max_excerpt_chars: int,
 ) -> None:
+    """Support merge list field behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, Any]
+        The result value.
+    field_name : str
+        The field name value.
+    values : list[str]
+        The input values.
+    source_file : str
+        The source file value.
+    max_evidence_snippets : int
+        The max evidence snippets value.
+    max_excerpt_chars : int
+        The max excerpt chars value.
+    """
+    
     current = list(result[field_name])
     result[field_name] = _dedupe_keep_order(current + values)
     for value in values[:max_evidence_snippets]:
@@ -108,6 +222,21 @@ def _merge_list_field(
 
 
 def _is_ignored_doc_path(path: Path, project_root: Path) -> bool:
+    """Support is ignored doc path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     ignored_parts = {
         ".git",
         ".idea",
@@ -142,6 +271,21 @@ def _discover_doc_files(
     project_root: Path,
     glob_patterns: tuple[str, ...],
 ) -> list[Path]:
+    """Support discover doc files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    glob_patterns : tuple[str, ...]
+        The glob patterns value.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     found: list[Path] = []
     for pattern in glob_patterns:
         for candidate in project_root.glob(pattern):
@@ -158,6 +302,19 @@ def _discover_doc_files(
 
 
 def _extract_heading_lines(text: str) -> list[str]:
+    """Support extract heading lines behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     headings: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -172,6 +329,19 @@ def _extract_heading_lines(text: str) -> list[str]:
 
 
 def _extract_run_instructions(text: str) -> list[str]:
+    """Support extract run instructions behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     matches: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -193,6 +363,19 @@ def _extract_run_instructions(text: str) -> list[str]:
 
 
 def _extract_named_features(headings: list[str]) -> list[str]:
+    """Support extract named features behavior.
+    
+    Parameters
+    ----------
+    headings : list[str]
+        The headings value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     features: list[str] = []
     for heading in headings:
         lowered = heading.lower()
@@ -214,6 +397,19 @@ def _extract_named_features(headings: list[str]) -> list[str]:
 
 
 def _extract_external_integrations(text: str) -> list[str]:
+    """Support extract external integrations behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     integrations: list[str] = []
     patterns = (
         "openai",
@@ -244,6 +440,21 @@ def _extract_external_integrations(text: str) -> list[str]:
 
 
 def _extract_architecture_terms(headings: list[str], text: str) -> list[str]:
+    """Support extract architecture terms behavior.
+    
+    Parameters
+    ----------
+    headings : list[str]
+        The headings value.
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     candidates = list(headings)
     patterns = re.findall(
         r"\b(controller|service|manager|builder|registry|router|pipeline|adapter|bridge|collector|parser|orchestrator|plugin|engine|loader)\b",
@@ -255,6 +466,19 @@ def _extract_architecture_terms(headings: list[str], text: str) -> list[str]:
 
 
 def _extract_first_meaningful_paragraph(text: str) -> str:
+    """Support extract first meaningful paragraph behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     disallowed_starts = (
         "#",
         "##",
@@ -310,6 +534,19 @@ def _extract_first_meaningful_paragraph(text: str) -> str:
 
 
 def _looks_like_vendor_or_font_doc(text: str) -> bool:
+    """Support looks like vendor or font doc behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = text.lower()
     markers = (
         "included fonts",
@@ -324,6 +561,21 @@ def _looks_like_vendor_or_font_doc(text: str) -> bool:
 
 
 def _looks_like_cache_or_generated_doc(path: Path, text: str) -> bool:
+    """Support looks like cache or generated doc behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = text.lower()
     path_low = str(path).replace("\\", "/").lower()
     if any(token in path_low for token in (".pytest_cache", ".mypy_cache", ".ruff_cache", "site-packages")):
@@ -339,6 +591,19 @@ def _looks_like_cache_or_generated_doc(path: Path, text: str) -> bool:
 
 
 def _read_text_best_effort(path: Path) -> tuple[str, str | None]:
+    """Support read text best effort behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    tuple[str, str | None]
+        The tuple of values.
+    """
+    
     try:
         return path.read_text(encoding="utf-8", errors="replace"), None
     except Exception as exc:
@@ -346,6 +611,21 @@ def _read_text_best_effort(path: Path) -> tuple[str, str | None]:
 
 
 def _doc_rank(path: Path, text: str) -> int:
+    """Support doc rank behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     path_low = str(path).replace("\\", "/").lower()
     name_low = path.name.lower()
     score = 0
@@ -373,6 +653,19 @@ def _doc_rank(path: Path, text: str) -> int:
 def _extract_best_purpose_summary(
     candidates: list[tuple[int, str, str]],
 ) -> tuple[str, str]:
+    """Support extract best purpose summary behavior.
+    
+    Parameters
+    ----------
+    candidates : list[tuple[int, str, str]]
+        The candidates value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     if not candidates:
         return "", "unknown"
     best_rank, _source_file, summary = sorted(candidates, key=lambda item: item[0], reverse=True)[0]
@@ -393,6 +686,25 @@ def parse_documentation_intent(
     max_evidence_snippets: int = 40,
     max_excerpt_chars: int = 400,
 ) -> dict[str, Any]:
+    """Parse the documentation intent.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    glob_patterns : tuple[str, ...], optional
+        The optional glob patterns value.
+    max_evidence_snippets : int, optional
+        The optional max evidence snippets value.
+    max_excerpt_chars : int, optional
+        The optional max excerpt chars value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     result = _new_result()
     root = Path(project_root).expanduser().resolve()
 
@@ -477,6 +789,18 @@ def parse_documentation_intent(
 
 # PASS_069C_STATIC_CONTEXT_SCOPE_OVERRIDE_START
 def _discover_doc_files(root, *args, **kwargs):
+    """Support discover doc files behavior.
+    
+    Parameters
+    ----------
+    root : object
+        The root path.
+    *args : object
+        The positional arguments.
+    **kwargs : object
+        The kwargs value.
+    """
+    
     from kanda_reasoner_app.reasoner_context_collector.collector_scope import iter_project_documentation_files
     return list(iter_project_documentation_files(root))
 # PASS_069C_STATIC_CONTEXT_SCOPE_OVERRIDE_END

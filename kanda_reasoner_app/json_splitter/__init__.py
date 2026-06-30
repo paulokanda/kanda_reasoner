@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/__init__.py
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 import copy
@@ -17,6 +18,8 @@ MIN_PART_BYTES: int = 256 * 1024
 
 @dataclass
 class SplitPlan:
+    """Represent split plan."""
+    
     input_path: str
     output_dir: str
     target_path: str
@@ -39,6 +42,8 @@ class LeafSlot:
 
 @dataclass
 class PartSpec:
+    """Represent part spec."""
+    
     slots: list[LeafSlot] = field(default_factory=list)
 
     def estimated_size(self) -> int:
@@ -46,19 +51,73 @@ class PartSpec:
         return sum((s.val_size for s in self.slots))
 
 def json_bytes_indented(value: Any) -> int:
+    """Support json bytes indented behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return len(json.dumps(value, ensure_ascii=False, indent=2).encode('utf-8'))
 
 def stable_hash(value: Any) -> str:
+    """Support stable hash behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
     return hashlib.sha256(payload).hexdigest()
 
 def parse_target_path(path_text: str) -> list[str]:
+    """Parse the target path.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     text = str(path_text).strip()
     if not text:
         return []
     return [p.strip() for p in text.split('.') if p.strip()]
 
 def get_nested_value(root: Any, path_parts: list[str]) -> Any:
+    """Return the nested value.
+    
+    Parameters
+    ----------
+    root : Any
+        The root path.
+    path_parts : list[str]
+        The path parts value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     cur = root
     for part in path_parts:
         if not isinstance(cur, dict):
@@ -69,6 +128,23 @@ def get_nested_value(root: Any, path_parts: list[str]) -> Any:
     return cur
 
 def set_nested_value(root: Any, path_parts: list[str], new_value: Any) -> Any:
+    """Set the nested value.
+    
+    Parameters
+    ----------
+    root : Any
+        The root path.
+    path_parts : list[str]
+        The path parts value.
+    new_value : Any
+        The new value value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     cloned = copy.deepcopy(root)
     if not path_parts:
         return new_value
@@ -79,6 +155,21 @@ def set_nested_value(root: Any, path_parts: list[str], new_value: Any) -> Any:
     return cloned
 
 def collect_container_paths(root: Any, max_depth: int=6) -> list[str]:
+    """Support collect container paths behavior.
+    
+    Parameters
+    ----------
+    root : Any
+        The root path.
+    max_depth : int, optional
+        The optional max depth value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     paths: list[str] = []
 
     def walk(node: Any, prefix: list[str], depth: int) -> None:
@@ -97,6 +188,19 @@ def collect_container_paths(root: Any, max_depth: int=6) -> list[str]:
     return sorted(set(paths))
 
 def get_entries(node: Any) -> list[tuple[Any, Any]]:
+    """Return the entries.
+    
+    Parameters
+    ----------
+    node : Any
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[tuple[Any, Any]]
+        The list of values.
+    """
+    
     if isinstance(node, dict):
         return list(node.items())
     if isinstance(node, list):
@@ -104,12 +208,44 @@ def get_entries(node: Any) -> list[tuple[Any, Any]]:
     raise TypeError('Target must be a dict or list.')
 
 def rebuild_container(entries: list[tuple[Any, Any]], is_list: bool) -> Any:
+    """Support rebuild container behavior.
+    
+    Parameters
+    ----------
+    entries : list[tuple[Any, Any]]
+        The entries value.
+    is_list : bool
+        The is list value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if is_list:
         return [v for _k, v in entries]
     return {k: v for k, v in entries}
 _wrapper_cache: dict[tuple, int] = {}
 
 def get_wrapper(root: Any, path_parts: list[str], is_list: bool) -> int:
+    """Return the wrapper.
+    
+    Parameters
+    ----------
+    root : Any
+        The root path.
+    path_parts : list[str]
+        The path parts value.
+    is_list : bool
+        The is list value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     key = tuple(path_parts)
     if key not in _wrapper_cache:
         if not path_parts:
@@ -121,6 +257,31 @@ def get_wrapper(root: Any, path_parts: list[str], is_list: bool) -> int:
     return _wrapper_cache[key]
 
 def expand_to_slots(root: Any, path_parts: list[str], entries: list[tuple[Any, Any]], is_list: bool, log_fn: Callable[[str], None], depth: int=0, balance_budget: int=MAX_FILE_BYTES) -> list[LeafSlot]:
+    """Support expand to slots behavior.
+    
+    Parameters
+    ----------
+    root : Any
+        The root path.
+    path_parts : list[str]
+        The path parts value.
+    entries : list[tuple[Any, Any]]
+        The entries value.
+    is_list : bool
+        The is list value.
+    log_fn : Callable[[str], None]
+        The log fn value.
+    depth : int, optional
+        The optional depth value.
+    balance_budget : int, optional
+        The optional balance budget value.
+    
+    Returns
+    -------
+    list[LeafSlot]
+        The list of values.
+    """
+    
     MAX_DEPTH = 12
     w = get_wrapper(root, path_parts, is_list)
     slots: list[LeafSlot] = []
@@ -252,6 +413,23 @@ def _greedy_pack(slots: list[LeafSlot], content_budget: int) -> list[PartSpec]:
     return parts
 
 def _balanced_chunks(slots: list[LeafSlot], val_sizes: list[int], n_parts: int) -> list[list[LeafSlot]]:
+    """Support balanced chunks behavior.
+    
+    Parameters
+    ----------
+    slots : list[LeafSlot]
+        The slots value.
+    val_sizes : list[int]
+        The val sizes value.
+    n_parts : int
+        The n parts value.
+    
+    Returns
+    -------
+    list[list[LeafSlot]]
+        The list of values.
+    """
+    
     if n_parts <= 1 or len(slots) <= 1:
         return [slots]
     total = sum(val_sizes)
@@ -322,6 +500,19 @@ def _merge_tiny_parts(parts: list[PartSpec], log_fn: Callable[[str], None]) -> l
     return parts
 
 def build_document_for_spec(spec: PartSpec) -> Any:
+    """Build a document for spec.
+    
+    Parameters
+    ----------
+    spec : PartSpec
+        The spec value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if not spec.slots:
         raise ValueError('Empty PartSpec.')
     is_list = spec.slots[0].is_list
@@ -329,16 +520,31 @@ def build_document_for_spec(spec: PartSpec) -> Any:
     return rebuild_container(entries, is_list)
 
 class SplitterWorker(QThread):
+    """Represent splitter worker."""
+    
     progress = Signal(int)
     log = Signal(str)
     finished = Signal(bool, str)
 
     def __init__(self, action: str, payload: dict[str, Any]) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        action : str
+            The action value.
+        payload : dict[str, Any]
+            The payload value.
+        """
+        
         super().__init__()
         self.action = action
         self.payload = payload
 
     def run(self) -> None:
+        """Support run behavior.
+        """
+        
         try:
             if self.action == 'split':
                 self._run_split()
@@ -350,6 +556,9 @@ class SplitterWorker(QThread):
             self.finished.emit(False, f'Unexpected error: {exc}\n{traceback.format_exc()}')
 
     def _run_split(self) -> None:
+        """Support run split behavior.
+        """
+        
         global _wrapper_cache
         _wrapper_cache = {}
         plan = SplitPlan(**self.payload)
@@ -429,6 +638,9 @@ class SplitterWorker(QThread):
         self.finished.emit(True, f'Done. {total} parts + manifest: {manifest_path}')
 
     def _run_reassemble(self) -> None:
+        """Support run reassemble behavior.
+        """
+        
         manifest_path = self.payload['manifest_path']
         output_path = self.payload['output_path']
         self.log.emit(f'Reading manifest: {manifest_path}')
@@ -484,7 +696,12 @@ class SplitterWorker(QThread):
 
 class JsonSplitterWindow(QMainWindow):
 
+    """Represent json splitter window."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.worker: SplitterWorker | None = None
         self.loaded_json: Any = None
@@ -493,6 +710,9 @@ class JsonSplitterWindow(QMainWindow):
         self._build_ui()
 
     def _build_ui(self) -> None:
+        """Support build ui behavior.
+        """
+        
         central = QWidget()
         self.setCentralWidget(central)
         root_layout = QVBoxLayout(central)
@@ -576,19 +796,36 @@ class JsonSplitterWindow(QMainWindow):
         self.reassemble_button.clicked.connect(self._start_reassemble)
 
     def _append_log(self, text: str) -> None:
+        """Support append log behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         self.log_box.append(text)
 
     def _browse_input(self) -> None:
+        """Support browse input behavior.
+        """
+        
         path, _ = QFileDialog.getOpenFileName(self, 'Select JSON', '', 'JSON Files (*.json)')
         if path:
             self.input_edit.setText(path)
 
     def _browse_output(self) -> None:
+        """Support browse output behavior.
+        """
+        
         path = QFileDialog.getExistingDirectory(self, 'Select Output Folder')
         if path:
             self.output_edit.setText(path)
 
     def _inspect_json(self) -> None:
+        """Support inspect json behavior.
+        """
+        
         input_path = self.input_edit.text().strip()
         if not input_path:
             QMessageBox.warning(self, 'Missing file', 'Select an input JSON file first.')
@@ -623,9 +860,15 @@ class JsonSplitterWindow(QMainWindow):
             self._append_log(f"Largest: '{lp}' = {ls / 1024 / 1024:.2f} MB")
 
     def _apply_target_from_combo(self) -> None:
+        """Support apply target from combo behavior.
+        """
+        
         self.target_edit.setText(self.target_combo.currentText().strip())
 
     def _start_split(self) -> None:
+        """Support start split behavior.
+        """
+        
         input_path = self.input_edit.text().strip()
         output_dir = self.output_edit.text().strip()
         target_path = self.target_edit.text().strip()
@@ -642,6 +885,9 @@ class JsonSplitterWindow(QMainWindow):
         self._start_worker('split', {'input_path': input_path, 'output_dir': output_dir, 'target_path': target_path, 'mode': mode, 'value': value})
 
     def _start_reassemble(self) -> None:
+        """Support start reassemble behavior.
+        """
+        
         manifest_path, _ = QFileDialog.getOpenFileName(self, 'Select Manifest', self.output_edit.text().strip() or '', 'JSON Files (*.json)')
         if not manifest_path:
             return
@@ -651,6 +897,16 @@ class JsonSplitterWindow(QMainWindow):
         self._start_worker('reassemble', {'manifest_path': manifest_path, 'output_path': output_path})
 
     def _start_worker(self, action: str, payload: dict[str, Any]) -> None:
+        """Support start worker behavior.
+        
+        Parameters
+        ----------
+        action : str
+            The action value.
+        payload : dict[str, Any]
+            The payload value.
+        """
+        
         if self.worker is not None and self.worker.isRunning():
             QMessageBox.information(self, 'Busy', 'Another operation is already running.')
             return
@@ -662,6 +918,16 @@ class JsonSplitterWindow(QMainWindow):
         self.worker.start()
 
     def _on_worker_finished(self, ok: bool, message: str) -> None:
+        """Support on worker finished behavior.
+        
+        Parameters
+        ----------
+        ok : bool
+            The ok value.
+        message : str
+            The message text.
+        """
+        
         self._append_log(message)
         if ok:
             show_auto_close_action_window(self, title='Finished', message=message)
@@ -669,6 +935,9 @@ class JsonSplitterWindow(QMainWindow):
             show_error_copy_close_window(self, title='Error', message=message)
 
 def main() -> None:
+    """Support main behavior.
+    """
+    
     app = QApplication([])
     window = JsonSplitterWindow()
     window.show()

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/daily_rfctr_report/daily_refactor_report_help/source_loader_private_impl.py
 """Load the preserved daily_refactor_report implementation source."""
 
 from __future__ import annotations

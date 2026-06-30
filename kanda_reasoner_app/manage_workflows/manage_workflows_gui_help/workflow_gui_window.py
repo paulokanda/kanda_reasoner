@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/workflow_gui_window.py
 """Qt window for the Workflow Review GUI.
 
 This is the canonical readable source for Workflow Review. The older
@@ -20,7 +21,12 @@ __all__ = ['WorkflowManagerWindow', 'main']
 
 class WorkflowManagerWindow(QMainWindow):
 
+    """Represent workflow manager window."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.setWindowTitle('Workflow & Architecture Manager')
         self.resize(1200, 820)
@@ -80,12 +86,31 @@ class WorkflowManagerWindow(QMainWindow):
         self._build_ui()
 
     def _current_script_path(self) -> Path:
+        """Support current script path behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         return Path(self._script_combo.currentText().strip())
 
     def _current_root_path(self) -> Path:
+        """Support current root path behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         return Path(self._root_combo.currentText().strip())
 
     def _build_ui(self) -> None:
+        """Support build ui behavior.
+        """
+        
         toolbar = QToolBar('Main')
         self.addToolBar(toolbar)
         self._mode_action_toolbar_widget = QWidget(self)
@@ -176,6 +201,9 @@ class WorkflowManagerWindow(QMainWindow):
         self._project_root_controls_moved_to_host = True
 
     def browse_script(self) -> None:
+        """Support browse script behavior.
+        """
+        
         start = str(self._current_script_path().parent)
         path, _ = QFileDialog.getOpenFileName(self, 'Select worker script', start, 'Python files (*.py)')
         if path:
@@ -184,6 +212,9 @@ class WorkflowManagerWindow(QMainWindow):
             self._script_combo.setCurrentText(path)
 
     def browse_root(self) -> None:
+        """Support browse root behavior.
+        """
+        
         path = QFileDialog.getExistingDirectory(self, 'Select project root', self._root_combo.currentText().strip() or str(Path.cwd()))
         if path:
             if self._root_combo.findText(path) == -1:
@@ -191,9 +222,20 @@ class WorkflowManagerWindow(QMainWindow):
             self._root_combo.setCurrentText(path)
 
     def run_selected_mode(self) -> None:
+        """Run the selected mode.
+        """
+        
         self.run_mode(self._mode_combo.currentText())
 
     def run_mode(self, mode: str) -> None:
+        """Run the mode.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        """
+        
         script_path = self._current_script_path()
         root_path = self._current_root_path()
         if not script_path.exists():
@@ -228,6 +270,19 @@ class WorkflowManagerWindow(QMainWindow):
         self._worker_thread.start()
 
     def _confirm_write(self, script_name: str) -> bool:
+        """Support confirm write behavior.
+        
+        Parameters
+        ----------
+        script_name : str
+            The script name value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         box = QMessageBox(self)
         box.setIcon(QMessageBox.Warning)
         box.setWindowTitle('Confirm write')
@@ -238,6 +293,14 @@ class WorkflowManagerWindow(QMainWindow):
         return box.exec() == QMessageBox.Yes
 
     def _append_text(self, text: str) -> None:
+        """Support append text behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         if not text:
             return
         self._output.moveCursor(self._output.textCursor().MoveOperation.End)
@@ -245,6 +308,14 @@ class WorkflowManagerWindow(QMainWindow):
         self._output.moveCursor(self._output.textCursor().MoveOperation.End)
 
     def _handle_worker_success(self, mode: str) -> None:
+        """Support handle worker success behavior.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        """
+        
         if self._operation_cancel_requested:
             self.statusBar().showMessage(f'Canceled {mode}')
             self._output.appendPlainText(f'\n[canceled] mode={mode} late success ignored\n')
@@ -255,6 +326,16 @@ class WorkflowManagerWindow(QMainWindow):
         show_auto_close_action_window(self, title='Done', message=f'{mode.capitalize()} completed successfully.')
 
     def _handle_worker_error(self, mode: str, details: str) -> None:
+        """Support handle worker error behavior.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        details : str
+            The details value.
+        """
+        
         if self._operation_cancel_requested:
             self.statusBar().showMessage(f'Canceled {mode}')
             self._output.appendPlainText(f'\n[canceled] mode={mode} late error ignored\n')
@@ -265,6 +346,9 @@ class WorkflowManagerWindow(QMainWindow):
         QMessageBox.warning(self, 'Finished with issues', f'{mode.capitalize()} finished with issues.\nCheck the output panel for details.')
 
     def _cleanup_worker(self) -> None:
+        """Support cleanup worker behavior.
+        """
+        
         if self._worker is not None:
             self._worker.deleteLater()
             self._worker = None
@@ -317,6 +401,9 @@ class WorkflowManagerWindow(QMainWindow):
         self.statusBar().showMessage('No running Workflow Review operation to cancel')
 
     def _force_cancel_worker_thread(self) -> None:
+        """Support force cancel worker thread behavior.
+        """
+        
         thread = self._worker_thread
         if thread is not None and thread.isRunning():
             self._output.appendPlainText('[cancel] terminating Workflow Review worker thread.\n')
@@ -324,6 +411,9 @@ class WorkflowManagerWindow(QMainWindow):
             thread.wait(1000)
 
     def _force_cancel_ai_review_thread(self) -> None:
+        """Support force cancel ai review thread behavior.
+        """
+        
         thread = getattr(self, '_tab2_ai_review_thread', None)
         if thread is not None and thread.isRunning():
             self._output.appendPlainText('[cancel] terminating Workflow Review AI review thread.\n')
@@ -331,6 +421,9 @@ class WorkflowManagerWindow(QMainWindow):
             thread.wait(1000)
 
     def show_history(self) -> None:
+        """Show the history.
+        """
+        
         roots = get_recent_roots()
         scripts = get_recent_scripts()
         lines: list[str] = []
@@ -350,6 +443,9 @@ class WorkflowManagerWindow(QMainWindow):
         QMessageBox.information(self, 'Session History', '\n'.join(lines))
 
     def show_mode_help(self) -> None:
+        """Show the mode help.
+        """
+        
         script_name = self._current_script_path().name
         is_arch = 'architecture' in script_name.lower()
         if is_arch:
@@ -359,6 +455,9 @@ class WorkflowManagerWindow(QMainWindow):
         QMessageBox.information(self, f'Mode Help - {script_name}', help_text)
 
     def save_output(self) -> None:
+        """Save the output.
+        """
+        
         path, _ = QFileDialog.getSaveFileName(self, 'Save output', str(Path.cwd() / 'manager_output.txt'), 'Text Files (*.txt)')
         if not path:
             return
@@ -366,6 +465,14 @@ class WorkflowManagerWindow(QMainWindow):
         self.statusBar().showMessage(f'Saved output to {path}')
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     app = QApplication(sys.argv)
     window = WorkflowManagerWindow()
     window.show()

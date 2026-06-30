@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/ai_settings.py
 """Tab 3 local-AI settings facade."""
 
 from __future__ import annotations

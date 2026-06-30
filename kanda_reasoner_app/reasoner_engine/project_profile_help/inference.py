@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/project_profile_help/inference.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -20,6 +21,25 @@ def infer_project_profile_name_from_metadata(
     packaging_metadata: dict[str, Any] | None = None,
     documentation_intent: dict[str, Any] | None = None,
 ) -> str:
+    """Support infer project profile name from metadata behavior.
+    
+    Parameters
+    ----------
+    project_root : str, optional
+        The project root path.
+    project_summary : dict[str, Any] | None, optional
+        The optional project summary value.
+    packaging_metadata : dict[str, Any] | None, optional
+        The optional packaging metadata value.
+    documentation_intent : dict[str, Any] | None, optional
+        The optional documentation intent value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     summary = project_summary if isinstance(project_summary, dict) else {}
     packaging = packaging_metadata if isinstance(packaging_metadata, dict) else {}
     documentation = (
@@ -169,6 +189,25 @@ def infer_project_profile(
     packaging_metadata: dict[str, Any] | None = None,
     documentation_intent: dict[str, Any] | None = None,
 ) -> ProjectProfile:
+    """Support infer project profile behavior.
+    
+    Parameters
+    ----------
+    project_root : str, optional
+        The project root path.
+    project_summary : dict[str, Any] | None, optional
+        The optional project summary value.
+    packaging_metadata : dict[str, Any] | None, optional
+        The optional packaging metadata value.
+    documentation_intent : dict[str, Any] | None, optional
+        The optional documentation intent value.
+    
+    Returns
+    -------
+    ProjectProfile
+        The project profile result.
+    """
+    
     profile_name = infer_project_profile_name_from_metadata(
         project_root=project_root,
         project_summary=project_summary,

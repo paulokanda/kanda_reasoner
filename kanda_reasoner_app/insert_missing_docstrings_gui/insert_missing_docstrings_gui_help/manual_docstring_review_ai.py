@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/manual_docstring_review_ai.py
 """Compatibility facade for manual review AI suggestions."""
 
 from __future__ import annotations

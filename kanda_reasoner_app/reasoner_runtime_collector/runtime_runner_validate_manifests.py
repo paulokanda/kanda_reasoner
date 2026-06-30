@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_runner_validate_manifests.py
 """Validate the runtime runner helper manifest contract."""
 
 from __future__ import annotations
@@ -17,10 +18,36 @@ HELPERS = ['runtime_runner_part_1_private_impl.py', 'runtime_runner_part_2_priva
 
 
 def _read(path: Path) -> str:
+    """Support read behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = _read(path)
     if not text:
         return 0
@@ -28,6 +55,14 @@ def _line_count(path: Path) -> int:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors = []
     if not ORIGIN.exists():
         errors.append(f"missing origin file: {ORIGIN}")

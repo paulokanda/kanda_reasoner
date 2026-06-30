@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_command_runner.py
 """Own command building, execution, and test workflow execution."""
 
 from __future__ import annotations
@@ -49,10 +50,40 @@ __all__ = [
 
 
 def replace_placeholders(value: str, *, root: Path) -> str:
+    """Support replace placeholders behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return value.replace("{root}", str(root)).replace("{python}", sys.executable)
 
 
 def maybe_stringify_command(args: list[str], shell: bool) -> str:
+    """Support maybe stringify command behavior.
+    
+    Parameters
+    ----------
+    args : list[str]
+        The positional arguments.
+    shell : bool
+        The shell value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if shell:
         return args[0]
     return " ".join(args)
@@ -78,6 +109,27 @@ def build_command(
     str,
     dict[str, list[str]],
 ]:
+    """Build a command.
+    
+    Parameters
+    ----------
+    spec : Any
+        The spec value.
+    category : str
+        The category value.
+    root : Path
+        The root path.
+    default_timeout : int | float
+        The default timeout value.
+    extra_env : dict[str, str] | None, optional
+        The optional extra env value.
+    
+    Returns
+    -------
+    tuple[str, list[str], bool, Path, dict[str, str], int | float, int, float | None, bool, str, dict[str, list[str]]]
+        The tuple of values.
+    """
+    
     if isinstance(spec, str):
         command = replace_placeholders(spec, root=root)
         env = dict(os.environ)
@@ -166,6 +218,27 @@ def execute_command(
     default_timeout: int | float,
     extra_env: dict[str, str] | None = None,
 ) -> CheckResult:
+    """Support execute command behavior.
+    
+    Parameters
+    ----------
+    category : str
+        The category value.
+    spec : Any
+        The spec value.
+    root : Path
+        The root path.
+    default_timeout : int | float
+        The default timeout value.
+    extra_env : dict[str, str] | None, optional
+        The optional extra env value.
+    
+    Returns
+    -------
+    CheckResult
+        The check result result.
+    """
+    
     placeholder_message, placeholder_details = placeholder_contract_failure_message(
         spec=spec,
         extra_env=extra_env,
@@ -306,6 +379,25 @@ def command_list_results(
     root: Path,
     extra_env: dict[str, str] | None = None,
 ) -> list[CheckResult]:
+    """Support command list results behavior.
+    
+    Parameters
+    ----------
+    category : str
+        The category value.
+    cfg : dict[str, Any]
+        The configuration data.
+    root : Path
+        The root path.
+    extra_env : dict[str, str] | None, optional
+        The optional extra env value.
+    
+    Returns
+    -------
+    list[CheckResult]
+        The list of values.
+    """
+    
     if not cfg.get("enabled", True):
         return [CheckResult(category, category, "skip", "Workflow disabled.")]
     commands = cfg.get("commands") or []
@@ -333,6 +425,23 @@ def command_list_results(
 
 
 def run_tests(root: Path, discovered: dict[str, Any], cfg: dict[str, Any]) -> list[CheckResult]:
+    """Run the tests.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    discovered : dict[str, Any]
+        The discovered value.
+    cfg : dict[str, Any]
+        The configuration data.
+    
+    Returns
+    -------
+    list[CheckResult]
+        The list of values.
+    """
+    
     if not cfg.get("enabled", True):
         return [CheckResult("tests", "tests", "skip", "Workflow disabled.")]
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_contract_validator_design.py
 """Design-only M20 shadow-mode contract validator design.
 
 M20 defines how a future non-runtime validator should enforce the M19

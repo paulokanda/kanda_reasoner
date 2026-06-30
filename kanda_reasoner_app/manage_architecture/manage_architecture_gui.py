@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/manage_architecture_gui.py
 """Qt GUI for running architecture scan, validate, diff, and write modes."""
 from __future__ import annotations
 
@@ -43,17 +44,34 @@ LARGE_MODULE_REFACTOR_PROTOCOL_RELATIVE_PATH = 'kanda_prompt_workspace/prompt_li
 __all__ = ['ArchitectureManagerWindow', 'ArchitectureRunWorker', 'main']
 
 class ArchitectureRunWorker(QObject):
+    """Represent architecture run worker."""
+    
     output_ready = Signal(str)
     finished_ok = Signal(str)
     finished_error = Signal(str, str)
 
     def __init__(self, manager_script_path: str, project_root: str, mode: str) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        manager_script_path : str
+            The manager script path value.
+        project_root : str
+            The project root path.
+        mode : str
+            The selected mode.
+        """
+        
         super().__init__()
         self._manager_script_path = Path(manager_script_path)
         self._project_root = Path(project_root)
         self._mode = mode
 
     def run(self) -> None:
+        """Support run behavior.
+        """
+        
         try:
             module = self._load_manager_module(self._manager_script_path)
             buffer = io.StringIO()
@@ -82,6 +100,14 @@ class ArchitectureRunWorker(QObject):
             self.finished_error.emit(self._mode, tb)
 
     def _load_manager_module(self, script_path: Path):
+        """Support load manager module behavior.
+        
+        Parameters
+        ----------
+        script_path : Path
+            The script path value.
+        """
+        
         if not script_path.exists():
             raise FileNotFoundError(f'Worker script not found: {script_path}')
         module_name = 'architecture_manager_worker'
@@ -99,7 +125,12 @@ class ArchitectureRunWorker(QObject):
 
 class ArchitectureManagerWindow(QMainWindow):
 
+    """Represent architecture manager window."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.setWindowTitle('Architecture Manager')
         self.resize(1100, 760)
@@ -147,6 +178,14 @@ class ArchitectureManagerWindow(QMainWindow):
         self._build_ui()
 
     def _manager_script_path(self) -> Path:
+        """Support manager script path behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         default_path = Path(__file__).resolve().parent / DEFAULT_MANAGER_NAME
         script_edit = getattr(self, '_script_path_edit', None)
         if script_edit is not None:
@@ -156,6 +195,9 @@ class ArchitectureManagerWindow(QMainWindow):
         return default_path
 
     def _build_ui(self) -> None:
+        """Support build ui behavior.
+        """
+        
         toolbar = QToolBar('Main')
         self.addToolBar(toolbar)
         self._run_options_toolbar_widget = QWidget(self)
@@ -287,20 +329,37 @@ class ArchitectureManagerWindow(QMainWindow):
         self._project_root_controls_moved_to_host = True
 
     def browse_script(self) -> None:
+        """Support browse script behavior.
+        """
+        
         start = str(self._manager_script_path().parent)
         path, _ = QFileDialog.getOpenFileName(self, 'Select worker script', start, 'Python files (*.py)')
         if path:
             self._script_path_edit.setText(path)
 
     def browse_root(self) -> None:
+        """Support browse root behavior.
+        """
+        
         path = QFileDialog.getExistingDirectory(self, 'Select project root', self._root_path_edit.text().strip() or str(Path.cwd()))
         if path:
             self._root_path_edit.setText(path)
 
     def run_selected_mode(self) -> None:
+        """Run the selected mode.
+        """
+        
         self.run_mode(self._mode_combo.currentText())
 
     def run_mode(self, mode: str) -> None:
+        """Run the mode.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        """
+        
         script_path = self._manager_script_path()
         root_path = Path(self._root_path_edit.text().strip())
         if not script_path.exists():
@@ -338,6 +397,14 @@ class ArchitectureManagerWindow(QMainWindow):
         self._worker_thread.start()
 
     def _confirm_write(self) -> bool:
+        """Support confirm write behavior.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         box = QMessageBox(self)
         box.setIcon(QMessageBox.Warning)
         box.setWindowTitle('Confirm write')
@@ -348,6 +415,14 @@ class ArchitectureManagerWindow(QMainWindow):
         return box.exec() == QMessageBox.Yes
 
     def _append_text(self, text: str) -> None:
+        """Support append text behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         if not text:
             return
         self._output.moveCursor(self._output.textCursor().MoveOperation.End)
@@ -355,6 +430,14 @@ class ArchitectureManagerWindow(QMainWindow):
         self._output.moveCursor(self._output.textCursor().MoveOperation.End)
 
     def _handle_worker_success(self, mode: str) -> None:
+        """Support handle worker success behavior.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        """
+        
         if self._operation_cancel_requested:
             self.statusBar().showMessage(f'Canceled {mode}')
             self._output.appendPlainText(f'\n[canceled] mode={mode} late success ignored\n')
@@ -370,6 +453,16 @@ class ArchitectureManagerWindow(QMainWindow):
         show_auto_close_action_window(self, title='Work done', message=f'{mode.capitalize()} completed successfully.')
 
     def _handle_worker_error(self, mode: str, details: str) -> None:
+        """Support handle worker error behavior.
+        
+        Parameters
+        ----------
+        mode : str
+            The selected mode.
+        details : str
+            The details value.
+        """
+        
         if self._operation_cancel_requested:
             self.statusBar().showMessage(f'Canceled {mode}')
             self._output.appendPlainText(f'\n[canceled] mode={mode} late error ignored\n')
@@ -387,6 +480,9 @@ class ArchitectureManagerWindow(QMainWindow):
         QMessageBox.warning(self, 'Work finished with issues', f'{mode.capitalize()} finished with issues.\nCheck the audit panel for details.')
 
     def _cleanup_worker(self) -> None:
+        """Support cleanup worker behavior.
+        """
+        
         if self._worker is not None:
             self._worker.deleteLater()
             self._worker = None
@@ -438,6 +534,9 @@ class ArchitectureManagerWindow(QMainWindow):
         self.statusBar().showMessage('No running Architecture operation to cancel')
 
     def _force_cancel_worker_thread(self) -> None:
+        """Support force cancel worker thread behavior.
+        """
+        
         thread = self._worker_thread
         if thread is not None and thread.isRunning():
             self._output.appendPlainText('[cancel] terminating Architecture worker thread.\n')
@@ -445,6 +544,9 @@ class ArchitectureManagerWindow(QMainWindow):
             thread.wait(1000)
 
     def _force_cancel_ai_review_thread(self) -> None:
+        """Support force cancel ai review thread behavior.
+        """
+        
         thread = self._ai_review_thread
         if thread is not None and thread.isRunning():
             self._output.appendPlainText('[cancel] terminating Architecture AI review thread.\n')
@@ -452,11 +554,17 @@ class ArchitectureManagerWindow(QMainWindow):
             thread.wait(1000)
 
     def copy_audit_to_clipboard(self) -> None:
+        """Support copy audit to clipboard behavior.
+        """
+        
         audit_text = self._output.toPlainText()
         QApplication.clipboard().setText(audit_text)
         self.statusBar().showMessage('Copied Project Audit Results to clipboard')
 
     def copy_large_module_protocol_to_clipboard(self) -> None:
+        """Support copy large module protocol to clipboard behavior.
+        """
+        
         prompt_path = self._large_module_protocol_path()
         if prompt_path is None or not prompt_path.exists():
             show_error_copy_close_window(
@@ -473,6 +581,14 @@ class ArchitectureManagerWindow(QMainWindow):
         self.statusBar().showMessage('Copied Large Module Creation/Refactor Protocol to clipboard')
 
     def _large_module_protocol_path(self) -> Path | None:
+        """Support large module protocol path behavior.
+        
+        Returns
+        -------
+        Path | None
+            The resolved path.
+        """
+        
         candidates: list[Path] = []
         root_text = self._root_path_edit.text().strip()
         if root_text:
@@ -591,6 +707,9 @@ class ArchitectureManagerWindow(QMainWindow):
             self._sync_large_module_target_controls()
 
     def browse_large_module_target(self) -> None:
+        """Support browse large module target behavior.
+        """
+        
         root_text = self._root_path_edit.text().strip() or str(Path.cwd())
         start = str(Path(root_text)) if Path(root_text).exists() else str(Path.cwd())
         path, _ = QFileDialog.getOpenFileName(self, 'Select large module target', start, 'Python files (*.py)')
@@ -615,6 +734,9 @@ class ArchitectureManagerWindow(QMainWindow):
             self.statusBar().showMessage(f'Manual oversized AST target selected: {line_count} lines')
 
     def run_large_module_split_audit_from_gui(self) -> None:
+        """Run the large module split audit from gui.
+        """
+        
         root_path = Path(self._root_path_edit.text().strip())
         self._prune_current_large_module_target_if_resolved()
         target_text = self._large_module_target_edit.text().strip()
@@ -654,15 +776,24 @@ class ArchitectureManagerWindow(QMainWindow):
         self.statusBar().showMessage('Copied Large Module AST Audit target .py path to clipboard')
 
     def copy_large_module_split_handoff(self) -> None:
+        """Support copy large module split handoff behavior.
+        """
+        
         handoff = self._last_large_module_split_handoff or self._output.toPlainText()
         QApplication.clipboard().setText(handoff)
         self.statusBar().showMessage('Copied Large Module Split Handoff for AI to clipboard')
 
     def show_mode_help(self) -> None:
+        """Show the mode help.
+        """
+        
         help_text = 'Validate\n- checks the project tree for duplicate public symbols, helper-folder rule violations, docstring mismatches, and oversized modules.\n\nDiff\n- previews the changes that would be written to __init__.py files, ARCHITECTURE.md, and architecture_manifest.json.\n\nScan\n- prints the full manifest JSON describing the project structure.\n\nWrite\n- writes architecture_manifest.json, minimal __init__.py facades, and ARCHITECTURE.md, but only when validation has no errors.'
         QMessageBox.information(self, 'Mode Help', help_text)
 
     def save_output(self) -> None:
+        """Save the output.
+        """
+        
         path, _ = QFileDialog.getSaveFileName(self, 'Save audit', str(Path.cwd() / 'architecture_manager_audit.txt'), 'Text Files (*.txt)')
         if not path:
             return
@@ -670,6 +801,14 @@ class ArchitectureManagerWindow(QMainWindow):
         self.statusBar().showMessage(f'Saved audit to {path}')
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     app = QApplication(sys.argv)
     window = ArchitectureManagerWindow()
     window.show()

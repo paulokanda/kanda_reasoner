@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/schemas.py
 """Shared report schemas for Engineering Safety tools."""
 
 from __future__ import annotations
@@ -138,6 +139,23 @@ class EngineeringSafetyReport:
 
     @staticmethod
     def _normalize_choice(value: object, choices: tuple[str, ...], fallback: str) -> str:
+        """Support normalize choice behavior.
+        
+        Parameters
+        ----------
+        value : object
+            The input value.
+        choices : tuple[str, ...]
+            The choices value.
+        fallback : str
+            The fallback value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         normalized = normalize_report_text(value).lower()
         return normalized if normalized in choices else fallback
 

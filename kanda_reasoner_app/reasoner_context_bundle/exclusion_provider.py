@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/exclusion_provider.py
 """Adapter for loading active project exclusion rules.
 
 This module reads the existing project exclusion policy through its public
@@ -30,6 +31,19 @@ EXCLUSION_RULES_SOURCE = (
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_visual_markers.py
 """Pulse marker contract for the Neural Architecture brain visual.
 
 This module is data-only. It defines pulsing marker anchors for the visible

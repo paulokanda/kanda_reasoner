@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/models.py
 """Data contracts for Tab 2 advisory AI review."""
 
 from __future__ import annotations

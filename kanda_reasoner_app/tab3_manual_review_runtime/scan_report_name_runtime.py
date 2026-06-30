@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/scan_report_name_runtime.py
 """Report-name helpers for the Tab 3 scan-only workflow."""
 
 from __future__ import annotations

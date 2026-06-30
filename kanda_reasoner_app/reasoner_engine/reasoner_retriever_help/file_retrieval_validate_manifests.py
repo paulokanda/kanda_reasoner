@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_retrieval_validate_manifests.py
 """Validate file_retrieval helper manifest artifacts."""
 
 from __future__ import annotations
@@ -14,10 +15,36 @@ MAX_LINES = 499
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = _read_text(path)
     if not text:
         return 0
@@ -25,6 +52,14 @@ def _line_count(path: Path) -> int:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     root = Path(__file__).resolve().parent
     manifest_path = root / "file_retrieval_help.json"
     helper_dir = root / "file_retrieval_help"

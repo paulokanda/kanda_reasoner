@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runner.py
 """Canonical runtime collector runner facade.
 
 This module replaces the retired project_reasoner_v10_runtime_collector
@@ -24,6 +25,21 @@ class Runner:
     """Small facade that delegates construction to the shell runner."""
 
     def __new__(cls, *args: Any, **kwargs: Any) -> Any:
+        """Support new behavior.
+        
+        Parameters
+        ----------
+        *args : Any
+            The positional arguments.
+        **kwargs : Any
+            The kwargs value.
+        
+        Returns
+        -------
+        Any
+            The any result.
+        """
+        
         shell_runner = _load_shell_runner()
 
         for candidate_name in (

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/registry/candidate_registry.py
 """Pure in-memory candidate registry records for Adviser Candidate v0.
 
 M14 builds deterministic registry records from caller-supplied candidate
@@ -180,6 +181,19 @@ def assert_candidate_registry_record_valid(record: Mapping[str, Any]) -> Mapping
 
 
 def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
+    """Support evaluation summary behavior.
+    
+    Parameters
+    ----------
+    report : Mapping[str, Any]
+        The report value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = report.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -200,6 +214,19 @@ def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
+    """Support queue summary behavior.
+    
+    Parameters
+    ----------
+    queue : Mapping[str, Any]
+        The queue value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = queue.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -217,6 +244,21 @@ def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _blockers(*, evaluation_summary: Mapping[str, Any], queue_summary: Mapping[str, Any]) -> list[str]:
+    """Support blockers behavior.
+    
+    Parameters
+    ----------
+    evaluation_summary : Mapping[str, Any]
+        The evaluation summary value.
+    queue_summary : Mapping[str, Any]
+        The queue summary value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     blockers = ["m16_promotion_gate_not_yet_run"]
     if int(evaluation_summary.get("cases_evaluated") or 0) == 0:
         blockers.append("no_cases_evaluated")
@@ -236,6 +278,19 @@ def _blockers(*, evaluation_summary: Mapping[str, Any], queue_summary: Mapping[s
 
 
 def _registry_status(blockers: list[str]) -> str:
+    """Support registry status behavior.
+    
+    Parameters
+    ----------
+    blockers : list[str]
+        The blockers value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if any(blocker in blockers for blocker in ("critical_failures_present", "p0_review_items_present")):
         return "blocked_critical_review_required"
     if len(blockers) > 1:
@@ -244,6 +299,21 @@ def _registry_status(blockers: list[str]) -> str:
 
 
 def _required_text(mapping: Mapping[str, Any], field: str) -> str:
+    """Support required text behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = str(mapping.get(field) or "").strip()
     if not value:
         raise ValueError(f"{field} is required")
@@ -251,6 +321,21 @@ def _required_text(mapping: Mapping[str, Any], field: str) -> str:
 
 
 def _required_hash(mapping: Mapping[str, Any], field: str) -> str:
+    """Support required hash behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = _required_text(mapping, field).lower()
     if not _is_sha256(value):
         raise ValueError(f"{field} must be sha256 hex")
@@ -258,4 +343,17 @@ def _required_hash(mapping: Mapping[str, Any], field: str) -> str:
 
 
 def _is_sha256(value: str) -> bool:
+    """Support is sha256 behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return len(value) == 64 and all(char in HEX_DIGITS for char in value)

@@ -1,3 +1,4 @@
+# project-path: _reasoner_tools_gui_engineering_safety_panel_commands.py
 """Private command helpers for the Engineering Safety panel.
 
 All implementation symbols in this module are private. The public GUI
@@ -39,6 +40,16 @@ class _PanelCommandArgs(list):
     """Raw CLI args that also compare equal to the legacy display form."""
 
     def __init__(self, raw_args: list[str], display_args: list[str]) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        raw_args : list[str]
+            The raw args value.
+        display_args : list[str]
+            The display args value.
+        """
+        
         super().__init__(raw_args)
         self._display_args = list(display_args)
 
@@ -48,9 +59,25 @@ class _PanelCommandArgs(list):
         return list(self._display_args)
 
     def __iter__(self):
+        """Support iter behavior.
+        """
+        
         return iter(self._display_args)
 
     def __eq__(self, other: object) -> bool:
+        """Support eq behavior.
+        
+        Parameters
+        ----------
+        other : object
+            The comparison value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         if isinstance(other, list) and other == self._display_args:
             return True
         return super().__eq__(other)

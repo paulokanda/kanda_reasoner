@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/output_policy.py
 """Output policy helpers for Project Symbol Atlas reports.
 
 The Project Symbol Atlas uses complete JSON as the canonical project evidence.
@@ -127,18 +128,59 @@ def is_active_test_command(value: str) -> bool:
 
 
 def _has_important_test_term(value: str) -> bool:
+    """Support has important test term behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     normalized = value.lower().replace("\\", "/")
     terms = [term.lower().replace("\\", "/") for term in IMPORTANT_TEST_TERMS]
     return any(term in normalized for term in terms)
 
 
 def _extract_value_after(line: str, marker: str) -> Optional[str]:
+    """Support extract value after behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    marker : str
+        The marker value.
+    
+    Returns
+    -------
+    Optional[str]
+        The optional result.
+    """
+    
     if marker not in line:
         return None
     return line.split(marker, 1)[1].strip()
 
 
 def _extract_target_path(lines: Sequence[str]) -> Optional[str]:
+    """Support extract target path behavior.
+    
+    Parameters
+    ----------
+    lines : Sequence[str]
+        The line values.
+    
+    Returns
+    -------
+    Optional[str]
+        The optional result.
+    """
+    
     patterns = (
         r"->\s*([^\s;]+\.py)",
         r"query=([^;\n]+\.py)",
@@ -156,6 +198,19 @@ def _extract_target_path(lines: Sequence[str]) -> Optional[str]:
 
 
 def _line_path_value(line: str) -> Optional[str]:
+    """Support line path value behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    Optional[str]
+        The optional result.
+    """
+    
     for marker in (
         "related_file=",
         "helper_path=",
@@ -170,6 +225,19 @@ def _line_path_value(line: str) -> Optional[str]:
 
 
 def _should_drop_path_line(line: str) -> bool:
+    """Support should drop path line behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     value = _line_path_value(line)
     if value is None:
         return False
@@ -179,6 +247,21 @@ def _should_drop_path_line(line: str) -> bool:
 
 
 def _replace_bad_owner_line(line: str, target_path: Optional[str]) -> str:
+    """Support replace bad owner line behavior.
+    
+    Parameters
+    ----------
+    line : str
+        The line value.
+    target_path : Optional[str]
+        The target path value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not target_path:
         return line
     inactive_primary = "primary_edit_target=" in line and _should_drop_path_line(line)
@@ -195,6 +278,19 @@ def _replace_bad_owner_line(line: str, target_path: Optional[str]) -> str:
 
 
 def _dedupe_keep_order(lines: Iterable[str]) -> List[str]:
+    """Support dedupe keep order behavior.
+    
+    Parameters
+    ----------
+    lines : Iterable[str]
+        The line values.
+    
+    Returns
+    -------
+    List[str]
+        The list result.
+    """
+    
     seen = set()
     result = []
     for line in lines:

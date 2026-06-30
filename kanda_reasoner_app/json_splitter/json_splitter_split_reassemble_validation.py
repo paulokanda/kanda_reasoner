@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_split_reassemble_validation.py
 """Validate Project Reasoner JSON split/reassemble output.
 
 This module audits an existing JSON Splitter output folder. It reconstructs the

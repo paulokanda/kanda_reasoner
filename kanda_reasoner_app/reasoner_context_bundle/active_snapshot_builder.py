@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/active_snapshot_builder.py
 """Build an active source snapshot for one reasoner context bundle."""
 
 from __future__ import annotations
@@ -51,17 +52,56 @@ _GENERATED_ARTIFACT_PREFIXES = (
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _is_generated_bundle_artifact(relative_path: str) -> bool:
+    """Support is generated bundle artifact behavior.
+    
+    Parameters
+    ----------
+    relative_path : str
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     rel = relative_path.replace("\\", "/").lower().lstrip("/")
     return any(rel.startswith(prefix) for prefix in _GENERATED_ARTIFACT_PREFIXES)
 
 
 def _omission_reason(record: dict[str, Any]) -> str:
+    """Support omission reason behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = str(record.get("path", ""))
     if _is_generated_bundle_artifact(path):
         return "generated_context_bundle_artifact"
@@ -79,6 +119,21 @@ def _omission_reason(record: dict[str, Any]) -> str:
 
 
 def _read_snapshot_text(path: Path, encoding: str) -> str:
+    """Support read snapshot text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    encoding : str
+        The encoding value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     selected_encoding = "utf-8-sig" if encoding == "utf-8-sig" else "utf-8"
     with path.open("r", encoding=selected_encoding, errors="replace", newline="") as handle:
         return handle.read()
@@ -88,6 +143,21 @@ def _snapshot_file_record(
     record: dict[str, Any],
     context: ProjectContext,
 ) -> dict[str, Any]:
+    """Support snapshot file record behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     relative_path = str(record["path"])
     source_path = context.root / Path(relative_path)
     encoding = str(record.get("encoding") or "utf-8")
@@ -106,6 +176,21 @@ def _snapshot_file_record(
 
 
 def _omitted_file_record(record: dict[str, Any], reason: str) -> dict[str, Any]:
+    """Support omitted file record behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    reason : str
+        The reason value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "path": str(record.get("path", "")),
         "kind": str(record.get("kind", "unknown")),
@@ -121,6 +206,21 @@ def _split_snapshot_records(
     manifest_files: list[dict[str, Any]],
     context: ProjectContext,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Support split snapshot records behavior.
+    
+    Parameters
+    ----------
+    manifest_files : list[dict[str, Any]]
+        The manifest files value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    tuple[list[dict[str, Any]], list[dict[str, Any]]]
+        The tuple of values.
+    """
+    
     files: list[dict[str, Any]] = []
     omitted_files: list[dict[str, Any]] = []
     for record in manifest_files:
@@ -138,6 +238,21 @@ def _split_snapshot_records(
 
 
 def _counts(files: list[dict[str, Any]], omitted_files: list[dict[str, Any]]) -> dict[str, int]:
+    """Support counts behavior.
+    
+    Parameters
+    ----------
+    files : list[dict[str, Any]]
+        The files value.
+    omitted_files : list[dict[str, Any]]
+        The omitted files value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     return {
         "snapshot_files": len(files),
         "omitted_files": len(omitted_files),

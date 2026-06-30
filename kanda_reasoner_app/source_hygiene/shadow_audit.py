@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/shadow_audit.py
 """Read-only audit for public symbol shadowing and unsafe facades."""
 
 from __future__ import annotations
@@ -216,6 +217,23 @@ def _audit_init_facade(
     display_path: str,
     explicit_all: tuple[str, ...],
 ) -> list[SourceHygieneFinding]:
+    """Support audit init facade behavior.
+    
+    Parameters
+    ----------
+    module : ast.Module
+        The module value.
+    display_path : str
+        The display path value.
+    explicit_all : tuple[str, ...]
+        The explicit all value.
+    
+    Returns
+    -------
+    list[SourceHygieneFinding]
+        The list of values.
+    """
+    
     findings: list[SourceHygieneFinding] = []
     has_public_import = False
 
@@ -279,6 +297,19 @@ def _audit_init_facade(
 
 
 def _collect_public_symbols(module: ast.Module) -> set[str]:
+    """Support collect public symbols behavior.
+    
+    Parameters
+    ----------
+    module : ast.Module
+        The module value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     symbols: set[str] = set()
     for node in module.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
@@ -306,6 +337,19 @@ def _collect_public_symbols(module: ast.Module) -> set[str]:
 
 
 def _collect_explicit_all(module: ast.Module) -> tuple[tuple[str, ...], bool]:
+    """Support collect explicit all behavior.
+    
+    Parameters
+    ----------
+    module : ast.Module
+        The module value.
+    
+    Returns
+    -------
+    tuple[tuple[str, ...], bool]
+        The tuple of values.
+    """
+    
     names: list[str] = []
     found_dynamic = False
     for node in module.body:
@@ -322,6 +366,19 @@ def _collect_explicit_all(module: ast.Module) -> tuple[tuple[str, ...], bool]:
 
 
 def _literal_string_sequence(node: ast.AST) -> tuple[str, ...] | None:
+    """Support literal string sequence behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    tuple[str, ...] | None
+        The tuple of values.
+    """
+    
     if not isinstance(node, (ast.List, ast.Tuple, ast.Set)):
         return None
     values: list[str] = []
@@ -333,6 +390,19 @@ def _literal_string_sequence(node: ast.AST) -> tuple[str, ...] | None:
 
 
 def _public_names_from_target(target: ast.AST) -> set[str]:
+    """Support public names from target behavior.
+    
+    Parameters
+    ----------
+    target : ast.AST
+        The target value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     names: set[str] = set()
     if isinstance(target, ast.Name):
         if not target.id.startswith("_"):
@@ -344,6 +414,19 @@ def _public_names_from_target(target: ast.AST) -> set[str]:
 
 
 def _is_runtime_statement(node: ast.AST) -> bool:
+    """Support is runtime statement behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if isinstance(node, ast.Expr):
         return not _is_module_docstring(node)
     if isinstance(node, ast.Assign):
@@ -358,6 +441,19 @@ def _is_runtime_statement(node: ast.AST) -> bool:
 
 
 def _is_module_docstring(node: ast.AST) -> bool:
+    """Support is module docstring behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return (
         isinstance(node, ast.Expr)
         and isinstance(node.value, ast.Constant)
@@ -366,10 +462,36 @@ def _is_module_docstring(node: ast.AST) -> bool:
 
 
 def _is_type_checking_import(node: ast.AST) -> bool:
+    """Support is type checking import behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return False
 
 
 def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
+    """Support normalize suffixes behavior.
+    
+    Parameters
+    ----------
+    suffixes : Iterable[str] | None
+        The suffixes value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if suffixes is None:
         return set(DEFAULT_SHADOW_AUDIT_SUFFIXES)
     normalized: set[str] = set()
@@ -384,6 +506,21 @@ def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
 
 
 def _is_in_skipped_dir(path: Path, root: Path) -> bool:
+    """Support is in skipped dir behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         parts = path.relative_to(root).parts[:-1]
     except ValueError:
@@ -392,6 +529,21 @@ def _is_in_skipped_dir(path: Path, root: Path) -> bool:
 
 
 def _display_path(path: Path, root: Path | None) -> str:
+    """Support display path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path | None
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if root is None:
         return str(path)
     try:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_boundary_design.py
 """Design-only M18 shadow-mode boundary.
 
 M18 is the post-Adviser bridge safety wall. It does not implement shadow mode,

@@ -428,9 +428,59 @@ def _apply_test_protection_generated_private_policy(source: str) -> str:
     return _replace_once(source, old, new)
 
 def _apply_stale_variant_compatibility_shim_policy(source: str) -> str:
-    """Suppress stale warnings for documented compatibility shims."""
-    source = _replace_once(source, 'def _normalized_variant_stem(filename: str) -> str:\n', ('COMPATIBILITY_SHIM_STALE_VARIANT_PATHS = {"kanda_reasoner_app/local_ai_json_working_copy.py", "kanda_reasoner_app/reasoner_context_bundle/source_archive_exporter.py", "kanda_reasoner_app/templates/floating_windows/error_copy_close_window.py"}\n\n' 'def _is_documented_compatibility_shim_variant(module: ModuleInfo) -> bool:\n' '    normalized_path = module.path.replace("\\\\", "/")\n' '    docstring = (module.docstring or "").lower()\n' '    return normalized_path in COMPATIBILITY_SHIM_STALE_VARIANT_PATHS or ("compatibility shim" in docstring and "new active code must import" in docstring)\n\n' 'def _normalized_variant_stem(filename: str) -> str:\n'))
-    return _replace_once(source, ('    for module in sorted(modules.values(), key=lambda item: item.path):\n' '        if module.is_init or is_test_path(module.path):\n' '            continue\n' '        reasons = stale_variant_reasons(module)\n'), ('    for module in sorted(modules.values(), key=lambda item: item.path):\n' '        if module.is_init or is_test_path(module.path):\n' '            continue\n' '        if _is_documented_compatibility_shim_variant(module):\n' '            continue\n' '        reasons = stale_variant_reasons(module)\n'))
+    """Suppress stale/deprecated errors for documented active compatibility shims."""
+    source = _replace_once(
+        source,
+        'def _normalized_variant_stem(filename: str) -> str:\n',
+        (
+            'COMPATIBILITY_SHIM_STALE_VARIANT_PATHS = {'
+            '"kanda_reasoner_app/error_memory_gui/_draft_deletion.py", '
+            '"kanda_reasoner_app/error_memory_gui/_table_draft_mixin.py", '
+            '"kanda_reasoner_app/local_ai_json_working_copy.py", '
+            '"kanda_reasoner_app/reasoner_context_bundle/source_archive_exporter.py", '
+            '"kanda_reasoner_app/reasoner_context_bundle/source_tree_exporter_archive_io.py", '
+            '"kanda_reasoner_app/templates/floating_windows/error_copy_close_window.py"}\n\n'
+            'def _is_documented_compatibility_shim_variant(module: ModuleInfo) -> bool:\n'
+            '    normalized_path = module.path.replace("\\\\", "/")\n'
+            '    docstring = (module.docstring or "").lower()\n'
+            '    return normalized_path in COMPATIBILITY_SHIM_STALE_VARIANT_PATHS or ("compatibility shim" in docstring and "new active code must import" in docstring)\n\n'
+            'def _normalized_variant_stem(filename: str) -> str:\n'
+        ),
+    )
+    source = _replace_once(
+        source,
+        (
+            '    for module in sorted(modules.values(), key=lambda item: item.path):\n'
+            '        if module.is_init or is_test_path(module.path):\n'
+            '            continue\n'
+            '        reasons = stale_variant_reasons(module)\n'
+        ),
+        (
+            '    for module in sorted(modules.values(), key=lambda item: item.path):\n'
+            '        if module.is_init or is_test_path(module.path):\n'
+            '            continue\n'
+            '        if _is_documented_compatibility_shim_variant(module):\n'
+            '            continue\n'
+            '        reasons = stale_variant_reasons(module)\n'
+        ),
+    )
+    return _replace_once(
+        source,
+        (
+            '    for stale_module in sorted(modules.values(), key=lambda item: item.path):\n'
+            '        if stale_module.is_init or is_test_path(stale_module.path):\n'
+            '            continue\n'
+            '        reasons = stale_variant_reasons(stale_module)\n'
+        ),
+        (
+            '    for stale_module in sorted(modules.values(), key=lambda item: item.path):\n'
+            '        if stale_module.is_init or is_test_path(stale_module.path):\n'
+            '            continue\n'
+            '        if _is_documented_compatibility_shim_variant(stale_module):\n'
+            '            continue\n'
+            '        reasons = stale_variant_reasons(stale_module)\n'
+        ),
+    )
 
 
 def _apply_generated_artifact_bundle_temp_manifest_policy(source: str) -> str:

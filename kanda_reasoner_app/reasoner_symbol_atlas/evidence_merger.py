@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/evidence_merger.py
 """Merge live AST Project Symbol Atlas evidence with complete JSON evidence."""
 
 from __future__ import annotations
@@ -244,6 +245,19 @@ def build_reasoner_symbol_atlas_merged_evidence_report(
 def _build_json_report_safely(
     options: ProjectSymbolAtlasEvidenceMergeOptions,
 ) -> ProjectSymbolAtlasReport:
+    """Support build json report safely behavior.
+    
+    Parameters
+    ----------
+    options : ProjectSymbolAtlasEvidenceMergeOptions
+        The option values.
+    
+    Returns
+    -------
+    ProjectSymbolAtlasReport
+        The project symbol atlas report result.
+    """
+    
     try:
         return build_reasoner_symbol_atlas_complete_json_report(options.to_json_options())
     except (OSError, ValueError):
@@ -256,6 +270,19 @@ def _build_json_report_safely(
 
 
 def _classify_merge_status(freshness_status: str) -> tuple[str, tuple[str, ...]]:
+    """Support classify merge status behavior.
+    
+    Parameters
+    ----------
+    freshness_status : str
+        The freshness status value.
+    
+    Returns
+    -------
+    tuple[str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     if freshness_status == PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_FRESH:
         return (
             PROJECT_SYMBOL_ATLAS_MERGE_STATUS_JSON_ENRICHED,
@@ -299,6 +326,21 @@ def _merge_canonical_modules(
     live_modules: tuple[ProjectModuleRecord, ...],
     json_modules: tuple[ProjectModuleRecord, ...],
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support merge canonical modules behavior.
+    
+    Parameters
+    ----------
+    live_modules : tuple[ProjectModuleRecord, ...]
+        The live modules value.
+    json_modules : tuple[ProjectModuleRecord, ...]
+        The json modules value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     json_by_path = {module.path.replace("\\", "/"): module for module in json_modules}
     live_by_path = {module.path.replace("\\", "/"): module for module in live_modules}
     merged: list[ProjectModuleRecord] = []
@@ -332,6 +374,21 @@ def _merge_fresh_modules(
     live_modules: tuple[ProjectModuleRecord, ...],
     json_modules: tuple[ProjectModuleRecord, ...],
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support merge fresh modules behavior.
+    
+    Parameters
+    ----------
+    live_modules : tuple[ProjectModuleRecord, ...]
+        The live modules value.
+    json_modules : tuple[ProjectModuleRecord, ...]
+        The json modules value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     json_by_path = {module.path.replace("\\", "/"): module for module in json_modules}
     merged: list[ProjectModuleRecord] = []
     for live in live_modules:
@@ -352,6 +409,21 @@ def _merge_fresh_symbols(
     live_symbols: tuple[ProjectSymbol, ...],
     json_symbols: tuple[ProjectSymbol, ...],
 ) -> tuple[ProjectSymbol, ...]:
+    """Support merge fresh symbols behavior.
+    
+    Parameters
+    ----------
+    live_symbols : tuple[ProjectSymbol, ...]
+        The live symbols value.
+    json_symbols : tuple[ProjectSymbol, ...]
+        The json symbols value.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     merged_by_key: dict[tuple[str, str, str], ProjectSymbol] = {
         _symbol_key(symbol): symbol for symbol in live_symbols
     }
@@ -375,6 +447,21 @@ def _tag_live_modules_for_advisory_status(
     modules: tuple[ProjectModuleRecord, ...],
     merge_status: str,
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support tag live modules for advisory status behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    merge_status : str
+        The merge status value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     evidence = ("merge: " + merge_status,)
     return tuple(_copy_module_with_extra_evidence(module, evidence) for module in modules)
 
@@ -383,6 +470,21 @@ def _copy_module_with_extra_evidence(
     module: ProjectModuleRecord,
     evidence: tuple[str, ...],
 ) -> ProjectModuleRecord:
+    """Support copy module with extra evidence behavior.
+    
+    Parameters
+    ----------
+    module : ProjectModuleRecord
+        The module value.
+    evidence : tuple[str, ...]
+        The evidence value.
+    
+    Returns
+    -------
+    ProjectModuleRecord
+        The project module record result.
+    """
+    
     merged_evidence = tuple(dict.fromkeys(tuple(module.evidence) + evidence))
     symbols = tuple(_copy_symbol_with_extra_evidence(symbol, evidence) for symbol in module.symbols)
     return ProjectModuleRecord(
@@ -402,6 +504,21 @@ def _copy_symbol_with_extra_evidence(
     symbol: ProjectSymbol,
     evidence: tuple[str, ...],
 ) -> ProjectSymbol:
+    """Support copy symbol with extra evidence behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    evidence : tuple[str, ...]
+        The evidence value.
+    
+    Returns
+    -------
+    ProjectSymbol
+        The project symbol result.
+    """
+    
     merged_evidence = tuple(dict.fromkeys(tuple(symbol.evidence) + evidence))
     return ProjectSymbol(
         name=symbol.name,
@@ -417,6 +534,19 @@ def _copy_symbol_with_extra_evidence(
 
 
 def _symbols_from_modules(modules: tuple[ProjectModuleRecord, ...]) -> tuple[ProjectSymbol, ...]:
+    """Support symbols from modules behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     symbols: list[ProjectSymbol] = []
     for module in modules:
         symbols.extend(module.symbols)
@@ -424,6 +554,19 @@ def _symbols_from_modules(modules: tuple[ProjectModuleRecord, ...]) -> tuple[Pro
 
 
 def _symbol_key(symbol: ProjectSymbol) -> tuple[str, str, str]:
+    """Support symbol key behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    
+    Returns
+    -------
+    tuple[str, str, str]
+        The tuple of values.
+    """
+    
     return (
         normalize_project_atlas_text(symbol.path).replace("\\", "/"),
         normalize_project_atlas_text(symbol.name),
@@ -432,6 +575,21 @@ def _symbol_key(symbol: ProjectSymbol) -> tuple[str, str, str]:
 
 
 def _input_sources_for_non_enriched_merge(status: str, json_path: str) -> tuple[str, ...]:
+    """Support input sources for non enriched merge behavior.
+    
+    Parameters
+    ----------
+    status : str
+        The status value.
+    json_path : str
+        The json path value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if status == PROJECT_SYMBOL_ATLAS_MERGE_STATUS_LIVE_ONLY:
         return ("live_ast", "owner_classifier")
     if status == PROJECT_SYMBOL_ATLAS_MERGE_STATUS_JSON_ADVISORY:
@@ -442,6 +600,19 @@ def _input_sources_for_non_enriched_merge(status: str, json_path: str) -> tuple[
 
 
 def _format_merge_summary(summary: ProjectSymbolAtlasEvidenceMergeSummary) -> str:
+    """Support format merge summary behavior.
+    
+    Parameters
+    ----------
+    summary : ProjectSymbolAtlasEvidenceMergeSummary
+        The summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     data = summary.to_dict()
     notes = normalize_project_atlas_sequence(data.get("notes"))
     suffix = ""

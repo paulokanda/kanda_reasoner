@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_project_scan.py
 """Own source discovery and project classification."""
 
 from __future__ import annotations
@@ -37,6 +38,21 @@ __all__ = [
 ]
 
 def should_skip_dir(dir_name: str, ignore_folders: list[str] | None = None) -> bool:
+    """Support should skip dir behavior.
+    
+    Parameters
+    ----------
+    dir_name : str
+        The dir name value.
+    ignore_folders : list[str] | None, optional
+        The optional ignore folders value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if dir_name in DEFAULT_EXCLUDE_DIRS:
         return True
     if ignore_folders and dir_name in ignore_folders:
@@ -44,6 +60,25 @@ def should_skip_dir(dir_name: str, ignore_folders: list[str] | None = None) -> b
     return False
 
 def iter_python_files(root: Path, ignore_folders: list[str], ignore_files: list[str], ignore_extensions: list[str]) -> Iterable[Path]:
+    """Support iter python files behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    ignore_folders : list[str]
+        The ignore folders value.
+    ignore_files : list[str]
+        The ignore files value.
+    ignore_extensions : list[str]
+        The ignore extensions value.
+    
+    Returns
+    -------
+    Iterable[Path]
+        The sequence of values.
+    """
+    
     for dirpath, dirnames, filenames in os.walk(root):
         path_obj = Path(dirpath)
         dirnames[:] = [
@@ -65,20 +100,74 @@ def iter_python_files(root: Path, ignore_folders: list[str], ignore_files: list[
             yield path_obj / filename
 
 def has_main_guard(text: str) -> bool:
+    """Return whether main guard.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return 'if __name__ == "__main__":' in text or "if __name__ == '__main__':" in text
 
 def has_gui_marker(text: str) -> bool:
+    """Return whether gui marker.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for marker in GUI_IMPORT_MARKERS:
         if f"import {marker}" in text or f"from {marker}" in text:
             return True
     return False
 
 def is_test_path(path: Path) -> bool:
+    """Return whether test path.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     parts = {part.lower() for part in path.parts}
     name = path.name.lower()
     return "tests" in parts or "test" in parts or name.startswith("test_") or name.endswith("_test.py")
 
 def module_id_for_path(root: Path, path: Path) -> str | None:
+    """Support module id for path behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str | None
+        The string result.
+    """
+    
     rel = path.relative_to(root)
     if path.parent == root:
         return path.stem if path.name != "__init__.py" else None
@@ -100,6 +189,19 @@ def module_id_for_path(root: Path, path: Path) -> str | None:
     return ".".join(parts)
 
 def scan_project(root: Path) -> dict[str, Any]:
+    """Scan the project.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     ignore_folders, ignore_files, ignore_extensions = load_ignore_rules()
     python_files: list[str] = []
     gui_files: list[str] = []
@@ -160,4 +262,12 @@ def scan_project(root: Path) -> dict[str, Any]:
     return discovered
 
 def pytest_available() -> bool:
+    """Support pytest available behavior.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return importlib.util.find_spec("pytest") is not None

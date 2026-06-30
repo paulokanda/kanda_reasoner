@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/exclusion_engine.py
 """Exclusion decision helpers for AI context bundle generation."""
 
 from __future__ import annotations
@@ -17,12 +18,38 @@ __all__ = ["decide_path_exclusion"]
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _as_policy_dict(rules: ExclusionRules) -> dict[str, list[str]]:
+    """Support as policy dict behavior.
+    
+    Parameters
+    ----------
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return {
         "folders": list(rules.folders),
         "files": list(rules.files),
@@ -31,6 +58,21 @@ def _as_policy_dict(rules: ExclusionRules) -> dict[str, list[str]]:
 
 
 def _path_for_decision(path: str | Path, root: Path) -> Path:
+    """Support path for decision behavior.
+    
+    Parameters
+    ----------
+    path : str | Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     candidate = Path(path)
     if candidate.is_absolute():
         return safe_resolve(candidate)
@@ -38,6 +80,21 @@ def _path_for_decision(path: str | Path, root: Path) -> Path:
 
 
 def _folder_matches(rel_path: str, rule: str) -> bool:
+    """Support folder matches behavior.
+    
+    Parameters
+    ----------
+    rel_path : str
+        The rel path value.
+    rule : str
+        The rule value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     rule_text = str(rule).strip().lower().replace("\\", "/").strip("/")
     if not rule_text:
         return False
@@ -52,6 +109,23 @@ def _folder_matches(rel_path: str, rule: str) -> bool:
 
 
 def _file_matches(rel_path: str, name: str, rule: str) -> bool:
+    """Support file matches behavior.
+    
+    Parameters
+    ----------
+    rel_path : str
+        The rel path value.
+    name : str
+        The name value.
+    rule : str
+        The rule value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     pattern = str(rule).strip().lower().replace("\\", "/")
     if not pattern:
         return False
@@ -61,6 +135,23 @@ def _file_matches(rel_path: str, name: str, rule: str) -> bool:
 
 
 def _matched_rule(rel_path: str, path: Path, rules: ExclusionRules) -> tuple[str, str, str]:
+    """Support matched rule behavior.
+    
+    Parameters
+    ----------
+    rel_path : str
+        The rel path value.
+    path : Path
+        The file or folder path.
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    tuple[str, str, str]
+        The tuple of values.
+    """
+    
     for folder in rules.folders:
         if _folder_matches(rel_path, folder):
             return str(folder), "folder", "Matched excluded folder rule."

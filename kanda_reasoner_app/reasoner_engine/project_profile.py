@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/project_profile.py
 """
 Project profile public API.
 

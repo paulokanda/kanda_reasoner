@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/tab1_audit_docstring_source.py
 """Read missing-docstring targets from the Tab 1 architecture audit."""
 
 from __future__ import annotations
@@ -181,6 +182,19 @@ def tab1_audit_source_is_enabled(window: object) -> bool:
 
 
 def _target_kind_from_message(message: str) -> str:
+    """Support target kind from message behavior.
+    
+    Parameters
+    ----------
+    message : str
+        The message text.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     lowered = message.lower()
     if "module" in lowered:
         return "module"
@@ -194,6 +208,16 @@ def _target_kind_from_message(message: str) -> str:
 
 
 def _append_window_text(window: object, text: str) -> None:
+    """Support append window text behavior.
+    
+    Parameters
+    ----------
+    window : object
+        The window value.
+    text : str
+        The text value.
+    """
+    
     append_text = getattr(window, "_append_text", None)
     if callable(append_text):
         append_text(text)

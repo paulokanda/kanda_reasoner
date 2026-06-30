@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/bundle_orchestrator.py
 """Orchestrate additive AI context bundle generation for one project."""
 
 from __future__ import annotations
@@ -25,18 +26,59 @@ __all__ = [
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _hash_if_file(path: Path) -> str:
+    """Support hash if file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if path.exists() and path.is_file():
         return sha256_file(path)
     return ""
 
 
 def _artifact_record(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support artifact record behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     exists = path.exists() and path.is_file()
     return {
         "path": artifact_logical_posix_path(path, context),
@@ -47,6 +89,21 @@ def _artifact_record(path: Path, context: ProjectContext) -> dict[str, Any]:
 
 
 def _generated_records(paths_by_name: Mapping[str, Path], context: ProjectContext) -> dict[str, Any]:
+    """Support generated records behavior.
+    
+    Parameters
+    ----------
+    paths_by_name : Mapping[str, Path]
+        The paths by name value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         name: _artifact_record(path, context)
         for name, path in paths_by_name.items()
@@ -54,6 +111,19 @@ def _generated_records(paths_by_name: Mapping[str, Path], context: ProjectContex
 
 
 def _paths_by_generated_name(project: str | Path | ProjectContext) -> dict[str, Path]:
+    """Support paths by generated name behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    dict[str, Path]
+        The mapped values.
+    """
+    
     paths = bundle_artifact_paths(project)
     return {
         "ai_briefing_json": paths.ai_briefing_json,

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/project_profile_help/profile_types.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -39,6 +40,14 @@ class ProjectProfile:
     notes: tuple[str, ...] = field(default_factory=tuple)
 
     def to_dict(self) -> dict[str, Any]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         return {
             "name": self.name,
             "description": self.description,

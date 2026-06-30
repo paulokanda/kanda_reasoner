@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_visual_template.py
 """HTML asset template for the visible Neural Architecture brain view."""
 from __future__ import annotations
 from html import escape

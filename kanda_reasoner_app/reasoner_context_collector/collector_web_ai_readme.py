@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_web_ai_readme.py
 """Build a compact web-AI routing guide for Project Reasoner JSON.
 
 This module creates an additive top-level web_ai_readme section that tells web AI

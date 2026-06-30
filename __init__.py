@@ -1,3 +1,4 @@
+# project-path: __init__.py
 """Source hygiene report foundation."""
 
 from .report_writer import (

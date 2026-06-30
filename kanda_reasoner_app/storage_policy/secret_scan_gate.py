@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/secret_scan_gate.py
 """Report-only sensitive value scan gate for Kanda Reasoner storage policy.
 
 This module detects likely secrets and credential material in files. It is

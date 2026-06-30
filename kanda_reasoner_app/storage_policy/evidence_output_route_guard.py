@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_output_route_guard.py
 """Post-migration guard for evidence output routing.
 
 This module verifies that generated evidence routing remains external to the

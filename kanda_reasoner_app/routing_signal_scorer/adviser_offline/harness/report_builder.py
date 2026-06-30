@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/harness/report_builder.py
 """Offline Adviser comparison report builder.
 
 The report builder summarizes already-produced comparison results. It is pure and
@@ -44,6 +45,14 @@ class AdviserHarnessRunSummary:
     feature_id: str = FEATURE_ID
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "schema_version": self.schema_version,
             "run_id": self.run_id,
@@ -125,6 +134,19 @@ def assert_summary_has_no_critical_failures(summary: Mapping[str, Any]) -> Mappi
 
 
 def _severity_from_rank(rank: int) -> str:
+    """Support severity from rank behavior.
+    
+    Parameters
+    ----------
+    rank : int
+        The rank value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for severity, value in SEVERITY_ORDER.items():
         if value == rank:
             return severity

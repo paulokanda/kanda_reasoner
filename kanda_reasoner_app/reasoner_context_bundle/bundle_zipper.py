@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/bundle_zipper.py
 """ZIP export helpers for the additive AI context bundle."""
 
 from __future__ import annotations
@@ -26,12 +27,38 @@ ZIP_GENERATOR_VERSION = "1.0.0"
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _load_json_object(path: Path) -> dict[str, Any]:
+    """Support load json object behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     with path.open("r", encoding="utf-8-sig") as handle:
         payload = json.load(handle)
     if not isinstance(payload, dict):
@@ -40,10 +67,38 @@ def _load_json_object(path: Path) -> dict[str, Any]:
 
 
 def _resolve_project_artifact(context: ProjectContext, relative_path: str) -> Path:
+    """Support resolve project artifact behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    relative_path : str
+        The relative path value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return resolve_logical_artifact_path(context, relative_path)
 
 
 def _manifest_artifact_paths(context: ProjectContext) -> list[Path]:
+    """Support manifest artifact paths behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     paths = bundle_artifact_paths(context)
     if not paths.bundle_manifest_json.exists():
         raise ValueError("Bundle manifest is missing: " + str(paths.bundle_manifest_json))
@@ -74,6 +129,19 @@ def _manifest_artifact_paths(context: ProjectContext) -> list[Path]:
 
 
 def _optional_runtime_trace_path(context: ProjectContext) -> Path | None:
+    """Support optional runtime trace path behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     paths = bundle_artifact_paths(context)
     complete_json = paths.complete_json
     suffix = "__complete.json"
@@ -87,6 +155,21 @@ def _optional_runtime_trace_path(context: ProjectContext) -> Path | None:
 
 
 def _artifact_records(paths: list[Path], context: ProjectContext) -> list[dict[str, Any]]:
+    """Support artifact records behavior.
+    
+    Parameters
+    ----------
+    paths : list[Path]
+        The file or folder paths.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     records = []
     for path in paths:
         records.append(
@@ -100,6 +183,23 @@ def _artifact_records(paths: list[Path], context: ProjectContext) -> list[dict[s
 
 
 def _safe_zip_member_name(base_folder: str, path: Path, context: ProjectContext) -> str:
+    """Support safe zip member name behavior.
+    
+    Parameters
+    ----------
+    base_folder : str
+        The base folder value.
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     relative = artifact_logical_posix_path(path, context)
     if relative.startswith("../") or relative == "..":
         raise ValueError("ZIP artifact path escapes allowed roots: " + str(path))
@@ -107,6 +207,19 @@ def _safe_zip_member_name(base_folder: str, path: Path, context: ProjectContext)
 
 
 def _timestamp_value(timestamp: str | None) -> str:
+    """Support timestamp value behavior.
+    
+    Parameters
+    ----------
+    timestamp : str | None
+        The timestamp value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if timestamp is not None:
         cleaned = timestamp.strip()
         if not cleaned:

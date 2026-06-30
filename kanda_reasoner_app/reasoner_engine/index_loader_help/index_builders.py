@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/index_loader_help/index_builders.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -18,6 +19,14 @@ from typing import Any
 
 
 def rebuild_indexes(index: Any) -> None:
+    """Support rebuild indexes behavior.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     index.files_by_path.clear()
     index.files_by_module.clear()
     index.symbol_details.clear()
@@ -84,6 +93,14 @@ def build_snippet_lookup_index(index: Any) -> None:
 
 
 def build_core_file_and_symbol_indexes(index: Any) -> None:
+    """Build a core file and symbol indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for file_record in index._safe_list(index.index_data.get("files")):
         if not isinstance(file_record, dict):
             continue
@@ -141,6 +158,14 @@ def build_core_file_and_symbol_indexes(index: Any) -> None:
 
 
 def build_import_and_call_graph_indexes(index: Any) -> None:
+    """Build a import and call graph indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for src_module, targets in index._safe_dict(index.index_data.get("import_graph")).items():
         src_path = index.resolve_module_to_path(str(src_module)) or str(src_module)
         for target in index._safe_list(targets):
@@ -158,6 +183,14 @@ def build_import_and_call_graph_indexes(index: Any) -> None:
 
 
 def build_widget_indexes(index: Any) -> None:
+    """Build a widget indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for file_path, widget_data in index.widget_registry.items():
         file_key = index._safe_text(file_path)
         if not file_key:
@@ -173,6 +206,14 @@ def build_widget_indexes(index: Any) -> None:
 
 
 def build_ui_action_indexes(index: Any) -> None:
+    """Build a ui action indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for file_path, action_data in index.ui_action_index.items():
         file_key = index._safe_text(file_path)
         if not file_key:
@@ -187,6 +228,14 @@ def build_ui_action_indexes(index: Any) -> None:
 
 
 def build_boundary_indexes(index: Any) -> None:
+    """Build a boundary indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for file_path, boundary_data in index.boundary_index.items():
         file_key = index._safe_text(file_path)
         if not file_key:
@@ -201,6 +250,14 @@ def build_boundary_indexes(index: Any) -> None:
 
 
 def build_runtime_indexes(index: Any) -> None:
+    """Build a runtime indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     for item in index.runtime_signal_connections:
         if not isinstance(item, dict):
             continue
@@ -267,6 +324,14 @@ def build_runtime_indexes(index: Any) -> None:
 
 
 def build_hotspot_indexes(index: Any) -> None:
+    """Build a hotspot indexes.
+    
+    Parameters
+    ----------
+    index : Any
+        The index value.
+    """
+    
     hotspot_groups = [
         index.widget_hotspots,
         index.widget_text_hotspots,

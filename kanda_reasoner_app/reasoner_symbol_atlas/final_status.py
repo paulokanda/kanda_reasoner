@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/final_status.py
 """Final Project Symbol Atlas status collector.
 
 This module is intentionally read-only for analyzed project source. It checks

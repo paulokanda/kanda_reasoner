@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_output.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -10,6 +11,19 @@ from .collector_config import CollectorConfig
 
 
 def build_collector_info(root: Path) -> dict:
+    """Build a collector info.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return {
         "collector_version": "1.8",
         "generated_at": datetime.now().isoformat(timespec="seconds"),
@@ -18,6 +32,19 @@ def build_collector_info(root: Path) -> dict:
 
 
 def build_collection_config(config: CollectorConfig) -> dict:
+    """Build a collection config.
+    
+    Parameters
+    ----------
+    config : CollectorConfig
+        The configuration data.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return {
         "excluded_dirs": config.excluded_dirs,
         "include_tests": config.include_tests,
@@ -40,6 +67,14 @@ def build_collection_config(config: CollectorConfig) -> dict:
 
 
 def build_collector_scope() -> dict:
+    """Build a collector scope.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return {
         "domain_scope": "kanda_reasoner_app",
         "runtime_scope": "generic_reusable",
@@ -58,6 +93,31 @@ def build_limitations_section(
     runtime_trace_present: bool = False,
     runtime_scenario_present: bool = False,
 ) -> dict[str, Any]:
+    """Build a limitations section.
+    
+    Parameters
+    ----------
+    files_corpus : dict[str, Any] | None, optional
+        The optional files corpus value.
+    local_symbol_index : dict[str, Any] | None, optional
+        The optional local symbol index value.
+    packaging_metadata : dict[str, Any] | None, optional
+        The optional packaging metadata value.
+    documentation_intent : dict[str, Any] | None, optional
+        The optional documentation intent value.
+    parse_errors : list[dict[str, Any]] | None, optional
+        The optional parse errors value.
+    runtime_trace_present : bool, optional
+        The optional runtime trace present value.
+    runtime_scenario_present : bool, optional
+        The optional runtime scenario present value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     files_corpus = files_corpus if isinstance(files_corpus, dict) else {}
     local_symbol_index = (
         local_symbol_index if isinstance(local_symbol_index, dict) else {}

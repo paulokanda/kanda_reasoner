@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap_validate_manifests.py
 """Validate Pass 046 collector responsibility overlap helper split."""
 
 from __future__ import annotations
@@ -24,10 +25,36 @@ HELPER_FILES = [
 
 
 def read_text(path: Path) -> str:
+    """Return the text.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="replace")
 
 
 def literal_all(path: Path) -> list[str] | None:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str] | None
+        The list of values.
+    """
+    
     tree = ast.parse(read_text(path))
     for node in tree.body:
         value = None
@@ -50,6 +77,19 @@ def literal_all(path: Path) -> list[str] | None:
 
 
 def has_star_import(path: Path) -> bool:
+    """Return whether star import.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     tree = ast.parse(read_text(path))
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
@@ -60,10 +100,31 @@ def has_star_import(path: Path) -> bool:
 
 
 def line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return len(read_text(path).splitlines())
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors: list[str] = []
     paths = [TARGET] + HELPER_FILES
 

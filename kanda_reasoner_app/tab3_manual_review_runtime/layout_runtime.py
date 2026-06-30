@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/layout_runtime.py
 """Runtime implementation for the Tab 3 review layout."""
 
 from __future__ import annotations
@@ -57,6 +58,11 @@ def _wire_events(window: object) -> None:
     """Connect Tab 3 widgets to their owner-window methods."""
     _connect(window._run_button, "clicked", window.run_selected_mode)
     _connect(window._stop_button, "clicked", _stop_running_selected_mode_slot(window))
+    _connect(
+        window._mode_combo,
+        "currentTextChanged",
+        lambda mode: _scan_only_runtime().refresh_selected_mode_controls(window, mode),
+    )
     _connect(window._browse_root_button, "clicked", window.browse_root)
     _connect(window._browse_target_button, "clicked", window.browse_target_path)
     _connect(window._clear_target_button, "clicked", _clear_target_path(window))
@@ -109,13 +115,14 @@ def _build_options_group(window: object) -> Any:
         "QGroupBox", "QHBoxLayout", "QLabel", "QPushButton", "QVBoxLayout"
     )
 
-    _scan_only_runtime().configure_scan_only_controls(window)
+    _scan_only_runtime().configure_scan_diff_write_controls(window)
 
-    group = QGroupBox("Missing Docstring Handler Options")
+    group = QGroupBox("Run Options")
     layout = QVBoxLayout(group)
 
     mode_row = QHBoxLayout()
-    mode_row.addWidget(QLabel("Mode: Scan"))
+    mode_row.addWidget(QLabel("Mode"))
+    mode_row.addWidget(window._mode_combo)
     mode_row.addWidget(window._tab1_audit_docstring_radio)
     mode_row.addSpacing(16)
     mode_row.addWidget(QLabel("Scope"))
@@ -130,6 +137,7 @@ def _build_options_group(window: object) -> Any:
     include_row.addWidget(window._class_checkbox)
     include_row.addWidget(window._function_checkbox)
     include_row.addWidget(window._file_address_checkbox)
+    include_row.addWidget(window._confirm_write_checkbox)
     include_row.addStretch(1)
     layout.addLayout(include_row)
 
@@ -137,13 +145,14 @@ def _build_options_group(window: object) -> Any:
     workers_row.addWidget(QLabel("Workers"))
     workers_row.addWidget(window._workers_spin)
     workers_row.addSpacing(16)
-    window._run_button = QPushButton("Scan Files for Missing Docstrings")
-    window._stop_button = QPushButton("Stop Running")
+    window._run_button = QPushButton("Run selected mode")
+    window._stop_button = QPushButton("Stop Running Selected Mode")
     window._stop_button.setEnabled(False)
     workers_row.addWidget(window._run_button)
     workers_row.addWidget(window._stop_button)
     workers_row.addStretch(1)
     layout.addLayout(workers_row)
+    _scan_only_runtime().refresh_selected_mode_controls(window)
 
     return group
 

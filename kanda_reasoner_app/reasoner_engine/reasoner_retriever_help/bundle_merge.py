@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/bundle_merge.py
 """Support V10 project reasoning and evidence handling."""
 
 # -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
@@ -27,6 +28,27 @@ def merge_retrieval_bundles(
     max_symbols: int = 14,
     max_snippets: int = 10,
 ) -> RetrievalBundle:
+    """Support merge retrieval bundles behavior.
+    
+    Parameters
+    ----------
+    current_bundle : RetrievalBundle
+        The current bundle value.
+    previous_bundle : RetrievalBundle
+        The previous bundle value.
+    max_files : int, optional
+        The optional max files value.
+    max_symbols : int, optional
+        The optional max symbols value.
+    max_snippets : int, optional
+        The optional max snippets value.
+    
+    Returns
+    -------
+    RetrievalBundle
+        The retrieval bundle result.
+    """
+    
     file_map: dict[str, EvidenceItem] = {}
     for item in current_bundle.file_evidence + previous_bundle.file_evidence:
         if not is_allowed_project_path(item.path):

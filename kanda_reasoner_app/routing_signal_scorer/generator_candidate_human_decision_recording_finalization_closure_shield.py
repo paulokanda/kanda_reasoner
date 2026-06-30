@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_recording_finalization_closure_shield.py
 """Generator candidate human decision recording finalization closure shield for routing scorer v3.
 
 This module is intentionally standard-library-only and finalization-closure-shield-schema-only.

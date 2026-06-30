@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/safety_suite_cli/project_symbol_atlas_commands.py
 """CLI integration for Project Symbol Atlas commands.
 
 This module owns parser wiring and presentation for atlas commands only. All
@@ -59,6 +60,14 @@ def add_reasoner_symbol_atlas_parsers(
 
 
 def _add_common_output_arguments(parser: argparse.ArgumentParser) -> None:
+    """Support add common output arguments behavior.
+    
+    Parameters
+    ----------
+    parser : argparse.ArgumentParser
+        The parser value.
+    """
+    
     parser.add_argument(
         "--format",
         choices=("markdown", "json"),
@@ -73,6 +82,14 @@ def _add_common_output_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def _add_common_atlas_arguments(parser: argparse.ArgumentParser) -> None:
+    """Support add common atlas arguments behavior.
+    
+    Parameters
+    ----------
+    parser : argparse.ArgumentParser
+        The parser value.
+    """
+    
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--query", default="", help="Free-text atlas query.")
     parser.add_argument("--symbol", default="", help="Symbol name to search.")
@@ -93,6 +110,14 @@ def _add_common_atlas_arguments(parser: argparse.ArgumentParser) -> None:
 def _add_atlas_report_parser(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
 ) -> None:
+    """Support add atlas report parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser(
         "atlas-report",
         help="Build and write Project Symbol Atlas reports.",
@@ -114,6 +139,14 @@ def _add_atlas_report_parser(
 def _add_symbol_atlas_parser(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
 ) -> None:
+    """Support add symbol atlas parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser(
         "symbol-atlas",
         help="Build a Project Symbol Atlas existing-code report without writing files.",
@@ -126,6 +159,14 @@ def _add_symbol_atlas_parser(
 def _add_evidence_freshness_parser(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
 ) -> None:
+    """Support add evidence freshness parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser(
         "evidence-freshness",
         help="Check Project Analysis Evidence freshness.",
@@ -143,6 +184,20 @@ def _add_existing_code_query_parser(
     query_type: str,
     help_text: str,
 ) -> None:
+    """Support add existing code query parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    command_name : str
+        The command name value.
+    query_type : str
+        The query type value.
+    help_text : str
+        The help text value.
+    """
+    
     parser = subparsers.add_parser(command_name, help=help_text)
     _add_common_atlas_arguments(parser)
     _add_common_output_arguments(parser)
@@ -150,6 +205,23 @@ def _add_existing_code_query_parser(
 
 
 def _cmd_atlas_report(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd atlas report behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reasoner_symbol_atlas.atlas_report_builder import (
         ProjectSymbolAtlasReportBuilderOptions,
@@ -180,6 +252,23 @@ def _cmd_atlas_report(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
 
 
 def _cmd_symbol_atlas(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd symbol atlas behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reasoner_symbol_atlas.existing_code_finder import (
         ProjectSymbolAtlasExistingCodeFinderOptions,
@@ -195,6 +284,23 @@ def _cmd_symbol_atlas(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
 
 
 def _cmd_existing_code_query(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd existing code query behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reasoner_symbol_atlas.existing_code_finder import (
         build_reasoner_symbol_atlas_existing_code_report,
@@ -210,6 +316,23 @@ def _cmd_existing_code_query(args: argparse.Namespace, stdout: TextIO, stderr: T
 
 
 def _cmd_evidence_freshness(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd evidence freshness behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reasoner_symbol_atlas.evidence_freshness import (
         ProjectSymbolAtlasEvidenceFreshnessOptions,
@@ -234,12 +357,30 @@ def _cmd_evidence_freshness(args: argparse.Namespace, stdout: TextIO, stderr: Te
 
 @contextmanager
 def _suppress_noisy_project_warnings():
+    """Support suppress noisy project warnings behavior.
+    """
+    
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", SyntaxWarning)
         warnings.simplefilter("ignore", DeprecationWarning)
         yield
 
 def _existing_options(args: argparse.Namespace, query_type: str) -> Any:
+    """Support existing options behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    query_type : str
+        The query type value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     from kanda_reasoner_app.reasoner_symbol_atlas.existing_code_finder import (
         ProjectSymbolAtlasExistingCodeFinderOptions,
     )
@@ -260,6 +401,25 @@ def _existing_options(args: argparse.Namespace, query_type: str) -> Any:
 
 
 def _emit_report(data: dict[str, Any], markdown: str, args: argparse.Namespace, stdout: TextIO) -> int:
+    """Support emit report behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    markdown : str
+        The markdown value.
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = json.dumps(_json_ready(data), indent=2, sort_keys=True) + "\n"
     if getattr(args, "format", "markdown") == "markdown":
         text = markdown
@@ -273,6 +433,19 @@ def _emit_report(data: dict[str, Any], markdown: str, args: argparse.Namespace, 
 
 
 def _format_builder_result_markdown(data: dict[str, Any]) -> str:
+    """Support format builder result markdown behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     lines = [
         "# Project Symbol Atlas Reports",
         "",
@@ -302,6 +475,19 @@ def _format_builder_result_markdown(data: dict[str, Any]) -> str:
 
 
 def _json_ready(value: Any) -> Any:
+    """Support json ready behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         return {str(key): _json_ready(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):

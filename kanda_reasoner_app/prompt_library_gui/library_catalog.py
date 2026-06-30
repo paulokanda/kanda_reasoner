@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/library_catalog.py
 """Read-only catalog loader for package Prompt Library text assets."""
 
 from __future__ import annotations

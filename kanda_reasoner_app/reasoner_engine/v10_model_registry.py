@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/v10_model_registry.py
 """Discover local Ollama models for the Project Reasoner V10 GUI."""
 
 from __future__ import annotations
@@ -26,6 +27,14 @@ class LocalModelRegistry:
         return _unique_sorted_model_names(models)
 
     def _from_tags(self) -> list[str]:
+        """Support from tags behavior.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         try:
             response = requests.get(OLLAMA_TAGS_URL, timeout=TIMEOUT)
             response.raise_for_status()
@@ -44,6 +53,14 @@ class LocalModelRegistry:
             return []
 
     def _from_v1_models(self) -> list[str]:
+        """Support from v1 models behavior.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         try:
             response = requests.get(OLLAMA_MODELS_URL, timeout=TIMEOUT)
             response.raise_for_status()
@@ -61,6 +78,14 @@ class LocalModelRegistry:
             return []
 
     def _from_ollama_cli(self) -> list[str]:
+        """Support from ollama cli behavior.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         try:
             result = subprocess.run(
                 ["ollama", "list"],

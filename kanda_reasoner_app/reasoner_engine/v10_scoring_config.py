@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/v10_scoring_config.py
 """Support V10 project reasoning and evidence handling."""
 
 from dataclasses import dataclass
@@ -5,6 +6,8 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class ScoringConfig:
     # Exact matches
+    """Represent scoring config."""
+    
     exact_path_match: int = 120
     exact_filename_match: int = 80
     exact_class_match: int = 180

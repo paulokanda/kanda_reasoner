@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/v10_static_context_dialog.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -9,11 +10,23 @@ from .v10_static_context_inspector_widget import StaticContextInspectorWidget
 
 
 class StaticContextDialog(QDialog):
+    """Represent static context dialog."""
+    
     def __init__(
         self,
         index: JsonProjectIndex | None = None,
         parent: QWidget | None = None,
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        index : JsonProjectIndex | None, optional
+            The index value.
+        parent : QWidget | None, optional
+            The optional parent value.
+        """
+        
         super().__init__(parent)
         self.setWindowTitle("Static Context Inspector")
         self.resize(900, 700)
@@ -44,6 +57,18 @@ class StaticContextDialog(QDialog):
         detected_profile_name: str = "",
         active_profile_name: str = "",
     ) -> None:
+        """Set the context.
+        
+        Parameters
+        ----------
+        index : JsonProjectIndex
+            The index value.
+        detected_profile_name : str, optional
+            The optional detected profile name value.
+        active_profile_name : str, optional
+            The optional active profile name value.
+        """
+        
         packaging_metadata = index.packaging_metadata
         documentation_intent = index.documentation_intent
 
@@ -71,6 +96,14 @@ class StaticContextDialog(QDialog):
         )
 
     def set_index(self, index: JsonProjectIndex) -> None:
+        """Set the index.
+        
+        Parameters
+        ----------
+        index : JsonProjectIndex
+            The index value.
+        """
+        
         self.set_context(index)
 
 

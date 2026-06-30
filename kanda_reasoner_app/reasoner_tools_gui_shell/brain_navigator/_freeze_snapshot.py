@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_freeze_snapshot.py
 """Final freeze snapshot metadata for the Brain Navigator flow.
 
 This module is intentionally data-only. It records the behavior that was

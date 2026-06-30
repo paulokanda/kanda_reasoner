@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/inline_preview_runtime.py
 """Preview helpers for Tab 3 inline docstring correction."""
 
 from __future__ import annotations

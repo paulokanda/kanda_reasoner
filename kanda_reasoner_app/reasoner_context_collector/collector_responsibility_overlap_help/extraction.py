@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap_help/extraction.py
 """Private extraction helpers for collector_responsibility_overlap."""
 
 from __future__ import annotations
@@ -17,6 +18,19 @@ from typing import Any
 __all__: list[str] = []
 
 def _symbol_name_set(file_record: dict[str, Any]) -> set[str]:
+    """Support symbol name set behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     for fn in file_record.get("functions", []):
@@ -42,6 +56,19 @@ def _symbol_name_set(file_record: dict[str, Any]) -> set[str]:
     return out
 
 def _call_name_roots(file_record: dict[str, Any]) -> set[str]:
+    """Support call name roots behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     def add_call_name(call_name: str) -> None:
@@ -77,6 +104,19 @@ def _call_name_roots(file_record: dict[str, Any]) -> set[str]:
     return out
 
 def _file_record_map(files_payload: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Support file record map behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     out: dict[str, dict[str, Any]] = {}
     for record in files_payload:
         path = str(record.get("path", "")).strip()

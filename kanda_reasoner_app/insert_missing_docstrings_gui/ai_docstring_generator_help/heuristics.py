@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_help/heuristics.py
 """Heuristic fallback helpers for the AI docstring generator."""
 
 from __future__ import annotations

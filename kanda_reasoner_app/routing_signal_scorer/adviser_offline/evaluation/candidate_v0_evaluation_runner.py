@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/evaluation/candidate_v0_evaluation_runner.py
 """Pure offline evaluation runner for Adviser Candidate v0.
 
 The runner compares caller-supplied seed-gold case dictionaries with the
@@ -72,6 +73,14 @@ class EvaluationCaseResult:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "case_id": self.case_id,
             "gold_case_id": self.gold_case_id,
@@ -139,6 +148,23 @@ def evaluate_candidate_v0_against_gold_cases(
 
 
 def _evaluate_one(gold_case: Mapping[str, Any], *, run_id: str, candidate_builder: CandidateBuilder) -> EvaluationCaseResult:
+    """Support evaluate one behavior.
+    
+    Parameters
+    ----------
+    gold_case : Mapping[str, Any]
+        The gold case value.
+    run_id : str
+        The run id value.
+    candidate_builder : CandidateBuilder
+        The candidate builder value.
+    
+    Returns
+    -------
+    EvaluationCaseResult
+        The evaluation case result result.
+    """
+    
     input_text = str(gold_case.get("input_text", ""))
     case_id = str(gold_case.get("case_id") or gold_case.get("gold_case_id") or "case-not-recorded")
     gold_case_id = str(gold_case.get("gold_case_id") or case_id)
@@ -221,6 +247,21 @@ def _evaluate_one(gold_case: Mapping[str, Any], *, run_id: str, candidate_builde
 
 
 def _invalid_case(index: int, message: str) -> dict[str, object]:
+    """Support invalid case behavior.
+    
+    Parameters
+    ----------
+    index : int
+        The index value.
+    message : str
+        The message text.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "case_id": f"invalid-case-{index}",
         "gold_case_id": f"invalid-case-{index}",
@@ -247,6 +288,19 @@ def _invalid_case(index: int, message: str) -> dict[str, object]:
 
 
 def _aggregate(case_results: list[Mapping[str, Any]]) -> dict[str, object]:
+    """Support aggregate behavior.
+    
+    Parameters
+    ----------
+    case_results : list[Mapping[str, Any]]
+        The case results value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     total = len(case_results)
     guard_failures = _count_false(case_results, "candidate_guard_ok")
     resource_failures = _count_false(case_results, "resource_limits_ok")
@@ -277,6 +331,27 @@ def _aggregate(case_results: list[Mapping[str, Any]]) -> dict[str, object]:
 
 
 def _promotion_recommendation(*, total: int, guard_failures: int, resource_failures: int, critical_failures: int, review_required: int) -> str:
+    """Support promotion recommendation behavior.
+    
+    Parameters
+    ----------
+    total : int
+        The total value.
+    guard_failures : int
+        The guard failures value.
+    resource_failures : int
+        The resource failures value.
+    critical_failures : int
+        The critical failures value.
+    review_required : int
+        The review required value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if total == 0:
         return "blocked_no_cases_supplied"
     if guard_failures or resource_failures or critical_failures:
@@ -287,14 +362,57 @@ def _promotion_recommendation(*, total: int, guard_failures: int, resource_failu
 
 
 def _count_true(items: list[Mapping[str, Any]], key: str) -> int:
+    """Support count true behavior.
+    
+    Parameters
+    ----------
+    items : list[Mapping[str, Any]]
+        The item values.
+    key : str
+        The key value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return sum(1 for item in items if bool(item.get(key)))
 
 
 def _count_false(items: list[Mapping[str, Any]], key: str) -> int:
+    """Support count false behavior.
+    
+    Parameters
+    ----------
+    items : list[Mapping[str, Any]]
+        The item values.
+    key : str
+        The key value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return sum(1 for item in items if not bool(item.get(key)))
 
 
 def _as_strings(value: object) -> list[str]:
+    """Support as strings behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if isinstance(value, (str, bytes, bytearray)):
         return [str(value)] if value else []
     if isinstance(value, Iterable):
@@ -303,6 +421,19 @@ def _as_strings(value: object) -> list[str]:
 
 
 def _risk_flags(candidate: Mapping[str, Any]) -> list[str]:
+    """Support risk flags behavior.
+    
+    Parameters
+    ----------
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     risk = candidate.get("risk_assessment")
     if isinstance(risk, Mapping):
         return _as_strings(risk.get("flags"))
@@ -310,8 +441,36 @@ def _risk_flags(candidate: Mapping[str, Any]) -> list[str]:
 
 
 def _same_token(left: object, right: object) -> bool:
+    """Support same token behavior.
+    
+    Parameters
+    ----------
+    left : object
+        The left value.
+    right : object
+        The right value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _normalize_token(left) == _normalize_token(right)
 
 
 def _normalize_token(value: object) -> str:
+    """Support normalize token behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip().lower().replace("-", "_").replace(" ", "_")

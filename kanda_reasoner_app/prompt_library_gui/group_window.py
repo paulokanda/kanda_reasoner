@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/group_window.py
 """Floating read-only windows for one Prompt Library group."""
 
 from __future__ import annotations

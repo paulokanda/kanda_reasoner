@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/evidence_migration.py
 """Project Analysis Evidence migration helpers.
 
 This module belongs to the reasoner_symbol_atlas box. It only moves generated
@@ -153,6 +154,25 @@ def _build_migration_report(
     apply_changes: bool,
     backup_existing: bool,
 ) -> ProjectAnalysisEvidenceMigrationReport:
+    """Support build migration report behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    include_patterns : Sequence[str] | None
+        The include patterns value.
+    apply_changes : bool
+        The apply changes value.
+    backup_existing : bool
+        The backup existing value.
+    
+    Returns
+    -------
+    ProjectAnalysisEvidenceMigrationReport
+        The project analysis evidence migration report result.
+    """
+    
     paths = resolve_project_analysis_evidence_paths(project_root)
     legacy_root = Path(paths.legacy_evidence_dir)
     canonical_root = Path(paths.canonical_evidence_dir)
@@ -241,6 +261,27 @@ def _plan_or_apply_file(
     apply_changes: bool,
     backup_existing: bool,
 ) -> ProjectAnalysisEvidenceMigrationFile:
+    """Support plan or apply file behavior.
+    
+    Parameters
+    ----------
+    source_file : Path
+        The source file value.
+    legacy_root : Path
+        The legacy root value.
+    canonical_root : Path
+        The canonical root value.
+    apply_changes : bool
+        The apply changes value.
+    backup_existing : bool
+        The backup existing value.
+    
+    Returns
+    -------
+    ProjectAnalysisEvidenceMigrationFile
+        The project analysis evidence migration file result.
+    """
+    
     relative_path = _safe_relative_path(source_file, legacy_root)
     target_file = canonical_root / relative_path
     source_hash = _sha256_file(source_file)
@@ -308,6 +349,21 @@ def _plan_or_apply_file(
 
 
 def _iter_evidence_files(root: Path, patterns: Sequence[str]) -> Iterable[Path]:
+    """Support iter evidence files behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    patterns : Sequence[str]
+        The patterns value.
+    
+    Returns
+    -------
+    Iterable[Path]
+        The sequence of values.
+    """
+    
     seen: set[Path] = set()
     for pattern in patterns:
         for item in root.rglob(pattern):
@@ -317,6 +373,21 @@ def _iter_evidence_files(root: Path, patterns: Sequence[str]) -> Iterable[Path]:
 
 
 def _safe_relative_path(path: Path, root: Path) -> str:
+    """Support safe relative path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return str(path.relative_to(root))
     except ValueError:
@@ -324,6 +395,19 @@ def _safe_relative_path(path: Path, root: Path) -> str:
 
 
 def _sha256_file(path: Path) -> str:
+    """Support sha256 file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
@@ -332,6 +416,19 @@ def _sha256_file(path: Path) -> str:
 
 
 def _build_backup_path(target_file: Path) -> Path:
+    """Support build backup path behavior.
+    
+    Parameters
+    ----------
+    target_file : Path
+        The target file value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     timestamp = datetime.now(timezone.utc).strftime(_BACKUP_TIMESTAMP_FORMAT)
     candidate = target_file.with_name(f"{target_file.name}.bak_{timestamp}")
     suffix = 1

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/bridge_signals.py
 """Support V10 project reasoning and evidence handling."""
 
 # -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
@@ -43,6 +44,14 @@ class AIWorkerBridge:
     """Lazy factory for the Qt-backed AI worker bridge."""
 
     def __new__(cls) -> Any:
+        """Support new behavior.
+        
+        Returns
+        -------
+        Any
+            The any result.
+        """
+        
         bridge_class = _build_qt_ai_worker_bridge()
         return bridge_class()
 

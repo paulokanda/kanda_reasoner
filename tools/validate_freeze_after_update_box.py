@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: tools/validate_freeze_after_update_box.py
 """Validate the Freeze Feature After Update backend box without opening the GUI."""
 
 from __future__ import annotations
@@ -52,19 +53,48 @@ def _load_freeze_after_update_api() -> None:
 
 
 def assert_true(condition: bool, message: str) -> None:
+    """Support assert true behavior.
+    
+    Parameters
+    ----------
+    condition : bool
+        The condition value.
+    message : str
+        The message text.
+    """
+    
     if not condition:
         raise AssertionError(message)
 
 
 def assert_file(path: Path) -> None:
+    """Support assert file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    """
+    
     assert_true(path.is_file(), f"Expected file: {path}")
 
 
 def assert_dir(path: Path) -> None:
+    """Support assert dir behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    """
+    
     assert_true(path.is_dir(), f"Expected directory: {path}")
 
 
 def validate_fresh_project() -> None:
+    """Validate the fresh project.
+    """
+    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_") as tmp:
         project = Path(tmp) / "sample_project"
         project.mkdir()
@@ -116,6 +146,9 @@ def validate_fresh_project() -> None:
 
 
 def validate_existing_freeze_entry() -> None:
+    """Validate the existing freeze entry.
+    """
+    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_entry_") as tmp:
         project = Path(tmp) / "project_with_entry"
         project.mkdir()
@@ -158,6 +191,9 @@ Sample freeze entry.
 
 
 def validate_invalid_inputs() -> None:
+    """Validate the invalid inputs.
+    """
+    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_invalid_") as tmp:
         file_root = Path(tmp) / "not_a_dir.py"
         file_root.write_text("print('not a project')\n", encoding="utf-8")
@@ -179,6 +215,9 @@ def validate_invalid_inputs() -> None:
 
 
 def validate_no_kanda_contamination() -> None:
+    """Validate the no kanda contamination.
+    """
+    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_clean_") as tmp:
         project = Path(tmp) / "clean_project"
         project.mkdir()
@@ -200,6 +239,14 @@ def validate_no_kanda_contamination() -> None:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     _load_freeze_after_update_api()
     tests = [
         validate_fresh_project,

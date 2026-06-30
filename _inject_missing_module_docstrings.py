@@ -1,3 +1,4 @@
+# project-path: _inject_missing_module_docstrings.py
 """Inject missing module docstrings for Project Reasoner maintenance scripts."""
 
 from __future__ import annotations

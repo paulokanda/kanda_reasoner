@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/static_context_controller.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -21,13 +22,49 @@ __all__ = ["StaticContextController"]
 
 
 class StaticContextController:
+    """Represent static context controller."""
+    
     def _has_packaging_metadata(self, project_index) -> bool:
+        """Support has packaging metadata behavior.
+        
+        Parameters
+        ----------
+        project_index : object
+            The project index value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         return bool(getattr(project_index, "packaging_metadata", {}) or {})
 
     def _has_documentation_intent(self, project_index) -> bool:
+        """Support has documentation intent behavior.
+        
+        Parameters
+        ----------
+        project_index : object
+            The project index value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         return bool(getattr(project_index, "documentation_intent", {}) or {})
 
     def refresh_controls(self, window) -> None:
+        """Support refresh controls behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         if not window.project_index.index_data:
             window.static_context_summary_value_label.setText("Not loaded")
             window.static_context_packaging_value_label.setText("Unknown")
@@ -56,6 +93,14 @@ class StaticContextController:
             window.static_context_button.setEnabled(True)
 
     def show_dialog(self, window) -> None:
+        """Show the dialog.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         if not window.project_index.index_data:
             QMessageBox.warning(window, "No JSON", "Please load a JSON file first.")
             return

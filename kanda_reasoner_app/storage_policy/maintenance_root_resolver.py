@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/maintenance_root_resolver.py
 """Maintenance root resolution for the Kanda Reasoner storage policy box.
 
 This module resolves the application-owned maintenance root used for backups,

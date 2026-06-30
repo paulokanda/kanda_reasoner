@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -110,6 +111,19 @@ MIN_HOTSPOT_SCORE = 1.95
 
 
 def _safe_float(value: Any) -> float:
+    """Support safe float behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     try:
         return float(value)
     except Exception:
@@ -117,6 +131,21 @@ def _safe_float(value: Any) -> float:
 
 
 def _safe_bucket(file_path: str, files_payload: list[dict[str, Any]]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -127,6 +156,21 @@ def _safe_bucket(file_path: str, files_payload: list[dict[str, Any]]) -> str:
 
 
 def _safe_role(file_path: str, boundary_index: dict[str, dict[str, Any]]) -> str:
+    """Support safe role behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -134,6 +178,19 @@ def _safe_role(file_path: str, boundary_index: dict[str, dict[str, Any]]) -> str
 
 
 def _basename_tokens(file_path: str) -> set[str]:
+    """Support basename tokens behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     normalized = str(file_path or "").replace("\\", "/").lower()
     name = normalized.rsplit("/", 1)[-1]
     stem = name.rsplit(".", 1)[0]
@@ -142,6 +199,19 @@ def _basename_tokens(file_path: str) -> set[str]:
 
 
 def _semantic_role_set(file_record: dict[str, Any]) -> set[str]:
+    """Support semantic role set behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     roles = file_record.get("semantic_roles", [])
     if not isinstance(roles, list):
         return set()
@@ -155,6 +225,19 @@ def _semantic_role_set(file_record: dict[str, Any]) -> set[str]:
 
 
 def _normalize_text_tokens(text: str) -> set[str]:
+    """Support normalize text tokens behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     cleaned = (
         str(text or "")
         .lower()
@@ -177,6 +260,19 @@ def _normalize_text_tokens(text: str) -> set[str]:
 
 
 def _summary_terms(file_record: dict[str, Any]) -> set[str]:
+    """Support summary terms behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
     summary_payload = file_record.get("module_responsibility_summary", {})
 
@@ -216,6 +312,23 @@ def build_responsibility_overlap_index(
     boundary_index: dict[str, dict[str, Any]],
     canonical_conflict_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a responsibility overlap index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    canonical_conflict_index : dict[str, dict[str, Any]]
+        The canonical conflict index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     record_map = _file_record_map(files_payload)
     file_paths = sorted(record_map.keys())
     pair_rows: list[dict[str, Any]] = []
@@ -367,6 +480,19 @@ def build_responsibility_overlap_index(
 def build_responsibility_overlap_summary(
     responsibility_overlap_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a responsibility overlap summary.
+    
+    Parameters
+    ----------
+    responsibility_overlap_index : dict[str, dict[str, Any]]
+        The responsibility overlap index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     overlap_type_frequency: dict[str, int] = {}
     overlap_pair_count = 0
@@ -416,6 +542,21 @@ def build_overlap_hotspots(
     responsibility_overlap_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a overlap hotspots.
+    
+    Parameters
+    ----------
+    responsibility_overlap_index : dict[str, dict[str, Any]]
+        The responsibility overlap index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in responsibility_overlap_index.items():

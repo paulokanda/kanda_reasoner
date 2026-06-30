@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/governance_automation/release_notes_generator.py
 """Build release-note reports from bundle and validation evidence."""
 
 from __future__ import annotations
@@ -12,16 +13,50 @@ GA_RELEASE_NOTE_DEFAULT_STATUS = "draft"
 
 
 def _utc_timestamp() -> str:
+    """Support utc timestamp behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
 def _normalize_status(value: str | None) -> str:
+    """Support normalize status behavior.
+    
+    Parameters
+    ----------
+    value : str | None
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value in GA_RELEASE_NOTE_STATUS_VALUES:
         return str(value)
     return GA_RELEASE_NOTE_DEFAULT_STATUS
 
 
 def _clean_line(value: str) -> str:
+    """Support clean line behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = " ".join(str(value).strip().split())
     return text or "Not specified."
 

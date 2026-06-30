@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/pre_patch_gate.py
 """Read-only pre-patch ownership gate for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -291,6 +292,19 @@ def build_reasoner_symbol_atlas_pre_patch_gate_report(
 def _matching_duplicate_findings(
     options: ProjectSymbolAtlasPrePatchGateOptions,
 ) -> tuple[ProjectSymbol, ...]:
+    """Support matching duplicate findings behavior.
+    
+    Parameters
+    ----------
+    options : ProjectSymbolAtlasPrePatchGateOptions
+        The option values.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     symbol_name = normalize_project_atlas_text(options.symbol_name)
     if not symbol_name:
         return tuple()
@@ -312,12 +326,42 @@ def _matching_duplicate_findings(
 
 
 def _wrong_target_file(target_path: str, primary_edit_target: str) -> bool:
+    """Support wrong target file behavior.
+    
+    Parameters
+    ----------
+    target_path : str
+        The target path value.
+    primary_edit_target : str
+        The primary edit target value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     target = _normalize_path(target_path)
     primary = _normalize_path(primary_edit_target)
     return bool(target and primary and target.lower() != primary.lower())
 
 
 def _evidence_is_stale(status: str, fail_on_stale: bool) -> bool:
+    """Support evidence is stale behavior.
+    
+    Parameters
+    ----------
+    status : str
+        The status value.
+    fail_on_stale : bool
+        The fail on stale value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not fail_on_stale:
         return False
     return status in {
@@ -332,6 +376,21 @@ def _missing_test_protection(
     options: ProjectSymbolAtlasPrePatchGateOptions,
     related_test_files: tuple[str, ...],
 ) -> bool:
+    """Support missing test protection behavior.
+    
+    Parameters
+    ----------
+    options : ProjectSymbolAtlasPrePatchGateOptions
+        The option values.
+    related_test_files : tuple[str, ...]
+        The related test files value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not options.require_test_protection:
         return False
     if not options.include_tests:
@@ -348,6 +407,31 @@ def _status_for_decision(
     evidence_stale: bool,
     needs_owner_review: bool,
 ) -> str:
+    """Support status for decision behavior.
+    
+    Parameters
+    ----------
+    safe_to_patch : bool
+        The safe to patch value.
+    wrong_target_file : bool
+        The wrong target file value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    duplicate_symbol_risk : bool
+        The duplicate symbol risk value.
+    missing_test_protection : bool
+        The missing test protection value.
+    evidence_stale : bool
+        The evidence stale value.
+    needs_owner_review : bool
+        The needs owner review value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if safe_to_patch:
         return PROJECT_SYMBOL_ATLAS_PRE_PATCH_STATUS_SAFE_TO_PATCH
     if wrong_target_file:
@@ -377,6 +461,37 @@ def _reasons(
     evidence_stale: bool,
     safe_to_patch: bool,
 ) -> tuple[str, ...]:
+    """Support reasons behavior.
+    
+    Parameters
+    ----------
+    responsibility_reasons : tuple[str, ...]
+        The responsibility reasons value.
+    related_evidence : tuple[str, ...]
+        The related evidence value.
+    duplicate_findings : tuple[ProjectSymbol, ...]
+        The duplicate findings value.
+    evidence_status : str
+        The evidence status value.
+    duplicate_symbol_risk : bool
+        The duplicate symbol risk value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    wrong_target_file : bool
+        The wrong target file value.
+    missing_test_protection : bool
+        The missing test protection value.
+    evidence_stale : bool
+        The evidence stale value.
+    safe_to_patch : bool
+        The safe to patch value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     for value in responsibility_reasons + related_evidence:
         _append_unique(values, value)
@@ -399,6 +514,21 @@ def _reasons(
 
 
 def _merge_tests(first: tuple[str, ...], second: tuple[str, ...]) -> tuple[str, ...]:
+    """Support merge tests behavior.
+    
+    Parameters
+    ----------
+    first : tuple[str, ...]
+        The first value.
+    second : tuple[str, ...]
+        The second value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     for item in first + second:
         _append_unique(values, item)
@@ -406,18 +536,54 @@ def _merge_tests(first: tuple[str, ...], second: tuple[str, ...]) -> tuple[str, 
 
 
 def _normalize_path(path_text: str) -> str:
+    """Support normalize path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not path_text:
         return ""
     return str(Path(path_text)).replace("\\", "/")
 
 
 def _append_unique(values: list[str], value: str) -> None:
+    """Support append unique behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    value : str
+        The input value.
+    """
+    
     cleaned = normalize_project_atlas_text(value)
     if cleaned and cleaned not in values:
         values.append(cleaned)
 
 
 def _format_summary(decision: ProjectSymbolAtlasPrePatchGateDecision) -> str:
+    """Support format summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasPrePatchGateDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         "Pre-patch ownership gate status="
         + decision.status

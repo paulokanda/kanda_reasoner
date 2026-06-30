@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/ai_style_diagnostics_runtime.py
 """Diagnostic trace helpers for Tab 3 AI docstring style flow."""
 
 from __future__ import annotations

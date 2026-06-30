@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/ai_docstring_row_bridge_runtime.py
 """Bridge AI docstring provider results into Tab 3 review rows."""
 
 from __future__ import annotations

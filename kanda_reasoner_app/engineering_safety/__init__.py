@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/__init__.py
 """Engineering Safety report foundations."""
 
 from .crash_triage import (

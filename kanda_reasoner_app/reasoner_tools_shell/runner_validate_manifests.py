@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/runner_validate_manifests.py
 """Validate reasoner_tools_shell.runner helper manifest artifacts."""
 
 from __future__ import annotations
@@ -18,10 +19,36 @@ MANIFEST = BASE / "runner_help.json"
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = _read_text(path)
     if not text:
         return 0
@@ -29,6 +56,14 @@ def _line_count(path: Path) -> int:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors: list[str] = []
     for path, label in ((ORIGIN, "origin"), (HELP_DIR, "helper dir"), (MANIFEST, "manifest")):
         if not path.exists():

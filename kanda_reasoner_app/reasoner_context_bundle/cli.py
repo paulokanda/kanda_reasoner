@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/cli.py
 """Command-line entry point for additive AI context bundle generation."""
 
 from __future__ import annotations
@@ -58,6 +59,16 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _print_result(result: dict[str, object], compact: bool) -> None:
+    """Support print result behavior.
+    
+    Parameters
+    ----------
+    result : dict[str, object]
+        The result value.
+    compact : bool
+        The compact value.
+    """
+    
     if compact:
         print(json.dumps(result, sort_keys=True), flush=True)
     else:

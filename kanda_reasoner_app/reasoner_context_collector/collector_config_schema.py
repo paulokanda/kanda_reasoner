@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_config_schema.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -29,10 +30,36 @@ CONFIG_KEY_HINTS = {
 
 
 def _safe_text(value: Any) -> str:
+    """Support safe text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip()
 
 
 def _normalize_token(token: str) -> str:
+    """Support normalize token behavior.
+    
+    Parameters
+    ----------
+    token : str
+        The token value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         _safe_text(token)
         .lower()
@@ -45,6 +72,19 @@ def _normalize_token(token: str) -> str:
 
 
 def _is_schema_like(token: str) -> bool:
+    """Support is schema like behavior.
+    
+    Parameters
+    ----------
+    token : str
+        The token value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     normalized = _normalize_token(token)
     if not normalized:
         return False
@@ -54,10 +94,36 @@ def _is_schema_like(token: str) -> bool:
 
 
 def _safe_bucket(file_record: dict[str, Any]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_text(file_record.get("subsystem_bucket", "")).lower() or "general"
 
 
 def _collect_assignment_targets(file_record: dict[str, Any]) -> set[str]:
+    """Support collect assignment targets behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     def add_assignment(assignment: dict[str, Any]) -> None:
@@ -86,6 +152,19 @@ def _collect_assignment_targets(file_record: dict[str, Any]) -> set[str]:
 
 
 def _collect_call_names(file_record: dict[str, Any]) -> set[str]:
+    """Support collect call names behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     def add_call(call: dict[str, Any]) -> None:
@@ -114,6 +193,19 @@ def _collect_call_names(file_record: dict[str, Any]) -> set[str]:
 
 
 def _collect_semantic_terms(file_record: dict[str, Any]) -> set[str]:
+    """Support collect semantic terms behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     for key in (
@@ -154,6 +246,19 @@ def _collect_semantic_terms(file_record: dict[str, Any]) -> set[str]:
 def build_config_schema_registry(
     files_payload: list[dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a config schema registry.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     registry: dict[str, dict[str, Any]] = {}
 
     for file_record in files_payload:
@@ -198,6 +303,19 @@ def build_config_schema_registry(
 def build_config_schema_summary(
     config_schema_registry: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a config schema summary.
+    
+    Parameters
+    ----------
+    config_schema_registry : dict[str, dict[str, Any]]
+        The config schema registry value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     all_terms: set[str] = set()
     all_namespaces: set[str] = set()
@@ -247,6 +365,21 @@ def build_schema_risk_hotspots(
     config_schema_registry: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a schema risk hotspots.
+    
+    Parameters
+    ----------
+    config_schema_registry : dict[str, dict[str, Any]]
+        The config schema registry value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in config_schema_registry.items():

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/prompt_extraction.py
 """Prompt parsing helpers for Project Reasoner AI bridge."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from typing import Any
 __all__ = ['extract_runtime_anchors_from_detail', 'extract_snippet_text_blob', 'extract_snippet_blocks', 'extract_file_evidence_blocks', 'extract_symbol_evidence_blocks', 'extract_user_question', 'extract_allowed_ids', 'extract_cited_ids', 'extract_allowed_symbols', 'extract_allowed_file_paths', 'extract_path_like_mentions', 'extract_symbol_like_mentions', 'extract_symbol_id_map', 'extract_file_id_map', 'extract_symbol_score_map', 'extract_file_score_map', 'extract_locator_target', 'extract_one_line_triplet']
 
 def extract_runtime_anchors_from_detail(detail_text: str) -> list[str]:
+        """Extract the runtime anchors from detail.
+        
+        Parameters
+        ----------
+        detail_text : str
+            The detail text value.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         anchors: list[str] = []
 
         for line in detail_text.splitlines():
@@ -92,6 +106,19 @@ def extract_snippet_blocks(prompt: str) -> list[dict[str, Any]]:
         return blocks
 
 def extract_file_evidence_blocks(prompt: str) -> list[dict[str, Any]]:
+        """Extract the file evidence blocks.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         blocks: list[dict[str, Any]] = []
         lines = prompt.splitlines()
 
@@ -140,6 +167,19 @@ def extract_file_evidence_blocks(prompt: str) -> list[dict[str, Any]]:
         return blocks
 
 def extract_symbol_evidence_blocks(prompt: str) -> list[dict[str, Any]]:
+        """Extract the symbol evidence blocks.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         blocks: list[dict[str, Any]] = []
         lines = prompt.splitlines()
 
@@ -195,6 +235,19 @@ def extract_symbol_evidence_blocks(prompt: str) -> list[dict[str, Any]]:
         return blocks
 
 def extract_user_question(prompt: str) -> str:
+        """Extract the user question.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         match = re.search(
             r"USER QUESTION\s*\n(.+?)(?:\n\s*\nPROJECT SUMMARY|\n\s*\nCONVERSATION MEMORY|\Z)",
             prompt,
@@ -205,12 +258,51 @@ def extract_user_question(prompt: str) -> str:
         return match.group(1).strip().lower()
 
 def extract_allowed_ids(prompt: str) -> set[str]:
+        """Extract the allowed ids.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        set[str]
+            The set result.
+        """
+        
         return set(re.findall(r"\[(?:F|S|SN)\d{2}\]", prompt))
 
 def extract_cited_ids(text: str) -> set[str]:
+        """Extract the cited ids.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        set[str]
+            The set result.
+        """
+        
         return set(re.findall(r"\[(?:F|S|SN)\d{2}\]", text))
 
 def extract_allowed_symbols(prompt: str) -> set[str]:
+        """Extract the allowed symbols.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        set[str]
+            The set result.
+        """
+        
         allowed: set[str] = set()
 
         symbol_pattern = re.compile(r"^Symbol:\s+(.+?)\s*$", flags=re.MULTILINE)
@@ -248,6 +340,19 @@ def extract_allowed_symbols(prompt: str) -> set[str]:
         return allowed
 
 def extract_allowed_file_paths(prompt: str) -> set[str]:
+        """Extract the allowed file paths.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        set[str]
+            The set result.
+        """
+        
         allowed: set[str] = set()
         current_file_id = None
 
@@ -286,6 +391,19 @@ def extract_path_like_mentions(text: str) -> set[str]:
         )
 
 def extract_symbol_like_mentions(text: str) -> set[str]:
+        """Extract the symbol like mentions.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        set[str]
+            The set result.
+        """
+        
         candidates = set(
             re.findall(r"\b[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+\b", text)
         )
@@ -341,6 +459,19 @@ def extract_symbol_like_mentions(text: str) -> set[str]:
         return filtered
 
 def extract_symbol_id_map(prompt: str) -> dict[str, str]:
+        """Extract the symbol id map.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        dict[str, str]
+            The mapped values.
+        """
+        
         out: dict[str, str] = {}
         current_symbol_id = None
 
@@ -360,6 +491,19 @@ def extract_symbol_id_map(prompt: str) -> dict[str, str]:
         return out
 
 def extract_file_id_map(prompt: str) -> dict[str, str]:
+        """Extract the file id map.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        dict[str, str]
+            The mapped values.
+        """
+        
         out: dict[str, str] = {}
         current_file_id = None
 
@@ -379,6 +523,19 @@ def extract_file_id_map(prompt: str) -> dict[str, str]:
         return out
 
 def extract_symbol_score_map(prompt: str) -> list[tuple[str, str, str, int]]:
+        """Extract the symbol score map.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        list[tuple[str, str, str, int]]
+            The list of values.
+        """
+        
         items: list[tuple[str, str, str, int]] = []
 
         current_symbol_id = None
@@ -418,6 +575,19 @@ def extract_symbol_score_map(prompt: str) -> list[tuple[str, str, str, int]]:
         return items
 
 def extract_file_score_map(prompt: str) -> list[tuple[str, str, int]]:
+        """Extract the file score map.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        list[tuple[str, str, int]]
+            The list of values.
+        """
+        
         items: list[tuple[str, str, int]] = []
         current_file_id = None
         current_score = None
@@ -440,6 +610,19 @@ def extract_file_score_map(prompt: str) -> list[tuple[str, str, int]]:
         return items
 
 def extract_locator_target(question: str) -> str:
+        """Extract the locator target.
+        
+        Parameters
+        ----------
+        question : str
+            The question value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         q = question.strip().lower()
 
         prefixes = [
@@ -481,6 +664,19 @@ def extract_locator_target(question: str) -> str:
         return ""
 
 def extract_one_line_triplet(text: str) -> str:
+        """Extract the one line triplet.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         for line in text.splitlines():
             stripped = line.strip()
             if stripped.count("|") == 2:

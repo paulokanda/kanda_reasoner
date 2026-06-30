@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/scan_only_workflow.py
 """Scan-only workflow helpers for the Tab 3 missing-docstring handler."""
 
 from __future__ import annotations
@@ -16,18 +17,63 @@ from kanda_reasoner_app.tab3_manual_review_runtime.scan_target_options_runtime i
 
 __all__ = [
     "SCAN_MODE",
+    "SCAN_DIFF_WRITE_MODES",
     "DEFAULT_SCAN_REPORT_NAME",
+    "configure_scan_diff_write_controls",
     "configure_scan_only_controls",
     "ensure_scan_report_path",
     "prepare_scan_report_lifecycle",
+    "refresh_selected_mode_controls",
     "run_scan_only_mode",
     "run_scan_selected_mode",
     "use_project_root_as_scan_scope",
 ]
 
 SCAN_MODE = "scan"
+SCAN_DIFF_WRITE_MODES = ("scan", "diff", "write")
 DEFAULT_SCAN_REPORT_NAME = "missing_docstrings_report.jsonl"
 ScanReportLifecycle = Literal["ready", "loaded", "cancelled"]
+
+
+def configure_scan_diff_write_controls(window: object) -> None:
+    """Expose the full scan/diff/write workflow controls."""
+    combo = getattr(window, "_mode_combo", None)
+    _combo_clear_and_add_modes(combo, SCAN_DIFF_WRITE_MODES)
+    _safe_widget_set_enabled(combo, True)
+    _safe_widget_show(combo)
+
+    confirm_write = getattr(window, "_confirm_write_checkbox", None)
+    _safe_widget_set_enabled(confirm_write, True)
+    _safe_widget_show(confirm_write)
+
+    configure_scan_target_checkboxes(window)
+    refresh_selected_mode_controls(window)
+
+
+def refresh_selected_mode_controls(
+    window: object,
+    mode: str | None = None,
+) -> None:
+    """Refresh button text and write guard visibility for the selected mode."""
+    normalized_mode = str(mode or _current_mode_text(window) or SCAN_MODE).strip().lower()
+
+    run_button = getattr(window, "_run_button", None)
+    setter = getattr(run_button, "setText", None)
+    if callable(setter):
+        setter(
+            {
+                "scan": "Scan Files for Missing Docstrings",
+                "diff": "Preview Docstring Diff",
+                "write": "Write Missing Docstrings",
+            }.get(normalized_mode, "Run selected mode")
+        )
+
+    confirm_write = getattr(window, "_confirm_write_checkbox", None)
+    if normalized_mode == "write":
+        _safe_widget_show(confirm_write)
+        _safe_widget_set_enabled(confirm_write, True)
+    else:
+        _safe_widget_set_enabled(confirm_write, False)
 
 
 def configure_scan_only_controls(window: object) -> None:
@@ -426,17 +472,46 @@ def _load_current_report(owner: object) -> None:
 
 def _combo_clear_and_add_scan(combo: object) -> None:
     """Replace a combo box's contents with the single scan mode."""
+    _combo_clear_and_add_modes(combo, (SCAN_MODE,))
+
+
+def _combo_clear_and_add_modes(combo: object, modes: tuple[str, ...]) -> None:
+    """Replace a combo box's contents with the provided modes."""
     if combo is None:
         return
+    current = _current_combo_text(combo)
     clear = getattr(combo, "clear", None)
     if callable(clear):
         clear()
     add_item = getattr(combo, "addItem", None)
     if callable(add_item):
-        add_item(SCAN_MODE)
+        for mode in modes:
+            add_item(mode)
     set_current = getattr(combo, "setCurrentText", None)
     if callable(set_current):
-        set_current(SCAN_MODE)
+        set_current(current if current in modes else modes[0])
+
+
+def _current_mode_text(owner: object) -> str:
+    """Return the currently selected mode text when available."""
+    return _current_combo_text(getattr(owner, "_mode_combo", None))
+
+
+def _current_combo_text(combo: object) -> str:
+    """Return current combo text for Qt widgets and lightweight test doubles."""
+    if combo is None:
+        return ""
+    current_text = getattr(combo, "currentText", None)
+    if callable(current_text):
+        try:
+            return str(current_text() or "").strip()
+        except Exception:
+            return ""
+    for attr_name in ("current_text", "current"):
+        value = getattr(combo, attr_name, "")
+        if str(value or "").strip():
+            return str(value or "").strip()
+    return ""
 
 
 def _safe_line_edit_text(widget: object) -> str:
@@ -469,6 +544,13 @@ def _safe_widget_hide(widget: object) -> None:
     hide = getattr(widget, "hide", None)
     if callable(hide):
         hide()
+
+
+def _safe_widget_show(widget: object) -> None:
+    """Show a widget when supported."""
+    show = getattr(widget, "show", None)
+    if callable(show):
+        show()
 
 
 def _append_output(owner: object, text: str) -> None:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_step_target_detectors.py
 """Detect workflow command target integrity problems."""
 
 from __future__ import annotations

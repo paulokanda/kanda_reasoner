@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/registry/run_registry.py
 """Offline Adviser run-registry record builder and validator.
 
 M6 builds deterministic records from supplied harness summaries, supplied gold
@@ -30,6 +31,8 @@ PROMOTION_BLOCKING_STATUSES = frozenset({"blocked", "critical_failure", "unsafe"
 
 @dataclass(frozen=True)
 class RunRegistryValidationResult:
+    """Represent run registry validation result."""
+    
     ok: bool
     errors: tuple[str, ...]
     warnings: tuple[str, ...]
@@ -40,6 +43,14 @@ class RunRegistryValidationResult:
     schema_version: str = SCHEMA_VERSION
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "errors": list(self.errors),
@@ -167,4 +178,17 @@ def assert_run_registry_record_review_eligible(record: Mapping[str, Any]) -> Map
 
 
 def _looks_like_sha256(value: str) -> bool:
+    """Support looks like sha256 behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, str) and len(value) == 64 and all(ch in "0123456789abcdef" for ch in value.lower())

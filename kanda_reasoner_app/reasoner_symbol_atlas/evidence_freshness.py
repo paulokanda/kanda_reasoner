@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/evidence_freshness.py
 """Read-only freshness checks for Project Analysis Evidence JSON."""
 
 from __future__ import annotations
@@ -100,6 +101,8 @@ class ProjectSymbolAtlasEvidenceFreshnessSummary:
 
 @dataclass(frozen=True)
 class _EvidenceSnapshot:
+    """Represent evidence snapshot."""
+    
     payload: dict[str, Any]
     json_path: Path
     project_root: str
@@ -215,6 +218,21 @@ def build_reasoner_symbol_atlas_evidence_freshness_report(
 
 
 def _select_json_path(project_root: Path, json_path: str) -> Path | None:
+    """Support select json path behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    json_path : str
+        The json path value.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     if json_path.strip():
         return Path(json_path).expanduser().resolve(strict=False)
     candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
@@ -222,6 +240,21 @@ def _select_json_path(project_root: Path, json_path: str) -> Path | None:
 
 
 def _load_snapshot(project_root: Path, json_path: Path) -> _EvidenceSnapshot:
+    """Support load snapshot behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    json_path : Path
+        The json path value.
+    
+    Returns
+    -------
+    _EvidenceSnapshot
+        The evidence snapshot result.
+    """
+    
     try:
         payload = load_reasoner_symbol_atlas_complete_json(json_path)
     except ValueError as exc:
@@ -241,6 +274,19 @@ def _load_snapshot(project_root: Path, json_path: Path) -> _EvidenceSnapshot:
 
 
 def _find_generated_at(payload: dict[str, Any]) -> str:
+    """Support find generated at behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     candidates = (
         payload.get("generated_at"),
         payload.get("created_at"),
@@ -256,6 +302,19 @@ def _find_generated_at(payload: dict[str, Any]) -> str:
 
 
 def _find_evidence_project_root(payload: dict[str, Any]) -> str:
+    """Support find evidence project root behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     candidates = (
         payload.get("project_root"),
         _nested_value(payload, ("metadata", "project_root")),
@@ -269,6 +328,21 @@ def _find_evidence_project_root(payload: dict[str, Any]) -> str:
 
 
 def _nested_value(payload: dict[str, Any], keys: tuple[str, ...]) -> object:
+    """Support nested value behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    keys : tuple[str, ...]
+        The key values.
+    
+    Returns
+    -------
+    object
+        The object result.
+    """
+    
     value: object = payload
     for key in keys:
         if not isinstance(value, dict):
@@ -278,6 +352,19 @@ def _nested_value(payload: dict[str, Any], keys: tuple[str, ...]) -> object:
 
 
 def _parse_generated_at(value: str) -> datetime | None:
+    """Support parse generated at behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    datetime | None
+        The datetime result.
+    """
+    
     text = normalize_project_atlas_text(value)
     if not text:
         return None
@@ -292,6 +379,21 @@ def _parse_generated_at(value: str) -> datetime | None:
 
 
 def _source_files_from_index(source_index: dict[str, Any], project_root: Path) -> tuple[str, ...]:
+    """Support source files from index behavior.
+    
+    Parameters
+    ----------
+    source_index : dict[str, Any]
+        The source index value.
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     paths: list[str] = []
     for key, value in source_index.items():
         path_text = ""
@@ -311,6 +413,21 @@ def _collect_live_files(
     project_root: Path,
     include_non_python_files: bool,
 ) -> dict[str, datetime]:
+    """Support collect live files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    include_non_python_files : bool
+        The include non python files value.
+    
+    Returns
+    -------
+    dict[str, datetime]
+        The mapped values.
+    """
+    
     result: dict[str, datetime] = {}
     pattern = "*" if include_non_python_files else "*.py"
     for path in project_root.rglob(pattern):
@@ -322,6 +439,21 @@ def _collect_live_files(
 
 
 def _should_skip(path: Path, project_root: Path) -> bool:
+    """Support should skip behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         parts = path.relative_to(project_root).parts
     except ValueError:
@@ -373,6 +505,25 @@ def _modified_after_generation(
     generated_dt: datetime | None,
     limit: int,
 ) -> tuple[str, ...]:
+    """Support modified after generation behavior.
+    
+    Parameters
+    ----------
+    live_files : dict[str, datetime]
+        The live files value.
+    evidence_files : set[str]
+        The evidence files value.
+    generated_dt : datetime | None
+        The generated dt value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if generated_dt is None:
         return ()
     modified = [
@@ -389,6 +540,25 @@ def _classify_freshness(
     new_files: tuple[str, ...],
     modified: tuple[str, ...],
 ) -> tuple[str, tuple[str, ...]]:
+    """Support classify freshness behavior.
+    
+    Parameters
+    ----------
+    generated_dt : datetime | None
+        The generated dt value.
+    missing : tuple[str, ...]
+        The missing value.
+    new_files : tuple[str, ...]
+        The new files value.
+    modified : tuple[str, ...]
+        The modified value.
+    
+    Returns
+    -------
+    tuple[str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     if missing or modified:
         notes = ["Canonical JSON conflicts with the live source tree."]
         if missing:
@@ -416,6 +586,21 @@ def _classify_freshness(
 
 
 def _as_project_relative_path(project_root: Path, path_text: str) -> str:
+    """Support as project relative path behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not path_text:
         return ""
     candidate = Path(path_text)
@@ -428,6 +613,21 @@ def _as_project_relative_path(project_root: Path, path_text: str) -> str:
 
 
 def _same_project_root(project_root: Path, evidence_root: str) -> bool:
+    """Support same project root behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    evidence_root : str
+        The evidence root value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         expected = project_root.resolve(strict=False)
         actual = Path(evidence_root).expanduser().resolve(strict=False)

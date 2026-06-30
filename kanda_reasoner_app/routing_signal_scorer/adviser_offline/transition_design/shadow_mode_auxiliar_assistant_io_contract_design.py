@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_io_contract_design.py
 """Design-only M27 Auxiliar/Assistant input/output contract design.
 
 M27 defines a static input/output contract for a possible later Auxiliar/Assistant

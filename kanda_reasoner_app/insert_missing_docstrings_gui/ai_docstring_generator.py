@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator.py
 """AI-powered docstring generator with structured-output first generation."""
 
 from __future__ import annotations
@@ -57,6 +58,16 @@ class _AIOutputFailure(RuntimeError):
     """Represent an AI output failure with a canonical reason code."""
 
     def __init__(self, failure_reason: str, message: str) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        failure_reason : str
+            The failure reason value.
+        message : str
+            The message text.
+        """
+        
         super().__init__(message)
         self.failure_reason = failure_reason
 
@@ -155,6 +166,8 @@ def _detect_low_information_docstring(ctx: SymbolContext, body: str) -> list[str
 
 
 class AIDocstringGenerator:
+    """Represent aidocstring generator."""
+    
     def __init__(
         self,
         *,
@@ -164,6 +177,22 @@ class AIDocstringGenerator:
         on_fallback: Callable[[str, str], None] | None = None,
         on_low_confidence: Callable[[str, list[str]], None] | None = None,
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        config : AIConfig
+            The configuration data.
+        project_root : Path
+            The project root path.
+        policy : DocstringPolicy | None, optional
+            The optional policy value.
+        on_fallback : Callable[[str, str], None] | None, optional
+            The optional on fallback value.
+        on_low_confidence : Callable[[str, list[str]], None] | None, optional
+            The optional on low confidence value.
+        """
+        
         self._config = config
         self._project_root = Path(project_root)
         self._policy = policy or DocstringPolicy.load_for_project(project_root)
@@ -174,6 +203,14 @@ class AIDocstringGenerator:
         self.stats = GenerationStats()
 
     def _load_cache(self) -> dict[str, dict]:
+        """Support load cache behavior.
+        
+        Returns
+        -------
+        dict[str, dict]
+            The mapped values.
+        """
+        
         if not self._cache_path.exists():
             return {}
         try:
@@ -182,6 +219,9 @@ class AIDocstringGenerator:
             return {}
 
     def flush_cache(self) -> None:
+        """Support flush cache behavior.
+        """
+        
         if not self._config.cache_enabled:
             return
         self._cache_path.write_text(
@@ -190,6 +230,19 @@ class AIDocstringGenerator:
         )
 
     def _cache_key(self, ctx: SymbolContext) -> str:
+        """Support cache key behavior.
+        
+        Parameters
+        ----------
+        ctx : SymbolContext
+            The ctx value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         payload = {
             "module_id": ctx.module_id,
             "kind": ctx.kind,
@@ -205,6 +258,14 @@ class AIDocstringGenerator:
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
     def _build_validation_config(self) -> ValidationConfig:
+        """Support build validation config behavior.
+        
+        Returns
+        -------
+        ValidationConfig
+            The validation config result.
+        """
+        
         return ValidationConfig(
             max_line_length=self._config.max_line_length,
             max_todo_ratio=self._config.max_todo_ratio,
@@ -215,6 +276,19 @@ class AIDocstringGenerator:
         )
 
     def _request_content(self, payload: dict[str, Any]) -> str:
+        """Support request content behavior.
+        
+        Parameters
+        ----------
+        payload : dict[str, Any]
+            The payload value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         url = self._config.base_url.rstrip("/") + "/chat/completions"
         if self._config.seed is not None:
             payload.setdefault("seed", self._config.seed)
@@ -229,6 +303,19 @@ class AIDocstringGenerator:
         return data["choices"][0]["message"]["content"]
 
     def _call_model(self, ctx: SymbolContext) -> tuple[str, str]:
+        """Support call model behavior.
+        
+        Parameters
+        ----------
+        ctx : SymbolContext
+            The ctx value.
+        
+        Returns
+        -------
+        tuple[str, str]
+            The tuple of values.
+        """
+        
         base_payload = {
             "model": self._config.model,
             "messages": [],
@@ -315,6 +402,23 @@ class AIDocstringGenerator:
         *,
         failure_reason: str,
     ) -> GenerationResult:
+        """Support fallback behavior.
+        
+        Parameters
+        ----------
+        ctx : SymbolContext
+            The ctx value.
+        reason : str
+            The reason value.
+        failure_reason : str
+            The failure reason value.
+        
+        Returns
+        -------
+        GenerationResult
+            The generation result result.
+        """
+        
         self.stats.fallback += 1
         self.stats.record_failure(failure_reason)
         if self._on_fallback is not None:
@@ -331,6 +435,19 @@ class AIDocstringGenerator:
         )
 
     def generate(self, ctx: SymbolContext) -> GenerationResult:
+        """Support generate behavior.
+        
+        Parameters
+        ----------
+        ctx : SymbolContext
+            The ctx value.
+        
+        Returns
+        -------
+        GenerationResult
+            The generation result result.
+        """
+        
         self.stats.total += 1
         is_private = ctx.name.startswith("_")
         if is_private and not self._config.include_private:

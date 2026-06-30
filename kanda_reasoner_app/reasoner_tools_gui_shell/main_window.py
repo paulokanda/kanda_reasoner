@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py
 """Main KANDA Reasoner tools window implementation."""
 
 from __future__ import annotations
@@ -74,7 +75,12 @@ from .main_window_help.window_tool_patches import _WindowToolPatchesMixin
 from .main_window_help.window_geometry import resize_window_for_primary_screen
 
 class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOutputPathsMixin, _WindowToolPatchesMixin, _WindowHelpMixin, QMainWindow):
+    """Represent reasoner tools window."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.setWindowTitle(APP_DISPLAY_NAME)
         if APP_ICON_PATH.exists():

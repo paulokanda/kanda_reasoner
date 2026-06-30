@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/local_generator_candidate_review_gate_design.py
 """Local generator candidate review gate design for routing scorer v3.
 
 This module is intentionally standard-library-only and review-only. It does not
@@ -267,6 +268,19 @@ FORBIDDEN_GATE_FIELDS = frozenset(
 
 
 def _as_set(value: Any) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if isinstance(value, str):
         return {value}
     if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray)):
@@ -275,6 +289,21 @@ def _as_set(value: Any) -> set[str]:
 
 
 def _flag_is_false(flags: Mapping[str, Any], name: str) -> bool:
+    """Support flag is false behavior.
+    
+    Parameters
+    ----------
+    flags : Mapping[str, Any]
+        The flags value.
+    name : str
+        The name value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return flags.get(name) is False
 
 

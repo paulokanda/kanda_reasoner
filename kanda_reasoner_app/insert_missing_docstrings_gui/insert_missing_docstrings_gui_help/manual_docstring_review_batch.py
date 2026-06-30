@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/manual_docstring_review_batch.py
 """Compatibility facade for approved review batch application."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_buckets.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from typing import Any
 
 
 def _lower_items(values: list[str]) -> list[str]:
+    """Support lower items behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     out: list[str] = []
     for value in values:
         if isinstance(value, str):
@@ -14,6 +28,19 @@ def _lower_items(values: list[str]) -> list[str]:
 
 
 def classify_file_bucket(file_record: dict[str, Any]) -> str:
+    """Support classify file bucket behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = str(file_record.get("path", "")).lower()
     module_name = str(file_record.get("module_name", "")).lower()
     imports = _lower_items(file_record.get("imports", []))
@@ -57,6 +84,19 @@ def classify_file_bucket(file_record: dict[str, Any]) -> str:
 
 
 def build_bucket_index(files_payload: list[dict[str, Any]]) -> dict[str, list[str]]:
+    """Build a bucket index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     bucket_index: dict[str, list[str]] = {}
 
     for file_record in files_payload:
@@ -75,6 +115,19 @@ def build_bucket_index(files_payload: list[dict[str, Any]]) -> dict[str, list[st
 
 
 def build_bucket_summary(files_payload: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Build a bucket summary.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     summary: dict[str, dict[str, Any]] = {}
 
     for file_record in files_payload:

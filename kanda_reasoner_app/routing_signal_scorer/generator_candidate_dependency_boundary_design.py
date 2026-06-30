@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_dependency_boundary_design.py
 """Generator candidate dependency boundary design for routing scorer v3.
 
 This module is intentionally standard-library-only and dependency_boundary-design-only. It
@@ -45,6 +46,19 @@ from kanda_reasoner_app.routing_signal_scorer._generator_candidate_dependency_bo
 
 
 def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
+    """Support sorted tuple behavior.
+    
+    Parameters
+    ----------
+    values : frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(sorted(values))
 
 
@@ -75,6 +89,19 @@ def build_generator_candidate_dependency_boundary_contract() -> dict[str, Any]:
 
 
 def _as_set(value: object) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if isinstance(value, str) or not isinstance(value, Sequence):
         return set()
     return {item for item in value if isinstance(item, str)}

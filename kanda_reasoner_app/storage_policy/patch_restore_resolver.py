@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/patch_restore_resolver.py
 """Backup path resolver helpers for the Kanda Reasoner storage policy box.
 
 This module returns canonical patch backup paths for future patch installers

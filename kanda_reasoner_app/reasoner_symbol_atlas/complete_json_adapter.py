@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/complete_json_adapter.py
 """Read-only adapter for generated complete Project Analysis Evidence JSON."""
 
 from __future__ import annotations
@@ -291,6 +292,21 @@ def _select_complete_json_path(
     project_root: Path,
     json_path: str | Path | None,
 ) -> Path | None:
+    """Support select complete json path behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    json_path : str | Path | None
+        The json path value.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     if json_path is not None and str(json_path).strip():
         return Path(json_path).expanduser().resolve(strict=False)
     candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
@@ -298,14 +314,53 @@ def _select_complete_json_path(
 
 
 def _mapping_count(value: object) -> int:
+    """Support mapping count behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return len(value) if isinstance(value, dict) else 0
 
 
 def _sequence_count(value: object) -> int:
+    """Support sequence count behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     return len(value) if isinstance(value, list) else 0
 
 
 def _format_summary_line(summary: ProjectSymbolAtlasCompleteJsonSummary) -> str:
+    """Support format summary line behavior.
+    
+    Parameters
+    ----------
+    summary : ProjectSymbolAtlasCompleteJsonSummary
+        The summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     data = summary.to_dict()
     return (
         "Complete JSON adapter status="
@@ -325,6 +380,21 @@ def _modules_from_complete_json(
     payload: dict[str, Any],
     limit: int,
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support modules from complete json behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     source_index = payload.get("source_file_index")
     if not isinstance(source_index, dict) or limit <= 0:
         return ()
@@ -372,6 +442,21 @@ def _symbols_from_complete_json(
     payload: dict[str, Any],
     limit: int,
 ) -> tuple[ProjectSymbol, ...]:
+    """Support symbols from complete json behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     symbol_index = payload.get("symbol_index")
     if not isinstance(symbol_index, dict) or limit <= 0:
         return ()
@@ -417,6 +502,19 @@ def _symbols_from_complete_json(
 
 
 def _coerce_symbol_kind(kind: object) -> str:
+    """Support coerce symbol kind behavior.
+    
+    Parameters
+    ----------
+    kind : object
+        The kind value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized = normalize_project_atlas_text(kind).lower()
     if normalized in {"function", "method"}:
         return "function"
@@ -426,6 +524,19 @@ def _coerce_symbol_kind(kind: object) -> str:
 
 
 def _module_name_from_path(path_text: str) -> str:
+    """Support module name from path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not path_text:
         return ""
     path = Path(path_text)
@@ -436,12 +547,38 @@ def _module_name_from_path(path_text: str) -> str:
 
 
 def _is_test_path(path_text: str) -> bool:
+    """Support is test path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     normalized = path_text.replace("\\", "/").lower()
     name = Path(normalized).name
     return normalized.startswith("tests/") or name.startswith("test_") or name.endswith("_test.py")
 
 
 def _safe_int(value: object) -> int:
+    """Support safe int behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         if value is None:
             return 0

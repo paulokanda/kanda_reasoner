@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/project_exclusion_policy.py
 """Unified Project Exclusion Rules policy for all Reasoner tabs."""
 
 from __future__ import annotations
@@ -67,6 +68,19 @@ __all__ = [
 
 
 def _safe_resolve(path: Path | str) -> Path:
+    """Support safe resolve behavior.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     try:
         return Path(path).expanduser().resolve()
     except Exception:
@@ -74,10 +88,33 @@ def _safe_resolve(path: Path | str) -> Path:
 
 
 def _empty_rules() -> dict[str, list[str]]:
+    """Support empty rules behavior.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return {"folders": [], "files": [], "extensions": []}
 
 
 def _dedupe(values: Iterable[object], *, lower: bool = False) -> list[str]:
+    """Support dedupe behavior.
+    
+    Parameters
+    ----------
+    values : Iterable[object]
+        The input values.
+    lower : bool, optional
+        The optional lower value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     output: list[str] = []
     seen: set[str] = set()
     for value in values:
@@ -94,6 +131,19 @@ def _dedupe(values: Iterable[object], *, lower: bool = False) -> list[str]:
 
 
 def _normalize_extensions(values: Iterable[object]) -> list[str]:
+    """Support normalize extensions behavior.
+    
+    Parameters
+    ----------
+    values : Iterable[object]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     output: list[str] = []
     seen: set[str] = set()
     for value in values:
@@ -110,6 +160,19 @@ def _normalize_extensions(values: Iterable[object]) -> list[str]:
 
 
 def normalize_project_exclusion_rules(payload: object) -> dict[str, list[str]]:
+    """Normalize the project exclusion rules.
+    
+    Parameters
+    ----------
+    payload : object
+        The payload value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     if not isinstance(payload, dict):
         return _empty_rules()
     return {
@@ -120,6 +183,19 @@ def normalize_project_exclusion_rules(payload: object) -> dict[str, list[str]]:
 
 
 def _merge_rules(*rule_sets: object) -> dict[str, list[str]]:
+    """Support merge rules behavior.
+    
+    Parameters
+    ----------
+    *rule_sets : object
+        The rule sets value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     merged = _empty_rules()
     for rules in rule_sets:
         normalized = normalize_project_exclusion_rules(rules)
@@ -132,6 +208,14 @@ def _merge_rules(*rule_sets: object) -> dict[str, list[str]]:
 
 
 def _default_rules() -> dict[str, list[str]]:
+    """Support default rules behavior.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return {
         "folders": list(DEFAULT_PROJECT_EXCLUDED_FOLDERS),
         "files": list(DEFAULT_PROJECT_EXCLUDED_FILES),
@@ -140,10 +224,36 @@ def _default_rules() -> dict[str, list[str]]:
 
 
 def _is_reasoner_project_root(project_root: Path | str | None) -> bool:
+    """Support is reasoner project root behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return is_reasoner_project_root(project_root)
 
 
 def _reasoner_project_rules(project_root: Path | str | None) -> dict[str, list[str]]:
+    """Support reasoner project rules behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     if not _is_reasoner_project_root(project_root):
         return _empty_rules()
     return {
@@ -154,6 +264,19 @@ def _reasoner_project_rules(project_root: Path | str | None) -> dict[str, list[s
 
 
 def project_key_candidates(project_root: Path | str | None) -> list[str]:
+    """Support project key candidates behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if project_root is None:
         return ["__global__"]
     raw_path = Path(str(project_root)).expanduser()
@@ -166,6 +289,19 @@ def project_key_candidates(project_root: Path | str | None) -> list[str]:
 
 
 def _iter_pref_paths(project_root: Path | str | None) -> Iterator[Path]:
+    """Support iter pref paths behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     seen: set[str] = set()
     roots: list[Path] = []
     if project_root is not None:
@@ -187,6 +323,14 @@ def _iter_pref_paths(project_root: Path | str | None) -> Iterator[Path]:
 
 
 def _rules_from_environment() -> dict[str, list[str]]:
+    """Support rules from environment behavior.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     merged = _empty_rules()
     for env_name in PROJECT_EXCLUSION_RULE_ENV_NAMES:
         text = os.environ.get(env_name, "").strip()
@@ -201,6 +345,19 @@ def _rules_from_environment() -> dict[str, list[str]]:
 
 
 def _rules_from_preferences(project_root: Path | str | None) -> dict[str, list[str]]:
+    """Support rules from preferences behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     merged = _empty_rules()
     keys = project_key_candidates(project_root)
     for prefs_path in _iter_pref_paths(project_root):
@@ -226,6 +383,19 @@ def _rules_from_preferences(project_root: Path | str | None) -> dict[str, list[s
 
 
 def load_reasoner_project_exclusion_rules(project_root: Path | str | None) -> dict[str, list[str]]:
+    """Load the reasoner project exclusion rules.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return _merge_rules(
         _default_rules(),
         _reasoner_project_rules(project_root),
@@ -235,6 +405,21 @@ def load_reasoner_project_exclusion_rules(project_root: Path | str | None) -> di
 
 
 def _relative_posix(path: Path, project_root: Path) -> str:
+    """Support relative posix behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return path.relative_to(project_root).as_posix()
     except Exception:
@@ -252,6 +437,21 @@ def _is_project_root_hidden_reference_path(rel_path: str) -> bool:
 
 
 def _folder_rule_matches(rel_path: str, rule: str) -> bool:
+    """Support folder rule matches behavior.
+    
+    Parameters
+    ----------
+    rel_path : str
+        The rel path value.
+    rule : str
+        The rule value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     rule_text = rule.strip().lower().replace("\\", "/").strip("/")
     if not rule_text:
         return False
@@ -269,6 +469,23 @@ def should_exclude_reasoner_project_path(
     project_root: Path | str | None,
     rules: dict[str, list[str]] | None = None,
 ) -> bool:
+    """Support should exclude reasoner project path behavior.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    project_root : Path | str | None
+        The project root path.
+    rules : dict[str, list[str]] | None, optional
+        The optional rules value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     root = _safe_resolve(project_root or Path.cwd())
     resolved = _safe_resolve(path)
     try:
@@ -298,6 +515,23 @@ def iter_reasoner_project_files(
     suffixes: Iterable[str] | None = None,
     rules: dict[str, list[str]] | None = None,
 ) -> Iterator[Path]:
+    """Support iter reasoner project files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None
+        The project root path.
+    suffixes : Iterable[str] | None, optional
+        The optional suffixes value.
+    rules : dict[str, list[str]] | None, optional
+        The optional rules value.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     root = _safe_resolve(project_root or Path.cwd())
     active_rules = rules if rules is not None else load_reasoner_project_exclusion_rules(root)
     wanted = {str(s).lower() for s in suffixes} if suffixes is not None else None
@@ -324,6 +558,23 @@ def filter_reasoner_path_strings(
     project_root: Path | str | None,
     rules: dict[str, list[str]] | None = None,
 ) -> list[str]:
+    """Support filter reasoner path strings behavior.
+    
+    Parameters
+    ----------
+    paths : Iterable[str]
+        The file or folder paths.
+    project_root : Path | str | None
+        The project root path.
+    rules : dict[str, list[str]] | None, optional
+        The optional rules value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     root = _safe_resolve(project_root or Path.cwd())
     active_rules = rules if rules is not None else load_reasoner_project_exclusion_rules(root)
     output: list[str] = []

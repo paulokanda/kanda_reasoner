@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_prompt_workspace/prompt_tools/audit_startup_candidates.py
 """
 audit_startup_candidates.py
 
@@ -72,7 +73,6 @@ __all__ = [
     'compare_candidates_to_source_map',
     'create_report',
     'detect_stale_entries',
-    'detect_workspace_root',
     'explain_missing_candidates',
     'find_sidecar_candidates',
     'handle_interactive_update',
@@ -81,15 +81,12 @@ __all__ = [
     'is_valid_workspace',
     'load_source_map_object',
     'main',
-    'normalize_rel_path',
-    'parse_args',
     'parse_source_map',
     'proposed_entry_for_candidate',
     'read_json_file',
     'read_text_utf8_strict',
     'run_audit',
     'run_sync_generator',
-    'sha256_file',
     'sidecar_to_candidate',
     'SourceMapEntry',
     'StartupCandidate',

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/__init__.py
 from __future__ import annotations
 
 from typing import Any
@@ -65,6 +66,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -78,6 +94,21 @@ def _safe_role_for_file(
     file_path: str,
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe role for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -88,6 +119,21 @@ def _safe_centrality_score(
     file_path: str,
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> float:
+    """Support safe centrality score behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     payload = module_centrality_index.get(file_path, {})
     if not isinstance(payload, dict):
         return 0.0
@@ -102,6 +148,19 @@ def _safe_centrality_score(
 
 
 def _iter_symbols(file_record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Support iter symbols behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     symbols: list[dict[str, Any]] = []
 
     for fn in file_record.get("functions", []):
@@ -119,6 +178,19 @@ def _iter_symbols(file_record: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _classify_call_name(call_name: str) -> tuple[bool, bool, bool]:
+    """Support classify call name behavior.
+    
+    Parameters
+    ----------
+    call_name : str
+        The call name value.
+    
+    Returns
+    -------
+    tuple[bool, bool, bool]
+        The tuple of values.
+    """
+    
     lowered = call_name.lower()
 
     is_read = any(token in lowered for token in READ_HINTS)
@@ -134,6 +206,23 @@ def build_persistence_io_index(
     boundary_index: dict[str, dict[str, Any]],
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a persistence io index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for file_record in files_payload:
@@ -212,6 +301,19 @@ def build_persistence_io_index(
 def build_persistence_io_summary(
     persistence_io_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a persistence io summary.
+    
+    Parameters
+    ----------
+    persistence_io_index : dict[str, dict[str, Any]]
+        The persistence io index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     bucket_frequency: dict[str, int] = {}
     role_frequency: dict[str, int] = {}
@@ -269,6 +371,21 @@ def build_persistence_io_hotspots(
     persistence_io_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a persistence io hotspots.
+    
+    Parameters
+    ----------
+    persistence_io_index : dict[str, dict[str, Any]]
+        The persistence io index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in persistence_io_index.items():

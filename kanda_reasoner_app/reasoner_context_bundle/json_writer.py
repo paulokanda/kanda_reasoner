@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/json_writer.py
 """Atomic JSON writing helpers for reasoner context bundle files."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/evaluation/__init__.py
 """Offline Adviser evaluation package.
 
 This package contains pure in-memory evaluation helpers for Adviser-only

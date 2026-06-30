@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/query_intents.py
 """Support V10 project reasoning and evidence handling."""
 
 # -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
@@ -35,6 +36,19 @@ __all__ = [
 ]
 
 def is_startup_question(q: str) -> bool:
+    """Return whether startup question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     startup_terms = [
         "startup",
         "start up",
@@ -54,6 +68,19 @@ def is_startup_question(q: str) -> bool:
     return any(term in q for term in startup_terms)
 
 def is_explicit_call_chain_question(q: str) -> bool:
+    """Return whether explicit call chain question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     call_chain_terms = [
         "self.v.main_window.show()",
         "self.v.main_window.show",
@@ -63,6 +90,19 @@ def is_explicit_call_chain_question(q: str) -> bool:
     return any(term in q for term in call_chain_terms)
 
 def is_main_window_show_responsibility_question(q: str) -> bool:
+    """Return whether main window show responsibility question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "showing the main window",
         "responsible for showing the main window",
@@ -73,9 +113,35 @@ def is_main_window_show_responsibility_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_qtimer_showmaximized_question(q: str) -> bool:
+    """Return whether qtimer showmaximized question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return "qtimer.singleshot" in q and "self.v.main_window.showmaximized" in q
 
 def is_where_is_called_question(q: str) -> bool:
+    """Return whether where is called question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "who calls ",
         "where is ",
@@ -96,6 +162,19 @@ def is_where_is_called_question(q: str) -> bool:
     )
 
 def is_where_is_question(q: str) -> bool:
+    """Return whether where is question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "where is ",
         "where is the ",
@@ -122,6 +201,19 @@ def is_where_is_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_which_method_calls_question(q: str) -> bool:
+    """Return whether which method calls question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "which method calls",
         "what method calls",
@@ -135,6 +227,19 @@ def is_which_method_calls_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_explain_chain_question(q: str) -> bool:
+    """Return whether explain chain question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "explain chain",
         "explain the chain",
@@ -153,6 +258,19 @@ def is_explain_chain_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_explanatory_question(q: str) -> bool:
+    """Return whether explanatory question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "explain",
         "trace",
@@ -168,6 +286,19 @@ def is_explanatory_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_code_localized_explanation_question(q: str) -> bool:
+    """Return whether code localized explanation question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     explanation_terms = [
         "explain",
         "trace",
@@ -200,6 +331,19 @@ def is_code_localized_explanation_question(q: str) -> bool:
     return any(term in q for term in explanation_terms) and any(term in q for term in code_terms)
 
 def is_topomap_explanation_question(q: str) -> bool:
+    """Return whether topomap explanation question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if "topomap" not in q and "amplitude map" not in q:
         return False
 
@@ -223,6 +367,19 @@ def is_topomap_explanation_question(q: str) -> bool:
     )
 
 def is_topomap_implementation_question(q: str) -> bool:
+    """Return whether topomap implementation question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if "topomap" not in q and "amplitude map" not in q:
         return False
 
@@ -241,6 +398,19 @@ def is_topomap_implementation_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_runtime_heavy_question(q: str) -> bool:
+    """Return whether runtime heavy question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     q = norm_text(q)
 
     generic_terms = [
@@ -271,6 +441,19 @@ def is_runtime_heavy_question(q: str) -> bool:
     return False
 
 def is_packaging_metadata_question(q: str) -> bool:
+    """Return whether packaging metadata question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "package metadata",
         "packaging metadata",
@@ -298,6 +481,19 @@ def is_packaging_metadata_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def is_documentation_intent_question(q: str) -> bool:
+    """Return whether documentation intent question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     terms = [
         "readme",
         "documentation",
@@ -317,6 +513,19 @@ def is_documentation_intent_question(q: str) -> bool:
     return any(term in q for term in terms)
 
 def detect_query_intents(q: str) -> dict[str, bool]:
+    """Detect the query intents.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    dict[str, bool]
+        The mapped values.
+    """
+    
     q = norm_text(q)
 
     return {

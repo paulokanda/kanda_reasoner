@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/snippet_retrieval_help/snippet_retrieval_part_3_private_impl.py
 """Private snippet retrieval helper implementation part 3."""
 
 from __future__ import annotations
@@ -6,6 +7,14 @@ __all__ = []
 
 
 def _bind_root_globals(root_globals):
+    """Support bind root globals behavior.
+    
+    Parameters
+    ----------
+    root_globals : object
+        The root globals value.
+    """
+    
     skipped = {
         '__name__',
         '__package__',
@@ -27,6 +36,27 @@ def _sr_score_symbol_snippet_candidate_impl(
     item: SymbolEvidenceItem,
     file_rank: dict[str, int],
 ) -> int:
+    """Support sr score symbol snippet candidate impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    q : str
+        The q value.
+    intents : dict[str, bool]
+        The intents value.
+    item : SymbolEvidenceItem
+        The item value.
+    file_rank : dict[str, int]
+        The file rank value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     score = int(item.score)
     symbol_low = item.symbol_name.lower()
     last_part = symbol_low.split(".")[-1]
@@ -118,6 +148,25 @@ def _sr_score_file_snippet_candidate_impl(
     intents: dict[str, bool],
     item: EvidenceItem,
 ) -> int:
+    """Support sr score file snippet candidate impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    q : str
+        The q value.
+    intents : dict[str, bool]
+        The intents value.
+    item : EvidenceItem
+        The item value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     score = int(item.score)
     path_low = item.path.replace("\\", "/").lower()
     entry_files = {
@@ -181,6 +230,25 @@ def _sr_snippet_radius_for_symbol_impl(
     intents: dict[str, bool],
     item: SymbolEvidenceItem,
 ) -> int:
+    """Support sr snippet radius for symbol impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    q : str
+        The q value.
+    intents : dict[str, bool]
+        The intents value.
+    item : SymbolEvidenceItem
+        The item value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     anchor_low = item.symbol_name.lower()
 
     if any(
@@ -224,6 +292,25 @@ def _sr_snippet_radius_for_symbol_impl(
     return 20
 
 def _sr_read_snippet_impl(retriever, abs_path: str, line: int, radius: int) -> str:
+    """Support sr read snippet impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    abs_path : str
+        The abs path value.
+    line : int
+        The line value.
+    radius : int
+        The radius value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = safe_read_text(abs_path)
     lines = text.splitlines()
     if not lines:

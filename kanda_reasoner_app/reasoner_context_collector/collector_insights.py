@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_insights.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,21 @@ from typing import Any
 
 
 def get_top_priority_files(payload: dict[str, Any], limit: int = 10) -> list[dict[str, Any]]:
+    """Return the top priority files.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     ranking = payload.get("priority_ranking", [])
     if not isinstance(ranking, list):
         return []
@@ -24,6 +40,19 @@ def get_top_priority_files(payload: dict[str, Any], limit: int = 10) -> list[dic
 
 
 def get_project_hotspot_summary(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+    """Return the project hotspot summary.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    dict[str, list[dict[str, Any]]]
+        The mapped values.
+    """
+    
     hotspots = payload.get("project_hotspots", {})
     if not isinstance(hotspots, dict):
         return {
@@ -46,6 +75,21 @@ def get_project_hotspot_summary(payload: dict[str, Any]) -> dict[str, list[dict[
 
 
 def get_top_central_symbols(payload: dict[str, Any], limit: int = 10) -> list[dict[str, Any]]:
+    """Return the top central symbols.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     centrality_index = payload.get("symbol_centrality_index", {})
     if not isinstance(centrality_index, dict):
         return []
@@ -68,6 +112,19 @@ def get_top_central_symbols(payload: dict[str, Any], limit: int = 10) -> list[di
 
 
 def get_entry_chain_summary(payload: dict[str, Any]) -> dict[str, Any]:
+    """Return the entry chain summary.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     project_summary = payload.get("project_summary", {})
     execution_chains = payload.get("execution_chains", {})
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/project_reasoner_data_collector_logic/__init__.py
 import json
 import os
 import hashlib
@@ -198,7 +199,12 @@ from PySide6.QtWidgets import QFileDialog, QWidget, QVBoxLayout, QLineEdit, QPus
 
 
 class FolderSelectionWindow(QWidget):
+    """Represent folder selection window."""
+    
     def __init__(self):
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.setWindowTitle("Select Folder and JSON File")
         self.setGeometry(100, 100, 400, 200)
@@ -225,11 +231,17 @@ class FolderSelectionWindow(QWidget):
         self.layout.addWidget(self.summary_label)
 
     def browse_folder(self):
+        """Support browse folder behavior.
+        """
+        
         folder = QFileDialog.getExistingDirectory(self, "Select Folder")
         if folder:
             self.file_line_edit.setText(folder)
 
     def select_json_file(self):
+        """Support select json file behavior.
+        """
+        
         folder = self.file_line_edit.text().strip()
         if not folder:
             self.summary_label.setText("Please select a folder first!")
@@ -240,6 +252,9 @@ class FolderSelectionWindow(QWidget):
             print(f"Selected file: {file}")
 
     def start_splitting(self):
+        """Support start splitting behavior.
+        """
+        
         folder = self.file_line_edit.text().strip()
         if not folder:
             self.summary_label.setText("Please select a folder first!")

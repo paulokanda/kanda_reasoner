@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_help/models.py
 """Result models for the AI docstring generator."""
 
 from __future__ import annotations
@@ -12,6 +13,8 @@ from dataclasses import dataclass, field
 
 @dataclass
 class GenerationResult:
+    """Represent generation result."""
+    
     body: str
     source: str
     confidence: str
@@ -27,6 +30,8 @@ class GenerationResult:
 
 @dataclass
 class GenerationStats:
+    """Represent generation stats."""
+    
     total: int = 0
     cached: int = 0
     ai_ok: int = 0
@@ -43,9 +48,25 @@ class GenerationStats:
 
     @property
     def high_confidence(self) -> int:
+        """Support high confidence behavior.
+        
+        Returns
+        -------
+        int
+            The integer result.
+        """
+        
         return max(0, self.ai_ok - self.medium_confidence - self.low_confidence)
 
     def summary_line(self) -> str:
+        """Support summary line behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         failure_summary = ""
         if self.failure_reasons:
             parts = [

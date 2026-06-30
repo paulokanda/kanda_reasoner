@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/prompt_modes.py
 """Prompt classification helpers for Project Reasoner AI bridge."""
 
 from __future__ import annotations
@@ -7,6 +8,19 @@ from .prompt_extraction import extract_user_question
 __all__ = ['is_code_localized_prompt', 'is_runtime_heavy_prompt', 'is_one_line_prompt', 'is_direct_responsibility_prompt', 'is_deterministic_prompt', 'is_locator_plus_explanation_prompt', 'is_generative_prompt']
 
 def is_code_localized_prompt(prompt: str) -> bool:
+        """Return whether code localized prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
 
         explanation_terms = [
@@ -53,6 +67,19 @@ def is_code_localized_prompt(prompt: str) -> bool:
         return any(term in q for term in explanation_terms) and any(term in q for term in code_terms)
 
 def is_runtime_heavy_prompt(prompt: str) -> bool:
+        """Return whether runtime heavy prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
 
         runtime_terms = [
@@ -83,6 +110,19 @@ def is_runtime_heavy_prompt(prompt: str) -> bool:
         return False
 
 def is_one_line_prompt(prompt: str) -> bool:
+        """Return whether one line prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
         return "answer only in one line" in q
 
@@ -99,6 +139,19 @@ def is_direct_responsibility_prompt(prompt: str) -> bool:
         return any(re.search(pattern, q) for pattern in patterns)
 
 def is_deterministic_prompt(prompt: str) -> bool:
+        """Return whether deterministic prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
 
         if is_locator_plus_explanation_prompt(prompt):
@@ -148,6 +201,19 @@ def is_deterministic_prompt(prompt: str) -> bool:
         return any(trigger in q for trigger in triggers)
 
 def is_locator_plus_explanation_prompt(prompt: str) -> bool:
+        """Return whether locator plus explanation prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
 
         code_terms = [
@@ -210,6 +276,19 @@ def is_locator_plus_explanation_prompt(prompt: str) -> bool:
         return is_locator and (wants_explanation or wants_code)
 
 def is_generative_prompt(prompt: str) -> bool:
+        """Return whether generative prompt.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
 
         if is_locator_plus_explanation_prompt(prompt):

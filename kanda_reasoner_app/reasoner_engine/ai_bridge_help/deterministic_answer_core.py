@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/deterministic_answer_core.py
 """Core deterministic answer orchestration."""
 
 from __future__ import annotations
@@ -31,6 +32,19 @@ from .deterministic_answer_core_parts import (
 )
 
 def _answer_deterministic_from_prompt_impl(prompt: str) -> str | None:
+        """Support answer deterministic from prompt impl behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        
+        Returns
+        -------
+        str | None
+            The string result.
+        """
+        
         q = extract_user_question(prompt)
 
         if is_one_line_prompt(prompt):

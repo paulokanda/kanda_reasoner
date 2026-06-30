@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/local_ai_json_enrichment/__init__.py
 """Local-AI JSON enrichment box for Project Reasoner.
 
 This package writes local-only enrichment into the local-AI working JSON.

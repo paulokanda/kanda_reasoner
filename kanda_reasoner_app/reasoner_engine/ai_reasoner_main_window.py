@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window.py
 """Project Q&A main window.
 
 This is normal readable source. The older encoded backend payload
@@ -79,7 +80,12 @@ from kanda_reasoner_app.reasoner_engine.reasoner_retriever import ProjectRetriev
 __all__ = ["JsonProjectReasonerV10", "main"]
 
 class JsonProjectReasonerV10(QMainWindow):
+    """Represent json project reasoner v10."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self.setWindowTitle("Project JSON Explorer V10 - Local AI Reasoner")
         self.resize(1880, 1080)
@@ -185,86 +191,247 @@ class JsonProjectReasonerV10(QMainWindow):
 
     @property
     def _last_bundle(self) -> RetrievalBundle:
+        """Support last bundle behavior.
+        
+        Returns
+        -------
+        RetrievalBundle
+            The retrieval bundle result.
+        """
+        
         return self.session_state.last_bundle
 
     @_last_bundle.setter
     def _last_bundle(self, value: RetrievalBundle) -> None:
+        """Support last bundle behavior.
+        
+        Parameters
+        ----------
+        value : RetrievalBundle
+            The input value.
+        """
+        
         self.session_state.last_bundle = value
 
     @property
     def _last_prompt(self) -> str:
+        """Support last prompt behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.session_state.last_prompt
 
     @_last_prompt.setter
     def _last_prompt(self, value: str) -> None:
+        """Support last prompt behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.session_state.last_prompt = value
 
     @property
     def _last_selected_model(self) -> str:
+        """Support last selected model behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.session_state.last_selected_model
 
     @_last_selected_model.setter
     def _last_selected_model(self, value: str) -> None:
+        """Support last selected model behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.session_state.last_selected_model = value
 
     @property
     def _pending_question(self) -> str:
+        """Support pending question behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.session_state.pending_question
 
     @_pending_question.setter
     def _pending_question(self, value: str) -> None:
+        """Support pending question behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.session_state.pending_question = value
 
     @property
     def _detected_project_profile_name(self) -> str:
+        """Support detected project profile name behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.profile_state.detected_profile_name
 
     @_detected_project_profile_name.setter
     def _detected_project_profile_name(self, value: str) -> None:
+        """Support detected project profile name behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.profile_state.detected_profile_name = value
 
     @property
     def _active_project_profile_name(self) -> str:
+        """Support active project profile name behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.profile_state.active_profile_name
 
     @_active_project_profile_name.setter
     def _active_project_profile_name(self, value: str) -> None:
+        """Support active project profile name behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.profile_state.active_profile_name = value
 
     @property
     def _manual_project_profile_name(self) -> str:
+        """Support manual project profile name behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.profile_state.manual_profile_name
 
     @_manual_project_profile_name.setter
     def _manual_project_profile_name(self, value: str) -> None:
+        """Support manual project profile name behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.profile_state.manual_profile_name = value
 
     @property
     def _analysis_running(self) -> bool:
+        """Support analysis running behavior.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         return self.analysis_state.is_running
 
     @_analysis_running.setter
     def _analysis_running(self, value: bool) -> None:
+        """Support analysis running behavior.
+        
+        Parameters
+        ----------
+        value : bool
+            The input value.
+        """
+        
         self.analysis_state.is_running = value
 
     @property
     def _last_generated_json_path(self) -> str:
+        """Support last generated json path behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.analysis_state.last_generated_json_path
 
     @_last_generated_json_path.setter
     def _last_generated_json_path(self, value: str) -> None:
+        """Support last generated json path behavior.
+        
+        Parameters
+        ----------
+        value : str
+            The input value.
+        """
+        
         self.analysis_state.last_generated_json_path = value
 
     def _save_last_config(self) -> None:
+        """Support save last config behavior.
+        """
+        
         self.settings_manager.save(self)
 
     def _append_log(self, text: str) -> None:
+        """Support append log behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         self.log_box.appendPlainText(text)
 
     def _refresh_profile_controls(self) -> None:
+        """Support refresh profile controls behavior.
+        """
+        
         self.profile_controller.refresh_controls(self)
 
     def _rebuild_retriever_for_active_profile(self) -> None:
+        """Support rebuild retriever for active profile behavior.
+        """
+        
         result = self.profile_controller.build_refresh_result(
             project_index=self.project_index,
             current_override_name=self.profile_override_combo.currentText(),
@@ -277,42 +444,118 @@ class JsonProjectReasonerV10(QMainWindow):
         self.reset_profile_override_button.setEnabled(result.reset_enabled and not self._analysis_running)
 
     def _on_profile_override_changed(self) -> None:
+        """Support on profile override changed behavior.
+        """
+        
         self.profile_controller.on_profile_override_changed(self)
 
     def _reset_profile_override(self) -> None:
+        """Support reset profile override behavior.
+        """
+        
         self.profile_controller.reset_profile_override(self)
 
     def _refresh_static_context_controls(self) -> None:
+        """Support refresh static context controls behavior.
+        """
+        
         self.static_context_controller.refresh_controls(self)
 
     def _refresh_workflow_controls(self) -> None:
+        """Support refresh workflow controls behavior.
+        """
+        
         self.runtime_controller.refresh_workflow_controls(self)
 
     def _expected_generated_json_path(self, project_root: str) -> str:
+        """Support expected generated json path behavior.
+        
+        Parameters
+        ----------
+        project_root : str
+            The project root path.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return self.analysis_controller.expected_generated_json_path(project_root)
 
     def pick_project_root(self) -> None:
+        """Support pick project root behavior.
+        """
+        
         self.analysis_controller.pick_project_root(self)
 
     def _build_analysis_command(self, project_root: str) -> tuple[str, list[str]]:
+        """Support build analysis command behavior.
+        
+        Parameters
+        ----------
+        project_root : str
+            The project root path.
+        
+        Returns
+        -------
+        tuple[str, list[str]]
+            The tuple of values.
+        """
+        
         return self.analysis_controller.build_analysis_command(project_root)
 
     def run_analysis(self) -> None:
+        """Run the analysis.
+        """
+        
         self.analysis_controller.run_analysis(self)
 
     def _on_analysis_stdout_ready(self) -> None:
+        """Support on analysis stdout ready behavior.
+        """
+        
         self.analysis_controller.on_analysis_stdout_ready(self)
 
     def _on_analysis_stderr_ready(self) -> None:
+        """Support on analysis stderr ready behavior.
+        """
+        
         self.analysis_controller.on_analysis_stderr_ready(self)
 
     def _on_analysis_error_occurred(self, process_error: QProcess.ProcessError) -> None:
+        """Support on analysis error occurred behavior.
+        
+        Parameters
+        ----------
+        process_error : QProcess.ProcessError
+            The process error value.
+        """
+        
         self.analysis_controller.on_analysis_error_occurred(self, process_error)
 
     def _on_analysis_finished(self, exit_code: int, exit_status: object) -> None:
+        """Support on analysis finished behavior.
+        
+        Parameters
+        ----------
+        exit_code : int
+            The exit code value.
+        exit_status : object
+            The exit status value.
+        """
+        
         self.analysis_controller.on_analysis_finished(self, exit_code, exit_status)
 
     def _on_ai_token_ready(self, token: str) -> None:
+        """Support on ai token ready behavior.
+        
+        Parameters
+        ----------
+        token : str
+            The token value.
+        """
+        
         current = self.answer_box.toPlainText()
         if current == "[Streaming...]\n\n":
             self.answer_box.setPlainText("")
@@ -324,22 +567,40 @@ class JsonProjectReasonerV10(QMainWindow):
         self.answer_box.ensureCursorVisible()
 
     def _build_ui(self) -> None:
+        """Support build ui behavior.
+        """
+        
         build_main_window_ui(self)
 
     def _connect_signals(self) -> None:
+        """Support connect signals behavior.
+        """
+        
         connect_main_window_signals(self)
 
     def show_help_dialog(self) -> None:
+        """Show the help dialog.
+        """
+        
         dialog = HelpDialog(self)
         dialog.exec()
 
     def show_static_context_dialog(self) -> None:
+        """Show the static context dialog.
+        """
+        
         self.static_context_controller.show_dialog(self)
 
     def refresh_models(self) -> None:
+        """Support refresh models behavior.
+        """
+        
         self.runtime_controller.refresh_models(self)
 
     def clear_visuals_only(self) -> None:
+        """Support clear visuals only behavior.
+        """
+        
         self.file_evidence_list.clear()
         self.symbol_evidence_list.clear()
         self.detail_box.clear()
@@ -351,27 +612,58 @@ class JsonProjectReasonerV10(QMainWindow):
         self._refresh_workflow_controls()
 
     def clear_memory(self) -> None:
+        """Support clear memory behavior.
+        """
+        
         self.memory.clear()
         self.history_list.clear()
         self._append_log("Conversation memory cleared.")
 
     def _run_quick_question(self, question: str) -> None:
+        """Support run quick question behavior.
+        
+        Parameters
+        ----------
+        question : str
+            The question value.
+        """
+        
         self.question_edit.setText(question)
         self.ask_local_ai()
 
     def pick_cache_dir(self) -> None:
+        """Support pick cache dir behavior.
+        """
+        
         self.runtime_controller.pick_cache_dir(self)
 
     def pick_governance_path(self) -> None:
+        """Support pick governance path behavior.
+        """
+        
         self.runtime_controller.pick_governance_path(self)
 
     def load_json(self) -> None:
+        """Load the json.
+        """
+        
         self.runtime_controller.load_json(self)
 
     def _load_json_from_path(self, file_path: str) -> None:
+        """Support load json from path behavior.
+        
+        Parameters
+        ----------
+        file_path : str
+            The file path.
+        """
+        
         self.runtime_controller.load_json_from_path(self, file_path)
 
     def ask_local_ai(self) -> None:
+        """Support ask local ai behavior.
+        """
+        
         if self._analysis_running:
             QMessageBox.information(
                 self,
@@ -419,16 +711,43 @@ class JsonProjectReasonerV10(QMainWindow):
         self.ai.ask(result.prompt, result.selected_model)
 
     def _on_ai_answer_ready(self, text: str) -> None:
+        """Support on ai answer ready behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        """
+        
         self.answer_presenter.handle_ai_answer_ready(self, text)
 
     def _on_ai_error_ready(self, error_text: str) -> None:
+        """Support on ai error ready behavior.
+        
+        Parameters
+        ----------
+        error_text : str
+            The error text value.
+        """
+        
         self.answer_presenter.handle_ai_error_ready(self, error_text)
 
     def closeEvent(self, event) -> None:
+        """Support close event behavior.
+        
+        Parameters
+        ----------
+        event : object
+            The event object.
+        """
+        
         self._save_last_config()
         super().closeEvent(event)
 
 def main() -> None:
+    """Support main behavior.
+    """
+    
     app = QApplication(sys.argv)
     window = JsonProjectReasonerV10()
     window.show()

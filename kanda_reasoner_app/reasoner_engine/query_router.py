@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/query_router.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -234,20 +235,63 @@ WHICH_CALLS_WITH_CODE_EXTRA_TERMS = (
 
 @dataclass(frozen=True)
 class QueryRouteDecision:
+    """Represent query route decision."""
+    
     route: str
     intent_name: str
     reason: str
 
 
 def _norm(text: str) -> str:
+    """Support norm behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return text.strip().lower()
 
 
 def _has_any(text: str, terms: tuple[str, ...]) -> bool:
+    """Support has any behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    terms : tuple[str, ...]
+        The terms value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(term in text for term in terms)
 
 
 def _which_calls_needs_code_answer(q: str) -> bool:
+    """Support which calls needs code answer behavior.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return (
         is_code_localization_question(q)
         or is_explanatory_question(q)
@@ -256,6 +300,19 @@ def _which_calls_needs_code_answer(q: str) -> bool:
 
 
 def is_one_line_locator_question(q: str) -> bool:
+    """Return whether one line locator question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return (
         "answer only in one line" in q
         or "<file path> | <symbol> | <evidence ids>" in q
@@ -263,42 +320,172 @@ def is_one_line_locator_question(q: str) -> bool:
 
 
 def is_exact_file_locator_question(q: str) -> bool:
+    """Return whether exact file locator question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, FILE_LOCATOR_TERMS)
 
 
 def is_exact_symbol_locator_question(q: str) -> bool:
+    """Return whether exact symbol locator question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, SYMBOL_LOCATOR_TERMS)
 
 
 def is_which_calls_question(q: str) -> bool:
+    """Return whether which calls question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, WHICH_CALLS_TERMS)
 
 
 def is_signal_or_action_question(q: str) -> bool:
+    """Return whether signal or action question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, SIGNAL_ACTION_TERMS)
 
 
 def is_responsibility_question(q: str) -> bool:
+    """Return whether responsibility question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, RESPONSIBILITY_TERMS)
 
 
 def is_widget_listing_question(q: str) -> bool:
+    """Return whether widget listing question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, WIDGET_LISTING_TERMS)
 
 
 def is_listing_or_discovery_question(q: str) -> bool:
+    """Return whether listing or discovery question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, DISCOVERY_TERMS)
 
 
 def is_explanatory_question(q: str) -> bool:
+    """Return whether explanatory question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, EXPLANATORY_TERMS)
 
 
 def is_code_localization_question(q: str) -> bool:
+    """Return whether code localization question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_any(q, CODE_EXPLANATION_TERMS) and _has_any(q, CODE_LOCALIZATION_TERMS)
 
 
 def is_locator_plus_explanation_question(q: str) -> bool:
+    """Return whether locator plus explanation question.
+    
+    Parameters
+    ----------
+    q : str
+        The q value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return is_exact_file_locator_question(q) and (
         is_code_localization_question(q)
         or is_explanatory_question(q)
@@ -309,6 +496,19 @@ def is_locator_plus_explanation_question(q: str) -> bool:
 
 
 def route_query_intent(question: str) -> QueryRouteDecision:
+    """Support route query intent behavior.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    QueryRouteDecision
+        The query route decision result.
+    """
+    
     q = _norm(question)
 
 

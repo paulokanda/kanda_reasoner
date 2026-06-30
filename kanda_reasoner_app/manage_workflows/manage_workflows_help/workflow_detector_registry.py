@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_detector_registry.py
 """Own workflow detector registration and execution."""
 
 from __future__ import annotations
@@ -72,6 +73,9 @@ class WorkflowDetectorRegistry:
     """Small ordered registry for additive workflow detectors."""
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self._detectors: list[tuple[str, WorkflowDetector]] = []
 
     def register(self, name: str, detector: WorkflowDetector) -> WorkflowDetector:

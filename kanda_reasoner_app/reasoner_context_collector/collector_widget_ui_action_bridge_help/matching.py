@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge_help/matching.py
 """Internal matching helpers for widget UI action bridge records."""
 
 from __future__ import annotations
@@ -17,6 +18,29 @@ def _find_matching_signal_record(
     target: str,
     line: Any,
 ) -> dict[str, Any]:
+    """Support find matching signal record behavior.
+    
+    Parameters
+    ----------
+    normalized_signal_records : list[dict[str, Any]]
+        The normalized signal records value.
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    signal_name : str
+        The signal name value.
+    target : str
+        The target value.
+    line : Any
+        The line value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     exact_matches: list[dict[str, Any]] = []
     relaxed_matches: list[dict[str, Any]] = []
 
@@ -50,6 +74,27 @@ def _match_widget_for_action(
     signal_name: str,
     signal_record: dict[str, Any],
 ) -> dict[str, Any]:
+    """Support match widget for action behavior.
+    
+    Parameters
+    ----------
+    widget_registry : dict[str, dict[str, Any]]
+        The widget registry value.
+    source_file : str
+        The source file value.
+    source_symbol : str
+        The source symbol value.
+    signal_name : str
+        The signal name value.
+    signal_record : dict[str, Any]
+        The signal record value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     candidates: list[dict[str, Any]] = []
 
     for widget_record in widget_registry.values():
@@ -83,6 +128,21 @@ def _match_widget_by_hint(
     candidates: list[dict[str, Any]],
     widget_hint: str,
 ) -> dict[str, Any]:
+    """Support match widget by hint behavior.
+    
+    Parameters
+    ----------
+    candidates : list[dict[str, Any]]
+        The candidates value.
+    widget_hint : str
+        The widget hint value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     hint = _safe_str(widget_hint).lower()
 
     for candidate in candidates:
@@ -103,6 +163,21 @@ def _match_widget_by_signal_name(
     candidates: list[dict[str, Any]],
     signal_name: str,
 ) -> dict[str, Any]:
+    """Support match widget by signal name behavior.
+    
+    Parameters
+    ----------
+    candidates : list[dict[str, Any]]
+        The candidates value.
+    signal_name : str
+        The signal name value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     signal = _safe_str(signal_name)
 
     if "clicked" in signal:
@@ -129,6 +204,19 @@ def _match_widget_by_signal_name(
 
 
 def _prefer_interactive_widget(candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    """Support prefer interactive widget behavior.
+    
+    Parameters
+    ----------
+    candidates : list[dict[str, Any]]
+        The candidates value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     interactive_types = {
         "QPushButton",
         "QCheckBox",
@@ -154,6 +242,21 @@ def _match_confidence(
     matched_widget: dict[str, Any],
     matched_signal_record: dict[str, Any],
 ) -> float:
+    """Support match confidence behavior.
+    
+    Parameters
+    ----------
+    matched_widget : dict[str, Any]
+        The matched widget value.
+    matched_signal_record : dict[str, Any]
+        The matched signal record value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     if matched_widget and matched_signal_record:
         if _safe_str(matched_signal_record.get("widget", "")):
             return 0.95

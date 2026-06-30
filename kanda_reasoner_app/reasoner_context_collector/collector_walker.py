@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_walker.py
 """Walk project Python files while applying collector exclusion rules."""
 
 from __future__ import annotations
@@ -260,6 +261,21 @@ def _matches_user_extension_rule(name: str, rules: dict[str, list[str]]) -> bool
 
 
 def _normalized_parts_from_root(path: Path, root: Path) -> list[str]:
+    """Support normalized parts from root behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     try:
         rel_parts = path.relative_to(root).parts
     except Exception:

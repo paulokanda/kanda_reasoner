@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_tests.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from pathlib import Path
 
 
 def link_tests_to_sources(files_payload: list[dict]) -> list[dict]:
+    """Support link tests to sources behavior.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     paths = [record["path"] for record in files_payload]
     test_files = [path for path in paths if "test" in Path(path).name.lower()]
 

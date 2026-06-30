@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/review_queue/__init__.py
 """Offline Adviser active-review queue package.
 
 This package is not part of runtime routing and exposes only pure in-memory

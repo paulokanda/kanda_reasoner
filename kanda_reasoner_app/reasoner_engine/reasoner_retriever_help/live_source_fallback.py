@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/live_source_fallback.py
 """Live-source fallback helpers for ProjectRetriever.
 
 This helper belongs to the Retrieval Box. It consumes the validated

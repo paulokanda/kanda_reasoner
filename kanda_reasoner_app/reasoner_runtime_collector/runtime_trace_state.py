@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_state.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -8,6 +9,19 @@ from typing import Any
 
 
 def collect_visualizer_state(visualizer: Any) -> dict[str, Any]:
+    """Support collect visualizer state behavior.
+    
+    Parameters
+    ----------
+    visualizer : Any
+        The visualizer value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     state: dict[str, Any] = {}
 
     state["main_window_exists"] = getattr(visualizer, "main_window", None) is not None

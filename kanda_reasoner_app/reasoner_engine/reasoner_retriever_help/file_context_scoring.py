@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_context_scoring.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -25,6 +26,23 @@ __all__ = [
 
 
 def get_runtime_anchor_summary(idx, path: str, limit: int = 12) -> tuple[list[str], list[str]]:
+    """Return the runtime anchor summary.
+    
+    Parameters
+    ----------
+    idx : object
+        The idx value.
+    path : str
+        The file or folder path.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    tuple[list[str], list[str]]
+        The tuple of values.
+    """
+    
     runtime_events = idx.runtime_events_by_file.get(path, [])
 
     preferred_order: list[str] = []
@@ -79,6 +97,21 @@ def get_runtime_anchor_summary(idx, path: str, limit: int = 12) -> tuple[list[st
 
 
 def collect_file_context_blobs(idx, path: str) -> dict[str, str]:
+    """Support collect file context blobs behavior.
+    
+    Parameters
+    ----------
+    idx : object
+        The idx value.
+    path : str
+        The file or folder path.
+    
+    Returns
+    -------
+    dict[str, str]
+        The mapped values.
+    """
+    
     widgets = idx.widgets_by_file.get(path, [])
     ui_actions = idx.ui_actions_by_file.get(path, [])
     boundaries = idx.boundaries_by_file.get(path, [])
@@ -145,6 +178,27 @@ def score_advanced_file_context(idx, q: str,
     tokens: list[str],
     reasons: list[str],
 ) -> int:
+    """Support score advanced file context behavior.
+    
+    Parameters
+    ----------
+    idx : object
+        The idx value.
+    q : str
+        The q value.
+    path : str
+        The file or folder path.
+    tokens : list[str]
+        The tokens value.
+    reasons : list[str]
+        The reasons value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     score = 0
 
     ctx = collect_file_context_blobs(idx, path)
@@ -287,6 +341,23 @@ def score_advanced_file_context(idx, q: str,
 def score_runtime_signal_matches(idx, q: str,
     reasons: list[str],
 ) -> tuple[int, set[str]]:
+    """Support score runtime signal matches behavior.
+    
+    Parameters
+    ----------
+    idx : object
+        The idx value.
+    q : str
+        The q value.
+    reasons : list[str]
+        The reasons value.
+    
+    Returns
+    -------
+    tuple[int, set[str]]
+        The tuple of values.
+    """
+    
     score = 0
     matched_paths: set[str] = set()
 

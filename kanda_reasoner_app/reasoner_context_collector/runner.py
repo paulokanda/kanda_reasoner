@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/runner.py
 """Compatibility launcher for the Project Reasoner tools shell.
 
 This module preserves older launch commands. The composite GUI shell lives in
@@ -54,6 +55,21 @@ class CollectorRunnerWindow:
     """Lazy compatibility proxy for the relocated tools shell window."""
 
     def __new__(cls, *args: Any, **kwargs: Any) -> Any:
+        """Support new behavior.
+        
+        Parameters
+        ----------
+        *args : Any
+            The positional arguments.
+        **kwargs : Any
+            The kwargs value.
+        
+        Returns
+        -------
+        Any
+            The any result.
+        """
+        
         shell_runner = _load_shell_runner()
         return shell_runner.CollectorRunnerWindow(*args, **kwargs)
 

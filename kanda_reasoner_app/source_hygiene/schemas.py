@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/schemas.py
 """Shared data structures for source hygiene reports."""
 
 from __future__ import annotations

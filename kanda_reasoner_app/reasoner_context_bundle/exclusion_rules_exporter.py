@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/exclusion_rules_exporter.py
 """Export active project exclusion rules as a companion JSON artifact."""
 
 from __future__ import annotations
@@ -34,12 +35,38 @@ _SAMPLE_PATHS = (
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _rules_dict(rules: ExclusionRules) -> dict[str, list[str]]:
+    """Support rules dict behavior.
+    
+    Parameters
+    ----------
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return {
         "folders": list(rules.folders),
         "files": list(rules.files),
@@ -48,6 +75,21 @@ def _rules_dict(rules: ExclusionRules) -> dict[str, list[str]]:
 
 
 def _decision_examples(context: ProjectContext, rules: ExclusionRules) -> list[dict[str, Any]]:
+    """Support decision examples behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     examples: list[dict[str, Any]] = []
     for rel_path in _SAMPLE_PATHS:
         decision = decide_path_exclusion(rel_path, context, rules)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder_help/prompt_classification.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -16,14 +17,53 @@ __all__ = [
 
 
 def norm_text(text: Any) -> str:
+    """Support norm text behavior.
+    
+    Parameters
+    ----------
+    text : Any
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(text).strip().lower() if text is not None else ""
 
 
 def tokenize_query(text: str) -> list[str]:
+    """Support tokenize query behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return re.findall(r"[a-zA-Z0-9_\.]+", norm_text(text))
 
 
 def is_which_method_calls_question(question: str) -> bool:
+    """Return whether which method calls question.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     q = norm_text(question)
     triggers = [
         "which method calls",
@@ -39,6 +79,19 @@ def is_which_method_calls_question(question: str) -> bool:
 
 
 def is_code_localized_explanation_question(question: str) -> bool:
+    """Return whether code localized explanation question.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     q = norm_text(question)
 
     explanation_terms = [
@@ -78,6 +131,19 @@ def is_code_localized_explanation_question(question: str) -> bool:
 
 
 def is_explain_implementation_question(question: str) -> bool:
+    """Return whether explain implementation question.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     q = norm_text(question)
     triggers = [
         "explain the implementation of",
@@ -89,6 +155,19 @@ def is_explain_implementation_question(question: str) -> bool:
 
 
 def is_chain_or_flow_question(question: str) -> bool:
+    """Return whether chain or flow question.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     q = norm_text(question)
     triggers = [
         "startup chain",

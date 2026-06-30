@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/module_scanner.py
 """Read-only Python module scanner for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -71,6 +72,19 @@ class ProjectSymbolAtlasModuleScanOptions:
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).resolve()
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -80,6 +94,21 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _safe_relative_path(project_root: Path, file_path: Path) -> Path:
+    """Support safe relative path behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     try:
         return file_path.resolve().relative_to(project_root)
     except ValueError:
@@ -87,16 +116,55 @@ def _safe_relative_path(project_root: Path, file_path: Path) -> Path:
 
 
 def _is_test_path(relative_path: Path) -> bool:
+    """Support is test path behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     parts = {part.lower() for part in relative_path.parts}
     name = relative_path.name.lower()
     return "tests" in parts or name.startswith("test_") or name.endswith("_test.py")
 
 
 def _is_workbench_path(relative_path: Path) -> bool:
+    """Support is workbench path behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(part.lower() == "workbench" for part in relative_path.parts)
 
 
 def _is_generated_or_stale_candidate(relative_path: Path) -> bool:
+    """Support is generated or stale candidate behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered_parts = [part.lower() for part in relative_path.parts]
     lowered_name = relative_path.name.lower()
     stale_tokens = (
@@ -117,11 +185,37 @@ def _is_generated_or_stale_candidate(relative_path: Path) -> bool:
 
 
 def _is_facade_candidate(relative_path: Path) -> bool:
+    """Support is facade candidate behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     name = relative_path.name.lower()
     return name == "__init__.py" or "facade" in name or name.endswith("_shell.py")
 
 
 def _is_helper_candidate(relative_path: Path) -> bool:
+    """Support is helper candidate behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     name = relative_path.name.lower()
     helper_tokens = ("helper", "helpers", "util", "utils", "common")
     return any(token in name for token in helper_tokens)
@@ -131,6 +225,21 @@ def _should_skip_path(
     relative_path: Path,
     options: ProjectSymbolAtlasModuleScanOptions,
 ) -> bool:
+    """Support should skip path behavior.
+    
+    Parameters
+    ----------
+    relative_path : Path
+        The relative path value.
+    options : ProjectSymbolAtlasModuleScanOptions
+        The option values.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     excluded_dir_names = options.normalized_excluded_dir_names()
     excluded_path_parts = options.normalized_excluded_path_parts()
     parts = [part.lower() for part in relative_path.parts]
@@ -154,6 +263,21 @@ def _iter_python_files(
     project_root: Path,
     options: ProjectSymbolAtlasModuleScanOptions,
 ) -> Iterable[Path]:
+    """Support iter python files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    options : ProjectSymbolAtlasModuleScanOptions
+        The option values.
+    
+    Returns
+    -------
+    Iterable[Path]
+        The sequence of values.
+    """
+    
     for file_path in project_root.rglob("*.py"):
         if not file_path.is_file():
             continue
@@ -164,6 +288,19 @@ def _iter_python_files(
 
 
 def _read_line_count(file_path: Path) -> tuple[int, tuple[str, ...]]:
+    """Support read line count behavior.
+    
+    Parameters
+    ----------
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    tuple[int, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence: list[str] = []
     try:
         text = file_path.read_text(encoding="utf-8", errors="replace")
@@ -195,6 +332,21 @@ def reasoner_symbol_atlas_module_name_for_path(
 
 
 def _module_record_for_file(project_root: Path, file_path: Path) -> ProjectModuleRecord:
+    """Support module record for file behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    ProjectModuleRecord
+        The project module record result.
+    """
+    
     relative_path = _safe_relative_path(project_root, file_path)
     module_name = reasoner_symbol_atlas_module_name_for_path(project_root, file_path)
     line_count, read_evidence = _read_line_count(file_path)

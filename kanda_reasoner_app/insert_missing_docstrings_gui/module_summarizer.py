@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/module_summarizer.py
 """Pre-pass module summarizer for AI-powered docstring generation."""
 
 from __future__ import annotations
@@ -18,6 +19,8 @@ if TYPE_CHECKING:
 
 @dataclass
 class InitAttribute:
+    """Represent init attribute."""
+    
     name: str
     type_hint: str = ""
     assigned_from: str = ""
@@ -25,6 +28,8 @@ class InitAttribute:
 
 @dataclass
 class ClassProfile:
+    """Represent class profile."""
+    
     name: str
     bases: list[str] = field(default_factory=list)
     decorators: list[str] = field(default_factory=list)
@@ -40,6 +45,8 @@ class ClassProfile:
 
 @dataclass
 class ModuleSummary:
+    """Represent module summary."""
+    
     module_id: str
     one_liner: str
     purpose_paragraph: str = ""
@@ -50,6 +57,14 @@ class ModuleSummary:
 
     @property
     def context_block(self) -> str:
+        """Support context block behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         parts = [f"Module purpose: {self.one_liner}"]
         if self.purpose_paragraph and self.purpose_paragraph != self.one_liner:
             parts.append(self.purpose_paragraph.strip())
@@ -66,6 +81,19 @@ class ModuleSummary:
 
 
 def _safe_unparse(node: ast.AST | None) -> str:
+    """Support safe unparse behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
     try:
@@ -75,6 +103,19 @@ def _safe_unparse(node: ast.AST | None) -> str:
 
 
 def _extract_init_attributes(init_node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[InitAttribute]:
+    """Support extract init attributes behavior.
+    
+    Parameters
+    ----------
+    init_node : ast.FunctionDef | ast.AsyncFunctionDef
+        The init node value.
+    
+    Returns
+    -------
+    list[InitAttribute]
+        The list of values.
+    """
+    
     seen: set[str] = set()
     attrs: list[InitAttribute] = []
     param_annotations: dict[str, str] = {}
@@ -115,6 +156,19 @@ def _extract_init_attributes(init_node: ast.FunctionDef | ast.AsyncFunctionDef) 
 
 
 def _extract_annotated_attributes(class_node: ast.ClassDef) -> list[InitAttribute]:
+    """Support extract annotated attributes behavior.
+    
+    Parameters
+    ----------
+    class_node : ast.ClassDef
+        The class node value.
+    
+    Returns
+    -------
+    list[InitAttribute]
+        The list of values.
+    """
+    
     attrs: list[InitAttribute] = []
     seen: set[str] = set()
     for node in ast.walk(class_node):
@@ -141,6 +195,19 @@ def _extract_annotated_attributes(class_node: ast.ClassDef) -> list[InitAttribut
 
 
 def _profile_class(class_node: ast.ClassDef) -> ClassProfile:
+    """Support profile class behavior.
+    
+    Parameters
+    ----------
+    class_node : ast.ClassDef
+        The class node value.
+    
+    Returns
+    -------
+    ClassProfile
+        The class profile result.
+    """
+    
     bases = [_safe_unparse(b) for b in class_node.bases if _safe_unparse(b)]
     dec_names = []
     for dec in class_node.decorator_list:
@@ -211,6 +278,19 @@ def _profile_class(class_node: ast.ClassDef) -> ClassProfile:
 
 
 def _extract_module_structure(tree: ast.Module) -> tuple[list[ClassProfile], list[str], list[str]]:
+    """Support extract module structure behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    tuple[list[ClassProfile], list[str], list[str]]
+        The tuple of values.
+    """
+    
     classes: list[ClassProfile] = []
     public_functions: list[str] = []
     constants: list[str] = []
@@ -235,6 +315,23 @@ def _extract_module_structure(tree: ast.Module) -> tuple[list[ClassProfile], lis
 
 
 def _heuristic_module_summary(module_id: str, path: Path, tree: ast.Module) -> ModuleSummary:
+    """Support heuristic module summary behavior.
+    
+    Parameters
+    ----------
+    module_id : str
+        The module id value.
+    path : Path
+        The file or folder path.
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    ModuleSummary
+        The module summary result.
+    """
+    
     classes, public_functions, constants = _extract_module_structure(tree)
     if path.name == "__init__.py":
         package_name = module_id.split(".")[-1] if module_id else path.parent.name
@@ -262,6 +359,25 @@ def _heuristic_module_summary(module_id: str, path: Path, tree: ast.Module) -> M
 
 
 def _build_user_prompt(module_id: str, path: Path, source_lines: list[str], summary: ModuleSummary) -> str:
+    """Support build user prompt behavior.
+    
+    Parameters
+    ----------
+    module_id : str
+        The module id value.
+    path : Path
+        The file or folder path.
+    source_lines : list[str]
+        The source lines value.
+    summary : ModuleSummary
+        The summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     source_text = "\n".join(source_lines[:160])
     structure = [f"MODULE: {module_id}", f"PATH: {path.name}"]
     if summary.classes:
@@ -274,6 +390,27 @@ def _build_user_prompt(module_id: str, path: Path, source_lines: list[str], summ
 
 
 def _call_model(module_id: str, path: Path, source_lines: list[str], ai_config: "AIConfig", seed_summary: ModuleSummary) -> tuple[str, str]:
+    """Support call model behavior.
+    
+    Parameters
+    ----------
+    module_id : str
+        The module id value.
+    path : Path
+        The file or folder path.
+    source_lines : list[str]
+        The source lines value.
+    ai_config : 'AIConfig'
+        The ai config value.
+    seed_summary : ModuleSummary
+        The seed summary value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     url = ai_config.base_url.rstrip("/") + "/chat/completions"
     system_prompt = (
         "You summarize Python modules for code documentation. "
@@ -325,6 +462,27 @@ def build_module_summary(
     source_lines: list[str],
     ai_config: "AIConfig | None" = None,
 ) -> ModuleSummary:
+    """Build a module summary.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    module_id : str
+        The module id value.
+    tree : ast.Module
+        The parsed syntax tree.
+    source_lines : list[str]
+        The source lines value.
+    ai_config : 'AIConfig | None', optional
+        The optional ai config value.
+    
+    Returns
+    -------
+    ModuleSummary
+        The module summary result.
+    """
+    
     summary = _heuristic_module_summary(module_id, path, tree)
     if ai_config is None:
         return summary

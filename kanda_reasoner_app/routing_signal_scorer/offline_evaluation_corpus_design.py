@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/offline_evaluation_corpus_design.py
 """Offline evaluation corpus design contract for future semantic evidence.
 
 This module is intentionally standard-library-only. It does not evaluate a
@@ -183,21 +184,74 @@ FORBIDDEN_RAW_TEXT_FIELDS = frozenset(
 
 
 def _is_sequence(value: Any) -> bool:
+    """Support is sequence behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
 
 
 def _as_strings(value: Any) -> set[str]:
+    """Support as strings behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if not _is_sequence(value):
         return set()
     return {item for item in value if isinstance(item, str)}
 
 
 def _append_missing(errors: list[str], label: str, missing: set[str] | frozenset[str]) -> None:
+    """Support append missing behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    label : str
+        The label value.
+    missing : set[str] | frozenset[str]
+        The missing value.
+    """
+    
     if missing:
         errors.append(f"{label} missing required values: {', '.join(sorted(missing))}")
 
 
 def _contains_forbidden_key(mapping: Mapping[str, Any], forbidden_keys: set[str] | frozenset[str]) -> set[str]:
+    """Support contains forbidden key behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    forbidden_keys : set[str] | frozenset[str]
+        The forbidden keys value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     return {key for key in mapping.keys() if key in forbidden_keys}
 
 
@@ -357,6 +411,19 @@ def validate_offline_evaluation_corpus_plan(plan: Mapping[str, Any]) -> dict[str
 
 
 def build_minimal_valid_evaluation_case(category: str) -> dict[str, Any]:
+    """Build a minimal valid evaluation case.
+    
+    Parameters
+    ----------
+    category : str
+        The category value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "case_id": f"eval-{category}",
         "category": category,
@@ -373,6 +440,14 @@ def build_minimal_valid_evaluation_case(category: str) -> dict[str, Any]:
 
 
 def build_minimal_valid_evaluation_corpus_template() -> dict[str, Any]:
+    """Build a minimal valid evaluation corpus template.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "evaluation_id": "routing-signal-scorer-v3-offline-evaluation-corpus-template",
         "schema_version": OFFLINE_EVALUATION_CORPUS_SCHEMA_VERSION,
@@ -402,6 +477,14 @@ def build_minimal_valid_evaluation_corpus_template() -> dict[str, Any]:
 
 
 def build_disabled_offline_evaluation_corpus_status() -> dict[str, Any]:
+    """Build a disabled offline evaluation corpus status.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "feature_id": OFFLINE_EVALUATION_CORPUS_FEATURE_ID,
         "schema_version": OFFLINE_EVALUATION_CORPUS_SCHEMA_VERSION,

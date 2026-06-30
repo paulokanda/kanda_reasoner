@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_boundary_violations.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -23,6 +24,21 @@ HIGH_CROSS_BUCKET_THRESHOLD = 5
 
 
 def _safe_role(boundary_index: dict[str, dict[str, Any]], file_path: str) -> str:
+    """Support safe role behavior.
+    
+    Parameters
+    ----------
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -30,6 +46,21 @@ def _safe_role(boundary_index: dict[str, dict[str, Any]], file_path: str) -> str
 
 
 def _safe_bucket(boundary_index: dict[str, dict[str, Any]], file_path: str) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "general"
@@ -37,6 +68,19 @@ def _safe_bucket(boundary_index: dict[str, dict[str, Any]], file_path: str) -> s
 
 
 def _safe_int(value: Any) -> int:
+    """Support safe int behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         return int(value)
     except Exception:
@@ -47,6 +91,21 @@ def build_boundary_violation_index(
     boundary_index: dict[str, dict[str, Any]],
     boundary_handoffs: list[dict[str, Any]],
 ) -> dict[str, list[dict[str, Any]]]:
+    """Build a boundary violation index.
+    
+    Parameters
+    ----------
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    boundary_handoffs : list[dict[str, Any]]
+        The boundary handoffs value.
+    
+    Returns
+    -------
+    dict[str, list[dict[str, Any]]]
+        The mapped values.
+    """
+    
     violation_index: dict[str, list[dict[str, Any]]] = {}
 
     for handoff in boundary_handoffs:
@@ -128,6 +187,19 @@ def build_boundary_violation_index(
 def build_boundary_violation_summary(
     boundary_violation_index: dict[str, list[dict[str, Any]]],
 ) -> dict[str, Any]:
+    """Build a boundary violation summary.
+    
+    Parameters
+    ----------
+    boundary_violation_index : dict[str, list[dict[str, Any]]]
+        The boundary violation index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     type_frequency: dict[str, int] = {}
     severity_frequency: dict[str, int] = {}
     rows: list[dict[str, Any]] = []
@@ -192,6 +264,21 @@ def build_boundary_violation_hotspots(
     boundary_violation_index: dict[str, list[dict[str, Any]]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a boundary violation hotspots.
+    
+    Parameters
+    ----------
+    boundary_violation_index : dict[str, list[dict[str, Any]]]
+        The boundary violation index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, violations in boundary_violation_index.items():

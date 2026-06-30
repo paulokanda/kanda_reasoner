@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_models.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -8,6 +9,8 @@ from typing import Any
 
 @dataclass
 class TraceEvent:
+    """Represent trace event."""
+    
     event_id: int
     time: str
     event_type: str
@@ -21,6 +24,8 @@ class TraceEvent:
 
 @dataclass
 class TraceStateSnapshot:
+    """Represent trace state snapshot."""
+    
     snapshot_id: int
     time: str
     label: str
@@ -29,6 +34,8 @@ class TraceStateSnapshot:
 
 @dataclass
 class TraceIssue:
+    """Represent trace issue."""
+    
     issue_id: int
     time: str
     source_file: str
@@ -39,6 +46,8 @@ class TraceIssue:
 
 @dataclass
 class TraceSignalConnection:
+    """Represent trace signal connection."""
+    
     connection_id: int
     time: str
     sender_type: str

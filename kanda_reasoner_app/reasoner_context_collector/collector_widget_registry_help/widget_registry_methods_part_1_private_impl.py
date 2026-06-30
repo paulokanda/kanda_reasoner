@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_registry_help/widget_registry_methods_part_1_private_impl.py
 """Private method implementations for collector_widget_registry."""
 
 from __future__ import annotations
@@ -5,47 +6,124 @@ from __future__ import annotations
 __all__ = []
 
 def _bind_root_globals(root_globals):
+    """Support bind root globals behavior.
+    
+    Parameters
+    ----------
+    root_globals : object
+        The root globals value.
+    """
+    
     globals().update(root_globals)
 
 def _wrg__current_source_symbol_impl(self) -> str:
+    """Support wrg current source symbol impl behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     names = [name for _kind, name in self._scope_stack if name]
     return ".".join(names) if names else "<module>"
 
 def _wrg__current_class_name_impl(self) -> str:
+    """Support wrg current class name impl behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for kind, name in reversed(self._scope_stack):
         if kind == "class":
             return name
     return ""
 
 def _wrg__current_method_name_impl(self) -> str:
+    """Support wrg current method name impl behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for kind, name in reversed(self._scope_stack):
         if kind in FUNCTION_SCOPE_KINDS:
             return name
     return ""
 
 def _wrg__push_scope_impl(self, kind: str, name: str) -> None:
+    """Support wrg push scope impl behavior.
+    
+    Parameters
+    ----------
+    kind : str
+        The kind value.
+    name : str
+        The name value.
+    """
+    
     self._scope_stack.append((kind, name))
 
 def _wrg__pop_scope_impl(self) -> None:
+    """Support wrg pop scope impl behavior.
+    """
+    
     if self._scope_stack:
         self._scope_stack.pop()
 
 def _wrg_visit_ClassDef_impl(self, node: ast.ClassDef) -> None:
+    """Support wrg visit class def impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.ClassDef
+        The syntax tree node.
+    """
+    
     self._push_scope("class", node.name)
     self.generic_visit(node)
     self._pop_scope()
 
 def _wrg_visit_FunctionDef_impl(self, node: ast.FunctionDef) -> None:
+    """Support wrg visit function def impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef
+        The syntax tree node.
+    """
+    
     self._push_scope("function", node.name)
     self.generic_visit(node)
     self._pop_scope()
 
 def _wrg_visit_AsyncFunctionDef_impl(self, node: ast.AsyncFunctionDef) -> None:
+    """Support wrg visit async function def impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.AsyncFunctionDef
+        The syntax tree node.
+    """
+    
     self._push_scope("async_function", node.name)
     self.generic_visit(node)
     self._pop_scope()
 
 def _wrg_visit_Assign_impl(self, node: ast.Assign) -> None:
+    """Support wrg visit assign impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Assign
+        The syntax tree node.
+    """
+    
     widget_call = node.value if isinstance(node.value, ast.Call) else None
     if widget_call is not None:
         widget_type = _get_widget_type_from_call(widget_call)
@@ -63,6 +141,14 @@ def _wrg_visit_Assign_impl(self, node: ast.Assign) -> None:
     self.generic_visit(node)
 
 def _wrg_visit_AnnAssign_impl(self, node: ast.AnnAssign) -> None:
+    """Support wrg visit ann assign impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.AnnAssign
+        The syntax tree node.
+    """
+    
     widget_call = node.value if isinstance(node.value, ast.Call) else None
     if widget_call is not None:
         widget_type = _get_widget_type_from_call(widget_call)
@@ -80,6 +166,14 @@ def _wrg_visit_AnnAssign_impl(self, node: ast.AnnAssign) -> None:
     self.generic_visit(node)
 
 def _wrg_visit_Call_impl(self, node: ast.Call) -> None:
+    """Support wrg visit call impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    """
+    
     self._handle_widget_property_call(node)
     self._handle_layout_call(node)
     self.generic_visit(node)
@@ -92,6 +186,27 @@ def _wrg__register_assigned_widget_impl(
     assign_node: ast.AST,
     creation_style: str,
 ) -> str:
+    """Support wrg register assigned widget impl behavior.
+    
+    Parameters
+    ----------
+    target_ref : str
+        The target ref value.
+    widget_type : str
+        The widget type value.
+    call_node : ast.Call
+        The call node value.
+    assign_node : ast.AST
+        The assign node value.
+    creation_style : str
+        The creation style value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     variable_name = _variable_name_from_ref(target_ref)
     source_symbol = self._current_source_symbol()
     class_name = self._current_class_name()
@@ -161,6 +276,27 @@ def _wrg__register_inline_widget_impl(
     layout_position: dict[str, Any] | None = None,
     creation_style: str = "inline_constructor",
 ) -> str:
+    """Support wrg register inline widget impl behavior.
+    
+    Parameters
+    ----------
+    widget_call : ast.Call
+        The widget call value.
+    parent_layout : str, optional
+        The optional parent layout value.
+    layout_kind : str, optional
+        The optional layout kind value.
+    layout_position : dict[str, Any] | None, optional
+        The optional layout position value.
+    creation_style : str, optional
+        The optional creation style value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     widget_type = _get_widget_type_from_call(widget_call)
     if not widget_type:
         return ""
@@ -222,6 +358,14 @@ def _wrg__register_inline_widget_impl(
     return widget_id
 
 def _wrg__handle_widget_property_call_impl(self, node: ast.Call) -> None:
+    """Support wrg handle widget property call impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    """
+    
     if not isinstance(node.func, ast.Attribute):
         return
 
@@ -274,6 +418,14 @@ def _wrg__handle_widget_property_call_impl(self, node: ast.Call) -> None:
         return
 
 def _wrg__handle_layout_call_impl(self, node: ast.Call) -> None:
+    """Support wrg handle layout call impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    """
+    
     if not isinstance(node.func, ast.Attribute):
         return
 
@@ -296,6 +448,16 @@ def _wrg__handle_layout_call_impl(self, node: ast.Call) -> None:
         return
 
 def _wrg__handle_add_widget_impl(self, node: ast.Call, layout_ref: str) -> None:
+    """Support wrg handle add widget impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    layout_ref : str
+        The layout ref value.
+    """
+    
     if not node.args:
         return
 
@@ -317,6 +479,16 @@ def _wrg__handle_add_widget_impl(self, node: ast.Call, layout_ref: str) -> None:
     )
 
 def _wrg__handle_add_row_impl(self, node: ast.Call, layout_ref: str) -> None:
+    """Support wrg handle add row impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    layout_ref : str
+        The layout ref value.
+    """
+    
     if len(node.args) < 2:
         return
 
@@ -355,6 +527,16 @@ def _wrg__handle_add_row_impl(self, node: ast.Call, layout_ref: str) -> None:
         )
 
 def _wrg__handle_add_tab_impl(self, node: ast.Call, layout_ref: str) -> None:
+    """Support wrg handle add tab impl behavior.
+    
+    Parameters
+    ----------
+    node : ast.Call
+        The syntax tree node.
+    layout_ref : str
+        The layout ref value.
+    """
+    
     if len(node.args) < 2:
         return
 
@@ -397,6 +579,22 @@ def _wrg__append_layout_record_impl(
     layout_position: dict[str, Any],
     line: int | None,
 ) -> None:
+    """Support wrg append layout record impl behavior.
+    
+    Parameters
+    ----------
+    widget_id : str
+        The widget id value.
+    parent_layout : str
+        The parent layout value.
+    layout_kind : str
+        The layout kind value.
+    layout_position : dict[str, Any]
+        The layout position value.
+    line : int | None
+        The line value.
+    """
+    
     record = self.registry.get(widget_id)
     if not record:
         return
@@ -422,18 +620,53 @@ def _wrg__append_layout_record_impl(
     record["layout_records"] = current_layout_records
 
 def _wrg__index_widget_ref_impl(self, source_symbol: str, target_ref: str, widget_id: str) -> None:
+    """Support wrg index widget ref impl behavior.
+    
+    Parameters
+    ----------
+    source_symbol : str
+        The source symbol value.
+    target_ref : str
+        The target ref value.
+    widget_id : str
+        The widget id value.
+    """
+    
     if source_symbol not in self._scope_ref_index:
         self._scope_ref_index[source_symbol] = {}
     self._scope_ref_index[source_symbol][target_ref] = widget_id
     self._file_ref_index[target_ref] = widget_id
 
 def _wrg__index_widget_var_impl(self, variable_name: str, widget_id: str) -> None:
+    """Support wrg index widget var impl behavior.
+    
+    Parameters
+    ----------
+    variable_name : str
+        The variable name value.
+    widget_id : str
+        The widget id value.
+    """
+    
     if variable_name not in self._file_var_index:
         self._file_var_index[variable_name] = []
     if widget_id not in self._file_var_index[variable_name]:
         self._file_var_index[variable_name].append(widget_id)
 
 def _wrg__resolve_widget_id_impl(self, target_ref: str) -> str:
+    """Support wrg resolve widget id impl behavior.
+    
+    Parameters
+    ----------
+    target_ref : str
+        The target ref value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not target_ref:
         return ""
 
@@ -460,6 +693,25 @@ def _wrg__resolve_or_create_widget_from_expr_impl(
     layout_kind: str,
     layout_position: dict[str, Any],
 ) -> str:
+    """Support wrg resolve or create widget from expr impl behavior.
+    
+    Parameters
+    ----------
+    expr : ast.AST
+        The expr value.
+    parent_layout : str
+        The parent layout value.
+    layout_kind : str
+        The layout kind value.
+    layout_position : dict[str, Any]
+        The layout position value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     ref = _expr_to_ref(expr)
     widget_id = self._resolve_widget_id(ref)
     if widget_id:

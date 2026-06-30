@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/semantic_evidence_contract.py
 """Mock semantic evidence contract for future routing_signal_scorer v3 ML work.
 
 This module is intentionally standard-library-only and does not implement
@@ -287,6 +288,19 @@ def render_mock_semantic_evidence_report_text(report: Mapping[str, Any]) -> str:
 
 
 def _prepare_candidate(candidate: Mapping[str, Any]) -> dict[str, object]:
+    """Support prepare candidate behavior.
+    
+    Parameters
+    ----------
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     score = round(float(candidate.get("score", 0.0)), 6)
     eligible, reasons = _metadata_eligibility(candidate)
     return {
@@ -319,6 +333,19 @@ def _prepare_candidate(candidate: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _metadata_eligibility(candidate: Mapping[str, Any]) -> tuple[bool, list[str]]:
+    """Support metadata eligibility behavior.
+    
+    Parameters
+    ----------
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    tuple[bool, list[str]]
+        The tuple of values.
+    """
+    
     reasons: list[str] = []
     lifecycle_status = str(candidate.get("lifecycle_status", "")).lower()
     allowed_use = set(_as_list(candidate.get("allowed_use", [])))
@@ -343,6 +370,21 @@ def _metadata_eligibility(candidate: Mapping[str, Any]) -> tuple[bool, list[str]
 
 
 def _is_ambiguous(candidates: list[Mapping[str, Any]], *, ambiguity_delta: float) -> bool:
+    """Support is ambiguous behavior.
+    
+    Parameters
+    ----------
+    candidates : list[Mapping[str, Any]]
+        The candidates value.
+    ambiguity_delta : float
+        The ambiguity delta value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if len(candidates) < 2:
         return False
     first = float(candidates[0].get("score", 0.0))
@@ -351,6 +393,23 @@ def _is_ambiguous(candidates: list[Mapping[str, Any]], *, ambiguity_delta: float
 
 
 def _semantic_state(candidates: list[Mapping[str, Any]], rejected: list[Mapping[str, Any]], ambiguous: bool) -> str:
+    """Support semantic state behavior.
+    
+    Parameters
+    ----------
+    candidates : list[Mapping[str, Any]]
+        The candidates value.
+    rejected : list[Mapping[str, Any]]
+        The rejected value.
+    ambiguous : bool
+        The ambiguous value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if ambiguous:
         return "AMBIGUOUS_SEMANTIC_MATCH"
     if not candidates:
@@ -360,6 +419,19 @@ def _semantic_state(candidates: list[Mapping[str, Any]], rejected: list[Mapping[
 
 
 def _confidence_band(score: float) -> str:
+    """Support confidence band behavior.
+    
+    Parameters
+    ----------
+    score : float
+        The score value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if score >= 0.80:
         return "HIGH_SIGNAL_ADVISORY"
     if score >= 0.65:
@@ -370,6 +442,19 @@ def _confidence_band(score: float) -> str:
 
 
 def _fallback_reason(state: str) -> str:
+    """Support fallback reason behavior.
+    
+    Parameters
+    ----------
+    state : str
+        The state value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if state == "AMBIGUOUS_SEMANTIC_MATCH":
         return "semantic candidates are ambiguous; lexical scorer remains primary"
     if state == "ERROR_STATE_FALLBACK":
@@ -380,6 +465,19 @@ def _fallback_reason(state: str) -> str:
 
 
 def _as_list(value: Any) -> list[str]:
+    """Support as list behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if value is None:
         return []
     if isinstance(value, str):

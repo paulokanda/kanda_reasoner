@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/parallel_runner.py
 """Parallel file-processing engine for the docstring inserter."""
 
 from __future__ import annotations
@@ -12,6 +13,8 @@ from typing import Callable, Protocol
 
 @dataclass
 class FileProgress:
+    """Represent file progress."""
+    
     path: Path
     symbols_found: int = 0
     symbols_done: int = 0
@@ -22,6 +25,8 @@ class FileProgress:
 
 @dataclass
 class RunSummary:
+    """Represent run summary."""
+    
     changes: dict[Path, tuple[str, bool]] = field(default_factory=dict)
     skipped_messages: list[str] = field(default_factory=list)
     files_scanned: int = 0
@@ -31,12 +36,29 @@ class RunSummary:
 
 
 class FileProcessorFn(Protocol):
+    """Represent file processor fn."""
+    
     def __call__(
         self,
         path: Path,
         *,
         on_symbol_done: Callable[[str, bool], None] | None = None,
     ) -> tuple[list[tuple[int, list[str]]], list[str], str, bool]:
+        """Support call behavior.
+        
+        Parameters
+        ----------
+        path : Path
+            The file or folder path.
+        on_symbol_done : Callable[[str, bool], None] | None, optional
+            The optional on symbol done value.
+        
+        Returns
+        -------
+        tuple[list[tuple[int, list[str]]], list[str], str, bool]
+            The tuple of values.
+        """
+        
         ...
 
 
@@ -46,6 +68,25 @@ def _process_one_file(
     parse_source_fn: Callable[[str, Path], object],
     apply_insertions_fn: Callable[[str, list], str],
 ) -> tuple[Path, tuple[str, bool] | None, list[str], FileProgress]:
+    """Support process one file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    processor : FileProcessorFn
+        The processor value.
+    parse_source_fn : Callable[[str, Path], object]
+        The parse source fn value.
+    apply_insertions_fn : Callable[[str, list], str]
+        The apply insertions fn value.
+    
+    Returns
+    -------
+    tuple[Path, tuple[str, bool] | None, list[str], FileProgress]
+        The tuple of values.
+    """
+    
     progress = FileProgress(path=path)
 
     def _on_symbol_done(_symbol_name: str, used_ai: bool) -> None:
@@ -89,6 +130,31 @@ def run_parallel(
     on_file_progress: Callable[[int, int], None] | None = None,
     on_file_complete: Callable[[FileProgress], None] | None = None,
 ) -> RunSummary:
+    """Run the parallel.
+    
+    Parameters
+    ----------
+    paths : list[Path]
+        The file or folder paths.
+    processor : FileProcessorFn
+        The processor value.
+    parse_source_fn : Callable[[str, Path], object]
+        The parse source fn value.
+    apply_insertions_fn : Callable[[str, list], str]
+        The apply insertions fn value.
+    max_workers : int
+        The max workers value.
+    on_file_progress : Callable[[int, int], None] | None, optional
+        The optional on file progress value.
+    on_file_complete : Callable[[FileProgress], None] | None, optional
+        The optional on file complete value.
+    
+    Returns
+    -------
+    RunSummary
+        The run summary result.
+    """
+    
     summary = RunSummary(files_scanned=len(paths))
     done = 0
 

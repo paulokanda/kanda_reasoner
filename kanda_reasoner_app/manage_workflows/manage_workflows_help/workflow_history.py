@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_history.py
 """Own remembered project-root history behavior."""
 
 from __future__ import annotations
@@ -66,13 +67,27 @@ def record_root(root: Path) -> None:
     _save_history(history)
 
 def get_history_roots() -> list[str]:
+    """Return the history roots.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return _load_history()["roots"]
 
 def clear_history() -> None:
+    """Support clear history behavior.
+    """
+    
     _save_history({"roots": []})
     print(f"History cleared ({HISTORY_FILE})")
 
 def print_history() -> None:
+    """Support print history behavior.
+    """
+    
     roots = get_history_roots()
     if not roots:
         print("No history recorded yet.")

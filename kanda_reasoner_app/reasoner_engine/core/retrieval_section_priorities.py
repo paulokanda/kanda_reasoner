@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/core/retrieval_section_priorities.py
 """Section-priority rules for reasoner engine retrieval."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_validate_manifests.py
 """Validate the AI docstring generator helper manifest."""
 
 from __future__ import annotations
@@ -21,10 +22,36 @@ EXPECTED_ROOT_ALL = [
 
 
 def read_text(path: Path) -> str:
+    """Return the text.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="replace")
 
 
 def literal_all(path: Path) -> list[str]:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(read_text(path))
     for node in tree.body:
         value = None
@@ -47,6 +74,19 @@ def literal_all(path: Path) -> list[str]:
 
 
 def has_star_import(path: Path) -> bool:
+    """Return whether star import.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     tree = ast.parse(read_text(path))
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
@@ -57,6 +97,19 @@ def has_star_import(path: Path) -> bool:
 
 
 def validate_manifest(manifest_path: Path) -> list[str]:
+    """Validate the manifest.
+    
+    Parameters
+    ----------
+    manifest_path : Path
+        The manifest path value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     errors: list[str] = []
     package_dir = manifest_path.parent
     project_root = package_dir.parents[1]
@@ -112,6 +165,14 @@ def validate_manifest(manifest_path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     manifest_path = Path(__file__).with_name(MANIFEST_NAME)
     errors = validate_manifest(manifest_path)
     if errors:

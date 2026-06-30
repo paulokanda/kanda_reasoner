@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py
 """Tool registry definitions for the Reasoner tools GUI shell."""
 
 from __future__ import annotations
@@ -24,6 +25,8 @@ def _source_path(*parts: str) -> str:
 
 @dataclass(frozen=True)
 class ToolSpec:
+    """Represent tool spec."""
+    
     step_title: str
     module_candidates: tuple[str, ...] = ()
     class_candidates: tuple[str, ...] = ()

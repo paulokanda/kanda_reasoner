@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/metadata_vector_manifest_schema.py
 """Metadata Vector Manifest schema for future routing_signal_scorer v3 work.
 
 This module is intentionally standard-library-only and does not implement
@@ -391,14 +392,52 @@ def render_metadata_vector_manifest_validation_text(result: ManifestValidation) 
 
 
 def _reject_forbidden_fields(mapping: Mapping[str, Any], errors: list[str], *, context: str) -> None:
+    """Support reject forbidden fields behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    errors : list[str]
+        The error values.
+    context : str
+        The context value.
+    """
+    
     found = FORBIDDEN_FIELDS & set(mapping.keys())
     if found:
         errors.append(f"{context} contains forbidden fields: " + ", ".join(sorted(found)))
 
 
 def _is_string_list(value: object) -> bool:
+    """Support is string list behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, list) and all(isinstance(item, str) for item in value)
 
 
 def _is_sha256_like(value: str) -> bool:
+    """Support is sha256 like behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return value.startswith("sha256:") and len(value) > len("sha256:")

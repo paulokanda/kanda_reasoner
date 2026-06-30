@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_observation_skeleton_design.py
 """Design-only M21 shadow-mode observation skeleton design.
 
 M21 defines the shape and safety limits of a future non-runtime observation

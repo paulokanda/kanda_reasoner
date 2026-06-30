@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/architecture_audit_resolver.py
 """External architecture audit path resolver for Kanda Reasoner.
 
 This module resolves where generated architecture audit evidence should live

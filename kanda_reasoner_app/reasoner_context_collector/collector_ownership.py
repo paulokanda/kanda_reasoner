@@ -1,9 +1,23 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_ownership.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
 
 
 def build_object_ownership_map(files_payload: list[dict]) -> list[dict]:
+    """Build a object ownership map.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     results: list[dict] = []
 
     for file_record in files_payload:

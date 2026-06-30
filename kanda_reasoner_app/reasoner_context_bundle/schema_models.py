@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/schema_models.py
 """Data models for the reasoner context bundle box.
 
 The models in this module are intentionally small contracts shared by the

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py
 r"""
 sync_startup_routing_kernel_pack.py
 

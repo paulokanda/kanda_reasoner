@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/report_writer.py
 """Report writer helpers for source hygiene outputs."""
 
 from __future__ import annotations

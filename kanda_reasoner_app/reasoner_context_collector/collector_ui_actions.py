@@ -11,6 +11,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -21,6 +36,19 @@ def _safe_bucket_for_file(
 
 
 def _normalize_signal_record(record: Any) -> dict[str, Any]:
+    """Support normalize signal record behavior.
+    
+    Parameters
+    ----------
+    record : Any
+        The record value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     if not isinstance(record, dict):
         return {}
 
@@ -38,6 +66,19 @@ def _normalize_signal_record(record: Any) -> dict[str, Any]:
 
 
 def _extract_class_name_from_source_symbol(source_symbol: str) -> str:
+    """Support extract class name from source symbol behavior.
+    
+    Parameters
+    ----------
+    source_symbol : str
+        The source symbol value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not source_symbol:
         return ""
 
@@ -51,6 +92,21 @@ def _expand_candidate_targets(
     raw_target: str,
     source_symbol: str,
 ) -> list[str]:
+    """Support expand candidate targets behavior.
+    
+    Parameters
+    ----------
+    raw_target : str
+        The raw target value.
+    source_symbol : str
+        The source symbol value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     target = str(raw_target or "").strip()
     if not target or target == "unknown":
         return []
@@ -71,6 +127,23 @@ def _resolve_handler_target(
     source_symbol: str,
     symbol_index: dict[str, Any],
 ) -> dict[str, Any]:
+    """Support resolve handler target behavior.
+    
+    Parameters
+    ----------
+    raw_target : str
+        The raw target value.
+    source_symbol : str
+        The source symbol value.
+    symbol_index : dict[str, Any]
+        The symbol index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     for candidate in _expand_candidate_targets(raw_target, source_symbol):
         payload = symbol_index.get(candidate, {})
         if isinstance(payload, dict) and payload:
@@ -98,6 +171,23 @@ def build_ui_action_index(
     symbol_index: dict[str, Any],
     files_payload: list[dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a ui action index.
+    
+    Parameters
+    ----------
+    qt_signal_map : Any
+        The qt signal map value.
+    symbol_index : dict[str, Any]
+        The symbol index value.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     action_index: dict[str, dict[str, Any]] = {}
 
     if isinstance(qt_signal_map, dict):
@@ -197,6 +287,19 @@ def build_ui_action_index(
 def build_ui_action_summary(
     ui_action_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a ui action summary.
+    
+    Parameters
+    ----------
+    ui_action_index : dict[str, dict[str, Any]]
+        The ui action index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for action_key, payload in ui_action_index.items():
@@ -239,6 +342,21 @@ def build_ui_action_hotspots(
     ui_action_index: dict[str, dict[str, Any]],
     limit: int = 20,
 ) -> list[dict[str, Any]]:
+    """Build a ui action hotspots.
+    
+    Parameters
+    ----------
+    ui_action_index : dict[str, dict[str, Any]]
+        The ui action index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     hotspots: list[dict[str, Any]] = []
 
     for action_key, payload in ui_action_index.items():

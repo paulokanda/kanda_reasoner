@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/freeze_state.py
 """Freeze-state parsing and indexing for the selected project external support box."""
 
 from __future__ import annotations
@@ -32,6 +33,19 @@ _LIST_ITEM_RE = re.compile(r"^\s*-\s*(?P<value>.*)$")
 
 
 def _strip_quotes(value: str) -> str:
+    """Support strip quotes behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = value.strip()
     if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
         return value[1:-1]

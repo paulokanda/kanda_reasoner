@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/project_profile_help/__init__.py
 """
 Helper package for project profile definitions and inference.
 """

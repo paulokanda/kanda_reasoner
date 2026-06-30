@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_issue_models.py
 """Workflow detector issue models.
 
 This module owns the small report object used by Tab 2 workflow detectors.

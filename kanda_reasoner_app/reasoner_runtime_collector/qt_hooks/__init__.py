@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/qt_hooks/__init__.py
 """Minimal package facade."""
 
 __all__ = []

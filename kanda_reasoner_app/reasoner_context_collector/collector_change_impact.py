@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_change_impact.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,14 +7,53 @@ from typing import Any
 
 
 def _safe_text(value: Any) -> str:
+    """Support safe text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip()
 
 
 def _safe_lower(value: Any) -> str:
+    """Support safe lower behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_text(value).lower()
 
 
 def _safe_float(value: Any) -> float:
+    """Support safe float behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     try:
         return float(value)
     except Exception:
@@ -21,6 +61,19 @@ def _safe_float(value: Any) -> float:
 
 
 def _safe_int(value: Any) -> int:
+    """Support safe int behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         return int(value)
     except Exception:
@@ -28,6 +81,21 @@ def _safe_int(value: Any) -> int:
 
 
 def _payload(mapping: dict[str, dict[str, Any]], file_path: str) -> dict[str, Any]:
+    """Support payload behavior.
+    
+    Parameters
+    ----------
+    mapping : dict[str, dict[str, Any]]
+        The mapping value.
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     value = mapping.get(file_path, {})
     if isinstance(value, dict):
         return value
@@ -35,6 +103,19 @@ def _payload(mapping: dict[str, dict[str, Any]], file_path: str) -> dict[str, An
 
 
 def _safe_bucket(file_record: dict[str, Any]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_lower(file_record.get("subsystem_bucket", "")) or "general"
 
 
@@ -54,6 +135,45 @@ def build_change_impact_index(
     config_schema_registry: dict[str, dict[str, Any]],
     state_lifecycle_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a change impact index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    file_priority_index : dict[str, dict[str, Any]]
+        The file priority index value.
+    boundary_violation_index : dict[str, dict[str, Any]]
+        The boundary violation index value.
+    orchestration_index : dict[str, dict[str, Any]]
+        The orchestration index value.
+    state_mutation_index : dict[str, dict[str, Any]]
+        The state mutation index value.
+    persistence_io_index : dict[str, dict[str, Any]]
+        The persistence io index value.
+    event_propagation_index : dict[str, dict[str, Any]]
+        The event propagation index value.
+    canonical_conflict_index : dict[str, dict[str, Any]]
+        The canonical conflict index value.
+    responsibility_overlap_index : dict[str, dict[str, Any]]
+        The responsibility overlap index value.
+    feature_registry : dict[str, dict[str, Any]]
+        The feature registry value.
+    implementation_chronology_index : dict[str, dict[str, Any]]
+        The implementation chronology index value.
+    config_schema_registry : dict[str, dict[str, Any]]
+        The config schema registry value.
+    state_lifecycle_index : dict[str, dict[str, Any]]
+        The state lifecycle index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     feature_count_by_file: dict[str, int] = {}
@@ -175,6 +295,19 @@ def build_change_impact_index(
 def build_change_impact_summary(
     change_impact_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a change impact summary.
+    
+    Parameters
+    ----------
+    change_impact_index : dict[str, dict[str, Any]]
+        The change impact index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     high_risk_count = 0
 
@@ -213,6 +346,21 @@ def build_high_risk_edit_hotspots(
     change_impact_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a high risk edit hotspots.
+    
+    Parameters
+    ----------
+    change_impact_index : dict[str, dict[str, Any]]
+        The change impact index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in change_impact_index.items():

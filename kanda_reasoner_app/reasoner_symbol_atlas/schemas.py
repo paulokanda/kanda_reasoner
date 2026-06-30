@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/schemas.py
 """Shared schemas for Project Symbol Atlas reports."""
 
 from __future__ import annotations

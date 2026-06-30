@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/ai_review/formatter.py
 """Format Tab 1 AI review output as advisory text."""
 
 from __future__ import annotations

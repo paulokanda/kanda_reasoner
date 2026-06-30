@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/actual_human_decision_recording_boundary_design.py
 """Actual human decision recording boundary design for routing scorer v3.
 
 This module is intentionally standard-library-only and boundary-design-only. It
@@ -305,6 +306,19 @@ FORBIDDEN_BOUNDARY_FIELDS = frozenset(
 
 
 def _sorted(values: Sequence[str] | frozenset[str]) -> list[str]:
+    """Support sorted behavior.
+    
+    Parameters
+    ----------
+    values : Sequence[str] | frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(values)
 
 

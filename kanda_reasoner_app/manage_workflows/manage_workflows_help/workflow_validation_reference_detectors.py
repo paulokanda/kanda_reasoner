@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_validation_reference_detectors.py
 """Detect workflow commands that reference outdated validation paths."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_step_order_detectors.py
 """Detect workflow steps that run in a dangerous order."""
 
 from __future__ import annotations

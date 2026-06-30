@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reliability_guidance/property_test_guidance.py
 """Build reviewable property-test guidance without editing source files."""
 
 from __future__ import annotations

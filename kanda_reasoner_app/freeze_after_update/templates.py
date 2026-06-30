@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/templates.py
 """Text templates for the external Freeze Feature After Update support box."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_8_help/source_loader_private_impl.py
 """Loader for the source-preserving json_splitter_8 facade."""
 
 from __future__ import annotations
@@ -12,11 +13,27 @@ __all__ = ["load_json_splitter_8_source"]
 
 
 def _decode_source() -> str:
+    """Support decode source behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = "".join([_SOURCE_PART_1, _SOURCE_PART_2])
     return base64.b64decode(payload.encode("ascii")).decode("utf-8")
 
 
 def load_json_splitter_8_source(target_globals: MutableMapping[str, Any]) -> None:
+    """Load the json splitter 8 source.
+    
+    Parameters
+    ----------
+    target_globals : MutableMapping[str, Any]
+        The target globals value.
+    """
+    
     source = _decode_source()
     filename = str(target_globals.get("__file__", "json_splitter_8.py"))
     code = compile(source, filename, "exec")

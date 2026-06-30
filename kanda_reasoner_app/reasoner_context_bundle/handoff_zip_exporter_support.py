@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter_support.py
 """Internal support helpers for JSON handoff ZIP export."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/help_index_help/help_index_normalization.py
 """
 Text normalization helpers for the Reasoner Engine help index.
 
@@ -27,6 +28,19 @@ _COMMON_REPLACEMENTS: dict[str, str] = {
 
 
 def normalize_help_text(value: str) -> str:
+    """Normalize the help text.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = value
     for old, new in _COMMON_REPLACEMENTS.items():
         text = text.replace(old, new)
@@ -34,6 +48,19 @@ def normalize_help_text(value: str) -> str:
 
 
 def normalize_help_payload(value: Any) -> Any:
+    """Normalize the help payload.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         return {key: normalize_help_payload(item) for key, item in value.items()}
     if isinstance(value, list):

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_fallback_index_widget.py
 """Fallback Brain Navigator index widget.
 
 This module owns the first visible Brain Navigator fallback UI. It deliberately

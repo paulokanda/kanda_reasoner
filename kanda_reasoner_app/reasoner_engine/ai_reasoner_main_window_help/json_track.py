@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/json_track.py
 """Classify the currently loaded Project Reasoner JSON file.
 
 This helper belongs to the V10 GUI / Runtime Controller box. It only labels

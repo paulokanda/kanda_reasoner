@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/dry_run_artifact_generation_plan_design.py
 """Dry-run artifact generation plan design for routing scorer v3.
 
 This module is intentionally standard-library-only and design-only. It does not
@@ -243,6 +244,19 @@ FORBIDDEN_PLAN_FIELDS = frozenset(
 
 
 def _as_set(value: Any) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if isinstance(value, str):
         return {value}
     if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):

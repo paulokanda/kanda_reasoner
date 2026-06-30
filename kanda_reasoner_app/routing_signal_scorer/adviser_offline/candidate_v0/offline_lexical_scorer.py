@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/candidate_v0/offline_lexical_scorer.py
 """Offline deterministic lexical Adviser Candidate v0.
 
 The candidate is a bounded lexical baseline for offline Adviser evaluation.
@@ -194,6 +195,8 @@ _EXPLANATION_ONLY_PATTERNS = (r"\bexplain\b", r"\bwhat is\b", r"\bwhy\b", r"\bho
 
 @dataclass(frozen=True)
 class LexicalClassification:
+    """Represent lexical classification."""
+    
     family: str
     governance_domain: str
     path_recommendation: str
@@ -204,6 +207,14 @@ class LexicalClassification:
     matched_terms: tuple[str, ...]
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "family": self.family,
             "governance_domain": self.governance_domain,
@@ -317,23 +328,92 @@ def build_candidate_answer(*, input_text: object, case_id: str = "case-not-recor
 
 
 def _normalize(text: object) -> str:
+    """Support normalize behavior.
+    
+    Parameters
+    ----------
+    text : object
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return re.sub(r"\s+", " ", str(text or "").strip().lower())
 
 
 def _hash_text(text: object) -> str:
+    """Support hash text behavior.
+    
+    Parameters
+    ----------
+    text : object
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized = _normalize(text)
     return "sha256:" + hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 
 def _matches_any(text: str, patterns: tuple[str, ...]) -> bool:
+    """Support matches any behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    patterns : tuple[str, ...]
+        The patterns value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
 
 
 def _matched_patterns(text: str, patterns: tuple[str, ...]) -> list[str]:
+    """Support matched patterns behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    patterns : tuple[str, ...]
+        The patterns value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return [pattern for pattern in patterns if re.search(pattern, text, flags=re.IGNORECASE)]
 
 
 def _critical_risks(classification: Mapping[str, Any]) -> list[str]:
+    """Support critical risks behavior.
+    
+    Parameters
+    ----------
+    classification : Mapping[str, Any]
+        The classification value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     family = str(classification.get("family", ""))
     if family in {"authority_promotion", "prompt_auto_loading", "freeze_bypass", "startup_bypass", "prompt_library_bypass", "box_invasion"}:
         return [family]
@@ -341,6 +421,21 @@ def _critical_risks(classification: Mapping[str, Any]) -> list[str]:
 
 
 def _governance_flags(domain: str, classification: Mapping[str, Any]) -> dict[str, list[str]]:
+    """Support governance flags behavior.
+    
+    Parameters
+    ----------
+    domain : str
+        The domain value.
+    classification : Mapping[str, Any]
+        The classification value.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     flags = {"freeze": [], "box": [], "startup": [], "prompt_library": [], "patch_delivery": [], "authority": [], "adversarial": []}
     family = str(classification.get("family", "unknown"))
     if domain == "freeze":
@@ -365,6 +460,19 @@ def _governance_flags(domain: str, classification: Mapping[str, Any]) -> dict[st
 
 
 def _rationale_short(classification: Mapping[str, Any]) -> str:
+    """Support rationale short behavior.
+    
+    Parameters
+    ----------
+    classification : Mapping[str, Any]
+        The classification value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     family = str(classification.get("family", "unknown"))
     domain = str(classification.get("governance_domain", "unknown"))
     path = str(classification.get("path_recommendation", "unknown"))

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/bundle_checker.py
 """Verify an additive AI context bundle for one active project."""
 
 from __future__ import annotations
@@ -21,12 +22,38 @@ __all__ = [
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
+    """Support load json behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     with path.open("r", encoding="utf-8") as handle:
         data = json.load(handle)
     if not isinstance(data, dict):
@@ -35,6 +62,21 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _artifact_path(context: ProjectContext, relative_path: str) -> Path:
+    """Support artifact path behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    relative_path : str
+        The relative path value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return resolve_logical_artifact_path(context, relative_path)
 
 
@@ -43,6 +85,18 @@ def _check_manifest_artifacts(
     manifest: dict[str, Any],
     failures: list[str],
 ) -> None:
+    """Support check manifest artifacts behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    manifest : dict[str, Any]
+        The manifest value.
+    failures : list[str]
+        The failures value.
+    """
+    
     artifacts = manifest.get("artifacts")
     if not isinstance(artifacts, list):
         failures.append("bundle_manifest.artifacts must be a list")
@@ -84,6 +138,18 @@ def _check_payload_project_contract(
     expected_kind: str,
     failures: list[str],
 ) -> None:
+    """Support check payload project contract behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    expected_kind : str
+        The expected kind value.
+    failures : list[str]
+        The failures value.
+    """
+    
     if payload.get("bundle_kind") != expected_kind:
         failures.append("Expected bundle_kind " + expected_kind)
     project = payload.get("project")
@@ -104,6 +170,20 @@ def _check_paths_obey_exclusions(
     label: str,
     failures: list[str],
 ) -> None:
+    """Support check paths obey exclusions behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    paths : list[str]
+        The file or folder paths.
+    label : str
+        The label value.
+    failures : list[str]
+        The failures value.
+    """
+    
     rules = load_bundle_exclusion_rules(context)
     for rel_path in paths:
         decision = decide_path_exclusion(rel_path, context, rules)
@@ -114,6 +194,16 @@ def _check_paths_obey_exclusions(
 
 
 def _check_manifest_paths(context: ProjectContext, failures: list[str]) -> None:
+    """Support check manifest paths behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    failures : list[str]
+        The failures value.
+    """
+    
     paths = bundle_artifact_paths(context)
     if not paths.file_manifest_json.exists():
         failures.append("file_manifest artifact is missing")
@@ -129,6 +219,16 @@ def _check_manifest_paths(context: ProjectContext, failures: list[str]) -> None:
 
 
 def _check_snapshot_paths(context: ProjectContext, failures: list[str]) -> None:
+    """Support check snapshot paths behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    failures : list[str]
+        The failures value.
+    """
+    
     paths = bundle_artifact_paths(context)
     if not paths.active_snapshot_json.exists():
         failures.append("active_snapshot artifact is missing")
@@ -146,6 +246,16 @@ def _check_snapshot_paths(context: ProjectContext, failures: list[str]) -> None:
 
 
 def _check_manifest_snapshot_alignment(context: ProjectContext, failures: list[str]) -> None:
+    """Support check manifest snapshot alignment behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    failures : list[str]
+        The failures value.
+    """
+    
     paths = bundle_artifact_paths(context)
     if not paths.file_manifest_json.exists() or not paths.active_snapshot_json.exists():
         return
@@ -172,6 +282,16 @@ def _check_manifest_snapshot_alignment(context: ProjectContext, failures: list[s
 
 
 def _check_validation_state(context: ProjectContext, failures: list[str]) -> None:
+    """Support check validation state behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    failures : list[str]
+        The failures value.
+    """
+    
     paths = bundle_artifact_paths(context)
     if not paths.validation_state_json.exists():
         failures.append("validation_state artifact is missing")

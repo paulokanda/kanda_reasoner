@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/context_builder_help/__init__.py
 """Private helper package for context builder internals."""
 
 # MODULE ORIGIN: kanda_reasoner_app.insert_missing_docstrings_gui.context_builder

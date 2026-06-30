@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/snippet_retrieval_help/snippet_retrieval_part_2_private_impl.py
 """Private snippet retrieval helper implementation part 2."""
 
 from __future__ import annotations
@@ -6,6 +7,14 @@ __all__ = []
 
 
 def _bind_root_globals(root_globals):
+    """Support bind root globals behavior.
+    
+    Parameters
+    ----------
+    root_globals : object
+        The root globals value.
+    """
+    
     skipped = {
         '__name__',
         '__package__',
@@ -27,6 +36,27 @@ def _sr_retrieve_snippets_impl(
     symbol_evidence: list[SymbolEvidenceItem],
     limit: int,
 ) -> list[dict[str, Any]]:
+    """Support sr retrieve snippets impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    question : str
+        The question value.
+    file_evidence : list[EvidenceItem]
+        The file evidence value.
+    symbol_evidence : list[SymbolEvidenceItem]
+        The symbol evidence value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     q = norm_text(question)
 
     reset_runtime_query = is_runtime_heavy_question(q) and (

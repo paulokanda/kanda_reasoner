@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/evidence_paths.py
 """Project Analysis Evidence path resolution for Project Symbol Atlas.
 
 This module owns only path normalization for the Project Symbol Atlas box.

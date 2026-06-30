@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge.py
 """
 Local AI bridge for Kanda Reasoner engine.
 
@@ -44,11 +45,26 @@ __all__ = ["AIWorkerBridge", "LocalAIReasoner"]
 
 
 class LocalAIReasoner:
+    """Represent local aireasoner."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self.wrapper = V9QwenAIModels()
         self.bridge = AIWorkerBridge()
 
     def _handle_done(self, prompt: str, answer_text: str) -> None:
+        """Support handle done behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        """
+        
         if is_one_line_prompt(prompt):
             answer_text = extract_one_line_triplet(answer_text)
             answer_text = repair_one_line_symbol_ids(prompt, answer_text)
@@ -79,12 +95,38 @@ class LocalAIReasoner:
         self.bridge.answer_ready.emit(answer_text)
 
     def set_cache_dir(self, cache_dir: str) -> None:
+        """Set the cache dir.
+        
+        Parameters
+        ----------
+        cache_dir : str
+            The cache dir value.
+        """
+        
         self.wrapper.set_cache_dir(Path(cache_dir).expanduser().resolve())
 
     def set_governance_state_path(self, state_path: str) -> None:
+        """Set the governance state path.
+        
+        Parameters
+        ----------
+        state_path : str
+            The state path value.
+        """
+        
         self.wrapper.set_governance_state_path(Path(state_path).expanduser().resolve())
 
     def ask(self, prompt: str, model_name: str) -> None:
+        """Support ask behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        model_name : str
+            The model name value.
+        """
+        
         self.bridge.status_ready.emit(
             "Submitting question to local AI using model: " + model_name
         )

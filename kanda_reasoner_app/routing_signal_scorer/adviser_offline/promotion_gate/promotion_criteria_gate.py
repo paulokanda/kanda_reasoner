@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/promotion_gate/promotion_criteria_gate.py
 """Pure in-memory Adviser promotion criteria gate.
 
 M16 is the final Adviser-phase gate. It evaluates caller-supplied summaries from
@@ -229,6 +230,19 @@ def assert_promotion_criteria_gate_report_valid(report: Mapping[str, Any]) -> Ma
 
 
 def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
+    """Support policy summary behavior.
+    
+    Parameters
+    ----------
+    policy : Mapping[str, Any]
+        The policy value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "minimum_cases": _nonnegative_int(policy.get("minimum_cases"), default=DEFAULT_MINIMUM_CASES),
         "maximum_mismatches": _nonnegative_int(policy.get("maximum_mismatches"), default=0),
@@ -245,6 +259,19 @@ def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _registry_summary(record: Mapping[str, Any]) -> dict[str, object]:
+    """Support registry summary behavior.
+    
+    Parameters
+    ----------
+    record : Mapping[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "source_registry_feature_id": str(record.get("feature_id") or "unknown"),
         "registry_record_id": str(record.get("registry_record_id") or "unknown"),
@@ -260,6 +287,21 @@ def _registry_summary(record: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _evaluation_summary(report: Mapping[str, Any], registry_record: Mapping[str, Any]) -> dict[str, object]:
+    """Support evaluation summary behavior.
+    
+    Parameters
+    ----------
+    report : Mapping[str, Any]
+        The report value.
+    registry_record : Mapping[str, Any]
+        The registry record value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = report.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -282,6 +324,21 @@ def _evaluation_summary(report: Mapping[str, Any], registry_record: Mapping[str,
 
 
 def _queue_summary(queue: Mapping[str, Any], registry_record: Mapping[str, Any]) -> dict[str, object]:
+    """Support queue summary behavior.
+    
+    Parameters
+    ----------
+    queue : Mapping[str, Any]
+        The queue value.
+    registry_record : Mapping[str, Any]
+        The registry record value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = queue.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -301,6 +358,19 @@ def _queue_summary(queue: Mapping[str, Any], registry_record: Mapping[str, Any])
 
 
 def _expansion_summary(plan: Mapping[str, Any]) -> dict[str, object]:
+    """Support expansion summary behavior.
+    
+    Parameters
+    ----------
+    plan : Mapping[str, Any]
+        The plan value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     targets = plan.get("expansion_targets")
     if not isinstance(targets, Mapping):
         targets = {}
@@ -325,6 +395,27 @@ def _gate_blockers(
     queue_summary: Mapping[str, Any],
     expansion_summary: Mapping[str, Any],
 ) -> list[str]:
+    """Support gate blockers behavior.
+    
+    Parameters
+    ----------
+    policy : Mapping[str, Any]
+        The policy value.
+    registry_summary : Mapping[str, Any]
+        The registry summary value.
+    evaluation_summary : Mapping[str, Any]
+        The evaluation summary value.
+    queue_summary : Mapping[str, Any]
+        The queue summary value.
+    expansion_summary : Mapping[str, Any]
+        The expansion summary value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     blockers: list[str] = []
     if registry_summary.get("authority_statement") != AUTHORITY_STATEMENT:
         blockers.append("registry_authority_statement_not_advisory_only")
@@ -370,12 +461,40 @@ def _gate_blockers(
 
 
 def _next_allowed_step(gate_decision: str) -> str:
+    """Support next allowed step behavior.
+    
+    Parameters
+    ----------
+    gate_decision : str
+        The gate decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if gate_decision == ELIGIBLE_REVIEW_ONLY:
         return "future_governed_shadow_mode_design_review_only"
     return "resolve_blockers_with_human_review_before_future_phase"
 
 
 def _nonnegative_int(value: Any, *, default: int) -> int:
+    """Support nonnegative int behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    default : int
+        The default value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         parsed = int(value)
     except (TypeError, ValueError):

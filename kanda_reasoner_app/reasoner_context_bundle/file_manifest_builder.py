@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/file_manifest_builder.py
 """Build the active-file manifest for one reasoner context bundle."""
 
 from __future__ import annotations
@@ -87,6 +88,21 @@ def is_ignored_legacy_delivery_noise(path: Path) -> bool:
 
 
 def _ignored_legacy_delivery_noise_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support ignored legacy delivery noise decision behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     relative = relative_posix_path(path, context.root)
     return {
         "path": relative,
@@ -98,6 +114,21 @@ def _ignored_legacy_delivery_noise_decision(path: Path, context: ProjectContext)
     }
 
 def _ignored_project_archive_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support ignored project archive decision behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     relative = relative_posix_path(path, context.root)
     return {
         "path": relative,
@@ -110,18 +141,57 @@ def _ignored_project_archive_decision(path: Path, context: ProjectContext) -> di
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _is_probable_binary(raw: bytes) -> bool:
+    """Support is probable binary behavior.
+    
+    Parameters
+    ----------
+    raw : bytes
+        The raw input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if b"\x00" in raw[:4096]:
         return True
     return False
 
 
 def _newline_style(text: str) -> str:
+    """Support newline style behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     has_crlf = "\r\n" in text
     text_without_crlf = text.replace("\r\n", "")
     has_lf = "\n" in text_without_crlf
@@ -138,6 +208,21 @@ def _newline_style(text: str) -> str:
 
 
 def _decode_text(raw: bytes, suffix: str) -> tuple[bool, str, str]:
+    """Support decode text behavior.
+    
+    Parameters
+    ----------
+    raw : bytes
+        The raw input value.
+    suffix : str
+        The suffix value.
+    
+    Returns
+    -------
+    tuple[bool, str, str]
+        The tuple of values.
+    """
+    
     if _is_probable_binary(raw):
         return False, "", ""
     suffix_low = suffix.lower()
@@ -156,11 +241,41 @@ def _decode_text(raw: bytes, suffix: str) -> tuple[bool, str, str]:
 
 
 def _is_generated_evidence_path(path: Path, context: ProjectContext) -> bool:
+    """Support is generated evidence path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     relative = relative_posix_path(path, context.root).replace("\\", "/").lower().lstrip("/")
     return any(relative.startswith(prefix) for prefix in GENERATED_EVIDENCE_PREFIXES)
 
 
 def _generated_artifact_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support generated artifact decision behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     relative = relative_posix_path(path, context.root)
     return {
         "path": relative,
@@ -173,11 +288,39 @@ def _generated_artifact_decision(path: Path, context: ProjectContext) -> dict[st
 
 
 def _is_snapshot_text_extension(path: Path) -> bool:
+    """Support is snapshot text extension behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     suffix = path.suffix.lower()
     return bool(suffix) and suffix in TEXT_FILE_EXTENSIONS
 
 
 def _kind_and_text_metadata(path: Path, raw: bytes) -> dict[str, Any]:
+    """Support kind and text metadata behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    raw : bytes
+        The raw input value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     is_text, text, encoding = _decode_text(raw, path.suffix)
     if not is_text:
         return {
@@ -203,6 +346,21 @@ def _kind_and_text_metadata(path: Path, raw: bytes) -> dict[str, Any]:
 
 
 def _file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support file record behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     raw = path.read_bytes()
     relative_path = relative_posix_path(path, context.root)
     metadata = _kind_and_text_metadata(path, raw)
@@ -224,6 +382,21 @@ def _file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
 
 
 def _safe_file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
+    """Support safe file record behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     try:
         return _file_record(path, context)
     except OSError as exc:
@@ -246,6 +419,19 @@ def _safe_file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
 
 
 def _iter_project_entries(root: Path) -> Iterator[Path]:
+    """Support iter project entries behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     try:
         entries = sorted(root.iterdir(), key=lambda item: (not item.is_dir(), item.name.lower()))
     except OSError:
@@ -288,6 +474,21 @@ def _iter_manifest_rows(
     context: ProjectContext,
     rules: ExclusionRules,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Support iter manifest rows behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    rules : ExclusionRules
+        The rules value.
+    
+    Returns
+    -------
+    tuple[list[dict[str, Any]], list[dict[str, Any]]]
+        The tuple of values.
+    """
+    
     files: list[dict[str, Any]] = []
     excluded_samples: list[dict[str, Any]] = []
     generated_artifact_samples: list[dict[str, Any]] = []
@@ -330,6 +531,23 @@ def _counts(
     excluded_samples: list[dict[str, Any]],
     generated_artifact_samples: list[dict[str, Any]],
 ) -> dict[str, int]:
+    """Support counts behavior.
+    
+    Parameters
+    ----------
+    files : list[dict[str, Any]]
+        The files value.
+    excluded_samples : list[dict[str, Any]]
+        The excluded samples value.
+    generated_artifact_samples : list[dict[str, Any]]
+        The generated artifact samples value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     return {
         "active_files": len(files),
         "text_files": sum(1 for item in files if item.get("kind") == "text"),

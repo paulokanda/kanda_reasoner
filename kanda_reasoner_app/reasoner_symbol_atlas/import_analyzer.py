@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/import_analyzer.py
 """AST-only import, facade, and re-export analyzer for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -38,6 +39,19 @@ class ProjectSymbolAtlasImportAnalysisOptions:
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).resolve()
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -47,6 +61,19 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _read_python_source(file_path: Path) -> tuple[str, tuple[str, ...]]:
+    """Support read python source behavior.
+    
+    Parameters
+    ----------
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    tuple[str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence: list[str] = []
     try:
         return file_path.read_text(encoding="utf-8-sig", errors="replace"), tuple(evidence)
@@ -56,6 +83,21 @@ def _read_python_source(file_path: Path) -> tuple[str, tuple[str, ...]]:
 
 
 def _parse_python_source(source_text: str, file_path: Path) -> tuple[ast.Module | None, tuple[str, ...]]:
+    """Support parse python source behavior.
+    
+    Parameters
+    ----------
+    source_text : str
+        The source text.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    tuple[ast.Module | None, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence: list[str] = []
     try:
         return ast.parse(source_text, filename=str(file_path)), tuple(evidence)
@@ -66,10 +108,36 @@ def _parse_python_source(source_text: str, file_path: Path) -> tuple[ast.Module 
 
 
 def _is_public_name(name: str) -> bool:
+    """Support is public name behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return bool(name) and not name.startswith("_")
 
 
 def _extract_string_sequence(node: ast.AST) -> tuple[str, ...]:
+    """Support extract string sequence behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
         names: list[str] = []
         for element in node.elts:
@@ -80,6 +148,19 @@ def _extract_string_sequence(node: ast.AST) -> tuple[str, ...]:
 
 
 def _module_all_names(tree: ast.Module) -> tuple[str, ...]:
+    """Support module all names behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     names: list[str] = []
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -94,17 +175,56 @@ def _module_all_names(tree: ast.Module) -> tuple[str, ...]:
 
 
 def _import_source_for_from(node: ast.ImportFrom) -> str:
+    """Support import source for from behavior.
+    
+    Parameters
+    ----------
+    node : ast.ImportFrom
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     prefix = "." * int(node.level or 0)
     return prefix + str(node.module or "")
 
 
 def _alias_local_name(alias: ast.alias) -> str:
+    """Support alias local name behavior.
+    
+    Parameters
+    ----------
+    alias : ast.alias
+        The alias value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if alias.asname:
         return alias.asname
     return alias.name.rsplit(".", 1)[-1]
 
 
 def _format_import_node(node: ast.stmt) -> tuple[str, ...]:
+    """Support format import node behavior.
+    
+    Parameters
+    ----------
+    node : ast.stmt
+        The syntax tree node.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     if isinstance(node, ast.Import):
         for alias in node.names:
@@ -123,6 +243,19 @@ def _format_import_node(node: ast.stmt) -> tuple[str, ...]:
 
 
 def _module_has_public_definition(tree: ast.Module) -> bool:
+    """Support module has public definition behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
             if _is_public_name(node.name) and node.name != "__getattr__":
@@ -131,6 +264,19 @@ def _module_has_public_definition(tree: ast.Module) -> bool:
 
 
 def _module_has_getattr_export(tree: ast.Module) -> bool:
+    """Support module has getattr export behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == "__getattr__":
             return True
@@ -138,6 +284,19 @@ def _module_has_getattr_export(tree: ast.Module) -> bool:
 
 
 def _module_has_delegation_map(tree: ast.Module) -> bool:
+    """Support module has delegation map behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for node in tree.body:
         if not isinstance(node, (ast.Assign, ast.AnnAssign)):
             continue
@@ -159,6 +318,23 @@ def _import_symbols_from_tree(
     module_record: ProjectModuleRecord,
     options: ProjectSymbolAtlasImportAnalysisOptions,
 ) -> tuple[ProjectSymbol, ...]:
+    """Support import symbols from tree behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    module_record : ProjectModuleRecord
+        The module record value.
+    options : ProjectSymbolAtlasImportAnalysisOptions
+        The option values.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     all_names = set(_module_all_names(tree))
     module_is_facade_shape = module_record.is_package_init or "facade" in module_record.path.lower()
     symbols: list[ProjectSymbol] = []
@@ -225,6 +401,21 @@ def _import_symbols_from_tree(
 
 
 def _evidence_from_tree(tree: ast.Module, imports: tuple[str, ...]) -> tuple[str, ...]:
+    """Support evidence from tree behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    imports : tuple[str, ...]
+        The imports value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     evidence: list[str] = ["import_analysis: ast_only", "import_count: " + str(len(imports))]
     all_names = _module_all_names(tree)
     if all_names:
@@ -245,6 +436,23 @@ def _owner_role_from_analysis(
     tree: ast.Module,
     imports: tuple[str, ...],
 ) -> str:
+    """Support owner role from analysis behavior.
+    
+    Parameters
+    ----------
+    module_record : ProjectModuleRecord
+        The module record value.
+    tree : ast.Module
+        The parsed syntax tree.
+    imports : tuple[str, ...]
+        The imports value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if module_record.owner_role in {"test_only", "generated_or_stale"}:
         return module_record.owner_role
     has_reexport_signals = bool(imports) and (
@@ -265,6 +473,23 @@ def _analyze_module_record(
     module_record: ProjectModuleRecord,
     options: ProjectSymbolAtlasImportAnalysisOptions,
 ) -> ProjectModuleRecord:
+    """Support analyze module record behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    module_record : ProjectModuleRecord
+        The module record value.
+    options : ProjectSymbolAtlasImportAnalysisOptions
+        The option values.
+    
+    Returns
+    -------
+    ProjectModuleRecord
+        The project module record result.
+    """
+    
     source_path = project_root / module_record.path
     source_text, read_evidence = _read_python_source(source_path)
     tree, parse_evidence = _parse_python_source(source_text, source_path)

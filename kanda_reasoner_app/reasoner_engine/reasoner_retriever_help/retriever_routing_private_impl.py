@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/retriever_routing_private_impl.py
 """Private routing helpers for reasoner_retriever."""
 from __future__ import annotations
 
@@ -7,6 +8,21 @@ __all__ = []
 
 
 def _resolve_query_kind_impl(retriever, intents: dict[str, bool]) -> str:
+    """Support resolve query kind impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    intents : dict[str, bool]
+        The intents value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if intents["packaging_metadata"]:
         return "packaging_metadata"
     if intents["documentation_intent"]:
@@ -29,6 +45,29 @@ def _resolve_effective_limits_impl(
     symbol_limit: int,
     snippet_limit: int,
 ) -> tuple[int, int, int]:
+    """Support resolve effective limits impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    q : str
+        The q value.
+    intents : dict[str, bool]
+        The intents value.
+    file_limit : int
+        The file limit value.
+    symbol_limit : int
+        The symbol limit value.
+    snippet_limit : int
+        The snippet limit value.
+    
+    Returns
+    -------
+    tuple[int, int, int]
+        The tuple of values.
+    """
+    
     effective_file_limit = file_limit
     effective_symbol_limit = symbol_limit
     effective_snippet_limit = snippet_limit
@@ -72,6 +111,23 @@ def _collect_section_file_evidence_impl(
     question: str,
     section_priority: list[str],
 ) -> list[EvidenceItem]:
+    """Support collect section file evidence impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    question : str
+        The question value.
+    section_priority : list[str]
+        The section priority value.
+    
+    Returns
+    -------
+    list[EvidenceItem]
+        The list of values.
+    """
+    
     section_file_evidence: list[EvidenceItem] = []
 
     for section_name in section_priority:
@@ -92,6 +148,25 @@ def _merge_section_file_evidence_impl(
     file_evidence: list[EvidenceItem],
     effective_file_limit: int,
 ) -> list[EvidenceItem]:
+    """Support merge section file evidence impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    section_file_evidence : list[EvidenceItem]
+        The section file evidence value.
+    file_evidence : list[EvidenceItem]
+        The file evidence value.
+    effective_file_limit : int
+        The effective file limit value.
+    
+    Returns
+    -------
+    list[EvidenceItem]
+        The list of values.
+    """
+    
     if not section_file_evidence:
         return file_evidence
     return (section_file_evidence + file_evidence)[:effective_file_limit]
@@ -101,6 +176,23 @@ def _build_canonical_section_bundle_impl(
     section_file_evidence: list[EvidenceItem],
     effective_file_limit: int,
 ) -> RetrievalBundle:
+    """Support build canonical section bundle impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    section_file_evidence : list[EvidenceItem]
+        The section file evidence value.
+    effective_file_limit : int
+        The effective file limit value.
+    
+    Returns
+    -------
+    RetrievalBundle
+        The retrieval bundle result.
+    """
+    
     canonical_section_files = section_file_evidence[:effective_file_limit]
     return RetrievalBundle(
         file_evidence=retriever._reindex_file_evidence(canonical_section_files),
@@ -109,4 +201,19 @@ def _build_canonical_section_bundle_impl(
     )
 
 def _is_section_only_intent_impl(retriever, intents: dict[str, bool]) -> bool:
+    """Support is section only intent impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    intents : dict[str, bool]
+        The intents value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return intents["packaging_metadata"] or intents["documentation_intent"]

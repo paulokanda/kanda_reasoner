@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/contract.py
 """Public contract for the Freeze Feature After Update box.
 
 This module is the only public bridge the GUI and other app code should use
@@ -357,6 +358,21 @@ def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 
 
 
 def _with_contract_status(preview: Mapping[str, Any], *, operation: str) -> dict[str, Any]:
+    """Support with contract status behavior.
+    
+    Parameters
+    ----------
+    preview : Mapping[str, Any]
+        The preview value.
+    operation : str
+        The operation value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     result = dict(preview)
     result.setdefault("errors", [])
     result.setdefault("warnings", [])
@@ -366,6 +382,23 @@ def _with_contract_status(preview: Mapping[str, Any], *, operation: str) -> dict
 
 
 def _contract_error(*, operation: str, project_root: str | Path, message: str) -> dict[str, Any]:
+    """Support contract error behavior.
+    
+    Parameters
+    ----------
+    operation : str
+        The operation value.
+    project_root : str | Path
+        The project root path.
+    message : str
+        The message text.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     try:
         resolved_root = str(Path(project_root).expanduser().resolve())
     except Exception:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter.py
 """Standalone multi-profile ZIP export for JSON handoff artifacts.
 
 The exporter writes ChatGPT-friendly standalone ZIP files from the generated
@@ -46,6 +47,21 @@ __all__ = [
 
 
 def _part_size_error(context: ProjectContext, message: str) -> dict[str, Any]:
+    """Support part size error behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    message : str
+        The message text.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "ok": False,
         "kind": _EXPORT_KIND,
@@ -60,6 +76,21 @@ def is_destination_inside_project_root(project_root: str | Path, destination: st
 
 
 def _validate_destination(context: ProjectContext, destination: Path) -> dict[str, Any] | None:
+    """Support validate destination behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    destination : Path
+        The destination path.
+    
+    Returns
+    -------
+    dict[str, Any] | None
+        The mapped values.
+    """
+    
     if not destination.exists() or not destination.is_dir():
         return _part_size_error(context, "Destination folder does not exist: " + str(destination))
     if is_destination_inside_project_root(context.root, destination):
@@ -76,6 +107,23 @@ def _resolve_part_size(
     part_size_mb: int,
     part_size_bytes: int | None,
 ) -> tuple[int | None, dict[str, Any] | None]:
+    """Support resolve part size behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    part_size_mb : int
+        The part size mb value.
+    part_size_bytes : int | None
+        The part size bytes value.
+    
+    Returns
+    -------
+    tuple[int | None, dict[str, Any] | None]
+        The tuple of values.
+    """
+    
     if part_size_bytes is None:
         if part_size_mb not in ALLOWED_PART_SIZE_MB_OPTIONS:
             return None, _part_size_error(
@@ -89,6 +137,21 @@ def _resolve_part_size(
 
 
 def _check_bundle_if_requested(context: ProjectContext, check_bundle: bool) -> dict[str, Any] | None:
+    """Support check bundle if requested behavior.
+    
+    Parameters
+    ----------
+    context : ProjectContext
+        The context value.
+    check_bundle : bool
+        The check bundle value.
+    
+    Returns
+    -------
+    dict[str, Any] | None
+        The mapped values.
+    """
+    
     if not check_bundle:
         return None
     check_result = check_ai_context_bundle(context)
@@ -107,6 +170,14 @@ def _check_bundle_if_requested(context: ProjectContext, check_bundle: bool) -> d
 
 
 def _cleanup_created_paths(created_paths: list[Path]) -> None:
+    """Support cleanup created paths behavior.
+    
+    Parameters
+    ----------
+    created_paths : list[Path]
+        The created paths value.
+    """
+    
     for created_path in created_paths:
         try:
             created_path.unlink()
@@ -115,6 +186,23 @@ def _cleanup_created_paths(created_paths: list[Path]) -> None:
 
 
 def _retarget_path_string(value: Any, stage: Path, destination: Path) -> Any:
+    """Support retarget path string behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    stage : Path
+        The stage value.
+    destination : Path
+        The destination path.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if not isinstance(value, str):
         return value
     stage_text = str(stage)
@@ -125,6 +213,23 @@ def _retarget_path_string(value: Any, stage: Path, destination: Path) -> Any:
 
 
 def _retarget_record_paths(value: Any, stage: Path, destination: Path) -> Any:
+    """Support retarget record paths behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    stage : Path
+        The stage value.
+    destination : Path
+        The destination path.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         return {key: _retarget_record_paths(item, stage, destination) for key, item in value.items()}
     if isinstance(value, list):
@@ -133,6 +238,21 @@ def _retarget_record_paths(value: Any, stage: Path, destination: Path) -> Any:
 
 
 def _publish_stage_outputs(stage: Path, destination: Path) -> list[Path]:
+    """Support publish stage outputs behavior.
+    
+    Parameters
+    ----------
+    stage : Path
+        The stage value.
+    destination : Path
+        The destination path.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     published: list[Path] = []
     destination.mkdir(parents=True, exist_ok=True)
     for child in sorted(stage.iterdir(), key=lambda item: item.name.lower()):
@@ -148,6 +268,14 @@ def _publish_stage_outputs(stage: Path, destination: Path) -> list[Path]:
 
 
 def _assert_no_forbidden_outputs(output_dir: Path) -> None:
+    """Support assert no forbidden outputs behavior.
+    
+    Parameters
+    ----------
+    output_dir : Path
+        The output dir value.
+    """
+    
     forbidden_names = {"CHUNK_MANIFEST.json", "json_splitted"}
     for child in output_dir.rglob("*"):
         if child.name in forbidden_names or child.name == "chunks":
@@ -422,6 +550,14 @@ def export_json_handoff_zip_parts(
 
 
 def _build_parser() -> argparse.ArgumentParser:
+    """Support build parser behavior.
+    
+    Returns
+    -------
+    argparse.ArgumentParser
+        The argument parser result.
+    """
+    
     parser = argparse.ArgumentParser(description="Export JSON handoff artifacts as ZIP profiles.")
     parser.add_argument("--root", required=True, help="Active project root.")
     parser.add_argument("--destination", required=True, help="Destination folder outside project root.")
@@ -434,6 +570,19 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Support main behavior.
+    
+    Parameters
+    ----------
+    argv : list[str] | None, optional
+        The optional argv value.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     parser = _build_parser()
     args = parser.parse_args(argv)
     result = export_json_handoff_zip_parts(

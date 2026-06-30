@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_web_ai_complete_json_audit.py
 """Audit the complete Step 4 JSON for web-AI awareness sections.
 
 This module validates that the canonical complete JSON produced by the GUI

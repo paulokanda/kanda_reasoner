@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/__init__.py
 """Implementation package for the root Reasoner tools GUI shell."""
 
 from __future__ import annotations
@@ -19,6 +20,14 @@ _EXPORTS = {
 
 
 def __getattr__(name: str):
+    """Support getattr behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    """
+    
     if name not in _EXPORTS:
         raise AttributeError(name)
     module_name = _EXPORTS[name]
@@ -32,4 +41,12 @@ def __getattr__(name: str):
 
 
 def __dir__() -> list[str]:
+    """Support dir behavior.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(list(globals()) + __all__)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/core/adviser_output_guard.py
 """Offline Adviser output guard.
 
 The output guard is the hard safety gate between a candidate answer and any
@@ -78,6 +79,14 @@ class GuardResult:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "errors": list(self.errors),
@@ -170,14 +179,55 @@ def assert_guard_passed(candidate_output: Mapping[str, Any], *, input_text: str 
 
 
 def _normalize(text: object) -> str:
+    """Support normalize behavior.
+    
+    Parameters
+    ----------
+    text : object
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return re.sub(r"\s+", " ", str(text or "").strip().lower())
 
 
 def _matches_any(text: str, patterns: tuple[str, ...]) -> bool:
+    """Support matches any behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    patterns : tuple[str, ...]
+        The patterns value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
 
 
 def _governance_flags(candidate_output: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Support governance flags behavior.
+    
+    Parameters
+    ----------
+    candidate_output : Mapping[str, Any]
+        The candidate output value.
+    
+    Returns
+    -------
+    Mapping[str, Any]
+        The mapped values.
+    """
+    
     value = candidate_output.get("governance_flags")
     if isinstance(value, Mapping):
         return value
@@ -185,11 +235,37 @@ def _governance_flags(candidate_output: Mapping[str, Any]) -> Mapping[str, Any]:
 
 
 def _require_flag(errors: list[str], flags: Mapping[str, Any], category: str, message: str) -> None:
+    """Support require flag behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    flags : Mapping[str, Any]
+        The flags value.
+    category : str
+        The category value.
+    message : str
+        The message text.
+    """
+    
     value = flags.get(category)
     if not isinstance(value, list) or not value:
         errors.append(message)
 
 
 def _require_no_action(errors: list[str], proceed: str, message: str) -> None:
+    """Support require no action behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    proceed : str
+        The proceed value.
+    message : str
+        The message text.
+    """
+    
     if proceed not in SAFE_NO_ACTION_VALUES:
         errors.append(message)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_import_checks.py
 """Own isolated import-probe workflow checks."""
 
 from __future__ import annotations
@@ -33,6 +34,23 @@ __all__ = [
 ]
 
 def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any]) -> list[CheckResult]:
+    """Run the import checks.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    discovered : dict[str, Any]
+        The discovered value.
+    cfg : dict[str, Any]
+        The configuration data.
+    
+    Returns
+    -------
+    list[CheckResult]
+        The list of values.
+    """
+    
     if not cfg.get("enabled", True):
         return [CheckResult("imports", "imports", "skip", "Workflow disabled.")]
 

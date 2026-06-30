@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_evidence_migration_dry_run.py
 """Dry-run planner for evidence findings from source debris review.
 
 This module refines source-debris evidence review items into exact external

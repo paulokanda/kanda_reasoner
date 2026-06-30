@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/project_profile_help/registry.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -22,6 +23,19 @@ PROJECT_PROFILES: dict[str, ProjectProfile] = {
 
 
 def get_project_profile(name: str | None) -> ProjectProfile:
+    """Return the project profile.
+    
+    Parameters
+    ----------
+    name : str | None
+        The project profile name.
+    
+    Returns
+    -------
+    ProjectProfile
+        The project profile result.
+    """
+    
     normalized = str(name or "").strip().lower()
     if not normalized:
         return GENERIC_PROJECT_PROFILE
@@ -34,6 +48,14 @@ def get_project_profile(name: str | None) -> ProjectProfile:
 
 
 def iter_project_profiles() -> tuple[ProjectProfile, ...]:
+    """Support iter project profiles behavior.
+    
+    Returns
+    -------
+    tuple[ProjectProfile, ...]
+        The tuple of values.
+    """
+    
     return tuple(PROJECT_PROFILES.values())
 
 

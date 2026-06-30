@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_evidence_migration_executor.py
 """Executor for reviewed source-debris evidence migration.
 
 This module executes only evidence migration dry-run items produced by

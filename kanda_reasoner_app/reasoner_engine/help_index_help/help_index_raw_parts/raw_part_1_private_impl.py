@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/help_index_help/help_index_raw_parts/raw_part_1_private_impl.py
 """Private data shard for help_index_raw.py."""
 
 from __future__ import annotations

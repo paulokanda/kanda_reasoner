@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/backend_payloads/payload_zi.py
 """Encoded implementation payload."""
 
 from __future__ import annotations

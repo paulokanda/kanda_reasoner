@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/safety_suite_cli/commands.py
 """CLI facade for Kanda Reasoner safety-suite tools.
 
 The CLI owns argument parsing and presentation only. Tool logic remains in the
@@ -101,6 +102,14 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _add_common_output_arguments(parser: argparse.ArgumentParser) -> None:
+    """Support add common output arguments behavior.
+    
+    Parameters
+    ----------
+    parser : argparse.ArgumentParser
+        The parser value.
+    """
+    
     parser.add_argument(
         "--format",
         choices=("markdown", "json"),
@@ -115,11 +124,27 @@ def _add_common_output_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def _add_list_tools_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add list tools parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("list-tools", help="List available safety tools.")
     parser.set_defaults(func=_cmd_list_tools)
 
 
 def _add_risk_radar_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add risk radar parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("risk-radar", help="Build a Risk Change Radar report.")
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--changed-file", action="append", default=[], help="Changed file path.")
@@ -131,6 +156,14 @@ def _add_risk_radar_parser(subparsers: argparse._SubParsersAction[argparse.Argum
 
 
 def _add_crash_triage_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add crash triage parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("crash-triage", help="Build a Crash Triage report.")
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--traceback", default="", help="Traceback text or file path.")
@@ -142,6 +175,14 @@ def _add_crash_triage_parser(subparsers: argparse._SubParsersAction[argparse.Arg
 
 
 def _add_refactor_playbook_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add refactor playbook parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("refactor-playbook", help="Build a Refactor Playbook report.")
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--target", required=True, help="Target file to refactor.")
@@ -158,6 +199,14 @@ def _add_refactor_playbook_parser(subparsers: argparse._SubParsersAction[argpars
 
 
 def _add_release_notes_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add release notes parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("release-notes", help="Build release notes from explicit evidence.")
     parser.add_argument("--bundle-name", required=True, help="Bundle or release name.")
     parser.add_argument("--title", default="", help="Release title.")
@@ -170,6 +219,14 @@ def _add_release_notes_parser(subparsers: argparse._SubParsersAction[argparse.Ar
 
 
 def _add_push_plan_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add push plan parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("push-plan", help="Build an On Every Push validation report.")
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--check-output", action="append", default=[], help="name::output evidence.")
@@ -178,6 +235,14 @@ def _add_push_plan_parser(subparsers: argparse._SubParsersAction[argparse.Argume
 
 
 def _add_stack_brief_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add stack brief parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("stack-brief", help="Build a Stack Compatibility Brief.")
     parser.add_argument("--requirement", action="append", default=[], help="Requirement line.")
     parser.add_argument("--runtime", action="append", default=[], help="Runtime context line.")
@@ -186,6 +251,14 @@ def _add_stack_brief_parser(subparsers: argparse._SubParsersAction[argparse.Argu
 
 
 def _add_api_contract_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add api contract parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("api-contract", help="Build an API Contract Guard draft.")
     parser.add_argument("--module", required=True, help="Target module path.")
     parser.add_argument("--function", required=True, help="Target function name.")
@@ -199,6 +272,14 @@ def _add_api_contract_parser(subparsers: argparse._SubParsersAction[argparse.Arg
 
 
 def _add_property_test_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add property test parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("property-test", help="Build a Property Test draft.")
     parser.add_argument("--module", required=True, help="Target module path.")
     parser.add_argument("--function", required=True, help="Target function name.")
@@ -212,6 +293,14 @@ def _add_property_test_parser(subparsers: argparse._SubParsersAction[argparse.Ar
 
 
 def _add_bom_scan_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add bom scan parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("bom-scan", help="Run a read-only BOM scan.")
     parser.add_argument("--root", required=True, help="Project root.")
     parser.add_argument("--suffix", action="append", default=[], help="File suffix to include.")
@@ -220,6 +309,14 @@ def _add_bom_scan_parser(subparsers: argparse._SubParsersAction[argparse.Argumen
 
 
 def _add_shadow_audit_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add shadow audit parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("shadow-audit", help="Run a read-only shadow conflict audit.")
     parser.add_argument("--root", required=True, help="Project root.")
     _add_common_output_arguments(parser)
@@ -227,6 +324,14 @@ def _add_shadow_audit_parser(subparsers: argparse._SubParsersAction[argparse.Arg
 
 
 def _add_shadow_plan_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add shadow plan parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("shadow-plan", help="Build a read-only shadow correction plan.")
     parser.add_argument("--root", required=True, help="Project root.")
     _add_common_output_arguments(parser)
@@ -234,6 +339,14 @@ def _add_shadow_plan_parser(subparsers: argparse._SubParsersAction[argparse.Argu
 
 
 def _add_facade_fix_plan_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    """Support add facade fix plan parser behavior.
+    
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction[argparse.ArgumentParser]
+        The subparsers value.
+    """
+    
     parser = subparsers.add_parser("facade-fix-plan", help="Build a safe facade-fix dry-run plan.")
     parser.add_argument("--root", required=True, help="Project root.")
     _add_common_output_arguments(parser)
@@ -241,6 +354,23 @@ def _add_facade_fix_plan_parser(subparsers: argparse._SubParsersAction[argparse.
 
 
 def _cmd_list_tools(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd list tools behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del args, stderr
     for command in available_cli_commands():
         stdout.write(command + "\n")
@@ -248,6 +378,23 @@ def _cmd_list_tools(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) ->
 
 
 def _cmd_risk_radar(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd risk radar behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.engineering_safety.report_writer import (
         format_engineering_safety_markdown,
@@ -270,6 +417,23 @@ def _cmd_risk_radar(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) ->
 
 
 def _cmd_crash_triage(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd crash triage behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.engineering_safety.crash_triage import (
         CrashTriageInput,
@@ -292,6 +456,23 @@ def _cmd_crash_triage(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
 
 
 def _cmd_refactor_playbook(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd refactor playbook behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.engineering_safety.refactor_playbook import (
         RefactorPlaybookInput,
@@ -319,6 +500,23 @@ def _cmd_refactor_playbook(args: argparse.Namespace, stdout: TextIO, stderr: Tex
 
 
 def _cmd_release_notes(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd release notes behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.governance_automation.release_notes_generator import (
         GovernanceReleaseNoteInput,
@@ -339,6 +537,23 @@ def _cmd_release_notes(args: argparse.Namespace, stdout: TextIO, stderr: TextIO)
 
 
 def _cmd_push_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd push plan behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.governance_automation.on_every_push_validator import (
         build_check_result_from_output,
@@ -357,6 +572,23 @@ def _cmd_push_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> 
 
 
 def _cmd_stack_brief(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd stack brief behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.stack_compatibility.stack_briefs import (
         build_stack_compatibility_brief,
@@ -370,6 +602,23 @@ def _cmd_stack_brief(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -
 
 
 def _cmd_api_contract(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd api contract behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reliability_guidance.api_contract_guidance import (
         ApiContractGuardDraft,
@@ -390,6 +639,23 @@ def _cmd_api_contract(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
 
 
 def _cmd_property_test(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd property test behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.reliability_guidance.property_test_guidance import (
         PropertyTestDraft,
@@ -410,6 +676,23 @@ def _cmd_property_test(args: argparse.Namespace, stdout: TextIO, stderr: TextIO)
 
 
 def _cmd_bom_scan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd bom scan behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.source_hygiene.bom_scanner import scan_project_for_bom
 
@@ -418,6 +701,23 @@ def _cmd_bom_scan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> i
 
 
 def _cmd_shadow_audit(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd shadow audit behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.source_hygiene.shadow_audit import audit_project_for_shadow_conflicts
 
@@ -426,6 +726,23 @@ def _cmd_shadow_audit(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
 
 
 def _cmd_shadow_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd shadow plan behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.source_hygiene.shadow_audit import audit_project_for_shadow_conflicts
     from kanda_reasoner_app.source_hygiene.shadow_planner import build_shadow_conflict_plan
@@ -436,6 +753,23 @@ def _cmd_shadow_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -
 
 
 def _cmd_facade_fix_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) -> int:
+    """Support cmd facade fix plan behavior.
+    
+    Parameters
+    ----------
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    stderr : TextIO
+        The stderr value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     del stderr
     from kanda_reasoner_app.source_hygiene.shadow_fixer import build_safe_facade_fix_plan
 
@@ -444,6 +778,25 @@ def _cmd_facade_fix_plan(args: argparse.Namespace, stdout: TextIO, stderr: TextI
 
 
 def _emit_report(data: dict[str, Any], markdown: str, args: argparse.Namespace, stdout: TextIO) -> int:
+    """Support emit report behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    markdown : str
+        The markdown value.
+    args : argparse.Namespace
+        The positional arguments.
+    stdout : TextIO
+        The stdout value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = json.dumps(_json_ready(data), indent=2, sort_keys=True) + "\n"
     if getattr(args, "format", "markdown") == "markdown":
         text = markdown
@@ -457,6 +810,19 @@ def _emit_report(data: dict[str, Any], markdown: str, args: argparse.Namespace, 
 
 
 def _read_text_or_literal(value: str) -> str:
+    """Support read text or literal behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = str(value or "")
     if not text:
         return ""
@@ -467,6 +833,19 @@ def _read_text_or_literal(value: str) -> str:
 
 
 def _source_report_markdown(data: dict[str, Any]) -> str:
+    """Support source report markdown behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     lines = [
         "# Source Hygiene Report",
         "",
@@ -490,6 +869,19 @@ def _source_report_markdown(data: dict[str, Any]) -> str:
 
 
 def _json_ready(value: Any) -> Any:
+    """Support json ready behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         return {str(key): _json_ready(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):

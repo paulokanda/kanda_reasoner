@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/_existing_code_finder_support.py
 """Private support helpers for Project Symbol Atlas existing-code finder."""
 
 from __future__ import annotations
@@ -163,6 +164,21 @@ def structured_decision_evidence(result: Any) -> tuple[str, ...]:
 
 
 def _keyed_value(key: str, value: str) -> tuple[str, ...]:
+    """Support keyed value behavior.
+    
+    Parameters
+    ----------
+    key : str
+        The key value.
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     cleaned = normalize_project_atlas_text(value)
     if not cleaned:
         return ()
@@ -170,10 +186,38 @@ def _keyed_value(key: str, value: str) -> tuple[str, ...]:
 
 
 def _keyed_values(key: str, values: Any) -> tuple[str, ...]:
+    """Support keyed values behavior.
+    
+    Parameters
+    ----------
+    key : str
+        The key value.
+    values : Any
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(key + "=" + value for value in _unique_strings(values))
 
 
 def _unique_strings(values: Any) -> tuple[str, ...]:
+    """Support unique strings behavior.
+    
+    Parameters
+    ----------
+    values : Any
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     output: list[str] = []
     seen: set[str] = set()
     for value in normalize_project_atlas_sequence(values):

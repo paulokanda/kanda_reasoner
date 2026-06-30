@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/shadow_planner.py
 """Read-only planning for shadow conflict corrections."""
 
 from __future__ import annotations
@@ -129,6 +130,19 @@ def build_shadow_conflict_plan(
 
 
 def _report_findings(report: SourceHygieneReport | dict[str, object]) -> tuple[SourceHygieneFinding | dict[str, object], ...]:
+    """Support report findings behavior.
+    
+    Parameters
+    ----------
+    report : SourceHygieneReport | dict[str, object]
+        The report value.
+    
+    Returns
+    -------
+    tuple[SourceHygieneFinding | dict[str, object], ...]
+        The tuple of values.
+    """
+    
     if isinstance(report, SourceHygieneReport):
         return report.findings
     raw_findings = report.get("findings", ())
@@ -138,6 +152,19 @@ def _report_findings(report: SourceHygieneReport | dict[str, object]) -> tuple[S
 
 
 def _report_project_root(report: SourceHygieneReport | dict[str, object]) -> str:
+    """Support report project root behavior.
+    
+    Parameters
+    ----------
+    report : SourceHygieneReport | dict[str, object]
+        The report value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(report, SourceHygieneReport):
         return str(report.project_root)
     value = report.get("project_root", "")
@@ -145,18 +172,57 @@ def _report_project_root(report: SourceHygieneReport | dict[str, object]) -> str
 
 
 def _finding_code(finding: SourceHygieneFinding | dict[str, object]) -> str:
+    """Support finding code behavior.
+    
+    Parameters
+    ----------
+    finding : SourceHygieneFinding | dict[str, object]
+        The finding value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(finding, SourceHygieneFinding):
         return finding.code
     return str(finding.get("code", ""))
 
 
 def _finding_path(finding: SourceHygieneFinding | dict[str, object]) -> str:
+    """Support finding path behavior.
+    
+    Parameters
+    ----------
+    finding : SourceHygieneFinding | dict[str, object]
+        The finding value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(finding, SourceHygieneFinding):
         return finding.path
     return str(finding.get("path", ""))
 
 
 def _finding_line(finding: SourceHygieneFinding | dict[str, object]) -> int | None:
+    """Support finding line behavior.
+    
+    Parameters
+    ----------
+    finding : SourceHygieneFinding | dict[str, object]
+        The finding value.
+    
+    Returns
+    -------
+    int | None
+        The integer result.
+    """
+    
     if isinstance(finding, SourceHygieneFinding):
         return finding.line
     line = finding.get("line")
@@ -166,6 +232,19 @@ def _finding_line(finding: SourceHygieneFinding | dict[str, object]) -> int | No
 
 
 def _finding_evidence(finding: SourceHygieneFinding | dict[str, object]) -> dict[str, object]:
+    """Support finding evidence behavior.
+    
+    Parameters
+    ----------
+    finding : SourceHygieneFinding | dict[str, object]
+        The finding value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     if isinstance(finding, SourceHygieneFinding):
         return dict(finding.evidence)
     evidence = finding.get("evidence", {})
@@ -175,6 +254,21 @@ def _finding_evidence(finding: SourceHygieneFinding | dict[str, object]) -> dict
 
 
 def _proposed_action_for(code: str, classification: str) -> str:
+    """Support proposed action for behavior.
+    
+    Parameters
+    ----------
+    code : str
+        The code value.
+    classification : str
+        The classification value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if code == "WILDCARD_IMPORT_IN_FACADE":
         return "Replace the wildcard import with explicit imports after import tests confirm the public contract."
     if code == "FACADE_WITHOUT_ALL":
@@ -195,6 +289,21 @@ def _proposed_action_for(code: str, classification: str) -> str:
 
 
 def _required_tests_for(code: str, classification: str) -> tuple[str, ...]:
+    """Support required tests for behavior.
+    
+    Parameters
+    ----------
+    code : str
+        The code value.
+    classification : str
+        The classification value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     base = [
         "python -m py_compile <touched_files>",
         "python kanda_reasoner_app\\manage_architecture\\manage_architecture.py --root <PROJECT_ROOT> --validate",
@@ -214,12 +323,38 @@ def _required_tests_for(code: str, classification: str) -> tuple[str, ...]:
 
 
 def _rollback_plan_for(classification: str) -> str:
+    """Support rollback plan for behavior.
+    
+    Parameters
+    ----------
+    classification : str
+        The classification value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if classification == DO_NOT_TOUCH:
         return "No source change should be produced by this plan item."
     return "Restore the pre-change file backup or reinstall the previous validated bundle if validation fails."
 
 
 def _classification_counts(items: Iterable[ShadowCorrectionPlanItem]) -> dict[str, int]:
+    """Support classification counts behavior.
+    
+    Parameters
+    ----------
+    items : Iterable[ShadowCorrectionPlanItem]
+        The item values.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     counts = {
         SAFE_MECHANICAL_FIX: 0,
         REQUIRES_OWNER_DECISION: 0,
@@ -232,6 +367,21 @@ def _classification_counts(items: Iterable[ShadowCorrectionPlanItem]) -> dict[st
 
 
 def _format_summary(counts: dict[str, int], total: int) -> str:
+    """Support format summary behavior.
+    
+    Parameters
+    ----------
+    counts : dict[str, int]
+        The counts value.
+    total : int
+        The total value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         "Shadow conflict correction plan completed. "
         + "items="

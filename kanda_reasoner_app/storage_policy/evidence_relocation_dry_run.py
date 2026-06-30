@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_relocation_dry_run.py
 """Dry-run planner for relocating in-source project evidence.
 
 This module inspects the old in-source evidence folder and builds a report-only

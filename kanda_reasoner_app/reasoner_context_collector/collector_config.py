@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_config.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -7,6 +8,8 @@ from dataclasses import dataclass, field
 
 @dataclass
 class CollectorConfig:
+    """Represent collector config."""
+    
     excluded_dirs: list[str] = field(
         default_factory=lambda: [
             ".venv",

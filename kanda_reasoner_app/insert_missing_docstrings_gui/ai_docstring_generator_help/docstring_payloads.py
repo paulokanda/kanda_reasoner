@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_help/docstring_payloads.py
 """Docstring payloads for the AI docstring generator."""
 
 from __future__ import annotations
@@ -11,6 +12,21 @@ from ..context_builder import AttributeInfo, ParameterInfo, SymbolContext
 
 
 def _build_system_prompt(policy: DocstringPolicy, structured: bool) -> str:
+    """Support build system prompt behavior.
+    
+    Parameters
+    ----------
+    policy : DocstringPolicy
+        The policy value.
+    structured : bool
+        The structured value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     rules = [
         "You are a Python documentation expert.",
         "Document only what is supported by the provided source and metadata.",
@@ -34,18 +50,52 @@ def _build_system_prompt(policy: DocstringPolicy, structured: bool) -> str:
 
 
 def _format_attribute(attr: AttributeInfo) -> str:
+    """Support format attribute behavior.
+    
+    Parameters
+    ----------
+    attr : AttributeInfo
+        The attr value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     type_hint = attr.type_hint or "object"
     hint = attr.description_hint or ""
     return f"- {attr.name}: {type_hint} {hint}".strip()
 
 
 def _format_parameter(param: ParameterInfo) -> str:
+    """Support format parameter behavior.
+    
+    Parameters
+    ----------
+    param : ParameterInfo
+        The param value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     prefix = "**" if param.is_kwarg else ("*" if param.is_vararg else "")
     suffix = " optional" if param.has_default else ""
     return f"- {prefix}{param.name}: {param.annotation}{suffix}"
 
 
 def _docstring_schema() -> dict[str, Any]:
+    """Support docstring schema behavior.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "type": "object",
         "properties": {
@@ -103,11 +153,37 @@ def _docstring_schema() -> dict[str, Any]:
     }
 
 def _evidence_name_list(values: list[str]) -> str:
+    """Support evidence name list behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     clean = [str(value).strip() for value in values if str(value).strip()]
     return ", ".join(clean) if clean else "none"
 
 
 def _evidence_parameter_names(ctx: SymbolContext) -> list[str]:
+    """Support evidence parameter names behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     names: list[str] = []
     for param in ctx.parameters:
         name = param.name.strip()
@@ -117,14 +193,53 @@ def _evidence_parameter_names(ctx: SymbolContext) -> list[str]:
 
 
 def _evidence_attribute_names(ctx: SymbolContext) -> list[str]:
+    """Support evidence attribute names behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return [attr.name for attr in ctx.class_attributes if attr.name]
 
 
 def _evidence_raise_names(ctx: SymbolContext) -> list[str]:
+    """Support evidence raise names behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return [name for name in ctx.raises_types if name]
 
 
 def _format_source_evidence(ctx: SymbolContext) -> str:
+    """Support format source evidence behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not ctx.source_lines:
         return "SOURCE EVIDENCE:\n- no source lines available"
 
@@ -139,6 +254,19 @@ def _format_source_evidence(ctx: SymbolContext) -> str:
 
 
 def _build_evidence_ledger(ctx: SymbolContext) -> str:
+    """Support build evidence ledger behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parameter_names = _evidence_parameter_names(ctx)
     attribute_names = _evidence_attribute_names(ctx)
     raise_names = _evidence_raise_names(ctx)
@@ -160,6 +288,23 @@ def _build_evidence_ledger(ctx: SymbolContext) -> str:
     return "\n".join(rows)
 
 def _build_user_prompt(ctx: SymbolContext, policy: DocstringPolicy, structured: bool) -> str:
+    """Support build user prompt behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    policy : DocstringPolicy
+        The policy value.
+    structured : bool
+        The structured value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parts = [
         f"KIND: {ctx.kind}",
         f"MODULE: {ctx.module_id}",

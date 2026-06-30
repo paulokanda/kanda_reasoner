@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/__init__.py
 """Read-only GUI components for the Prompt Engineering Library.
 
 The package facade avoids importing PySide6 until GUI classes are explicitly

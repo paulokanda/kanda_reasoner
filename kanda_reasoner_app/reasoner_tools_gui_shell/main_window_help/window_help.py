@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_help.py
 """Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
 
 from __future__ import annotations
@@ -16,12 +17,23 @@ class _WindowHelpMixin:
 
     @staticmethod
     def _help_file_path() -> Path:
+        """Support help file path behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         try:
             return _PROJECT_ROOT / _HELP_FILENAME
         except Exception:
             return _PROJECT_ROOT / _HELP_FILENAME
 
     def _open_help_file(self) -> None:
+        """Support open help file behavior.
+        """
+        
         help_path = self._help_file_path()
         if not help_path.exists():
             QMessageBox.warning(

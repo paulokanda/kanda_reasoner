@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_roles.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -21,6 +22,19 @@ ROLE_HINTS = {
 
 
 def summarize_file_semantics(record: dict[str, Any]) -> dict[str, Any]:
+    """Support summarize file semantics behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     blob_parts: list[str] = []
 
     blob_parts.extend(record.get("imports", []))
@@ -79,6 +93,21 @@ def summarize_file_semantics(record: dict[str, Any]) -> dict[str, Any]:
 
 
 def summarize_symbol_semantics(symbol_record: dict[str, Any], kind: str) -> str:
+    """Support summarize symbol semantics behavior.
+    
+    Parameters
+    ----------
+    symbol_record : dict[str, Any]
+        The symbol record value.
+    kind : str
+        The kind value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     name = symbol_record.get("qualname") or symbol_record.get("name", "")
     calls = [call.get("call_name", "") for call in symbol_record.get("calls", [])]
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/state_models.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -20,12 +21,17 @@ __all__ = ["WindowSessionState", "ProfileSelectionState", "AnalysisState"]
 
 @dataclass
 class WindowSessionState:
+    """Represent window session state."""
+    
     last_bundle: RetrievalBundle = field(default_factory=RetrievalBundle)
     last_prompt: str = ""
     last_selected_model: str = ""
     pending_question: str = ""
 
     def clear_visual_state(self) -> None:
+        """Support clear visual state behavior.
+        """
+        
         self.last_bundle = RetrievalBundle()
         self.last_prompt = ""
         self.last_selected_model = ""
@@ -34,6 +40,8 @@ class WindowSessionState:
 
 @dataclass
 class ProfileSelectionState:
+    """Represent profile selection state."""
+    
     detected_profile_name: str = ""
     active_profile_name: str = ""
     manual_profile_name: str = ""
@@ -41,6 +49,8 @@ class ProfileSelectionState:
 
 @dataclass
 class AnalysisState:
+    """Represent analysis state."""
+    
     is_running: bool = False
     last_generated_json_path: str = ""
 

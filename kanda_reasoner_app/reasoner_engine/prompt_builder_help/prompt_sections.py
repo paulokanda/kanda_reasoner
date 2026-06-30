@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder_help/prompt_sections.py
 """Prompt section helpers for Project Reasoner."""
 
 from __future__ import annotations

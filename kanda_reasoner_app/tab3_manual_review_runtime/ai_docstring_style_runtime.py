@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/ai_docstring_style_runtime.py
 """AI docstring style enforcement helpers for Tab 3 review drafts."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/profile_controller.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -29,6 +30,8 @@ __all__ = ["ProfileRefreshResult", "ProfileController"]
 
 @dataclass
 class ProfileRefreshResult:
+    """Represent profile refresh result."""
+    
     retriever: ProjectRetriever
     state: ProfileSelectionState
     detected_label_text: str
@@ -38,7 +41,17 @@ class ProfileRefreshResult:
 
 
 class ProfileController:
+    """Represent profile controller."""
+    
     def available_profile_names(self) -> list[str]:
+        """Support available profile names behavior.
+        
+        Returns
+        -------
+        list[str]
+            The list of values.
+        """
+        
         names: list[str] = []
         for profile in iter_project_profiles():
             profile_name = str(getattr(profile, "name", "")).strip()
@@ -47,12 +60,38 @@ class ProfileController:
         return sorted(set(names))
 
     def _selected_override_name(self, combo_text: str) -> str:
+        """Support selected override name behavior.
+        
+        Parameters
+        ----------
+        combo_text : str
+            The combo text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         text = str(combo_text).strip()
         if not text or text.lower() in {"auto", "automatic", "(auto)"}:
             return ""
         return text
 
     def _detect_project_profile(self, project_index) -> ProjectProfile:
+        """Support detect project profile behavior.
+        
+        Parameters
+        ----------
+        project_index : object
+            The project index value.
+        
+        Returns
+        -------
+        ProjectProfile
+            The project profile result.
+        """
+        
         project_summary = (
             project_index.project_summary
             if isinstance(getattr(project_index, "project_summary", None), dict)
@@ -71,6 +110,21 @@ class ProfileController:
         project_index,
         current_override_name: str,
     ) -> ProfileRefreshResult:
+        """Build a refresh result.
+        
+        Parameters
+        ----------
+        project_index : object
+            The project index value.
+        current_override_name : str
+            The current override name value.
+        
+        Returns
+        -------
+        ProfileRefreshResult
+            The profile refresh result result.
+        """
+        
         detected_profile = self._detect_project_profile(project_index)
         override_name = self._selected_override_name(current_override_name)
         active_profile = (
@@ -95,6 +149,14 @@ class ProfileController:
         )
 
     def refresh_controls(self, window) -> None:
+        """Support refresh controls behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         combo = window.profile_override_combo
         current_manual = getattr(window, "_manual_project_profile_name", "")
         current_selection = combo.currentText().strip()
@@ -131,6 +193,14 @@ class ProfileController:
         )
 
     def on_profile_override_changed(self, window) -> None:
+        """Support on profile override changed behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         if not window.project_index.index_data:
             return
 
@@ -145,6 +215,14 @@ class ProfileController:
             )
 
     def reset_profile_override(self, window) -> None:
+        """Support reset profile override behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         window.profile_override_combo.blockSignals(True)
         window.profile_override_combo.setCurrentIndex(0)
         window.profile_override_combo.blockSignals(False)

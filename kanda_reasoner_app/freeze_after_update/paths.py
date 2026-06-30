@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/paths.py
 """Path helpers for the external Freeze Feature After Update state box."""
 
 from __future__ import annotations

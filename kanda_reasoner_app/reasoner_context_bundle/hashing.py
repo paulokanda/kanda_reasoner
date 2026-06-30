@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/hashing.py
 """Hashing helpers for reasoner context bundle artifacts."""
 
 from __future__ import annotations
@@ -5,7 +6,7 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
-__all__ = ["sha256_bytes", "sha256_file", "sha256_text_normalized"]
+__all__: list[str] = []
 
 
 def sha256_bytes(data: bytes) -> str:

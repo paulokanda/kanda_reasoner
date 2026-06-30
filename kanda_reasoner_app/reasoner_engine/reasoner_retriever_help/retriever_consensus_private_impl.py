@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/retriever_consensus_private_impl.py
 """Private consensus helpers for reasoner_retriever."""
 from __future__ import annotations
 
@@ -25,6 +26,41 @@ def _expand_bundle_with_named_callees_impl(
     symbol_limit: int,
     snippet_limit: int,
 ) -> tuple[list[EvidenceItem], list[SymbolEvidenceItem], list[dict[str, Any]]]:
+    """Support expand bundle with named callees impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    question : str
+        The question value.
+    which_calls_query : bool
+        The which calls query value.
+    file_evidence : list[EvidenceItem]
+        The file evidence value.
+    symbol_evidence : list[SymbolEvidenceItem]
+        The symbol evidence value.
+    snippet_evidence : list[dict[str, Any]]
+        The snippet evidence value.
+    effective_file_limit : int
+        The effective file limit value.
+    effective_symbol_limit : int
+        The effective symbol limit value.
+    effective_snippet_limit : int
+        The effective snippet limit value.
+    file_limit : int
+        The file limit value.
+    symbol_limit : int
+        The symbol limit value.
+    snippet_limit : int
+        The snippet limit value.
+    
+    Returns
+    -------
+    tuple[list[EvidenceItem], list[SymbolEvidenceItem], list[dict[str, Any]]]
+        The tuple of values.
+    """
+    
     top_snippets = snippet_evidence[:8]
     candidate_callees: set[str] = set()
 
@@ -98,6 +134,29 @@ def _rerank_file_evidence_with_consensus_impl(
     *,
     limit: int,
 ) -> list[EvidenceItem]:
+    """Support rerank file evidence with consensus impl behavior.
+    
+    Parameters
+    ----------
+    retriever : object
+        The retriever value.
+    question : str
+        The question value.
+    file_evidence : list[EvidenceItem]
+        The file evidence value.
+    symbol_evidence : list[SymbolEvidenceItem]
+        The symbol evidence value.
+    snippet_evidence : list[dict[str, Any]]
+        The snippet evidence value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    list[EvidenceItem]
+        The list of values.
+    """
+    
     if not file_evidence:
         return []
 

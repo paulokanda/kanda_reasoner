@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_utils.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -9,10 +10,31 @@ from typing import Any
 
 
 def now_iso() -> str:
+    """Support now iso behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return datetime.now().isoformat(timespec="milliseconds")
 
 
 def sanitize_text(value: Any) -> str:
+    """Support sanitize text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     text = str(value)
@@ -20,6 +42,19 @@ def sanitize_text(value: Any) -> str:
 
 
 def sanitize_data(data: Any) -> Any:
+    """Support sanitize data behavior.
+    
+    Parameters
+    ----------
+    data : Any
+        The input data.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(data, dict):
         return {
             sanitize_text(key): sanitize_data(value)
@@ -35,6 +70,16 @@ def sanitize_data(data: Any) -> Any:
 
 
 def safe_json_dump(data: Any, output_path: Path) -> None:
+    """Support safe json dump behavior.
+    
+    Parameters
+    ----------
+    data : Any
+        The input data.
+    output_path : Path
+        The output path value.
+    """
+    
     output_path.parent.mkdir(parents=True, exist_ok=True)
     clean_data = sanitize_data(data)
     json_text = json.dumps(clean_data, indent=2, ensure_ascii=False)

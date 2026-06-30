@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/implementation_responsibility_resolver.py
 """Read-only implementation responsibility resolver for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -272,12 +273,38 @@ def build_reasoner_symbol_atlas_implementation_responsibility_report(
 
 
 def _normalized_path(path_text: str) -> str:
+    """Support normalized path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not path_text:
         return ""
     return str(Path(path_text)).replace("\\", "/")
 
 
 def _active_path_or_empty(path_text: str) -> str:
+    """Support active path or empty behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized = _normalized_path(path_text)
     if normalized and is_active_atlas_path(normalized):
         return normalized
@@ -291,6 +318,27 @@ def _choose_primary_edit_target(
     main_path: str,
     helper_target: str,
 ) -> str:
+    """Support choose primary edit target behavior.
+    
+    Parameters
+    ----------
+    placement_primary : str
+        The placement primary value.
+    facade_owner : str
+        The facade owner value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    main_path : str
+        The main path value.
+    helper_target : str
+        The helper target value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     active_helper = _active_path_or_empty(helper_target)
     active_placement = _active_path_or_empty(placement_primary)
     active_facade_owner = _active_path_or_empty(facade_owner)
@@ -315,6 +363,21 @@ def _secondary_helper_targets(
     primary_target: str,
     helper_paths: tuple[str, ...],
 ) -> tuple[str, ...]:
+    """Support secondary helper targets behavior.
+    
+    Parameters
+    ----------
+    primary_target : str
+        The primary target value.
+    helper_paths : tuple[str, ...]
+        The helper paths value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     primary_key = _normalized_path(primary_target).lower()
     for path in helper_paths:
@@ -330,6 +393,25 @@ def _files_not_to_touch(
     facade_target: str,
     forbidden_boxes: tuple[str, ...],
 ) -> tuple[str, ...]:
+    """Support files not to touch behavior.
+    
+    Parameters
+    ----------
+    target_path : str
+        The target path value.
+    primary_target : str
+        The primary target value.
+    facade_target : str
+        The facade target value.
+    forbidden_boxes : tuple[str, ...]
+        The forbidden boxes value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     target = _active_path_or_empty(target_path)
     primary = _active_path_or_empty(primary_target)
@@ -350,6 +432,23 @@ def _merge_tests(
     helper_tests: tuple[str, ...],
     primary_target: str,
 ) -> tuple[str, ...]:
+    """Support merge tests behavior.
+    
+    Parameters
+    ----------
+    placement_tests : tuple[str, ...]
+        The placement tests value.
+    helper_tests : tuple[str, ...]
+        The helper tests value.
+    primary_target : str
+        The primary target value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     tests: list[str] = []
     if primary_target and is_active_atlas_path(primary_target):
         command = "python -m py_compile " + primary_target
@@ -374,6 +473,25 @@ def _needs_owner_review(
     facade_patch_risk: bool,
     helper_public_api_risk: bool,
 ) -> bool:
+    """Support needs owner review behavior.
+    
+    Parameters
+    ----------
+    placement_status : str
+        The placement status value.
+    facade_status : str
+        The facade status value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    helper_public_api_risk : bool
+        The helper public api risk value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if facade_patch_risk:
         return True
     if helper_public_api_risk:
@@ -396,6 +514,29 @@ def _status_and_confidence(
     placement_status: str,
     main_helper_status: str,
 ) -> tuple[str, str]:
+    """Support status and confidence behavior.
+    
+    Parameters
+    ----------
+    primary_target : str
+        The primary target value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    wrong_box_risk : bool
+        The wrong box risk value.
+    needs_owner_review : bool
+        The needs owner review value.
+    placement_status : str
+        The placement status value.
+    main_helper_status : str
+        The main helper status value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     if not primary_target:
         return PROJECT_SYMBOL_ATLAS_RESPONSIBILITY_STATUS_TARGET_NOT_FOUND, "low"
     if wrong_box_risk or placement_status == PROJECT_SYMBOL_ATLAS_PLACEMENT_STATUS_WRONG_TARGET:
@@ -408,6 +549,19 @@ def _status_and_confidence(
 
 
 def _merge_reasons(*groups: tuple[str, ...]) -> tuple[str, ...]:
+    """Support merge reasons behavior.
+    
+    Parameters
+    ----------
+    *groups : tuple[str, ...]
+        The groups value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     for group in groups:
         for value in group:
@@ -423,6 +577,25 @@ def _extra_reasons(
     helper_public_api_risk: bool,
     wrong_box_risk: bool,
 ) -> tuple[str, ...]:
+    """Support extra reasons behavior.
+    
+    Parameters
+    ----------
+    primary_target : str
+        The primary target value.
+    facade_patch_risk : bool
+        The facade patch risk value.
+    helper_public_api_risk : bool
+        The helper public api risk value.
+    wrong_box_risk : bool
+        The wrong box risk value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     reasons: list[str] = []
     if primary_target:
         reasons.append("Primary edit target selected: " + primary_target)
@@ -438,6 +611,19 @@ def _extra_reasons(
 def _format_decision_summary(
     decision: ProjectSymbolAtlasImplementationResponsibilityDecision,
 ) -> str:
+    """Support format decision summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasImplementationResponsibilityDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parts = [
         "Implementation responsibility: " + decision.status,
         "owner_box=" + decision.recommended_owner_box,

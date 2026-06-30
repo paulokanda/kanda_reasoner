@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/governance_automation/on_every_push_validator.py
 """Build On Every Push validation plans and reports.
 
 This module is intentionally report-only. It does not execute shell commands.
@@ -27,15 +28,51 @@ GA_PUSH_DEFAULT_CHECKS = (
 
 
 def _utc_timestamp() -> str:
+    """Support utc timestamp behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
 def _clean_text(value: str | None, default: str = "Not specified.") -> str:
+    """Support clean text behavior.
+    
+    Parameters
+    ----------
+    value : str | None
+        The input value.
+    default : str, optional
+        The default value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = " ".join(str(value or "").strip().split())
     return text or default
 
 
 def _normalize_status(value: str | None) -> str:
+    """Support normalize status behavior.
+    
+    Parameters
+    ----------
+    value : str | None
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = str(value or "").strip().lower()
     if text in GA_PUSH_VALID_STATUSES:
         return text

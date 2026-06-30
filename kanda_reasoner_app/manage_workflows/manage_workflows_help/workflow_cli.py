@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_cli.py
 """Own CLI orchestration while leaving manage_workflows.py as facade."""
 
 from __future__ import annotations
@@ -174,6 +175,19 @@ def run_workflow_detector_results(
     return results
 
 def validate_project(root: Path) -> tuple[dict[str, Any], list[CheckResult]]:
+    """Validate the project.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    tuple[dict[str, Any], list[CheckResult]]
+        The tuple of values.
+    """
+    
     discovered = scan_project(root)
     manifest, loaded = load_manifest_or_default(root, discovered)
     workflows = manifest["workflows"]
@@ -232,6 +246,21 @@ def validate_project(root: Path) -> tuple[dict[str, Any], list[CheckResult]]:
 def _run(root: Path, mode: str) -> int:
     # scan_project and generate_manifest are always needed; validate_project
     # does its own internal scan so we skip the redundant one for that mode.
+    """Support run behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    mode : str
+        The selected mode.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     if mode == "validate":
         loaded_manifest, results = validate_project(root)
         print_results(results)
@@ -287,6 +316,14 @@ def _run(root: Path, mode: str) -> int:
     raise ValueError(f"Unsupported mode: {mode}")
 
 def _build_parser() -> argparse.ArgumentParser:
+    """Support build parser behavior.
+    
+    Returns
+    -------
+    argparse.ArgumentParser
+        The argument parser result.
+    """
+    
     history_roots = get_history_roots()
     default_root = history_roots[0] if history_roots else str(Path.cwd())
 
@@ -346,6 +383,14 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     parser = _build_parser()
     args = parser.parse_args()
 

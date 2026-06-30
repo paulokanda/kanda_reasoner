@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_boundary_readiness_gate_design.py
 """Design-only M25 shadow-mode readiness gate for Assistant boundary review.
 
 M25 defines static criteria for deciding whether a later M26 Assistant boundary

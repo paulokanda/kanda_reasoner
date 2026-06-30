@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/contract.py
 """Public contract for the Brain Region Mapping box.
 
 This pure data box maps stable brain-region identifiers to stable tab

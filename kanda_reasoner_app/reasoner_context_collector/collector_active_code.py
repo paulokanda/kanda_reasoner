@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_active_code.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,14 +7,53 @@ from typing import Any
 
 
 def _safe_text(value: Any) -> str:
+    """Support safe text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip()
 
 
 def _safe_lower(value: Any) -> str:
+    """Support safe lower behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_text(value).lower()
 
 
 def _safe_float(value: Any) -> float:
+    """Support safe float behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     try:
         return float(value)
     except Exception:
@@ -21,6 +61,19 @@ def _safe_float(value: Any) -> float:
 
 
 def _safe_int(value: Any) -> int:
+    """Support safe int behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         return int(value)
     except Exception:
@@ -28,6 +81,21 @@ def _safe_int(value: Any) -> int:
 
 
 def _payload(mapping: dict[str, dict[str, Any]], file_path: str) -> dict[str, Any]:
+    """Support payload behavior.
+    
+    Parameters
+    ----------
+    mapping : dict[str, dict[str, Any]]
+        The mapping value.
+    file_path : str
+        The file path.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     value = mapping.get(file_path, {})
     if isinstance(value, dict):
         return value
@@ -35,12 +103,38 @@ def _payload(mapping: dict[str, dict[str, Any]], file_path: str) -> dict[str, An
 
 
 def _safe_bucket(file_record: dict[str, Any]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return _safe_lower(file_record.get("subsystem_bucket", "")) or "general"
 
 
 def _feature_count_by_file(
     feature_registry: dict[str, dict[str, Any]],
 ) -> dict[str, int]:
+    """Support feature count by file behavior.
+    
+    Parameters
+    ----------
+    feature_registry : dict[str, dict[str, Any]]
+        The feature registry value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     counts: dict[str, int] = {}
 
     for payload in feature_registry.values():
@@ -64,6 +158,27 @@ def build_active_code_index(
     canonical_conflict_index: dict[str, dict[str, Any]],
     feature_registry: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a active code index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    change_impact_index : dict[str, dict[str, Any]]
+        The change impact index value.
+    implementation_chronology_index : dict[str, dict[str, Any]]
+        The implementation chronology index value.
+    canonical_conflict_index : dict[str, dict[str, Any]]
+        The canonical conflict index value.
+    feature_registry : dict[str, dict[str, Any]]
+        The feature registry value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
     feature_counts = _feature_count_by_file(feature_registry)
 
@@ -154,6 +269,19 @@ def build_active_code_index(
 def build_active_code_summary(
     active_code_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a active code summary.
+    
+    Parameters
+    ----------
+    active_code_index : dict[str, dict[str, Any]]
+        The active code index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     status_frequency: dict[str, int] = {}
     coverage_confirmed_file_count = 0
@@ -200,6 +328,21 @@ def build_untested_critical_hotspots(
     active_code_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a untested critical hotspots.
+    
+    Parameters
+    ----------
+    active_code_index : dict[str, dict[str, Any]]
+        The active code index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in active_code_index.items():

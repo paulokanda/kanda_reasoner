@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_bucket_insights.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from typing import Any
 
 
 def _safe_float(value: Any) -> float:
+    """Support safe float behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     try:
         return float(value)
     except Exception:
@@ -13,6 +27,19 @@ def _safe_float(value: Any) -> float:
 
 
 def _safe_int(value: Any) -> int:
+    """Support safe int behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     try:
         return int(value)
     except Exception:
@@ -24,6 +51,23 @@ def build_bucket_hotspots(
     module_centrality_index: dict[str, dict[str, Any]],
     limit: int = 10,
 ) -> list[dict[str, Any]]:
+    """Build a bucket hotspots.
+    
+    Parameters
+    ----------
+    bucket_summary : dict[str, dict[str, Any]]
+        The bucket summary value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for bucket_name, bucket_payload in bucket_summary.items():
@@ -66,6 +110,21 @@ def build_bucket_priority_summary(
     bucket_summary: dict[str, dict[str, Any]],
     file_priority_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a bucket priority summary.
+    
+    Parameters
+    ----------
+    bucket_summary : dict[str, dict[str, Any]]
+        The bucket summary value.
+    file_priority_index : dict[str, dict[str, Any]]
+        The file priority index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for bucket_name, bucket_payload in bucket_summary.items():
@@ -98,6 +157,21 @@ def build_bucket_warning_summary(
     bucket_summary: dict[str, dict[str, Any]],
     warning_index: dict[str, list[dict[str, Any]]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a bucket warning summary.
+    
+    Parameters
+    ----------
+    bucket_summary : dict[str, dict[str, Any]]
+        The bucket summary value.
+    warning_index : dict[str, list[dict[str, Any]]]
+        The warning index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for bucket_name, bucket_payload in bucket_summary.items():
@@ -127,6 +201,25 @@ def build_bucket_insights(
     file_priority_index: dict[str, dict[str, Any]],
     warning_index: dict[str, list[dict[str, Any]]],
 ) -> dict[str, Any]:
+    """Build a bucket insights.
+    
+    Parameters
+    ----------
+    bucket_summary : dict[str, dict[str, Any]]
+        The bucket summary value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    file_priority_index : dict[str, dict[str, Any]]
+        The file priority index value.
+    warning_index : dict[str, list[dict[str, Any]]]
+        The warning index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     bucket_hotspots = build_bucket_hotspots(
         bucket_summary,
         module_centrality_index,

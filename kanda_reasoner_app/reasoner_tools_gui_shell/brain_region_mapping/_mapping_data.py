@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/_mapping_data.py
 """Private mapping data for the Brain Region Mapping box.
 
 This module intentionally contains data only. It does not import GUI modules,

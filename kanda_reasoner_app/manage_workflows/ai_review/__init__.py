@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/__init__.py
 """Tab 2 advisory AI review helpers."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_primary_definition_index.py
 """Build a primary definition index for Project Reasoner web AI.
 
 This module is additive over duplicate_symbols and web_ai_symbol_index. It helps

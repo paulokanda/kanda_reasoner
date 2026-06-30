@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/group_dashboard.py
 """Dashboard widgets for launching Prompt Library group windows."""
 
 from __future__ import annotations

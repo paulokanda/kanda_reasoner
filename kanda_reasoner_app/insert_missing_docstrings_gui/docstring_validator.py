@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/docstring_validator.py
 """Post-generation docstring validator with confidence scoring."""
 
 from __future__ import annotations
@@ -11,6 +12,8 @@ from .context_builder import SymbolContext
 
 @dataclass
 class ValidationConfig:
+    """Represent validation config."""
+    
     max_line_length: int = 88
     max_todo_ratio: float = 0.5
     min_confidence: str = "low"
@@ -21,6 +24,8 @@ class ValidationConfig:
 
 @dataclass
 class ValidationResult:
+    """Represent validation result."""
+    
     ok: bool
     cleaned: str
     confidence: str = "high"
@@ -30,6 +35,19 @@ class ValidationResult:
 
     @classmethod
     def fatal(cls, reason: str) -> "ValidationResult":
+        """Support fatal behavior.
+        
+        Parameters
+        ----------
+        reason : str
+            The reason value.
+        
+        Returns
+        -------
+        'ValidationResult'
+            The 'validation result' result.
+        """
+        
         return cls(ok=False, cleaned="", confidence="low", issues=[reason], fatal_reason=reason)
 
 
@@ -39,6 +57,19 @@ _SECTION_RE = re.compile(r"^(%s)\s*$" % "|".join(re.escape(s) for s in _SECTION_
 
 
 def _strip_quotes_and_fences(text: str) -> str:
+    """Support strip quotes and fences behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     cleaned = text.strip()
     if cleaned.startswith("```") and cleaned.endswith("```"):
         lines = cleaned.splitlines()
@@ -54,14 +85,55 @@ def _strip_quotes_and_fences(text: str) -> str:
 
 
 def _contains_triple_quote_token(text: str) -> bool:
+    """Support contains triple quote token behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return ('"""' in text) or ("'''" in text)
 
 
 def _looks_like_quote_only_output(text: str) -> bool:
+    """Support looks like quote only output behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     stripped = text.strip()
     return stripped in {'"""', "'''", '"', "'", '""', "''"}
 
 def _find_section(lines: list[str], title: str) -> tuple[int, int] | None:
+    """Support find section behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    title : str
+        The title value.
+    
+    Returns
+    -------
+    tuple[int, int] | None
+        The tuple of values.
+    """
+    
     for idx, line in enumerate(lines):
         if line.strip() != title:
             continue
@@ -71,6 +143,19 @@ def _find_section(lines: list[str], title: str) -> tuple[int, int] | None:
 
 
 def _extract_param_names(lines: list[str]) -> list[str]:
+    """Support extract param names behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     span = _find_section(lines, "Parameters")
     if span is None:
         return []
@@ -88,6 +173,19 @@ def _extract_param_names(lines: list[str]) -> list[str]:
 
 
 def _extract_raise_names(lines: list[str]) -> list[str]:
+    """Support extract raise names behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     span = _find_section(lines, "Raises")
     if span is None:
         return []
@@ -105,6 +203,23 @@ def _extract_raise_names(lines: list[str]) -> list[str]:
 
 
 def validate(docstring: str, ctx: SymbolContext, config: ValidationConfig) -> ValidationResult:
+    """Support validate behavior.
+    
+    Parameters
+    ----------
+    docstring : str
+        The docstring value.
+    ctx : SymbolContext
+        The ctx value.
+    config : ValidationConfig
+        The configuration data.
+    
+    Returns
+    -------
+    ValidationResult
+        The validation result result.
+    """
+    
     cleaned = _strip_quotes_and_fences(docstring)
     if not cleaned:
         return ValidationResult.fatal("Empty docstring output.")

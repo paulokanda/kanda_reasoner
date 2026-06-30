@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_assistant_transition_design.py
 """Design-only Shadow Mode / Assistant transition plan.
 
 M17 is the first post-Adviser phase milestone. It does not implement shadow
@@ -244,6 +245,19 @@ def assert_shadow_mode_assistant_transition_design_valid(record: Mapping[str, An
 
 
 def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
+    """Support policy summary behavior.
+    
+    Parameters
+    ----------
+    policy : Mapping[str, Any]
+        The policy value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "policy_version": str(policy.get("policy_version", "not_supplied")),
         "requires_human_confirmation": policy.get("requires_human_confirmation", True) is True,
@@ -254,6 +268,21 @@ def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
 
 
 def _hash_record_without_field(record: Mapping[str, Any], field: str) -> str:
+    """Support hash record without field behavior.
+    
+    Parameters
+    ----------
+    record : Mapping[str, Any]
+        The record value.
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = {key: value for key, value in record.items() if key != field}
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()

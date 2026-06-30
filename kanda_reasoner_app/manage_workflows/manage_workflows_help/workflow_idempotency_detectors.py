@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_idempotency_detectors.py
 """Detect non-idempotent Tab 2 workflow command patterns."""
 
 from __future__ import annotations

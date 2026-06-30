@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/registry/hash_utils.py
 """Deterministic hash helpers for offline Adviser registry records.
 
 The functions in this module hash values that are explicitly supplied by the

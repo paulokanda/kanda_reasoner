@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/hooks/qt_connection_monitor.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -8,6 +9,14 @@ import os
 from pathlib import Path
 
 def _resolve_project_root() -> str:
+    """Support resolve project root behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = os.environ.get("DEVTOOLS_PROJECT_ROOT", "").strip()
     if not value:
         raise RuntimeError(
@@ -30,7 +39,12 @@ from qt_hooks.qt_connection_monitor import (
 
 
 class TestQtConnectionMonitor(unittest.TestCase):
+    """Represent test qt connection monitor."""
+    
     def test_install_and_uninstall_are_safe(self) -> None:
+        """Support test install and uninstall are safe behavior.
+        """
+        
         configure_runtime_trace(
             project_root=_resolve_project_root(),
             output_path="",
@@ -44,6 +58,9 @@ class TestQtConnectionMonitor(unittest.TestCase):
         self.assertIn(uninstalled, (True, False))
 
     def test_trace_signal_connection_storage(self) -> None:
+        """Support test trace signal connection storage behavior.
+        """
+        
         writer = configure_runtime_trace(
             project_root=_resolve_project_root(),
             output_path="",

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/contract.py
 """Public contract for the Brain Navigator box.
 
 This module keeps import-time side effects low and avoids static PySide6,

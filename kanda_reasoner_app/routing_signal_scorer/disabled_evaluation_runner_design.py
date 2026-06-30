@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/disabled_evaluation_runner_design.py
 """Disabled evaluation runner design contract for future semantic evaluation.
 
 This module is intentionally standard-library-only and design-only. It does not
@@ -210,21 +211,74 @@ FORBIDDEN_VECTOR_OR_PROVIDER_FIELDS = frozenset(
 
 
 def _is_sequence(value: Any) -> bool:
+    """Support is sequence behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
 
 
 def _as_strings(value: Any) -> set[str]:
+    """Support as strings behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if not _is_sequence(value):
         return set()
     return {item for item in value if isinstance(item, str)}
 
 
 def _append_missing(errors: list[str], label: str, missing: set[str]) -> None:
+    """Support append missing behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    label : str
+        The label value.
+    missing : set[str]
+        The missing value.
+    """
+    
     if missing:
         errors.append(f"missing {label}: {', '.join(sorted(missing))}")
 
 
 def _find_forbidden_fields(mapping: Mapping[str, Any], forbidden: set[str] | frozenset[str]) -> set[str]:
+    """Support find forbidden fields behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    forbidden : set[str] | frozenset[str]
+        The forbidden value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     return {key for key in mapping if key in forbidden}
 
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/core/adviser_resource_limits.py
 """Offline Adviser resource limits.
 
 Resource limits keep future Adviser evaluation bounded and predictable. They are
@@ -47,6 +48,14 @@ class ResourceLimitResult:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "errors": list(self.errors),
@@ -126,12 +135,36 @@ def assert_resource_limits_ok(result: Mapping[str, Any]) -> Mapping[str, Any]:
 
 
 def _check_list_size(data: Mapping[str, Any], key: str, limit: int, errors: list[str]) -> None:
+    """Support check list size behavior.
+    
+    Parameters
+    ----------
+    data : Mapping[str, Any]
+        The input data.
+    key : str
+        The key value.
+    limit : int
+        The limit value.
+    errors : list[str]
+        The error values.
+    """
+    
     value = data.get(key)
     if isinstance(value, list) and len(value) > limit:
         errors.append(f"{key} exceeds limit {limit}")
 
 
 def _check_context_requirements(value: object, errors: list[str]) -> None:
+    """Support check context requirements behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     if not isinstance(value, Mapping):
         return
     for key, bucket in value.items():
@@ -140,6 +173,16 @@ def _check_context_requirements(value: object, errors: list[str]) -> None:
 
 
 def _check_governance_flags(value: object, errors: list[str]) -> None:
+    """Support check governance flags behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     if not isinstance(value, Mapping):
         return
     for key, bucket in value.items():
@@ -148,6 +191,16 @@ def _check_governance_flags(value: object, errors: list[str]) -> None:
 
 
 def _check_rationale(value: object, errors: list[str]) -> None:
+    """Support check rationale behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    errors : list[str]
+        The error values.
+    """
+    
     if isinstance(value, Mapping):
         short = value.get("short")
         if isinstance(short, str) and len(short) > MAX_RATIONALE_SHORT_CHARS:
@@ -155,6 +208,19 @@ def _check_rationale(value: object, errors: list[str]) -> None:
 
 
 def _count_list_items(value: object) -> int:
+    """Support count list items behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     if isinstance(value, Mapping):
         return sum(_count_list_items(item) for item in value.values())
     if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):

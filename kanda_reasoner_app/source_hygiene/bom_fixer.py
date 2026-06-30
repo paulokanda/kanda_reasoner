@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/bom_fixer.py
 """Safe UTF-8 BOM removal with backup, validation, and rollback."""
 
 from __future__ import annotations
@@ -189,6 +190,23 @@ def _make_backup_path(
     project_root: Path,
     backup_root: str | Path | None,
 ) -> Path:
+    """Support make backup path behavior.
+    
+    Parameters
+    ----------
+    file_path : Path
+        The file path.
+    project_root : Path
+        The project root path.
+    backup_root : str | Path | None
+        The backup root value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     if backup_root is None:
         stamp = utc_timestamp().replace(":", "").replace("-", "")
         backup_base = project_root / "workbench" / "source_hygiene_backups" / stamp
@@ -202,6 +220,21 @@ def _make_backup_path(
 
 
 def _display_path(path: Path, root: Path | None) -> str:
+    """Support display path behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path | None
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if root is None:
         return str(path)
     try:

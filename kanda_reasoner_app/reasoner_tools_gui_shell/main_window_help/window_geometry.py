@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_geometry.py
 """Screen-aware startup sizing helpers for the main tools window."""
 
 from __future__ import annotations

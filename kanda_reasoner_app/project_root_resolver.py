@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/project_root_resolver.py
 """Project-root resolution helpers for source and compiled execution.
 
 The helpers in this module keep project identity dynamic. They must not

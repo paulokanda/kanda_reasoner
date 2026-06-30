@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_observation_review_evidence_design.py
 """Design-only M24 shadow observation review evidence design.
 
 M24 defines a static review-evidence envelope for later human review of M23

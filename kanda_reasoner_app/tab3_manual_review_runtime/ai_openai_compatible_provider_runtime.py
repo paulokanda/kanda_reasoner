@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/ai_openai_compatible_provider_runtime.py
 """OpenAI-compatible local AI docstring provider for Tab 3."""
 
 from __future__ import annotations

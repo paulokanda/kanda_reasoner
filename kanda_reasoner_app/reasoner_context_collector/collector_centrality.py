@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_centrality.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,12 +7,42 @@ from collections import Counter
 
 
 def _safe_list(value: object) -> list:
+    """Support safe list behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    list
+        The list of values.
+    """
+    
     if isinstance(value, list):
         return value
     return []
 
 
 def build_module_centrality_index(import_graph: dict, call_edges: list[dict], symbol_index: dict) -> dict:
+    """Build a module centrality index.
+    
+    Parameters
+    ----------
+    import_graph : dict
+        The import graph value.
+    call_edges : list[dict]
+        The call edges value.
+    symbol_index : dict
+        The symbol index value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     module_scores: dict[str, dict] = {}
 
     for module_name, imports in import_graph.items():
@@ -97,6 +128,19 @@ def build_module_centrality_index(import_graph: dict, call_edges: list[dict], sy
 
 
 def build_symbol_centrality_index(call_edges: list[dict]) -> dict:
+    """Build a symbol centrality index.
+    
+    Parameters
+    ----------
+    call_edges : list[dict]
+        The call edges value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     outgoing = Counter()
     incoming = Counter()
 
@@ -132,6 +176,23 @@ def build_top_project_hotspots(
     symbol_centrality_index: dict,
     limit: int = 20,
 ) -> dict:
+    """Build a top project hotspots.
+    
+    Parameters
+    ----------
+    module_centrality_index : dict
+        The module centrality index value.
+    symbol_centrality_index : dict
+        The symbol centrality index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     top_modules = []
     top_symbols = []
 

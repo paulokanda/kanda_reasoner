@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/help_index_help/help_index_data.py
 """
 Normalized help payload for Reasoner Engine.
 """

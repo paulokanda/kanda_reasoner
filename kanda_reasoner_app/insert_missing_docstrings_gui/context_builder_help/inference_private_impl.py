@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/context_builder_help/inference_private_impl.py
 """Private AST inference helpers for docstring context building."""
 
 # ------------------------------------------------------
@@ -15,6 +16,19 @@ import ast
 
 
 def _safe_unparse(node: ast.AST | None) -> str:
+    """Support safe unparse behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
     try:
@@ -24,6 +38,19 @@ def _safe_unparse(node: ast.AST | None) -> str:
 
 
 def _dedupe_texts(values: list[str]) -> list[str]:
+    """Support dedupe texts behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     output: list[str] = []
     seen: set[str] = set()
     for value in values:
@@ -39,6 +66,19 @@ def _dedupe_texts(values: list[str]) -> list[str]:
 
 
 def _annotation_from_default(default: ast.AST | None) -> str:
+    """Support annotation from default behavior.
+    
+    Parameters
+    ----------
+    default : ast.AST | None
+        The default value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if default is None:
         return ""
     if isinstance(default, ast.Constant):
@@ -67,6 +107,19 @@ def _annotation_from_default(default: ast.AST | None) -> str:
 
 
 def _walk_without_nested_symbols(node: ast.AST) -> list[ast.AST]:
+    """Support walk without nested symbols behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[ast.AST]
+        The list of values.
+    """
+    
     output: list[ast.AST] = []
     stack = list(ast.iter_child_nodes(node))
     while stack:
@@ -82,6 +135,19 @@ def _walk_without_nested_symbols(node: ast.AST) -> list[ast.AST]:
 
 
 def _has_top_level_yield(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
+    """Support has top level yield behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for inner in _walk_without_nested_symbols(node):
         if isinstance(inner, (ast.Yield, ast.YieldFrom)):
             return True
@@ -89,6 +155,19 @@ def _has_top_level_yield(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
 
 
 def _top_level_returns(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[ast.Return]:
+    """Support top level returns behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[ast.Return]
+        The list of values.
+    """
+    
     returns: list[ast.Return] = []
     for inner in _walk_without_nested_symbols(node):
         if isinstance(inner, ast.Return):
@@ -97,6 +176,19 @@ def _top_level_returns(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[ast
 
 
 def _infer_return_annotation(node: ast.FunctionDef | ast.AsyncFunctionDef) -> str:
+    """Support infer return annotation behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if _has_top_level_yield(node):
         if isinstance(node, ast.AsyncFunctionDef):
             return "AsyncIterator[object]"
@@ -121,6 +213,19 @@ def _infer_return_annotation(node: ast.FunctionDef | ast.AsyncFunctionDef) -> st
 
 
 def _raise_type_name(exc: ast.AST) -> str:
+    """Support raise type name behavior.
+    
+    Parameters
+    ----------
+    exc : ast.AST
+        The exc value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(exc, ast.Call):
         return _safe_unparse(exc.func)
     if isinstance(exc, (ast.Name, ast.Attribute, ast.Subscript)):

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_patch_file_set_design.py
 """Generator candidate patch file-set design for routing scorer v3.
 
 This module is intentionally standard-library-only and file_set-design-only. It
@@ -310,6 +311,19 @@ FORBIDDEN_FILE_SET_FIELDS = REQUIRED_PROHIBITED_FILE_SET_OUTPUTS
 
 
 def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
+    """Support sorted tuple behavior.
+    
+    Parameters
+    ----------
+    values : frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(sorted(values))
 
 
@@ -340,6 +354,19 @@ def build_generator_candidate_patch_file_set_contract() -> dict[str, Any]:
 
 
 def _as_set(value: object) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if isinstance(value, str) or not isinstance(value, Sequence):
         return set()
     return {item for item in value if isinstance(item, str)}

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/help_docs/path_resolver.py
 """Safe path resolution for local desktop help documents."""
 
 from __future__ import annotations
@@ -55,6 +56,19 @@ def resolve_help_child(relative_path: str) -> Path:
 
 
 def _page_from_manifest_entry(entry: dict[str, Any]) -> HelpPage:
+    """Support page from manifest entry behavior.
+    
+    Parameters
+    ----------
+    entry : dict[str, Any]
+        The entry value.
+    
+    Returns
+    -------
+    HelpPage
+        The help page result.
+    """
+    
     assets = tuple(resolve_help_child(path) for path in entry.get("assets", []))
     return HelpPage(
         page_id=str(entry["id"]),

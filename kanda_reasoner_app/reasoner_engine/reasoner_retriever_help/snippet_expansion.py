@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/snippet_expansion.py
 # -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
 # MODULE ORIGIN : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever.py
 # MANIFEST      : <PROJECT_ROOT>\kanda_reasoner_app\reasoner_engine\reasoner_retriever_help.json
@@ -55,6 +56,19 @@ IGNORE_CALLS = {
 }
 
 def _extract_named_callees(snippet_text: str) -> set[str]:
+    """Support extract named callees behavior.
+    
+    Parameters
+    ----------
+    snippet_text : str
+        The snippet text value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     names = set()
 
     for m in CALL_RE.finditer(snippet_text or ""):

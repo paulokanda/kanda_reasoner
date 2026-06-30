@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/templates/floating_windows/float_window.py
 """Reusable delayed floating window helpers for Qt widgets."""
 
 from __future__ import annotations
@@ -56,6 +57,20 @@ class HoverFloatingWindowController(_QObject):
         message: str,
         delay_ms: int = 4000,
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        target_widget : Any
+            The target widget value.
+        trigger_word : str
+            The trigger word value.
+        message : str
+            The message text.
+        delay_ms : int, optional
+            The optional delay ms value.
+        """
+        
         super().__init__(target_widget)
         self._target_widget = target_widget
         self._trigger_word = trigger_word

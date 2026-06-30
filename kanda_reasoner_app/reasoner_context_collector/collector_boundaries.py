@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_boundaries.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -56,6 +57,19 @@ DOMAIN_KEYWORDS = (
 
 
 def _normalize_text(value: Any) -> str:
+    """Support normalize text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip().lower()
 
 
@@ -63,6 +77,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -76,6 +105,21 @@ def _safe_module_centrality(
     file_path: str,
     module_centrality_index: dict[str, Any],
 ) -> float:
+    """Support safe module centrality behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    module_centrality_index : dict[str, Any]
+        The module centrality index value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     payload = module_centrality_index.get(file_path, {})
     if not isinstance(payload, dict):
         return 0.0
@@ -87,6 +131,19 @@ def _safe_module_centrality(
 
 
 def _guess_boundary_role(record: dict[str, Any]) -> str:
+    """Support guess boundary role behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path_text = _normalize_text(record.get("path", ""))
     module_name = _normalize_text(record.get("module_name", ""))
     primary_role = _normalize_text(record.get("primary_role", ""))
@@ -122,6 +179,25 @@ def build_boundary_index(
     module_centrality_index: dict[str, Any],
     call_edges: list[dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a boundary index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    ui_action_index : dict[str, Any]
+        The ui action index value.
+    module_centrality_index : dict[str, Any]
+        The module centrality index value.
+    call_edges : list[dict[str, Any]]
+        The call edges value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     ui_source_files: set[str] = set()
     ui_target_files: set[str] = set()
 
@@ -198,6 +274,19 @@ def build_boundary_index(
 def build_boundary_summary(
     boundary_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a boundary summary.
+    
+    Parameters
+    ----------
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     role_counts = {
         "controller": 0,
         "service": 0,
@@ -251,6 +340,25 @@ def build_boundary_handoffs(
     symbol_index: dict[str, Any],
     limit: int = 50,
 ) -> list[dict[str, Any]]:
+    """Build a boundary handoffs.
+    
+    Parameters
+    ----------
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    call_edges : list[dict[str, Any]]
+        The call edges value.
+    symbol_index : dict[str, Any]
+        The symbol index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     handoffs: list[dict[str, Any]] = []
 
     for edge in call_edges:

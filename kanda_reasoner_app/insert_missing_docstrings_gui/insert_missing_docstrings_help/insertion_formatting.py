@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_help/insertion_formatting.py
 # ------------------------------------------------------
 # MODULE ORIGIN : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings.py
 # MANIFEST      : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_help.json
@@ -142,8 +143,34 @@ def payload_with_optional_uncertainty(
     payload.append(indent)
     return payload
 
+
+def _is_coding_comment(line: str) -> bool:
+    """Return whether a line is a Python source-encoding declaration."""
+    stripped = line.lstrip().lower()
+    return stripped.startswith("#") and "coding" in stripped
+
+
+def _is_module_header_comment(line: str) -> bool:
+    """Return whether a top comment should stay above the module docstring."""
+    stripped = line.strip().lower()
+    if not stripped.startswith("#"):
+        return False
+    return (
+        stripped.startswith("# spdx-")
+        or stripped.startswith("# copyright")
+        or stripped.startswith("# license")
+        or stripped.startswith("# project-path:")
+        or stripped.startswith("# type: ignore")
+        or stripped.startswith("# mypy:")
+        or stripped.startswith("# pyright:")
+        or stripped.startswith("# ruff:")
+        or stripped.startswith("# flake8:")
+        or stripped.startswith("# pylint:")
+    )
+
+
 def module_insert_index(lines: list[str]) -> int:
-    """Handle module insert index.
+    """Return where a module docstring belongs in a Python source file.
     
     Parameters
     ----------
@@ -155,14 +182,19 @@ def module_insert_index(lines: list[str]) -> int:
     int
         TODO: describe the return value.
     """
-    
     idx = 0
     if idx < len(lines) and lines[idx].startswith("#!"):
         idx += 1
-    if idx < len(lines) and "coding" in lines[idx]:
+    if idx < len(lines) and _is_coding_comment(lines[idx]):
         idx += 1
-    while idx < len(lines) and lines[idx].strip() == "":
-        idx += 1
+    while idx < len(lines):
+        if lines[idx].strip() == "":
+            idx += 1
+            continue
+        if _is_module_header_comment(lines[idx]):
+            idx += 1
+            continue
+        break
     return idx
 
 def has_inline_body(node: ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef) -> bool:

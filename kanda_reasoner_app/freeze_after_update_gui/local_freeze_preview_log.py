@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update_gui/local_freeze_preview_log.py
 """Plain-text renderer for local freeze-entry preview log visibility.
 
 This module intentionally has no Qt dependency so the preview/log contract can
@@ -16,6 +17,19 @@ LOCAL_FREEZE_PREVIEW_LOG_END = "LOCAL FREEZE ENTRY PREVIEW END"
 
 
 def _as_lines(value: Any) -> list[str]:
+    """Support as lines behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if value is None:
         return []
     if isinstance(value, (list, tuple, set)):
@@ -25,6 +39,18 @@ def _as_lines(value: Any) -> list[str]:
 
 
 def _extend_findings(lines: list[str], label: str, findings: Any) -> None:
+    """Support extend findings behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    label : str
+        The label value.
+    findings : Any
+        The findings value.
+    """
+    
     items = _as_lines(findings)
     if not items:
         return

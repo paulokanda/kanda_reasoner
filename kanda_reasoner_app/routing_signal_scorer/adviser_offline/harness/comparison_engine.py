@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/harness/comparison_engine.py
 """Offline Adviser pure comparison engine.
 
 This module compares a provided teacher answer with a provided candidate answer.
@@ -63,6 +64,14 @@ class AdviserComparisonResult:
     schema_version: str = SCHEMA_VERSION
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "ok": self.ok,
             "report_id": self.report_id,
@@ -222,6 +231,21 @@ def compare_many(
 
 
 def _compare_core_fields(teacher_payload: Mapping[str, Any], candidate: Mapping[str, Any]) -> list[dict[str, object]]:
+    """Support compare core fields behavior.
+    
+    Parameters
+    ----------
+    teacher_payload : Mapping[str, Any]
+        The teacher payload value.
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    list[dict[str, object]]
+        The list of values.
+    """
+    
     disagreements: list[dict[str, object]] = []
     for field in ("governance_domain", "path_recommendation", "advisory_proceed_recommendation", "requires_human_confirmation", "authority_statement"):
         teacher_value = teacher_payload.get(field)
@@ -244,6 +268,25 @@ def _compare_core_fields(teacher_payload: Mapping[str, Any], candidate: Mapping[
 
 
 def _missing_list_items(field: str, teacher_payload: Mapping[str, Any], candidate: Mapping[str, Any], *, severity: str) -> list[dict[str, object]]:
+    """Support missing list items behavior.
+    
+    Parameters
+    ----------
+    field : str
+        The field value.
+    teacher_payload : Mapping[str, Any]
+        The teacher payload value.
+    candidate : Mapping[str, Any]
+        The candidate value.
+    severity : str
+        The severity value.
+    
+    Returns
+    -------
+    list[dict[str, object]]
+        The list of values.
+    """
+    
     teacher_items = set(_as_string_sequence(teacher_payload.get(field)))
     candidate_items = set(_as_string_sequence(candidate.get(field)))
     missing = sorted(teacher_items - candidate_items)
@@ -261,6 +304,21 @@ def _missing_list_items(field: str, teacher_payload: Mapping[str, Any], candidat
 
 
 def _missing_context_items(teacher_payload: Mapping[str, Any], candidate: Mapping[str, Any]) -> list[dict[str, object]]:
+    """Support missing context items behavior.
+    
+    Parameters
+    ----------
+    teacher_payload : Mapping[str, Any]
+        The teacher payload value.
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    list[dict[str, object]]
+        The list of values.
+    """
+    
     teacher_context = teacher_payload.get("context_requirements")
     candidate_context = candidate.get("context_requirements")
     if not isinstance(teacher_context, Mapping) or not isinstance(candidate_context, Mapping):
@@ -284,6 +342,21 @@ def _missing_context_items(teacher_payload: Mapping[str, Any], candidate: Mappin
 
 
 def _risk_severity_disagreement(teacher_payload: Mapping[str, Any], candidate: Mapping[str, Any]) -> list[dict[str, object]]:
+    """Support risk severity disagreement behavior.
+    
+    Parameters
+    ----------
+    teacher_payload : Mapping[str, Any]
+        The teacher payload value.
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    list[dict[str, object]]
+        The list of values.
+    """
+    
     teacher_risk = teacher_payload.get("risk_assessment")
     candidate_risk = candidate.get("risk_assessment")
     if not isinstance(teacher_risk, Mapping) or not isinstance(candidate_risk, Mapping):
@@ -322,6 +395,35 @@ def _final_result(
     candidate_guard_ok: bool,
     resource_limits_ok: bool,
 ) -> dict[str, object]:
+    """Support final result behavior.
+    
+    Parameters
+    ----------
+    report_id : str
+        The report id value.
+    run_id : str
+        The run id value.
+    case_id : str
+        The case id value.
+    teacher_ref : str
+        The teacher ref value.
+    candidate_ref : str
+        The candidate ref value.
+    disagreements : list[dict[str, object]]
+        The disagreements value.
+    teacher_review_status : str
+        The teacher review status value.
+    candidate_guard_ok : bool
+        The candidate guard ok value.
+    resource_limits_ok : bool
+        The resource limits ok value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     aggregate = _aggregate_severity(disagreements)
     promotion_blocker = aggregate == "critical" or not candidate_guard_ok or not resource_limits_ok
     review_status = "pending" if disagreements else "reviewed"
@@ -343,6 +445,27 @@ def _final_result(
 
 
 def _field_severity(field: str, teacher_value: object, candidate_value: object, teacher_payload: Mapping[str, Any], candidate: Mapping[str, Any]) -> str:
+    """Support field severity behavior.
+    
+    Parameters
+    ----------
+    field : str
+        The field value.
+    teacher_value : object
+        The teacher value value.
+    candidate_value : object
+        The candidate value value.
+    teacher_payload : Mapping[str, Any]
+        The teacher payload value.
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if field == "authority_statement":
         return "critical"
     if field == "advisory_proceed_recommendation":
@@ -365,6 +488,19 @@ def _field_severity(field: str, teacher_value: object, candidate_value: object, 
 
 
 def _field_impact(field: str) -> str:
+    """Support field impact behavior.
+    
+    Parameters
+    ----------
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     impacts = {
         "governance_domain": "candidate may classify the governed domain differently from teacher draft evidence",
         "path_recommendation": "candidate may choose the wrong Fast Path or Routed Work posture",
@@ -376,24 +512,78 @@ def _field_impact(field: str) -> str:
 
 
 def _field_recommendation(field: str) -> str:
+    """Support field recommendation behavior.
+    
+    Parameters
+    ----------
+    field : str
+        The field value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if field in {"authority_statement", "advisory_proceed_recommendation", "requires_human_confirmation"}:
         return "block promotion and queue human review"
     return "queue human review before using candidate evidence"
 
 
 def _teacher_payload(teacher_answer: Mapping[str, Any] | object) -> object:
+    """Support teacher payload behavior.
+    
+    Parameters
+    ----------
+    teacher_answer : Mapping[str, Any] | object
+        The teacher answer value.
+    
+    Returns
+    -------
+    object
+        The object result.
+    """
+    
     if not isinstance(teacher_answer, Mapping):
         return None
     return teacher_answer.get("answer", teacher_answer)
 
 
 def _teacher_review_status(teacher_answer: Mapping[str, Any] | object) -> str:
+    """Support teacher review status behavior.
+    
+    Parameters
+    ----------
+    teacher_answer : Mapping[str, Any] | object
+        The teacher answer value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not isinstance(teacher_answer, Mapping):
         return "missing"
     return str(teacher_answer.get("review_status", "draft"))
 
 
 def _extract_case_id(teacher_answer: Mapping[str, Any] | object, candidate_answer: Mapping[str, Any] | object) -> str:
+    """Support extract case id behavior.
+    
+    Parameters
+    ----------
+    teacher_answer : Mapping[str, Any] | object
+        The teacher answer value.
+    candidate_answer : Mapping[str, Any] | object
+        The candidate answer value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for value in (teacher_answer, candidate_answer):
         if isinstance(value, Mapping) and value.get("case_id"):
             return str(value.get("case_id"))
@@ -401,6 +591,21 @@ def _extract_case_id(teacher_answer: Mapping[str, Any] | object, candidate_answe
 
 
 def _answer_ref(answer: Mapping[str, Any] | object, prefix: str) -> str:
+    """Support answer ref behavior.
+    
+    Parameters
+    ----------
+    answer : Mapping[str, Any] | object
+        The answer value.
+    prefix : str
+        The prefix value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not isinstance(answer, Mapping):
         return f"{prefix}:not-mapping"
     for key in ("answer_id", "candidate_id", "teacher_id"):
@@ -411,14 +616,53 @@ def _answer_ref(answer: Mapping[str, Any] | object, prefix: str) -> str:
 
 
 def _candidate_domain(candidate: Mapping[str, Any]) -> str:
+    """Support candidate domain behavior.
+    
+    Parameters
+    ----------
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(candidate.get("governance_domain", "unknown"))
 
 
 def _severity_from_guard(severity_result: Mapping[str, Any]) -> str:
+    """Support severity from guard behavior.
+    
+    Parameters
+    ----------
+    severity_result : Mapping[str, Any]
+        The severity result value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return P_SEVERITY_TO_DISAGREEMENT.get(str(severity_result.get("severity", "")), "medium")
 
 
 def _aggregate_severity(disagreements: Sequence[Mapping[str, Any]]) -> str:
+    """Support aggregate severity behavior.
+    
+    Parameters
+    ----------
+    disagreements : Sequence[Mapping[str, Any]]
+        The disagreements value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     highest = 0
     for item in disagreements:
         highest = max(highest, SEVERITY_ORDER.get(str(item.get("severity", "none")), 0))
@@ -438,6 +682,31 @@ def _disagreement(
     recommendation: str,
     missing_items: Sequence[str] = (),
 ) -> dict[str, object]:
+    """Support disagreement behavior.
+    
+    Parameters
+    ----------
+    field : str
+        The field value.
+    teacher_value : object
+        The teacher value value.
+    candidate_value : object
+        The candidate value value.
+    severity : str
+        The severity value.
+    impact : str
+        The impact value.
+    recommendation : str
+        The recommendation value.
+    missing_items : Sequence[str], optional
+        The optional missing items value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     data: dict[str, object] = {
         "field": field,
         "teacher_value": teacher_value,
@@ -452,6 +721,19 @@ def _disagreement(
 
 
 def _as_string_sequence(value: object) -> list[str]:
+    """Support as string sequence behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
         return []
     return [str(item) for item in value]

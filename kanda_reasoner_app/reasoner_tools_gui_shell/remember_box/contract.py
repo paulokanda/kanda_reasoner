@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/remember_box/contract.py
 """Public contract for the Remember Box scaffold.
 
 The Remember Box is the future explanation-card view used by the Brain

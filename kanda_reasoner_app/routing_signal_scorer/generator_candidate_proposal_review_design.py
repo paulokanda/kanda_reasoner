@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_proposal_review_design.py
 """Generator candidate proposal review design for routing scorer v3.
 
 This module is intentionally standard-library-only and review-design-only. It
@@ -326,16 +327,52 @@ FORBIDDEN_REVIEW_FIELDS = frozenset(
 
 
 def _as_set(value: object) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if not isinstance(value, Sequence) or isinstance(value, (str, bytes)):
         return set()
     return {str(item) for item in value}
 
 
 def _missing(required: set[str] | frozenset[str], actual: object) -> list[str]:
+    """Support missing behavior.
+    
+    Parameters
+    ----------
+    required : set[str] | frozenset[str]
+        The required value.
+    actual : object
+        The actual value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(set(required) - _as_set(actual))
 
 
 def _disabled_flags() -> dict[str, bool]:
+    """Support disabled flags behavior.
+    
+    Returns
+    -------
+    dict[str, bool]
+        The mapped values.
+    """
+    
     return {flag: False for flag in sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
 
 

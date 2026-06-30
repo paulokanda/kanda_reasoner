@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_docstrings.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ import re
 
 
 def _clean_lines(docstring: str) -> list[str]:
+    """Support clean lines behavior.
+    
+    Parameters
+    ----------
+    docstring : str
+        The docstring value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines = []
     for raw_line in (docstring or "").splitlines():
         line = raw_line.strip()
@@ -15,6 +29,19 @@ def _clean_lines(docstring: str) -> list[str]:
 
 
 def _extract_first_sentence(text: str) -> str:
+    """Support extract first sentence behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = " ".join((text or "").split())
     if not text:
         return ""
@@ -23,6 +50,21 @@ def _extract_first_sentence(text: str) -> str:
 
 
 def _extract_prefixed_values(lines: list[str], prefixes: list[str]) -> list[str]:
+    """Support extract prefixed values behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    prefixes : list[str]
+        The prefixes value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     found: list[str] = []
 
     for line in lines:
@@ -38,6 +80,19 @@ def _extract_prefixed_values(lines: list[str], prefixes: list[str]) -> list[str]
 
 
 def _extract_param_lines(lines: list[str]) -> list[dict]:
+    """Support extract param lines behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     params: list[dict] = []
 
     param_patterns = [
@@ -62,6 +117,19 @@ def _extract_param_lines(lines: list[str]) -> list[dict]:
 
 
 def _extract_return_lines(lines: list[str]) -> list[str]:
+    """Support extract return lines behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     prefixes = [
         "@return",
         ":return:",
@@ -72,6 +140,19 @@ def _extract_return_lines(lines: list[str]) -> list[str]:
 
 
 def _extract_side_effect_lines(lines: list[str]) -> list[str]:
+    """Support extract side effect lines behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     prefixes = [
         "side effects",
         "side effect",
@@ -80,6 +161,19 @@ def _extract_side_effect_lines(lines: list[str]) -> list[str]:
 
 
 def build_docstring_summary(docstring: str) -> dict:
+    """Build a docstring summary.
+    
+    Parameters
+    ----------
+    docstring : str
+        The docstring value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     lines = _clean_lines(docstring)
     joined = " ".join(lines)
 

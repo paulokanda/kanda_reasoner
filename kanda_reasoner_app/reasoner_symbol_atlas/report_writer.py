@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/report_writer.py
 """Report writer helpers for Project Symbol Atlas outputs."""
 
 from __future__ import annotations
@@ -31,6 +32,21 @@ def reasoner_symbol_atlas_report_stem(report: ProjectSymbolAtlasReport) -> str:
 
 
 def _format_lines(title: str, values: list[str]) -> list[str]:
+    """Support format lines behavior.
+    
+    Parameters
+    ----------
+    title : str
+        The title value.
+    values : list[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines = ["## " + title, ""]
     if values:
         lines.extend("- " + value for value in values)
@@ -110,6 +126,19 @@ def format_reasoner_symbol_atlas_markdown(report: ProjectSymbolAtlasReport) -> s
 
 
 def _decision_lines(data: dict[str, object]) -> list[str]:
+    """Support decision lines behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, object]
+        The input data.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines: list[str] = []
     for symbol in data.get("symbols", []):
         if not isinstance(symbol, dict):
@@ -124,6 +153,19 @@ def _decision_lines(data: dict[str, object]) -> list[str]:
 
 
 def _is_decision_evidence(text: str) -> bool:
+    """Support is decision evidence behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     prefixes = (
         "query_type=",
         "status=",
@@ -143,6 +185,19 @@ def _is_decision_evidence(text: str) -> bool:
 
 
 def _query_result_lines(data: dict[str, object]) -> list[str]:
+    """Support query result lines behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, object]
+        The input data.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines: list[str] = []
     for result in data.get("query_results", []):
         if not isinstance(result, dict):
@@ -163,6 +218,21 @@ def _query_result_lines(data: dict[str, object]) -> list[str]:
 
 
 def _symbol_evidence_lines(data: dict[str, object], max_items: int) -> list[str]:
+    """Support symbol evidence lines behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, object]
+        The input data.
+    max_items : int
+        The max items value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines: list[str] = []
     for symbol in data.get("symbols", []):
         if not isinstance(symbol, dict):

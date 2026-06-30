@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_orchestration.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -9,6 +10,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -22,6 +38,21 @@ def _safe_role_for_file(
     file_path: str,
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe role for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -32,6 +63,21 @@ def _safe_module_score(
     file_path: str,
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> float:
+    """Support safe module score behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     payload = module_centrality_index.get(file_path, {})
     if not isinstance(payload, dict):
         return 0.0
@@ -50,6 +96,21 @@ def _resolve_target_file(
     to_call: str,
     symbol_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support resolve target file behavior.
+    
+    Parameters
+    ----------
+    to_call : str
+        The to call value.
+    symbol_index : dict[str, dict[str, Any]]
+        The symbol index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = symbol_index.get(to_call, {})
     if not isinstance(payload, dict):
         return ""
@@ -63,6 +124,27 @@ def build_orchestration_index(
     boundary_index: dict[str, dict[str, Any]],
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a orchestration index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    call_edges : list[dict[str, Any]]
+        The call edges value.
+    symbol_index : dict[str, dict[str, Any]]
+        The symbol index value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     orchestration_index: dict[str, dict[str, Any]] = {}
 
     for record in files_payload:
@@ -155,6 +237,19 @@ def build_orchestration_index(
 def build_orchestration_summary(
     orchestration_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a orchestration summary.
+    
+    Parameters
+    ----------
+    orchestration_index : dict[str, dict[str, Any]]
+        The orchestration index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     bucket_frequency: dict[str, int] = {}
     role_frequency: dict[str, int] = {}
     rows: list[dict[str, Any]] = []
@@ -214,6 +309,21 @@ def build_orchestration_hotspots(
     orchestration_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a orchestration hotspots.
+    
+    Parameters
+    ----------
+    orchestration_index : dict[str, dict[str, Any]]
+        The orchestration index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in orchestration_index.items():

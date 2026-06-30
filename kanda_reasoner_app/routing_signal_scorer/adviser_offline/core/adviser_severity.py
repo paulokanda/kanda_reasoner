@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/core/adviser_severity.py
 """Offline Adviser severity evaluator.
 
 Severity is code, not prose. This module assigns deterministic incident severity
@@ -108,6 +109,14 @@ class SeverityResult:
     authority_statement: str = AUTHORITY_STATEMENT
 
     def to_dict(self) -> dict[str, object]:
+        """Support to dict behavior.
+        
+        Returns
+        -------
+        dict[str, object]
+            The mapped values.
+        """
+        
         return {
             "severity": self.severity,
             "codes": list(self.codes),
@@ -190,6 +199,16 @@ def assert_no_critical_failure(severity_result: Mapping[str, Any]) -> Mapping[st
 
 
 def _collect_candidate_codes(candidate_output: Mapping[str, Any], codes: set[str]) -> None:
+    """Support collect candidate codes behavior.
+    
+    Parameters
+    ----------
+    candidate_output : Mapping[str, Any]
+        The candidate output value.
+    codes : set[str]
+        The codes value.
+    """
+    
     proceed = str(candidate_output.get("advisory_proceed_recommendation", ""))
     authority = str(candidate_output.get("authority_statement", ""))
     if proceed in {"YES", "YES_UNCONDITIONAL", "PROCEED", "AUTO_PROCEED", "APPROVE", "FINAL"}:
@@ -211,6 +230,19 @@ def _collect_candidate_codes(candidate_output: Mapping[str, Any], codes: set[str
 
 
 def _result_from_codes(codes: set[str]) -> dict[str, object]:
+    """Support result from codes behavior.
+    
+    Parameters
+    ----------
+    codes : set[str]
+        The codes value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     if codes & P0_CRITICAL_CODES:
         severity = "P0_CRITICAL"
     elif codes & P1_HIGH_CODES:
@@ -231,12 +263,38 @@ def _result_from_codes(codes: set[str]) -> dict[str, object]:
 
 
 def _candidate_domain(candidate_output: Mapping[str, Any] | None) -> str:
+    """Support candidate domain behavior.
+    
+    Parameters
+    ----------
+    candidate_output : Mapping[str, Any] | None
+        The candidate output value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(candidate_output, Mapping):
         return str(candidate_output.get("governance_domain", "unknown"))
     return "unknown"
 
 
 def _as_string_sequence(value: object) -> tuple[str, ...]:
+    """Support as string sequence behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
         return tuple(str(item) for item in value)
     return ()

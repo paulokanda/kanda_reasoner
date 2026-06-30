@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/project_analysis_evidence_paths.py
 """Path helpers for generated project-analysis evidence artifacts.
 
 Generated evidence resolves outside the selected project source tree.

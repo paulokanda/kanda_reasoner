@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_ui_action_bridge.py
 """Support static evidence collection for Project Reasoner."""
 
 # =====================================================

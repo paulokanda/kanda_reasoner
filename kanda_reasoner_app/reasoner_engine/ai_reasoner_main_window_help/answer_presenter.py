@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/answer_presenter.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -26,12 +27,26 @@ __all__ = ["ConfidenceStatus", "AnswerPresenter"]
 
 @dataclass(frozen=True)
 class ConfidenceStatus:
+    """Represent confidence status."""
+    
     label: str
     evidence_count: int
 
 
 class AnswerPresenter:
+    """Represent answer presenter."""
+    
     def populate_evidence_lists(self, window, bundle: RetrievalBundle) -> None:
+        """Support populate evidence lists behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        bundle : RetrievalBundle
+            The bundle value.
+        """
+        
         window.file_evidence_list.clear()
         window.symbol_evidence_list.clear()
         window.detail_box.clear()
@@ -61,6 +76,16 @@ class AnswerPresenter:
             window.symbol_evidence_list.setCurrentRow(0)
 
     def show_selected_file_detail(self, window, current) -> None:
+        """Show the selected file detail.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        current : object
+            The current value.
+        """
+        
         if not current:
             return
         evidence_id = current.data(Qt.UserRole)
@@ -70,6 +95,16 @@ class AnswerPresenter:
                 return
 
     def show_selected_symbol_detail(self, window, current) -> None:
+        """Show the selected symbol detail.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        current : object
+            The current value.
+        """
+        
         if not current:
             return
         evidence_id = current.data(Qt.UserRole)
@@ -79,6 +114,16 @@ class AnswerPresenter:
                 return
 
     def show_selected_history_turn(self, window, current) -> None:
+        """Show the selected history turn.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        current : object
+            The current value.
+        """
+        
         if not current:
             return
         row = window.history_list.row(current)
@@ -90,6 +135,14 @@ class AnswerPresenter:
         window.prompt_preview.setPlainText(turn.prompt)
 
     def refresh_history_list(self, window) -> None:
+        """Support refresh history list behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         window.history_list.clear()
         for idx, turn in enumerate(window.memory.turns(), start=1):
             label = str(idx) + ". " + turn.question
@@ -97,6 +150,19 @@ class AnswerPresenter:
             window.history_list.addItem(item)
 
     def _build_confidence_status(self, bundle: RetrievalBundle) -> ConfidenceStatus:
+        """Support build confidence status behavior.
+        
+        Parameters
+        ----------
+        bundle : RetrievalBundle
+            The bundle value.
+        
+        Returns
+        -------
+        ConfidenceStatus
+            The confidence status result.
+        """
+        
         evidence_count = len(bundle.file_evidence) + len(bundle.symbol_evidence)
         if evidence_count < 3:
             label = "low"
@@ -107,6 +173,16 @@ class AnswerPresenter:
         return ConfidenceStatus(label=label, evidence_count=evidence_count)
 
     def handle_ai_answer_ready(self, window, text: str) -> None:
+        """Support handle ai answer ready behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        text : str
+            The text value.
+        """
+        
         window.answer_box.setPlainText(text)
         window._append_log("Local AI answer received.")
 
@@ -131,6 +207,16 @@ class AnswerPresenter:
         self.refresh_history_list(window)
 
     def handle_ai_error_ready(self, window, error_text: str) -> None:
+        """Support handle ai error ready behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        error_text : str
+            The error text value.
+        """
+        
         window.answer_box.setPlainText("AI error:\n" + error_text)
         window._append_log("AI error: " + error_text)
 

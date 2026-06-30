@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder_help/answer_style.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -14,6 +15,21 @@ __all__ = ["build_answer_style_instructions"]
 
 
 def build_answer_style_instructions(question: str, prefer_code: bool) -> str:
+    """Build a answer style instructions.
+    
+    Parameters
+    ----------
+    question : str
+        The question value.
+    prefer_code : bool
+        The prefer code value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     q = norm_text(question)
 
     calibration = (

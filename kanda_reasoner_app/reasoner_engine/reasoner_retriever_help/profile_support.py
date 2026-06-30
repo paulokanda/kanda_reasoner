@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/profile_support.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -65,6 +66,21 @@ def resolve_project_profile(project_index, project_profile: ProjectProfile | Non
 
 
 def get_profile_alias_terms(project_profile: ProjectProfile, alias_key: str) -> tuple[str, ...]:
+    """Return the profile alias terms.
+    
+    Parameters
+    ----------
+    project_profile : ProjectProfile
+        The project profile value.
+    alias_key : str
+        The alias key value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     flags = project_profile.feature_flags if isinstance(project_profile.feature_flags, dict) else {}
     if not bool(flags.get("use_profile_question_aliases", False)):
         return ()
@@ -84,14 +100,63 @@ def get_profile_alias_terms(project_profile: ProjectProfile, alias_key: str) -> 
 
 
 def question_has_profile_alias(project_profile: ProjectProfile, question: str, alias_key: str) -> bool:
+    """Support question has profile alias behavior.
+    
+    Parameters
+    ----------
+    project_profile : ProjectProfile
+        The project profile value.
+    question : str
+        The question value.
+    alias_key : str
+        The alias key value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(term in question for term in get_profile_alias_terms(project_profile, alias_key))
 
 
 def text_has_profile_alias(project_profile: ProjectProfile, text: str, alias_key: str) -> bool:
+    """Support text has profile alias behavior.
+    
+    Parameters
+    ----------
+    project_profile : ProjectProfile
+        The project profile value.
+    text : str
+        The text value.
+    alias_key : str
+        The alias key value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(term in text for term in get_profile_alias_terms(project_profile, alias_key))
 
 
 def get_profile_owner_paths(project_profile: ProjectProfile, alias_key: str) -> tuple[str, ...]:
+    """Return the profile owner paths.
+    
+    Parameters
+    ----------
+    project_profile : ProjectProfile
+        The project profile value.
+    alias_key : str
+        The alias key value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return get_profile_alias_terms(project_profile, alias_key)
 
 

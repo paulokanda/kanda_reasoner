@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_summary.py
 """Support static evidence collection for Project Reasoner."""
 
 # =====================================================
@@ -193,6 +194,19 @@ def build_widget_hotspots(
 def _display_text_counter(
     widget_registry: dict[str, dict[str, Any]],
 ) -> dict[str, int]:
+    """Support display text counter behavior.
+    
+    Parameters
+    ----------
+    widget_registry : dict[str, dict[str, Any]]
+        The widget registry value.
+    
+    Returns
+    -------
+    dict[str, int]
+        The mapped values.
+    """
+    
     counter: Counter[str] = Counter()
 
     for record in widget_registry.values():
@@ -204,6 +218,21 @@ def _display_text_counter(
 
 
 def _top_counter_rows(counter: Counter[str], limit: int) -> list[dict[str, Any]]:
+    """Support top counter rows behavior.
+    
+    Parameters
+    ----------
+    counter : Counter[str]
+        The counter value.
+    limit : int
+        The limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for value, count in counter.most_common(limit):
@@ -218,6 +247,14 @@ def _top_counter_rows(counter: Counter[str], limit: int) -> list[dict[str, Any]]
 
 
 def _interactive_widget_types() -> set[str]:
+    """Support interactive widget types behavior.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     return {
         "QPushButton",
         "QCheckBox",
@@ -234,11 +271,37 @@ def _interactive_widget_types() -> set[str]:
 
 
 def _has_connections(record: dict[str, Any]) -> bool:
+    """Support has connections behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     connections = record.get("connections", [])
     return isinstance(connections, list) and len(connections) > 0
 
 
 def _has_any_user_visible_text(record: dict[str, Any]) -> bool:
+    """Support has any user visible text behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, Any]
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     display_text = _safe_str(record.get("display_text", ""))
     placeholder_text = _safe_str(record.get("placeholder_text", ""))
     tooltip_text = _safe_str(record.get("tooltip_text", ""))
@@ -262,6 +325,19 @@ def _has_any_user_visible_text(record: dict[str, Any]) -> bool:
 
 
 def _safe_str(value: Any) -> str:
+    """Support safe str behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     try:

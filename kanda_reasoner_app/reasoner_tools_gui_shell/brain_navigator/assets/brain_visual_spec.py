@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_visual_spec.py
 """Visual contract for the Brain Navigator neural architecture asset.
 
 This module is data-only. It freezes the planned title, footer, marker behavior,

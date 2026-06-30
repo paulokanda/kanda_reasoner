@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/crash_triage.py
 """Read-only Crash Triage report builder."""
 
 from __future__ import annotations
@@ -63,6 +64,19 @@ class CrashTriageInput:
 
 
 def _combined_crash_text(input_data: CrashTriageInput) -> str:
+    """Support combined crash text behavior.
+    
+    Parameters
+    ----------
+    input_data : CrashTriageInput
+        The input data value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     parts = [
         input_data.traceback_text,
         input_data.log_text,
@@ -72,6 +86,21 @@ def _combined_crash_text(input_data: CrashTriageInput) -> str:
 
 
 def _project_relative_path(path_text: str, project_root: str) -> str:
+    """Support project relative path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    project_root : str
+        The project root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized_input = normalize_risk_change_path(path_text)
     for marker in (
         CANONICAL_PACKAGE_PATH,
@@ -136,6 +165,21 @@ def infer_crash_implicated_files(frames: list[str]) -> list[str]:
 
 
 def _risk_level_for_crash(crash_class: str, files: list[str]) -> str:
+    """Support risk level for crash behavior.
+    
+    Parameters
+    ----------
+    crash_class : str
+        The crash class value.
+    files : list[str]
+        The files value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if crash_class == "no_crash_text":
         return "unknown"
     if any(path.startswith("_project_reference/ACTIVE_PROJECT_ GOVERNANCE") for path in files):
@@ -148,6 +192,21 @@ def _risk_level_for_crash(crash_class: str, files: list[str]) -> str:
 
 
 def _first_action_for_crash(crash_class: str, files: list[str]) -> str:
+    """Support first action for crash behavior.
+    
+    Parameters
+    ----------
+    crash_class : str
+        The crash class value.
+    files : list[str]
+        The files value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if crash_class == "no_crash_text":
         return "Provide traceback text, a crash log, or runtime trace evidence before patching."
     if files:
@@ -156,6 +215,19 @@ def _first_action_for_crash(crash_class: str, files: list[str]) -> str:
 
 
 def _tests_for_crash(files: list[str]) -> list[str]:
+    """Support tests for crash behavior.
+    
+    Parameters
+    ----------
+    files : list[str]
+        The files value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tests = [
         'python kanda_reasoner_app\\manage_architecture\\manage_architecture.py --root "$PROJECT_ROOT" --validate',
         'python kanda_reasoner_app\\manage_workflows\\manage_workflows.py --root "$PROJECT_ROOT" --validate',

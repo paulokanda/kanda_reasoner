@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_output_integration_audit.py
 """Report-only audit for evidence output integration references.
 
 This module helps prepare the output-path integration step after evidence has

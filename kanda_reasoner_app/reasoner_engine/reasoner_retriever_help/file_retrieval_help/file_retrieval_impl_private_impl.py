@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_retrieval_help/file_retrieval_impl_private_impl.py
 """Private source-preserving loader for file_retrieval implementation."""
 
 from __future__ import annotations
@@ -17,6 +18,14 @@ _PART_MODULES = (
 
 
 def _load_original_namespace() -> dict[str, object]:
+    """Support load original namespace behavior.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     source_bytes = b"".join(
         base64.b64decode(part._SOURCE_PART_BASE64)
         for part in _PART_MODULES

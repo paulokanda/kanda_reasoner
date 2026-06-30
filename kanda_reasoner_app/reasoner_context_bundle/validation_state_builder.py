@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/validation_state_builder.py
 """Build validation-state metadata for one reasoner context bundle."""
 
 from __future__ import annotations
@@ -78,16 +79,50 @@ _TAIL_LIMIT = 6000
 
 
 def _utc_now() -> str:
+    """Support utc now behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 
 
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    project : str | Path | ProjectContext
+        The project value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(project, ProjectContext):
         return project
     return resolve_project_context(project)
 
 
 def _clip_text(value: object) -> str:
+    """Support clip text behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = "" if value is None else str(value)
     if len(text) <= _TAIL_LIMIT:
         return text
@@ -95,6 +130,19 @@ def _clip_text(value: object) -> str:
 
 
 def _coerce_exit_code(value: object) -> int | None:
+    """Support coerce exit code behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    int | None
+        The integer result.
+    """
+    
     if value is None or value == "":
         return None
     try:
@@ -104,6 +152,23 @@ def _coerce_exit_code(value: object) -> int | None:
 
 
 def _normalize_status(value: object, ran: bool, exit_code: int | None) -> str:
+    """Support normalize status behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    ran : bool
+        The ran value.
+    exit_code : int | None
+        The exit code value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     status = "" if value is None else str(value).strip().lower()
     if status in _ALLOWED_STATUSES:
         return status
@@ -120,6 +185,21 @@ def _normalize_command_result(
     command_spec: Mapping[str, object],
     result: Mapping[str, object] | None,
 ) -> dict[str, Any]:
+    """Support normalize command result behavior.
+    
+    Parameters
+    ----------
+    command_spec : Mapping[str, object]
+        The command spec value.
+    result : Mapping[str, object] | None
+        The result value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     result_data: Mapping[str, object] = result or {}
     ran = bool(result_data.get("ran", False))
     exit_code = _coerce_exit_code(result_data.get("exit_code"))
@@ -155,6 +235,19 @@ def _normalize_command_result(
 def _normalize_results(
     command_results: Mapping[str, Mapping[str, object]] | None,
 ) -> list[dict[str, Any]]:
+    """Support normalize results behavior.
+    
+    Parameters
+    ----------
+    command_results : Mapping[str, Mapping[str, object]] | None
+        The command results value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     by_name = command_results or {}
     normalized: list[dict[str, Any]] = []
     for command_spec in DEFAULT_VALIDATION_COMMANDS:
@@ -164,6 +257,19 @@ def _normalize_results(
 
 
 def _overall_status(commands: list[dict[str, Any]]) -> dict[str, Any]:
+    """Support overall status behavior.
+    
+    Parameters
+    ----------
+    commands : list[dict[str, Any]]
+        The commands value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     statuses = [str(item.get("status", "unknown")) for item in commands]
     required = [item for item in commands if item.get("required_for_freeze")]
     optional = [item for item in commands if not item.get("required_for_freeze")]
@@ -196,6 +302,21 @@ def _overall_status(commands: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def _argv_for_command(command_spec: Mapping[str, object], context: ProjectContext) -> list[str]:
+    """Support argv for command behavior.
+    
+    Parameters
+    ----------
+    command_spec : Mapping[str, object]
+        The command spec value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     argv_obj = command_spec.get("argv")
     if not isinstance(argv_obj, Sequence) or isinstance(argv_obj, (str, bytes)):
         raise ValueError("Validation command is missing argv: " + str(command_spec.get("name")))
@@ -209,6 +330,19 @@ def _argv_for_command(command_spec: Mapping[str, object], context: ProjectContex
 
 
 def _not_run_result(command_spec: Mapping[str, object]) -> dict[str, object]:
+    """Support not run result behavior.
+    
+    Parameters
+    ----------
+    command_spec : Mapping[str, object]
+        The command spec value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     return {
         "ran": False,
         "exit_code": None,
@@ -223,6 +357,21 @@ def _run_one_validation_command(
     command_spec: Mapping[str, object],
     context: ProjectContext,
 ) -> dict[str, object]:
+    """Support run one validation command behavior.
+    
+    Parameters
+    ----------
+    command_spec : Mapping[str, object]
+        The command spec value.
+    context : ProjectContext
+        The context value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     argv = _argv_for_command(command_spec, context)
     try:
         completed = subprocess.run(

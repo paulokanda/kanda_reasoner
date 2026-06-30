@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/compilation_readiness_snapshot_export.py
 """Final compilation-readiness snapshot exporter for storage cleanup.
 
 This module builds and exports a report-only snapshot of the source cleanup

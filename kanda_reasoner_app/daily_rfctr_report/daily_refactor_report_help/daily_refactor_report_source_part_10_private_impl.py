@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/daily_rfctr_report/daily_refactor_report_help/daily_refactor_report_source_part_10_private_impl.py
 """Encoded source shard 10 for daily_refactor_report."""
 
 DAILY_REFACTOR_REPORT_SOURCE_PART_10 = (

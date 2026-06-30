@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_non_runtime_assistance.py
 """M31 non-runtime Auxiliar/Assistant assistance implementation.
 
 M31 introduces a narrow in-memory helper for non-authoritative human-review
@@ -115,6 +116,19 @@ class AuxiliarAssistantAssistanceContractError(ValueError):
 
 
 def _validate_mapping(payload: object) -> dict[str, object]:
+    """Support validate mapping behavior.
+    
+    Parameters
+    ----------
+    payload : object
+        The payload value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     if not isinstance(payload, dict):
         raise AuxiliarAssistantAssistanceContractError("input_must_be_dict")
     validated: dict[str, object] = {}
@@ -130,6 +144,21 @@ def _validate_mapping(payload: object) -> dict[str, object]:
 
 
 def _required_string(payload: dict[str, object], key: str) -> str:
+    """Support required string behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, object]
+        The payload value.
+    key : str
+        The key value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if key not in payload:
         raise AuxiliarAssistantAssistanceContractError(f"missing_required_input_field:{key}")
     value = payload[key]
@@ -141,6 +170,21 @@ def _required_string(payload: dict[str, object], key: str) -> str:
 
 
 def _optional_string(payload: dict[str, object], key: str) -> str:
+    """Support optional string behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, object]
+        The payload value.
+    key : str
+        The key value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if key not in payload:
         return ""
     value = payload[key]
@@ -150,6 +194,19 @@ def _optional_string(payload: dict[str, object], key: str) -> str:
 
 
 def _validate_requested_support_kind(value: str) -> str:
+    """Support validate requested support kind behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized = value.strip()
     if normalized not in _ALLOWED_SUPPORT_KINDS:
         raise AuxiliarAssistantAssistanceContractError(
@@ -165,6 +222,27 @@ def _build_human_review_context(
     review_evidence_summary: str,
     current_router_outcome_summary: str,
 ) -> str:
+    """Support build human review context behavior.
+    
+    Parameters
+    ----------
+    assistant_case_id : str
+        The assistant case id value.
+    requested_support_kind : str
+        The requested support kind value.
+    boundary_context_summary : str
+        The boundary context summary value.
+    review_evidence_summary : str
+        The review evidence summary value.
+    current_router_outcome_summary : str
+        The current router outcome summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         "Non-runtime Auxiliar/Assistant support envelope for human review only. "
         f"Case `{assistant_case_id}` requested `{requested_support_kind}` support. "
@@ -177,6 +255,19 @@ def _build_human_review_context(
 
 
 def _build_boundary_questions(requested_support_kind: str) -> tuple[str, ...]:
+    """Support build boundary questions behavior.
+    
+    Parameters
+    ----------
+    requested_support_kind : str
+        The requested support kind value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     common = (
         "Does the human reviewer agree that this assistance record is non-authoritative evidence only?",
         "Is any separate governed patch, freeze, route, prompt, or human-decision action required outside this helper?",
@@ -199,6 +290,19 @@ def _build_boundary_questions(requested_support_kind: str) -> tuple[str, ...]:
 
 
 def _build_safety_flags(known_boundary_flags_summary: str) -> tuple[str, ...]:
+    """Support build safety flags behavior.
+    
+    Parameters
+    ----------
+    known_boundary_flags_summary : str
+        The known boundary flags summary value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     base = (
         "non_runtime_in_memory_assistance_only",
         "requires_separate_human_review",
@@ -221,6 +325,21 @@ def _build_missing_information_summary(
     requested_support_kind: str,
     known_boundary_flags_summary: str,
 ) -> str:
+    """Support build missing information summary behavior.
+    
+    Parameters
+    ----------
+    requested_support_kind : str
+        The requested support kind value.
+    known_boundary_flags_summary : str
+        The known boundary flags summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if requested_support_kind == "missing_information_review":
         return (
             "Human reviewer must determine missing information from the caller-supplied summaries; "
@@ -234,6 +353,14 @@ def _build_missing_information_summary(
 
 
 def _assert_output_contract(record: dict[str, object]) -> None:
+    """Support assert output contract behavior.
+    
+    Parameters
+    ----------
+    record : dict[str, object]
+        The record value.
+    """
+    
     keys = set(record)
     if keys != _OUTPUT_FIELDS:
         raise AuxiliarAssistantAssistanceContractError("output_contract_shape_violation")

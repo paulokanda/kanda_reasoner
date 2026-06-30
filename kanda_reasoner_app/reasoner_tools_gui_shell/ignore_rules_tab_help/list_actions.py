@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab_help/list_actions.py
 """List editing actions for the ignore-rules tab."""
 
 from __future__ import annotations

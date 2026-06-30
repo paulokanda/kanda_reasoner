@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_cleanliness_validator.py
 """Source-cleanliness validator for Kanda Reasoner storage policy.
 
 This module reports non-compilation debris in a source tree. It is report-only:

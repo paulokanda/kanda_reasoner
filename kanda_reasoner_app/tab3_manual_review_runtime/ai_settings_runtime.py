@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/ai_settings_runtime.py
 """Runtime implementation for Tab 3 local-AI settings."""
 
 from __future__ import annotations
@@ -212,6 +213,19 @@ def _unique_sorted(names: Iterable[str]) -> list[str]:
 
 
 def _line_edit_text(widget: object) -> str:
+    """Support line edit text behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     method = getattr(widget, "text", None)
     if callable(method):
         return str(method()).strip()
@@ -219,12 +233,35 @@ def _line_edit_text(widget: object) -> str:
 
 
 def _set_line_edit_text(widget: object, value: str) -> None:
+    """Support set line edit text behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    value : str
+        The input value.
+    """
+    
     method = getattr(widget, "setText", None)
     if callable(method):
         method(str(value))
 
 
 def _combo_text(widget: object) -> str:
+    """Support combo text behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     method = getattr(widget, "currentText", None)
     if callable(method):
         return str(method()).strip()
@@ -232,12 +269,37 @@ def _combo_text(widget: object) -> str:
 
 
 def _set_combo_text(widget: object, value: str) -> None:
+    """Support set combo text behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    value : str
+        The input value.
+    """
+    
     method = getattr(widget, "setCurrentText", None)
     if callable(method):
         method(str(value))
 
 
 def _spin_value(widget: object, default: int) -> int:
+    """Support spin value behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    default : int
+        The default value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     method = getattr(widget, "value", None)
     if callable(method):
         return int(method())
@@ -245,12 +307,37 @@ def _spin_value(widget: object, default: int) -> int:
 
 
 def _set_spin_value(widget: object, value: int) -> None:
+    """Support set spin value behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    value : int
+        The input value.
+    """
+    
     method = getattr(widget, "setValue", None)
     if callable(method):
         method(int(value))
 
 
 def _is_checked(widget: object, default: bool) -> bool:
+    """Support is checked behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    default : bool
+        The default value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     method = getattr(widget, "isChecked", None)
     if callable(method):
         return bool(method())
@@ -258,18 +345,46 @@ def _is_checked(widget: object, default: bool) -> bool:
 
 
 def _set_checked(widget: object, value: bool) -> None:
+    """Support set checked behavior.
+    
+    Parameters
+    ----------
+    widget : object
+        The widget value.
+    value : bool
+        The input value.
+    """
+    
     method = getattr(widget, "setChecked", None)
     if callable(method):
         method(bool(value))
 
 
 def _save_preferences(owner: object) -> None:
+    """Support save preferences behavior.
+    
+    Parameters
+    ----------
+    owner : object
+        The owning object.
+    """
+    
     method = getattr(owner, "_save_prefs", None)
     if callable(method):
         method()
 
 
 def _show_status(owner: object, message: str) -> None:
+    """Support show status behavior.
+    
+    Parameters
+    ----------
+    owner : object
+        The owning object.
+    message : str
+        The message text.
+    """
+    
     status_bar = getattr(owner, "statusBar", None)
     if not callable(status_bar):
         return
@@ -280,6 +395,18 @@ def _show_status(owner: object, message: str) -> None:
 
 
 def _message_box_warning(owner: object, title: str, text: str) -> None:
+    """Support message box warning behavior.
+    
+    Parameters
+    ----------
+    owner : object
+        The owning object.
+    title : str
+        The title value.
+    text : str
+        The text value.
+    """
+    
     module = _qt_widgets_module()
     if module is None:
         _show_status(owner, title + ": " + text.replace("\n", " "))
@@ -288,6 +415,25 @@ def _message_box_warning(owner: object, title: str, text: str) -> None:
 
 
 def _get_open_file_name(owner: object, title: str, start: str, file_filter: str) -> tuple[str, str]:
+    """Support get open file name behavior.
+    
+    Parameters
+    ----------
+    owner : object
+        The owning object.
+    title : str
+        The title value.
+    start : str
+        The start value.
+    file_filter : str
+        The file filter value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     module = _qt_widgets_module()
     if module is None:
         return "", ""
@@ -295,6 +441,25 @@ def _get_open_file_name(owner: object, title: str, start: str, file_filter: str)
 
 
 def _get_save_file_name(owner: object, title: str, start: str, file_filter: str) -> tuple[str, str]:
+    """Support get save file name behavior.
+    
+    Parameters
+    ----------
+    owner : object
+        The owning object.
+    title : str
+        The title value.
+    start : str
+        The start value.
+    file_filter : str
+        The file filter value.
+    
+    Returns
+    -------
+    tuple[str, str]
+        The tuple of values.
+    """
+    
     module = _qt_widgets_module()
     if module is None:
         return "", ""

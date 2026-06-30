@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_state_mutations.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -9,6 +10,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -22,6 +38,21 @@ def _safe_role_for_file(
     file_path: str,
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe role for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     payload = boundary_index.get(file_path, {})
     if not isinstance(payload, dict):
         return "unclassified"
@@ -32,6 +63,21 @@ def _safe_centrality_score(
     file_path: str,
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> float:
+    """Support safe centrality score behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    float
+        The floating-point result.
+    """
+    
     payload = module_centrality_index.get(file_path, {})
     if not isinstance(payload, dict):
         return 0.0
@@ -47,6 +93,19 @@ def _safe_centrality_score(
 
 
 def _iter_symbol_records(file_record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Support iter symbol records behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     symbols: list[dict[str, Any]] = []
 
     for fn in file_record.get("functions", []):
@@ -68,6 +127,23 @@ def build_state_mutation_index(
     boundary_index: dict[str, dict[str, Any]],
     module_centrality_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a state mutation index.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    module_centrality_index : dict[str, dict[str, Any]]
+        The module centrality index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for file_record in files_payload:
@@ -163,6 +239,19 @@ def build_state_mutation_index(
 def build_state_mutation_summary(
     state_mutation_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a state mutation summary.
+    
+    Parameters
+    ----------
+    state_mutation_index : dict[str, dict[str, Any]]
+        The state mutation index value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     bucket_frequency: dict[str, int] = {}
     role_frequency: dict[str, int] = {}
@@ -223,6 +312,21 @@ def build_state_mutation_hotspots(
     state_mutation_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a state mutation hotspots.
+    
+    Parameters
+    ----------
+    state_mutation_index : dict[str, dict[str, Any]]
+        The state mutation index value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for file_path, payload in state_mutation_index.items():

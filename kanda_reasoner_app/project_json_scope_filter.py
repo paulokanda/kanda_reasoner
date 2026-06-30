@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/project_json_scope_filter.py
 """Apply Project Exclusion Rules to project-analysis JSON payloads."""
 
 from __future__ import annotations
@@ -31,10 +32,38 @@ __all__ = [
 
 
 def is_project_analysis_json_payload(payload: Any) -> bool:
+    """Return whether project analysis json payload.
+    
+    Parameters
+    ----------
+    payload : Any
+        The payload value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(payload, dict) and bool(PROJECT_ANALYSIS_MARKER_KEYS.intersection(payload.keys()))
 
 
 def _project_root_from_payload(payload: Any, source_json_path: str | Path | None) -> Path:
+    """Support project root from payload behavior.
+    
+    Parameters
+    ----------
+    payload : Any
+        The payload value.
+    source_json_path : str | Path | None
+        The source json path value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     if isinstance(payload, dict):
         for key in ("collector_info", "project_summary"):
             item = payload.get(key)
@@ -60,6 +89,19 @@ def _project_root_from_payload(payload: Any, source_json_path: str | Path | None
 
 
 def _looks_like_relative_project_path(value: str) -> bool:
+    """Support looks like relative project path behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     text = value.strip().replace("\\", "/")
     if not text or "\n" in text or len(text) > 260:
         return False
@@ -69,6 +111,23 @@ def _looks_like_relative_project_path(value: str) -> bool:
 
 
 def _is_excluded_path_text(value: str, project_root: Path, rules: dict[str, list[str]]) -> bool:
+    """Support is excluded path text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    project_root : Path
+        The project root path.
+    rules : dict[str, list[str]]
+        The rules value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not _looks_like_relative_project_path(value):
         return False
     candidate = Path(value)
@@ -78,6 +137,23 @@ def _is_excluded_path_text(value: str, project_root: Path, rules: dict[str, list
 
 
 def _dict_has_excluded_path_field(value: dict[str, Any], project_root: Path, rules: dict[str, list[str]]) -> bool:
+    """Support dict has excluded path field behavior.
+    
+    Parameters
+    ----------
+    value : dict[str, Any]
+        The input value.
+    project_root : Path
+        The project root path.
+    rules : dict[str, list[str]]
+        The rules value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for field in PATH_FIELD_NAMES:
         item = value.get(field)
         if isinstance(item, str) and _is_excluded_path_text(item, project_root, rules):
@@ -86,6 +162,25 @@ def _dict_has_excluded_path_field(value: dict[str, Any], project_root: Path, rul
 
 
 def _filter_value(value: Any, project_root: Path, rules: dict[str, list[str]], summary: dict[str, int]) -> Any:
+    """Support filter value behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    project_root : Path
+        The project root path.
+    rules : dict[str, list[str]]
+        The rules value.
+    summary : dict[str, int]
+        The summary value.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         if _dict_has_excluded_path_field(value, project_root, rules):
             summary["removed_count"] += 1
@@ -118,6 +213,23 @@ def filter_project_analysis_json_payload(
     project_root: str | Path | None = None,
     source_json_path: str | Path | None = None,
 ) -> tuple[Any, dict[str, Any]]:
+    """Support filter project analysis json payload behavior.
+    
+    Parameters
+    ----------
+    payload : Any
+        The payload value.
+    project_root : str | Path | None, optional
+        The project root path.
+    source_json_path : str | Path | None, optional
+        The optional source json path value.
+    
+    Returns
+    -------
+    tuple[Any, dict[str, Any]]
+        The tuple of values.
+    """
+    
     summary: dict[str, Any] = {"applied": False, "removed_count": 0, "project_root": ""}
     if not is_project_analysis_json_payload(payload):
         return payload, summary

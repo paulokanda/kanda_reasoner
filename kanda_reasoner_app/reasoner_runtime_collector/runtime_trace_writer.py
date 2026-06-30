@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_runtime_collector/runtime_trace_writer.py
 """Support runtime evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -16,7 +17,12 @@ from .runtime_trace_utils import now_iso, safe_json_dump, sanitize_data, sanitiz
 
 
 class RuntimeTraceWriter:
+    """Represent runtime trace writer."""
+    
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self.project_root: str = ""
         self.entry_script: str = ""
         self.output_path: Path | None = None
@@ -60,6 +66,19 @@ class RuntimeTraceWriter:
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
     def _build_stack_context(self, max_frames: int = 8) -> list[dict[str, Any]]:
+        """Support build stack context behavior.
+        
+        Parameters
+        ----------
+        max_frames : int, optional
+            The optional max frames value.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         frames_out: list[dict[str, Any]] = []
 
         try:
@@ -90,6 +109,19 @@ class RuntimeTraceWriter:
         return frames_out
 
     def _merge_extra_with_stack(self, extra: dict[str, Any] | None) -> dict[str, Any]:
+        """Support merge extra with stack behavior.
+        
+        Parameters
+        ----------
+        extra : dict[str, Any] | None
+            The extra value.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         merged = dict(extra or {})
         if "stack" not in merged:
             merged["stack"] = self._build_stack_context()
@@ -106,6 +138,26 @@ class RuntimeTraceWriter:
         object_type: str = "",
         extra: dict[str, Any] | None = None,
     ) -> None:
+        """Support trace event behavior.
+        
+        Parameters
+        ----------
+        event_type : str
+            The event type value.
+        source_file : str
+            The source file value.
+        source_symbol : str
+            The source symbol value.
+        message : str, optional
+            The message text.
+        object_name : str, optional
+            The optional object name value.
+        object_type : str, optional
+            The optional object type value.
+        extra : dict[str, Any] | None, optional
+            The optional extra value.
+        """
+        
         self._event_counter += 1
         self.events.append(
             TraceEvent(
@@ -127,6 +179,16 @@ class RuntimeTraceWriter:
         label: str,
         state: dict[str, Any],
     ) -> None:
+        """Support trace state snapshot behavior.
+        
+        Parameters
+        ----------
+        label : str
+            The label value.
+        state : dict[str, Any]
+            The state value.
+        """
+        
         self._snapshot_counter += 1
         self.state_snapshots.append(
             TraceStateSnapshot(
@@ -145,6 +207,20 @@ class RuntimeTraceWriter:
         message: str,
         extra: dict[str, Any] | None = None,
     ) -> None:
+        """Support trace error behavior.
+        
+        Parameters
+        ----------
+        source_file : str
+            The source file value.
+        source_symbol : str
+            The source symbol value.
+        message : str
+            The message text.
+        extra : dict[str, Any] | None, optional
+            The optional extra value.
+        """
+        
         self._issue_counter += 1
         self.errors.append(
             TraceIssue(
@@ -165,6 +241,20 @@ class RuntimeTraceWriter:
         message: str,
         extra: dict[str, Any] | None = None,
     ) -> None:
+        """Support trace warning behavior.
+        
+        Parameters
+        ----------
+        source_file : str
+            The source file value.
+        source_symbol : str
+            The source symbol value.
+        message : str
+            The message text.
+        extra : dict[str, Any] | None, optional
+            The optional extra value.
+        """
+        
         self._issue_counter += 1
         self.warnings.append(
             TraceIssue(
@@ -190,6 +280,30 @@ class RuntimeTraceWriter:
         source_line: int | None = None,
         extra: dict[str, Any] | None = None,
     ) -> None:
+        """Support trace signal connection behavior.
+        
+        Parameters
+        ----------
+        sender_type : str
+            The sender type value.
+        sender_name : str
+            The sender name value.
+        signal_name : str
+            The signal name value.
+        receiver_type : str
+            The receiver type value.
+        receiver_name : str
+            The receiver name value.
+        slot_name : str
+            The slot name value.
+        source_file : str, optional
+            The optional source file value.
+        source_line : int | None, optional
+            The optional source line value.
+        extra : dict[str, Any] | None, optional
+            The optional extra value.
+        """
+        
         self._connection_counter += 1
         self.signal_connections.append(
             TraceSignalConnection(
@@ -208,6 +322,14 @@ class RuntimeTraceWriter:
         )
 
     def build_payload(self) -> dict[str, Any]:
+        """Build a payload.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         return {
             "trace_info": {
                 "trace_version": "1.2",
@@ -305,6 +427,14 @@ class RuntimeTraceWriter:
         }
 
     def save(self) -> Path:
+        """Support save behavior.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         if self.output_path is None:
             raise RuntimeError("RuntimeTraceWriter is not configured.")
 

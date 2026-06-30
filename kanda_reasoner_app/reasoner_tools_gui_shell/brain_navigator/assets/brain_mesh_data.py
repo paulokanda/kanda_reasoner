@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_mesh_data.py
 """Extracted mesh data for the Brain Navigator neural architecture visual.
 
 This module contains only inert data and metadata extracted from the uploaded

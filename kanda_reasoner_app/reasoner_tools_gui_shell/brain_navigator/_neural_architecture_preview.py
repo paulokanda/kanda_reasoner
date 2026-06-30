@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/_neural_architecture_preview.py
 """Internal isolated WebView preview for the Neural Architecture brain asset.
 
 This module creates an explicit manual-preview QWebEngineView for the extracted

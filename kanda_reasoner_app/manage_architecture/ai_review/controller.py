@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/ai_review/controller.py
 """Coordinate Tab 1 advisory AI review requests."""
 
 from __future__ import annotations

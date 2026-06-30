@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/symbol_indexer.py
 """AST-only public symbol indexer for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -39,6 +40,19 @@ class ProjectSymbolAtlasSymbolIndexOptions:
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).resolve()
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -48,6 +62,19 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _read_python_source(file_path: Path) -> tuple[str, tuple[str, ...]]:
+    """Support read python source behavior.
+    
+    Parameters
+    ----------
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    tuple[str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence: list[str] = []
     try:
         return file_path.read_text(encoding="utf-8-sig", errors="replace"), tuple(evidence)
@@ -57,6 +84,21 @@ def _read_python_source(file_path: Path) -> tuple[str, tuple[str, ...]]:
 
 
 def _parse_python_source(source_text: str, file_path: Path) -> tuple[ast.Module | None, tuple[str, ...]]:
+    """Support parse python source behavior.
+    
+    Parameters
+    ----------
+    source_text : str
+        The source text.
+    file_path : Path
+        The file path.
+    
+    Returns
+    -------
+    tuple[ast.Module | None, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence: list[str] = []
     try:
         return ast.parse(source_text, filename=str(file_path)), tuple(evidence)
@@ -67,10 +109,36 @@ def _parse_python_source(source_text: str, file_path: Path) -> tuple[ast.Module 
 
 
 def _is_public_name(name: str) -> bool:
+    """Support is public name behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return bool(name) and not name.startswith("_")
 
 
 def _decorator_name(decorator: ast.expr) -> str:
+    """Support decorator name behavior.
+    
+    Parameters
+    ----------
+    decorator : ast.expr
+        The decorator value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(decorator, ast.Name):
         return decorator.id
     if isinstance(decorator, ast.Attribute):
@@ -82,6 +150,19 @@ def _decorator_name(decorator: ast.expr) -> str:
 
 
 def _is_dataclass_definition(node: ast.ClassDef) -> bool:
+    """Support is dataclass definition behavior.
+    
+    Parameters
+    ----------
+    node : ast.ClassDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for decorator in node.decorator_list:
         if _decorator_name(decorator).endswith("dataclass"):
             return True
@@ -89,6 +170,19 @@ def _is_dataclass_definition(node: ast.ClassDef) -> bool:
 
 
 def _constant_names_from_target(target: ast.expr) -> tuple[str, ...]:
+    """Support constant names from target behavior.
+    
+    Parameters
+    ----------
+    target : ast.expr
+        The target value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if isinstance(target, ast.Name):
         return (target.id,)
     if isinstance(target, (ast.Tuple, ast.List)):
@@ -100,6 +194,19 @@ def _constant_names_from_target(target: ast.expr) -> tuple[str, ...]:
 
 
 def _extract_all_names(node: ast.AST) -> tuple[str, ...]:
+    """Support extract all names behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
         names: list[str] = []
         for element in node.elts:
@@ -110,6 +217,19 @@ def _extract_all_names(node: ast.AST) -> tuple[str, ...]:
 
 
 def _module_all_names(tree: ast.Module) -> tuple[str, ...]:
+    """Support module all names behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     names: list[str] = []
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -132,6 +252,31 @@ def _symbol_from_definition(
     evidence: tuple[str, ...],
     options: ProjectSymbolAtlasSymbolIndexOptions,
 ) -> ProjectSymbol | None:
+    """Support symbol from definition behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    kind : str
+        The kind value.
+    module_record : ProjectModuleRecord
+        The module record value.
+    line : int | None
+        The line value.
+    all_names : set[str]
+        The all names value.
+    evidence : tuple[str, ...]
+        The evidence value.
+    options : ProjectSymbolAtlasSymbolIndexOptions
+        The option values.
+    
+    Returns
+    -------
+    ProjectSymbol | None
+        The project symbol result.
+    """
+    
     is_public = _is_public_name(name)
     if not is_public and not options.include_private:
         return None
@@ -154,6 +299,23 @@ def _iter_symbols_from_tree(
     module_record: ProjectModuleRecord,
     options: ProjectSymbolAtlasSymbolIndexOptions,
 ) -> tuple[ProjectSymbol, ...]:
+    """Support iter symbols from tree behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    module_record : ProjectModuleRecord
+        The module record value.
+    options : ProjectSymbolAtlasSymbolIndexOptions
+        The option values.
+    
+    Returns
+    -------
+    tuple[ProjectSymbol, ...]
+        The tuple of values.
+    """
+    
     all_names = set(_module_all_names(tree))
     symbols: list[ProjectSymbol] = []
     for node in tree.body:
@@ -214,6 +376,23 @@ def _index_module_record(
     module_record: ProjectModuleRecord,
     options: ProjectSymbolAtlasSymbolIndexOptions,
 ) -> ProjectModuleRecord:
+    """Support index module record behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    module_record : ProjectModuleRecord
+        The module record value.
+    options : ProjectSymbolAtlasSymbolIndexOptions
+        The option values.
+    
+    Returns
+    -------
+    ProjectModuleRecord
+        The project module record result.
+    """
+    
     source_path = project_root / module_record.path
     source_text, read_evidence = _read_python_source(source_path)
     tree, parse_evidence = _parse_python_source(source_text, source_path)

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_quarantine_dry_run.py
 """Dry-run planner for source debris quarantine and review.
 
 This module consumes the report-only source debris export and converts it into

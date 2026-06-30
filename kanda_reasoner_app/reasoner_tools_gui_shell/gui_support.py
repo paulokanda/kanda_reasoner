@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/gui_support.py
 """Internal support functions for embedded GUI tabs and help catalogs."""
 
 from __future__ import annotations
@@ -43,6 +44,16 @@ from .app_constants import _PROJECT_ROOT
 __all__: list[str] = []
 
 def _first_existing_attr(module: object, names: Iterable[str]):
+    """Support first existing attr behavior.
+    
+    Parameters
+    ----------
+    module : object
+        The module value.
+    names : Iterable[str]
+        The name values.
+    """
+    
     for name in names:
         if hasattr(module, name):
             return getattr(module, name)
@@ -50,6 +61,14 @@ def _first_existing_attr(module: object, names: Iterable[str]):
 
 
 def _first_imported_module(module_names: Iterable[str]):
+    """Support first imported module behavior.
+    
+    Parameters
+    ----------
+    module_names : Iterable[str]
+        The module names value.
+    """
+    
     errors: list[str] = []
     for module_name in module_names:
         try:
@@ -60,6 +79,19 @@ def _first_imported_module(module_names: Iterable[str]):
 
 
 def _prepare_embedded_widget(widget: QWidget) -> QWidget:
+    """Support prepare embedded widget behavior.
+    
+    Parameters
+    ----------
+    widget : QWidget
+        The widget value.
+    
+    Returns
+    -------
+    QWidget
+        The qwidget result.
+    """
+    
     widget.setParent(None)
     widget.setWindowFlags(Qt.Widget)
     widget.setAttribute(Qt.WA_DeleteOnClose, False)
@@ -68,6 +100,14 @@ def _prepare_embedded_widget(widget: QWidget) -> QWidget:
 
 
 def _safe_disconnect(signal) -> None:
+    """Support safe disconnect behavior.
+    
+    Parameters
+    ----------
+    signal : object
+        The signal value.
+    """
+    
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
         with contextlib.suppress(Exception):
@@ -75,12 +115,39 @@ def _safe_disconnect(signal) -> None:
 
 
 def _replace_exact_label_text(root: QWidget, old_text: str, new_text: str) -> None:
+    """Support replace exact label text behavior.
+    
+    Parameters
+    ----------
+    root : QWidget
+        The root path.
+    old_text : str
+        The old text value.
+    new_text : str
+        The new text value.
+    """
+    
     for label in root.findChildren(QLabel):
         if label.text().strip() == old_text:
             label.setText(new_text)
 
 
 def _find_button_by_text(root: QWidget, text: str) -> QPushButton | None:
+    """Support find button by text behavior.
+    
+    Parameters
+    ----------
+    root : QWidget
+        The root path.
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    QPushButton | None
+        The qpush button result.
+    """
+    
     for button in root.findChildren(QPushButton):
         if button.text().strip() == text:
             return button
@@ -88,10 +155,33 @@ def _find_button_by_text(root: QWidget, text: str) -> QPushButton | None:
 
 
 def _normalized_tab_text(text: str) -> str:
+    """Support normalized tab text behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return " ".join(text.strip().lower().split())
 
 
 def _prune_named_subtabs(root: QWidget, names_to_remove: set[str]) -> None:
+    """Support prune named subtabs behavior.
+    
+    Parameters
+    ----------
+    root : QWidget
+        The root path.
+    names_to_remove : set[str]
+        The names to remove value.
+    """
+    
     for tabs in root.findChildren(QTabWidget):
         remove_indexes: list[int] = []
         for index in range(tabs.count()):
@@ -108,6 +198,14 @@ def _prune_named_subtabs(root: QWidget, names_to_remove: set[str]) -> None:
 
 
 def _architecture_worker_script_path() -> Path:
+    """Support architecture worker script path behavior.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return (
         _PROJECT_ROOT
         / LEGACY_PACKAGE_NAME
@@ -128,6 +226,19 @@ def _docstring_worker_script_path() -> Path:
 
 
 def _help_catalog_path(filename: str) -> Path:
+    """Support help catalog path behavior.
+    
+    Parameters
+    ----------
+    filename : str
+        The file name.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     canonical_path = (
         _PROJECT_ROOT
         / CANONICAL_PACKAGE_NAME
@@ -145,6 +256,19 @@ def _help_catalog_path(filename: str) -> Path:
 
 
 def _format_help_catalog_text(path: Path) -> str:
+    """Support format help catalog text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_split_reassemble_validation_help/core.py
 """Core helpers for json_splitter_split_reassemble_validation."""
 
 from __future__ import annotations

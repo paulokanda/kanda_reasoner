@@ -40,9 +40,25 @@ class _LocalGovernanceStateReader:
     """
 
     def __init__(self, state_path: Path) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        state_path : Path
+            The state path value.
+        """
+        
         self.state_path = Path(state_path).expanduser().resolve()
 
     def get_mode(self) -> int:
+        """Return the mode.
+        
+        Returns
+        -------
+        int
+            The integer result.
+        """
+        
         try:
             if not self.state_path.exists():
                 return 0
@@ -62,21 +78,58 @@ class _LocalDiskCache:
     """
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self._cache_dir = Path(__file__).resolve().parent / "_v10_cache"
         self._cache_dir.mkdir(parents=True, exist_ok=True)
         self._lock = threading.Lock()
 
     def set_cache_dir(self, cache_dir: Path) -> None:
+        """Set the cache dir.
+        
+        Parameters
+        ----------
+        cache_dir : Path
+            The cache dir value.
+        """
+        
         resolved = Path(cache_dir).expanduser().resolve()
         resolved.mkdir(parents=True, exist_ok=True)
         self._cache_dir = resolved
 
     def _key_to_path(self, key_data: dict[str, Any]) -> Path:
+        """Support key to path behavior.
+        
+        Parameters
+        ----------
+        key_data : dict[str, Any]
+            The key data value.
+        
+        Returns
+        -------
+        Path
+            The resolved path.
+        """
+        
         stable_text = json.dumps(key_data, sort_keys=True, ensure_ascii=True)
         digest = hashlib.sha256(stable_text.encode("utf-8", errors="replace")).hexdigest()
         return self._cache_dir / (digest + ".json")
 
     def get(self, key_data: dict[str, Any]) -> Any | None:
+        """Support get behavior.
+        
+        Parameters
+        ----------
+        key_data : dict[str, Any]
+            The key data value.
+        
+        Returns
+        -------
+        Any | None
+            The any result.
+        """
+        
         try:
             cache_path = self._key_to_path(key_data)
             if not cache_path.exists():
@@ -91,6 +144,16 @@ class _LocalDiskCache:
             return None
 
     def set_value(self, key_data: dict[str, Any], value: Any) -> None:
+        """Set the value.
+        
+        Parameters
+        ----------
+        key_data : dict[str, Any]
+            The key data value.
+        value : Any
+            The input value.
+        """
+        
         try:
             cache_path = self._key_to_path(key_data)
             payload = {
@@ -115,6 +178,9 @@ class _LocalAIRequestQueue:
     _instance_lock = threading.Lock()
 
     def __new__(cls):
+        """Support new behavior.
+        """
+        
         with cls._instance_lock:
             if cls._instance is None:
                 cls._instance = super().__new__(cls)
@@ -122,11 +188,17 @@ class _LocalAIRequestQueue:
         return cls._instance
 
     def _init_once(self) -> None:
+        """Support init once behavior.
+        """
+        
         self._queue: queue.Queue[Callable[[], None]] = queue.Queue()
         self._worker = threading.Thread(target=self._worker_loop, daemon=True)
         self._worker.start()
 
     def _worker_loop(self) -> None:
+        """Support worker loop behavior.
+        """
+        
         while True:
             task = self._queue.get()
             try:
@@ -137,6 +209,14 @@ class _LocalAIRequestQueue:
                 self._queue.task_done()
 
     def submit(self, task: Callable[[], None]) -> None:
+        """Support submit behavior.
+        
+        Parameters
+        ----------
+        task : Callable[[], None]
+            The task value.
+        """
+        
         self._queue.put(task)
 
 
@@ -154,6 +234,9 @@ class V9QwenAIModels:
     """
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self._governance_state_path = (
             Path(__file__).resolve().parent / "governance_state.json"
         )
@@ -161,12 +244,41 @@ class V9QwenAIModels:
         self._request_queue = _LocalAIRequestQueue()
 
     def set_cache_dir(self, cache_dir: Path) -> None:
+        """Set the cache dir.
+        
+        Parameters
+        ----------
+        cache_dir : Path
+            The cache dir value.
+        """
+        
         self._cache.set_cache_dir(Path(cache_dir).expanduser().resolve())
 
     def set_governance_state_path(self, state_path: Path) -> None:
+        """Set the governance state path.
+        
+        Parameters
+        ----------
+        state_path : Path
+            The state path value.
+        """
+        
         self._governance_state_path = Path(state_path).expanduser().resolve()
 
     def _choose_model(self, text: Any) -> str:
+        """Support choose model behavior.
+        
+        Parameters
+        ----------
+        text : Any
+            The text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         if isinstance(text, list):
             content_len = sum(len(str(message.get("content", ""))) for message in text if isinstance(message, dict))
         else:
@@ -174,11 +286,32 @@ class V9QwenAIModels:
         return FAST_MODEL if content_len < AUTO_THRESHOLD else SMART_MODEL
 
     def _post(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Support post behavior.
+        
+        Parameters
+        ----------
+        payload : dict[str, Any]
+            The payload value.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         response = requests.post(OLLAMA_URL, json=payload, timeout=TIMEOUT)
         response.raise_for_status()
         return response.json()
 
     def _get_governance_modifier(self) -> str:
+        """Support get governance modifier behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         state_reader = _LocalGovernanceStateReader(self._governance_state_path)
         mode = state_reader.get_mode()
 
@@ -209,6 +342,19 @@ class V9QwenAIModels:
         self,
         messages: list[dict[str, Any]],
     ) -> list[dict[str, Any]]:
+        """Support prepare messages behavior.
+        
+        Parameters
+        ----------
+        messages : list[dict[str, Any]]
+            The message values.
+        
+        Returns
+        -------
+        list[dict[str, Any]]
+            The list of values.
+        """
+        
         modifier = self._get_governance_modifier()
         prepared_messages = [dict(message) for message in messages]
 

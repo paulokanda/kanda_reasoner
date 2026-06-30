@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/runtime_controller.py
 """Runtime controls and JSON loading for the Project Reasoner main window.
 
 This helper belongs to the V10 GUI / Runtime Controller box. It may call the
@@ -85,6 +86,14 @@ class RuntimeController:
         window._save_last_config()
 
     def pick_cache_dir(self, window: Any) -> None:
+        """Support pick cache dir behavior.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         path = QFileDialog.getExistingDirectory(window, 'Select cache directory')
         if not path:
             return
@@ -97,6 +106,14 @@ class RuntimeController:
             QMessageBox.warning(window, 'Cache dir error', str(exc))
 
     def pick_governance_path(self, window: Any) -> None:
+        """Support pick governance path behavior.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         path, _selected_filter = QFileDialog.getOpenFileName(window, 'Select governance_state.json', os.getcwd(), 'JSON Files (*.json)')
         if not path:
             return
@@ -109,6 +126,14 @@ class RuntimeController:
             QMessageBox.warning(window, 'Governance path error', str(exc))
 
     def load_json(self, window: Any) -> None:
+        """Load the json.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         current_path = window.json_path_edit.text().strip()
         start_dir = os.path.dirname(current_path) if current_path else os.getcwd()
         file_path, _selected_filter = QFileDialog.getOpenFileName(window, 'Select project_structure_index.json', start_dir, 'JSON Files (*.json)')
@@ -121,6 +146,16 @@ class RuntimeController:
             show_error_copy_close_window(window, title='Error', message='Failed to load JSON:\n' + str(exc))
 
     def load_json_from_path(self, window: Any, file_path: str) -> None:
+        """Load the json from path.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        file_path : str
+            The file path.
+        """
+        
         window.project_index.load_json(file_path)
         window.json_path_edit.setText(file_path)
         if window.project_index.project_root:
@@ -145,6 +180,14 @@ class RuntimeController:
         window._save_last_config()
 
     def refresh_workflow_controls(self, window: Any) -> None:
+        """Support refresh workflow controls behavior.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         has_project_root = bool(window.project_root_edit.text().strip())
         has_json = bool(window.project_index.index_data)
         is_running = bool(window._analysis_running)

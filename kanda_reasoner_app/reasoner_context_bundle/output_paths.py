@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/output_paths.py
 """Output path helpers for the additive AI context bundle."""
 
 from __future__ import annotations
@@ -34,6 +35,19 @@ ROUTING_MANIFEST_SUFFIX = "__routing_manifest.json"
 
 
 def _context(value: str | Path | ProjectContext) -> ProjectContext:
+    """Support context behavior.
+    
+    Parameters
+    ----------
+    value : str | Path | ProjectContext
+        The input value.
+    
+    Returns
+    -------
+    ProjectContext
+        The project context result.
+    """
+    
     if isinstance(value, ProjectContext):
         return value
     return resolve_project_context(value)

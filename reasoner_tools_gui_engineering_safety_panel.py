@@ -1,3 +1,4 @@
+# project-path: reasoner_tools_gui_engineering_safety_panel.py
 """Engineering Safety panel for the Reasoner tools GUI.
 
 This module owns the Engineering Safety panel factory only. It is intentionally

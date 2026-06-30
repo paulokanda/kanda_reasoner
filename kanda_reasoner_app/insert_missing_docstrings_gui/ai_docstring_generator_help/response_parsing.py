@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_help/response_parsing.py
 """Response parsing for the AI docstring generator."""
 
 from __future__ import annotations
@@ -12,6 +13,21 @@ from .heuristics import _prettify
 
 
 def _clean_summary(text: str, fallback: str) -> str:
+    """Support clean summary behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    fallback : str
+        The fallback value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     cleaned = " ".join((text or "").strip().split())
     if not cleaned:
         cleaned = fallback
@@ -22,6 +38,19 @@ def _clean_summary(text: str, fallback: str) -> str:
 
 
 def _json_from_text(text: str) -> dict[str, Any]:
+    """Support json from text behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     cleaned = text.strip()
     if cleaned.startswith("```"):
         lines = cleaned.splitlines()
@@ -44,6 +73,23 @@ def _json_from_text(text: str) -> dict[str, Any]:
 
 
 def _render_structured_docstring(ctx: SymbolContext, policy: DocstringPolicy, payload: dict[str, Any]) -> str:
+    """Support render structured docstring behavior.
+    
+    Parameters
+    ----------
+    ctx : SymbolContext
+        The ctx value.
+    policy : DocstringPolicy
+        The policy value.
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     summary_fallback = (
         ctx.module_id.split(".")[-1].replace("_", " ")
         if ctx.kind == "module"

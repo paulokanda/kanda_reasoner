@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_non_runtime_observation.py
 """M23 non-runtime shadow observation implementation.
 
 M23 is the first implementation milestone after the design-only M18-M22
@@ -110,16 +111,45 @@ class ShadowObservationContractError(ValueError):
 
 
 def _fail(reason: str) -> None:
+    """Support fail behavior.
+    
+    Parameters
+    ----------
+    reason : str
+        The reason value.
+    """
+    
     raise ShadowObservationContractError(reason)
 
 
 def _require_plain_input_dict(shadow_input: object) -> dict[str, object]:
+    """Support require plain input dict behavior.
+    
+    Parameters
+    ----------
+    shadow_input : object
+        The shadow input value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     if type(shadow_input) is not dict:
         _fail("shadow_input_must_be_plain_dict")
     return shadow_input
 
 
 def _require_allowed_keys(shadow_input: dict[str, object]) -> None:
+    """Support require allowed keys behavior.
+    
+    Parameters
+    ----------
+    shadow_input : dict[str, object]
+        The shadow input value.
+    """
+    
     for key in shadow_input:
         if type(key) is not str:
             _fail("input_keys_must_be_strings")
@@ -133,6 +163,21 @@ def _require_allowed_keys(shadow_input: dict[str, object]) -> None:
 
 
 def _require_string_field(shadow_input: dict[str, object], field_name: str) -> str:
+    """Support require string field behavior.
+    
+    Parameters
+    ----------
+    shadow_input : dict[str, object]
+        The shadow input value.
+    field_name : str
+        The field name value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     value = shadow_input[field_name]
     if type(value) is not str:
         _fail("input_field_must_be_string:" + field_name)
@@ -142,12 +187,42 @@ def _require_string_field(shadow_input: dict[str, object], field_name: str) -> s
 
 
 def _copy_optional_string_field(shadow_input: dict[str, object], field_name: str) -> str:
+    """Support copy optional string field behavior.
+    
+    Parameters
+    ----------
+    shadow_input : dict[str, object]
+        The shadow input value.
+    field_name : str
+        The field name value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if field_name not in shadow_input:
         return ""
     return _require_string_field(shadow_input, field_name)
 
 
 def _copy_list_of_strings_field(shadow_input: dict[str, object], field_name: str) -> list[str]:
+    """Support copy list of strings field behavior.
+    
+    Parameters
+    ----------
+    shadow_input : dict[str, object]
+        The shadow input value.
+    field_name : str
+        The field name value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     if field_name not in shadow_input:
         return []
     value = shadow_input[field_name]
@@ -162,6 +237,19 @@ def _copy_list_of_strings_field(shadow_input: dict[str, object], field_name: str
 
 
 def _validated_shadow_input_copy(shadow_input: object) -> dict[str, object]:
+    """Support validated shadow input copy behavior.
+    
+    Parameters
+    ----------
+    shadow_input : object
+        The shadow input value.
+    
+    Returns
+    -------
+    dict[str, object]
+        The mapped values.
+    """
+    
     checked = _require_plain_input_dict(shadow_input)
     _require_allowed_keys(checked)
     copied: dict[str, object] = {
@@ -179,6 +267,19 @@ def _validated_shadow_input_copy(shadow_input: object) -> dict[str, object]:
 
 
 def _human_review_reason_summary(validated_input: dict[str, object]) -> str:
+    """Support human review reason summary behavior.
+    
+    Parameters
+    ----------
+    validated_input : dict[str, object]
+        The validated input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     reasons = [
         "non_runtime_shadow_observation_requires_separate_human_review",
         "m23_has_no_routing_prompt_loading_persistence_or_promotion_effect",

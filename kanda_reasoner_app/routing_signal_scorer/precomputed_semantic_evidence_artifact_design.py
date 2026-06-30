@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/precomputed_semantic_evidence_artifact_design.py
 """Precomputed semantic evidence artifact design contract.
 
 This module is intentionally standard-library-only and design-only. It does
@@ -267,21 +268,74 @@ FORBIDDEN_VECTOR_PROVIDER_RUNTIME_FIELDS = frozenset(
 
 
 def _is_sequence(value: Any) -> bool:
+    """Support is sequence behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
 
 
 def _as_strings(value: Any) -> set[str]:
+    """Support as strings behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if not _is_sequence(value):
         return set()
     return {item for item in value if isinstance(item, str)}
 
 
 def _append_missing(errors: list[str], label: str, missing: set[str]) -> None:
+    """Support append missing behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    label : str
+        The label value.
+    missing : set[str]
+        The missing value.
+    """
+    
     if missing:
         errors.append(f"missing {label}: {', '.join(sorted(missing))}")
 
 
 def _find_forbidden_fields(mapping: Mapping[str, Any], forbidden: set[str] | frozenset[str]) -> set[str]:
+    """Support find forbidden fields behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    forbidden : set[str] | frozenset[str]
+        The forbidden value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     found: set[str] = set()
     for key, value in mapping.items():
         if key in forbidden:
@@ -296,6 +350,14 @@ def _find_forbidden_fields(mapping: Mapping[str, Any], forbidden: set[str] | fro
 
 
 def build_precomputed_artifact_design_status() -> dict[str, Any]:
+    """Build a precomputed artifact design status.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "feature_id": PRECOMPUTED_ARTIFACT_FEATURE_ID,
         "schema_version": PRECOMPUTED_ARTIFACT_SCHEMA_VERSION,
@@ -323,6 +385,14 @@ def build_precomputed_artifact_design_status() -> dict[str, Any]:
 
 
 def build_minimal_valid_precomputed_artifact_contract() -> dict[str, Any]:
+    """Build a minimal valid precomputed artifact contract.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "contract_id": PRECOMPUTED_ARTIFACT_FEATURE_ID,
         "schema_version": PRECOMPUTED_ARTIFACT_SCHEMA_VERSION,
@@ -341,6 +411,19 @@ def build_minimal_valid_precomputed_artifact_contract() -> dict[str, Any]:
 
 
 def validate_precomputed_artifact_contract(contract: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate the precomputed artifact contract.
+    
+    Parameters
+    ----------
+    contract : Mapping[str, Any]
+        The contract value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     errors: list[str] = []
     fields = set(contract)
     _append_missing(errors, "precomputed artifact fields", REQUIRED_PRECOMPUTED_ARTIFACT_FIELDS - fields)
@@ -435,6 +518,19 @@ def validate_precomputed_artifact_contract(contract: Mapping[str, Any]) -> dict[
 
 
 def classify_precomputed_artifact_activation_request(request: str) -> dict[str, Any]:
+    """Support classify precomputed artifact activation request behavior.
+    
+    Parameters
+    ----------
+    request : str
+        The request value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     normalized = request.lower()
     matched = any(
         token in normalized

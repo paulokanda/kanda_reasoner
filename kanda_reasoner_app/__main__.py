@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/__main__.py
 """Command-line launcher for the canonical Kanda Reasoner package."""
 
 from __future__ import annotations

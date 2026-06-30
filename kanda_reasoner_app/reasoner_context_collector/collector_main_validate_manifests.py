@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_main_validate_manifests.py
 """Validate Pass 059C collector_main helper-manifest artifacts."""
 
 from __future__ import annotations
@@ -10,6 +11,19 @@ MAX_LINES = 499
 
 
 def _line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     text = path.read_text(encoding="utf-8", errors="replace")
     if not text:
         return 0
@@ -17,6 +31,19 @@ def _line_count(path: Path) -> int:
 
 
 def _public_assignments(path: Path) -> set[str]:
+    """Support public assignments behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     tree = ast.parse(path.read_text(encoding="utf-8", errors="replace"), filename=str(path))
     names = set()
     for node in tree.body:
@@ -30,6 +57,14 @@ def _public_assignments(path: Path) -> set[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     base_dir = Path(__file__).resolve().parent
     origin = base_dir / "collector_main.py"
     manifest_path = base_dir / "collector_main_help.json"

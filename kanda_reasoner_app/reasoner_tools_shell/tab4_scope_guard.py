@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/tab4_scope_guard.py
 """Dynamic scope guard helpers for Tab 4 project collection.
 
 Tab 4 must collect only inside the project root selected by the user.
@@ -28,14 +29,53 @@ LEGACY_PACKAGE_NAME = "_".join(("ask", "ai", "project", "reasoner"))
 
 
 def _reasoner_package_dirs(root: Path) -> list[Path]:
+    """Support reasoner package dirs behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    list[Path]
+        The list of values.
+    """
+    
     return [root / LEGACY_PACKAGE_NAME, root / CANONICAL_PACKAGE_NAME]
 
 
 def _has_reasoner_package(root: Path) -> bool:
+    """Support has reasoner package behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(path.is_dir() for path in _reasoner_package_dirs(root))
 
 
 def _installed_package_dir(root: Path) -> Path:
+    """Support installed package dir behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     for path in _reasoner_package_dirs(root):
         if path.is_dir():
             return path

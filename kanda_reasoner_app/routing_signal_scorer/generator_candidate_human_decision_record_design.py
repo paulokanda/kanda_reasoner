@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_record_design.py
 """Generator candidate human decision record design for routing scorer v3.
 
 This module is intentionally standard-library-only and human-decision-record-schema-only.

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_validate_manifests.py
 """Validate the canonical main window helper manifest contract.
 
 This validator is intentionally scoped to ai_reasoner_main_window only. It avoids
@@ -19,10 +20,31 @@ __all__ = ["main", "validate_main_window_manifest"]
 
 
 def _project_root() -> Path:
+    """Support project root behavior.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return Path(__file__).resolve().parents[2]
 
 
 def _read_json(path: Path) -> dict:
+    """Support read json behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
@@ -64,6 +86,14 @@ def validate_main_window_manifest(project_root: Path | None = None) -> list[str]
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors = validate_main_window_manifest()
     manifest_path = _project_root() / MANIFEST_RELATIVE_PATH
 

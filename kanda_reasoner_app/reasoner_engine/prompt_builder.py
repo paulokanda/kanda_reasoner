@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/prompt_builder.py
 """Prompt builder public entry point for Project Reasoner.
 
 This module owns final evidence-pack assembly for the local AI prompt. Helper

@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/tab1_audit_write_support/planning.py
 """Build Tab 1 audit write target plans."""
 
 from __future__ import annotations

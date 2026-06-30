@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_quarantine_report_export.py
 """Canonical exporter for source debris quarantine dry-run reports.
 
 This module writes review-only dry-run reports into the Kanda maintenance audit

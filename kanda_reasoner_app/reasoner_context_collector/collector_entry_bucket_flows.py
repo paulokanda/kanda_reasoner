@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_entry_bucket_flows.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -9,6 +10,19 @@ NOISE_BUCKETS = {"tests", "legacy"}
 
 
 def _sorted_frequency_items(bucket_frequency: dict[str, int]) -> list[tuple[str, int]]:
+    """Support sorted frequency items behavior.
+    
+    Parameters
+    ----------
+    bucket_frequency : dict[str, int]
+        The bucket frequency value.
+    
+    Returns
+    -------
+    list[tuple[str, int]]
+        The list of values.
+    """
+    
     return sorted(
         bucket_frequency.items(),
         key=lambda item: (-item[1], item[0]),
@@ -16,12 +30,38 @@ def _sorted_frequency_items(bucket_frequency: dict[str, int]) -> list[tuple[str,
 
 
 def _pick_dominant_bucket(bucket_frequency: dict[str, int]) -> str:
+    """Support pick dominant bucket behavior.
+    
+    Parameters
+    ----------
+    bucket_frequency : dict[str, int]
+        The bucket frequency value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not bucket_frequency:
         return ""
     return _sorted_frequency_items(bucket_frequency)[0][0]
 
 
 def _pick_dominant_bucket_clean(bucket_frequency: dict[str, int]) -> str:
+    """Support pick dominant bucket clean behavior.
+    
+    Parameters
+    ----------
+    bucket_frequency : dict[str, int]
+        The bucket frequency value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     clean_frequency = {
         bucket: count
         for bucket, count in bucket_frequency.items()
@@ -36,6 +76,21 @@ def _safe_bucket_for_file(
     file_path: str,
     files_payload: list[dict[str, Any]],
 ) -> str:
+    """Support safe bucket for file behavior.
+    
+    Parameters
+    ----------
+    file_path : str
+        The file path.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for record in files_payload:
         if str(record.get("path", "")) == file_path:
             bucket = str(record.get("subsystem_bucket", "")).strip()
@@ -46,6 +101,19 @@ def _safe_bucket_for_file(
 
 
 def _normalize_chain_step(step: Any) -> dict[str, Any]:
+    """Support normalize chain step behavior.
+    
+    Parameters
+    ----------
+    step : Any
+        The step value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     if not isinstance(step, dict):
         return {}
     return {
@@ -61,6 +129,21 @@ def build_entry_bucket_flows(
     execution_chains: dict[str, Any],
     files_payload: list[dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a entry bucket flows.
+    
+    Parameters
+    ----------
+    execution_chains : dict[str, Any]
+        The execution chains value.
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     output: dict[str, dict[str, Any]] = {}
 
     for chain_name, raw_steps in execution_chains.items():
@@ -121,6 +204,19 @@ def build_entry_bucket_flows(
 def build_entry_bucket_flow_summary(
     entry_bucket_flows: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a entry bucket flow summary.
+    
+    Parameters
+    ----------
+    entry_bucket_flows : dict[str, dict[str, Any]]
+        The entry bucket flows value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     summary_rows: list[dict[str, Any]] = []
 
     for chain_name, payload in entry_bucket_flows.items():

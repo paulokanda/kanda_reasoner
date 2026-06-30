@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/help_docs/renderer.py
 """Desktop renderer for local help documents."""
 
 from __future__ import annotations
@@ -12,18 +13,54 @@ __all__ = [
 
 
 def _qt_core_attr(name: str):
+    """Support qt core attr behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    """
+    
     return getattr(import_module("PySide6.QtCore"), name)
 
 
 def _qt_widgets_attr(name: str):
+    """Support qt widgets attr behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    """
+    
     return getattr(import_module("PySide6.QtWidgets"), name)
 
 
 def _qt_web_engine_widgets_attr(name: str):
+    """Support qt web engine widgets attr behavior.
+    
+    Parameters
+    ----------
+    name : str
+        The name value.
+    """
+    
     return getattr(import_module("PySide6.QtWebEngineWidgets"), name)
 
 
 def _create_web_engine_dialog(parent, page: HelpPage, window_title: str):
+    """Support create web engine dialog behavior.
+    
+    Parameters
+    ----------
+    parent : object
+        The parent value.
+    page : HelpPage
+        The page value.
+    window_title : str
+        The window title value.
+    """
+    
     QMainWindow = _qt_widgets_attr("QMainWindow")
     QUrl = _qt_core_attr("QUrl")
     QWebEngineView = _qt_web_engine_widgets_attr("QWebEngineView")
@@ -40,6 +77,18 @@ def _create_web_engine_dialog(parent, page: HelpPage, window_title: str):
 
 
 def _create_text_browser_dialog(parent, page: HelpPage, window_title: str):
+    """Support create text browser dialog behavior.
+    
+    Parameters
+    ----------
+    parent : object
+        The parent value.
+    page : HelpPage
+        The page value.
+    window_title : str
+        The window title value.
+    """
+    
     QMainWindow = _qt_widgets_attr("QMainWindow")
     QTextBrowser = _qt_widgets_attr("QTextBrowser")
     QUrl = _qt_core_attr("QUrl")

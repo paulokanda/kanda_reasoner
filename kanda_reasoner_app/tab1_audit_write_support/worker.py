@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/tab1_audit_write_support/worker.py
 """Run Tab 1 audit target modules in a background thread."""
 
 from __future__ import annotations

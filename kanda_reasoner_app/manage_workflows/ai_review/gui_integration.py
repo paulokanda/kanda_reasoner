@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/ai_review/gui_integration.py
 """GUI integration for Tab 2 advisory AI review."""
 
 from __future__ import annotations
@@ -226,6 +227,19 @@ class QWidgetLikeRow:
     """Small QWidget wrapper imported lazily to keep tests easy."""
 
     def __new__(cls, row_layout: Any) -> Any:
+        """Support new behavior.
+        
+        Parameters
+        ----------
+        row_layout : Any
+            The row layout value.
+        
+        Returns
+        -------
+        Any
+            The any result.
+        """
+        
         from PySide6.QtWidgets import QWidget
 
         widget = QWidget()
@@ -237,6 +251,14 @@ class _Tab2AIReviewResultReceiver(QObject):
     """GUI-thread receiver for results emitted by the AI worker thread."""
 
     def __init__(self, window: Any) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        window : Any
+            The window value.
+        """
+        
         super().__init__(window)
         self._window = window
 
@@ -395,10 +417,21 @@ def create_tab2_ai_review_window_class(base_class: type[Any]) -> type[Any]:
         """Workflow manager window with read-only Tab 2 AI review controls."""
 
         def _build_ui(self) -> None:  # type: ignore[override]
+            """Support build ui behavior.
+            """
+            
             super()._build_ui()
             _install_tab2_ai_review_controls(self)
 
         def run_mode(self, mode: str) -> None:  # type: ignore[override]
+            """Run the mode.
+            
+            Parameters
+            ----------
+            mode : str
+                The selected mode.
+            """
+            
             super().run_mode(mode)
             if self._worker_thread is None:
                 return
@@ -407,6 +440,14 @@ def create_tab2_ai_review_window_class(base_class: type[Any]) -> type[Any]:
                 indicator.start_deterministic(_deterministic_label(mode))
 
         def _handle_worker_success(self, mode: str) -> None:  # type: ignore[override]
+            """Support handle worker success behavior.
+            
+            Parameters
+            ----------
+            mode : str
+                The selected mode.
+            """
+            
             if getattr(self, "_operation_cancel_requested", False):
                 super()._handle_worker_success(mode)
                 return
@@ -416,6 +457,16 @@ def create_tab2_ai_review_window_class(base_class: type[Any]) -> type[Any]:
             super()._handle_worker_success(mode)
 
         def _handle_worker_error(self, mode: str, details: str) -> None:  # type: ignore[override]
+            """Support handle worker error behavior.
+            
+            Parameters
+            ----------
+            mode : str
+                The selected mode.
+            details : str
+                The details value.
+            """
+            
             if getattr(self, "_operation_cancel_requested", False):
                 super()._handle_worker_error(mode, details)
                 return

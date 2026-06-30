@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/manage_architecture.py
 """Public facade for the architecture governance module."""
 
 from __future__ import annotations

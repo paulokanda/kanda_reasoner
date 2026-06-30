@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_rollback_fail_safe_detectors.py
 """Detect workflow steps that mutate state without rollback or fail-safe coverage."""
 
 from __future__ import annotations
@@ -98,23 +99,92 @@ def _stringify_safety_context(workflow_cfg: dict[str, Any], spec: Any) -> str:
 
 
 def _has_marker(text: str, markers: tuple[str, ...]) -> bool:
+    """Support has marker behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    markers : tuple[str, ...]
+        The markers value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = text.lower()
     return any(marker in lowered for marker in markers)
 
 
 def _is_mutating_command(command_text: str) -> bool:
+    """Support is mutating command behavior.
+    
+    Parameters
+    ----------
+    command_text : str
+        The command text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_marker(command_text, _MUTATING_COMMAND_MARKERS)
 
 
 def _has_rollback_or_fail_safe(safety_text: str) -> bool:
+    """Support has rollback or fail safe behavior.
+    
+    Parameters
+    ----------
+    safety_text : str
+        The safety text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_marker(safety_text, _ROLLBACK_MARKERS)
 
 
 def _has_preflight_marker(text: str) -> bool:
+    """Support has preflight marker behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return _has_marker(text, _PREFLIGHT_MARKERS)
 
 
 def _prior_commands_have_preflight(commands: list[Any], current_index: int) -> bool:
+    """Support prior commands have preflight behavior.
+    
+    Parameters
+    ----------
+    commands : list[Any]
+        The commands value.
+    current_index : int
+        The current index value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     prior_text = " ".join(_stringify_command(spec) for spec in commands[:current_index])
     return _has_preflight_marker(prior_text)
 
@@ -128,6 +198,29 @@ def _issue(
     expected: str,
     actual: str,
 ) -> WorkflowIssue:
+    """Support issue behavior.
+    
+    Parameters
+    ----------
+    issue_id : str
+        The issue id value.
+    workflow_name : str
+        The workflow name value.
+    command_name : str
+        The command name value.
+    evidence : str
+        The evidence value.
+    expected : str
+        The expected value.
+    actual : str
+        The actual value.
+    
+    Returns
+    -------
+    WorkflowIssue
+        The workflow issue result.
+    """
+    
     return WorkflowIssue(
         issue_id=issue_id,
         category="workflow_fail_safe",

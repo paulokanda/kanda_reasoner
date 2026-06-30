@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/send_pack_builder.py
 """Build uploadable AI-send files for Freeze Feature After Update.
 
 This app-facing module delegates generation to the blueprint freeze generator
@@ -28,18 +29,57 @@ _STATUS_MAP = {
 
 
 def _optional_path(value: Any) -> Path | None:
+    """Support optional path behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     if value in (None, ""):
         return None
     return Path(str(value))
 
 
 def _path_tuple(values: Any) -> tuple[Path, ...]:
+    """Support path tuple behavior.
+    
+    Parameters
+    ----------
+    values : Any
+        The input values.
+    
+    Returns
+    -------
+    tuple[Path, ...]
+        The tuple of values.
+    """
+    
     if not isinstance(values, list):
         return ()
     return tuple(Path(str(item)) for item in values)
 
 
 def _from_payload(payload: dict[str, Any]) -> FreezeAfterUpdateResult:
+    """Support from payload behavior.
+    
+    Parameters
+    ----------
+    payload : dict[str, Any]
+        The payload value.
+    
+    Returns
+    -------
+    FreezeAfterUpdateResult
+        The freeze after update result result.
+    """
+    
     status_text = str(payload.get("status") or "error")
     status = _STATUS_MAP.get(status_text, FreezeAfterUpdateStatus.ERROR)
     return FreezeAfterUpdateResult(

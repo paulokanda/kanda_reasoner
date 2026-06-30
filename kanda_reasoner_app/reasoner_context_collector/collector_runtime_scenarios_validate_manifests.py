@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_runtime_scenarios_validate_manifests.py
 """Validate collector_runtime_scenarios helper split."""
 
 from __future__ import annotations
@@ -12,15 +13,54 @@ PUBLIC_ALL = ['build_runtime_scenario_hotspots', 'build_runtime_scenario_index',
 
 
 def read_text(path: Path) -> str:
+    """Return the text.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8", errors="replace")
 
 
 def fail(message: str) -> int:
+    """Support fail behavior.
+    
+    Parameters
+    ----------
+    message : str
+        The message text.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     print(f"FAIL {message}")
     return 1
 
 
 def literal_all(source: str) -> list[str]:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    source : str
+        The source value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(source)
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -33,6 +73,19 @@ def literal_all(source: str) -> list[str]:
 
 
 def has_star_import(source: str) -> bool:
+    """Return whether star import.
+    
+    Parameters
+    ----------
+    source : str
+        The source value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     tree = ast.parse(source)
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
@@ -43,6 +96,14 @@ def has_star_import(source: str) -> bool:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     base = Path(__file__).resolve().parent
     root = base / "collector_runtime_scenarios.py"
     helper_dir = base / "collector_runtime_scenarios_help"

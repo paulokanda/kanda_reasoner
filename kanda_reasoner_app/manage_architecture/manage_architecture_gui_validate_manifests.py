@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/manage_architecture_gui_validate_manifests.py
 """Validate helper manifest contract for this helper group."""
 
 from __future__ import annotations
@@ -16,10 +17,36 @@ MANIFEST_NAME = "manage_architecture_gui_help.json"
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _literal_all(path: Path) -> list[str]:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(_read_text(path))
 
     for node in tree.body:
@@ -50,6 +77,19 @@ def _literal_all(path: Path) -> list[str]:
 
 
 def validate_manifest(manifest_path: Path) -> list[str]:
+    """Validate the manifest.
+    
+    Parameters
+    ----------
+    manifest_path : Path
+        The manifest path value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     errors: list[str] = []
 
     data = json.loads(_read_text(manifest_path))
@@ -87,6 +127,14 @@ def validate_manifest(manifest_path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     manifest_path = Path(__file__).with_name(MANIFEST_NAME)
     errors = validate_manifest(manifest_path)
 

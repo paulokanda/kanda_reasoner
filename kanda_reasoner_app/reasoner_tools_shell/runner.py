@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/runner.py
 """Source-preserving compatibility facade."""
 
 from __future__ import annotations
@@ -104,6 +105,9 @@ load_payload(__name__, globals(), 'zp')
 # Green sonar process monitor override. Keep the legacy payload class intact, but
 # replace the old text-spinner busy animation with a floating status panel.
 def _kanda_show_project_sonar(self):
+    """Support kanda show project sonar behavior.
+    """
+    
     from kanda_reasoner_app.templates.green_sonar_monitor import GreenSonarActivityMonitor
 
     monitor = getattr(self, "_show_project_sonar_monitor", None)
@@ -114,6 +118,19 @@ def _kanda_show_project_sonar(self):
 
 
 def _kanda_show_project_details(stage_text: str) -> tuple[str, str, str]:
+    """Support kanda show project details behavior.
+    
+    Parameters
+    ----------
+    stage_text : str
+        The stage text value.
+    
+    Returns
+    -------
+    tuple[str, str, str]
+        The tuple of values.
+    """
+    
     stage = str(stage_text or "Running")
     normalized = stage.lower()
     if "runtime" in normalized:
@@ -154,6 +171,14 @@ def _kanda_show_project_details(stage_text: str) -> tuple[str, str, str]:
 
 
 def _kanda_start_busy_animation(self, stage_text: str) -> None:
+    """Support kanda start busy animation behavior.
+    
+    Parameters
+    ----------
+    stage_text : str
+        The stage text value.
+    """
+    
     self._busy_index = 0
     self._active_stage = stage_text
     for attr_name in (
@@ -174,6 +199,14 @@ def _kanda_start_busy_animation(self, stage_text: str) -> None:
 
 
 def _kanda_stop_busy_animation(self, status_text: str) -> None:
+    """Support kanda stop busy animation behavior.
+    
+    Parameters
+    ----------
+    status_text : str
+        The status text value.
+    """
+    
     timer = getattr(self, "_busy_timer", None)
     stop = getattr(timer, "stop", None)
     if callable(stop):
@@ -208,6 +241,9 @@ def _kanda_stop_busy_animation(self, status_text: str) -> None:
 
 
 def _kanda_tick_busy_animation(self) -> None:
+    """Support kanda tick busy animation behavior.
+    """
+    
     stage_text = getattr(self, "_active_stage", "") or "Running"
     self.status_label.setText(str(stage_text) + "...")
 

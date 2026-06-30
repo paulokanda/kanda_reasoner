@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/live_source_verification/verifier.py
 """Verify and read live source files under PROJECT_ROOT.
 
 This module is an isolated Project Reasoner box.

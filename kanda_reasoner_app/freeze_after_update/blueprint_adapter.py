@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_after_update/blueprint_adapter.py
 """Adapter from the GUI-facing box to the blueprint freeze generator.
 
 The app box owns GUI/controller integration. The generator logic that creates

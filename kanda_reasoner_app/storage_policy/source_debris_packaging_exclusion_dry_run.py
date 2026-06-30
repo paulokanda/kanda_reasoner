@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_packaging_exclusion_dry_run.py
 """Dry-run planner for source debris packaging exclusions.
 
 This module turns development-only source debris warnings into an explicit

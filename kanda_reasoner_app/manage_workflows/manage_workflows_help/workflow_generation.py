@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_generation.py
 """Own workflow manifest and WORKFLOWS.md generation."""
 
 from __future__ import annotations
@@ -41,6 +42,21 @@ __all__ = [
 ]
 
 def generate_manifest(root: Path, discovered: dict[str, Any]) -> dict[str, Any]:
+    """Support generate manifest behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    discovered : dict[str, Any]
+        The discovered value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     default_test_dir = discovered["test_dirs"][0] if discovered["test_dirs"] else "tests"
 
     return {
@@ -124,6 +140,19 @@ def generate_manifest(root: Path, discovered: dict[str, Any]) -> dict[str, Any]:
     }
 
 def generate_workflows_md(manifest: dict[str, Any]) -> str:
+    """Support generate workflows md behavior.
+    
+    Parameters
+    ----------
+    manifest : dict[str, Any]
+        The manifest value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     discovered = manifest["discovered"]
     lines: list[str] = [
         "# WORKFLOWS",
@@ -190,6 +219,21 @@ def generate_workflows_md(manifest: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 def collect_generated_outputs(root: Path, manifest: dict[str, Any]) -> dict[Path, str]:
+    """Support collect generated outputs behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    manifest : dict[str, Any]
+        The manifest value.
+    
+    Returns
+    -------
+    dict[Path, str]
+        The mapped values.
+    """
+    
     outputs: dict[Path, str] = {}
     manifest_path = root / WORKFLOW_MANIFEST_NAME
     doc_path = root / WORKFLOWS_DOC_NAME
@@ -202,6 +246,21 @@ def collect_generated_outputs(root: Path, manifest: dict[str, Any]) -> dict[Path
     return outputs
 
 def load_manifest_or_default(root: Path, discovered: dict[str, Any]) -> tuple[dict[str, Any], bool]:
+    """Load the manifest or default.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    discovered : dict[str, Any]
+        The discovered value.
+    
+    Returns
+    -------
+    tuple[dict[str, Any], bool]
+        The tuple of values.
+    """
+    
     path = root / WORKFLOW_MANIFEST_NAME
     generated = generate_manifest(root, discovered)
     if not path.exists():

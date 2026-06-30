@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_output_writer_shortlist.py
 """Report-only shortlist for evidence output writer candidates.
 
 This module narrows the broad evidence output integration audit into a smaller

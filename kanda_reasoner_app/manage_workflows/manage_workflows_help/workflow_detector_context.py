@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_detector_context.py
 """Workflow detector execution context.
 
 The context is intentionally small and read-only. It gives detector gates a

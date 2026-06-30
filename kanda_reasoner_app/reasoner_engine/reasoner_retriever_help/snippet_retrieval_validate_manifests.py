@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/snippet_retrieval_validate_manifests.py
 """Validate snippet_retrieval helper manifest artifacts."""
 
 from __future__ import annotations
@@ -16,10 +17,36 @@ MANIFEST = BASE / "snippet_retrieval_help.json"
 
 
 def _read_text(path: Path) -> str:
+    """Support read text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return path.read_text(encoding="utf-8-sig", errors="replace")
 
 
 def _extract_public_names(path: Path) -> list[str]:
+    """Support extract public names behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(_read_text(path), filename=str(path))
     names: list[str] = []
     for node in tree.body:
@@ -30,6 +57,14 @@ def _extract_public_names(path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     if not MANIFEST.exists():
         print(f"FAIL missing manifest: {MANIFEST}")
         return 1

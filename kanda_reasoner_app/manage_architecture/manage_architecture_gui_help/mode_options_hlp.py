@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/manage_architecture_gui_help/mode_options_hlp.py
 """
 PROJECT  : Architecture Manager Developer Tool
 FILE     : mode_options_hlp.py
@@ -30,6 +31,14 @@ MODE_OPTIONS_HELP_TEXT = {
 
 
 def mode_help_summary() -> str:
+    """Support mode help summary behavior.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         "validate: check the project tree for architecture problems\n"
         "diff: preview generated file changes\n"

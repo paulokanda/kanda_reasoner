@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_assistance_skeleton_design.py
 """Design-only M29 Auxiliar/Assistant assistance skeleton design.
 
 M29 defines static skeleton slots for possible later Auxiliar/Assistant

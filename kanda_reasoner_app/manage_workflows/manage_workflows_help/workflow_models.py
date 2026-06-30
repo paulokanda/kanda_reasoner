@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_models.py
 """Own workflow validation result data structures."""
 
 from __future__ import annotations
@@ -27,6 +28,8 @@ __all__ = [
 
 @dataclass(slots=True)
 class CheckResult:
+    """Represent check result."""
+    
     category: str
     name: str
     status: str
@@ -36,6 +39,14 @@ class CheckResult:
     details: dict[str, Any] = field(default_factory=dict)
 
     def as_dict(self) -> dict[str, Any]:
+        """Support as dict behavior.
+        
+        Returns
+        -------
+        dict[str, Any]
+            The mapped values.
+        """
+        
         return {
             "category": self.category,
             "name": self.name,

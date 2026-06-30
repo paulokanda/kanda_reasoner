@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/backend_payloads/loader.py
 """Load encoded implementation payloads for source-preserving facades."""
 
 from __future__ import annotations

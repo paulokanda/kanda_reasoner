@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/__init__.py
 """Public package surface for Brain Navigator visual assets."""
 
 from __future__ import annotations

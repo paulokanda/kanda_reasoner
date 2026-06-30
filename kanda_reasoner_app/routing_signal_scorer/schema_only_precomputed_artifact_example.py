@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/schema_only_precomputed_artifact_example.py
 """Schema-only precomputed artifact example design contract.
 
 This module is intentionally standard-library-only and design-only. It does
@@ -223,22 +224,80 @@ FORBIDDEN_FIELD_NAMES = frozenset(
 
 
 def _as_mapping(value: Any, name: str) -> Mapping[str, Any]:
+    """Support as mapping behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    name : str
+        The name value.
+    
+    Returns
+    -------
+    Mapping[str, Any]
+        The mapped values.
+    """
+    
     if not isinstance(value, Mapping):
         raise TypeError(f"{name} must be a mapping")
     return value
 
 
 def _as_sequence(value: Any, name: str) -> Sequence[Any]:
+    """Support as sequence behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    name : str
+        The name value.
+    
+    Returns
+    -------
+    Sequence[Any]
+        The sequence of values.
+    """
+    
     if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
         raise TypeError(f"{name} must be a sequence")
     return value
 
 
 def _missing(required: frozenset[str], actual: Any) -> tuple[str, ...]:
+    """Support missing behavior.
+    
+    Parameters
+    ----------
+    required : frozenset[str]
+        The required value.
+    actual : Any
+        The actual value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(sorted(required.difference(set(_as_sequence(actual, "sequence")))))
 
 
 def _walk_field_names(value: Any) -> tuple[str, ...]:
+    """Support walk field names behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     names: list[str] = []
     if isinstance(value, Mapping):
         for key, nested in value.items():

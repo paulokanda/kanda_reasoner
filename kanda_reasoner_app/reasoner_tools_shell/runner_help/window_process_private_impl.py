@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_shell/runner_help/window_process_private_impl.py
 """Private window process private impl helpers for reasoner_tools_shell.runner."""
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
@@ -11,9 +12,35 @@ CANONICAL_PACKAGE_NAME = 'kanda_reasoner_app'
 LEGACY_PACKAGE_NAME = '_'.join(('ask', 'ai', 'project', 'reasoner'))
 
 def _has_reasoner_package(root: Path) -> bool:
+    """Support has reasoner package behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return any(((root / name).is_dir() for name in (LEGACY_PACKAGE_NAME, CANONICAL_PACKAGE_NAME)))
 
 def _installed_package_dir(root: Path) -> Path:
+    """Support installed package dir behavior.
+    
+    Parameters
+    ----------
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     return next((root / name for name in (LEGACY_PACKAGE_NAME, CANONICAL_PACKAGE_NAME) if (root / name).is_dir()), root / LEGACY_PACKAGE_NAME)
 
 def _bind_globals(namespace):
@@ -38,6 +65,19 @@ def _tab4_tool_root() -> Path:
     return here.parent
 
 def _tab4_is_drive_root(path: Path) -> bool:
+    """Support tab4 is drive root behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         resolved = path.resolve()
     except Exception:
@@ -65,6 +105,19 @@ def _tab4_resolve_project_root(raw_root: object) -> Path:
     return candidate
 
 def _tab4_project_key_candidates(project_root: Path) -> list[str]:
+    """Support tab4 project key candidates behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     keys = []
     try:
         resolved = str(project_root.expanduser().resolve())
@@ -79,6 +132,19 @@ def _tab4_project_key_candidates(project_root: Path) -> list[str]:
     return list(dict.fromkeys(keys))
 
 def _tab4_rules_dict(payload: object) -> dict:
+    """Support tab4 rules dict behavior.
+    
+    Parameters
+    ----------
+    payload : object
+        The payload value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     if not isinstance(payload, dict):
         return {'folders': [], 'files': [], 'extensions': []}
     return {'folders': [str(x) for x in payload.get('folders', []) if str(x).strip()], 'files': [str(x) for x in payload.get('files', []) if str(x).strip()], 'extensions': [str(x) for x in payload.get('extensions', []) if str(x).strip()]}
@@ -116,6 +182,19 @@ def _tab4_load_ignore_rules(project_root: Path) -> dict:
     return {'folders': [], 'files': [], 'extensions': []}
 
 def _tab4_build_child_env(project_root: Path) -> dict:
+    """Support tab4 build child env behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     env = os.environ.copy()
     tool_root = project_root if _has_reasoner_package(project_root) else _tab4_tool_root()
     existing = env.get('PYTHONPATH', '')
@@ -134,6 +213,18 @@ def _tab4_apply_second_prompt_build_env(self, env: dict) -> None:
         env[SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV] = build_dir
 
 def _tab4_apply_qprocess_env(process, env: dict, working_dir: Path) -> None:
+    """Support tab4 apply qprocess env behavior.
+    
+    Parameters
+    ----------
+    process : object
+        The process value.
+    env : dict
+        The env value.
+    working_dir : Path
+        The working dir value.
+    """
+    
     try:
         process.setWorkingDirectory(str(working_dir))
     except Exception:
@@ -144,6 +235,9 @@ def _tab4_apply_qprocess_env(process, env: dict, working_dir: Path) -> None:
     process.setProcessEnvironment(process_env)
 
 def _start_runtime_trace_process(self) -> None:
+    """Support start runtime trace process behavior.
+    """
+    
     self._process = QProcess(self)
     self._process.finished.connect(self._on_process_finished)
     self._process.errorOccurred.connect(self._on_process_error)
@@ -163,6 +257,16 @@ def _start_runtime_trace_process(self) -> None:
     self._process.start(sys.executable, process_args)
 
 def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_status) -> None:
+    """Support on process finished without web ai enrichment behavior.
+    
+    Parameters
+    ----------
+    exit_code : int
+        The exit code value.
+    _exit_status : object
+        The exit status value.
+    """
+    
     stdout_text = ''
     stderr_text = ''
     if self._process is not None:
@@ -253,6 +357,14 @@ def _on_process_finished(self, exit_code: int, _exit_status) -> None:
     return _on_process_finished_without_web_ai_enrichment(self, exit_code, _exit_status)
 
 def _on_process_error(self, _process_error) -> None:
+    """Support on process error behavior.
+    
+    Parameters
+    ----------
+    _process_error : object
+        The process error value.
+    """
+    
     failed_stage = self._active_stage or 'Process'
     self._stop_busy_animation('Failed')
     self._append_log(f'[ERROR] {failed_stage} process could not start.')
@@ -261,6 +373,9 @@ def _on_process_error(self, _process_error) -> None:
     self._process = None
 
 def _start_collector_process(self) -> None:
+    """Support start collector process behavior.
+    """
+    
     self._process = QProcess(self)
     self._process.finished.connect(self._on_process_finished)
     self._process.errorOccurred.connect(self._on_process_error)
@@ -277,6 +392,9 @@ def _start_collector_process(self) -> None:
     self._process.start(sys.executable, process_args)
 
 def _start_complete_json_enrichment_process(self) -> None:
+    """Support start complete json enrichment process behavior.
+    """
+    
     self._process = QProcess(self)
     self._process.finished.connect(self._on_process_finished)
     self._process.errorOccurred.connect(self._on_process_error)
@@ -291,6 +409,9 @@ def _start_complete_json_enrichment_process(self) -> None:
     self._process.start(sys.executable, process_args)
 
 def _start_ai_context_bundle_process(self) -> None:
+    """Support start ai context bundle process behavior.
+    """
+    
     self._process = QProcess(self)
     self._process.finished.connect(self._on_process_finished)
     self._process.errorOccurred.connect(self._on_process_error)
@@ -305,6 +426,9 @@ def _start_ai_context_bundle_process(self) -> None:
     self._process.start(sys.executable, process_args)
 
 def _run_collector(self) -> None:
+    """Support run collector behavior.
+    """
+    
     project_root_raw = self.project_root_edit.text().strip()
     try:
         project_root_path = _tab4_resolve_project_root(project_root_raw)

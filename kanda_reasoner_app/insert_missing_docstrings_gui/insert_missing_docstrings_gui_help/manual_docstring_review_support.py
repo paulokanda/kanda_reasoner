@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/manual_docstring_review_support.py
 """Compatibility facade for Tab 3 review support helpers."""
 
 from __future__ import annotations

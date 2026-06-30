@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_duplicates.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,6 +7,19 @@ from collections import defaultdict
 
 
 def find_duplicate_symbols(files_payload: list[dict]) -> list[dict]:
+    """Find the duplicate symbols.
+    
+    Parameters
+    ----------
+    files_payload : list[dict]
+        The files payload value.
+    
+    Returns
+    -------
+    list[dict]
+        The list of values.
+    """
+    
     symbol_map: dict[str, list[str]] = defaultdict(list)
 
     for file_record in files_payload:

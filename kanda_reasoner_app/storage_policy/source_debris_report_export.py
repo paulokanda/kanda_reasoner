@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/source_debris_report_export.py
 """Detailed source debris report/export helpers for Kanda Reasoner.
 
 This module converts the report-only source-cleanliness scan into a stable

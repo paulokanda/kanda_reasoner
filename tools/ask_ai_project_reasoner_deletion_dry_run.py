@@ -1,3 +1,4 @@
+# project-path: tools/ask_ai_project_reasoner_deletion_dry_run.py
 """Dry-run removal check for the top-level ask_ai_project_reasoner package.
 
 This tool temporarily moves ask_ai_project_reasoner out of the project root,

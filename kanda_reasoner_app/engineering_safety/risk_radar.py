@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/risk_radar.py
 """Read-only Risk Change Radar report builder."""
 
 from __future__ import annotations
@@ -100,6 +101,19 @@ def infer_risk_change_affected_boxes(changed_files: list[str]) -> list[str]:
 
 
 def _path_score(path: str) -> int:
+    """Support path score behavior.
+    
+    Parameters
+    ----------
+    path : str
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     normalized = normalize_risk_change_path(path)
     score = 0
     if normalized.endswith(".py"):
@@ -162,6 +176,21 @@ def score_risk_change(input_data: RiskChangeRadarInput) -> tuple[str, int, list[
 
 
 def _recommended_tests(changed_files: list[str], risk_level: str) -> list[str]:
+    """Support recommended tests behavior.
+    
+    Parameters
+    ----------
+    changed_files : list[str]
+        The changed files value.
+    risk_level : str
+        The risk level value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tests = [
         'python kanda_reasoner_app\\manage_architecture\\manage_architecture.py --root "$PROJECT_ROOT" --validate',
         'python kanda_reasoner_app\\manage_workflows\\manage_workflows.py --root "$PROJECT_ROOT" --validate',

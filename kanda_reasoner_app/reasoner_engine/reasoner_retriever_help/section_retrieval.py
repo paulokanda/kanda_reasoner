@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/section_retrieval.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -19,6 +20,21 @@ __all__ = ["retrieve_packaging_metadata", "retrieve_documentation_intent"]
 
 
 def retrieve_packaging_metadata(project_index, question: str) -> list[EvidenceItem]:
+    """Support retrieve packaging metadata behavior.
+    
+    Parameters
+    ----------
+    project_index : object
+        The project index value.
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    list[EvidenceItem]
+        The list of values.
+    """
+    
     q = norm_text(question)
     intents = detect_query_intents(q)
 
@@ -135,6 +151,21 @@ def retrieve_packaging_metadata(project_index, question: str) -> list[EvidenceIt
 
 
 def retrieve_documentation_intent(project_index, question: str) -> list[EvidenceItem]:
+    """Support retrieve documentation intent behavior.
+    
+    Parameters
+    ----------
+    project_index : object
+        The project index value.
+    question : str
+        The question value.
+    
+    Returns
+    -------
+    list[EvidenceItem]
+        The list of values.
+    """
+    
     q = norm_text(question)
     intents = detect_query_intents(q)
 

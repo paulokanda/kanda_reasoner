@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/v10_static_context_evidence_formatter.py
 """Support V10 project reasoning and evidence handling."""
 
 from __future__ import annotations
@@ -6,10 +7,38 @@ from typing import Any
 
 
 def _clean_list(values: list[Any]) -> list[str]:
+    """Support clean list behavior.
+    
+    Parameters
+    ----------
+    values : list[Any]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return [str(value).strip() for value in values if str(value).strip()]
 
 
 def _preview_lines(values: list[str], limit: int = 8) -> list[str]:
+    """Support preview lines behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     preview = values[:limit]
     if len(values) > limit:
         preview.append(f"... (+{len(values) - limit} more)")
@@ -20,6 +49,21 @@ def build_static_context_evidence_preview(
     packaging_metadata: dict[str, Any],
     documentation_intent: dict[str, Any],
 ) -> str:
+    """Build a static context evidence preview.
+    
+    Parameters
+    ----------
+    packaging_metadata : dict[str, Any]
+        The packaging metadata value.
+    documentation_intent : dict[str, Any]
+        The documentation intent value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     packaging_files = _clean_list(packaging_metadata.get("packaging_files_found", []))
     documentation_files = _clean_list(
         documentation_intent.get("documentation_files_found", [])

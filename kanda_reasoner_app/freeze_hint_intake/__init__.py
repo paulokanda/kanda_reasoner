@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/freeze_hint_intake/__init__.py
 """Freeze hint intake box for KANDA freeze-after-update workflows."""
 
 from .contract import (

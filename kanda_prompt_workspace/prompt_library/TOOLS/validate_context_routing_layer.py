@@ -1,3 +1,4 @@
+# project-path: kanda_prompt_workspace/prompt_library/TOOLS/validate_context_routing_layer.py
 """Validate the staged KANDA Context Routing Layer package.
 
 This validator is intentionally project-local and read-only. It checks the
@@ -67,6 +68,9 @@ class ValidationState:
     """Collect validation failures and warnings while printing gates."""
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         self.failures: int = 0
         self.warnings: int = 0
 

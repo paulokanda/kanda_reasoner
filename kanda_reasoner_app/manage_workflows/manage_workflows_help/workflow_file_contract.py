@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_file_contract.py
 """Own workflow command expected-file and public contract adapters."""
 
 from __future__ import annotations

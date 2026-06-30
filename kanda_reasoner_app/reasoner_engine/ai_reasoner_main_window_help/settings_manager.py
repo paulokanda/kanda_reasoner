@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/settings_manager.py
 """Support V10 project reasoning and evidence handling."""
 
 # ------------------------------------------------------
@@ -15,7 +16,17 @@ __all__ = ["WindowSettingsManager"]
 
 
 class WindowSettingsManager:
+    """Represent window settings manager."""
+    
     def restore(self, window) -> None:
+        """Support restore behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         settings = window.settings
 
         def _set_text(attr_name: str, key: str) -> None:
@@ -54,6 +65,14 @@ class WindowSettingsManager:
         )
 
     def save(self, window) -> None:
+        """Support save behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         if not getattr(window, "_settings_ready", False):
             return
 

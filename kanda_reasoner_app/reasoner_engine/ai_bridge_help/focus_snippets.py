@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/focus_snippets.py
 """Focused snippet selection helpers for Project Reasoner AI bridge.
 
 This module belongs to the AI Bridge helper box. It scores source snippets

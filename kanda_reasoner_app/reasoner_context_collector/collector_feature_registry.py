@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_feature_registry.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -155,10 +156,36 @@ FEATURE_RULES = {
 
 
 def _safe_text(value: Any) -> str:
+    """Support safe text behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(value or "").strip().lower()
 
 
 def _normalize_text_parts(text: str) -> set[str]:
+    """Support normalize text parts behavior.
+    
+    Parameters
+    ----------
+    text : str
+        The text value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     cleaned = (
         _safe_text(text)
         .replace("\\", " ")
@@ -176,6 +203,19 @@ def _normalize_text_parts(text: str) -> set[str]:
 
 
 def _record_text_corpus(file_record: dict[str, Any]) -> set[str]:
+    """Support record text corpus behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     out: set[str] = set()
 
     for field in (
@@ -238,6 +278,19 @@ def _record_text_corpus(file_record: dict[str, Any]) -> set[str]:
 
 
 def _safe_bucket(file_record: dict[str, Any]) -> str:
+    """Support safe bucket behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     bucket = _safe_text(file_record.get("subsystem_bucket", ""))
     return bucket or "general"
 
@@ -246,6 +299,21 @@ def _safe_boundary_role(
     file_record: dict[str, Any],
     boundary_index: dict[str, dict[str, Any]],
 ) -> str:
+    """Support safe boundary role behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = str(file_record.get("path", "")).strip()
     payload = boundary_index.get(path, {})
     if not isinstance(payload, dict):
@@ -258,6 +326,21 @@ def build_feature_registry(
     files_payload: list[dict[str, Any]],
     boundary_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Build a feature registry.
+    
+    Parameters
+    ----------
+    files_payload : list[dict[str, Any]]
+        The files payload value.
+    boundary_index : dict[str, dict[str, Any]]
+        The boundary index value.
+    
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        The mapped values.
+    """
+    
     feature_registry: dict[str, dict[str, Any]] = {}
 
     for feature_name in FEATURE_RULES:
@@ -322,6 +405,19 @@ def build_feature_registry(
 def build_feature_summary(
     feature_registry: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
+    """Build a feature summary.
+    
+    Parameters
+    ----------
+    feature_registry : dict[str, dict[str, Any]]
+        The feature registry value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     rows: list[dict[str, Any]] = []
     mapped_file_count = 0
     unique_files: set[str] = set()
@@ -365,6 +461,21 @@ def build_feature_hotspots(
     feature_registry: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
+    """Build a feature hotspots.
+    
+    Parameters
+    ----------
+    feature_registry : dict[str, dict[str, Any]]
+        The feature registry value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     rows: list[dict[str, Any]] = []
 
     for feature_name, payload in feature_registry.items():

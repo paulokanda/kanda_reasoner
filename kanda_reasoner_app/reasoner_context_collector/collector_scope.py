@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_scope.py
 """Central scope helpers for Project Reasoner Tab 4 collection."""
 from __future__ import annotations
 import fnmatch
@@ -29,14 +30,48 @@ __all__ = [
     "sanitize_json_file",
 ]
 def _safe_resolve(path: Path | str) -> Path:
+    """Support safe resolve behavior.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     try:
         return Path(path).expanduser().resolve()
     except Exception:
         return Path(path).absolute()
 def resolve_project_root(project_root: Path | str | None = None) -> Path:
+    """Resolve the project root.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     raw = project_root or os.environ.get("PROJECT_REASONER_SCAN_ROOT") or os.environ.get("PROJECT_REASONER_PROJECT_ROOT") or os.environ.get("KANDA_RUNTIME_PROJECT_ROOT") or os.getcwd()
     return _safe_resolve(raw)
 def _load_rules() -> dict[str, list[str]]:
+    """Support load rules behavior.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     text = os.environ.get("PROJECT_REASONER_TAB8_IGNORE_RULES_JSON", "").strip() or os.environ.get("PROJECT_REASONER_IGNORE_RULES_JSON", "").strip()
     if not text:
         return {"folders": [], "files": [], "extensions": []}
@@ -46,6 +81,21 @@ def _load_rules() -> dict[str, list[str]]:
         return {"folders": [], "files": [], "extensions": []}
     return {"folders": list(data.get("folders", []) or []), "files": list(data.get("files", []) or []), "extensions": list(data.get("extensions", []) or [])}
 def is_inside_project(path: Path | str, project_root: Path | str | None = None) -> bool:
+    """Return whether inside project.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     root = resolve_project_root(project_root)
     resolved = _safe_resolve(path)
     try:
@@ -54,11 +104,43 @@ def is_inside_project(path: Path | str, project_root: Path | str | None = None) 
     except Exception:
         return False
 def _relative_posix(path: Path, root: Path) -> str:
+    """Support relative posix behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     try:
         return path.relative_to(root).as_posix()
     except Exception:
         return str(path).replace("\\", "/")
 def should_exclude_path(path: Path | str, project_root: Path | str | None = None, rules: dict[str, list[str]] | None = None) -> bool:
+    """Support should exclude path behavior.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    project_root : Path | str | None, optional
+        The project root path.
+    rules : dict[str, list[str]] | None, optional
+        The optional rules value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     root = resolve_project_root(project_root)
     resolved = _safe_resolve(path)
     if not is_inside_project(resolved, root):
@@ -86,6 +168,21 @@ def should_exclude_path(path: Path | str, project_root: Path | str | None = None
             return True
     return False
 def iter_project_files(project_root: Path | str | None = None, suffixes: Iterable[str] | None = None) -> Iterator[Path]:
+    """Support iter project files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    suffixes : Iterable[str] | None, optional
+        The optional suffixes value.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     root = resolve_project_root(project_root)
     rules = _load_rules()
     wanted = {s.lower() for s in suffixes} if suffixes is not None else None
@@ -105,14 +202,68 @@ def iter_project_files(project_root: Path | str | None = None, suffixes: Iterabl
                 yield entry
     yield from walk(root)
 def iter_project_python_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project python files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     yield from iter_project_files(project_root, {".py"})
 def iter_project_documentation_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project documentation files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     yield from iter_project_files(project_root, DOC_SUFFIXES)
 def iter_project_packaging_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project packaging files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     for path in iter_project_files(project_root, {".toml", ".py", ".cfg", ".txt", ".lock"}):
         if path.name.lower() in PACKAGING_NAMES:
             yield path
 def _contains_forbidden_text(value: str, project_root: Path | str | None = None) -> bool:
+    """Support contains forbidden text behavior.
+    
+    Parameters
+    ----------
+    value : str
+        The input value.
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     low = value.lower()
     for fragment in FORBIDDEN_TEXT_FRAGMENTS:
         if fragment.lower() in low:
@@ -124,6 +275,21 @@ def _contains_forbidden_text(value: str, project_root: Path | str | None = None)
             return True
     return False
 def _sanitize_value(value: Any, project_root: Path | str | None = None) -> Any:
+    """Support sanitize value behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Any
+        The any result.
+    """
+    
     if isinstance(value, dict):
         cleaned: dict[str, Any] = {}
         for key, item in value.items():
@@ -145,6 +311,21 @@ def _sanitize_value(value: Any, project_root: Path | str | None = None) -> Any:
         return value
     return value
 def sanitize_json_file(json_path: Path | str, project_root: Path | str | None = None) -> bool:
+    """Support sanitize json file behavior.
+    
+    Parameters
+    ----------
+    json_path : Path | str
+        The json path value.
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     path = Path(json_path)
     if not path.exists() or not path.is_file():
         return False
@@ -160,6 +341,16 @@ def sanitize_json_file(json_path: Path | str, project_root: Path | str | None = 
         return True
     return False
 def assert_no_forbidden_fragments(json_path: Path | str, project_root: Path | str | None = None) -> None:
+    """Support assert no forbidden fragments behavior.
+    
+    Parameters
+    ----------
+    json_path : Path | str
+        The json path value.
+    project_root : Path | str | None, optional
+        The project root path.
+    """
+    
     path = Path(json_path)
     if not path.exists():
         return
@@ -177,6 +368,18 @@ def assert_no_forbidden_fragments(json_path: Path | str, project_root: Path | st
     if found:
         raise RuntimeError("forbidden path fragments remain: " + ", ".join(sorted(set(found))))
 def sanitize_collector_outputs(project_root: Path | str, output_json: Path | str | None = None, runtime_trace_json: Path | str | None = None) -> None:
+    """Support sanitize collector outputs behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str
+        The project root path.
+    output_json : Path | str | None, optional
+        The optional output json value.
+    runtime_trace_json : Path | str | None, optional
+        The optional runtime trace json value.
+    """
+    
     root = resolve_project_root(project_root)
     if runtime_trace_json:
         sanitize_json_file(runtime_trace_json, root)
@@ -193,30 +396,109 @@ from kanda_reasoner_app.project_exclusion_policy import (  # noqa: E402
 
 
 def _load_rules() -> dict[str, list[str]]:
+    """Support load rules behavior.
+    
+    Returns
+    -------
+    dict[str, list[str]]
+        The mapped values.
+    """
+    
     return _pa024_load_reasoner_project_exclusion_rules(resolve_project_root())
 
 
 def should_exclude_path(path: Path | str, project_root: Path | str | None = None, rules: dict[str, list[str]] | None = None) -> bool:
+    """Support should exclude path behavior.
+    
+    Parameters
+    ----------
+    path : Path | str
+        The file or folder path.
+    project_root : Path | str | None, optional
+        The project root path.
+    rules : dict[str, list[str]] | None, optional
+        The optional rules value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     root = resolve_project_root(project_root)
     active_rules = rules if rules is not None else _pa024_load_reasoner_project_exclusion_rules(root)
     return _pa024_should_exclude_reasoner_project_path(path, root, active_rules)
 
 
 def iter_project_files(project_root: Path | str | None = None, suffixes: Iterable[str] | None = None) -> Iterator[Path]:
+    """Support iter project files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    suffixes : Iterable[str] | None, optional
+        The optional suffixes value.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     root = resolve_project_root(project_root)
     rules = _pa024_load_reasoner_project_exclusion_rules(root)
     yield from _pa024_iter_reasoner_project_files(root, suffixes=suffixes, rules=rules)
 
 
 def iter_project_python_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project python files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     yield from iter_project_files(project_root, {".py"})
 
 
 def iter_project_documentation_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project documentation files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     yield from iter_project_files(project_root, DOC_SUFFIXES)
 
 
 def iter_project_packaging_files(project_root: Path | str | None = None) -> Iterator[Path]:
+    """Support iter project packaging files behavior.
+    
+    Parameters
+    ----------
+    project_root : Path | str | None, optional
+        The project root path.
+    
+    Returns
+    -------
+    Iterator[Path]
+        The iterator result.
+    """
+    
     for path in iter_project_files(project_root, {".toml", ".py", ".cfg", ".txt", ".lock"}):
         if path.name.lower() in PACKAGING_NAMES:
             yield path

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/deterministic_answers.py
 """Deterministic evidence-backed answer helpers for Project Reasoner V10."""
 
 from __future__ import annotations

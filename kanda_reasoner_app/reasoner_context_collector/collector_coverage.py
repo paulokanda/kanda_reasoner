@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_coverage.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_bundle/project_context.py
 """Dynamic project context resolution for the reasoner context bundle box."""
 
 from __future__ import annotations

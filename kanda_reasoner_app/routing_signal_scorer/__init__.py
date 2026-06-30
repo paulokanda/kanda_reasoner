@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/__init__.py
 """Diagnostic routing signal scorer for KANDA prompt-call accuracy."""
 
 from .contract import (

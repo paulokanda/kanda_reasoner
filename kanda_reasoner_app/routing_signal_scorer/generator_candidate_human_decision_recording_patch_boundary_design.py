@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_recording_patch_boundary_design.py
 """Generator candidate human decision recording patch boundary design for routing scorer v3.
 
 This module is intentionally standard-library-only and decision-recording-patch-boundary-design-schema-only.
@@ -289,12 +290,38 @@ STOP_CONDITIONS = frozenset(
 
 
 def _as_set(value: object) -> set[str]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if isinstance(value, str) or not isinstance(value, Sequence):
         return set()
     return {str(item) for item in value}
 
 
 def _disabled_flags_are_false(flags: object) -> tuple[bool, list[str]]:
+    """Support disabled flags are false behavior.
+    
+    Parameters
+    ----------
+    flags : object
+        The flags value.
+    
+    Returns
+    -------
+    tuple[bool, list[str]]
+        The tuple of values.
+    """
+    
     if not isinstance(flags, Mapping):
         return False, ["disabled_flags must be a mapping"]
     errors: list[str] = []
@@ -305,6 +332,14 @@ def _disabled_flags_are_false(flags: object) -> tuple[bool, list[str]]:
 
 
 def build_generator_candidate_human_decision_recording_patch_boundary_design_contract() -> dict[str, Any]:
+    """Build a generator candidate human decision recording patch boundary design contract.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     return {
         "schema_id": GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_FEATURE_ID,
         "schema_version": GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_SCHEMA_VERSION,
@@ -327,6 +362,19 @@ def build_generator_candidate_human_decision_recording_patch_boundary_design_con
 
 
 def validate_generator_candidate_human_decision_recording_patch_boundary_design_contract(candidate: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate the generator candidate human decision recording patch boundary design contract.
+    
+    Parameters
+    ----------
+    candidate : Mapping[str, Any]
+        The candidate value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     errors: list[str] = []
     if not isinstance(candidate, Mapping):
         return {"ok": False, "errors": ["candidate must be a mapping"]}
@@ -413,6 +461,19 @@ def validate_generator_candidate_human_decision_recording_patch_boundary_design_
 
 
 def classify_generator_candidate_human_decision_recording_patch_boundary_design_request(action: str) -> dict[str, Any]:
+    """Support classify generator candidate human decision recording patch boundary design request behavior.
+    
+    Parameters
+    ----------
+    action : str
+        The action value.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     normalized = action.lower()
     denied_tokens = (
         "approve",

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/high_confidence_secret_inspector.py
 """Report-only high-confidence secret finding inspector.
 
 This module turns the report-only secret scan output into a focused manual

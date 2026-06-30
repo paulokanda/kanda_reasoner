@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_8_help/source_part_1_private_impl.py
 """Encoded source shard 1 for json_splitter_8 facade."""
 
 from __future__ import annotations

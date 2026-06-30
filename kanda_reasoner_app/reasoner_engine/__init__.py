@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/__init__.py
 """Canonical reasoner engine package.
 
 This package is the active engine namespace. Its initializer only exposes

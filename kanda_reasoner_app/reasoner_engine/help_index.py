@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/help_index.py
 """
 Public help index facade for Reasoner Engine.
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/file_retrieval_help/file_retrieval_source_part_2_private_impl.py
 """Private encoded source part for file_retrieval implementation."""
 
 from __future__ import annotations

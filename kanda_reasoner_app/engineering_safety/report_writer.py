@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/report_writer.py
 """Writers for Engineering Safety JSON and Markdown reports."""
 
 from __future__ import annotations
@@ -29,6 +30,19 @@ def engineering_safety_report_stem(report: EngineeringSafetyReport) -> str:
 
 
 def _format_list(values: list[str]) -> str:
+    """Support format list behavior.
+    
+    Parameters
+    ----------
+    values : list[str]
+        The input values.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not values:
         return "- none"
     return "\n".join("- " + value for value in values)

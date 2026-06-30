@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/facade_owner_resolver.py
 """Read-only facade versus real-owner resolver for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -195,6 +196,19 @@ def build_reasoner_symbol_atlas_facade_owner_report(
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).expanduser().resolve(strict=False)
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -204,6 +218,19 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _normalize_relative_path(path_text: str) -> str:
+    """Support normalize relative path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not path_text:
         return ""
     return str(Path(path_text)).replace("\\", "/")
@@ -214,6 +241,23 @@ def _find_target_record(
     modules: tuple[ProjectModuleRecord, ...],
     target_path: str,
 ) -> ProjectModuleRecord | None:
+    """Support find target record behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    target_path : str
+        The target path value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if not target_path:
         return None
     target = Path(target_path)
@@ -236,6 +280,19 @@ def _find_target_record(
 
 
 def _record_is_facade(record: ProjectModuleRecord) -> bool:
+    """Support record is facade behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if record.owner_role in {"facade", "compatibility_facade"}:
         return True
     evidence_text = "\n".join(record.evidence).lower()
@@ -257,6 +314,19 @@ def _record_is_facade(record: ProjectModuleRecord) -> bool:
 
 
 def _facade_evidence(record: ProjectModuleRecord) -> tuple[str, ...]:
+    """Support facade evidence behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     for item in record.evidence:
         lowered = item.lower()
@@ -269,6 +339,19 @@ def _facade_evidence(record: ProjectModuleRecord) -> tuple[str, ...]:
 
 
 def _source_modules_from_import_symbol(symbol: ProjectSymbol) -> tuple[str, ...]:
+    """Support source modules from import symbol behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     values: list[str] = []
     for item in symbol.evidence:
         if not item.startswith("source: "):
@@ -289,6 +372,21 @@ def _record_for_module_name(
     modules: tuple[ProjectModuleRecord, ...],
     module_name: str,
 ) -> ProjectModuleRecord | None:
+    """Support record for module name behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    module_name : str
+        The module name value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if not module_name:
         return None
     for record in modules:
@@ -307,6 +405,25 @@ def _candidate_owner_paths(
     symbols: tuple[ProjectSymbol, ...],
     symbol_name: str,
 ) -> tuple[str, ...]:
+    """Support candidate owner paths behavior.
+    
+    Parameters
+    ----------
+    target_record : ProjectModuleRecord
+        The target record value.
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    symbols : tuple[ProjectSymbol, ...]
+        The symbols value.
+    symbol_name : str
+        The symbol name value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     candidates: list[str] = []
     for symbol in target_record.symbols:
         if symbol.kind != "import":
@@ -333,6 +450,21 @@ def _record_for_path(
     modules: tuple[ProjectModuleRecord, ...],
     path_text: str,
 ) -> ProjectModuleRecord | None:
+    """Support record for path behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     key = _normalize_relative_path(path_text)
     for record in modules:
         if _normalize_relative_path(record.path) == key:
@@ -344,6 +476,21 @@ def _select_likely_owner(
     modules: tuple[ProjectModuleRecord, ...],
     candidate_paths: tuple[str, ...],
 ) -> ProjectModuleRecord | None:
+    """Support select likely owner behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    candidate_paths : tuple[str, ...]
+        The candidate paths value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     records = [_record_for_path(modules, path) for path in candidate_paths]
     records = [record for record in records if record is not None]
     if not records:
@@ -370,6 +517,27 @@ def _decision_status(
     owner_candidates: tuple[str, ...],
     merge_status: str,
 ) -> tuple[str, str, bool, tuple[str, ...]]:
+    """Support decision status behavior.
+    
+    Parameters
+    ----------
+    target_record : ProjectModuleRecord
+        The target record value.
+    target_is_facade : bool
+        The target is facade value.
+    likely_owner : ProjectModuleRecord | None
+        The likely owner value.
+    owner_candidates : tuple[str, ...]
+        The owner candidates value.
+    merge_status : str
+        The merge status value.
+    
+    Returns
+    -------
+    tuple[str, str, bool, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     reasons: list[str] = []
     reasons.append("Target owner role: " + target_record.owner_role + ".")
     reasons.append("Evidence merge status: " + merge_status + ".")
@@ -400,6 +568,19 @@ def _decision_status(
 
 
 def _format_decision_summary(decision: ProjectSymbolAtlasFacadeOwnerDecision) -> str:
+    """Support format decision summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasFacadeOwnerDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if decision.target_is_facade and decision.likely_real_owner_path:
         return (
             "Target appears to be a facade. Likely real owner: "

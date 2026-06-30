@@ -1,3 +1,4 @@
+# project-path: profiling/run_with_trace.py
 """Support profiling workflows for developer tooling."""
 
 import os
@@ -13,10 +14,21 @@ import subprocess
 from shell.kanda_main import main
 
 def test_governance_probe():
+    """Support test governance probe behavior.
+    """
+    
     pass
 
 
 def run_with_trace_main() -> int:
+    """Run the with trace main.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     os.environ["KANDA_DEBUG"] = os.environ.get("KANDA_DEBUG", "1")
 
     os.environ.setdefault("MPLCONFIGDIR", r"E:\EEG_KANDA\_cache\mpl")

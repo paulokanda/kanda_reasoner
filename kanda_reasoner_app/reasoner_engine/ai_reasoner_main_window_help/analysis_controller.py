@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/analysis_controller.py
 """Support V10 project reasoning and evidence handling."""
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
@@ -10,10 +11,33 @@ __all__ = ['AnalysisController']
 
 class AnalysisController:
 
+    """Represent analysis controller."""
+    
     def expected_generated_json_path(self, project_root: str) -> str:
+        """Support expected generated json path behavior.
+        
+        Parameters
+        ----------
+        project_root : str
+            The project root path.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         return os.path.join(project_root, 'project_structure_index.json')
 
     def pick_project_root(self, window) -> None:
+        """Support pick project root behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         start_dir = window.project_root_edit.text().strip() or os.getcwd()
         path = QFileDialog.getExistingDirectory(window, 'Select project root', start_dir)
         if not path:
@@ -24,12 +48,33 @@ class AnalysisController:
         window._save_last_config()
 
     def build_analysis_command(self, project_root: str) -> tuple[str, list[str]]:
+        """Build a analysis command.
+        
+        Parameters
+        ----------
+        project_root : str
+            The project root path.
+        
+        Returns
+        -------
+        tuple[str, list[str]]
+            The tuple of values.
+        """
+        
         python_exe = sys.executable
         module_name = 'kanda_reasoner_app.reasoner_engine_data_collector.collector_main'
         args = ['-m', module_name, '--project-root', project_root]
         return (python_exe, args)
 
     def run_analysis(self, window) -> None:
+        """Run the analysis.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         if window._analysis_running:
             QMessageBox.information(window, 'Analysis running', 'Analysis is already running.')
             return
@@ -67,6 +112,14 @@ class AnalysisController:
             show_error_copy_close_window(window, title='Analysis error', message='Failed to start collector process.')
 
     def on_analysis_stdout_ready(self, window) -> None:
+        """Support on analysis stdout ready behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         process = window._analysis_process
         if process is None:
             return
@@ -75,6 +128,14 @@ class AnalysisController:
             window._append_log(data.rstrip())
 
     def on_analysis_stderr_ready(self, window) -> None:
+        """Support on analysis stderr ready behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        """
+        
         process = window._analysis_process
         if process is None:
             return
@@ -83,12 +144,34 @@ class AnalysisController:
             window._append_log('[stderr] ' + data.rstrip())
 
     def on_analysis_error_occurred(self, window, process_error: QProcess.ProcessError) -> None:
+        """Support on analysis error occurred behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        process_error : QProcess.ProcessError
+            The process error value.
+        """
+        
         window.analysis_status_value_label.setText('Error')
         window._analysis_running = False
         window._append_log('Analysis process error: ' + str(process_error))
         window._refresh_workflow_controls()
 
     def on_analysis_finished(self, window, exit_code: int, exit_status: object) -> None:
+        """Support on analysis finished behavior.
+        
+        Parameters
+        ----------
+        window : object
+            The window value.
+        exit_code : int
+            The exit code value.
+        exit_status : object
+            The exit status value.
+        """
+        
         _ = exit_status
         process = window._analysis_process
         window._analysis_process = None

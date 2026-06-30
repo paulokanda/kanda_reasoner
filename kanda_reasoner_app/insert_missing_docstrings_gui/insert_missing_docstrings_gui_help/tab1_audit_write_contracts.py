@@ -1,4 +1,5 @@
 
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/tab1_audit_write_contracts.py
 """Shared contracts for Tab 1 audit write routing."""
 
 from __future__ import annotations

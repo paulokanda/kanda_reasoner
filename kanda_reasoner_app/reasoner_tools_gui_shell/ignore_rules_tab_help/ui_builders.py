@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/ignore_rules_tab_help/ui_builders.py
 """UI construction helpers for the ignore-rules tab."""
 
 from __future__ import annotations
@@ -13,6 +14,9 @@ class IgnoreRulesUiMixin:
     """Build and wire the ignore-rules tab user interface."""
 
     def _build_ui(self) -> None:
+        """Support build ui behavior.
+        """
+        
         main_layout = QVBoxLayout(self)
 
         project_scope_row = QHBoxLayout()

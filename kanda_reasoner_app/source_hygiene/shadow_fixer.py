@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/source_hygiene/shadow_fixer.py
 """Safe mechanical facade fixes for source hygiene."""
 
 from __future__ import annotations
@@ -179,6 +180,21 @@ def apply_safe_package_marker_fix(
 
 
 def _is_skipped(path: Path, root: Path) -> bool:
+    """Support is skipped behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         relative_parts = path.relative_to(root).parts
     except ValueError:
@@ -187,6 +203,19 @@ def _is_skipped(path: Path, root: Path) -> bool:
 
 
 def _is_empty_init_file(path: Path) -> bool:
+    """Support is empty init file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if not path.exists() or not path.is_file():
         return False
     try:
@@ -197,6 +226,21 @@ def _is_empty_init_file(path: Path) -> bool:
 
 
 def _is_inside(path: Path, root: Path) -> bool:
+    """Support is inside behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     try:
         path.relative_to(root)
     except ValueError:
@@ -205,11 +249,41 @@ def _is_inside(path: Path, root: Path) -> bool:
 
 
 def _package_marker_text(path: Path) -> str:
+    """Support package marker text behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     package_name = path.parent.name or "package"
     return '\"\"\"Package marker for ' + package_name + '.\"\"\"\n\n__all__ = []\n'
 
 
 def _create_backup(path: Path, root: Path, backup_dir: str | Path | None) -> Path:
+    """Support create backup behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    root : Path
+        The root path.
+    backup_dir : str | Path | None
+        The backup dir value.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     if backup_dir is None:
         target_root = root / "workbench" / "source_hygiene_backups" / "safe_facade_fix"
     else:
@@ -222,6 +296,23 @@ def _create_backup(path: Path, root: Path, backup_dir: str | Path | None) -> Pat
 
 
 def _failed(path: Path, dry_run: bool, error: str) -> FacadeFixResult:
+    """Support failed behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    dry_run : bool
+        The dry run value.
+    error : str
+        The error value.
+    
+    Returns
+    -------
+    FacadeFixResult
+        The facade fix result result.
+    """
+    
     return FacadeFixResult(
         path=str(path),
         action="No change applied.",

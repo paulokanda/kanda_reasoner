@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/launch.py
 """Launch entry point for the Reasoner tools GUI shell."""
 
 from __future__ import annotations
@@ -12,6 +13,14 @@ __all__: list[str] = []
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     app = QApplication.instance() or QApplication(sys.argv)
     window = ReasonerToolsWindow()
     window.show()

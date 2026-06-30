@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/json_splitter/json_splitter_8_validate_manifests.py
 """Validate the json_splitter_8 helper split."""
 
 from __future__ import annotations
@@ -9,6 +10,19 @@ __all__ = ["main"]
 
 
 def _line_count(path: Path) -> int:
+    """Support line count behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     if not path.exists():
         return 0
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -18,6 +32,14 @@ def _line_count(path: Path) -> int:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     root = Path(__file__).resolve().parent
     manifest_path = root / "json_splitter_8_help.json"
     helper_dir = root / "json_splitter_8_help"

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/offline_corpus_governance.py
 """Offline corpus governance contract for future semantic evidence.
 
 This module is intentionally standard-library-only and does not generate a
@@ -201,21 +202,74 @@ FORBIDDEN_AUTHORITY_FIELDS = frozenset(
 
 
 def _is_sequence(value: Any) -> bool:
+    """Support is sequence behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
 
 
 def _as_strings(value: Any) -> set[str]:
+    """Support as strings behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     if not _is_sequence(value):
         return set()
     return {item for item in value if isinstance(item, str)}
 
 
 def _append_missing(errors: list[str], label: str, missing: set[str]) -> None:
+    """Support append missing behavior.
+    
+    Parameters
+    ----------
+    errors : list[str]
+        The error values.
+    label : str
+        The label value.
+    missing : set[str]
+        The missing value.
+    """
+    
     if missing:
         errors.append(f"{label} missing required values: {', '.join(sorted(missing))}")
 
 
 def _contains_forbidden_key(mapping: Mapping[str, Any], forbidden_keys: set[str] | frozenset[str]) -> set[str]:
+    """Support contains forbidden key behavior.
+    
+    Parameters
+    ----------
+    mapping : Mapping[str, Any]
+        The mapping value.
+    forbidden_keys : set[str] | frozenset[str]
+        The forbidden keys value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     return {key for key in mapping.keys() if key in forbidden_keys}
 
 

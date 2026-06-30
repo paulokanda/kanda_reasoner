@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/ai_review/qt_worker.py
 """Qt worker for Tab 1 advisory AI review."""
 
 from __future__ import annotations
@@ -29,6 +30,18 @@ class Tab1AIReviewWorker(QObject):
         project_root: str,
         model_name: str = "",
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        audit_text : str
+            The audit text value.
+        project_root : str
+            The project root path.
+        model_name : str, optional
+            The optional model name value.
+        """
+        
         super().__init__()
         self._audit_text = str(audit_text or "")
         self._project_root = str(project_root or "")

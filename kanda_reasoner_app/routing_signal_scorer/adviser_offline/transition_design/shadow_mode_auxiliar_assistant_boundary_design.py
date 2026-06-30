@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_auxiliar_assistant_boundary_design.py
 """Design-only M26 Auxiliar/Assistant boundary design.
 
 M26 defines the safe boundary for a possible later Auxiliar/Assistant phase. It

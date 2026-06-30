@@ -1,3 +1,4 @@
+# project-path: profiling/eeg_profiler.py
 """Support profiling workflows for developer tooling."""
 
 import time
@@ -15,7 +16,21 @@ def _qt_core_attr(name: str):
 from PySide6.QtWidgets import QLabel
 
 class RealTimePerformanceProfiler:
+    """Represent real time performance profiler."""
+    
     def __init__(self, max_samples=60, interval_ms=1000, overlay_widget=None):
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        max_samples : object, optional
+            The optional max samples value.
+        interval_ms : object, optional
+            The optional interval ms value.
+        overlay_widget : object, optional
+            The optional overlay widget value.
+        """
+        
         self.durations = deque(maxlen=max_samples)
         self.process = psutil.Process()
         self.last_time = None
@@ -27,9 +42,15 @@ class RealTimePerformanceProfiler:
         self.timer.start(interval_ms)
 
     def before_render(self):
+        """Support before render behavior.
+        """
+        
         self.last_time = time.perf_counter()
 
     def after_render(self):
+        """Support after render behavior.
+        """
+        
         if self.last_time is None:
             return
         now = time.perf_counter()
@@ -37,6 +58,9 @@ class RealTimePerformanceProfiler:
         self.last_time = None
 
     def _report(self):
+        """Support report behavior.
+        """
+        
         if not self.durations:
             return
 
@@ -51,6 +75,14 @@ class RealTimePerformanceProfiler:
             self.overlay.setText(text)
 
     def attach_overlay(self, parent):
+        """Support attach overlay behavior.
+        
+        Parameters
+        ----------
+        parent : object
+            The parent value.
+        """
+        
         if self.overlay is None:
             self.overlay = QLabel(parent)
             self.overlay.setStyleSheet("color: lime; background: black; padding: 5px;")

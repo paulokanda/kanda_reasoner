@@ -131,6 +131,14 @@ def build_runtime_trace_index(
 # ---------------------------------------------------------------------------
 
 def _empty_result() -> dict:
+    """Support empty result behavior.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     return {
         "signal_connections": [],
         "state_snapshots":    [],
@@ -355,6 +363,19 @@ def _build_call_stack_index(
 # ------------------------------------------------------------------
 
 def _safe_str(value: Any) -> str:
+    """Support safe str behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if value is None:
         return ""
     try:

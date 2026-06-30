@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/main_helper_mapper.py
 """Read-only main file and helper file mapper for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -244,6 +245,19 @@ def build_reasoner_symbol_atlas_main_helper_report(
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).expanduser().resolve(strict=False)
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -258,6 +272,25 @@ def _find_target_record(
     target_path: str,
     symbol_name: str,
 ) -> ProjectModuleRecord | None:
+    """Support find target record behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    target_path : str
+        The target path value.
+    symbol_name : str
+        The symbol name value.
+    
+    Returns
+    -------
+    ProjectModuleRecord | None
+        The project module record result.
+    """
+    
     if target_path:
         normalized_target = _normalize_path_for_compare(project_root, target_path)
         for record in modules:
@@ -276,6 +309,21 @@ def _find_target_record(
 
 
 def _normalize_path_for_compare(project_root: Path, path_text: str) -> str:
+    """Support normalize path for compare behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = Path(path_text)
     if path.is_absolute():
         try:
@@ -286,26 +334,91 @@ def _normalize_path_for_compare(project_root: Path, path_text: str) -> str:
 
 
 def _normalize_record_path(path_text: str) -> str:
+    """Support normalize record path behavior.
+    
+    Parameters
+    ----------
+    path_text : str
+        The path text value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return str(Path(path_text)).replace("\\", "/")
 
 
 
 
 def _record_is_active(record: ProjectModuleRecord) -> bool:
+    """Support record is active behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return is_active_atlas_path(record.path)
 
 
 def _active_records(records: tuple[ProjectModuleRecord, ...]) -> tuple[ProjectModuleRecord, ...]:
+    """Support active records behavior.
+    
+    Parameters
+    ----------
+    records : tuple[ProjectModuleRecord, ...]
+        The record values.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     return tuple(record for record in records if _record_is_active(record))
 
 
 def _target_is_helper_like(record: ProjectModuleRecord) -> bool:
+    """Support target is helper like behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if _record_is_private_helper(record):
         return True
     return _has_helper_suffix(record)
 
 
 def _record_is_low_signal_support_file(record: ProjectModuleRecord) -> bool:
+    """Support record is low signal support file behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     stem = _module_stem(record).lower()
     low_signal_tokens = (
         "smoke",
@@ -318,6 +431,19 @@ def _record_is_low_signal_support_file(record: ProjectModuleRecord) -> bool:
     return any(token in stem for token in low_signal_tokens)
 
 def _target_role(record: ProjectModuleRecord) -> str:
+    """Support target role behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if _record_is_private_helper(record):
         return "helper"
     if _has_helper_suffix(record):
@@ -350,6 +476,21 @@ def _main_candidates_for_helper(
     helper_record: ProjectModuleRecord,
     modules: tuple[ProjectModuleRecord, ...],
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support main candidates for helper behavior.
+    
+    Parameters
+    ----------
+    helper_record : ProjectModuleRecord
+        The helper record value.
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     helper_stem = _module_stem(helper_record)
     base_stem = _strip_helper_suffix(helper_stem)
     candidates: list[tuple[int, ProjectModuleRecord]] = []
@@ -377,6 +518,25 @@ def _select_helper_records(
     modules: tuple[ProjectModuleRecord, ...],
     max_helpers: int,
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support select helper records behavior.
+    
+    Parameters
+    ----------
+    target_record : ProjectModuleRecord
+        The target record value.
+    main_record : ProjectModuleRecord
+        The main record value.
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    max_helpers : int
+        The max helpers value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     scored: list[tuple[int, ProjectModuleRecord]] = []
     for record in modules:
         if record.path == main_record.path or record.is_test_file or not _record_is_active(record):
@@ -391,6 +551,21 @@ def _select_helper_records(
 
 
 def _helper_score(main_record: ProjectModuleRecord, candidate: ProjectModuleRecord) -> int:
+    """Support helper score behavior.
+    
+    Parameters
+    ----------
+    main_record : ProjectModuleRecord
+        The main record value.
+    candidate : ProjectModuleRecord
+        The candidate value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     score = 0
     main_stem = _module_stem(main_record)
     candidate_stem = _module_stem(candidate)
@@ -406,6 +581,21 @@ def _helper_score(main_record: ProjectModuleRecord, candidate: ProjectModuleReco
 
 
 def _module_imports(source: ProjectModuleRecord, target: ProjectModuleRecord) -> bool:
+    """Support module imports behavior.
+    
+    Parameters
+    ----------
+    source : ProjectModuleRecord
+        The source value.
+    target : ProjectModuleRecord
+        The target value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     target_module = normalize_project_atlas_text(target.module)
     if not target_module:
         return False
@@ -416,6 +606,19 @@ def _module_imports(source: ProjectModuleRecord, target: ProjectModuleRecord) ->
 
 
 def _module_stem(record: ProjectModuleRecord) -> str:
+    """Support module stem behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = Path(record.path)
     if path.name == "__init__.py":
         return path.parent.name
@@ -423,6 +626,19 @@ def _module_stem(record: ProjectModuleRecord) -> str:
 
 
 def _strip_helper_suffix(stem: str) -> str:
+    """Support strip helper suffix behavior.
+    
+    Parameters
+    ----------
+    stem : str
+        The stem value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     for suffix in sorted(PROJECT_SYMBOL_ATLAS_HELPER_SUFFIXES, key=len, reverse=True):
         if stem.endswith(suffix):
             return stem[: -len(suffix)]
@@ -430,17 +646,56 @@ def _strip_helper_suffix(stem: str) -> str:
 
 
 def _has_helper_suffix(record: ProjectModuleRecord) -> bool:
+    """Support has helper suffix behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     stem = _module_stem(record)
     return any(stem.endswith(suffix) for suffix in PROJECT_SYMBOL_ATLAS_HELPER_SUFFIXES)
 
 
 def _record_is_private_helper(record: ProjectModuleRecord) -> bool:
+    """Support record is private helper behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return record.owner_role == "private_helper" or "private_helper" in tuple(record.evidence)
 
 
 def _public_helper_warnings(
     helper_records: tuple[ProjectModuleRecord, ...],
 ) -> tuple[str, ...]:
+    """Support public helper warnings behavior.
+    
+    Parameters
+    ----------
+    helper_records : tuple[ProjectModuleRecord, ...]
+        The helper records value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     warnings: list[str] = []
     for record in helper_records:
         public_symbols = [symbol.name for symbol in record.symbols if symbol.is_public]
@@ -456,6 +711,23 @@ def _related_tests_to_run(
     main_record: ProjectModuleRecord,
     helper_records: tuple[ProjectModuleRecord, ...],
 ) -> tuple[str, ...]:
+    """Support related tests to run behavior.
+    
+    Parameters
+    ----------
+    modules : tuple[ProjectModuleRecord, ...]
+        The modules value.
+    main_record : ProjectModuleRecord
+        The main record value.
+    helper_records : tuple[ProjectModuleRecord, ...]
+        The helper records value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple()
 
 def _decision_status(
@@ -464,6 +736,25 @@ def _decision_status(
     helper_records: tuple[ProjectModuleRecord, ...],
     merge_status: str,
 ) -> tuple[str, str, tuple[str, ...]]:
+    """Support decision status behavior.
+    
+    Parameters
+    ----------
+    target_record : ProjectModuleRecord
+        The target record value.
+    main_record : ProjectModuleRecord
+        The main record value.
+    helper_records : tuple[ProjectModuleRecord, ...]
+        The helper records value.
+    merge_status : str
+        The merge status value.
+    
+    Returns
+    -------
+    tuple[str, str, tuple[str, ...]]
+        The tuple of values.
+    """
+    
     evidence = ["Evidence merge status: " + merge_status]
     if target_record.path != main_record.path:
         evidence.append("Target is helper-like; main owner selected from related files.")
@@ -475,6 +766,19 @@ def _decision_status(
 
 
 def _format_decision_summary(decision: ProjectSymbolAtlasMainHelperDecision) -> str:
+    """Support format decision summary behavior.
+    
+    Parameters
+    ----------
+    decision : ProjectSymbolAtlasMainHelperDecision
+        The decision value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return (
         f"Main/helper map status={decision.status}; "
         f"target_role={decision.target_role}; main={decision.main_path}; "

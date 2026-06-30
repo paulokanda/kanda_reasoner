@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_gate_design.py
 """Generator candidate human decision gate design for routing scorer v3.
 
 This module is intentionally standard-library-only and human-decision-gate-only.
@@ -248,6 +249,19 @@ REQUIRED_STOP_CONDITIONS = frozenset(
 
 
 def _as_set(value: Any) -> set[Any]:
+    """Support as set behavior.
+    
+    Parameters
+    ----------
+    value : Any
+        The input value.
+    
+    Returns
+    -------
+    set[Any]
+        The set result.
+    """
+    
     if isinstance(value, str):
         return {value}
     if isinstance(value, Sequence):
@@ -256,6 +270,14 @@ def _as_set(value: Any) -> set[Any]:
 
 
 def _false_flags() -> dict[str, bool]:
+    """Support false flags behavior.
+    
+    Returns
+    -------
+    dict[str, bool]
+        The mapped values.
+    """
+    
     return {flag: False for flag in sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
 
 

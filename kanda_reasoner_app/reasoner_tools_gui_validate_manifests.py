@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_validate_manifests.py
 """Validate the root Reasoner tools GUI shell helper manifest contract."""
 
 from __future__ import annotations
@@ -19,6 +20,19 @@ HELP_FOLDER = Path(PRODUCT_PACKAGE) / "reasoner_tools_gui_shell"
 
 
 def _extract_all(path: Path) -> list[str]:
+    """Support extract all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     tree = ast.parse(path.read_text(encoding="utf-8"))
     for node in tree.body:
         if not isinstance(node, ast.Assign):
@@ -36,6 +50,19 @@ def _extract_all(path: Path) -> list[str]:
 
 
 def validate_manifest(root: Path = ROOT) -> list[str]:
+    """Validate the manifest.
+    
+    Parameters
+    ----------
+    root : Path, optional
+        The root path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     errors: list[str] = []
     manifest_path = root / MANIFEST
     help_path = root / HELP_FOLDER
@@ -71,6 +98,14 @@ def validate_manifest(root: Path = ROOT) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     errors = validate_manifest()
     if errors:
         for error in errors:

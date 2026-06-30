@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/context_builder.py
 """Build rich symbol context objects for AI-powered docstring generation.
 
 AI CONTEXT: Builds evidence-backed symbol context for local AI docstring generation."""
@@ -31,6 +32,8 @@ from .context_builder_help.inference_private_impl import (
 
 @dataclass
 class ParameterInfo:
+    """Represent parameter info."""
+    
     name: str
     annotation: str
     has_default: bool
@@ -41,6 +44,8 @@ class ParameterInfo:
 
 @dataclass
 class AttributeInfo:
+    """Represent attribute info."""
+    
     name: str
     type_hint: str = ""
     description_hint: str = ""
@@ -48,6 +53,8 @@ class AttributeInfo:
 
 @dataclass
 class SymbolContext:
+    """Represent symbol context."""
+    
     kind: str
     name: str
     module_id: str
@@ -78,12 +85,33 @@ class SymbolContext:
 
     @property
     def full_name(self) -> str:
+        """Support full name behavior.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         if self.enclosing_class:
             return f"{self.enclosing_class}.{self.name}"
         return self.name
 
 
 def _safe_unparse(node: ast.AST | None) -> str:
+    """Support safe unparse behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST | None
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if node is None:
         return ""
     try:
@@ -93,6 +121,19 @@ def _safe_unparse(node: ast.AST | None) -> str:
 
 
 def _decorator_names(node: ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef) -> list[str]:
+    """Support decorator names behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     names: list[str] = []
     for dec in node.decorator_list:
         if isinstance(dec, ast.Name):
@@ -106,6 +147,19 @@ def _decorator_names(node: ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef
     return names
 
 def _extract_parameters(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[ParameterInfo]:
+    """Support extract parameters behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[ParameterInfo]
+        The list of values.
+    """
+    
     result: list[ParameterInfo] = []
     args = node.args
 
@@ -162,6 +216,21 @@ def _extract_parameters(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[Pa
 
 
 def _extract_imports(tree: ast.Module, *, limit: int = 10) -> list[str]:
+    """Support extract imports behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lines: list[str] = []
     for node in tree.body:
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -176,6 +245,23 @@ def _extract_imports(tree: ast.Module, *, limit: int = 10) -> list[str]:
 
 
 def _extract_source_lines(node: ast.AST, file_lines: list[str], *, limit: int = 80) -> list[str]:
+    """Support extract source lines behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    file_lines : list[str]
+        The file lines value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     lineno = getattr(node, "lineno", 1)
     end_lineno = getattr(node, "end_lineno", lineno)
     raw = file_lines[lineno - 1 : end_lineno]
@@ -186,6 +272,23 @@ def _extract_source_lines(node: ast.AST, file_lines: list[str], *, limit: int = 
 
 
 def _extract_sibling_docstrings(parent_body: list[ast.stmt], current_node: ast.AST, *, limit: int = 3) -> list[str]:
+    """Support extract sibling docstrings behavior.
+    
+    Parameters
+    ----------
+    parent_body : list[ast.stmt]
+        The parent body value.
+    current_node : ast.AST
+        The current node value.
+    limit : int, optional
+        The optional limit value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     docs: list[str] = []
     for sibling in parent_body:
         if sibling is current_node:
@@ -200,6 +303,19 @@ def _extract_sibling_docstrings(parent_body: list[ast.stmt], current_node: ast.A
 
 
 def _extract_class_attributes(class_node: ast.ClassDef) -> list[AttributeInfo]:
+    """Support extract class attributes behavior.
+    
+    Parameters
+    ----------
+    class_node : ast.ClassDef
+        The class node value.
+    
+    Returns
+    -------
+    list[AttributeInfo]
+        The list of values.
+    """
+    
     attrs: dict[str, AttributeInfo] = {}
     for child in class_node.body:
         if not isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) or child.name != "__init__":
@@ -248,6 +364,19 @@ def _extract_class_attributes(class_node: ast.ClassDef) -> list[AttributeInfo]:
 
 
 def _extract_raises_types(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[str]:
+    """Support extract raises types behavior.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     result: list[str] = []
     for inner in _walk_without_nested_symbols(node):
         if not isinstance(inner, ast.Raise) or inner.exc is None:
@@ -260,6 +389,21 @@ def _extract_raises_types(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[
 
 
 def _find_parent_class(tree: ast.Module, node: ast.AST) -> ast.ClassDef | None:
+    """Support find parent class behavior.
+    
+    Parameters
+    ----------
+    tree : ast.Module
+        The parsed syntax tree.
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    ast.ClassDef | None
+        The class def result.
+    """
+    
     for parent in ast.walk(tree):
         if isinstance(parent, ast.ClassDef) and node in parent.body:
             return parent
@@ -267,6 +411,23 @@ def _find_parent_class(tree: ast.Module, node: ast.AST) -> ast.ClassDef | None:
 
 
 def _collect_overload_siblings(parent_body: list[ast.stmt], name: str, current_node: ast.AST) -> list[str]:
+    """Support collect overload siblings behavior.
+    
+    Parameters
+    ----------
+    parent_body : list[ast.stmt]
+        The parent body value.
+    name : str
+        The name value.
+    current_node : ast.AST
+        The current node value.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     results: list[str] = []
     for sibling in parent_body:
         if sibling is current_node:
@@ -292,10 +453,38 @@ def _collect_overload_siblings(parent_body: list[ast.stmt], name: str, current_n
 
 
 def _module_summary_block(module_summary: Any | None) -> str:
+    """Support module summary block behavior.
+    
+    Parameters
+    ----------
+    module_summary : Any | None
+        The module summary value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return getattr(module_summary, "context_block", "") if module_summary is not None else ""
 
 
 def _class_profile_attributes(module_summary: Any | None, class_name: str) -> list[AttributeInfo]:
+    """Support class profile attributes behavior.
+    
+    Parameters
+    ----------
+    module_summary : Any | None
+        The module summary value.
+    class_name : str
+        The class name value.
+    
+    Returns
+    -------
+    list[AttributeInfo]
+        The list of values.
+    """
+    
     if module_summary is None:
         return []
     profiles = getattr(module_summary, "classes", [])
@@ -322,6 +511,27 @@ def build_module_context(
     source_lines: list[str],
     module_summary: Any | None = None,
 ) -> SymbolContext:
+    """Build a module context.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    module_id : str
+        The module id value.
+    tree : ast.Module
+        The parsed syntax tree.
+    source_lines : list[str]
+        The source lines value.
+    module_summary : Any | None, optional
+        The optional module summary value.
+    
+    Returns
+    -------
+    SymbolContext
+        The symbol context result.
+    """
+    
     module_doc = ast.get_docstring(tree, clean=False) or ""
     return SymbolContext(
         kind="module",
@@ -345,6 +555,29 @@ def build_class_context(
     module_summary: Any | None = None,
     class_docstring_override: str = "",
 ) -> SymbolContext:
+    """Build a class context.
+    
+    Parameters
+    ----------
+    node : ast.ClassDef
+        The syntax tree node.
+    tree : ast.Module
+        The parsed syntax tree.
+    module_id : str
+        The module id value.
+    source_lines : list[str]
+        The source lines value.
+    module_summary : Any | None, optional
+        The optional module summary value.
+    class_docstring_override : str, optional
+        The optional class docstring override value.
+    
+    Returns
+    -------
+    SymbolContext
+        The symbol context result.
+    """
+    
     class_attributes = _class_profile_attributes(module_summary, node.name) or _extract_class_attributes(node)
     return SymbolContext(
         kind="class",
@@ -371,6 +604,27 @@ def build_function_context(
     source_lines: list[str],
     module_summary: Any | None = None,
 ) -> SymbolContext:
+    """Build a function context.
+    
+    Parameters
+    ----------
+    node : ast.FunctionDef | ast.AsyncFunctionDef
+        The syntax tree node.
+    tree : ast.Module
+        The parsed syntax tree.
+    module_id : str
+        The module id value.
+    source_lines : list[str]
+        The source lines value.
+    module_summary : Any | None, optional
+        The optional module summary value.
+    
+    Returns
+    -------
+    SymbolContext
+        The symbol context result.
+    """
+    
     parent_class = _find_parent_class(tree, node)
     parent_body = parent_class.body if parent_class is not None else tree.body
     decorators = _decorator_names(node)

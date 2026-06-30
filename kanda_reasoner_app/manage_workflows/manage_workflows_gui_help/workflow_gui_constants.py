@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/workflow_gui_constants.py
 """Private constants for the workflow manager GUI."""
 
 from __future__ import annotations

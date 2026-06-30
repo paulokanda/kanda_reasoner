@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_dump_mapper.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -18,12 +19,38 @@ from typing import Any
 
 
 def _string_constant_value(node: ast.AST) -> str:
+    """Support string constant value behavior.
+    
+    Parameters
+    ----------
+    node : ast.AST
+        The syntax tree node.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(node, ast.Constant) and isinstance(node.value, str):
         return node.value
     return ""
 
 
 def _decorator_name(decorator: Any) -> str:
+    """Support decorator name behavior.
+    
+    Parameters
+    ----------
+    decorator : Any
+        The decorator value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if isinstance(decorator, str):
         return decorator
     if isinstance(decorator, dict):
@@ -145,6 +172,23 @@ def extract_global_state(source_tree: dict) -> list[dict]:
 
 
 def _build_symbol_record(path: str, symbol_data: dict, kind: str) -> dict:
+    """Support build symbol record behavior.
+    
+    Parameters
+    ----------
+    path : str
+        The file or folder path.
+    symbol_data : dict
+        The symbol data value.
+    kind : str
+        The kind value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     decorators = [
         name
         for name in (_decorator_name(item) for item in symbol_data.get("decorators", []))

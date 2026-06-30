@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_engine/ai_bridge_help/grounding_checks.py
 """Grounding validation helpers for Project Reasoner AI bridge."""
 
 from __future__ import annotations
@@ -31,6 +32,21 @@ def _normalize_path_for_grounding(path: str) -> str:
 
 
 def sanitize_invalid_ids(prompt: str, text: str) -> str:
+        """Support sanitize invalid ids behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         allowed_ids = extract_allowed_ids(prompt)
 
         def repl(match: re.Match[str]) -> str:
@@ -43,6 +59,21 @@ def sanitize_invalid_ids(prompt: str, text: str) -> str:
         return cleaned.strip()
 
 def has_forbidden_paths(prompt: str, answer_text: str) -> bool:
+        """Return whether forbidden paths.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         if is_generative_prompt(prompt):
             return False
 
@@ -68,6 +99,21 @@ def has_forbidden_paths(prompt: str, answer_text: str) -> bool:
         return False
 
 def has_forbidden_symbols(prompt: str, answer_text: str) -> bool:
+        """Return whether forbidden symbols.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         allowed_symbols = extract_allowed_symbols(prompt)
         if not allowed_symbols:
             return False
@@ -117,6 +163,19 @@ def has_forbidden_symbols(prompt: str, answer_text: str) -> bool:
         return False
 
 def looks_ungrounded_deterministic(text: str) -> bool:
+        """Support looks ungrounded deterministic behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         suspicious_terms = [
             "test_module.py",
             "test_class_method",
@@ -144,6 +203,19 @@ def looks_ungrounded_deterministic(text: str) -> bool:
         return any(term in low for term in suspicious_terms)
 
 def looks_ungrounded_generative(text: str) -> bool:
+        """Support looks ungrounded generative behavior.
+        
+        Parameters
+        ----------
+        text : str
+            The text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         suspicious_terms = [
             "test_module.py",
             "test_class_method",
@@ -161,11 +233,41 @@ def looks_ungrounded_generative(text: str) -> bool:
         return any(term in low for term in suspicious_terms)
 
 def has_forbidden_ids(prompt: str, answer_text: str) -> bool:
+        """Return whether forbidden ids.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         allowed_ids = extract_allowed_ids(prompt)
         cited_ids = extract_cited_ids(answer_text)
         return not cited_ids.issubset(allowed_ids)
 
 def answer_ignored_required_snippets(prompt: str, answer_text: str) -> bool:
+        """Support answer ignored required snippets behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        bool
+            True if the condition is met; otherwise, False.
+        """
+        
         q = extract_user_question(prompt)
         snippet_blocks = extract_snippet_blocks(prompt)
 
@@ -234,6 +336,21 @@ def answer_ignored_required_snippets(prompt: str, answer_text: str) -> bool:
         ) == 0
 
 def grounding_failure_reason(prompt: str, answer_text: str) -> str:
+        """Support grounding failure reason behavior.
+        
+        Parameters
+        ----------
+        prompt : str
+            The prompt value.
+        answer_text : str
+            The answer text value.
+        
+        Returns
+        -------
+        str
+            The string result.
+        """
+        
         if is_deterministic_prompt(prompt):
             if looks_ungrounded_deterministic(answer_text):
                 return "looks_ungrounded_deterministic"

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_symbol_atlas/owner_classifier.py
 """Read-only owner classification for Project Symbol Atlas."""
 
 from __future__ import annotations
@@ -54,6 +55,19 @@ class ProjectSymbolAtlasOwnerClassifyOptions:
 
 
 def _coerce_project_root(project_root: str | Path) -> Path:
+    """Support coerce project root behavior.
+    
+    Parameters
+    ----------
+    project_root : str | Path
+        The project root path.
+    
+    Returns
+    -------
+    Path
+        The resolved path.
+    """
+    
     root = Path(project_root).resolve()
     if not root.exists():
         raise FileNotFoundError("Project root does not exist: " + str(project_root))
@@ -63,19 +77,73 @@ def _coerce_project_root(project_root: str | Path) -> Path:
 
 
 def _path_parts(record: ProjectModuleRecord) -> tuple[str, ...]:
+    """Support path parts behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return tuple(part.lower() for part in Path(record.path).parts)
 
 
 def _path_name(record: ProjectModuleRecord) -> str:
+    """Support path name behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return Path(record.path).name.lower()
 
 
 def _has_evidence(record: ProjectModuleRecord, token: str) -> bool:
+    """Support has evidence behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    token : str
+        The token value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     lowered = token.lower()
     return any(lowered in item.lower() for item in record.evidence)
 
 
 def _has_public_definition(record: ProjectModuleRecord) -> bool:
+    """Support has public definition behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for symbol in record.symbols:
         if symbol.kind in {"function", "class", "dataclass", "constant"} and symbol.is_public:
             return True
@@ -83,6 +151,19 @@ def _has_public_definition(record: ProjectModuleRecord) -> bool:
 
 
 def _has_public_reexport(record: ProjectModuleRecord) -> bool:
+    """Support has public reexport behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     for symbol in record.symbols:
         if symbol.kind == "import" and symbol.is_public:
             return True
@@ -90,6 +171,19 @@ def _has_public_reexport(record: ProjectModuleRecord) -> bool:
 
 
 def _is_helper_path(record: ProjectModuleRecord) -> bool:
+    """Support is helper path behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     name = _path_name(record)
     parts = _path_parts(record)
     helper_tokens = ("helper", "helpers", "util", "utils", "common")
@@ -99,6 +193,19 @@ def _is_helper_path(record: ProjectModuleRecord) -> bool:
 
 
 def _is_generated_or_stale(record: ProjectModuleRecord) -> bool:
+    """Support is generated or stale behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     if record.owner_role == "generated_or_stale":
         return True
     name = _path_name(record)
@@ -112,6 +219,19 @@ def _is_generated_or_stale(record: ProjectModuleRecord) -> bool:
 
 
 def _module_role(record: ProjectModuleRecord) -> str:
+    """Support module role behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if record.is_test_file or record.owner_role == "test_only":
         return "test_only"
     if _is_generated_or_stale(record):
@@ -138,6 +258,21 @@ def _module_role(record: ProjectModuleRecord) -> str:
 
 
 def _symbol_role(symbol: ProjectSymbol, module_role: str) -> str:
+    """Support symbol role behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    module_role : str
+        The module role value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not symbol.is_public:
         return "private_helper"
     if module_role in {
@@ -157,6 +292,23 @@ def _symbol_role(symbol: ProjectSymbol, module_role: str) -> str:
 
 
 def _copy_symbol_with_role(symbol: ProjectSymbol, owner_role: str, evidence: tuple[str, ...]) -> ProjectSymbol:
+    """Support copy symbol with role behavior.
+    
+    Parameters
+    ----------
+    symbol : ProjectSymbol
+        The symbol value.
+    owner_role : str
+        The owner role value.
+    evidence : tuple[str, ...]
+        The evidence value.
+    
+    Returns
+    -------
+    ProjectSymbol
+        The project symbol result.
+    """
+    
     merged_evidence = tuple(dict.fromkeys(tuple(symbol.evidence) + evidence))
     return ProjectSymbol(
         name=symbol.name,
@@ -172,6 +324,21 @@ def _copy_symbol_with_role(symbol: ProjectSymbol, owner_role: str, evidence: tup
 
 
 def _copy_record_with_role(record: ProjectModuleRecord, owner_role: str) -> ProjectModuleRecord:
+    """Support copy record with role behavior.
+    
+    Parameters
+    ----------
+    record : ProjectModuleRecord
+        The record value.
+    owner_role : str
+        The owner role value.
+    
+    Returns
+    -------
+    ProjectModuleRecord
+        The project module record result.
+    """
+    
     evidence = tuple(dict.fromkeys(tuple(record.evidence) + ("owner_classification: " + owner_role,)))
     symbols = tuple(
         _copy_symbol_with_role(
@@ -198,6 +365,21 @@ def _merge_index_and_import_records(
     indexed_records: tuple[ProjectModuleRecord, ...],
     import_records: tuple[ProjectModuleRecord, ...],
 ) -> tuple[ProjectModuleRecord, ...]:
+    """Support merge index and import records behavior.
+    
+    Parameters
+    ----------
+    indexed_records : tuple[ProjectModuleRecord, ...]
+        The indexed records value.
+    import_records : tuple[ProjectModuleRecord, ...]
+        The import records value.
+    
+    Returns
+    -------
+    tuple[ProjectModuleRecord, ...]
+        The tuple of values.
+    """
+    
     indexed_by_path = {record.path: record for record in indexed_records}
     import_by_path = {record.path: record for record in import_records}
     paths = sorted(set(indexed_by_path) | set(import_by_path))

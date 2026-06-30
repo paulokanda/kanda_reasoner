@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/manual_docstring_review_export.py
 """Compatibility facade for review summary export."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_workflows/manage_workflows_help/workflow_output_contract.py
 """Own private workflow command output contract helpers."""
 
 from __future__ import annotations

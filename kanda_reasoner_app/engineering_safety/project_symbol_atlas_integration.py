@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/engineering_safety/project_symbol_atlas_integration.py
 """Engineering Safety integration for Project Symbol Atlas signals."""
 
 from __future__ import annotations
@@ -296,6 +297,19 @@ def format_engineering_safety_reasoner_symbol_atlas_markdown(
 
 
 def _status_from_gate(gate_status: str) -> str:
+    """Support status from gate behavior.
+    
+    Parameters
+    ----------
+    gate_status : str
+        The gate status value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     normalized = normalize_project_atlas_text(gate_status)
     if normalized == PROJECT_SYMBOL_ATLAS_PRE_PATCH_STATUS_SAFE_TO_PATCH:
         return ENGINEERING_SAFETY_ATLAS_STATUS_READY
@@ -312,6 +326,21 @@ def _status_from_gate(gate_status: str) -> str:
 
 
 def _risk_level_from_gate(gate_status: str, gate_data: dict[str, Any]) -> str:
+    """Support risk level from gate behavior.
+    
+    Parameters
+    ----------
+    gate_status : str
+        The gate status value.
+    gate_data : dict[str, Any]
+        The gate data value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if gate_data.get("wrong_target_file") or gate_data.get("facade_patch_risk"):
         return ENGINEERING_SAFETY_ATLAS_RISK_HIGH
     if gate_data.get("duplicate_symbol_risk"):
@@ -324,6 +353,19 @@ def _risk_level_from_gate(gate_status: str, gate_data: dict[str, Any]) -> str:
 
 
 def _warnings_from_gate(gate: Any) -> tuple[str, ...]:
+    """Support warnings from gate behavior.
+    
+    Parameters
+    ----------
+    gate : Any
+        The gate value.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     warnings = []
     if getattr(gate, "facade_patch_risk", False):
         warnings.append("Target may be a facade; review the real owner before patching.")
@@ -339,6 +381,21 @@ def _warnings_from_gate(gate: Any) -> tuple[str, ...]:
 
 
 def _confidence_from_gate(gate_confidence: str, existing_confidence: str) -> str:
+    """Support confidence from gate behavior.
+    
+    Parameters
+    ----------
+    gate_confidence : str
+        The gate confidence value.
+    existing_confidence : str
+        The existing confidence value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     gate = normalize_project_atlas_text(gate_confidence).lower()
     existing = normalize_project_atlas_text(existing_confidence).lower()
     if gate == "high" or existing == "high":
@@ -351,6 +408,14 @@ def _confidence_from_gate(gate_confidence: str, existing_confidence: str) -> str
 
 
 def _global_validation_commands() -> tuple[str, ...]:
+    """Support global validation commands behavior.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     return (
         "python kanda_reasoner_app\\manage_architecture\\manage_architecture.py --root <PROJECT_ROOT> --validate",
         "python kanda_reasoner_app\\manage_workflows\\manage_workflows.py --root <PROJECT_ROOT> --validate",
@@ -358,6 +423,19 @@ def _global_validation_commands() -> tuple[str, ...]:
 
 
 def _unique_strings(values: object) -> tuple[str, ...]:
+    """Support unique strings behavior.
+    
+    Parameters
+    ----------
+    values : object
+        The input values.
+    
+    Returns
+    -------
+    tuple[str, ...]
+        The tuple of values.
+    """
+    
     result = []
     for value in normalize_project_atlas_sequence(values):
         if value not in result:
@@ -366,6 +444,18 @@ def _unique_strings(values: object) -> tuple[str, ...]:
 
 
 def _append_markdown_list(lines: list[str], title: str, values: tuple[str, ...]) -> None:
+    """Support append markdown list behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    title : str
+        The title value.
+    values : tuple[str, ...]
+        The input values.
+    """
+    
     lines.append("## " + title)
     if not values:
         lines.append("- None")

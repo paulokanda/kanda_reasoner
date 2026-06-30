@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/developer_tools/project_reasoner/project_reasoner_v10_data_collector/__init__.py
 from .collector_packaging_metadata import collect_packaging_metadata
 from .collector_documentation_intent import collect_documentation_intent
 

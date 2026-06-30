@@ -21,6 +21,19 @@ REQUIRED_HEADER_FIELDS = (
 
 
 def _literal_all(path: Path) -> list[str] | None:
+    """Support literal all behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str] | None
+        The list of values.
+    """
+    
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -36,6 +49,21 @@ def _literal_all(path: Path) -> list[str] | None:
 
 
 def _path_tail(value: object, marker: str) -> str:
+    """Support path tail behavior.
+    
+    Parameters
+    ----------
+    value : object
+        The input value.
+    marker : str
+        The marker value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     text = str(value or "").replace("\\", "/").strip("/")
     if marker in text:
         return text.split(marker, 1)[-1].strip("/")
@@ -43,6 +71,21 @@ def _path_tail(value: object, marker: str) -> str:
 
 
 def _resolve_help_folder(base: Path, data: dict[str, Any]) -> Path | None:
+    """Support resolve help folder behavior.
+    
+    Parameters
+    ----------
+    base : Path
+        The base value.
+    data : dict[str, Any]
+        The input data.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     value = data.get("help_folder") or data.get("helper_folder")
     if not value:
         return None
@@ -50,6 +93,21 @@ def _resolve_help_folder(base: Path, data: dict[str, Any]) -> Path | None:
 
 
 def _resolve_origin(base: Path, data: dict[str, Any]) -> Path | None:
+    """Support resolve origin behavior.
+    
+    Parameters
+    ----------
+    base : Path
+        The base value.
+    data : dict[str, Any]
+        The input data.
+    
+    Returns
+    -------
+    Path | None
+        The resolved path.
+    """
+    
     value = data.get("origin")
     if not value:
         return None
@@ -57,6 +115,21 @@ def _resolve_origin(base: Path, data: dict[str, Any]) -> Path | None:
 
 
 def _helper_entries(data: dict[str, Any], help_folder: Path) -> list[tuple[str, Path, dict[str, Any]]]:
+    """Support helper entries behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    help_folder : Path
+        The help folder value.
+    
+    Returns
+    -------
+    list[tuple[str, Path, dict[str, Any]]]
+        The list of values.
+    """
+    
     helpers = data.get("helpers", {})
     entries: list[tuple[str, Path, dict[str, Any]]] = []
     if isinstance(helpers, dict):
@@ -73,6 +146,19 @@ def _helper_entries(data: dict[str, Any], help_folder: Path) -> list[tuple[str, 
 
 
 def _physical_helper_names(help_folder: Path) -> set[str]:
+    """Support physical helper names behavior.
+    
+    Parameters
+    ----------
+    help_folder : Path
+        The help folder value.
+    
+    Returns
+    -------
+    set[str]
+        The set result.
+    """
+    
     return {
         item.name
         for item in help_folder.glob("*.py")
@@ -81,10 +167,36 @@ def _physical_helper_names(help_folder: Path) -> set[str]:
 
 
 def _is_strict_manifest(data: dict[str, Any]) -> bool:
+    """Support is strict manifest behavior.
+    
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The input data.
+    
+    Returns
+    -------
+    bool
+        True if the condition is met; otherwise, False.
+    """
+    
     return bool(data.get("enforce_strict_headers"))
 
 
 def _validate_manifest(path: Path) -> list[str]:
+    """Support validate manifest behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     errors: list[str] = []
     data = json.loads(path.read_text(encoding="utf-8"))
     base = path.parent
@@ -145,6 +257,14 @@ def _validate_manifest(path: Path) -> list[str]:
 
 
 def main() -> int:
+    """Support main behavior.
+    
+    Returns
+    -------
+    int
+        The integer status code.
+    """
+    
     root = Path(__file__).resolve().parent
     manifests = sorted(root.rglob("*_help.json"))
     failed = False

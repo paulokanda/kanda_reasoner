@@ -1,9 +1,23 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_module_summary.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
 
 
 def build_module_responsibility_summary(file_record: dict) -> dict:
+    """Build a module responsibility summary.
+    
+    Parameters
+    ----------
+    file_record : dict
+        The file record value.
+    
+    Returns
+    -------
+    dict
+        The mapped values.
+    """
+    
     primary_role = file_record.get("primary_role", "") or "general_module"
     secondary_roles = file_record.get("secondary_roles", []) or []
 

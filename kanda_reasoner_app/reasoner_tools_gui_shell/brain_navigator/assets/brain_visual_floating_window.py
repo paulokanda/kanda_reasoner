@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_tools_gui_shell/brain_navigator/assets/brain_visual_floating_window.py
 """Floating Remember Box data for the Neural Architecture brain visual.
 
 This module is data-only. It defines the professional floating explanation

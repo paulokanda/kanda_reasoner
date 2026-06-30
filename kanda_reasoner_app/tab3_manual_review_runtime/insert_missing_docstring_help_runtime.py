@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/tab3_manual_review_runtime/insert_missing_docstring_help_runtime.py
 """Help window runtime for the Insert Missing Docstring workflow."""
 
 from __future__ import annotations

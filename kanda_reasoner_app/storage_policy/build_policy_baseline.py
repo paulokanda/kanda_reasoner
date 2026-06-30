@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/build_policy_baseline.py
 """Build and ignore policy baseline for Kanda Reasoner storage policy.
 
 This module declares source-cleanliness and packaging policy data used by later

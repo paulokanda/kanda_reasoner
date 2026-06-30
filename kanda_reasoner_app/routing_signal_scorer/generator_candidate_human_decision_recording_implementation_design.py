@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/generator_candidate_human_decision_recording_implementation_design.py
 """Generator candidate human decision recording implementation design for routing scorer v3.
 
 This module is intentionally standard-library-only and human-decision-recording-implementation-schema-only.
@@ -338,10 +339,31 @@ SCHEMA_TALK_TERMS = frozenset(
 
 
 def _sorted(values: Sequence[str] | set[str] | frozenset[str]) -> list[str]:
+    """Support sorted behavior.
+    
+    Parameters
+    ----------
+    values : Sequence[str] | set[str] | frozenset[str]
+        The input values.
+    
+    Returns
+    -------
+    list[str]
+        The list of values.
+    """
+    
     return sorted(values)
 
 
 def _false_flags() -> dict[str, bool]:
+    """Support false flags behavior.
+    
+    Returns
+    -------
+    dict[str, bool]
+        The mapped values.
+    """
+    
     return {flag: False for flag in _sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
 
 

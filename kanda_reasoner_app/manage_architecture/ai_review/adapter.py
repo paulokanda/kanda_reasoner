@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/manage_architecture/ai_review/adapter.py
 """Local model adapter for Tab 1 advisory AI review."""
 
 from __future__ import annotations
@@ -35,6 +36,16 @@ class Tab1AIReviewAdapter:
         registry_factory: Callable[[], Any] | None = None,
         ai_factory: Callable[[], Any] | None = None,
     ) -> None:
+        """Support init behavior.
+        
+        Parameters
+        ----------
+        registry_factory : Callable[[], Any] | None, optional
+            The optional registry factory value.
+        ai_factory : Callable[[], Any] | None, optional
+            The optional ai factory value.
+        """
+        
         self._registry_factory = registry_factory
         self._ai_factory = ai_factory
 

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/reasoner_context_collector/collector_edit_ready_source.py
 """Support static evidence collection for Project Reasoner."""
 
 # =====================================================
@@ -13,6 +14,19 @@ from .collector_utils import short_hash
 
 
 def _infer_bucket_name(file_record: dict[str, Any]) -> str:
+    """Support infer bucket name behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     path = str(file_record.get("path", "") or "").strip("/")
     module_name = str(file_record.get("module_name", "") or "").strip(".")
 
@@ -26,6 +40,21 @@ def _infer_bucket_name(file_record: dict[str, Any]) -> str:
 
 
 def _truncate_source(source: str, max_chars: int) -> tuple[str, bool]:
+    """Support truncate source behavior.
+    
+    Parameters
+    ----------
+    source : str
+        The source value.
+    max_chars : int
+        The max chars value.
+    
+    Returns
+    -------
+    tuple[str, bool]
+        The tuple of values.
+    """
+    
     if max_chars <= 0:
         return source, False
 
@@ -36,6 +65,19 @@ def _truncate_source(source: str, max_chars: int) -> tuple[str, bool]:
 
 
 def _count_method_records(classes: list[dict[str, Any]]) -> int:
+    """Support count method records behavior.
+    
+    Parameters
+    ----------
+    classes : list[dict[str, Any]]
+        The classes value.
+    
+    Returns
+    -------
+    int
+        The integer result.
+    """
+    
     total = 0
 
     for class_record in classes:
@@ -104,6 +146,23 @@ def _slice_lines(
         line_start: int,
         line_end: int,
 ) -> str:
+    """Support slice lines behavior.
+    
+    Parameters
+    ----------
+    lines : list[str]
+        The line values.
+    line_start : int
+        The line start value.
+    line_end : int
+        The line end value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     if not lines or line_start <= 0 or line_end <= 0 or line_end < line_start:
         return ""
 
@@ -115,6 +174,19 @@ def _slice_lines(
 def _collect_symbol_records(
         file_record: dict[str, Any],
 ) -> list[dict[str, Any]]:
+    """Support collect symbol records behavior.
+    
+    Parameters
+    ----------
+    file_record : dict[str, Any]
+        The file record value.
+    
+    Returns
+    -------
+    list[dict[str, Any]]
+        The list of values.
+    """
+    
     records: list[dict[str, Any]] = []
 
     for function_record in file_record.get("functions", []):
@@ -140,6 +212,25 @@ def _build_symbol_excerpt_record(
         source: str,
         config: CollectorConfig,
 ) -> dict[str, Any]:
+    """Support build symbol excerpt record behavior.
+    
+    Parameters
+    ----------
+    symbol_record : dict[str, Any]
+        The symbol record value.
+    path : str
+        The file or folder path.
+    source : str
+        The source value.
+    config : CollectorConfig
+        The configuration data.
+    
+    Returns
+    -------
+    dict[str, Any]
+        The mapped values.
+    """
+    
     lines = source.splitlines()
 
     symbol_name = str(
@@ -320,6 +411,27 @@ def _format_numbered_snippet_block(
     anchor_below: str,
     max_lines: int,
 ) -> str:
+    """Support format numbered snippet block behavior.
+    
+    Parameters
+    ----------
+    line_start : int
+        The line start value.
+    anchor_above : str
+        The anchor above value.
+    source_excerpt : str
+        The source excerpt value.
+    anchor_below : str
+        The anchor below value.
+    max_lines : int
+        The max lines value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     _ = anchor_below
     block_lines: list[tuple[int, str]] = []
 

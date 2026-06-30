@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/routing_signal_scorer/adviser_offline/transition_design/shadow_mode_implementation_gate_design.py
 """Design-only M22 shadow-mode implementation gate design.
 
 M22 defines the static gate requirements that must be satisfied before any

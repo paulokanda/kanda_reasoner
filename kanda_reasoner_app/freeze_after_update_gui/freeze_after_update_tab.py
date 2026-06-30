@@ -1,7 +1,8 @@
+# project-path: kanda_reasoner_app/freeze_after_update_gui/freeze_after_update_tab.py
 """GUI tab for local freeze after update and auto-filled local freezing."""
 from __future__ import annotations
 
-__all__ = ['FreezeAfterUpdateTab', 'LocalFreezeAIFormularyRunner']
+__all__ = ['FreezeAfterUpdateTab']
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 import json
 import queue
@@ -41,6 +42,9 @@ class FreezeAfterUpdateTab(
     """Human-facing controller for the project-local freeze-after-update box."""
 
     def __init__(self) -> None:
+        """Support init behavior.
+        """
+        
         super().__init__()
         self._last_output_folder: Path | None = None
         self._pending_staged_project_root: Path | None = None
@@ -58,6 +62,9 @@ class FreezeAfterUpdateTab(
         self._connect_signals()
 
     def _open_local_freeze_entry_dialog(self) -> None:
+        """Support open local freeze entry dialog behavior.
+        """
+        
         if self._raise_existing_local_freeze_dialog():
             return
         project_root = self._require_project_root()

@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/prompt_library_gui/group_catalog.py
 """Read-only group catalog for Prompt Library dashboard cards."""
 
 from __future__ import annotations

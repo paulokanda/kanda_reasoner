@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/storage_policy/evidence_relocator.py
 """Explicit evidence relocation executor for old project_analysis_evidence.
 
 This module executes a previously dry-run evidence relocation plan only when an

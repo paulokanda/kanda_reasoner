@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# project-path: kanda_prompt_workspace/prompt_tools/startup_freeze_context.py
 """Generate the active-project freeze context for the KANDA startup pack.
 
 This module belongs to the startup delivery tool box:
@@ -75,10 +76,36 @@ def freeze_memory_root(project_root: Path) -> Path:
     return freeze_state_owner_root(project_root) / FREEZE_MEMORY_RELATIVE
 
 def _sha256_bytes(data: bytes) -> str:
+    """Support sha256 bytes behavior.
+    
+    Parameters
+    ----------
+    data : bytes
+        The input data.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return hashlib.sha256(data).hexdigest()
 
 
 def _read_bytes_if_file(path: Path) -> bytes:
+    """Support read bytes if file behavior.
+    
+    Parameters
+    ----------
+    path : Path
+        The file or folder path.
+    
+    Returns
+    -------
+    bytes
+        The bytes result.
+    """
+    
     try:
         if path.is_file():
             return path.read_bytes()
@@ -233,6 +260,19 @@ def _sanitize_startup_freeze_exposure_text(text: str) -> str:
 
 
 def _load_expose_freeze_memory_module(engine_root: Path) -> ModuleType:
+    """Support load expose freeze memory module behavior.
+    
+    Parameters
+    ----------
+    engine_root : Path
+        The engine root value.
+    
+    Returns
+    -------
+    ModuleType
+        The module type result.
+    """
+    
     module_path = engine_root / EXPOSE_FREEZE_MEMORY_RELATIVE
     if not module_path.is_file():
         raise FileNotFoundError(f"Missing freeze exposure tool: {module_path}")
@@ -247,6 +287,23 @@ def _load_expose_freeze_memory_module(engine_root: Path) -> ModuleType:
 
 
 def _render_fallback_context(project_root: Path, generated_at: str, error: str) -> str:
+    """Support render fallback context behavior.
+    
+    Parameters
+    ----------
+    project_root : Path
+        The project root path.
+    generated_at : str
+        The generated at value.
+    error : str
+        The error value.
+    
+    Returns
+    -------
+    str
+        The string result.
+    """
+    
     return f"""# ACTIVE PROJECT FREEZE CONTEXT
 
 Generated: `{generated_at}`

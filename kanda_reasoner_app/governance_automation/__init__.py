@@ -1,3 +1,4 @@
+# project-path: kanda_reasoner_app/governance_automation/__init__.py
 """Governance automation report helpers."""
 
 from kanda_reasoner_app.governance_automation.on_every_push_validator import (
