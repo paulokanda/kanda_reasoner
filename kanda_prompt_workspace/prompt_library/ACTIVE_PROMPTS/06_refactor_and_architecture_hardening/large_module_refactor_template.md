@@ -92,6 +92,14 @@ Define:
 - delivery ZIP contents;
 - patch-train delivery plan when several separate governed patches will be packaged together in one outer bundle.
 
+Helper expansion rule:
+
+- If the target structure would leave any new or touched code/source module above 500 physical lines, create as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed.
+- Each helper must have a named responsibility and must obey the same size policy: ideal <= 400 physical lines, hard maximum <= 500 physical lines, and practical minimum around 100 substantive lines unless a documented exception applies.
+- A helper below roughly 100 substantive lines requires an explicit justification such as facade/re-export shim, package marker, constants module, validation helper, optional dependency adapter, circular-dependency breaker, stable seam, or another cohesive boundary.
+- Do not split by arbitrary line ranges. Split by responsibility, dependency direction, public API boundary, side-effect isolation, validation boundary, or no-leak ownership boundary.
+- Do not let helper modules accidentally own facade public API. Facades own public compatibility unless a separate governed architecture decision approves another owner.
+
 ## Sequential double-refactor delivery train v7.2
 
 Use this only when several governed refactor patches are prepared together from one clean roadmap.
@@ -125,6 +133,7 @@ Rules:
 - avoid circular imports;
 - avoid catch-all helper files;
 - avoid micro-files created only to chase a line-count target; cohesive helpers around 250-400 lines are acceptable;
+- create as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed when that is necessary to keep every touched code/source module within the 500-line hard maximum;
 - use ordinary importable `.py` files for runtime/source logic, not ZIP payload files or delivery-package structures;
 - add characterization tests before moving insufficiently tested behavior;
 - validate after every cluster;

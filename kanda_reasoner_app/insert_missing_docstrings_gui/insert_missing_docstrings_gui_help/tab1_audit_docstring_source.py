@@ -24,7 +24,7 @@ import sys
 
 
 MISSING_DOCSTRING_CODE = "MISSING_DOCSTRING"
-TAB1_AUDIT_SOURCE_LABEL = "get missing docstring from Tab1 audit."
+TAB1_AUDIT_SOURCE_LABEL = "get missing docstring from Tab 1 audit"
 MISSING_DOCSTRING_RE = re.compile(
     r"^(?:ERROR|WARNING)\s+MISSING_DOCSTRING\s+(.+?)\s+::\s+(.+)$"
 )

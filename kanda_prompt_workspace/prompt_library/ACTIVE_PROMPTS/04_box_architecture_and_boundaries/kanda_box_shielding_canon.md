@@ -36,7 +36,8 @@ A shield protects:
 - the box public contract;
 - the box side-effect boundary;
 - the box regression-critical outputs;
-- the box do-not-invade-other-box boundary.
+- the box do-not-invade-other-box boundary;
+- the NO_LEAK_LOGIC_V1 boundary.
 
 Master rule:
 
@@ -50,6 +51,28 @@ No other box logic is invaded.
 A shield converts working behavior into protected architecture law.
 
 ---
+
+
+## 1A. No-Leak Shield Checklist
+
+NO_LEAK_LOGIC_V1 is active inside every KANDA box shield.
+
+A shield must explicitly prevent:
+
+1. tool/project ownership leakage;
+2. wrong-root writes;
+3. cross-box logic leakage;
+4. private reach-in;
+5. public API ownership leakage;
+6. hidden mutable-state leakage;
+7. generated-artifact-as-source leakage;
+8. validation, freeze, and Error Memory evidence leakage;
+9. prompt/canon leakage from generated artifacts back into source truth;
+10. refactor-output leakage between reusable tool engines and selected-project
+    outputs.
+
+When any item is uncertain, the shield must produce a `NO-LEAK CHECK` before
+feature escalation or patch delivery.
 
 ## 2. When KBSC is mandatory
 

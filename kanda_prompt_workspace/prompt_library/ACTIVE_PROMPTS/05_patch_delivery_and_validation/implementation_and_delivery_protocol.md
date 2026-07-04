@@ -355,22 +355,22 @@ SURGICAL RESTORE COMPLETED
 
 6.8 Install terminal behavior
 
-Install scripts must use this controlled terminal behavior:
+Install, validation, freeze, recovery, diagnostic, and error terminal cleanup is
+owned by `terminal_cleanup_contract.md`.
 
-- If install succeeds with exit code 0:
-    - print a clear success message;
-    - wait 5 seconds;
-    - clear the terminal after the 5 second pause.
+Before emitting any Windows 11 PowerShell terminal block, apply
+`terminal_cleanup_contract.md` and `pre_output_contract_gates.md`.
 
-- If install fails with nonzero exit code:
-    - print a clear failure message;
-    - preserve all visible error output;
-    - do not clear the terminal unless the user presses Enter twice in the explicit failure branch.
+Do not duplicate terminal footer implementation details in this protocol. The
+canonical contract is:
 
-- Do not use `finally` blocks for terminal cleanup.
-- Do not clear the terminal from a shared cleanup path.
-- Clearing is allowed only in the explicit success branch after the 5 second pause, or after Enter + Enter in an explicit failure branch.
-- Failure branches must leave all logs visible until user confirmation.
+```text
+Install success -> success message -> about 2 seconds -> Clear-Host -> keep open -> no Enter prompts.
+All non-install-success terminal blocks -> show output -> Enter -> Enter -> one final Clear-Host -> keep open.
+```
+
+Do not use `finally` blocks, broad shared cleanup paths, terminal-closing
+commands, or inline `python -c` for KANDA operational helpers.
 
 7. Manual restore script rule
 
@@ -571,30 +571,13 @@ Terminal output is audit evidence, but Kanda patch scripts use controlled cleari
 
 Canonical rule:
 
-- Installation logs must remain visible on failure.
-- Validation logs must remain visible until the user confirms they copied them.
-- Terminal clearing is allowed only in the exact controlled cases below.
-- Do not use broad cleanup paths or `finally` blocks to clear the terminal.
-- Do not close the visible PowerShell session automatically.
-- Do not delete, truncate, overwrite, or remove log files.
-
-Allowed terminal clearing:
-
-1. Install success only:
-   - if install exits with code 0;
-   - show success message;
-   - wait 5 seconds;
-   - then clear the terminal.
-
-2. Validation completion only:
-   - after validation output is shown;
-   - user presses Enter once after copying the output;
-   - user presses Enter a second time to confirm clearing;
-   - then clear the terminal.
+Terminal cleanup behavior is owned by `terminal_cleanup_contract.md`. Apply that
+prompt before writing install, validation, freeze, recovery, diagnostic, or error
+PowerShell. This protocol intentionally does not repeat the full footer text.
 
 Forbidden terminal behavior:
 
-- clearing on install failure;
+- clearing on install failure before the Enter, Enter confirmation flow;
 - clearing before validation output is copied;
 - clearing from `finally`;
 - clearing from shared cleanup code;

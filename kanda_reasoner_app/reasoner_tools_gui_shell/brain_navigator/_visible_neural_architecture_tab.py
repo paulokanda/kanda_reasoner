@@ -14,6 +14,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 OpenTabById = Callable[[str], object]
+CanOpenTabId = Callable[[str], bool]
 
 __all__: list[str] = []
 
@@ -35,6 +36,7 @@ class VisibleNeuralArchitectureTabSummary:
 def open_mapped_tab_by_region_id(
     region_id: str,
     open_tab_by_id: OpenTabById | None,
+    can_open_tab_id: CanOpenTabId | None = None,
 ) -> object | None:
     """Resolve a brain region and request stable-tab navigation.
 
@@ -51,12 +53,15 @@ def open_mapped_tab_by_region_id(
     target = resolve_brain_region(region_id)
     if not target.is_known or not target.target_tab_id:
         return None
+    if can_open_tab_id is not None and not can_open_tab_id(target.target_tab_id):
+        return None
     return open_tab_by_id(target.target_tab_id)
 
 
 def create_visible_neural_architecture_brain_tab(
     *,
     open_tab_by_id: OpenTabById | None = None,
+    can_open_tab_id: CanOpenTabId | None = None,
 ) -> object:
     """Create the visible Brain Navigator tab as the Neural Architecture brain.
 
@@ -83,6 +88,7 @@ def create_visible_neural_architecture_brain_tab(
                 on_region_clicked=lambda region_id: open_mapped_tab_by_region_id(
                     region_id,
                     open_tab_by_id,
+                    can_open_tab_id,
                 ),
             )
         )
@@ -94,11 +100,15 @@ def create_visible_neural_architecture_brain_tab(
         # Open module call may never reach the Python navigation adapter.
         setattr(bundle.widget, "_brain_navigator_preview_bundle", bundle)
         setattr(bundle.widget, "_brain_navigator_open_tab_by_id", open_tab_by_id)
+        setattr(bundle.widget, "_brain_navigator_can_open_tab_id", can_open_tab_id)
         return bundle.widget
     except Exception:
         from ._fallback_index_widget import create_brain_navigator_fallback_widget
 
-        return create_brain_navigator_fallback_widget(open_tab_by_id=open_tab_by_id)
+        return create_brain_navigator_fallback_widget(
+            open_tab_by_id=open_tab_by_id,
+            can_open_tab_id=can_open_tab_id,
+        )
 
 
 def get_visible_neural_architecture_tab_summary() -> VisibleNeuralArchitectureTabSummary:

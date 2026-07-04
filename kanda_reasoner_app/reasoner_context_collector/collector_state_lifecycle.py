@@ -294,10 +294,8 @@ def _collect_symbol_lifecycle_counts(
         ) and _has_any_hint(symbol_name, STATE_REHYDRATE_HINTS):
             rehydrate_count += 1
             rehydrate_symbols.append(symbol_name)
-
         if has_reads:
             read_count += len(attribute_reads)
-
         for call in calls if isinstance(calls, list) else []:
             if not isinstance(call, dict):
                 continue
@@ -311,7 +309,6 @@ def _collect_symbol_lifecycle_counts(
             if _has_any_hint(call_name, STATE_UPDATE_HINTS):
                 update_count += 1
                 update_symbols.append(symbol_name)
-
     return {
         "create_count": create_count,
         "update_count": update_count,
@@ -323,8 +320,6 @@ def _collect_symbol_lifecycle_counts(
         "reset_symbols": sorted(set(reset_symbols))[:25],
         "rehydrate_symbols": sorted(set(rehydrate_symbols))[:25],
     }
-
-
 def build_state_lifecycle_index(
     files_payload: list[dict[str, Any]],
     boundary_index: dict[str, dict[str, Any]],
@@ -352,30 +347,24 @@ def build_state_lifecycle_index(
     dict[str, dict[str, Any]]
         The mapped values.
     """
-    
     output: dict[str, dict[str, Any]] = {}
-
     for file_record in files_payload:
         file_path = _safe_text(file_record.get("path", ""))
         if not file_path:
             continue
-
         mutation_payload = _safe_payload(state_mutation_index, file_path)
         persistence_payload = _safe_payload(persistence_io_index, file_path)
         lifecycle_counts = _collect_symbol_lifecycle_counts(file_record)
-
         attribute_payload = attribute_state_map.get(file_path, {})
         attribute_state_count = 0
         if isinstance(attribute_payload, dict):
             for value in attribute_payload.values():
                 if isinstance(value, list):
                     attribute_state_count += len(value)
-
         state_like_target_count = int(mutation_payload.get("state_like_target_count", 0))
         assignment_count = int(mutation_payload.get("assignment_count", 0))
         persistence_write_count = int(persistence_payload.get("write_call_count", 0))
         persistence_read_count = int(persistence_payload.get("read_call_count", 0))
-
         lifecycle_score = (
             (lifecycle_counts["create_count"] * 2.0)
             + (lifecycle_counts["update_count"] * 1.5)
@@ -388,7 +377,6 @@ def build_state_lifecycle_index(
             + (persistence_read_count * 1.5)
             + (attribute_state_count * 0.5)
         )
-
         output[file_path] = {
             "file": file_path,
             "bucket": _safe_bucket(file_path, files_payload),
@@ -417,10 +405,7 @@ def build_state_lifecycle_index(
                 or persistence_read_count >= 1
             ),
         }
-
     return dict(sorted(output.items()))
-
-
 def build_state_lifecycle_summary(
     state_lifecycle_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
@@ -436,20 +421,16 @@ def build_state_lifecycle_summary(
     dict[str, Any]
         The mapped values.
     """
-    
     rows: list[dict[str, Any]] = []
     reset_candidate_count = 0
     rehydration_candidate_count = 0
-
     for file_path, payload in state_lifecycle_index.items():
         is_reset = bool(payload.get("is_state_reset_candidate", False))
         is_rehydrate = bool(payload.get("is_state_rehydration_candidate", False))
-
         if is_reset:
             reset_candidate_count += 1
         if is_rehydrate:
             rehydration_candidate_count += 1
-
         rows.append(
             {
                 "file": file_path,
@@ -464,22 +445,18 @@ def build_state_lifecycle_summary(
                 "is_state_rehydration_candidate": is_rehydrate,
             }
         )
-
     rows.sort(
         key=lambda item: (
             -float(item.get("lifecycle_score", 0.0)),
             item.get("file", ""),
         )
     )
-
     return {
         "file_count": len(rows),
         "state_reset_candidate_count": reset_candidate_count,
         "state_rehydration_candidate_count": rehydration_candidate_count,
         "files": rows,
     }
-
-
 def build_state_lifecycle_hotspots(
     state_lifecycle_index: dict[str, dict[str, Any]],
     limit: int = 25,
@@ -498,9 +475,7 @@ def build_state_lifecycle_hotspots(
     list[dict[str, Any]]
         The list of values.
     """
-    
     rows: list[dict[str, Any]] = []
-
     for file_path, payload in state_lifecycle_index.items():
         rows.append(
             {
@@ -516,12 +491,10 @@ def build_state_lifecycle_hotspots(
                 "is_state_rehydration_candidate": bool(payload.get("is_state_rehydration_candidate", False)),
             }
         )
-
     rows.sort(
         key=lambda item: (
             -float(item.get("lifecycle_score", 0.0)),
             item.get("file", ""),
         )
     )
-
     return rows[:limit]

@@ -6,6 +6,7 @@ import os
 import sys
 from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import QFileDialog, QMessageBox
+from kanda_reasoner_app.project_analysis_evidence_paths import working_copy_json_path
 from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.ui_components import shorten_path
 __all__ = ['AnalysisController']
 
@@ -27,7 +28,7 @@ class AnalysisController:
             The string result.
         """
         
-        return os.path.join(project_root, 'project_structure_index.json')
+        return str(working_copy_json_path(project_root))
 
     def pick_project_root(self, window) -> None:
         """Support pick project root behavior.
@@ -44,6 +45,9 @@ class AnalysisController:
             return
         window.project_root_edit.setText(path)
         window._append_log('Project root selected: ' + path)
+        runtime_controller = getattr(window, 'runtime_controller', None)
+        if runtime_controller is not None and hasattr(runtime_controller, 'refresh_project_json_path_from_project_root'):
+            runtime_controller.refresh_project_json_path_from_project_root(window, force=True, save=False)
         window._refresh_workflow_controls()
         window._save_last_config()
 
@@ -62,7 +66,10 @@ class AnalysisController:
         """
         
         python_exe = sys.executable
-        module_name = 'kanda_reasoner_app.reasoner_engine_data_collector.collector_main'
+        module_name = (
+            'kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.'
+            'project_qa_analysis_runner'
+        )
         args = ['-m', module_name, '--project-root', project_root]
         return (python_exe, args)
 
@@ -103,13 +110,8 @@ class AnalysisController:
         window._append_log('Starting analysis for project root: ' + project_root)
         window._append_log('Analysis command: ' + ' '.join([program] + args))
         window._refresh_workflow_controls()
+        process.started.connect(lambda: window._append_log('Analysis process started.'))
         process.start()
-        if not process.waitForStarted(3000):
-            window._analysis_process = None
-            window._analysis_running = False
-            window.analysis_status_value_label.setText('Failed to start')
-            window._refresh_workflow_controls()
-            show_error_copy_close_window(window, title='Analysis error', message='Failed to start collector process.')
 
     def on_analysis_stdout_ready(self, window) -> None:
         """Support on analysis stdout ready behavior.

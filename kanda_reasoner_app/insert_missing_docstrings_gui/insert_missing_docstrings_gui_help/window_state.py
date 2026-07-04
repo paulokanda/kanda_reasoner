@@ -69,11 +69,12 @@ def initialize_window(self) -> None:
     self._report_rows: list[dict] = []
     self._prefs = self._load_prefs()
     self._root_path_label = QLabel("Project Root:")
+    self._root_path_label.setStyleSheet("color: #0B3D91; font-weight: bold;")
     self._root_path_edit = QLineEdit(
         safe_text(self._prefs.get("project_root"), DEFAULT_PROJECT_ROOT)
     )
     self._root_path_edit.setPlaceholderText("Project root")
-    self._browse_root_button = QPushButton("Search")
+    self._browse_root_button = QPushButton("Browser")
     self._project_root_controls_moved_to_host = False
     self._worker_path_edit = QLineEdit(_canonical_worker_script_path())
     self._worker_path_edit.setEnabled(False)
@@ -83,7 +84,7 @@ def initialize_window(self) -> None:
         safe_text(self._prefs.get("mode"), "scan")
     )
     self._tab1_audit_docstring_radio = QRadioButton(
-        "get missing docstring from Tab1 audit."
+        "get missing docstring from Tab 1 audit"
     )
     self._tab1_audit_docstring_radio.setChecked(
         safe_bool(self._prefs.get("use_tab1_audit_docstring_source"), False)
@@ -91,7 +92,7 @@ def initialize_window(self) -> None:
     font = self._tab1_audit_docstring_radio.font()
     font.setBold(True)
     self._tab1_audit_docstring_radio.setFont(font)
-    self._tab1_audit_docstring_radio.setStyleSheet("color: red; font-weight: bold;")
+    self._tab1_audit_docstring_radio.setStyleSheet("color: green; font-weight: bold;")
     self._tab1_audit_docstring_radio.setToolTip(
         "Read MISSING_DOCSTRING targets from the Tab 1 architecture audit."
     )

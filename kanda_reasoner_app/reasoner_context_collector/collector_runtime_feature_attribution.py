@@ -1,4 +1,3 @@
-# project-path: kanda_reasoner_app/reasoner_context_collector/collector_runtime_feature_attribution.py
 """Support static evidence collection for Project Reasoner."""
 
 from __future__ import annotations
@@ -6,55 +5,23 @@ from __future__ import annotations
 from pathlib import PurePosixPath
 from typing import Any
 
+__all__ = [
+    'build_runtime_feature_attribution_hotspots',
+    'build_runtime_feature_attribution_index',
+    'build_runtime_feature_attribution_summary',
+]
+
+
 
 def _safe_text(value: Any) -> str:
-    """Support safe text behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
     return str(value or "").strip()
 
 
 def _safe_lower(value: Any) -> str:
-    """Support safe lower behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
     return _safe_text(value).lower()
 
 
 def _safe_int(value: Any) -> int:
-    """Support safe int behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    int
-        The integer result.
-    """
-    
     try:
         return int(value)
     except Exception:
@@ -62,19 +29,6 @@ def _safe_int(value: Any) -> int:
 
 
 def _safe_float(value: Any) -> float:
-    """Support safe float behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    float
-        The floating-point result.
-    """
-    
     try:
         return float(value)
     except Exception:
@@ -82,19 +36,6 @@ def _safe_float(value: Any) -> float:
 
 
 def _normalize_path(value: Any) -> str:
-    """Support normalize path behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
     text = _safe_text(value).replace("\\", "/")
     while "//" in text:
         text = text.replace("//", "/")
@@ -102,19 +43,6 @@ def _normalize_path(value: Any) -> str:
 
 
 def _tokenize_text(value: Any) -> list[str]:
-    """Support tokenize text behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
     text = _safe_lower(value)
     cleaned = []
     current = []
@@ -136,19 +64,6 @@ def _tokenize_text(value: Any) -> list[str]:
 def _file_to_feature_map(
     feature_registry: dict[str, dict[str, Any]],
 ) -> dict[str, list[str]]:
-    """Support file to feature map behavior.
-    
-    Parameters
-    ----------
-    feature_registry : dict[str, dict[str, Any]]
-        The feature registry value.
-    
-    Returns
-    -------
-    dict[str, list[str]]
-        The mapped values.
-    """
-    
     mapping: dict[str, list[str]] = {}
 
     for feature_name, payload in feature_registry.items():
@@ -176,19 +91,6 @@ def _file_to_feature_map(
 
 
 def _feature_name_tokens(feature_registry: dict[str, dict[str, Any]]) -> dict[str, set[str]]:
-    """Support feature name tokens behavior.
-    
-    Parameters
-    ----------
-    feature_registry : dict[str, dict[str, Any]]
-        The feature registry value.
-    
-    Returns
-    -------
-    dict[str, set[str]]
-        The mapped values.
-    """
-    
     out: dict[str, set[str]] = {}
 
     for feature_name in feature_registry.keys():
@@ -201,19 +103,6 @@ def _feature_name_tokens(feature_registry: dict[str, dict[str, Any]]) -> dict[st
 
 
 def _file_to_bucket_map(files_payload: list[dict[str, Any]]) -> dict[str, str]:
-    """Support file to bucket map behavior.
-    
-    Parameters
-    ----------
-    files_payload : list[dict[str, Any]]
-        The files payload value.
-    
-    Returns
-    -------
-    dict[str, str]
-        The mapped values.
-    """
-    
     out: dict[str, str] = {}
 
     for record in files_payload:
@@ -235,19 +124,6 @@ def _file_to_bucket_map(files_payload: list[dict[str, Any]]) -> dict[str, str]:
 def _file_to_boundary_role_map(
     boundary_index: dict[str, dict[str, Any]],
 ) -> dict[str, str]:
-    """Support file to boundary role map behavior.
-    
-    Parameters
-    ----------
-    boundary_index : dict[str, dict[str, Any]]
-        The boundary index value.
-    
-    Returns
-    -------
-    dict[str, str]
-        The mapped values.
-    """
-    
     out: dict[str, str] = {}
 
     for file_path, payload in boundary_index.items():
@@ -261,19 +137,6 @@ def _file_to_boundary_role_map(
 def _file_to_current_status_map(
     implementation_chronology_index: dict[str, dict[str, Any]],
 ) -> dict[str, str]:
-    """Support file to current status map behavior.
-    
-    Parameters
-    ----------
-    implementation_chronology_index : dict[str, dict[str, Any]]
-        The implementation chronology index value.
-    
-    Returns
-    -------
-    dict[str, str]
-        The mapped values.
-    """
-    
     out: dict[str, str] = {}
 
     for file_path, payload in implementation_chronology_index.items():
@@ -288,21 +151,6 @@ def _path_prefix_feature_match(
     source_file: str,
     file_feature_map: dict[str, list[str]],
 ) -> list[str]:
-    """Support path prefix feature match behavior.
-    
-    Parameters
-    ----------
-    source_file : str
-        The source file value.
-    file_feature_map : dict[str, list[str]]
-        The file feature map value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
     src = _normalize_path(source_file)
     if not src:
         return []
@@ -335,27 +183,6 @@ def _symbol_feature_match(
     feature_registry: dict[str, dict[str, Any]],
     feature_name_token_map: dict[str, set[str]],
 ) -> list[str]:
-    """Support symbol feature match behavior.
-    
-    Parameters
-    ----------
-    source_symbol : str
-        The source symbol value.
-    event_type : str
-        The event type value.
-    message : str
-        The message text.
-    feature_registry : dict[str, dict[str, Any]]
-        The feature registry value.
-    feature_name_token_map : dict[str, set[str]]
-        The feature name token map value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
     symbol_tokens = set(_tokenize_text(source_symbol))
     event_tokens = set(_tokenize_text(event_type))
     message_tokens = set(_tokenize_text(message))
@@ -389,31 +216,6 @@ def _resolve_event_features(
     feature_registry: dict[str, dict[str, Any]],
     feature_name_token_map: dict[str, set[str]],
 ) -> tuple[list[str], str]:
-    """Support resolve event features behavior.
-    
-    Parameters
-    ----------
-    source_file : str
-        The source file value.
-    source_symbol : str
-        The source symbol value.
-    event_type : str
-        The event type value.
-    message : str
-        The message text.
-    file_feature_map : dict[str, list[str]]
-        The file feature map value.
-    feature_registry : dict[str, dict[str, Any]]
-        The feature registry value.
-    feature_name_token_map : dict[str, set[str]]
-        The feature name token map value.
-    
-    Returns
-    -------
-    tuple[list[str], str]
-        The tuple of values.
-    """
-    
     normalized_source_file = _normalize_path(source_file)
 
     exact = file_feature_map.get(normalized_source_file, [])
@@ -444,27 +246,6 @@ def build_runtime_feature_attribution_index(
     boundary_index: dict[str, dict[str, Any]],
     implementation_chronology_index: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
-    """Build a runtime feature attribution index.
-    
-    Parameters
-    ----------
-    runtime_scenario_index : dict[str, dict[str, Any]]
-        The runtime scenario index value.
-    feature_registry : dict[str, dict[str, Any]]
-        The feature registry value.
-    files_payload : list[dict[str, Any]]
-        The files payload value.
-    boundary_index : dict[str, dict[str, Any]]
-        The boundary index value.
-    implementation_chronology_index : dict[str, dict[str, Any]]
-        The implementation chronology index value.
-    
-    Returns
-    -------
-    dict[str, dict[str, Any]]
-        The mapped values.
-    """
-    
     file_feature_map = _file_to_feature_map(feature_registry)
     feature_name_token_map = _feature_name_tokens(feature_registry)
     file_bucket_map = _file_to_bucket_map(files_payload)
@@ -567,19 +348,6 @@ def build_runtime_feature_attribution_index(
 def build_runtime_feature_attribution_summary(
     runtime_feature_attribution_index: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
-    """Build a runtime feature attribution summary.
-    
-    Parameters
-    ----------
-    runtime_feature_attribution_index : dict[str, dict[str, Any]]
-        The runtime feature attribution index value.
-    
-    Returns
-    -------
-    dict[str, Any]
-        The mapped values.
-    """
-    
     rows: list[dict[str, Any]] = []
     all_features: set[str] = set()
     all_buckets: set[str] = set()
@@ -640,21 +408,6 @@ def build_runtime_feature_attribution_hotspots(
     runtime_feature_attribution_index: dict[str, dict[str, Any]],
     limit: int = 25,
 ) -> list[dict[str, Any]]:
-    """Build a runtime feature attribution hotspots.
-    
-    Parameters
-    ----------
-    runtime_feature_attribution_index : dict[str, dict[str, Any]]
-        The runtime feature attribution index value.
-    limit : int, optional
-        The optional limit value.
-    
-    Returns
-    -------
-    list[dict[str, Any]]
-        The list of values.
-    """
-    
     rows: list[dict[str, Any]] = []
 
     for session_id, payload in runtime_feature_attribution_index.items():

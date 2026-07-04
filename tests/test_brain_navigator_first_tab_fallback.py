@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 import unittest
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 MAIN_WINDOW_PATH = (
     PROJECT_ROOT
     / "kanda_reasoner_app"
@@ -54,6 +57,7 @@ class BrainNavigatorFirstTabFallbackTests(unittest.TestCase):
                 "Engineering Safety",
                 "Docstring Assistant",
                 "Show Project to AI",
+                "Error Memory",
                 "Refactor Report",
                 "Project Q&A",
                 "Freeze Feature After Update",
@@ -80,6 +84,7 @@ class BrainNavigatorFirstTabFallbackTests(unittest.TestCase):
         text = MAIN_WINDOW_PATH.read_text(encoding="utf-8")
 
         self.assertIn("open_tab_by_id=self._tab_navigation_controller.open_tab_by_id", text)
+        self.assertIn("can_open_tab_id=self._tab_navigation_controller.can_open_tab", text)
         self.assertNotIn("brain_navigator_tab.setCurrentIndex", text)
         self.assertNotIn("open_tab_by_index", text)
 

@@ -330,7 +330,6 @@ def _disabled_flags_are_false(flags: object) -> tuple[bool, list[str]]:
             errors.append(f"disabled flag must be False: {key}")
     return not errors, errors
 
-
 def build_generator_candidate_human_decision_recording_patch_boundary_design_contract() -> dict[str, Any]:
     """Build a generator candidate human decision recording patch boundary design contract.
     
@@ -339,7 +338,6 @@ def build_generator_candidate_human_decision_recording_patch_boundary_design_con
     dict[str, Any]
         The mapped values.
     """
-    
     return {
         "schema_id": GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_FEATURE_ID,
         "schema_version": GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_SCHEMA_VERSION,
@@ -359,8 +357,6 @@ def build_generator_candidate_human_decision_recording_patch_boundary_design_con
         "patch_boundary_design_effect_policy": "schema_only_no_decision_write_no_patch_creation_no_generator_authorization_no_runtime_effect",
         "stop_conditions": sorted(STOP_CONDITIONS),
     }
-
-
 def validate_generator_candidate_human_decision_recording_patch_boundary_design_contract(candidate: Mapping[str, Any]) -> dict[str, Any]:
     """Validate the generator candidate human decision recording patch boundary design contract.
     
@@ -374,19 +370,15 @@ def validate_generator_candidate_human_decision_recording_patch_boundary_design_
     dict[str, Any]
         The mapped values.
     """
-    
     errors: list[str] = []
     if not isinstance(candidate, Mapping):
         return {"ok": False, "errors": ["candidate must be a mapping"]}
-
     missing = sorted(REQUIRED_FIELDS.difference(candidate.keys()))
     if missing:
         errors.append("missing required fields: " + ", ".join(missing))
-
     forbidden = sorted(FORBIDDEN_FIELDS.intersection(candidate.keys()))
     if forbidden:
         errors.append("forbidden fields present: " + ", ".join(forbidden))
-
     if candidate.get("schema_id") != GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_FEATURE_ID:
         errors.append("schema_id mismatch")
     if candidate.get("schema_version") != GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_PATCH_BOUNDARY_DESIGN_SCHEMA_VERSION:
@@ -397,7 +389,6 @@ def validate_generator_candidate_human_decision_recording_patch_boundary_design_
         errors.append("invalid current_human_decision_recording_patch_boundary_design_state")
     if candidate.get("current_recorded_decision_value") != "not_recorded":
         errors.append("current_recorded_decision_value must remain not_recorded")
-
     required_checks = (
         ("required_prior_milestones", REQUIRED_PRIOR_MILESTONES),
         ("required_future_patch_evidence", REQUIRED_FUTURE_PATCH_EVIDENCE),
@@ -412,11 +403,9 @@ def validate_generator_candidate_human_decision_recording_patch_boundary_design_
         missing_values = sorted(required.difference(actual))
         if missing_values:
             errors.append(f"{field} missing values: " + ", ".join(missing_values))
-
     flags_ok, flag_errors = _disabled_flags_are_false(candidate.get("disabled_flags"))
     if not flags_ok:
         errors.extend(flag_errors)
-
     ok = not errors
     return {
         "ok": ok,
@@ -458,8 +447,6 @@ def validate_generator_candidate_human_decision_recording_patch_boundary_design_
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
-
 def classify_generator_candidate_human_decision_recording_patch_boundary_design_request(action: str) -> dict[str, Any]:
     """Support classify generator candidate human decision recording patch boundary design request behavior.
     
@@ -473,7 +460,6 @@ def classify_generator_candidate_human_decision_recording_patch_boundary_design_
     dict[str, Any]
         The mapped values.
     """
-    
     normalized = action.lower()
     denied_tokens = (
         "approve",

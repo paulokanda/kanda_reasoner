@@ -6,12 +6,12 @@
   "refactor_goal": "Align helper manifest contract with actual helper __all__ exports.",
   "pattern": "mixed",
   "pattern_note": "__init__.py package reexports are intentionally excluded from helper entries.",
-  "generated_by": "reasoner_correction_pass_014b_helper_manifest_all_alignment",
+  "generated_by": "architecture_warning_cleanup_batch13_public_surface_docstrings_v1",
   "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
   "exports": [],
   "summary": {
-    "total_helpers": 11,
-    "public_helpers": 11,
+    "total_helpers": 19,
+    "public_helpers": 19,
     "internal_helpers": 0,
     "entry_exports": [
       "ProjectRetriever",
@@ -38,11 +38,22 @@
       "last_part_match_in_query"
     ],
     "exported_symbols": [
+      "CandidateFileContext",
+      "RetrievalQueryContext",
+      "apply_advanced_and_runtime_scoring",
+      "apply_exact_and_call_scoring",
+      "apply_explanation_heavy_scoring",
+      "apply_semantic_scoring",
+      "apply_startup_scoring",
       "augment_bundle_with_live_source_fallback",
+      "build_candidate_context",
       "build_compact_file_evidence",
+      "build_query_context",
       "build_runtime_anchor_snippets",
       "build_symbol_evidence",
+      "candidate_file_paths",
       "collect_file_context_blobs",
+      "collect_symbols",
       "detect_query_intents",
       "extract_live_identifier_terms",
       "extract_runtime_anchors_from_detail",
@@ -71,9 +82,14 @@
       "is_which_method_calls_question",
       "last_part_match_in_query",
       "merge_retrieval_bundles",
+      "module_name_for_file",
       "norm_text",
+      "ProjectRetrieverCoreMixin",
+      "ProjectRetrieverIntentSectionMixin",
+      "ProjectRetrieverSnippetEvidenceMixin",
       "question_has_profile_alias",
       "read_snippet",
+      "reindex_file_evidence",
       "resolve_existing_project_file_path",
       "resolve_project_profile",
       "retrieve_documentation_intent",
@@ -243,6 +259,100 @@
       ],
       "depends_on": [],
       "consumed_by": []
+    },
+    "retriever_core_mixin.py": {
+      "purpose": "Core retrieval orchestration methods for ProjectRetriever.",
+      "reason": "Extracted from the public ProjectRetriever shell to keep the entry module below the large-module threshold.",
+      "stability": "stable",
+      "exports": [
+        "ProjectRetrieverCoreMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "reasoner_retriever.py"
+      ]
+    },
+    "retriever_intent_section_mixin.py": {
+      "purpose": "Intent, profile, and section wrapper methods for ProjectRetriever.",
+      "reason": "Extracted from the public ProjectRetriever shell to keep the entry module below the large-module threshold.",
+      "stability": "stable",
+      "exports": [
+        "ProjectRetrieverIntentSectionMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "reasoner_retriever.py"
+      ]
+    },
+    "retriever_snippet_evidence_mixin.py": {
+      "purpose": "Snippet, path, and evidence-builder methods for ProjectRetriever.",
+      "reason": "Extracted from the public ProjectRetriever shell to keep the entry module below the large-module threshold.",
+      "stability": "stable",
+      "exports": [
+        "ProjectRetrieverSnippetEvidenceMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "reasoner_retriever.py"
+      ]
+    },
+    "file_retrieval_context.py": {
+      "purpose": "File retrieval helper module owned by the reasoner_retriever_help folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "RetrievalQueryContext",
+        "CandidateFileContext",
+        "build_query_context",
+        "candidate_file_paths",
+        "collect_symbols",
+        "module_name_for_file",
+        "build_candidate_context",
+        "reindex_file_evidence"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_scoring_exact.py": {
+      "purpose": "File retrieval helper module owned by the reasoner_retriever_help folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "apply_exact_and_call_scoring"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_scoring_explain.py": {
+      "purpose": "File retrieval helper module owned by the reasoner_retriever_help folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "apply_startup_scoring",
+        "apply_explanation_heavy_scoring"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_scoring_runtime.py": {
+      "purpose": "File retrieval helper module owned by the reasoner_retriever_help folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "apply_advanced_and_runtime_scoring"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_scoring_semantic.py": {
+      "purpose": "File retrieval helper module owned by the reasoner_retriever_help folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "apply_semantic_scoring"
+      ],
+      "depends_on": [],
+      "consumed_by": []
     }
   },
   "dependency_graph": {
@@ -253,6 +363,9 @@
     "profile_support.py": {},
     "query_intents.py": {},
     "query_text.py": {},
+    "retriever_core_mixin.py": {},
+    "retriever_intent_section_mixin.py": {},
+    "retriever_snippet_evidence_mixin.py": {},
     "section_retrieval.py": {},
     "snippet_expansion.py": {},
     "snippet_retrieval.py": {},

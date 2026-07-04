@@ -9,6 +9,8 @@ from typing import Any
 from PySide6.QtCore import QObject, QSettings, QThread, Slot
 from PySide6.QtWidgets import QComboBox, QHBoxLayout, QLabel, QMessageBox, QPushButton
 
+from ._gui_row_adapter import _QWidgetLikeRow
+
 
 __all__ = [
     "AUTO_MODEL_LABEL",
@@ -183,7 +185,7 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
     refresh_button.setToolTip("Refresh Tab 2 Ollama model choices.")
     refresh_button.clicked.connect(lambda: populate_tab2_ai_review_model_combo(window))
 
-    review_check_button = QPushButton("AI Review Check")
+    review_check_button = QPushButton("AI Review First Check")
     review_check_button.setToolTip(
         "Read-only AI review of the latest deterministic Tab 2 Check output."
     )
@@ -205,6 +207,7 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
     window._tab2_ai_review_thread = None
     window._tab2_ai_review_worker = None
     window._tab2_ai_review_result_receiver = None
+    window._tab2_ai_review_controls_moved_to_host = False
 
     row_layout.addWidget(model_label)
     row_layout.addWidget(model_combo)
@@ -214,7 +217,7 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
     row_layout.addStretch()
     _install_activity_indicator(window, row_layout)
 
-    row_container = QWidgetLikeRow(row_layout)
+    row_container = _QWidgetLikeRow(row_layout)
     window._tab2_ai_review_row_widget = row_container
     insert_index = min(2, layout.count()) if hasattr(layout, "count") else 0
     if hasattr(layout, "insertWidget"):
@@ -222,29 +225,37 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
     else:
         layout.addWidget(row_container)
 
+    def move_ai_review_controls_to_layout(
+        destination_layout: Any,
+        insert_index: int | None = None,
+    ) -> None:
+        """Move Tab 2 AI review controls into the host header template."""
+        if getattr(window, "_tab2_ai_review_controls_moved_to_host", False):
+            return
+        widgets = [
+            model_label,
+            model_combo,
+            refresh_button,
+            review_check_button,
+        ]
+        target_index = (
+            destination_layout.count()
+            if insert_index is None
+            else insert_index
+        )
+        offset = 0
+        for widget in widgets:
+            parent = widget.parentWidget()
+            parent_layout = parent.layout() if parent is not None else None
+            if parent_layout is not None:
+                parent_layout.removeWidget(widget)
+            widget.setParent(None)
+            destination_layout.insertWidget(target_index + offset, widget, 0)
+            offset += 1
+        row_container.hide()
+        window._tab2_ai_review_controls_moved_to_host = True
 
-class QWidgetLikeRow:
-    """Small QWidget wrapper imported lazily to keep tests easy."""
-
-    def __new__(cls, row_layout: Any) -> Any:
-        """Support new behavior.
-        
-        Parameters
-        ----------
-        row_layout : Any
-            The row layout value.
-        
-        Returns
-        -------
-        Any
-            The any result.
-        """
-        
-        from PySide6.QtWidgets import QWidget
-
-        widget = QWidget()
-        widget.setLayout(row_layout)
-        return widget
+    window.move_ai_review_controls_to_layout = move_ai_review_controls_to_layout
 
 
 class _Tab2AIReviewResultReceiver(QObject):

@@ -89,7 +89,7 @@ class MissingDocstringsWindow(QMainWindow):
         destination_layout,
         insert_index: int | None = None,
     ) -> None:
-        """Move the Safe Mode radio control into the host status/source row."""
+        """Move the Tab 1 audit source radio control into the host header."""
         from .guided_folder_mode.actual_tab3_wiring import move_safe_mode_radio_to_layout
 
         move_safe_mode_radio_to_layout(self, destination_layout, insert_index)
@@ -99,7 +99,7 @@ class MissingDocstringsWindow(QMainWindow):
         destination_layout,
         insert_index: int | None = None,
     ) -> None:
-        """Move Docstring Assistant Project Root controls into the host source row."""
+        """Move Docstring Assistant Project Root controls into the host header."""
         if getattr(self, "_project_root_controls_moved_to_host", False):
             return
 

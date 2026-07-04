@@ -17,25 +17,13 @@ runtime behavior.
 
 from __future__ import annotations
 
-
-__all__ = [
-    'build_generator_candidate_human_decision_recording_commit_contract',
-    'classify_generator_candidate_human_decision_recording_commit_request',
-    'validate_generator_candidate_human_decision_recording_commit_contract',
-]
+__all__ = ['build_generator_candidate_human_decision_recording_commit_contract', 'classify_generator_candidate_human_decision_recording_commit_request', 'validate_generator_candidate_human_decision_recording_commit_contract']
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-
-GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_FEATURE_ID = (
-    "routing_signal_scorer_v3_generator_candidate_human_decision_recording_commit_design_v1"
-)
-GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_SCHEMA_VERSION = (
-    "3.34-generator-candidate-human-decision-recording-commit-design"
-)
-GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_STATUS = (
-    "generator_candidate_human_decision_recording_commit_schema_only_no_decision_write_no_candidate_patch_no_generator_authorization"
-)
+GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_FEATURE_ID = "routing_signal_scorer_v3_generator_candidate_human_decision_recording_commit_design_v1"
+GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_SCHEMA_VERSION = "3.34-generator-candidate-human-decision-recording-commit-design"
+GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_COMMIT_STATUS = "generator_candidate_human_decision_recording_commit_schema_only_no_decision_write_no_candidate_patch_no_generator_authorization"
 
 REQUIRED_FIELDS = frozenset(
     {
@@ -337,7 +325,6 @@ SCHEMA_TALK_TERMS = frozenset(
     }
 )
 
-
 def _sorted(values: Sequence[str] | set[str] | frozenset[str]) -> list[str]:
     """Support sorted behavior.
     
@@ -354,7 +341,6 @@ def _sorted(values: Sequence[str] | set[str] | frozenset[str]) -> list[str]:
     
     return sorted(values)
 
-
 def _false_flags() -> dict[str, bool]:
     """Support false flags behavior.
     
@@ -365,7 +351,6 @@ def _false_flags() -> dict[str, bool]:
     """
     
     return {flag: False for flag in _sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
-
 
 def build_generator_candidate_human_decision_recording_commit_contract() -> dict[str, Any]:
     """Return the inert decision-recording commit schema."""
@@ -388,7 +373,6 @@ def build_generator_candidate_human_decision_recording_commit_contract() -> dict
         "commit_effect_policy": _sorted(REQUIRED_COMMIT_EFFECT_POLICY),
         "stop_conditions": _sorted(REQUIRED_STOP_CONDITIONS),
     }
-
 
 def validate_generator_candidate_human_decision_recording_commit_contract(
     candidate: Mapping[str, Any]
@@ -487,7 +471,6 @@ def validate_generator_candidate_human_decision_recording_commit_contract(
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
 
 def classify_generator_candidate_human_decision_recording_commit_request(user_text: str) -> dict[str, Any]:
     """Classify requests without granting decision-recording or generation authority."""

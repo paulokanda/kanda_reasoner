@@ -17,6 +17,17 @@ __all__ = [
 
 CANONICAL_COMPLETE_JSON_NAME = "<project_slug>__complete.json"
 LOCAL_AI_COMPLETE_JSON_NAME = "<project_slug>__complete_local_AI.json"
+KNOWN_COMPLETE_JSON_PARENTS = {"json_complete", "second_prompt_files"}
+
+
+def _is_canonical_complete_name(name: str) -> bool:
+    """Return True for a generated canonical complete JSON filename."""
+    return name.endswith("__complete.json")
+
+
+def _is_local_ai_complete_name(name: str) -> bool:
+    """Return True for a generated local-AI working JSON filename."""
+    return name.endswith("__complete_local_ai.json")
 
 
 def classify_loaded_json_track(file_path: str) -> str:
@@ -30,16 +41,16 @@ def classify_loaded_json_track(file_path: str) -> str:
     name = parts[-1].lower() if parts else ""
     parent = parts[-2].lower() if len(parts) >= 2 else ""
 
-    if name == CANONICAL_COMPLETE_JSON_NAME.lower() and parent == "json_complete":
+    if _is_canonical_complete_name(name) and parent in KNOWN_COMPLETE_JSON_PARENTS:
         return "Canonical web-AI JSON"
 
-    if name == LOCAL_AI_COMPLETE_JSON_NAME.lower() and parent == "json_complete":
+    if _is_local_ai_complete_name(name) and parent in KNOWN_COMPLETE_JSON_PARENTS:
         return "Local-AI working JSON"
 
-    if name == CANONICAL_COMPLETE_JSON_NAME.lower():
+    if _is_canonical_complete_name(name):
         return "Canonical web-AI JSON candidate"
 
-    if name == LOCAL_AI_COMPLETE_JSON_NAME.lower():
+    if _is_local_ai_complete_name(name):
         return "Local-AI working JSON candidate"
 
     return "Other JSON"

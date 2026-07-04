@@ -1,4 +1,3 @@
-# project-path: kanda_reasoner_app/freeze_hint_intake/contract.py
 """Public contract for freeze hint intake records.
 
 Patch ZIPs produced by the AI may contain a root-level KANDA_FREEZE_HINT.json
@@ -43,11 +42,11 @@ from .models import (
     SCHEMA_VERSION,
     STALE_LOCAL_VALIDATION_PENDING_PATTERNS,
     STARTER_PLACEHOLDER_PATTERNS,
-    FreezeHintIntakeError,
-    FreezeHintIntakePaths,
+    FreezeHintIntakeError as _FreezeHintIntakeError,
+    FreezeHintIntakePaths as _FreezeHintIntakePaths,
 )
 from .paths_io import (
-    build_freeze_hint_intake_paths,
+    build_freeze_hint_intake_paths as _build_freeze_hint_intake_paths,
     _resolve_project_root,
     _default_staging_dir,
     _source_signature,
@@ -104,10 +103,10 @@ from .frozen_matching import (
     _same_feature_identity,
 )
 from .records import (
-    save_freeze_hint_record,
-    load_latest_freeze_hint_record,
-    merge_validation_evidence_into_latest_hint,
-    mark_latest_freeze_hint_used,
+    save_freeze_hint_record as _save_freeze_hint_record,
+    load_latest_freeze_hint_record as _load_latest_freeze_hint_record,
+    merge_validation_evidence_into_latest_hint as _merge_validation_evidence_into_latest_hint,
+    mark_latest_freeze_hint_used as _mark_latest_freeze_hint_used,
     _consume_latest_hint_if_already_frozen,
     _existing_validated_latest_source_mtime_ns,
     _preserve_existing_validated_record_if_same_hint,
@@ -122,12 +121,12 @@ from .consumed_hints import (
     _same_consumed_source,
 )
 from .scanner import (
-    read_freeze_hint_from_patch_zip,
-    scan_and_save_latest_freeze_hint,
+    read_freeze_hint_from_patch_zip as _read_freeze_hint_from_patch_zip,
+    scan_and_save_latest_freeze_hint as _scan_and_save_latest_freeze_hint,
 )
 from .autofill import (
-    resolve_freeze_hint_autofill_state,
-    build_freeze_form_inputs_from_latest_hint,
+    resolve_freeze_hint_autofill_state as _resolve_freeze_hint_autofill_state,
+    build_freeze_form_inputs_from_latest_hint as _build_freeze_form_inputs_from_latest_hint,
     _select_preview_snapshot,
     _select_manual_review_form,
     _merge_record_form_inputs_with_fallback,
@@ -136,3 +135,15 @@ from .autofill import (
     _form_has_recognizable_validation_marker,
     _record_feature_title,
 )
+FreezeHintIntakeError = _FreezeHintIntakeError
+FreezeHintIntakePaths = _FreezeHintIntakePaths
+build_freeze_hint_intake_paths = _build_freeze_hint_intake_paths
+save_freeze_hint_record = _save_freeze_hint_record
+load_latest_freeze_hint_record = _load_latest_freeze_hint_record
+merge_validation_evidence_into_latest_hint = _merge_validation_evidence_into_latest_hint
+mark_latest_freeze_hint_used = _mark_latest_freeze_hint_used
+read_freeze_hint_from_patch_zip = _read_freeze_hint_from_patch_zip
+scan_and_save_latest_freeze_hint = _scan_and_save_latest_freeze_hint
+resolve_freeze_hint_autofill_state = _resolve_freeze_hint_autofill_state
+build_freeze_form_inputs_from_latest_hint = _build_freeze_form_inputs_from_latest_hint
+

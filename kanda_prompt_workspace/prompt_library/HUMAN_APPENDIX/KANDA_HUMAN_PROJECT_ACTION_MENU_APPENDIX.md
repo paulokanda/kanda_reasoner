@@ -322,16 +322,9 @@ AI should deliver:
 Current terminal behavior canon:
 
 ```text
-Install script:
-- if install succeeds, print result/manifest/backup information, wait 5 seconds, then clear terminal;
-- if install fails, do not clear terminal;
-- do not use PowerShell finally blocks.
-
-Validation script:
-- print all validation output;
-- do not clear automatically;
-- clear only after the user presses Enter twice;
-- if validation fails, leave output visible.
+The exact terminal cleanup contract is owned by terminal_cleanup_contract.md.
+Install success uses the 2-second Clear-Host footer and keeps the terminal open.
+Validation, freeze, diagnostics, recovery, errors, and all other non-install-success blocks use Enter, Enter, one final Clear-Host, and keep the terminal open.
 ```
 
 Important distinction:

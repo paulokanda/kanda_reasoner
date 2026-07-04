@@ -13,15 +13,9 @@ scoring, does not modify router authority, and does not change runtime behavior.
 
 from __future__ import annotations
 
-
-__all__ = [
-    'build_generator_candidate_preparation_closure_shield_contract',
-    'classify_generator_candidate_preparation_closure_shield_request',
-    'validate_generator_candidate_preparation_closure_shield_contract',
-]
+__all__ = ['build_generator_candidate_preparation_closure_shield_contract', 'classify_generator_candidate_preparation_closure_shield_request', 'validate_generator_candidate_preparation_closure_shield_contract']
 from collections.abc import Mapping, Sequence
 from typing import Any
-
 
 GENERATOR_CANDIDATE_PREPARATION_CLOSURE_SHIELD_FEATURE_ID = (
     "routing_signal_scorer_v3_generator_candidate_preparation_closure_shield_v1"
@@ -281,7 +275,6 @@ REQUIRED_STOP_CONDITIONS = frozenset(
     }
 )
 
-
 def _as_set(value: Any) -> set[Any]:
     """Support as set behavior.
     
@@ -302,7 +295,6 @@ def _as_set(value: Any) -> set[Any]:
         return set(value)
     return set()
 
-
 def _false_flags() -> dict[str, bool]:
     """Support false flags behavior.
     
@@ -313,7 +305,6 @@ def _false_flags() -> dict[str, bool]:
     """
     
     return {flag: False for flag in sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
-
 
 def build_generator_candidate_preparation_closure_shield_contract() -> dict[str, Any]:
     """Return the schema-only closure shield for the preparation chain."""
@@ -342,7 +333,6 @@ def build_generator_candidate_preparation_closure_shield_contract() -> dict[str,
         ),
         "stop_conditions": sorted(REQUIRED_STOP_CONDITIONS),
     }
-
 
 def validate_generator_candidate_preparation_closure_shield_contract(
     contract: Mapping[str, Any]
@@ -431,7 +421,6 @@ def validate_generator_candidate_preparation_closure_shield_contract(
         "kbsc_preparation_chain_closure_declared": ok,
         "preparation_chain_closed_for_current_phase": ok,
     }
-
 
 def classify_generator_candidate_preparation_closure_shield_request(request_text: str) -> dict[str, Any]:
     """Classify closure-shield requests without enabling candidate patch work."""

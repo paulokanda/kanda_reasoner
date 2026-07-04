@@ -366,7 +366,6 @@ def _false_flags() -> dict[str, bool]:
     
     return {flag: False for flag in _sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
 
-
 def build_generator_candidate_human_decision_recording_implementation_contract() -> dict[str, Any]:
     """Return the inert decision-recording implementation schema."""
     return {
@@ -388,22 +387,17 @@ def build_generator_candidate_human_decision_recording_implementation_contract()
         "implementation_effect_policy": _sorted(REQUIRED_IMPLEMENTATION_EFFECT_POLICY),
         "stop_conditions": _sorted(REQUIRED_STOP_CONDITIONS),
     }
-
-
 def validate_generator_candidate_human_decision_recording_implementation_contract(
     candidate: Mapping[str, Any]
 ) -> dict[str, Any]:
     """Validate the inert recording-implementation schema and return denial facts."""
     errors: list[str] = []
-
     missing = REQUIRED_FIELDS.difference(candidate)
     if missing:
         errors.append("missing required human decision recording implementation fields: " + ", ".join(sorted(missing)))
-
     forbidden = FORBIDDEN_FIELDS.intersection(candidate)
     if forbidden:
         errors.append("forbidden implementation field present: " + ", ".join(sorted(forbidden)))
-
     if candidate.get("schema_id") != GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_IMPLEMENTATION_FEATURE_ID:
         errors.append("schema_id mismatch")
     if candidate.get("schema_version") != GENERATOR_CANDIDATE_HUMAN_DECISION_RECORDING_IMPLEMENTATION_SCHEMA_VERSION:
@@ -422,7 +416,6 @@ def validate_generator_candidate_human_decision_recording_implementation_contrac
         errors.append("current human decision recording implementation effect must remain no_effect_schema_only_not_implemented_not_recorded")
     if candidate.get("current_recorded_decision_value") != "not_recorded":
         errors.append("current recorded decision value must remain not_recorded")
-
     set_checks = [
         ("required_prior_milestones", REQUIRED_PRIOR_MILESTONES),
         ("required_future_implementation_evidence", REQUIRED_FUTURE_IMPLEMENTATION_EVIDENCE),
@@ -440,7 +433,6 @@ def validate_generator_candidate_human_decision_recording_implementation_contrac
             continue
         if not required.issubset(set(values)):
             errors.append(f"{key} missing required values")
-
     flags = candidate.get("disabled_flags", {})
     if not isinstance(flags, Mapping):
         errors.append("disabled_flags must be a mapping")
@@ -451,7 +443,6 @@ def validate_generator_candidate_human_decision_recording_implementation_contrac
                 errors.append(f"disabled flag missing: {flag}")
             elif flags[flag] is not False:
                 errors.append(f"disabled flag must be false: {flag}")
-
     return {
         "ok": not errors,
         "errors": errors,
@@ -486,14 +477,11 @@ def validate_generator_candidate_human_decision_recording_implementation_contrac
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
-
 def classify_generator_candidate_human_decision_recording_implementation_request(user_text: str) -> dict[str, Any]:
     """Classify requests without granting decision-recording or generation authority."""
     text = (user_text or "").lower()
     has_trigger = any(term in text for term in TRIGGER_TERMS_REQUIRING_FUTURE_PATCH)
     has_schema_talk = any(term in text for term in SCHEMA_TALK_TERMS)
-
     base = validate_generator_candidate_human_decision_recording_implementation_contract(
         build_generator_candidate_human_decision_recording_implementation_contract()
     )
@@ -504,7 +492,6 @@ def classify_generator_candidate_human_decision_recording_implementation_request
             "permitted_output": "none",
             "reason": "request would require a separate governed decision-recording, candidate-patch, or generation patch",
         }
-
     return {
         **base,
         "allowed_now": bool(has_schema_talk),

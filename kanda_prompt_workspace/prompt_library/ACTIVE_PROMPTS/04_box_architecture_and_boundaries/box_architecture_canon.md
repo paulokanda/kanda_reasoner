@@ -19,7 +19,7 @@ Before any implementation, repair, refactor, prompt update, governance update, b
 - Preserve public contracts.
 - Validate the active box and any touched external box.
 - Output the Box Boundary Audit before code when boundary risk exists.
-- Refuse private reach-in, God Box expansion, leaking registry behavior, and hidden mutable cross-box state.
+- Refuse private reach-in, God Box expansion, leaking registry behavior, hidden mutable cross-box state, and No-Leak Logic violations.
 
 If the active box, owner paths, public contract, or allowed supporting touches are unclear, stop and ask the user or inspect the required project context. Do not proceed from memory.
 
@@ -42,6 +42,94 @@ loading the full specialist prompt. This complete `box_architecture_canon.md`
 remains on-demand for implementation, repair, refactor, prompt update,
 governance update, bundle creation, GUI ownership changes, public contracts,
 cross-box behavior, mutable-state ownership, and architecture-boundary risk.
+
+
+## No-Leak Logic Object
+
+NO_LEAK_LOGIC_V1: No-Leak Logic is a named boundary-protection object inside
+Box Logic and Box Shielding. It prevents ownership, path, state, contract,
+evidence, and responsibility from leaking across boxes.
+
+No-Leak Logic is not a separate architecture system. It is a specific
+enforcement object inside the existing Box Architecture discipline.
+
+Core rule:
+
+Before implementation, refactor, prompt update, validation, freeze, patch
+delivery, GUI work, or artifact generation, classify every touched item as
+one of:
+
+1. tool-owned logic;
+2. active-project source;
+3. project-specific support state;
+4. generated evidence or handoff artifact;
+5. temporary daily-work artifact;
+6. external box dependency;
+7. out-of-scope file.
+
+If classification is unclear, stop before writing and inspect the source,
+manifest, prompt, or validation context.
+
+No-Leak checklist:
+
+1. Tool/project leakage: reusable tool logic must not be written into
+   active-project output paths; active-project output must not be written into
+   reusable tool-source paths.
+2. Wrong-root leakage: project-specific support files must use the selected
+   active project root and support folders, not a hardcoded KANDA Reasoner
+   root.
+3. Cross-box logic leakage: code, imports, mutable state, UI logic, domain
+   logic, prompt logic, validation logic, governance logic, freeze logic, and
+   delivery logic must stay inside the owning box unless a governed cross-box
+   touch is declared and validated.
+4. Private reach-in leakage: a box must not import, call, edit, or depend on
+   another box's private internals. Use public contracts only.
+5. Public API ownership leakage: helper modules must not accidentally become
+   public owners of facade symbols. Facades own public compatibility surfaces
+   unless a governed architecture change approves another owner.
+6. Mutable-state leakage: hidden mutable globals, registries, caches,
+   singletons, or shared runtime state must not become silent communication
+   channels between boxes.
+7. Generated-artifact leakage: generated handoff files, startup ZIP contents,
+   reports, manifests, validation output, and preview artifacts are not source
+   truth unless explicitly promoted through the governed source path.
+8. Validation/freeze leakage: validation evidence, freeze hints, freeze
+   memory, and Error Memory intake must stay in their governed locations and
+   must not be mixed into unrelated tool, project, or generated-output paths.
+9. Prompt/canon leakage: prompt-library canon updates must be made in
+   canonical prompt files, not only in generated startup artifacts or copied
+   ZIP contents.
+10. Refactor-output leakage: refactor engines, analyzers, planners, and
+    validators are tool-owned; concrete split/refactored files produced for a
+    selected project are project-owned.
+
+Required output when no-leak risk exists:
+
+```text
+NO-LEAK CHECK
+
+Active box:
+Tool-owned files:
+Project-owned files:
+Project-specific support files:
+Generated/evidence files:
+Temporary daily-work files:
+External boxes touched:
+Out-of-scope files:
+Leak risks:
+Blocked writes:
+Safe next action:
+```
+
+Routing rule:
+
+If any no-leak answer is uncertain, route to `box_architecture_canon.md`,
+`kanda_box_shielding_canon.md`, and `project_tool_boundary_canon.md` when
+tool/project ownership is involved. For generated startup delivery, route to
+the startup delivery maintenance rules.
+
+Do not proceed from memory when ownership, root, box, public contract,
+generated/source status, or freeze/validation location is unclear.
 
 ## 0. Core Definition
 

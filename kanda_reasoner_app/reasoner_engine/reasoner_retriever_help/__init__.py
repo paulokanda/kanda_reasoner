@@ -14,7 +14,7 @@ MODULE ORIGIN: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\r
 MANIFEST: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever_help.json
 HELP FOLDER: E:\\selected_project\\kanda_reasoner_app\\project_reasoner_v10\\reasoner_retriever_help
 PURPOSE: Package export surface for reasoner_retriever helpers.
-EXPORTS: bundle_merge, file_context_scoring, file_retrieval, profile_support, query_intents, query_text, section_retrieval, snippet_expansion, snippet_retrieval, symbol_retrieval
+EXPORTS: bundle_merge, file_context_scoring, file_retrieval, profile_support, query_intents, query_text, retriever_core_mixin, retriever_intent_section_mixin, retriever_snippet_evidence_mixin, section_retrieval, snippet_expansion, snippet_retrieval, symbol_retrieval
 DEPENDS ON:
 REFACTOR DATE: 2026-04-10
 """
@@ -27,12 +27,14 @@ __all__ = [
     "profile_support",
     "query_intents",
     "query_text",
+    "retriever_core_mixin",
+    "retriever_intent_section_mixin",
+    "retriever_snippet_evidence_mixin",
     "section_retrieval",
     "snippet_expansion",
     "snippet_retrieval",
     "symbol_retrieval",
 ]
-
 
 
 

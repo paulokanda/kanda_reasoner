@@ -277,7 +277,6 @@ REQUIRED_NO_AUTHORITY_ASSERTIONS = frozenset(
         "file_set_does_not_create_candidate_patch",
     }
 )
-
 REQUIRED_FILE_SET_EFFECT_POLICY = frozenset(
     {
         "schema_only_current_effect",
@@ -291,7 +290,6 @@ REQUIRED_FILE_SET_EFFECT_POLICY = frozenset(
         "future_generation_requires_separate_governed_patch",
     }
 )
-
 REQUIRED_STOP_CONDITIONS = frozenset(
     {
         "stop_if_request_asks_to_create_candidate_patch_now",
@@ -306,10 +304,7 @@ REQUIRED_STOP_CONDITIONS = frozenset(
         "stop_if_request_asks_to_change_router_authority_now",
     }
 )
-
 FORBIDDEN_FILE_SET_FIELDS = REQUIRED_PROHIBITED_FILE_SET_OUTPUTS
-
-
 def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
     """Support sorted tuple behavior.
     
@@ -323,13 +318,9 @@ def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
     tuple[str, ...]
         The tuple of values.
     """
-    
     return tuple(sorted(values))
-
-
 def build_generator_candidate_patch_file_set_contract() -> dict[str, Any]:
     """Return the frozen design contract for generator candidate patch file-set."""
-
     return {
         "schema_id": GENERATOR_CANDIDATE_PATCH_FILE_SET_FEATURE_ID,
         "schema_version": GENERATOR_CANDIDATE_PATCH_FILE_SET_SCHEMA_VERSION,
@@ -351,8 +342,6 @@ def build_generator_candidate_patch_file_set_contract() -> dict[str, Any]:
         "file_set_effect_policy": _sorted_tuple(REQUIRED_FILE_SET_EFFECT_POLICY),
         "stop_conditions": _sorted_tuple(REQUIRED_STOP_CONDITIONS),
     }
-
-
 def _as_set(value: object) -> set[str]:
     """Support as set behavior.
     
@@ -366,24 +355,18 @@ def _as_set(value: object) -> set[str]:
     set[str]
         The set result.
     """
-    
     if isinstance(value, str) or not isinstance(value, Sequence):
         return set()
     return {item for item in value if isinstance(item, str)}
-
-
 def validate_generator_candidate_patch_file_set_contract(candidate: Mapping[str, Any]) -> dict[str, Any]:
     """Validate a candidate file_set design contract without side effects."""
-
     errors: list[str] = []
     for field in sorted(REQUIRED_FILE_SET_FIELDS):
         if field not in candidate:
             errors.append(f"missing required field: {field}")
-
     for field in sorted(FORBIDDEN_FILE_SET_FIELDS):
         if field in candidate:
             errors.append(f"forbidden file_set field present: {field}")
-
     if candidate.get("schema_id") != GENERATOR_CANDIDATE_PATCH_FILE_SET_FEATURE_ID:
         errors.append("schema_id mismatch")
     if candidate.get("schema_version") != GENERATOR_CANDIDATE_PATCH_FILE_SET_SCHEMA_VERSION:
@@ -398,7 +381,6 @@ def validate_generator_candidate_patch_file_set_contract(candidate: Mapping[str,
         errors.append("current_file_set_state is not allowed")
     if candidate.get("current_file_set_effect") != "no_effect_schema_only_not_file_set_defined":
         errors.append("current_file_set_effect must remain schema-only/no-effect")
-
     required_sets = {
         "required_prior_milestones": REQUIRED_PRIOR_MILESTONES,
         "required_file_set_sections": REQUIRED_FILE_SET_SECTIONS,
@@ -417,7 +399,6 @@ def validate_generator_candidate_patch_file_set_contract(candidate: Mapping[str,
         missing = sorted(required.difference(actual))
         if missing:
             errors.append(f"{field} missing required values: {missing}")
-
     disabled_flags = candidate.get("disabled_flags")
     if not isinstance(disabled_flags, Mapping):
         errors.append("disabled_flags must be a mapping")
@@ -425,7 +406,6 @@ def validate_generator_candidate_patch_file_set_contract(candidate: Mapping[str,
         for flag in sorted(REQUIRED_DISABLED_FLAGS_FALSE):
             if disabled_flags.get(flag) is not False:
                 errors.append(f"disabled flag must be false: {flag}")
-
     ok = not errors
     return {
         "ok": ok,
@@ -454,11 +434,8 @@ def validate_generator_candidate_patch_file_set_contract(candidate: Mapping[str,
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
-
 def classify_generator_candidate_patch_file_set_request(action: str) -> dict[str, Any]:
     """Classify whether an action is allowed by this design-only file_set."""
-
     lowered = action.lower()
     unsafe_terms = (
         "create candidate patch",

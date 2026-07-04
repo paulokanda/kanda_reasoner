@@ -501,6 +501,85 @@ def _apply_test_contract_cleanup_policy(source: str) -> str:
     return source
 
 
+def _apply_boundary_error_contract_marker_policy(source: str) -> str:
+    """Avoid treating successful feature IDs containing "error" as failures."""
+    old = (
+        'def _stmt_prints_failure(stmt: ast.stmt) -> int | None:\n'
+        '    """Return the line number when a statement prints failure/error text."""\n'
+        '    if not isinstance(stmt, ast.Expr) or not isinstance(stmt.value, ast.Call):\n'
+        '        return None\n'
+        '    if _call_full_name(stmt.value.func) != "print":\n'
+        '        return None\n'
+        '    printable = " ".join(_string_literals_in_node(stmt.value)).upper()\n'
+        '    if "FAIL" in printable or "ERROR" in printable:\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    return None\n'
+    )
+    new = (
+        'def _stmt_prints_failure(stmt: ast.stmt) -> int | None:\n'
+        '    """Return the line number when a statement prints actual failure text."""\n'
+        '    if not isinstance(stmt, ast.Expr) or not isinstance(stmt.value, ast.Call):\n'
+        '        return None\n'
+        '    if _call_full_name(stmt.value.func) != "print":\n'
+        '        return None\n'
+        '    printable = " ".join(_string_literals_in_node(stmt.value)).upper()\n'
+        '    failure_markers = (\n'
+        '        "VALIDATION ERROR",\n'
+        '        "VALIDATION FAIL",\n'
+        '        "VALIDATION FAILED",\n'
+        '        "ZIP CONTRACT: FAIL",\n'
+        '        "FREEZE_HINT_EVIDENCE_MERGE: FAIL",\n'
+        '        "FAIL -",\n'
+        '        "FAIL:",\n'
+        '        "FAILED",\n'
+        '    )\n'
+        '    if any(marker in printable for marker in failure_markers):\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    if printable.startswith("ERROR:") or printable.startswith("ERROR "):\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    return None\n'
+    )
+    return _replace_once(source, old, new)
+
+
+def _apply_stale_variant_active_domain_terms_policy(source: str) -> str:
+    """Do not flag active domain phrases that contain broad stale tokens."""
+    old = (
+        'def _filename_has_stale_marker(filename: str) -> bool:\n'
+        '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
+        '    stem = Path(filename).stem.lower()\n'
+        '    tokens = _tokenize_variant_text(stem)\n'
+        '    if tokens.intersection(STALE_VARIANT_TOKEN_MARKERS):\n'
+        '        return True\n'
+        '    if any(marker in stem for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
+        '        return True\n'
+        '    if any(stem.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
+        '        return True\n'
+        '    return False\n'
+    )
+    new = (
+        'ACTIVE_DOMAIN_STALE_TOKEN_PHRASES = (\n'
+        '    "preflight_backup",\n'
+        '    "copy_error",\n'
+        '    "chat_service",\n'
+        ')\n\n\n'
+        'def _filename_has_stale_marker(filename: str) -> bool:\n'
+        '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
+        '    stem = Path(filename).stem.lower()\n'
+        '    if any(phrase in stem for phrase in ACTIVE_DOMAIN_STALE_TOKEN_PHRASES):\n'
+        '        return False\n'
+        '    tokens = _tokenize_variant_text(stem)\n'
+        '    if tokens.intersection(STALE_VARIANT_TOKEN_MARKERS):\n'
+        '        return True\n'
+        '    if any(marker in stem for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
+        '        return True\n'
+        '    if any(stem.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
+        '        return True\n'
+        '    return False\n'
+    )
+    return _replace_once(source, old, new)
+
+
 def load_manage_architecture_source() -> str:
     """Return the original manage_architecture implementation source."""
     encoded_source = "".join([
@@ -535,6 +614,8 @@ def load_manage_architecture_source() -> str:
     source = _apply_stale_variant_compatibility_shim_policy(source)
     source = _apply_generated_artifact_bundle_temp_manifest_policy(source)
     source = _apply_test_contract_cleanup_policy(source)
+    source = _apply_boundary_error_contract_marker_policy(source)
+    source = _apply_stale_variant_active_domain_terms_policy(source)
     return _apply_tab8_project_exclusion_policy(source)
 
 

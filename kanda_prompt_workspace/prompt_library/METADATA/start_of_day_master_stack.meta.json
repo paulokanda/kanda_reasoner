@@ -6,7 +6,7 @@
   "status": "active_candidate",
   "load_type": "tier_0_session_kernel",
   "source_stage": "kanda_context_routing_layer_phase1",
-  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library.",
+  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library. Includes startup-visible CODE_MODULE_HARD_MAX_500_LINES bridge for the <=500-line hard gate on every new or touched code/source module. Includes startup-visible BOX_LOGIC_STARTUP_SHIELD bridge for mandatory beginning-of-chat box-boundary enforcement.",
   "priority": 5,
   "required_companion_prompts": [
     "session_start_upload_checklist",
@@ -18,5 +18,18 @@
     "start of day",
     "continue KANDA context routing",
     "daily kernel"
+  ],
+  "notes": [
+    "Startup Code Module Size Hard Gate Bridge v1 is mandatory beginning-of-chat context: every new or touched code/source module must be <=500 physical lines after creation, update, modification, refactor, or split; route over-limit code work to large_module_refactor_protocol before delivery.",
+    "Box Logic Startup Shield v1 is mandatory beginning-of-chat context: identify the active box, owner paths, allowed files, out-of-scope files, cross-box touches, public contracts, validation scope, and boundary risks before implementation, repair, refactor, prompt update, governance update, bundle, GUI, validation, freeze, patch, or artifact delivery.",
+    "Terminal Cleanup Contract Bridge v1 is mandatory beginning-of-chat context: install success uses about 2 seconds then Clear-Host and all non-install-success terminal blocks use Enter, Enter, one final Clear-Host; route emitted terminal commands to terminal_cleanup_contract and pre_output_contract_gates."
+  ],
+  "startup_markers": [
+    "BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_START",
+    "CODE_MODULE_HARD_MAX_500_LINES",
+    "BEGINNING_OF_DAY_BOX_LOGIC_SHIELD_V1_START",
+    "BOX_LOGIC_STARTUP_SHIELD",
+    "BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_START",
+    "TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE"
   ]
 }

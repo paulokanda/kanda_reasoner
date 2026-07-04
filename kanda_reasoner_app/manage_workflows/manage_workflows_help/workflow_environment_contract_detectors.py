@@ -9,9 +9,7 @@ from typing import Any
 from .workflow_detector_context import WorkflowDetectorContext
 from .workflow_issue_models import WorkflowIssue
 
-__all__ = [
-    "detect_workflow_environment_contract_issues",
-]
+__all__ = ["detect_workflow_environment_contract_issues"]
 
 _BAD_ENCODING_MARKERS = (
     "-encoding unicode",
@@ -78,7 +76,6 @@ _ROOT_PLACEHOLDERS = (
     "{workspace_root}",
 )
 
-
 def _issue(
     *,
     issue_id: str,
@@ -118,7 +115,6 @@ def _issue(
         actual=actual,
     )
 
-
 def _iter_workflow_commands(manifest: dict[str, Any]) -> list[tuple[str, int, Any]]:
     """Support iter workflow commands behavior.
     
@@ -150,7 +146,6 @@ def _iter_workflow_commands(manifest: dict[str, Any]) -> list[tuple[str, int, An
             items.append((str(workflow_name), index, spec))
     return items
 
-
 def _command_name(spec: Any, index: int) -> str:
     """Support command name behavior.
     
@@ -170,7 +165,6 @@ def _command_name(spec: Any, index: int) -> str:
     if isinstance(spec, dict) and spec.get("name"):
         return str(spec.get("name"))
     return "command_" + str(index)
-
 
 def _command_text(spec: Any) -> str:
     """Support command text behavior.
@@ -206,7 +200,6 @@ def _command_text(spec: Any) -> str:
 
     return " ".join(parts)
 
-
 def _dict_text(spec: Any) -> str:
     """Support dict text behavior.
     
@@ -226,7 +219,6 @@ def _dict_text(spec: Any) -> str:
     except Exception:
         return str(spec)
 
-
 def json_dumps_safe(value: Any) -> str:
     """Support json dumps safe behavior.
     
@@ -244,7 +236,6 @@ def json_dumps_safe(value: Any) -> str:
     import json
 
     return json.dumps(value, sort_keys=True, ensure_ascii=True)
-
 
 def _has_bad_encoding_marker(text: str) -> str | None:
     """Support has bad encoding marker behavior.
@@ -265,7 +256,6 @@ def _has_bad_encoding_marker(text: str) -> str | None:
         if marker in lowered:
             return marker
     return None
-
 
 def _bad_line_ending_value(spec: dict[str, Any]) -> tuple[str, str] | None:
     """Support bad line ending value behavior.
@@ -289,7 +279,6 @@ def _bad_line_ending_value(spec: dict[str, Any]) -> tuple[str, str] | None:
             return key, value
     return None
 
-
 def _has_expected_output_contract(spec: dict[str, Any]) -> bool:
     """Support has expected output contract behavior.
     
@@ -305,7 +294,6 @@ def _has_expected_output_contract(spec: dict[str, Any]) -> bool:
     """
     
     return any(key in spec for key in _OUTPUT_KEYS)
-
 
 def _has_non_empty_guard(spec: dict[str, Any]) -> bool:
     """Support has non empty guard behavior.
@@ -327,7 +315,6 @@ def _has_non_empty_guard(spec: dict[str, Any]) -> bool:
             return True
     return False
 
-
 def _allows_empty_output(spec: dict[str, Any]) -> bool:
     """Support allows empty output behavior.
     
@@ -346,7 +333,6 @@ def _allows_empty_output(spec: dict[str, Any]) -> bool:
         if spec.get(key) is True:
             return True
     return False
-
 
 def _dependency_items(value: Any) -> list[str]:
     """Support dependency items behavior.
@@ -369,7 +355,6 @@ def _dependency_items(value: Any) -> list[str]:
     if isinstance(value, dict):
         return [str(key) + str(val) for key, val in value.items()]
     return []
-
 
 def _find_unpinned_dependencies(spec: dict[str, Any]) -> list[str]:
     """Support find unpinned dependencies behavior.
@@ -395,7 +380,6 @@ def _find_unpinned_dependencies(spec: dict[str, Any]) -> list[str]:
                 unpinned.append(text)
     return sorted(set(unpinned))
 
-
 def _path_root_drift_hits(spec: dict[str, Any]) -> list[str]:
     """Support path root drift hits behavior.
     
@@ -420,7 +404,6 @@ def _path_root_drift_hits(spec: dict[str, Any]) -> list[str]:
         for match in _WINDOWS_ABSOLUTE_PATH_RE.finditer(value):
             hits.append(key + "=" + match.group(0))
     return sorted(set(hits))
-
 
 def detect_workflow_environment_contract_issues(
     context: WorkflowDetectorContext,

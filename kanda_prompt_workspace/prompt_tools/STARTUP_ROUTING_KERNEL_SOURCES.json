@@ -41,7 +41,7 @@
       "generated_filename": "05_start_of_day_master_stack.md",
       "prompt_id": "start_of_day_master_stack",
       "load_mode": "always_startup",
-      "role": "Defines start-of-day/session startup flow, baseline session behavior, and the beginning-of-day Code Module Size Bridge."
+      "role": "Defines start-of-day/session startup flow, baseline session behavior, the beginning-of-day Code Module Size Bridge, Box Logic bridge, and No-Leak Logic Bridge."
     },
     {
       "load_order": 6,

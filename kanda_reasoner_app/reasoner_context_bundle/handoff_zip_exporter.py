@@ -16,7 +16,20 @@ import os
 from pathlib import Path
 from typing import Any
 
-from .bundle_checker import check_ai_context_bundle
+from .handoff_zip_exporter_paths_private import (
+    _assert_no_forbidden_outputs,
+    _cleanup_created_paths,
+    _finalize_ai_context_artifacts_for_handoff,
+    _previous_second_prompt_files_for_reuse,
+    _publish_stage_outputs,
+    _retarget_record_paths,
+)
+from .handoff_zip_exporter_validation_private import (
+    _check_bundle_if_requested,
+    _part_size_error,
+    _resolve_part_size,
+    _validate_destination,
+)
 from .handoff_zip_exporter_support import (
     _BYTES_PER_MB,
     _EXPORT_GENERATOR,
@@ -46,28 +59,6 @@ __all__ = [
 ]
 
 
-def _part_size_error(context: ProjectContext, message: str) -> dict[str, Any]:
-    """Support part size error behavior.
-    
-    Parameters
-    ----------
-    context : ProjectContext
-        The context value.
-    message : str
-        The message text.
-    
-    Returns
-    -------
-    dict[str, Any]
-        The mapped values.
-    """
-    
-    return {
-        "ok": False,
-        "kind": _EXPORT_KIND,
-        "project_slug": context.project_slug,
-        "failures": [message],
-    }
 
 
 def is_destination_inside_project_root(project_root: str | Path, destination: str | Path) -> bool:
@@ -75,286 +66,8 @@ def is_destination_inside_project_root(project_root: str | Path, destination: st
     return _is_destination_inside_project_root(project_root, destination)
 
 
-def _validate_destination(context: ProjectContext, destination: Path) -> dict[str, Any] | None:
-    """Support validate destination behavior.
-    
-    Parameters
-    ----------
-    context : ProjectContext
-        The context value.
-    destination : Path
-        The destination path.
-    
-    Returns
-    -------
-    dict[str, Any] | None
-        The mapped values.
-    """
-    
-    if not destination.exists() or not destination.is_dir():
-        return _part_size_error(context, "Destination folder does not exist: " + str(destination))
-    if is_destination_inside_project_root(context.root, destination):
-        return _part_size_error(
-            context,
-            "Destination folder is inside the active project root. "
-            "Choose a folder outside: " + str(context.root),
-        )
-    return None
 
 
-def _resolve_part_size(
-    context: ProjectContext,
-    part_size_mb: int,
-    part_size_bytes: int | None,
-) -> tuple[int | None, dict[str, Any] | None]:
-    """Support resolve part size behavior.
-    
-    Parameters
-    ----------
-    context : ProjectContext
-        The context value.
-    part_size_mb : int
-        The part size mb value.
-    part_size_bytes : int | None
-        The part size bytes value.
-    
-    Returns
-    -------
-    tuple[int | None, dict[str, Any] | None]
-        The tuple of values.
-    """
-    
-    if part_size_bytes is None:
-        if part_size_mb not in ALLOWED_PART_SIZE_MB_OPTIONS:
-            return None, _part_size_error(
-                context,
-                "part_size_mb must be one of " + ", ".join(str(item) for item in ALLOWED_PART_SIZE_MB_OPTIONS),
-            )
-        part_size_bytes = part_size_mb * _BYTES_PER_MB
-    if part_size_bytes <= 0:
-        return None, _part_size_error(context, "part_size_bytes must be positive")
-    return int(part_size_bytes), None
-
-
-def _check_bundle_if_requested(context: ProjectContext, check_bundle: bool) -> dict[str, Any] | None:
-    """Support check bundle if requested behavior.
-    
-    Parameters
-    ----------
-    context : ProjectContext
-        The context value.
-    check_bundle : bool
-        The check bundle value.
-    
-    Returns
-    -------
-    dict[str, Any] | None
-        The mapped values.
-    """
-    
-    if not check_bundle:
-        return None
-    check_result = check_ai_context_bundle(context)
-    if bool(check_result.get("ok", False)):
-        return None
-    failures = check_result.get("failures", [])
-    if not isinstance(failures, list):
-        failures = ["Unknown bundle checker failure"]
-    return {
-        "ok": False,
-        "kind": _EXPORT_KIND,
-        "project_slug": context.project_slug,
-        "failures": [str(item) for item in failures],
-        "check_result": check_result,
-    }
-
-
-def _cleanup_created_paths(created_paths: list[Path]) -> None:
-    """Support cleanup created paths behavior.
-    
-    Parameters
-    ----------
-    created_paths : list[Path]
-        The created paths value.
-    """
-    
-    for created_path in created_paths:
-        try:
-            created_path.unlink()
-        except Exception:
-            pass
-
-
-def _retarget_path_string(value: Any, stage: Path, destination: Path) -> Any:
-    """Support retarget path string behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    stage : Path
-        The stage value.
-    destination : Path
-        The destination path.
-    
-    Returns
-    -------
-    Any
-        The any result.
-    """
-    
-    if not isinstance(value, str):
-        return value
-    stage_text = str(stage)
-    dest_text = str(destination)
-    return value.replace(stage_text, dest_text).replace(
-        stage_text.replace("\\", "/"), dest_text.replace("\\", "/")
-    )
-
-
-def _retarget_record_paths(value: Any, stage: Path, destination: Path) -> Any:
-    """Support retarget record paths behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    stage : Path
-        The stage value.
-    destination : Path
-        The destination path.
-    
-    Returns
-    -------
-    Any
-        The any result.
-    """
-    
-    if isinstance(value, dict):
-        return {key: _retarget_record_paths(item, stage, destination) for key, item in value.items()}
-    if isinstance(value, list):
-        return [_retarget_record_paths(item, stage, destination) for item in value]
-    return _retarget_path_string(value, stage, destination)
-
-
-def _publish_stage_outputs(stage: Path, destination: Path) -> list[Path]:
-    """Support publish stage outputs behavior.
-    
-    Parameters
-    ----------
-    stage : Path
-        The stage value.
-    destination : Path
-        The destination path.
-    
-    Returns
-    -------
-    list[Path]
-        The list of values.
-    """
-    
-    published: list[Path] = []
-    destination.mkdir(parents=True, exist_ok=True)
-    for child in sorted(stage.iterdir(), key=lambda item: item.name.lower()):
-        target = destination / child.name
-        if target.exists():
-            if target.is_dir():
-                shutil.rmtree(target)
-            else:
-                target.unlink()
-        shutil.move(str(child), str(target))
-        published.append(target)
-    return published
-
-
-def _assert_no_forbidden_outputs(output_dir: Path) -> None:
-    """Support assert no forbidden outputs behavior.
-    
-    Parameters
-    ----------
-    output_dir : Path
-        The output dir value.
-    """
-    
-    forbidden_names = {"CHUNK_MANIFEST.json", "json_splitted"}
-    for child in output_dir.rglob("*"):
-        if child.name in forbidden_names or child.name == "chunks":
-            raise ValueError("Forbidden legacy split artifact generated: " + str(child))
-        if child.name.endswith("__reconstruction_payload.json"):
-            raise ValueError("Forbidden normal reconstruction payload generated: " + str(child))
-
-
-
-def _delivery_folder_for_metadata(destination: Path) -> Path:
-    """Return the final public folder to write inside artifact metadata."""
-    if destination.name == "second_prompt_files_building":
-        return destination.with_name("second_prompt_files")
-    return destination
-
-
-def _previous_second_prompt_files_for_reuse(destination: Path) -> Path:
-    """Return the selected project's previous final second_prompt_files folder.
-
-    Show Project to AI may build new artifacts in a temporary sibling named
-    ``second_prompt_files_building``.  Reusable artifact families, such as
-    PNG assets, must be read from the same selected project's previously
-    published ``second_prompt_files`` folder, not from the tool installation
-    and not from a hard-coded project name.
-    """
-    if destination.name == "second_prompt_files_building":
-        return destination.with_name("second_prompt_files")
-    return destination
-
-
-def _rewrite_text_references(folder: Path, delivery_folder: Path) -> int:
-    """Rewrite build/stage folder references to the public delivery folder."""
-    replacements = (
-        (str(folder), str(delivery_folder)),
-        (str(folder).replace("\\", "/"), str(delivery_folder).replace("\\", "/")),
-        ("show_project_to_AI/second_prompt_files_building", "show_project_to_AI/second_prompt_files"),
-        ("show_project_to_AI\\second_prompt_files_building", "show_project_to_AI\\second_prompt_files"),
-        ("second_prompt_files_building", "second_prompt_files"),
-    )
-    changed = 0
-    if not folder.exists():
-        return changed
-    for path in folder.rglob("*"):
-        if not path.is_file() or path.suffix.lower() not in {".json", ".txt", ".md"}:
-            continue
-        try:
-            text = path.read_text(encoding="utf-8-sig")
-        except UnicodeDecodeError:
-            continue
-        original = text
-        for old, new in replacements:
-            text = text.replace(old, new)
-        if text != original:
-            path.write_text(text, encoding="utf-8")
-            changed += 1
-    return changed
-
-
-def _finalize_ai_context_artifacts_for_handoff(context: ProjectContext, destination: Path) -> None:
-    """Refresh JSON artifacts before they are copied into upload ZIPs.
-
-    The GUI builds in ``second_prompt_files_building`` and publishes later.
-    Upload ZIPs are created before that publish step, so this function rewrites
-    metadata to the final delivery folder and refreshes the mutually linked
-    briefing/manifest pair before packaging.
-    """
-    from .ai_briefing_builder import write_ai_briefing_json
-    from .bundle_manifest_builder import write_bundle_manifest_json
-
-    delivery_folder = _delivery_folder_for_metadata(destination)
-    _rewrite_text_references(destination, delivery_folder)
-    write_ai_briefing_json(context)
-    _rewrite_text_references(destination, delivery_folder)
-    write_bundle_manifest_json(context)
-    _rewrite_text_references(destination, delivery_folder)
-    write_ai_briefing_json(context)
-    _rewrite_text_references(destination, delivery_folder)
-    write_bundle_manifest_json(context)
-    _rewrite_text_references(destination, delivery_folder)
 
 def export_json_handoff_zip_parts(
     project: str | Path | ProjectContext,
@@ -378,7 +91,7 @@ def export_json_handoff_zip_parts(
     if destination_error is not None:
         return destination_error
 
-    resolved_part_size_bytes, size_error = _resolve_part_size(context, part_size_mb, part_size_bytes)
+    resolved_part_size_bytes, size_error = _resolve_part_size(context, part_size_mb, part_size_bytes, ALLOWED_PART_SIZE_MB_OPTIONS)
     if size_error is not None:
         return size_error
     if resolved_part_size_bytes is None:

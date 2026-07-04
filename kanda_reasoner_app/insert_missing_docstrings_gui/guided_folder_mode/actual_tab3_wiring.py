@@ -27,6 +27,10 @@ def move_safe_mode_radio_to_layout(
     if radio is None or destination_layout is None:
         return
 
+    set_parent = getattr(radio, "setParent", None)
+    if callable(set_parent):
+        set_parent(None)
+
     insert_widget = getattr(destination_layout, "insertWidget", None)
     add_widget = getattr(destination_layout, "addWidget", None)
     if insert_index is not None and callable(insert_widget):

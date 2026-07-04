@@ -13,7 +13,7 @@ def _build_ui(self) -> None:
     """
     
     from PySide6.QtCore import Qt
-    from PySide6.QtGui import QFont
+    from PySide6.QtGui import QColor, QFont, QPalette
     from PySide6.QtWidgets import QGroupBox, QRadioButton, QSplitter
 
     central = QWidget()
@@ -32,24 +32,122 @@ def _build_ui(self) -> None:
     combined_button_font = QFont()
     combined_button_font.setBold(True)
     self.create_first_and_second_prompt_files_button.setFont(combined_button_font)
-    self.create_first_and_second_prompt_files_button.setStyleSheet("color: green; font-weight: bold;")
+    self.create_first_and_second_prompt_files_button.setStyleSheet(
+        "color: #008000; "
+        "font-weight: bold; "
+        "border: 1px solid #008000; "
+        "padding: 2px 6px;"
+    )
     project_root_row.addWidget(self.create_first_and_second_prompt_files_button)
-    project_root_row.addWidget(QLabel("Project root:"))
+    self.project_root_label = QLabel("Project Root:")
+    self.project_root_label.setStyleSheet("color: #0B3D91; font-weight: bold; padding-left: 4px;")
+    project_root_row.addWidget(self.project_root_label)
     self.project_root_edit = QLineEdit(
         self._prefs.get("project_root", str(_DEFAULT_PROJECT_ROOT))
     )
+    self.project_root_edit.setMinimumWidth(180)
+    self.project_root_edit.setMaximumWidth(360)
     project_root_row.addWidget(self.project_root_edit)
     self.browse_project_button = QPushButton("Browse...")
     project_root_row.addWidget(self.browse_project_button)
-    project_root_row.addWidget(QLabel("AI answer Routine Blueprint:"))
+    project_root_row.addStretch(1)
+    self.ai_answer_routine_label = QLabel("AI answer Routine Blueprint:")
+    project_root_row.addWidget(self.ai_answer_routine_label)
     self.copy_patch_validate_freeze_routine_button = QPushButton(
-        "Copy Patch Validate Freeze Recovery Routine"
+        "Answer, Validate, Freeze, Memorize Error"
     )
+    answer_routine_button_palette = (
+        self.copy_patch_validate_freeze_routine_button.palette()
+    )
+    answer_routine_button_palette.setColor(
+        QPalette.ButtonText,
+        QColor("#ff4d00"),
+    )
+    self.copy_patch_validate_freeze_routine_button.setPalette(
+        answer_routine_button_palette
+    )
+    answer_routine_button_font = self.copy_patch_validate_freeze_routine_button.font()
+    answer_routine_button_font.setBold(True)
+    self.copy_patch_validate_freeze_routine_button.setFont(answer_routine_button_font)
     project_root_row.addWidget(self.copy_patch_validate_freeze_routine_button)
-    project_root_row.addWidget(QLabel("Bridge List:"))
-    self.copy_complete_bridge_list_button = QPushButton("Complete Bridge List")
-    project_root_row.addWidget(self.copy_complete_bridge_list_button)
+    self.copy_terminal_cleanup_contract_button = QPushButton("Clean 2sec 2xEnter")
+    terminal_cleanup_button_palette = (
+        self.copy_terminal_cleanup_contract_button.palette()
+    )
+    terminal_cleanup_button_palette.setColor(
+        QPalette.ButtonText,
+        QColor("#ff4d00"),
+    )
+    self.copy_terminal_cleanup_contract_button.setPalette(
+        terminal_cleanup_button_palette
+    )
+    terminal_cleanup_button_font = self.copy_terminal_cleanup_contract_button.font()
+    terminal_cleanup_button_font.setBold(True)
+    self.copy_terminal_cleanup_contract_button.setFont(terminal_cleanup_button_font)
+    project_root_row.addWidget(self.copy_terminal_cleanup_contract_button)
+    self.bridges_label = QLabel("Bridges:")
+    bridges_label_palette = self.bridges_label.palette()
+    bridges_label_palette.setColor(
+        QPalette.WindowText,
+        QColor("#000000"),
+    )
+    self.bridges_label.setPalette(bridges_label_palette)
+    bridges_label_font = self.bridges_label.font()
+    bridges_label_font.setBold(False)
+    self.bridges_label.setFont(bridges_label_font)
+    project_root_row.addWidget(self.bridges_label)
+    self.copy_startup_bridge_list_button = QPushButton("Startup")
+    startup_bridge_button_palette = self.copy_startup_bridge_list_button.palette()
+    startup_bridge_button_palette.setColor(
+        QPalette.ButtonText,
+        QColor("#ff4d00"),
+    )
+    self.copy_startup_bridge_list_button.setPalette(startup_bridge_button_palette)
+    startup_bridge_button_font = self.copy_startup_bridge_list_button.font()
+    startup_bridge_button_font.setBold(True)
+    self.copy_startup_bridge_list_button.setFont(startup_bridge_button_font)
+    project_root_row.addWidget(self.copy_startup_bridge_list_button)
+    self.copy_on_demand_bridge_list_button = QPushButton("On Demand")
+    on_demand_bridge_button_palette = self.copy_on_demand_bridge_list_button.palette()
+    on_demand_bridge_button_palette.setColor(
+        QPalette.ButtonText,
+        QColor("#ff4d00"),
+    )
+    self.copy_on_demand_bridge_list_button.setPalette(on_demand_bridge_button_palette)
+    on_demand_bridge_button_font = self.copy_on_demand_bridge_list_button.font()
+    on_demand_bridge_button_font.setBold(True)
+    self.copy_on_demand_bridge_list_button.setFont(on_demand_bridge_button_font)
+    project_root_row.addWidget(self.copy_on_demand_bridge_list_button)
     collector_layout.addLayout(project_root_row)
+    self._project_root_controls_moved_to_host = False
+
+    def _move_project_root_controls_to_layout(destination_layout, insert_index: int | None = None) -> None:
+        if self._project_root_controls_moved_to_host:
+            return
+        widgets = (
+            self.project_root_label,
+            self.project_root_edit,
+            self.browse_project_button,
+        )
+        for widget in widgets:
+            parent = widget.parentWidget()
+            parent_layout = parent.layout() if parent is not None else None
+            if parent_layout is not None:
+                parent_layout.removeWidget(widget)
+            widget.setParent(None)
+        if insert_index is None:
+            destination_layout.addSpacing(12)
+            destination_layout.addWidget(self.project_root_label, 0)
+            destination_layout.addWidget(self.project_root_edit, 0)
+            destination_layout.addWidget(self.browse_project_button, 0)
+        else:
+            destination_layout.insertSpacing(insert_index, 12)
+            destination_layout.insertWidget(insert_index + 1, self.project_root_label, 0)
+            destination_layout.insertWidget(insert_index + 2, self.project_root_edit, 0)
+            destination_layout.insertWidget(insert_index + 3, self.browse_project_button, 0)
+        self._project_root_controls_moved_to_host = True
+
+    self.move_project_root_controls_to_layout = _move_project_root_controls_to_layout
 
     def _copy_patch_validate_freeze_recovery_routine() -> None:
         try:
@@ -70,7 +168,7 @@ def _build_ui(self) -> None:
             if not prompt_path.is_file():
                 raise FileNotFoundError("Prompt not found: " + str(prompt_rel))
             QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
-            message = "Copied Patch Validate Freeze Recovery Routine"
+            message = "Copied Answer, Validate, Freeze, Memorize Error routine"
             try:
                 self.first_prompt_status_label.setText(message)
             except Exception:
@@ -80,7 +178,7 @@ def _build_ui(self) -> None:
             except Exception:
                 pass
         except Exception as exc:
-            message = "[ERROR] Could not copy Patch Validate Freeze Recovery Routine: " + str(exc)
+            message = "[ERROR] Could not copy Answer, Validate, Freeze, Memorize Error routine: " + str(exc)
             try:
                 self.first_prompt_status_label.setText(message)
             except Exception:
@@ -94,10 +192,56 @@ def _build_ui(self) -> None:
         _copy_patch_validate_freeze_recovery_routine
     )
 
+    def _copy_terminal_cleanup_contract() -> None:
+        try:
+            from pathlib import Path
+            from PySide6.QtWidgets import QApplication
+
+            raw_root = self.project_root_edit.text().strip()
+            project_root = Path(raw_root).expanduser().resolve()
+            prompt_rel = Path(
+                "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
+                "05_patch_delivery_and_validation/"
+                "terminal_cleanup_contract.md"
+            )
+            prompt_path = project_root / prompt_rel
+            if not prompt_path.is_file():
+                app_root = Path(__file__).resolve().parents[3]
+                prompt_path = app_root / prompt_rel
+            if not prompt_path.is_file():
+                raise FileNotFoundError("Prompt not found: " + str(prompt_rel))
+            QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
+            message = "Copied Clean 2sec 2xEnter prompt"
+            try:
+                self.first_prompt_status_label.setText(message)
+            except Exception:
+                pass
+            try:
+                self._append_log(message)
+            except Exception:
+                pass
+        except Exception as exc:
+            message = "[ERROR] Could not copy Clean 2sec 2xEnter prompt: " + str(exc)
+            try:
+                self.first_prompt_status_label.setText(message)
+            except Exception:
+                pass
+            try:
+                self._append_log(message)
+            except Exception:
+                pass
+
+    self.copy_terminal_cleanup_contract_button.clicked.connect(
+        _copy_terminal_cleanup_contract
+    )
+
     try:
-        from kanda_reasoner_app.reasoner_tools_shell.runner_help import complete_bridge_list_private_impl as _bridge_list_impl
-        self.copy_complete_bridge_list_button.clicked.connect(
-            lambda: _bridge_list_impl.copy_complete_bridge_list_to_clipboard(self)
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import bridge_list_wrapper_buttons_private_impl as _bridge_button_impl
+        self.copy_startup_bridge_list_button.clicked.connect(
+            lambda: _bridge_button_impl.copy_startup_bridge_list_to_clipboard(self)
+        )
+        self.copy_on_demand_bridge_list_button.clicked.connect(
+            lambda: _bridge_button_impl.copy_on_demand_bridge_list_to_clipboard(self)
         )
     except Exception:
         pass

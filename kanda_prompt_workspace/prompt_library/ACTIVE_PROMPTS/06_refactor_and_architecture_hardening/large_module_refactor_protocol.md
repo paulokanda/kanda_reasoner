@@ -57,6 +57,14 @@ Practical granularity rule for helper files:
 * Prefer fewer, cohesive responsibility modules over project hyperpopulation. Hyperpopulated micro-files make features harder to find, increase import-surface risk, and increase missed-feature risk during future maintenance.
 * Completion guards should stop a refactor train when remaining files are cohesive and below the practical target band; do not continue splitting tiny cohesive files just to create another train car.
 
+Helper expansion rule:
+
+* When a new or touched code/source module would exceed the 500-physical-line hard maximum, split the work into as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed to preserve behavior, ownership, readability, and validation safety.
+* Additional helper modules are allowed and expected when they are needed to keep the main module and every helper module within the module-size law.
+* Every helper, auxiliary, derived, adapter, or complementary code/source module must obey the same size law: ideal <= 400 physical lines, hard maximum <= 500 physical lines, and practical minimum around 100 substantive lines unless a documented exception applies.
+* Do not create tiny helper files merely to satisfy a line-count target. A helper below roughly 100 substantive lines is allowed only when it is justified as a facade or re-export shim, package marker, constants module, validation helper, optional dependency adapter, circular-dependency breaker, stable seam, or another explicitly documented cohesive boundary.
+* Prefer cohesive responsibility modules over catch-all helpers or project hyperpopulation. Split by responsibility, dependency direction, public API boundary, side-effect isolation, validation boundary, or no-leak ownership boundary, not by arbitrary line ranges.
+
 Traditional source-file rule:
 
 * Runtime/source logic should live in normal importable `.py` files with clear names and ordinary Python imports.

@@ -9,6 +9,7 @@ the editable source of truth.
 from __future__ import annotations
 
 import sys
+import contextlib
 
 from importlib import import_module as _qtcore_import_module
 
@@ -175,6 +176,8 @@ class JsonProjectReasonerV10(QMainWindow):
         self.analysis_output_json_value_label = QLabel("Not generated")
         self.analysis_auto_load_checkbox = QCheckBox("Auto-load JSON after analysis")
         self.analysis_auto_load_checkbox.setChecked(True)
+        self._project_root_controls_moved_to_host = False
+        self._ai_runtime_controls_moved_to_host = False
 
         self.verbosity_combo = QComboBox()
         self.verbosity_combo.addItems(["Concise", "Detailed", "With Code"])
@@ -184,6 +187,11 @@ class JsonProjectReasonerV10(QMainWindow):
         self._connect_signals()
         self.refresh_models()
         self.settings_manager.restore(self)
+        self.runtime_controller.refresh_project_json_path_from_project_root(
+            self,
+            force=False,
+            save=False,
+        )
         self._refresh_profile_controls()
         self._refresh_static_context_controls()
         self._refresh_workflow_controls()
@@ -578,6 +586,68 @@ class JsonProjectReasonerV10(QMainWindow):
         
         connect_main_window_signals(self)
 
+    def move_project_root_controls_to_layout(
+        self,
+        destination_layout,
+        insert_index: int | None = None,
+    ) -> None:
+        """Move Project Q&A project-root controls into a host layout."""
+        if self._project_root_controls_moved_to_host:
+            return
+
+        widgets = [
+            getattr(self, "project_root_label", None),
+            self.project_root_edit,
+            self.pick_project_root_button,
+            self.run_analysis_button,
+        ]
+        self._move_widgets_to_host_layout(widgets, destination_layout, insert_index)
+        self._project_root_controls_moved_to_host = True
+
+    def move_ai_runtime_controls_to_layout(
+        self,
+        destination_layout,
+        insert_index: int | None = None,
+    ) -> None:
+        """Move Project Q&A local-AI model controls into a host layout."""
+        if self._ai_runtime_controls_moved_to_host:
+            return
+
+        widgets = [
+            getattr(self, "local_ai_model_label", None),
+            self.model_combo,
+            self.refresh_models_button,
+        ]
+        self._move_widgets_to_host_layout(widgets, destination_layout, insert_index)
+        self._ai_runtime_controls_moved_to_host = True
+
+    @staticmethod
+    def _move_widgets_to_host_layout(
+        widgets: list[object],
+        destination_layout,
+        insert_index: int | None = None,
+    ) -> None:
+        """Move live widgets into a host layout without duplicating state."""
+        if insert_index is None:
+            destination_layout.addSpacing(12)
+            target_index = destination_layout.count()
+        else:
+            destination_layout.insertSpacing(insert_index, 12)
+            target_index = insert_index + 1
+
+        offset = 0
+        for widget in widgets:
+            if widget is None:
+                continue
+            parent = widget.parentWidget()
+            parent_layout = parent.layout() if parent is not None else None
+            if parent_layout is not None:
+                with contextlib.suppress(Exception):
+                    parent_layout.removeWidget(widget)
+            widget.setParent(None)
+            destination_layout.insertWidget(target_index + offset, widget, 0)
+            offset += 1
+
     def show_help_dialog(self) -> None:
         """Show the help dialog.
         """
@@ -676,6 +746,12 @@ class JsonProjectReasonerV10(QMainWindow):
         selected_model = self.model_combo.currentText().strip()
 
         try:
+            self.runtime_controller.ensure_project_json_loaded_for_question(self)
+        except Exception as exc:
+            QMessageBox.warning(self, "JSON load failed", str(exc))
+            return
+
+        try:
             result = self.session_service.execute(self, question, selected_model)
         except SessionExecutionError as exc:
             message = str(exc)
@@ -755,9 +831,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-
 
 
 

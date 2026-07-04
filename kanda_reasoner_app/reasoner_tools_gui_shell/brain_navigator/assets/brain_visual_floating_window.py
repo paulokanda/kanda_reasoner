@@ -141,6 +141,15 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
         "Open module",
     ),
     BrainFloatingRememberWindow(
+        "temporal_lobe_error_memory",
+        "Temporal lobe Error Memory node",
+        "Error Memory",
+        "Failure memory and learned prevention",
+        "Keeps project-specific lessons from failures so repeated mistakes can be recognized, corrected, and prevented.",
+        "Ready to open through the injected Tab Navigation Controller callback.",
+        "Open module",
+    ),
+    BrainFloatingRememberWindow(
         "hippocampus",
         "Hippocampus",
         "Freeze Feature After Update",

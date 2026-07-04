@@ -12,6 +12,10 @@
 # ------------------------------------------------------
 from __future__ import annotations
 
+from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.project_json_path_resolver import (
+    is_deprecated_project_json_path,
+)
+
 __all__ = ["WindowSettingsManager"]
 
 
@@ -37,10 +41,14 @@ class WindowSettingsManager:
             if value:
                 widget.setText(value)
 
-        _set_text("json_path_edit", "json_path")
+        _set_text("project_root_edit", "project_root")
+        saved_json_path = settings.value("json_path", "", type=str)
+        if saved_json_path and not is_deprecated_project_json_path(saved_json_path):
+            json_widget = getattr(window, "json_path_edit", None)
+            if json_widget is not None:
+                json_widget.setText(saved_json_path)
         _set_text("cache_dir_edit", "cache_dir")
         _set_text("governance_path_edit", "governance_path")
-        _set_text("project_root_edit", "project_root")
 
         saved_model = settings.value("selected_model", "", type=str)
         if saved_model:
@@ -77,7 +85,10 @@ class WindowSettingsManager:
             return
 
         settings = window.settings
-        settings.setValue("json_path", window.json_path_edit.text().strip())
+        json_path = window.json_path_edit.text().strip()
+        if is_deprecated_project_json_path(json_path):
+            json_path = ""
+        settings.setValue("json_path", json_path)
         settings.setValue("cache_dir", window.cache_dir_edit.text().strip())
         settings.setValue("governance_path", window.governance_path_edit.text().strip())
         settings.setValue("project_root", window.project_root_edit.text().strip())
@@ -89,7 +100,6 @@ class WindowSettingsManager:
             "analysis_auto_load", window.analysis_auto_load_checkbox.isChecked()
         )
         settings.sync()
-
 
 
 

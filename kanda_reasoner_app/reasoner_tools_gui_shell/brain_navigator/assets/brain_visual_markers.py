@@ -130,6 +130,17 @@ _PULSE_MARKERS: tuple[BrainPulseMarker, ...] = (
     # distance from frontal lobe to lateral sulcus: 46.5 - 40.0 = 6.5,
     # therefore 46.5 + 6.5 = 53.0.
     BrainPulseMarker("temporal_lobe", "Temporal lobe", 66.0, 53.0, 0.86, -0.30, 0.24),
+    # Error Memory gets a second temporal-lobe marker. It is offset lower and
+    # slightly posterior so both temporal-lobe circles remain selectable.
+    BrainPulseMarker(
+        "temporal_lobe_error_memory",
+        "Temporal lobe Error Memory node",
+        63.0,
+        57.0,
+        0.74,
+        -0.36,
+        0.12,
+    ),
     # Hippocampus keeps the former temporal-lobe marker position.
     BrainPulseMarker("hippocampus", "Hippocampus", 58.0, 52.5, 0.54, -0.18, 0.06),
     BrainPulseMarker(

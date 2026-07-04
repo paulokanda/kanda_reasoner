@@ -394,7 +394,6 @@ from kanda_reasoner_app.project_exclusion_policy import (  # noqa: E402
     should_exclude_reasoner_project_path as _pa024_should_exclude_reasoner_project_path,
 )
 
-
 def _load_rules() -> dict[str, list[str]]:
     """Support load rules behavior.
     
@@ -405,7 +404,6 @@ def _load_rules() -> dict[str, list[str]]:
     """
     
     return _pa024_load_reasoner_project_exclusion_rules(resolve_project_root())
-
 
 def should_exclude_path(path: Path | str, project_root: Path | str | None = None, rules: dict[str, list[str]] | None = None) -> bool:
     """Support should exclude path behavior.
@@ -429,7 +427,6 @@ def should_exclude_path(path: Path | str, project_root: Path | str | None = None
     active_rules = rules if rules is not None else _pa024_load_reasoner_project_exclusion_rules(root)
     return _pa024_should_exclude_reasoner_project_path(path, root, active_rules)
 
-
 def iter_project_files(project_root: Path | str | None = None, suffixes: Iterable[str] | None = None) -> Iterator[Path]:
     """Support iter project files behavior.
     
@@ -450,7 +447,6 @@ def iter_project_files(project_root: Path | str | None = None, suffixes: Iterabl
     rules = _pa024_load_reasoner_project_exclusion_rules(root)
     yield from _pa024_iter_reasoner_project_files(root, suffixes=suffixes, rules=rules)
 
-
 def iter_project_python_files(project_root: Path | str | None = None) -> Iterator[Path]:
     """Support iter project python files behavior.
     
@@ -467,7 +463,6 @@ def iter_project_python_files(project_root: Path | str | None = None) -> Iterato
     
     yield from iter_project_files(project_root, {".py"})
 
-
 def iter_project_documentation_files(project_root: Path | str | None = None) -> Iterator[Path]:
     """Support iter project documentation files behavior.
     
@@ -483,7 +478,6 @@ def iter_project_documentation_files(project_root: Path | str | None = None) -> 
     """
     
     yield from iter_project_files(project_root, DOC_SUFFIXES)
-
 
 def iter_project_packaging_files(project_root: Path | str | None = None) -> Iterator[Path]:
     """Support iter project packaging files behavior.

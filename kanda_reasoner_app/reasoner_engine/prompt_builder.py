@@ -32,6 +32,7 @@ from .prompt_builder_help.widget_registry_section import append_widget_registry_
 
 __all__ = [
     "PROJECT_SCOPE_GUARDRAIL",
+    "TOOL_PROJECT_BOUNDARY_GUARDRAIL",
     "PromptBuilder",
     "is_which_method_calls_question",
 ]
@@ -42,6 +43,23 @@ PROJECT_SCOPE_GUARDRAIL = (
     "- Do not answer from memory when the evidence pack does not support the claim.\n"
     "- If evidence is partial, report uncertainty explicitly.\n"
     "- Do not invent files, classes, functions, methods, snippets, ids, tests, responsibilities, or execution flows.\n"
+)
+
+TOOL_PROJECT_BOUNDARY_GUARDRAIL = (
+    "TOOL / ACTIVE PROJECT BOUNDARY:\n"
+    "- Project Q&A is a KANDA Reasoner tool feature, but this prompt answers about "
+    "the active selected project loaded from PROJECT_ROOT and the evidence pack.\n"
+    "- Treat PROJECT_ROOT as the project being analyzed, even when the selected "
+    "project name is kanda_reasoner.\n"
+    "- Do not answer about KANDA Reasoner as a reusable tool/runtime unless the "
+    "retrieved evidence explicitly shows tool-owned code or the user asks about "
+    "the tool layer.\n"
+    "- Do not assume kanda_reasoner_app, *_show_project_to_AI, or "
+    "*_delete_after_daily_work is the target for every question; target ownership "
+    "follows the selected project root and retrieved evidence.\n"
+    "- Generated evidence, local-AI JSON, freeze hints, handoff output, and "
+    "daily-work files are project-support/evidence artifacts, not reusable tool "
+    "source truth.\n"
 )
 
 # Backward-compatible aliases for existing callers/tests.
@@ -78,6 +96,9 @@ class PromptBuilder:
         lines: list[str] = []
 
         lines.append(PROJECT_SCOPE_GUARDRAIL)
+        lines.append("")
+
+        lines.append(TOOL_PROJECT_BOUNDARY_GUARDRAIL)
         lines.append("")
 
         lines.append("PRIMARY TASK")

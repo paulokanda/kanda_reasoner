@@ -27,12 +27,7 @@ Authority boundary:
 
 from __future__ import annotations
 
-
-__all__ = [
-    'assert_promotion_criteria_gate_report_valid',
-    'build_promotion_criteria_gate_report',
-    'validate_promotion_criteria_gate_report',
-]
+__all__ = ['assert_promotion_criteria_gate_report_valid', 'build_promotion_criteria_gate_report', 'validate_promotion_criteria_gate_report']
 from collections.abc import Mapping
 from typing import Any
 
@@ -48,7 +43,6 @@ DEFAULT_MINIMUM_CASES = 50
 DEFAULT_REQUIRED_GOLD_VERSION = "seed_gold_set_v1"
 ELIGIBLE_REVIEW_ONLY = "eligible_for_future_shadow_mode_design_review_only"
 BLOCKED = "blocked_human_review_or_evidence_required"
-
 
 def build_promotion_criteria_gate_report(
     *,
@@ -131,7 +125,6 @@ def build_promotion_criteria_gate_report(
     }
     report["gate_hash"] = hash_record_without_field(report, "gate_hash")
     return report
-
 
 def validate_promotion_criteria_gate_report(report: Mapping[str, Any]) -> dict[str, object]:
     """Validate a supplied promotion criteria gate report."""
@@ -219,7 +212,6 @@ def validate_promotion_criteria_gate_report(report: Mapping[str, Any]) -> dict[s
 
     return {"ok": not errors, "errors": errors}
 
-
 def assert_promotion_criteria_gate_report_valid(report: Mapping[str, Any]) -> Mapping[str, Any]:
     """Return report when valid; raise ValueError otherwise."""
 
@@ -227,7 +219,6 @@ def assert_promotion_criteria_gate_report_valid(report: Mapping[str, Any]) -> Ma
     if not result["ok"]:
         raise ValueError("promotion criteria gate report invalid: " + "; ".join(result["errors"]))
     return report
-
 
 def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
     """Support policy summary behavior.
@@ -257,7 +248,6 @@ def _policy_summary(policy: Mapping[str, Any]) -> dict[str, object]:
         "require_gold_expansion_plan_reviewed_separately": bool(policy.get("require_gold_expansion_plan_reviewed_separately", True)),
     }
 
-
 def _registry_summary(record: Mapping[str, Any]) -> dict[str, object]:
     """Support registry summary behavior.
     
@@ -284,7 +274,6 @@ def _registry_summary(record: Mapping[str, Any]) -> dict[str, object]:
         "may_promote_candidate": bool(record.get("may_promote_candidate", False)),
         "authority_statement": str(record.get("authority_statement") or "unknown"),
     }
-
 
 def _evaluation_summary(report: Mapping[str, Any], registry_record: Mapping[str, Any]) -> dict[str, object]:
     """Support evaluation summary behavior.
@@ -322,7 +311,6 @@ def _evaluation_summary(report: Mapping[str, Any], registry_record: Mapping[str,
         "authority_statement": AUTHORITY_STATEMENT,
     }
 
-
 def _queue_summary(queue: Mapping[str, Any], registry_record: Mapping[str, Any]) -> dict[str, object]:
     """Support queue summary behavior.
     
@@ -356,7 +344,6 @@ def _queue_summary(queue: Mapping[str, Any], registry_record: Mapping[str, Any])
         "authority_statement": AUTHORITY_STATEMENT,
     }
 
-
 def _expansion_summary(plan: Mapping[str, Any]) -> dict[str, object]:
     """Support expansion summary behavior.
     
@@ -385,7 +372,6 @@ def _expansion_summary(plan: Mapping[str, Any]) -> dict[str, object]:
         "may_promote_candidate": bool(plan.get("may_promote_candidate", False)),
         "authority_statement": str(plan.get("authority_statement") or "unknown"),
     }
-
 
 def _gate_blockers(
     *,
@@ -459,7 +445,6 @@ def _gate_blockers(
 
     return blockers
 
-
 def _next_allowed_step(gate_decision: str) -> str:
     """Support next allowed step behavior.
     
@@ -477,7 +462,6 @@ def _next_allowed_step(gate_decision: str) -> str:
     if gate_decision == ELIGIBLE_REVIEW_ONLY:
         return "future_governed_shadow_mode_design_review_only"
     return "resolve_blockers_with_human_review_before_future_phase"
-
 
 def _nonnegative_int(value: Any, *, default: int) -> int:
     """Support nonnegative int behavior.

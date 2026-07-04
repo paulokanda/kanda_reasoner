@@ -13,15 +13,9 @@ proposal can even be discussed.
 
 from __future__ import annotations
 
-
-__all__ = [
-    'build_human_architectural_review_record_contract',
-    'classify_human_architectural_review_request',
-    'validate_human_architectural_review_record_contract',
-]
+__all__ = ['build_human_architectural_review_record_contract', 'classify_human_architectural_review_request', 'validate_human_architectural_review_record_contract']
 from collections.abc import Mapping, Sequence
 from typing import Any
-
 
 HUMAN_ARCHITECTURAL_REVIEW_RECORD_FEATURE_ID = (
     "routing_signal_scorer_v3_human_architectural_review_record_design_v1"
@@ -270,7 +264,6 @@ FORBIDDEN_REVIEW_RECORD_FIELDS = frozenset(
     }
 )
 
-
 def _as_set(value: Any) -> set[str]:
     """Support as set behavior.
     
@@ -291,7 +284,6 @@ def _as_set(value: Any) -> set[str]:
         return {str(item) for item in value}
     return set()
 
-
 def _flag_is_false(flags: Mapping[str, Any], name: str) -> bool:
     """Support flag is false behavior.
     
@@ -309,7 +301,6 @@ def _flag_is_false(flags: Mapping[str, Any], name: str) -> bool:
     """
     
     return flags.get(name) is False
-
 
 def build_human_architectural_review_record_contract() -> dict[str, Any]:
     """Return the static schema for a human architectural review record."""
@@ -331,7 +322,6 @@ def build_human_architectural_review_record_contract() -> dict[str, Any]:
         "decision_policy": sorted(REQUIRED_DECISION_POLICY),
         "escalation_rules": sorted(REQUIRED_ESCALATION_RULES),
     }
-
 
 def validate_human_architectural_review_record_contract(
     contract: Mapping[str, Any],
@@ -432,7 +422,6 @@ def validate_human_architectural_review_record_contract(
         "requires_future_governed_patch": True,
         "review_evidence_only": True,
     }
-
 
 def classify_human_architectural_review_request(request_text: str) -> dict[str, Any]:
     """Classify human-review requests while denying activation/generation."""

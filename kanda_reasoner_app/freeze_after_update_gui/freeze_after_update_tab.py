@@ -104,7 +104,7 @@ class FreezeAfterUpdateTab(
             ignore_freeze_button.setEnabled(can_ignore)
             if can_confirm:
                 confirm_write_button.setStyleSheet(FREEZE_CONFIRM_ENABLED_STYLE)
-                confirm_write_button.setToolTip('Write this validated local freeze entry after explicit human confirmation.')
+                confirm_write_button.setToolTip('Write this validated local freeze entry and close the form immediately.')
             else:
                 confirm_write_button.setStyleSheet(FREEZE_DISABLED_ACTION_STYLE)
                 confirm_reason = reason or 'Preview and validate a writable freeze entry before confirming.'
@@ -387,10 +387,6 @@ class FreezeAfterUpdateTab(
             receive_dialog.activateWindow()
 
         def ignore_this_freeze() -> None:
-            reply = QMessageBox.question(self, 'Ignore this freeze', 'This will discard the current local freeze draft and will not write any frozen memory entry.\n\nIf a KANDA_FREEZE_HINT intake record filled this form, it will be marked as ignored/used so it does not keep refilling this same draft.\n\nContinue?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            if reply != QMessageBox.Yes:
-                self._append_log('Ignore this Freeze cancelled by human.')
-                return
             self._local_freeze_preview = None
             preview_text_edit.clear()
             disable_freeze_action_buttons('Freeze draft was ignored by the human.')
@@ -414,20 +410,17 @@ class FreezeAfterUpdateTab(
         def confirm_and_write_local_freeze() -> None:
             preview = self._local_freeze_preview
             if not preview:
-                QMessageBox.warning(self, 'Preview missing', 'Generate a valid preview first.')
-                return
-            targets = preview.get('write_targets') or []
-            target_text = '\n'.join((f'- {path}' for path in targets))
-            reply = QMessageBox.question(self, 'Confirm local freeze write', f'You are about to write a local freeze entry for this active project.\n\nWILL WRITE:\n{target_text}\n\nWILL NOT WRITE:\n- project_freeze_ledger as project-specific memory\n- other project roots\n- temporary files in the project root\n\nContinue?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            if reply != QMessageBox.Yes:
-                self._append_log('Local freeze write cancelled by human confirmation gate.')
+                self.status_label.setText('No valid local freeze preview was available. The form was closed.')
+                self._append_log('Local freeze write skipped: no valid preview was available.')
+                dialog.close()
                 return
             result = write_confirmed_freeze_entry(project_root, preview, confirmation=True)
             if not result.get('ok'):
                 errors = '\n'.join(result.get('errors') or ['Unknown error'])
-                show_error_copy_close_window(self, title='Local freeze write failed', message=errors)
+                self.status_label.setText('Local freeze write failed. Check the log.')
                 self._append_log('LOCAL FREEZE WRITE FAILED')
                 self._append_log(errors)
+                dialog.close()
                 return
             self.status_label.setText('Local freeze entry written successfully.')
             self._append_log('LOCAL FREEZE WRITE OK')
@@ -478,10 +471,9 @@ class FreezeAfterUpdateTab(
                 self._append_log('Current freeze exposure after write:')
                 self._append_log(str(compliance.get('report')))
             if not compliance.get('ok'):
-                QMessageBox.warning(self, 'Local freeze written; AI compliance refresh warning', 'The local freeze entry was written, but the AI-visible startup context refresh reported a warning or error. Check the log.')
-                dialog.close()
-            else:
-                show_auto_close_action_window(self, title='Local freeze written', message='Freeze entry written successfully and AI startup freeze context was refreshed.', on_close=dialog.close)
+                self.status_label.setText('Local freeze written. AI compliance refresh warning logged.')
+            dialog.close()
+
         refresh_local_ai_models_button.clicked.connect(populate_local_ai_model_combo)
         local_ai_radio.toggled.connect(lambda checked: mode_status_label.setText('Local AI selected. The form will use the selected local model only if it passes quality gates; otherwise heuristic draft is kept.' if checked else 'Heuristics selected. The form will use deterministic local rules only.'))
         autofill_button.clicked.connect(auto_fill_local_freeze)

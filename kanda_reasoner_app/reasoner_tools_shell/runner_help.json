@@ -20,6 +20,112 @@
       "purpose": "Private process and collector methods moved from runner.py.",
       "exports": [],
       "depends_on": []
+    },
+    "zip_json_files_private_impl.py": {
+      "purpose": "Stable compatibility wrapper for Tab 4 JSON ZIP export helpers.",
+      "exports": [
+        "DEFAULT_ZIP_SIZE_MB",
+        "EXTENDED_ZIP_SIZE_MB_OPTIONS",
+        "ALLOWED_ZIP_SIZE_MB_OPTIONS",
+        "load_saved_part_size_mb",
+        "save_selected_part_size_mb",
+        "cleanup_loose_json_files_after_success",
+        "cleanup_transient_daily_refactor_folders",
+        "auto_zip_json_complete",
+        "cleanup_show_project_to_ai_root_after_success",
+        "clear_second_prompt_files_dir",
+        "clear_second_prompt_files_building_dir",
+        "publish_second_prompt_files_building_dir",
+        "second_prompt_files_building_dir",
+        "write_second_prompt_status",
+        "resolve_zip_dialog_start_folder",
+        "run_zip_json_files",
+        "selected_part_size_mb"
+      ],
+      "depends_on": [
+        "zip_json_files_state_private_impl.py",
+        "zip_json_files_paths_private_impl.py",
+        "zip_json_files_publish_private_impl.py",
+        "zip_json_files_process_private_impl.py"
+      ]
+    },
+    "zip_json_files_state_private_impl.py": {
+      "purpose": "ZIP export preferences, saved destination, and part-size selection helpers.",
+      "exports": [
+        "DEFAULT_ZIP_SIZE_MB",
+        "EXTENDED_ZIP_SIZE_MB_OPTIONS",
+        "ALLOWED_ZIP_SIZE_MB_OPTIONS",
+        "STATUS_FILE_NAME",
+        "_prefs_path",
+        "_load_prefs_payload",
+        "_save_prefs_payload",
+        "_load_destination",
+        "_save_destination",
+        "load_saved_part_size_mb",
+        "save_selected_part_size_mb",
+        "selected_part_size_mb",
+        "_selected_part_size_mb"
+      ],
+      "depends_on": []
+    },
+    "zip_json_files_paths_private_impl.py": {
+      "purpose": "ZIP dialog path resolution and Show Project to AI root cleanup helpers.",
+      "exports": [
+        "_require_show_project_child_dir",
+        "_is_known_show_project_root_file",
+        "cleanup_show_project_to_ai_root_after_success",
+        "_is_transient_daily_refactor_folder",
+        "_destination_inside_project_root",
+        "_existing_dialog_start_folder",
+        "_fallback_dialog_start_folder",
+        "resolve_zip_dialog_start_folder",
+        "_start_folder_for_dialog"
+      ],
+      "depends_on": [
+        "zip_json_files_state_private_impl.py"
+      ]
+    },
+    "zip_json_files_publish_private_impl.py": {
+      "purpose": "Second-prompt publication, status writing, and generated artifact cleanup helpers.",
+      "exports": [
+        "second_prompt_files_building_dir",
+        "_clear_dir_contents",
+        "write_second_prompt_status",
+        "clear_second_prompt_files_building_dir",
+        "_rewrite_generated_text_paths",
+        "_refresh_bundle_manifest_after_publish_rewrite",
+        "_remove_forbidden_second_prompt_payloads",
+        "cleanup_loose_json_files_after_success",
+        "cleanup_transient_daily_refactor_folders",
+        "publish_second_prompt_files_building_dir",
+        "clear_second_prompt_files_dir"
+      ],
+      "depends_on": [
+        "zip_json_files_paths_private_impl.py",
+        "zip_json_files_state_private_impl.py"
+      ]
+    },
+    "zip_json_files_process_private_impl.py": {
+      "purpose": "Qt process orchestration for JSON ZIP export actions.",
+      "exports": [
+        "_qt_widgets",
+        "_process_helpers",
+        "_set_controls_enabled",
+        "_append_log",
+        "_start_zip_status",
+        "_finish_zip_status",
+        "_decode_process_output",
+        "_on_zip_process_finished",
+        "_on_zip_process_error",
+        "_start_zip_process",
+        "auto_zip_json_complete",
+        "run_zip_json_files"
+      ],
+      "depends_on": [
+        "zip_json_files_state_private_impl.py",
+        "zip_json_files_paths_private_impl.py",
+        "zip_json_files_publish_private_impl.py"
+      ]
     }
   }
 }

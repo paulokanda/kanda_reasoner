@@ -26,6 +26,7 @@ from kanda_reasoner_app.reasoner_tools_gui_shell.remember_box.contract import (
 )
 
 OpenTabById = Callable[[str], object]
+CanOpenTabId = Callable[[str], bool]
 
 
 def _qt_widgets_attr(name: str) -> Any:
@@ -46,10 +47,12 @@ class BrainNavigatorFallbackConfig:
 
     Attributes:
         open_tab_by_id: Optional callback that opens a target tab by stable ID.
+        can_open_tab_id: Optional callback that reports whether a tab ID exists.
         region_targets: Optional explicit target list for tests or alternate maps.
     """
 
     open_tab_by_id: OpenTabById | None = None
+    can_open_tab_id: CanOpenTabId | None = None
     region_targets: tuple[BrainRegionTarget, ...] | None = None
 
 
@@ -71,6 +74,7 @@ class BrainNavigatorFallbackWidget(_qt_widgets_attr("QWidget")):
         super().__init__()
         self._config = config or BrainNavigatorFallbackConfig()
         self._open_tab_by_id = self._config.open_tab_by_id
+        self._can_open_tab_id = self._config.can_open_tab_id
         self._region_targets = tuple(
             self._config.region_targets or list_brain_region_targets()
         )
@@ -208,20 +212,37 @@ class BrainNavigatorFallbackWidget(_qt_widgets_attr("QWidget")):
             return None
         if self._open_tab_by_id is None:
             return None
+        if not self._can_open_target_tab(self._selected_state.target_tab_id):
+            return None
         return self._open_tab_by_id(self._selected_state.target_tab_id)
+
+    def _can_open_target_tab(self, tab_id: str) -> bool:
+        """Return whether the injected navigation owner knows ``tab_id``."""
+        if not tab_id:
+            return False
+        if self._can_open_tab_id is None:
+            return True
+        return bool(self._can_open_tab_id(tab_id))
 
     def _apply_state(self, state: RememberBoxState) -> None:
         """Render a RememberBoxState into the fallback card."""
 
+        can_open_target = (
+            state.can_open_target
+            and self._open_tab_by_id is not None
+            and self._can_open_target_tab(state.target_tab_id)
+        )
         self._selected_state = state
         self._selected_target_tab_id = state.target_tab_id
         self._region_label.setText(f"Brain structure: {state.region_name}")
         self._target_label.setText(f"Mapped tab: {state.target_tab_label}")
         self._analogy_title_label.setText(f"Analogy: {state.analogy_title}")
         self._analogy_text_label.setText(state.analogy_text)
-        self._status_label.setText(f"Status: {state.status}")
-        self._open_button.setText(state.action_label)
-        self._open_button.setEnabled(state.can_open_target and self._open_tab_by_id is not None)
+        status = state.status if can_open_target else "unmapped"
+        action_label = state.action_label if can_open_target else "No action available"
+        self._status_label.setText(f"Status: {status}")
+        self._open_button.setText(action_label)
+        self._open_button.setEnabled(can_open_target)
 
     def current_remember_state(self) -> RememberBoxState:
         """Return the currently displayed RememberBoxState."""
@@ -232,6 +253,7 @@ class BrainNavigatorFallbackWidget(_qt_widgets_attr("QWidget")):
 def create_brain_navigator_fallback_widget(
     *,
     open_tab_by_id: OpenTabById | None = None,
+    can_open_tab_id: CanOpenTabId | None = None,
     region_targets: tuple[BrainRegionTarget, ...] | None = None,
 ) -> object:
     """Create the visible fallback Brain Navigator widget.
@@ -247,6 +269,7 @@ def create_brain_navigator_fallback_widget(
     return BrainNavigatorFallbackWidget(
         BrainNavigatorFallbackConfig(
             open_tab_by_id=open_tab_by_id,
+            can_open_tab_id=can_open_tab_id,
             region_targets=region_targets,
         )
     )

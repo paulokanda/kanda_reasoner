@@ -40,6 +40,7 @@ EXPECTED_REGION_TO_TAB = {
     "central_sulcus": "project_structure_map",
     "cerebellum": "refactor_report",
     "temporal_lobe": "project_qa",
+    "temporal_lobe_error_memory": "error_memory",
     "hippocampus": "freeze_feature_after_update",
     "lateral_sulcus": "exclusion_rules",
     "longitudinal_fissure": "prompt_library",
@@ -90,7 +91,7 @@ class BrainRegionMappingContractTests(unittest.TestCase):
         self.assertEqual("brain_region_mapping", summary.box_id)
         self.assertEqual("0.1", summary.contract_version)
         self.assertEqual("pure_mapping_box", summary.implementation_state)
-        self.assertEqual(12, summary.target_count)
+        self.assertEqual(13, summary.target_count)
         self.assertIn("resolve_brain_region", summary.public_functions)
         self.assertIn(
             "kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/",

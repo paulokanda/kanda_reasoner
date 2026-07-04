@@ -15,13 +15,79 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from kanda_reasoner_app.reasoner_engine.v10_models import RetrievalBundle
-from kanda_reasoner_app.reasoner_engine.query_router import route_query_intent
+from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help.exact_code_anchors import (
+    filter_bundle_to_requested_files,
+    missing_requested_files,
+    strict_evidence_requested,
+)
+from kanda_reasoner_app.reasoner_engine.query_router import (
+    QueryRouteDecision,
+    route_query_intent,
+)
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_session_capture import (
     capture_session_prompt_router_reasoner_review,
     summarize_session_capture_result,
 )
 
 __all__ = ["SessionExecutionError", "SessionExecutionResult", "SessionService"]
+
+STRICT_GENERATIVE_TERMS = (
+    "answer in",
+    "answer exactly",
+    "answer only",
+    "generate a prose answer",
+    "generate an answer",
+    "prose answer",
+    "question:",
+    "explain",
+    "trace",
+    "describe",
+    "summarize",
+    "what ",
+    "which ",
+    "how ",
+    "why ",
+    "mention",
+    "include",
+    "numbered line",
+    "numbered lines",
+)
+
+STRICT_RANKED_ONLY_TERMS = (
+    "ranked retrieval only",
+    "show ranked retrieval",
+    "return ranked retrieval",
+    "top file evidence only",
+    "top symbol evidence only",
+    "evidence list only",
+)
+
+
+def _strict_prompt_requests_generated_answer(question: str) -> bool:
+    """Return whether a strict-evidence prompt asks for a generated answer."""
+
+    q = question.strip().lower()
+    if not q:
+        return False
+    if any(term in q for term in STRICT_RANKED_ONLY_TERMS):
+        return False
+    return any(term in q for term in STRICT_GENERATIVE_TERMS)
+
+
+def _strict_generated_answer_decision(question: str, decision: QueryRouteDecision) -> QueryRouteDecision:
+    """Promote strict evidence answer prompts out of ranked-only routing."""
+
+    if decision.route != "ranked":
+        return decision
+    if not strict_evidence_requested(question):
+        return decision
+    if not _strict_prompt_requests_generated_answer(question):
+        return decision
+    return QueryRouteDecision(
+        route="generative",
+        intent_name="strict_evidence_answer",
+        reason="Strict evidence prompt requests a generated answer.",
+    )
 
 
 class SessionExecutionError(RuntimeError):
@@ -72,7 +138,10 @@ class SessionService:
         if not selected_model:
             raise SessionExecutionError("Please select a model.")
 
-        decision = route_query_intent(question)
+        decision = _strict_generated_answer_decision(
+            question,
+            route_query_intent(question),
+        )
         log_messages = [
             "Query route: "
             + decision.route
@@ -102,6 +171,44 @@ class SessionService:
             symbol_limit=10,
             snippet_limit=6,
         )
+
+        strict_requested = strict_evidence_requested(question)
+        if strict_requested:
+            bundle = filter_bundle_to_requested_files(question, bundle)
+            log_messages.append(
+                "Strict evidence mode filtered evidence to exact filename anchors."
+            )
+
+        strict_missing = []
+        if strict_requested:
+            strict_missing = missing_requested_files(question, bundle.file_evidence)
+
+        if strict_missing:
+            answer_text = "INSUFFICIENT_EVIDENCE: " + ", ".join(strict_missing)
+            answer_text += " not retrieved"
+            log_messages.append("Strict evidence mode blocked unsupported answer.")
+            result = SessionExecutionResult(
+                route="ranked",
+                question="",
+                selected_model="",
+                bundle=bundle,
+                prompt="",
+                answer_text=answer_text,
+                log_messages=log_messages,
+                prefer_code=window.prefer_code_radio.isChecked(),
+            )
+            self._capture_prompt_router_reasoner_review(
+                window,
+                question,
+                selected_model,
+                decision,
+                bundle,
+                "",
+                window.prefer_code_radio.isChecked(),
+                result,
+                log_messages,
+            )
+            return result
 
         if not bundle.file_evidence and not bundle.symbol_evidence:
             raise SessionExecutionError("No relevant evidence was retrieved.")

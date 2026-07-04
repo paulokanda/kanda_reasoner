@@ -196,7 +196,7 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "Project root marker: <PROJECT_ROOT>",
             "Target standalone ZIP part size: " + str(part_size_mb) + " MB",
             "The AI-readable JSON handoff is delivered as ZIP package(s) that respect the selected Show Project to AI size cap.",
-            "Loose JSON files are packaged into the JSON handoff ZIP and are normally removed from second_prompt_files after successful ZIP export.",
+            "Loose web-AI JSON files are packaged into the JSON handoff ZIP and are normally removed from second_prompt_files after successful ZIP export; the Project A&A local-AI working JSON may be retained for local questions.",
             "",
             "Second-upload reading order:",
             "1. _RUN_COLLECTOR_STATUS.txt, if present, to confirm generation status.",

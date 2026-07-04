@@ -13,15 +13,9 @@ router authority, and does not change runtime behavior.
 
 from __future__ import annotations
 
-
-__all__ = [
-    'build_generator_candidate_patch_skeleton_contract',
-    'classify_generator_candidate_patch_skeleton_request',
-    'validate_generator_candidate_patch_skeleton_contract',
-]
+__all__ = ['build_generator_candidate_patch_skeleton_contract', 'classify_generator_candidate_patch_skeleton_request', 'validate_generator_candidate_patch_skeleton_contract']
 from collections.abc import Mapping, Sequence
 from typing import Any
-
 
 GENERATOR_CANDIDATE_PATCH_SKELETON_FEATURE_ID = (
     "routing_signal_scorer_v3_generator_candidate_patch_skeleton_design_v1"
@@ -299,7 +293,6 @@ REQUIRED_STOP_CONDITIONS = frozenset(
 
 FORBIDDEN_SKELETON_FIELDS = REQUIRED_PROHIBITED_SKELETON_OUTPUTS
 
-
 def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
     """Support sorted tuple behavior.
     
@@ -315,7 +308,6 @@ def _sorted_tuple(values: frozenset[str]) -> tuple[str, ...]:
     """
     
     return tuple(sorted(values))
-
 
 def build_generator_candidate_patch_skeleton_contract() -> dict[str, Any]:
     """Return the frozen design contract for generator candidate patch skeleton."""
@@ -342,7 +334,6 @@ def build_generator_candidate_patch_skeleton_contract() -> dict[str, Any]:
         "stop_conditions": _sorted_tuple(REQUIRED_STOP_CONDITIONS),
     }
 
-
 def _as_set(value: object) -> set[str]:
     """Support as set behavior.
     
@@ -360,7 +351,6 @@ def _as_set(value: object) -> set[str]:
     if isinstance(value, str) or not isinstance(value, Sequence):
         return set()
     return {item for item in value if isinstance(item, str)}
-
 
 def validate_generator_candidate_patch_skeleton_contract(candidate: Mapping[str, Any]) -> dict[str, Any]:
     """Validate a candidate skeleton design contract without side effects."""
@@ -443,7 +433,6 @@ def validate_generator_candidate_patch_skeleton_contract(candidate: Mapping[str,
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
 
 def classify_generator_candidate_patch_skeleton_request(action: str) -> dict[str, Any]:
     """Classify whether an action is allowed by this design-only skeleton."""

@@ -43,11 +43,7 @@ from .workflow_project_scan import (
     pytest_available,
 )
 
-__all__ = [
-    "command_list_results",
-    "run_tests",
-]
-
+__all__ = ["command_list_results", "run_tests"]
 
 def replace_placeholders(value: str, *, root: Path) -> str:
     """Support replace placeholders behavior.
@@ -66,7 +62,6 @@ def replace_placeholders(value: str, *, root: Path) -> str:
     """
     
     return value.replace("{root}", str(root)).replace("{python}", sys.executable)
-
 
 def maybe_stringify_command(args: list[str], shell: bool) -> str:
     """Support maybe stringify command behavior.
@@ -87,7 +82,6 @@ def maybe_stringify_command(args: list[str], shell: bool) -> str:
     if shell:
         return args[0]
     return " ".join(args)
-
 
 def build_command(
     spec: Any,
@@ -208,7 +202,6 @@ def build_command(
         )
 
     raise KeyError(f"{category} command spec requires 'args' or 'command'.")
-
 
 def execute_command(
     *,
@@ -371,7 +364,6 @@ def execute_command(
         },
     )
 
-
 def command_list_results(
     *,
     category: str,
@@ -422,7 +414,6 @@ def command_list_results(
         )
         results.append(result)
     return results
-
 
 def run_tests(root: Path, discovered: dict[str, Any], cfg: dict[str, Any]) -> list[CheckResult]:
     """Run the tests.

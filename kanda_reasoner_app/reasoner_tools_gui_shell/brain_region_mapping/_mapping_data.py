@@ -136,6 +136,20 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "category": "Project Tools",
     },
     {
+        "region_id": "temporal_lobe_error_memory",
+        "region_name": "Temporal lobe Error Memory node",
+        "target_tab_id": "error_memory",
+        "target_tab_label": "Error Memory",
+        "analogy_title": "Failure memory and learned prevention",
+        "analogy_text": (
+            "The temporal lobe supports memory and meaning, like Error Memory "
+            "keeps project-specific lessons from failures so repeated mistakes "
+            "can be recognized, corrected, and prevented."
+        ),
+        "tooltip_text": "Temporal lobe Error Memory node -> Error Memory",
+        "category": "Project Memory",
+    },
+    {
         "region_id": "hippocampus",
         "region_name": "Hippocampus",
         "target_tab_id": "freeze_feature_after_update",

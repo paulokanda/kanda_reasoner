@@ -8,6 +8,15 @@ from __future__ import annotations
 
 import re
 from kanda_reasoner_app.reasoner_engine.v10_models import SymbolEvidenceItem
+from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help.exact_code_anchors import (
+    extract_question_file_names,
+    extract_strict_requested_file_paths,
+    path_is_project_qa_run_analysis_distractor,
+    path_matches_project_qa_run_analysis_trace_file,
+    path_matches_requested_file,
+    path_matches_strict_requested_path,
+    project_qa_run_analysis_trace_requested,
+)
 from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help.query_intents import (
     detect_query_intents,
     is_runtime_heavy_question,
@@ -56,6 +65,15 @@ def _retrieve_symbols_impl(retriever, question: str, limit: int) -> list[SymbolE
     explanation_heavy = intents['explanatory'] or intents['code_localized_explanation'] or intents['explain_chain']
     is_runtime_question = intents['runtime_heavy']
     question_file_names = set(re.findall('[a-zA-Z0-9_\\-]+\\.py', q))
+    strict_requested_paths = extract_strict_requested_file_paths(q)
+    requested_file_names = extract_question_file_names(q)
+    run_analysis_trace_query = project_qa_run_analysis_trace_requested(q)
+    run_analysis_trace_symbols = {
+        'connect_main_window_signals',
+        'run_analysis',
+        'build_analysis_command',
+        'run_project_qa_analysis',
+    }
     scored: list[SymbolEvidenceItem] = []
     exact_symbol_targets = [token for token in tokens if ('_' in token or '.' in token) and len(token) >= 6]
     for symbol_name, detail in retriever.idx.symbol_details.items():
@@ -88,13 +106,39 @@ def _retrieve_symbols_impl(retriever, question: str, limit: int) -> list[SymbolE
         call_count = len(record.get('calls', [])) if isinstance(record, dict) else 0
         score = 0
         reasons: list[str] = []
+        strict_path_match = path_matches_strict_requested_path(path, strict_requested_paths)
+        requested_file_match = path_matches_requested_file(path, requested_file_names)
+        if strict_requested_paths:
+            if strict_path_match:
+                score += 4200
+                reasons.append('symbol-strict-requested-path-allowlist-boost')
+            else:
+                score -= 10000
+                reasons.append('symbol-outside-strict-requested-path-allowlist-penalty')
+
         if base_name and base_name in q:
-            score += 30
+            score += 220
             reasons.append('symbol-file-match')
         for file_name in question_file_names:
             if base_name == file_name.lower():
-                score += 30
+                score += 260
                 reasons.append('symbol-question-file-match')
+        if requested_file_match:
+            score += 1200
+            reasons.append('symbol-required-file-anchor-boost')
+        elif requested_file_names:
+            score -= 420
+            reasons.append('symbol-outside-required-file-anchor-penalty')
+        if run_analysis_trace_query:
+            if path_matches_project_qa_run_analysis_trace_file(path):
+                score += 950
+                reasons.append('symbol-project-qa-run-analysis-trace-file-boost')
+                if last_symbol_part in run_analysis_trace_symbols:
+                    score += 720
+                    reasons.append('symbol-project-qa-run-analysis-trace-owner-boost')
+            elif path_is_project_qa_run_analysis_distractor(path):
+                score -= 980
+                reasons.append('symbol-project-qa-run-analysis-distractor-penalty')
         if symbol_name_norm and symbol_name_norm in q:
             score += 120
             reasons.append('exact-symbol-match')

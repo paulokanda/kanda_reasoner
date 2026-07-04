@@ -26,54 +26,90 @@ from pathlib import Path
 from typing import Any
 
 from kanda_reasoner_app._project_analysis_evidence_path_resolution import (
-    PROJECT_REFERENCE_DIR,
-    PROJECT_ANALYSIS_EVIDENCE_DIR,
-    SHOW_PROJECT_TO_AI_SUFFIX,
-    DELETE_AFTER_DAILY_WORK_SUFFIX,
-    SECOND_PROMPT_FILES_DIR,
-    SECOND_PROMPT_FILES_BUILDING_DIR,
-    FIRST_PROMPT_FILES_DIR,
-    PROJECT_ERROR_MEMORY_DIR,
-    PROJECT_FREEZE_AFTER_UPDATE_DIR,
-    LIFECYCLE_MANIFEST_NAME,
-    SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV,
-    SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV,
-    JSON_COMPLETE_DIR,
-    JSON_PARTS_DIR,
+    PROJECT_REFERENCE_DIR as _public_PROJECT_REFERENCE_DIR,
+    PROJECT_ANALYSIS_EVIDENCE_DIR as _public_PROJECT_ANALYSIS_EVIDENCE_DIR,
+    SHOW_PROJECT_TO_AI_SUFFIX as _public_SHOW_PROJECT_TO_AI_SUFFIX,
+    DELETE_AFTER_DAILY_WORK_SUFFIX as _public_DELETE_AFTER_DAILY_WORK_SUFFIX,
+    SECOND_PROMPT_FILES_DIR as _public_SECOND_PROMPT_FILES_DIR,
+    SECOND_PROMPT_FILES_BUILDING_DIR as _public_SECOND_PROMPT_FILES_BUILDING_DIR,
+    FIRST_PROMPT_FILES_DIR as _public_FIRST_PROMPT_FILES_DIR,
+    PROJECT_ERROR_MEMORY_DIR as _public_PROJECT_ERROR_MEMORY_DIR,
+    PROJECT_FREEZE_AFTER_UPDATE_DIR as _public_PROJECT_FREEZE_AFTER_UPDATE_DIR,
+    LIFECYCLE_MANIFEST_NAME as _public_LIFECYCLE_MANIFEST_NAME,
+    SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV as _public_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV,
+    SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV as _public_SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV,
+    JSON_COMPLETE_DIR as _public_JSON_COMPLETE_DIR,
+    JSON_PARTS_DIR as _public_JSON_PARTS_DIR,
     _SAFE_NAME_RE,
     _SAFE_SLUG_RE,
     _REPEATED_UNDERSCORE_RE,
-    normalize_path,
-    make_safe_slug,
-    project_name_from_root,
+    normalize_path as _public_normalize_path,
+    make_safe_slug as _public_make_safe_slug,
+    project_name_from_root as _public_project_name_from_root,
     _folder_name_for_slug,
     _base_slug_from_suffixed_name,
-    show_project_to_ai_root_from_hint,
+    show_project_to_ai_root_from_hint as _public_show_project_to_ai_root_from_hint,
     _show_project_to_ai_root,
-    project_analysis_evidence_root,
+    project_analysis_evidence_root as _public_project_analysis_evidence_root,
     _normalize_project_analysis_evidence_dir_casing,
     _paths_refer_to_same_location,
-    analysis_json_building_dir,
+    analysis_json_building_dir as _public_analysis_json_building_dir,
     _show_project_to_ai_override_project_root,
     _active_artifact_project_root,
     _analysis_json_complete_dir_override,
-    analysis_json_complete_dir,
-    analysis_project_error_memory_dir,
-    analysis_project_freeze_after_update_dir,
-    legacy_project_freeze_after_update_dir,
-    show_project_lifecycle_manifest_path,
-    analysis_first_prompt_files_dir,
-    analysis_json_parts_dir,
+    analysis_json_complete_dir as _public_analysis_json_complete_dir,
+    analysis_project_error_memory_dir as _public_analysis_project_error_memory_dir,
+    analysis_project_freeze_after_update_dir as _public_analysis_project_freeze_after_update_dir,
+    legacy_project_freeze_after_update_dir as _public_legacy_project_freeze_after_update_dir,
+    show_project_lifecycle_manifest_path as _public_show_project_lifecycle_manifest_path,
+    analysis_first_prompt_files_dir as _public_analysis_first_prompt_files_dir,
+    analysis_json_parts_dir as _public_analysis_json_parts_dir,
     _project_name,
-    primary_evidence_json_path,
-    secondary_evidence_json_path,
-    working_copy_json_path,
-    working_copy_metadata_path,
-    parts_manifest_file_path,
-    parts_index_file_path,
-    route_manifest_file_path,
-    normalize_evidence_artifact_path,
+    primary_evidence_json_path as _public_primary_evidence_json_path,
+    secondary_evidence_json_path as _public_secondary_evidence_json_path,
+    working_copy_json_path as _public_working_copy_json_path,
+    working_copy_metadata_path as _public_working_copy_metadata_path,
+    parts_manifest_file_path as _public_parts_manifest_file_path,
+    parts_index_file_path as _public_parts_index_file_path,
+    route_manifest_file_path as _public_route_manifest_file_path,
+    normalize_evidence_artifact_path as _public_normalize_evidence_artifact_path,
 )
+
+PROJECT_REFERENCE_DIR = _public_PROJECT_REFERENCE_DIR
+PROJECT_ANALYSIS_EVIDENCE_DIR = _public_PROJECT_ANALYSIS_EVIDENCE_DIR
+SHOW_PROJECT_TO_AI_SUFFIX = _public_SHOW_PROJECT_TO_AI_SUFFIX
+DELETE_AFTER_DAILY_WORK_SUFFIX = _public_DELETE_AFTER_DAILY_WORK_SUFFIX
+SECOND_PROMPT_FILES_DIR = _public_SECOND_PROMPT_FILES_DIR
+SECOND_PROMPT_FILES_BUILDING_DIR = _public_SECOND_PROMPT_FILES_BUILDING_DIR
+FIRST_PROMPT_FILES_DIR = _public_FIRST_PROMPT_FILES_DIR
+PROJECT_ERROR_MEMORY_DIR = _public_PROJECT_ERROR_MEMORY_DIR
+PROJECT_FREEZE_AFTER_UPDATE_DIR = _public_PROJECT_FREEZE_AFTER_UPDATE_DIR
+LIFECYCLE_MANIFEST_NAME = _public_LIFECYCLE_MANIFEST_NAME
+SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV = _public_SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV
+SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV = _public_SHOW_PROJECT_TO_AI_PROJECT_ROOT_ENV
+JSON_COMPLETE_DIR = _public_JSON_COMPLETE_DIR
+JSON_PARTS_DIR = _public_JSON_PARTS_DIR
+normalize_path = _public_normalize_path
+make_safe_slug = _public_make_safe_slug
+project_name_from_root = _public_project_name_from_root
+show_project_to_ai_root_from_hint = _public_show_project_to_ai_root_from_hint
+project_analysis_evidence_root = _public_project_analysis_evidence_root
+analysis_json_building_dir = _public_analysis_json_building_dir
+analysis_json_complete_dir = _public_analysis_json_complete_dir
+analysis_project_error_memory_dir = _public_analysis_project_error_memory_dir
+analysis_project_freeze_after_update_dir = _public_analysis_project_freeze_after_update_dir
+legacy_project_freeze_after_update_dir = _public_legacy_project_freeze_after_update_dir
+show_project_lifecycle_manifest_path = _public_show_project_lifecycle_manifest_path
+analysis_first_prompt_files_dir = _public_analysis_first_prompt_files_dir
+analysis_json_parts_dir = _public_analysis_json_parts_dir
+primary_evidence_json_path = _public_primary_evidence_json_path
+secondary_evidence_json_path = _public_secondary_evidence_json_path
+working_copy_json_path = _public_working_copy_json_path
+working_copy_metadata_path = _public_working_copy_metadata_path
+parts_manifest_file_path = _public_parts_manifest_file_path
+parts_index_file_path = _public_parts_index_file_path
+route_manifest_file_path = _public_route_manifest_file_path
+normalize_evidence_artifact_path = _public_normalize_evidence_artifact_path
 
 __all__ = [
     "PROJECT_REFERENCE_DIR",

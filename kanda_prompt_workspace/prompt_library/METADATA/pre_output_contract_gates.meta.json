@@ -24,7 +24,8 @@
   ],
   "required_companion_prompts": [
     "daily_patch_delivery_guardrails",
-    "freeze_code_intake_and_form_protocol"
+    "freeze_code_intake_and_form_protocol",
+    "terminal_cleanup_contract"
   ],
   "recommended_companion_prompts": [
     "implementation_and_delivery_protocol",

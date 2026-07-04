@@ -48,7 +48,11 @@ def _build_project_json_group(window: Any) -> QGroupBox:
     if not hasattr(window, "refresh_local_ai_json_button"):
         window.refresh_local_ai_json_button = QPushButton("Refresh Local-AI Copy")
 
-    layout.addWidget(QLabel("Project root:"), 0, 0)
+    if not hasattr(window, "project_root_label"):
+        window.project_root_label = QLabel("Project root:")
+    window.project_root_label.setStyleSheet("color: #0B3D91; font-weight: bold;")
+
+    layout.addWidget(window.project_root_label, 0, 0)
     layout.addWidget(window.project_root_edit, 0, 1, 1, 3)
     layout.addWidget(window.pick_project_root_button, 0, 4)
     layout.addWidget(window.run_analysis_button, 0, 5)
@@ -106,7 +110,10 @@ def _build_runtime_group(window: Any) -> QGroupBox:
     layout.addWidget(window.governance_path_edit, 1, 1)
     layout.addWidget(window.pick_governance_button, 1, 2)
 
-    layout.addWidget(QLabel("Model:"), 2, 0)
+    if not hasattr(window, "local_ai_model_label"):
+        window.local_ai_model_label = QLabel("Model:")
+
+    layout.addWidget(window.local_ai_model_label, 2, 0)
     layout.addWidget(window.model_combo, 2, 1)
     layout.addWidget(window.refresh_models_button, 2, 2)
 

@@ -21,8 +21,8 @@ class BrainVisualMarkersDirectTests(unittest.TestCase):
         summary = get_neural_architecture_pulse_marker_summary()
         marker_js = build_neural_architecture_marker_data_js()
 
-        self.assertEqual(12, len(markers))
-        self.assertEqual(12, summary.marker_count)
+        self.assertEqual(13, len(markers))
+        self.assertEqual(13, summary.marker_count)
         self.assertEqual("neural_architecture_pulse_marker_layer", summary.box_id)
         self.assertEqual(
             "mesh_anchored_pulse_marker_layer",
@@ -31,6 +31,7 @@ class BrainVisualMarkersDirectTests(unittest.TestCase):
         self.assertIn("const NEURAL_ARCHITECTURE_PULSE_MARKERS", marker_js)
         self.assertIn("frontal_lobe", marker_js)
         self.assertIn("broca_area", marker_js)
+        self.assertIn("temporal_lobe_error_memory", marker_js)
         self.assertIn("hippocampus", marker_js)
         self.assertIn("longitudinal_fissure", marker_js)
         self.assertIn("dark_blue_slow_pulsing_circle", marker_js)

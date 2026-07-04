@@ -5,11 +5,16 @@ from __future__ import annotations
 
 from typing import Any
 
+from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.project_qa_copy_error_ask_controller import (
+    install_project_qa_copy_error_ask_handler,
+)
+
 __all__ = ["connect_main_window_signals"]
 
 
 def connect_main_window_signals(window: Any) -> None:
     """Connect all main window widget signals to their current callbacks."""
+    install_project_qa_copy_error_ask_handler(window)
     window.pick_project_root_button.clicked.connect(window.pick_project_root)
     window.run_analysis_button.clicked.connect(window.run_analysis)
     window.load_button.clicked.connect(window.load_json)
@@ -29,6 +34,8 @@ def connect_main_window_signals(window: Any) -> None:
     window.ask_ai_button.clicked.connect(window.ask_local_ai)
     window.clear_button.clicked.connect(window.clear_visuals_only)
     window.clear_memory_button.clicked.connect(window.clear_memory)
+    window.question_edit.textChanged.connect(lambda _text: window._refresh_workflow_controls())
+    window.json_path_edit.textChanged.connect(lambda _text: window._refresh_workflow_controls())
 
     window.pick_cache_dir_button.clicked.connect(window.pick_cache_dir)
     window.pick_governance_button.clicked.connect(window.pick_governance_path)

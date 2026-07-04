@@ -46,122 +46,18 @@ Do not rely on memory. Do not use generic code-generation habits. Do not guess i
 
 ## TERMINAL_OUTPUT_CONTRACT
 
-Apply before any PowerShell or terminal block.
+Terminal cleanup behavior is owned by `terminal_cleanup_contract.md`.
 
-First classify the terminal artifact as one of:
+Before emitting any PowerShell or terminal block, apply `terminal_cleanup_contract.md` to classify the block and audit the exact footer text.
 
-- `INSTALL_SUCCESS`
-- `INSTALL_ERROR`
-- `VALIDATION`
-- `FREEZE`
-- `DIAGNOSTIC`
-- `VALIDATION_ERROR`
-- `FREEZE_ERROR`
-- `OTHER_TERMINAL`
+This pre-output gate must not duplicate terminal footer implementation details. It must fail closed if the terminal block conflicts with the canonical contract.
 
-### INSTALL_SUCCESS contract
+Additional pre-output constraints still apply:
 
-Use only after an install command completes successfully.
+- Install blocks must include a fail-safe `try` / `catch` or equivalent checked error path.
+- Freeze-prep, freeze-hint merge, validation-evidence merge, repair, or other KANDA operational PowerShell blocks must not use inline `python -c`; use a temporary UTF-8 `.py` helper under `_delete_after_daily_work`.
+- Terminal blocks must never close the visible terminal session.
 
-Required footer behavior:
-
-- Show a success message.
-- Wait about 2 seconds.
-- Clear the terminal.
-- Keep the terminal open.
-- Do not ask for Enter.
-- Do not close the terminal.
-
-PowerShell shape:
-
-```powershell
-Write-Host ""
-Write-Host "INSTALL OK. Terminal will clear in 2 seconds..."
-Start-Sleep -Seconds 2
-Clear-Host
-```
-
-### VALIDATION, FREEZE, DIAGNOSTIC, INSTALL_ERROR, VALIDATION_ERROR, FREEZE_ERROR, and OTHER_TERMINAL contract
-
-Use this cleanup behavior for validation blocks, freeze blocks, diagnostic blocks, install failures, validation failures, freeze failures, and any terminal block that is not a successful install.
-
-Required footer behavior:
-
-- Keep the terminal open.
-- Wait for Enter.
-- Wait for Enter again.
-- Clear the terminal once.
-- Do not close the terminal.
-
-PowerShell shape:
-
-```powershell
-Write-Host ""
-Read-Host "Press Enter to clear terminal"
-Read-Host "Press Enter again to clear"
-Clear-Host
-```
-
-### Terminal forbidden patterns
-
-Never mix the install-success 2-second footer with the Enter Enter cleanup footer.
-Never use the old generic footer that waits before asking for Enter twice.
-Never close the terminal from install, validation, diagnostic, or error blocks.
-Never ask for Enter after a successful install unless the user explicitly asked to keep the log visible.
-Never auto-clear validation or diagnostic output after 2 seconds.
-Never use inline `python -c` for freeze-prep, freeze-hint merge, validation-evidence merge, repair, or other KANDA operational PowerShell blocks; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work` and run that file. Before executing it, set `$env:PYTHONPATH = $PROJECT_ROOT`; inside the helper, insert `project_root` into `sys.path` before importing `kanda_reasoner_app`.
-
-
-
-
-<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_START -->
-
-## Terminal footer self-audit gate - v15
-
-Before emitting the final answer that contains any PowerShell or terminal code,
-inspect the exact block text. Do not rely on memory and do not infer that the
-footer is present. Check the text that will be shown to the user.
-
-Pass criteria for an install block:
-
-- It has `$InstallFailed = $false` or an equivalent checked success flag.
-- It has a `try { ... } catch { ... }` or text-equivalent guarded error path.
-- The install error path includes `INSTALL ERROR`, the error message,
-  `Read-Host "Press Enter to clear terminal"`,
-  `Read-Host "Press Enter again to clear"`, and one final `Clear-Host`.
-- The success path includes `INSTALL OK. Terminal will clear in 2 seconds...`,
-  `Start-Sleep -Seconds 2`, and `Clear-Host`.
-- The success path does not ask for Enter.
-
-Pass criteria for validation, diagnostic, repair, staging-check, freeze-merge,
-and every other non-install-success terminal block:
-
-- It includes `Read-Host "Press Enter to clear terminal"`.
-- It includes `Read-Host "Press Enter again to clear"`.
-- It includes one final `Clear-Host` after both prompts.
-- It does not use `Start-Sleep -Seconds 2` as the cleanup behavior.
-- It does not claim install success.
-- If it executes Python helper logic for freeze-prep, freeze-hint merge, validation-evidence merge, or repair, it does not use `python -c`; it writes a temporary UTF-8 `.py` helper under `_delete_after_daily_work` and executes that file.
-
-Fail-closed rule:
-
-Never deliver a KANDA install block without the 2-second success clear footer.
-Never deliver a validation, diagnostic, staging-check, repair, or other terminal
-block without Enter, Enter, `Clear-Host`. If the footer check
-fails, repair the command before output.
-Never deliver freeze-prep or validation-evidence merge code that calls `python -c`. PowerShell can strip embedded quotes and create invalid Python such as `raise SystemExit(FREEZE...)`. Use a temporary `.py` helper file in `_delete_after_daily_work` instead, and make the project importable with `$env:PYTHONPATH = $PROJECT_ROOT` plus `sys.path.insert(0, str(project_root))` in the helper before project imports.
-
-<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_END -->
-
-### INSTALL_ERROR fail-safe wrapper
-
-Every install PowerShell block must wrap the install body in `try { ... } catch { ... }` or use a text-equivalent checked wrapper so that install errors cannot bypass terminal cleanup.
-
-If installation succeeds, the script must show `INSTALL OK. Terminal will clear in 2 seconds...`, wait about 2 seconds, run `Clear-Host`, and keep the terminal open with no `Read-Host`.
-
-If installation fails at any point before success, the `catch` block must show `INSTALL ERROR`, show the error message, wait for Enter twice, run one final `Clear-Host`, keep the terminal open, and must not call `exit`, `Stop-Process`, `Restart-Computer`, or any command that closes the terminal.
-
-The installer must not rely on an uncaught `throw` for install failures because an uncaught error can skip the diagnostic cleanup footer.
 
 
 

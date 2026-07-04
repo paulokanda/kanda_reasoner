@@ -10,6 +10,27 @@ load Qt until a GUI object is actually requested.
 
 from __future__ import annotations
 
+import warnings
+
+
+def _configure_known_warning_filters() -> None:
+    """Suppress a known GUI-startup invalid-escape warning.
+
+    Python 3.12 can report invalid escape sequences from dynamically parsed
+    source snippets as ``<unknown>`` warnings during GUI startup. The launcher
+    filters only the observed noisy left-bracket escape SyntaxWarning so unrelated warnings
+    remain visible.
+    """
+
+    warnings.filterwarnings(
+        "ignore",
+        message=r"invalid escape sequence '\\\['",
+        category=SyntaxWarning,
+    )
+
+
+_configure_known_warning_filters()
+
 __all__ = [
     "main",
 ]

@@ -214,36 +214,27 @@ def validate_gold_set_expansion_plan(plan: Mapping[str, Any]) -> dict[str, objec
 
     if plan.get("promotion_blocked") is not True:
         errors.append("promotion_blocked must be true")
-
     items = plan.get("plan_items")
     if not isinstance(items, list) or not items:
         errors.append("plan_items must be a non-empty list")
     elif any(not _valid_plan_item(item) for item in items):
         errors.append("all plan_items must remain planned-only and human-review-required")
-
     targets = plan.get("expansion_targets")
     if not isinstance(targets, Mapping):
         errors.append("expansion_targets must be a mapping")
     elif targets.get("requires_separate_reviewed_gold_patch") is not True:
         errors.append("expansion_targets must require a separate reviewed gold patch")
-
     if "plan_hash" in plan:
         expected = hash_record_without_field(plan, "plan_hash")
         if plan.get("plan_hash") != expected:
             errors.append("plan_hash mismatch")
-
     return {"ok": not errors, "errors": errors}
-
-
 def assert_gold_set_expansion_plan_valid(plan: Mapping[str, Any]) -> Mapping[str, Any]:
     """Return plan when valid; raise ValueError otherwise."""
-
     result = validate_gold_set_expansion_plan(plan)
     if not result["ok"]:
         raise ValueError("gold set expansion plan invalid: " + "; ".join(result["errors"]))
     return plan
-
-
 def _gold_summary(summary: Mapping[str, Any]) -> dict[str, object]:
     """Support gold summary behavior.
     
@@ -257,7 +248,6 @@ def _gold_summary(summary: Mapping[str, Any]) -> dict[str, object]:
     dict[str, object]
         The mapped values.
     """
-    
     case_count = _positive_int(summary.get("case_count") or summary.get("gold_case_count") or summary.get("current_case_count"), default=0, allow_zero=True)
     version = str(summary.get("gold_set_version") or summary.get("version") or "unknown")
     families = summary.get("families")
@@ -271,8 +261,6 @@ def _gold_summary(summary: Mapping[str, Any]) -> dict[str, object]:
         "authority_statement": AUTHORITY_STATEMENT,
         "gold_mutation": "not_performed",
     }
-
-
 def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
     """Support evaluation summary behavior.
     
@@ -286,7 +274,6 @@ def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
     dict[str, object]
         The mapped values.
     """
-    
     aggregate = report.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -302,8 +289,6 @@ def _evaluation_summary(report: Mapping[str, Any]) -> dict[str, object]:
         "promotion_recommendation": str(aggregate.get("promotion_recommendation") or "unknown"),
         "authority_statement": AUTHORITY_STATEMENT,
     }
-
-
 def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
     """Support queue summary behavior.
     
@@ -317,7 +302,6 @@ def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
     dict[str, object]
         The mapped values.
     """
-    
     aggregate = queue.get("aggregate")
     if not isinstance(aggregate, Mapping):
         aggregate = {}
@@ -331,8 +315,6 @@ def _queue_summary(queue: Mapping[str, Any]) -> dict[str, object]:
         "queue_recommendation": str(aggregate.get("queue_recommendation") or "unknown"),
         "authority_statement": AUTHORITY_STATEMENT,
     }
-
-
 def _registry_summary(registry_record: Mapping[str, Any]) -> dict[str, object]:
     """Support registry summary behavior.
     
@@ -346,7 +328,6 @@ def _registry_summary(registry_record: Mapping[str, Any]) -> dict[str, object]:
     dict[str, object]
         The mapped values.
     """
-    
     blockers = registry_record.get("promotion_blockers")
     if not isinstance(blockers, list):
         blockers = []
@@ -358,8 +339,6 @@ def _registry_summary(registry_record: Mapping[str, Any]) -> dict[str, object]:
         "promotion_blockers": [str(item) for item in blockers],
         "authority_statement": AUTHORITY_STATEMENT,
     }
-
-
 def _target_families(policy: Mapping[str, Any]) -> tuple[str, ...]:
     """Support target families behavior.
     
@@ -373,15 +352,12 @@ def _target_families(policy: Mapping[str, Any]) -> tuple[str, ...]:
     tuple[str, ...]
         The tuple of values.
     """
-    
     raw = policy.get("target_families")
     if isinstance(raw, (list, tuple)):
         values = tuple(str(item).strip() for item in raw if str(item).strip())
         if values:
             return values
     return DEFAULT_TARGET_FAMILIES
-
-
 def _plan_item(
     *,
     family: str,
@@ -410,7 +386,6 @@ def _plan_item(
     dict[str, object]
         The mapped values.
     """
-    
     family_counts = gold_summary.get("family_counts")
     current_family_count = 0
     if isinstance(family_counts, Mapping):
@@ -433,8 +408,6 @@ def _plan_item(
         "requires_future_governed_patch": True,
         "rationale_codes": reasons,
     }
-
-
 def _blockers(
     *,
     gold_summary: Mapping[str, Any],
@@ -463,7 +436,6 @@ def _blockers(
     list[str]
         The list of values.
     """
-    
     blockers = ["future_human_review_required", "future_governed_gold_patch_required", "m16_promotion_gate_not_yet_run"]
     if int(gold_summary.get("current_case_count") or 0) == 0:
         blockers.append("current_gold_summary_empty_or_unreported")
@@ -482,8 +454,6 @@ def _blockers(
     if any(item.get("requires_future_governed_patch") is True for item in plan_items):
         blockers.append("planned_items_not_gold_cases")
     return sorted(set(blockers))
-
-
 def _valid_plan_item(item: object) -> bool:
     """Support valid plan item behavior.
     
@@ -497,7 +467,6 @@ def _valid_plan_item(item: object) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
     return (
         isinstance(item, Mapping)
         and bool(str(item.get("family") or ""))
@@ -506,8 +475,6 @@ def _valid_plan_item(item: object) -> bool:
         and item.get("may_mutate_gold_now") is False
         and item.get("requires_future_governed_patch") is True
     )
-
-
 def _positive_int(value: object, *, default: int, allow_zero: bool = False) -> int:
     """Support positive int behavior.
     
@@ -525,7 +492,6 @@ def _positive_int(value: object, *, default: int, allow_zero: bool = False) -> i
     int
         The integer result.
     """
-    
     try:
         number = int(value)  # type: ignore[arg-type]
     except (TypeError, ValueError):

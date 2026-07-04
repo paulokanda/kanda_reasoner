@@ -265,7 +265,8 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         """Add one registered tab to the notebook."""
         if spec.tab_kind == "builtin_brain_navigator":
             self.brain_navigator_tab = create_brain_navigator_tab(
-                open_tab_by_id=self._tab_navigation_controller.open_tab_by_id
+                open_tab_by_id=self._tab_navigation_controller.open_tab_by_id,
+                can_open_tab_id=self._tab_navigation_controller.can_open_tab,
             )
             index = self.tabs.addTab(self.brain_navigator_tab, spec.step_title)
             self._register_tab_index(spec, index)

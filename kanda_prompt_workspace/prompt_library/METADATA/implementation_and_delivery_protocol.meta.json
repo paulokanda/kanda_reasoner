@@ -21,6 +21,7 @@
   "required_companion_prompts": [
     "box_architecture_canon",
     "evidence_freshness_gate",
-    "bundle_gated_development_workflow"
+    "bundle_gated_development_workflow",
+    "terminal_cleanup_contract"
   ]
 }

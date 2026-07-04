@@ -396,7 +396,6 @@ def build_runtime_anchor_snippets(
                 if key in seen:
                     continue
                 seen.add(key)
-
                 out.append(
                     {
                         "path": resolved_rel_path,
@@ -406,12 +405,9 @@ def build_runtime_anchor_snippets(
                     }
                 )
                 found_for_file = True
-
                 if len(out) >= limit:
                     return out
-
                 break
-
         if not found_for_file:
             line = _fallback_line_cached(abs_path)
             key = (resolved_rel_path, line, "runtime-file-fallback")
@@ -425,13 +421,9 @@ def build_runtime_anchor_snippets(
                         "text": _read_snippet_cached(abs_path, line, radius=18),
                     }
                 )
-
                 if len(out) >= limit:
                     return out
-
     return out
-
-
 def extract_runtime_anchors_from_detail(*args, **kwargs):
     """Extract the runtime anchors from detail.
     
@@ -442,11 +434,7 @@ def extract_runtime_anchors_from_detail(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_1._sr_extract_runtime_anchors_from_detail_impl(*args, **kwargs)
-
-
-
 def retrieve_snippets(*args, **kwargs):
     """Support retrieve snippets behavior.
     
@@ -457,11 +445,7 @@ def retrieve_snippets(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_2._sr_retrieve_snippets_impl(*args, **kwargs)
-
-
-
 def score_symbol_snippet_candidate(*args, **kwargs):
     """Support score symbol snippet candidate behavior.
     
@@ -472,11 +456,7 @@ def score_symbol_snippet_candidate(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_3._sr_score_symbol_snippet_candidate_impl(*args, **kwargs)
-
-
-
 def score_file_snippet_candidate(*args, **kwargs):
     """Support score file snippet candidate behavior.
     
@@ -487,11 +467,7 @@ def score_file_snippet_candidate(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_3._sr_score_file_snippet_candidate_impl(*args, **kwargs)
-
-
-
 def snippet_radius_for_symbol(*args, **kwargs):
     """Support snippet radius for symbol behavior.
     
@@ -502,11 +478,7 @@ def snippet_radius_for_symbol(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_3._sr_snippet_radius_for_symbol_impl(*args, **kwargs)
-
-
-
 def read_snippet(*args, **kwargs):
     """Return the snippet.
     
@@ -517,24 +489,12 @@ def read_snippet(*args, **kwargs):
     **kwargs : object
         The kwargs value.
     """
-    
     return _sr_part_3._sr_read_snippet_impl(*args, **kwargs)
-
-
-
-
-
-
-
-
 def _bind_snippet_retrieval_private_impl_globals():
     """Support bind snippet retrieval private impl globals behavior.
     """
-    
     root_globals = globals()
     _sr_part_1._bind_root_globals(root_globals)
     _sr_part_2._bind_root_globals(root_globals)
     _sr_part_3._bind_root_globals(root_globals)
-
-
 _bind_snippet_retrieval_private_impl_globals()

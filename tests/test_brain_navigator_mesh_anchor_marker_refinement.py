@@ -28,6 +28,14 @@ class BrainNavigatorMeshAnchorMarkerRefinementTests(unittest.TestCase):
         self.assertEqual("cerebellum", markers["cerebellum"].surface_cloud)
         self.assertEqual("cerebellum", markers["cerebellar_folia"].surface_cloud)
         self.assertLess(markers["cerebellar_folia"].anchor_y, -0.40)
+        self.assertIn("temporal_lobe_error_memory", markers)
+        self.assertEqual("telencephalon", markers["temporal_lobe_error_memory"].surface_cloud)
+        self.assertGreater(markers["temporal_lobe_error_memory"].anchor_x, 0.65)
+        self.assertLess(markers["temporal_lobe_error_memory"].anchor_y, -0.30)
+        self.assertLess(
+            markers["temporal_lobe_error_memory"].anchor_z,
+            markers["temporal_lobe"].anchor_z,
+        )
 
     def test_marker_asset_remains_navigation_free(self) -> None:
         """The refinement patch must remain data-only and navigation free."""

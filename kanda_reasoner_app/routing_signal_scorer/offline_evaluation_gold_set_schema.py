@@ -1,27 +1,17 @@
 # project-path: kanda_reasoner_app/routing_signal_scorer/offline_evaluation_gold_set_schema.py
 """Offline evaluation gold-set schema contract for future semantic evidence.
 
-This module is intentionally standard-library-only. It does not run an
-evaluation, generate embeddings, build vector indexes, read prompt-library
-files, read freeze entries, persist user requests, tune thresholds, or mutate
-project state. It validates the future frozen gold-set artifact shape that must
-exist before semantic/embedding evidence can be evaluated.
+This module is intentionally standard-library-only. It does not run an evaluation,
+generate embeddings, build vector indexes, read prompt-library files, read freeze entries,
+persist user requests, tune thresholds, or mutate project state. It validates
+the future frozen gold-set artifact shape that must exist before semantic/embedding evidence can be evaluated.
 """
 
 from __future__ import annotations
 
-
-__all__ = [
-    'build_disabled_gold_set_schema_status',
-    'build_minimal_valid_gold_set_case',
-    'build_minimal_valid_gold_set_template',
-    'classify_gold_set_case_category',
-    'validate_gold_set_case',
-    'validate_offline_evaluation_gold_set',
-]
+__all__ = ['build_disabled_gold_set_schema_status', 'build_minimal_valid_gold_set_case', 'build_minimal_valid_gold_set_template', 'classify_gold_set_case_category', 'validate_gold_set_case', 'validate_offline_evaluation_gold_set']
 from collections.abc import Mapping, Sequence
 from typing import Any
-
 
 OFFLINE_EVALUATION_GOLD_SET_FEATURE_ID = "routing_signal_scorer_v3_offline_evaluation_gold_set_schema_v1"
 OFFLINE_EVALUATION_GOLD_SET_SCHEMA_VERSION = "3.5-offline-evaluation-gold-set"
@@ -210,7 +200,6 @@ ALLOWED_SOURCE_CONTEXT_STATUSES = frozenset(
 AMBIGUOUS_CATEGORIES = frozenset({"ambiguous_cases"})
 STALE_SUPPRESSION_CATEGORIES = frozenset({"stale_context_cases"})
 
-
 def _is_sequence(value: Any) -> bool:
     """Support is sequence behavior.
     
@@ -226,7 +215,6 @@ def _is_sequence(value: Any) -> bool:
     """
     
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
-
 
 def _as_strings(value: Any) -> set[str]:
     """Support as strings behavior.
@@ -246,7 +234,6 @@ def _as_strings(value: Any) -> set[str]:
         return set()
     return {item for item in value if isinstance(item, str)}
 
-
 def _append_missing(errors: list[str], label: str, missing: set[str] | frozenset[str]) -> None:
     """Support append missing behavior.
     
@@ -262,7 +249,6 @@ def _append_missing(errors: list[str], label: str, missing: set[str] | frozenset
     
     if missing:
         errors.append(f"{label} missing required values: {', '.join(sorted(missing))}")
-
 
 def _contains_forbidden_key(mapping: Mapping[str, Any], forbidden_keys: set[str] | frozenset[str]) -> set[str]:
     """Support contains forbidden key behavior.
@@ -282,7 +268,6 @@ def _contains_forbidden_key(mapping: Mapping[str, Any], forbidden_keys: set[str]
     
     return {key for key in mapping.keys() if key in forbidden_keys}
 
-
 def classify_gold_set_case_category(category: str) -> dict[str, Any]:
     """Classify whether a gold-set case category is known and advisory-only."""
 
@@ -293,7 +278,6 @@ def classify_gold_set_case_category(category: str) -> dict[str, Any]:
         "evaluation_runner_authorized": False,
         "advisory_only": True,
     }
-
 
 def validate_gold_set_case(case: Mapping[str, Any]) -> dict[str, Any]:
     """Validate one future gold-set case without storing raw user text."""
@@ -367,7 +351,6 @@ def validate_gold_set_case(case: Mapping[str, Any]) -> dict[str, Any]:
         "threshold_changes_authorized": False,
         "advisory_only": True,
     }
-
 
 def validate_offline_evaluation_gold_set(gold_set: Mapping[str, Any]) -> dict[str, Any]:
     """Validate the future offline evaluation gold-set artifact shape."""
@@ -450,7 +433,6 @@ def validate_offline_evaluation_gold_set(gold_set: Mapping[str, Any]) -> dict[st
         "advisory_only": True,
     }
 
-
 def build_minimal_valid_gold_set_case(category: str = "positive_routing_cases") -> dict[str, Any]:
     """Build a synthetic, schema-valid case for tests and design examples only."""
 
@@ -483,7 +465,6 @@ def build_minimal_valid_gold_set_case(category: str = "positive_routing_cases") 
         "contains_freeze_entry_text": False,
     }
 
-
 def build_minimal_valid_gold_set_template() -> dict[str, Any]:
     """Build a minimal future gold-set artifact template without enabling evaluation."""
 
@@ -500,7 +481,6 @@ def build_minimal_valid_gold_set_template() -> dict[str, Any]:
         "forbidden_actions": sorted(REQUIRED_FORBIDDEN_ACTIONS),
         "case_records": [build_minimal_valid_gold_set_case(category) for category in sorted(REQUIRED_CASE_CATEGORIES)],
     }
-
 
 def build_disabled_gold_set_schema_status() -> dict[str, Any]:
     """Return a status payload showing this feature does not execute evaluation."""

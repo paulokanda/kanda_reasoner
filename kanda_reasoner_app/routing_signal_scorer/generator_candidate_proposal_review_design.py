@@ -125,7 +125,6 @@ REQUIRED_REVIEW_QUESTIONS = frozenset(
         "does_proposal_include_stop_conditions",
     }
 )
-
 REQUIRED_REJECTION_REASONS = frozenset(
     {
         "missing_recorded_human_decision",
@@ -146,7 +145,6 @@ REQUIRED_REJECTION_REASONS = frozenset(
         "tries_to_write_freeze_memory_from_output_now",
     }
 )
-
 ALLOWED_FUTURE_REVIEW_OUTCOMES = frozenset(
     {
         "reject_candidate_proposal",
@@ -155,7 +153,6 @@ ALLOWED_FUTURE_REVIEW_OUTCOMES = frozenset(
         "permit_separate_governed_generator_candidate_patch_review_only",
     }
 )
-
 REQUIRED_ALLOWED_REVIEW_OUTPUTS = frozenset(
     {
         "proposal_review_schema",
@@ -177,7 +174,6 @@ REQUIRED_ALLOWED_REVIEW_OUTPUTS = frozenset(
         "no_may_proceed_signal",
     }
 )
-
 REQUIRED_PROHIBITED_REVIEW_OUTPUTS = frozenset(
     {
         "generator_candidate_patch",
@@ -207,7 +203,6 @@ REQUIRED_PROHIBITED_REVIEW_OUTPUTS = frozenset(
         "freeze_memory_write",
     }
 )
-
 REQUIRED_DISABLED_FLAGS_FALSE = frozenset(
     {
         "real_human_decision_recorded_by_review",
@@ -243,7 +238,6 @@ REQUIRED_DISABLED_FLAGS_FALSE = frozenset(
         "write_freeze_memory_enabled",
     }
 )
-
 REQUIRED_NO_AUTHORITY_ASSERTIONS = frozenset(
     {
         "review_is_evidence_only",
@@ -268,7 +262,6 @@ REQUIRED_NO_AUTHORITY_ASSERTIONS = frozenset(
         "future_artifact_generation_requires_later_separate_governed_patch",
     }
 )
-
 REQUIRED_REVIEW_EFFECT_POLICY = frozenset(
     {
         "review_schema_has_no_runtime_effect",
@@ -281,7 +274,6 @@ REQUIRED_REVIEW_EFFECT_POLICY = frozenset(
         "review_output_is_not_prompt_loading_authority",
     }
 )
-
 REQUIRED_STOP_CONDITIONS = frozenset(
     {
         "stop_if_recorded_human_decision_missing",
@@ -299,7 +291,6 @@ REQUIRED_STOP_CONDITIONS = frozenset(
         "stop_if_freeze_memory_write_from_output_is_requested",
     }
 )
-
 FORBIDDEN_REVIEW_FIELDS = frozenset(
     {
         "approved_generator_candidate_patch",
@@ -324,8 +315,6 @@ FORBIDDEN_REVIEW_FIELDS = frozenset(
         "may_proceed_now",
     }
 )
-
-
 def _as_set(value: object) -> set[str]:
     """Support as set behavior.
     
@@ -339,12 +328,9 @@ def _as_set(value: object) -> set[str]:
     set[str]
         The set result.
     """
-    
     if not isinstance(value, Sequence) or isinstance(value, (str, bytes)):
         return set()
     return {str(item) for item in value}
-
-
 def _missing(required: set[str] | frozenset[str], actual: object) -> list[str]:
     """Support missing behavior.
     
@@ -360,10 +346,7 @@ def _missing(required: set[str] | frozenset[str], actual: object) -> list[str]:
     list[str]
         The list of values.
     """
-    
     return sorted(set(required) - _as_set(actual))
-
-
 def _disabled_flags() -> dict[str, bool]:
     """Support disabled flags behavior.
     
@@ -372,13 +355,9 @@ def _disabled_flags() -> dict[str, bool]:
     dict[str, bool]
         The mapped values.
     """
-    
     return {flag: False for flag in sorted(REQUIRED_DISABLED_FLAGS_FALSE)}
-
-
 def build_generator_candidate_proposal_review_contract() -> dict[str, Any]:
     """Return the inert review schema for a future proposal review."""
-
     return {
         "schema_id": GENERATOR_CANDIDATE_PROPOSAL_REVIEW_FEATURE_ID,
         "schema_version": GENERATOR_CANDIDATE_PROPOSAL_REVIEW_SCHEMA_VERSION,
@@ -399,23 +378,17 @@ def build_generator_candidate_proposal_review_contract() -> dict[str, Any]:
         "review_effect_policy": sorted(REQUIRED_REVIEW_EFFECT_POLICY),
         "stop_conditions": sorted(REQUIRED_STOP_CONDITIONS),
     }
-
-
 def validate_generator_candidate_proposal_review_contract(
     contract: Mapping[str, Any]
 ) -> dict[str, Any]:
     """Validate that a proposal review schema remains inert."""
-
     errors: list[str] = []
-
     for field in sorted(REQUIRED_REVIEW_FIELDS):
         if field not in contract:
             errors.append(f"missing required field: {field}")
-
     for field in sorted(FORBIDDEN_REVIEW_FIELDS):
         if field in contract:
             errors.append(f"forbidden field present: {field}")
-
     if contract.get("schema_id") != GENERATOR_CANDIDATE_PROPOSAL_REVIEW_FEATURE_ID:
         errors.append("schema_id mismatch")
     if contract.get("schema_version") != GENERATOR_CANDIDATE_PROPOSAL_REVIEW_SCHEMA_VERSION:
@@ -430,7 +403,6 @@ def validate_generator_candidate_proposal_review_contract(
         errors.append("invalid current_review_state")
     if contract.get("current_review_effect") != "no_effect_schema_only_not_reviewed":
         errors.append("current_review_effect must remain no effect")
-
     required_sets = [
         ("required_prior_milestones", REQUIRED_PRIOR_MILESTONES),
         ("required_proposal_inputs", REQUIRED_PROPOSAL_INPUTS),
@@ -447,7 +419,6 @@ def validate_generator_candidate_proposal_review_contract(
         missing = _missing(required, contract.get(field))
         if missing:
             errors.append(f"{field} missing: {', '.join(missing)}")
-
     disabled_flags = contract.get("disabled_flags")
     if not isinstance(disabled_flags, Mapping):
         errors.append("disabled_flags must be a mapping")
@@ -457,7 +428,6 @@ def validate_generator_candidate_proposal_review_contract(
             errors.append(f"disabled_flags missing: {flag}")
         elif disabled_flags[flag] is not False:
             errors.append(f"disabled flag must be false: {flag}")
-
     return {
         "ok": not errors,
         "errors": errors,
@@ -480,11 +450,8 @@ def validate_generator_candidate_proposal_review_contract(
         "requires_future_governed_candidate_patch": True,
         "requires_future_governed_generation_patch": True,
     }
-
-
 def classify_generator_candidate_proposal_review_request(request_text: str) -> dict[str, Any]:
     """Classify whether a request stays inside the inert review boundary."""
-
     text = request_text.lower()
     blocked_markers = {
         "approve",
@@ -507,7 +474,6 @@ def classify_generator_candidate_proposal_review_request(request_text: str) -> d
     review_markers = {"review", "checklist", "schema", "questions", "rejection"}
     blocked = any(marker in text for marker in blocked_markers)
     review_only = any(marker in text for marker in review_markers)
-
     return {
         "allowed_now": review_only and not blocked,
         "permitted_output": (

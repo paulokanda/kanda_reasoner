@@ -422,9 +422,7 @@ def _build_top_counter_rows(counter: Counter[str], limit: int) -> list[dict[str,
     list[dict[str, Any]]
         The list of values.
     """
-    
     rows: list[dict[str, Any]] = []
-
     for value, count in counter.most_common(limit):
         rows.append(
             {
@@ -432,10 +430,7 @@ def _build_top_counter_rows(counter: Counter[str], limit: int) -> list[dict[str,
                 "count": int(count),
             }
         )
-
     return rows
-
-
 def _has_grid_position(layout_position: dict[str, Any]) -> bool:
     """Support has grid position behavior.
     
@@ -449,12 +444,9 @@ def _has_grid_position(layout_position: dict[str, Any]) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
     if not isinstance(layout_position, dict):
         return False
     return "row" in layout_position and "col" in layout_position
-
-
 def _dict_or_empty(value: Any) -> dict[str, Any]:
     """Support dict or empty behavior.
     
@@ -468,12 +460,9 @@ def _dict_or_empty(value: Any) -> dict[str, Any]:
     dict[str, Any]
         The mapped values.
     """
-    
     if isinstance(value, dict):
         return value
     return {}
-
-
 def _list_or_empty(value: Any) -> list[Any]:
     """Support list or empty behavior.
     
@@ -487,12 +476,9 @@ def _list_or_empty(value: Any) -> list[Any]:
     list[Any]
         The list of values.
     """
-    
     if isinstance(value, list):
         return value
     return []
-
-
 def _safe_str(value: Any) -> str:
     """Support safe str behavior.
     
@@ -506,7 +492,6 @@ def _safe_str(value: Any) -> str:
     str
         The string result.
     """
-    
     if value is None:
         return ""
     try:

@@ -17,6 +17,7 @@ from .workflow_gui_constants import _WORKFLOW_GUI_DEFAULT_MANAGER_NAME, _WORKFLO
 from .workflow_gui_history import get_recent_roots, get_recent_scripts, record_root, record_script
 from .workflow_gui_worker import WorkflowRunWorker
 from kanda_reasoner_app.templates.floating_windows import show_auto_close_action_window
+from kanda_reasoner_app.refactor_report_evidence import build_refactor_report_evidence_text
 __all__ = ['WorkflowManagerWindow', 'main']
 
 class WorkflowManagerWindow(QMainWindow):
@@ -153,6 +154,10 @@ class WorkflowManagerWindow(QMainWindow):
         run_options_toolbar_layout.addWidget(self._mode_toolbar_label)
         run_options_toolbar_layout.addWidget(self._mode_combo)
         run_options_toolbar_layout.addWidget(self._strict_write_checkbox)
+        self._include_refactor_report_checkbox = QCheckBox('Add Refactor Report')
+        self._include_refactor_report_checkbox.setChecked(True)
+        self._include_refactor_report_checkbox.setToolTip('Run Refactor Report before copying and append compact evidence for AI.')
+        run_options_toolbar_layout.addWidget(self._include_refactor_report_checkbox)
         toolbar.addWidget(self._run_options_toolbar_widget)
         self._mode_help_toolbar_button = QPushButton('What do these modes do?')
         self._mode_help_toolbar_button.setObjectName('workflow_review_mode_help_toolbar_button')
@@ -162,9 +167,9 @@ class WorkflowManagerWindow(QMainWindow):
         clear_action = QAction('Clear Output', self)
         clear_action.triggered.connect(self._output.clear)
         toolbar.addAction(clear_action)
-        save_action = QAction('Save Output...', self)
-        save_action.triggered.connect(self.save_output)
-        toolbar.addAction(save_action)
+        copy_workflow_action = QAction('Copy Workflow Audit', self)
+        copy_workflow_action.triggered.connect(self.copy_workflow_audit_to_clipboard)
+        toolbar.addAction(copy_workflow_action)
         toolbar.addSeparator()
         history_action = QAction('Show History', self)
         history_action.triggered.connect(self.show_history)
@@ -172,7 +177,9 @@ class WorkflowManagerWindow(QMainWindow):
         central = QWidget(self)
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
-        layout.addWidget(QLabel('Output'))
+        self._workflow_audit_label = QLabel('Project Audit Workflow')
+        self._workflow_audit_label.setStyleSheet('color: #000000; font-weight: bold;')
+        layout.addWidget(self._workflow_audit_label)
         layout.addWidget(self._output, stretch=1)
         self.setStatusBar(QStatusBar(self))
         self.statusBar().showMessage('Ready')
@@ -453,6 +460,33 @@ class WorkflowManagerWindow(QMainWindow):
         else:
             help_text = 'Validate\n  Runs tests, runtime smoke commands, business checks, GUI flows,\n  integration commands, performance commands, and import probes.\n\nDiff\n  Previews changes to workflow_manifest.json and WORKFLOWS.md.\n\nScan\n  Prints the generated workflow manifest template as JSON.\n\nWrite\n  Writes workflow_manifest.json and WORKFLOWS.md.\n  Blocked if validation has failures.'
         QMessageBox.information(self, f'Mode Help - {script_name}', help_text)
+
+    def copy_workflow_audit_to_clipboard(self) -> None:
+        """Copy Workflow Review output with optional compact Refactor Report evidence."""
+
+        audit_text = self._output.toPlainText()
+        if self._include_refactor_report_checkbox.isChecked():
+            root_path = self._current_root_path()
+            self.statusBar().showMessage('Running Refactor Report before copying Workflow Audit...')
+            QApplication.processEvents()
+            try:
+                audit_text += build_refactor_report_evidence_text(root_path)
+            except Exception as exc:
+                audit_text += (
+                    '\n\n---\n'
+                    'Refactor Report Evidence\n'
+                    f'Unable to auto-generate compact evidence for {root_path}:\n{exc}\n'
+                )
+                show_error_copy_close_window(
+                    self,
+                    title='Refactor Report evidence failed',
+                    message=f'Workflow Audit will still be copied, but Refactor Report evidence failed:\n{exc}',
+                )
+        QApplication.clipboard().setText(audit_text)
+        if self._include_refactor_report_checkbox.isChecked():
+            self.statusBar().showMessage('Copied Workflow Audit with compact Refactor Report evidence')
+        else:
+            self.statusBar().showMessage('Copied Workflow Audit to clipboard')
 
     def save_output(self) -> None:
         """Save the output.

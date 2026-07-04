@@ -24,20 +24,38 @@ It prevents loading the full prompt library at session start.
 
 ## Box Logic Startup Bridge
 
-At the beginning of every session, carry this lightweight Box Logic rule into
-all implementation, repair, refactor, prompt update, governance update, bundle,
-GUI, validation, freeze, and artifact-delivery work:
+BEGINNING_OF_DAY_BOX_LOGIC_BRIDGE: This bridge is mandatory beginning-of-day
+context. Startup load/readiness reporting must make clear that the Box Logic
+shield is available from the start of the session, without loading the full Box
+Architecture canon unless a task actually needs it.
 
-- Identify the active box before implementation.
-- State owner paths.
+BEGINNING_OF_DAY_BOX_LOGIC_SHIELD_V1_START
+BOX_LOGIC_STARTUP_SHIELD: This is a startup-visible hard gate for all
+KANDA/PyArchitect implementation, repair, refactor, prompt update, governance
+update, bundle, GUI, validation, freeze, patch, and artifact-delivery work. The
+AI must carry this rule at the beginning of every chat and apply it before
+planning, changing, validating, or delivering project files.
+
+Mandatory summarized box-boundary rule:
+
+- Identify the active box before implementation or file changes.
+- State owner paths when work touches code, prompt, governance, validation,
+  startup, GUI, freeze, or artifact-delivery behavior.
 - State files allowed to change.
 - State files explicitly out of scope.
 - Declare cross-box touches before touching more than one box.
-- Preserve public contracts and avoid private reach-in.
+- Keep code and responsibility inside the owning box.
+- Do not let code, imports, mutable state, UI logic, domain logic, prompt logic,
+  validation logic, governance logic, freeze logic, or delivery logic leak from
+  one box into another.
+- Preserve public contracts between boxes and avoid private reach-in.
 - Validate the active box and any touched external box.
 - Do not proceed from memory when box ownership, owner paths, public contracts,
   or allowed supporting touches are unclear; inspect the needed source, prompt,
   manifest, or validation context first.
+- If boundary risk, cross-box leakage, public-contract risk, mutable-state
+  ownership risk, or box-responsibility confusion exists, route to
+  `box_architecture_canon.md` before implementation or delivery.
 
 This bridge is only the startup enforcement layer. It does not replace the full
 Box Architecture canon. When a task involves implementation, repair, refactor,
@@ -47,6 +65,46 @@ risk, route to `box_architecture_canon.md` before doing the risky step.
 
 Do not load the full Box Architecture prompt during normal startup unless the
 current task requires it.
+BEGINNING_OF_DAY_BOX_LOGIC_SHIELD_V1_END
+
+
+## No-Leak Logic Bridge
+
+BEGINNING_OF_DAY_NO_LEAK_LOGIC_BRIDGE: This bridge is mandatory
+beginning-of-day context. Startup load/readiness reporting must make clear
+that NO_LEAK_LOGIC_V1 is available from the start of the session, without
+loading the full Box Architecture canon unless a task actually needs it.
+
+BEGINNING_OF_DAY_NO_LEAK_LOGIC_V1_START
+NO_LEAK_LOGIC_V1: This is a startup-visible hard gate inside Box Logic and
+Box Shielding. It prevents ownership, path, state, contract, evidence, and
+responsibility from leaking across boxes.
+
+Mandatory summarized no-leak rule:
+
+- Classify every touched item before mutation as tool-owned logic,
+  active-project source, project-specific support state, generated/evidence
+  artifact, temporary daily-work artifact, external box dependency, or
+  out-of-scope file.
+- Prevent wrong-root writes, especially project-specific state written to a
+  hardcoded KANDA Reasoner root or reusable tool code written into an
+  active-project support/output path.
+- Prevent tool/project leakage: reusable engines, GUI tabs, analyzers,
+  planners, validators, prompt routing, patch delivery, startup delivery,
+  freeze tooling, and source maps are tool-owned; concrete generated or
+  refactored files for the selected active project are project-owned.
+- Prevent cross-box leakage, private reach-in, public API ownership leakage,
+  hidden mutable-state leakage, generated-artifact-as-source leakage, and
+  validation/freeze/Error Memory evidence leakage.
+- If no-leak risk exists, output `NO-LEAK CHECK` before implementation or
+  delivery.
+- If ownership, root, box, public contract, generated/source status, or
+  freeze/validation location is unclear, inspect the needed source, prompt,
+  manifest, or validation context before writing.
+
+This bridge is only the startup enforcement layer. It does not replace the
+full Box Architecture, Box Shielding, or Project Tool Boundary canons.
+BEGINNING_OF_DAY_NO_LEAK_LOGIC_V1_END
 
 ## Code Module Size Bridge
 
@@ -55,57 +113,91 @@ beginning-of-day context. Startup load/readiness reporting must make clear that
 the module-size guardrail is available from the start of the session, without
 loading the full large-module protocol unless a task actually needs it.
 
-At the beginning of every session, carry this lightweight module-size rule into
-all code creation and refactor work:
+BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_START
+CODE_MODULE_HARD_MAX_500_LINES: This is a startup-visible hard gate for all
+KANDA/PyArchitect code creation, updates, modifications, refactors, and splits.
+The AI must carry this rule at the beginning of every chat and apply it before
+writing, changing, refactoring, or delivering code modules.
 
-- Ideal code module size: 400 lines or fewer.
-- Maximum code module size: 500 lines or fewer.
-- When creating a new code module, do not create a file above 500 lines; split
-  the module by responsibility before delivery.
-- When refactoring an existing code module above 500 lines, use the approved
-  large-module protocol and split by responsibility.
-- Prefer cohesive helper modules with clear ownership over large mixed-purpose
-  files.
-- This rule applies to code/source modules, especially `.py` files.
+Mandatory summarized line-count rule:
+
+- Ideal code/source module size: 400 physical lines or fewer.
+- Absolute hard maximum code/source module size: 500 physical lines or fewer.
+- Every new or touched code/source module must be at most 500 physical lines
+  after the change, including creation, update, modification, refactor, or
+  split work.
+- Do not create, keep, enlarge, or deliver a touched code/source module above
+  500 physical lines as normal implementation work.
+- If the requested work would create or preserve an over-limit touched module,
+  route to `large_module_refactor_protocol.md`, split by cohesive ownership,
+  and validate line counts before patch delivery.
+- If a module would exceed the 500-line hard maximum, the AI may and should
+  create as many cohesive helper, auxiliary, derived, adapter, or complementary
+  code/source modules as needed, as long as every created or touched module also
+  follows this bridge.
+- Every helper module must have a clear responsibility, must stay at or below
+  500 physical lines, should target 400 physical lines or fewer, and should not
+  be below roughly 100 substantive lines unless a documented exception applies
+  such as a facade/re-export shim, package marker, constants module, validation
+  helper, optional dependency adapter, circular-dependency breaker, stable seam,
+  or another cohesive boundary.
+- Split by responsibility, dependency direction, public API boundary,
+  side-effect isolation, validation boundary, or no-leak ownership boundary; do
+  not split by arbitrary line ranges or create micro-files only to satisfy a
+  line-count target.
+- For Python work, check physical line counts for every touched `.py` file
+  whenever source files are available before patch delivery.
+- This rule applies to code/source modules, especially `.py` files and other
+  implementation files.
 - This rule does not apply to plain text, Markdown, documentation, prompt,
-  manifest, JSON, log, report, or other non-code content files. Files such as
-  `.txt`, `.md`, `.json`, documentation artifacts, prompt files, manifests,
-  and logs may be larger when their purpose requires it.
+  manifest, JSON, log, report, or other non-code content files when their
+  purpose requires larger content.
 
 If a task needs the full methodology, route to `large_module_refactor_protocol.md`;
 do not load the full prompt during normal startup unless needed.
+BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_END
 
 ## Terminal Cleanup Bridge
 
 BEGINNING_OF_DAY_TERMINAL_CLEANUP_BRIDGE: This bridge is mandatory
 beginning-of-day context. Startup load/readiness reporting must make clear that
 terminal cleanup behavior is available from the start of the session, because it
-applies to install, validation, freeze, error, diagnostic, and other terminal
-blocks.
+applies to install, validation, freeze, recovery, error, diagnostic, and other
+terminal blocks.
 
-At the beginning of every session, carry this lightweight terminal cleanup rule
-into every KANDA/PyArchitect terminal command:
+The canonical owner prompt is `terminal_cleanup_contract.md`. This startup bridge
+is the beginning-of-day visible summary of that contract so the AI can apply the
+rule before loading specialist output prompts.
 
-- Install success: show `INSTALL OK: ...`, wait about 2 seconds, run
-  `Clear-Host`, and keep the terminal open. Do not ask for Enter on the install
-  success path.
-- Validation success: show validation markers, then ask for Enter twice, then
-  run one final `Clear-Host`, and keep the terminal open.
-- Freeze success or freeze-ready commands: show freeze or evidence-merge
-  markers, then ask for Enter twice, then run one final `Clear-Host`, and keep
-  the terminal open.
-- Any error: show `INSTALL ERROR`, `VALIDATION ERROR`, or `FREEZE ERROR` with
-  the error details, then ask for Enter twice, then run one final `Clear-Host`,
-  and keep the terminal open.
-- Any other terminal situation: ask for Enter twice, then run one final
+BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_START
+TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE: Before writing any Windows 11
+PowerShell terminal block, classify it as install success or non-install-success.
+
+Mandatory startup-visible terminal cleanup rule:
+
+- Install success only: show `INSTALL OK. Terminal will clear in 2 seconds...`,
+  wait about 2 seconds, run one `Clear-Host`, keep the terminal open, and do not
+  ask for Enter.
+- Install errors, validation, freeze, recovery, diagnostics, validation errors,
+  freeze errors, and every other non-install-success terminal block: show all
+  relevant output, ask for Enter, ask for Enter again, run one final
   `Clear-Host`, and keep the terminal open.
-- Do not use `exit`, `Stop-Process`, or any terminal-closing command in install,
-  validation, freeze, error, diagnostic, or other terminal blocks.
-- Do not clear validation, freeze, diagnostic, or error output after the first
-  Enter; preserve the output until the second Enter, then clear once.
+- Never close the terminal from install, validation, freeze, recovery,
+  diagnostic, or error blocks.
+- Never mix the install-success 2-second footer with the Enter, Enter footer.
+- Never auto-clear validation, freeze, diagnostic, recovery, or error output
+  after a timer.
+- Install blocks must include a fail-safe error path so install errors cannot
+  bypass the Enter, Enter, `Clear-Host` cleanup.
+- Freeze-prep, validation-evidence merge, recovery, and repair commands must not
+  use inline `python -c`; write and run a temporary UTF-8 `.py` helper under the
+  active project `_delete_after_daily_work` folder.
 
-If a task needs the full output-time gate, route to `pre_output_contract_gates.md`;
-do not load the full prompt during normal startup unless needed.
+This bridge does not replace `terminal_cleanup_contract.md`; it makes the
+contract visible at startup. When producing an install, validation, freeze,
+recovery, diagnostic, or error command, apply `terminal_cleanup_contract.md` and
+`pre_output_contract_gates.md` before output.
+BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_END
 
 ## Tier model
 

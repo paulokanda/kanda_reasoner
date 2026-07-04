@@ -265,7 +265,7 @@ def create_engineering_safety_panel():
     project_root_edit.setMinimumWidth(180)
     project_root_edit.setMaximumWidth(360)
 
-    search_project_button = QPushButton("Search")
+    search_project_button = QPushButton("Browse...")
     search_project_button.setToolTip("Select the active project root for Engineering Safety commands")
 
     project_root_controls_moved_to_host = {"moved": False}
@@ -369,7 +369,7 @@ def create_engineering_safety_panel():
         destination_layout,
         insert_index: int | None = None,
     ) -> None:
-        """Move Engineering Safety Project Root controls into the host source row."""
+        """Move Engineering Safety Project Root controls into the host header."""
         if project_root_controls_moved_to_host["moved"]:
             return
 
@@ -391,6 +391,12 @@ def create_engineering_safety_panel():
         project_root_controls_moved_to_host["moved"] = True
 
     panel.move_project_root_controls_to_layout = move_project_root_controls_to_layout
+
+    def run_ai_review_first_check() -> None:
+        """Run the first Engineering Safety check exposed in the tab header."""
+        run_command("pre-patch-gate")
+
+    panel.run_ai_review_first_check = run_ai_review_first_check
 
     button_width = 170
     grouped_sections = _group_tools_by_section(get_engineering_safety_panel_catalog())

@@ -347,6 +347,7 @@ Required prompts/groups:
 4. box_architecture_canon when boundary risk exists
 5. project_tool_boundary_canon when project/tool identity can be confused
 6. pre_output_contract_gates when terminal, ZIP, freeze, or validation artifacts will be emitted
+7. terminal_cleanup_contract when any terminal command will be emitted
 
 Mandatory behavior:
 
@@ -368,6 +369,7 @@ Required prompts/groups:
 
 1. 05_patch_delivery_and_validation
 2. router_bridge_patch_delivery_contract
+3. terminal_cleanup_contract, when terminal commands will be emitted
 3. pre_output_contract_gates from 03_governance_freeze_and_handoff
 4. freeze_code_intake_and_form_protocol when the patch can be frozen later
 5. Relevant source files and validation command
