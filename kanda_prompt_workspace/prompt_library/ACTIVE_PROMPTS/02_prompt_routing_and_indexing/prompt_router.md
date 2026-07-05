@@ -194,6 +194,12 @@ MODULE_TOO_LARGE
 code file above 500 lines
 large module protocol v7
 large module protocol v7.2
+large module protocol v7.3
+Web AI refactor version
+Imported Web AI Version
+AI Refactor Version How To
+Copy Comprehensive Planning for Web AI
+Receive Planning from Web AI
 double refactor train
 sequential refactor train
 AST Split Audit
@@ -210,19 +216,22 @@ kanda_bundle_gated_development_workflow
 python_clean_code_overlay
 large_module_refactor_protocol
 large_module_refactor_template
+web_ai_large_module_refactor_exchange_protocol, when external/online Web AI planning improvement or imported Web AI Version packaging is requested
 project_tool_boundary_canon, when project-root, staging, freeze, handoff, or validation paths are involved
 ```
 
 Required routing behavior:
 
 ```text
-Use Large Module Creation and Refactor Protocol Version 7.2. Apply the v7.2 granularity rule: cohesive helpers near 400 lines are acceptable, avoid unnecessary micro-files, and use normal importable .py files for runtime/source logic rather than ZIP payload structures.
+Use Large Module Creation and Refactor Protocol Version 7.3. Apply the v7.3 granularity and external Web AI delegation rules: cohesive helpers near 400 lines are acceptable, avoid unnecessary micro-files, and use normal importable .py files for runtime/source logic rather than ZIP payload structures.
 Before implementation, prefer Architecture Review -> Run AST Split Audit and require/paste the Split Handoff for AI when the tool is available.
 Use the AST-assisted candidate-island queue, independence matrix, and patch composition decision before implementing.
 Choose one of: single-island patch, approved two-island patch, or sequential double-refactor delivery train with serial inner patches.
 Do not stack multiple inner patches before validation/freeze.
 A sequential double-refactor train may prepare up to four ordered patch ZIPs in one response, each normally containing at most two related refactor slices.
 Keep every inner patch on install -> validate -> freeze before proceeding to the next patch.
+When the user requests an external/online Web AI refactor version, load KPR-06-001 web_ai_large_module_refactor_exchange_protocol in addition to the core v7.3 canon.
+The external Web AI flow is native plan -> copy comprehensive package -> bounded external improvement -> governed import ZIP -> install -> Receive Planning from Web AI -> review -> Load as Imported Web AI Version.
 ```
 
 Group to open in Tab 9:

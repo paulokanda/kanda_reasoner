@@ -9,9 +9,9 @@
   "generated_by": "reasoner_engine_main_window_manifest_contract_repair",
   "ai_instruction": "Keep this manifest aligned with the canonical ai_reasoner_main_window_help folder while the GUI migration remains staged.",
   "summary": {
-    "total_helpers": 13,
+    "total_helpers": 14,
     "public_helpers": 12,
-    "internal_helpers": 1,
+    "internal_helpers": 2,
     "entry_exports": [
       "JsonProjectReasonerV10",
       "main"
@@ -156,6 +156,18 @@
       ],
       "depends_on": [],
       "consumed_by": []
+    },
+    "window_controller_bridge.py": {
+      "purpose": "Private state accessor and controller delegate mixin for the Project Q&A main window facade.",
+      "reason": "Keep ai_reasoner_main_window.py below the module-size threshold without moving GUI construction or entry-point behavior.",
+      "stability": "stable",
+      "exports": [
+        "_WindowControllerBridgeMixin"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "ai_reasoner_main_window.py"
+      ]
     }
   },
   "dependency_graph": {
@@ -171,7 +183,8 @@
     "state_models.py": {},
     "static_context_controller.py": {},
     "ui_builder.py": {},
-    "ui_components.py": {}
+    "ui_components.py": {},
+    "window_controller_bridge.py": {}
   },
   "domain_overlay": "GENERIC",
   "domain_specific": {}

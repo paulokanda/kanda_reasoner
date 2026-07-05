@@ -11,6 +11,34 @@
       "exports": [],
       "depends_on": []
     },
+    "ast_primitives.py": {
+      "purpose": "Private AST primitive constants and conversion helpers for collector_widget_registry.",
+      "exports": [
+        "SUPPORTED_WIDGET_TYPES",
+        "TEXT_CONSTRUCTOR_WIDGET_TYPES",
+        "TEXT_SETTER_TO_FIELD",
+        "LIST_SETTER_TO_FIELD",
+        "SINGLE_ITEM_SETTER_TO_FIELD",
+        "TAB_TEXT_SETTERS",
+        "LAYOUT_METHODS",
+        "FUNCTION_SCOPE_KINDS",
+        "_build_widget_id",
+        "_get_widget_type_from_call",
+        "_callable_name",
+        "_expr_to_ref",
+        "_variable_name_from_ref",
+        "_extract_constructor_display_text",
+        "_extract_constructor_parent_ref",
+        "_extract_layout_position_from_add_widget",
+        "_first_arg",
+        "_keyword_value",
+        "_node_to_text",
+        "_node_to_text_list",
+        "_node_to_number",
+        "_safe_str"
+      ],
+      "depends_on": []
+    },
     "widget_registry_methods_part_1_private_impl.py": {
       "purpose": "Private AST visitor method implementations bound by collector_widget_registry.",
       "exports": [],

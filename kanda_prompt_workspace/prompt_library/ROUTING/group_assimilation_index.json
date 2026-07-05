@@ -157,7 +157,7 @@
         "architecture hardening",
         "problem ordering"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompts": [
         "architecture_hardening_triage_protocol.md",
         "architecture_hardening_triage_template.md",
@@ -165,7 +165,8 @@
         "large_module_refactor_template.md",
         "problem_set_roadmap_solver.md",
         "refactor_fragmentation_audit_runner.md",
-        "tab1_tab2_audit_taxonomy.md"
+        "tab1_tab2_audit_taxonomy.md",
+        "web_ai_large_module_refactor_exchange_protocol.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },

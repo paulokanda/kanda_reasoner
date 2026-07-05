@@ -12,8 +12,8 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 * Preserve public contracts.
 * Validate the active box and any touched external box.
 
-Version: 7.2
-Status: Large-module creation and refactor protocol, expanded canon for safe splitting, public API preservation, validation gates, dependency-direction mapping, GUI inventory, optional type-check gates, safe wide responsibility-island extraction, AST-assisted heuristic split audit, safe multi-island batch patches, patch-train delivery bundles, sequential double-refactor delivery trains, practical helper-file granularity, normal `.py` source ownership, and a speed-acceleration layer covering codemod-assisted moves, tiered validation gates, parallel test execution, audit-cache reuse, and parallel-safe backlog batching.
+Version: 7.3
+Status: Large-module creation and refactor protocol, expanded canon for safe splitting, public API preservation, validation gates, dependency-direction mapping, GUI inventory, optional type-check gates, safe wide responsibility-island extraction, AST-assisted heuristic split audit, safe multi-island batch patches, patch-train delivery bundles, sequential double-refactor delivery trains, practical helper-file granularity, normal `.py` source ownership, external Web AI Planner-version delegation, and a speed-acceleration layer covering codemod-assisted moves, tiered validation gates, parallel test execution, audit-cache reuse, and parallel-safe backlog batching.
 Use: Invoke when creating or refactoring a relevant code module that is above 500 lines, would exceed 500 lines, has high complexity, has too many responsibilities, or the user opens a large-module creation/refactor pass.
 
 ## Canonical prompt location
@@ -747,6 +747,43 @@ Preferred practical limit: 1 or 2 ZIPs unless the roadmap is unusually clean.
 
 The train may reduce download and chat friction, but it must not reduce traceability, attribution, rollback safety, validation evidence, or freeze quality.
 
+
+## External Web AI Planner Version Delegation v7.3
+
+The Large File Refactor Planner may use an external online Web AI as a bounded planning-version reviewer after a native Heuristic or Local AI plan exists.
+
+The core authority remains this protocol. The specialized exchange workflow is delegated to:
+
+```text
+KPR-06-001
+web_ai_large_module_refactor_exchange_protocol
+ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md
+```
+
+Required workflow:
+
+```text
+Generate native Heuristic or Local AI plan
+-> Copy Comprehensive Planning for Web AI
+-> send the copied planning package plus the specialist companion prompt to external Web AI
+-> external Web AI searches for bounded improvement rather than blindly copying or fully redesigning the plan
+-> external Web AI returns a governed import ZIP
+-> install external artifact
+-> Receive Planning from Web AI
+-> deterministic validation and human review
+-> Load as Imported Web AI Version
+-> compare versions
+-> select final version before Workbench handoff
+```
+
+External Web AI planning actions remain bounded to the exchange schema: known-helper merges, known-symbol reassignments, semantic renames of surviving known helpers, and updates to already-known docstring proposal targets. The external AI must not invent modules or symbols, change public-facade ownership, split atomic clusters, introduce helper cycles, write source, or mutate Workbench state.
+
+The Web AI import ZIP is delivery infrastructure, not runtime source architecture. Its installer must write only the external pending imported-plan artifact. Validation and freeze-evidence code may accompany the bundle, but final canonical freezing still requires local validation evidence and `Freeze Feature After Update -> Preview -> Confirm and Write`.
+
+The Planner action `AI Refactor Version How To` is a thin wrapper that copies the canonical specialist prompt. GUI code must not embed a stale duplicate of the specialist prompt body.
+
+The `Copy Comprehensive Planning for Web AI` package must explicitly expose the native base identity, hashes, known modules, known movable symbols, deterministic evidence, improvement objective, allowed/forbidden actions, response schema, installer contract, validation contract, and freeze-evidence boundary.
+
 ## Delivery model
 
 Use the active project delivery contract.
@@ -875,3 +912,5 @@ Per-cluster approval is optional only when the user explicitly authorized contin
 * v7.0: Added AST-assisted heuristic split audit as a local read-only evidence tool, Multi-Island Execution Layer for at most two independent islands per patch, strict independence criteria using non-conflicting writes rather than impossible no-shared-read rules, per-island validation/freeze naming, daily-work audit staging, patch-train delivery bundles for multiple separate governed patches in one outer ZIP, and an explicit rule against stacking multiple patches before validation or freeze.
 * v7.1: Replaced vague patch-train bundle wording with the sequential double-refactor delivery train protocol: up to four ordered patch ZIPs per response, each normally containing at most two related refactor slices, each with independent install, validation, ZIP contract, freeze-prep, freeze hint, freeze preview, Confirm and Write, and rollback boundary.
 * v7.2: Added practical helper-file granularity and traditional source-file rules: cohesive helpers near the 400-line ideal are acceptable, needless micro-files should be avoided, refactor trains should stop when remaining helpers are small/cohesive, and normal runtime/source logic should live in ordinary importable `.py` files rather than ZIP payload/delivery structures.
+
+* v7.3: Added external Web AI Planner-version delegation to KPR-06-001, including bounded improvement search, canonical specialist-prompt wrapper behavior, imported-version ZIP/install/validate/freeze-evidence workflow, and stronger Comprehensive Planning package requirements.

@@ -16,11 +16,15 @@ from typing import Any
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
+    QAbstractScrollArea,
     QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QLabel,
+    QLayout,
     QPushButton,
+    QScrollArea,
+    QSizePolicy,
     QSplitter,
     QVBoxLayout,
     QWidget,
@@ -223,10 +227,47 @@ def _build_content_splitter(window: Any) -> QSplitter:
 
 
 def build_main_window_ui(window: Any) -> None:
-    """Build and attach the full Qt layout for tab 7."""
+    """Build the Project Q&A body inside a height-contained scroll area.
+
+    Project Q&A is embedded in the shared KANDA shell. Its relatively tall
+    control and evidence layout must scroll internally instead of increasing
+    the outer application height when this tab is selected.
+    """
     central = QWidget()
+    central.setMinimumHeight(0)
+    central.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
     window.setCentralWidget(central)
 
     main_layout = QVBoxLayout(central)
-    main_layout.addWidget(_build_top_controls(window), stretch=0)
-    main_layout.addWidget(_build_content_splitter(window), stretch=1)
+    main_layout.setContentsMargins(0, 0, 0, 0)
+
+    scroll = QScrollArea()
+    scroll.setObjectName("projectQaBodyScrollArea")
+    scroll.setWidgetResizable(True)
+    scroll.setSizeAdjustPolicy(
+        QAbstractScrollArea.SizeAdjustPolicy.AdjustIgnored
+    )
+    scroll.setHorizontalScrollBarPolicy(
+        Qt.ScrollBarPolicy.ScrollBarAsNeeded
+    )
+    scroll.setVerticalScrollBarPolicy(
+        Qt.ScrollBarPolicy.ScrollBarAsNeeded
+    )
+    scroll.setMinimumHeight(0)
+    scroll.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
+
+    body = QWidget()
+    body.setObjectName("projectQaScrollableBody")
+    body.setMinimumHeight(0)
+    body.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+
+    body_layout = QVBoxLayout(body)
+    body_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinAndMaxSize)
+    body_layout.addWidget(_build_top_controls(window), stretch=0)
+    body_layout.addWidget(_build_content_splitter(window), stretch=1)
+
+    scroll.setWidget(body)
+    main_layout.addWidget(scroll, stretch=1)
+
+    window._project_qa_body_scroll_area = scroll
+    window._project_qa_scrollable_body = body
