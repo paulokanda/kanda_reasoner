@@ -1,0 +1,103 @@
+{
+  "source_root": "/mnt/data/kanda_reasoner_app/insert_missing_docstrings_gui/benchmark_corpus",
+  "workspace": "/tmp/docstring_benchmark_kz7bssgw/workspace",
+  "ai_enabled": false,
+  "ai_config_path": null,
+  "workers": 1,
+  "include_private": true,
+  "min_confidence": "low",
+  "no_uncertain": false,
+  "scan": {
+    "exit_code": 0,
+    "summary": {
+      "project_root": "/tmp/docstring_benchmark_kz7bssgw/workspace",
+      "include_module": true,
+      "include_classes": true,
+      "include_functions": true,
+      "include_init": false,
+      "include_relaxed_paths": false,
+      "include_tests": false,
+      "files_with_missing_docstrings": 6,
+      "files": [
+        "benchpkg/async_service.py",
+        "benchpkg/dataclass_case.py",
+        "benchpkg/models.py",
+        "benchpkg/overloads.py",
+        "benchpkg/raises_case.py",
+        "benchpkg/utilities.py"
+      ],
+      "skipped": [],
+      "report_path": "/tmp/docstring_benchmark_kz7bssgw/workspace/scan_report.jsonl"
+    },
+    "report": {
+      "rows": 22,
+      "by_source": {
+        "heuristic": 22
+      },
+      "by_confidence": {
+        "low": 22
+      },
+      "uncertain_rows": 0,
+      "fallback_rows": 0
+    }
+  },
+  "diff": {
+    "exit_code": 0,
+    "bytes": 6178,
+    "fallbacks": 0,
+    "low_confidence_events": 0,
+    "skipped": 0,
+    "report": {
+      "rows": 22,
+      "by_source": {
+        "heuristic": 22
+      },
+      "by_confidence": {
+        "low": 22
+      },
+      "uncertain_rows": 0,
+      "fallback_rows": 0
+    }
+  },
+  "write": {
+    "exit_code": 0,
+    "files_written": 6,
+    "fallbacks": 0,
+    "low_confidence_events": 0,
+    "uncertain_markers": 0,
+    "report": {
+      "rows": 22,
+      "by_source": {
+        "heuristic": 22
+      },
+      "by_confidence": {
+        "low": 22
+      },
+      "uncertain_rows": 0,
+      "fallback_rows": 0
+    }
+  },
+  "post_write_scan": {
+    "exit_code": 0,
+    "summary": {
+      "project_root": "/tmp/docstring_benchmark_kz7bssgw/workspace",
+      "include_module": true,
+      "include_classes": true,
+      "include_functions": true,
+      "include_init": false,
+      "include_relaxed_paths": false,
+      "include_tests": false,
+      "files_with_missing_docstrings": 0,
+      "files": [],
+      "skipped": [],
+      "report_path": "/tmp/docstring_benchmark_kz7bssgw/workspace/post_scan_report.jsonl"
+    },
+    "report": {
+      "rows": 0,
+      "by_source": {},
+      "by_confidence": {},
+      "uncertain_rows": 0,
+      "fallback_rows": 0
+    }
+  }
+}

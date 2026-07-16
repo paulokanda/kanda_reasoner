@@ -1,8 +1,8 @@
 {
   "origin": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings.py",
   "help_folder": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_help/",
-  "refactor_date": "2026-06-30",
-  "refactor_goal": "isolate backend scanning, insertion, reporting, AST guard, CLI, action-summary helpers, and run execution into single-responsibility modules",
+  "refactor_date": "2026-07-12",
+  "refactor_goal": "isolate backend scanning, managed file-address headers, insertion, reporting, AST guard, CLI, action-summary helpers, and run execution into single-responsibility modules",
   "ai_instruction": "Read this manifest before editing any file in help_folder or origin.",
   "helpers": {
     "project_exclusion_rules.py": {
@@ -173,12 +173,13 @@
       "depends_on": []
     },
     "file_processing.py": {
-      "purpose": "Per-file processing and batch change collection",
+      "purpose": "Per-file docstring processing and cooperative batch change collection",
       "exports": [
         "load_manifest",
         "collect_changes"
       ],
       "depends_on": [
+        "_file_address_headers.py",
         "project_exclusion_rules.py",
         "source_io.py",
         "insertion_collector.py",
@@ -186,6 +187,11 @@
         "ast_safety.py",
         "reporting.py"
       ]
+    },
+    "_file_address_headers.py": {
+      "purpose": "Managed project-path header auditing and safe insertion helpers",
+      "exports": [],
+      "depends_on": []
     }
   },
   "dependency_graph": {
@@ -229,12 +235,14 @@
     ],
     "__init__.py": [],
     "file_processing.py": [
+      "_file_address_headers.py",
       "project_exclusion_rules.py",
       "source_io.py",
       "insertion_collector.py",
       "insertion_formatting.py",
       "ast_safety.py",
       "reporting.py"
-    ]
+    ],
+    "_file_address_headers.py": []
   }
 }

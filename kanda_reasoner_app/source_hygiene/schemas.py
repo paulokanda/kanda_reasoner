@@ -18,6 +18,7 @@ VALID_REPORT_TYPES = frozenset(
         "shadow_conflict_audit",
         "shadow_conflict_plan",
         "facade_fix_plan",
+        "ruff_quality",
     }
 )
 

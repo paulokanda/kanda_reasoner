@@ -68,7 +68,7 @@ active_project_root = selected project root
 
 KANDA Reasoner can be the reusable tool/runtime and can also be the selected target project in a particular session. Those identities must not be collapsed. Even when both slugs match, router logic, patch logic, freeze logic, handoff logic, validation logic, and source-inspection logic must behave as if they could be different in the next session.
 
-For any coding, patch, freeze, handoff, validation, source-inspection, project-root, or staging-path task where that distinction matters, route to:
+For any coding, patch, freeze, handoff, validation, source-inspection, project-root, staging-path, Workbench Preview ownership, or Preview-vs-Shadow task where that distinction matters, route to:
 
 ```text
 project_tool_boundary_canon
@@ -81,6 +81,40 @@ ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md
 ```
 
 It is a boundary invariant, not a substitute for Box Architecture, patch delivery, validation, freeze intake, handoff, or Python engineering prompts.
+
+For Large File Refactor Workbench routing, preserve this specific lifetime split:
+
+```text
+Durable Preview state
+-> <active_project_support_root>/large_file_refactor_workbench/preview/<preview_id>
+
+Disposable Shadow state
+-> <transient_garbage_root>/large_file_refactor_shadow/<shadow_id>
+
+Transient garbage root
+-> staging, extraction, temporary helpers, temporary validation assembly, Shadow, and regenerable garbage only
+-> owns no Tool state, Project state, or durable evidence
+```
+
+The router must pair `project_tool_boundary_canon` with `router_bridge_governed_implementation` for implementation tasks that can move Workbench state between these boxes.
+
+
+For Architecture Review lifecycle tasks, also route to:
+
+```text
+KPR-12-005 architecture_review_project_card_machine_canon
+```
+
+when the request involves AST Split Audit card identity, Planner target state, Planner-to-Workbench handoff, project-root switching, target switching, stale async results, Workbench snapshot replacement, Completion transaction/apply/rollback state, RefactorReceipt, or post-completion eject semantics. Pair it with `project_tool_boundary_canon`; the card-machine canon specializes Architecture Review lifecycle and does not replace the general Tool/Project boundary.
+
+Canonical principle:
+
+```text
+Tool = reusable machine
+Active Project = card owner
+Selected module = card
+terminal eject = clear Tool target memory, retain project durable results
+```
 
 # 2. Core routing objective
 
@@ -917,10 +951,10 @@ This is the source of truth for active frozen memory for that selected project.
 Example:
 
 ```text
-E:/kanda_reasoner_show_project_to_AI/project_freeze_after_update/frozen_features_memory
+<project_drive>/<active_project_slug>_show_project_to_AI/project_freeze_after_update/frozen_features_memory
 ```
 
-is the active memory only when the selected project is KANDA Reasoner itself.
+The concrete drive and slug are derived from the selected project root.
 
 For another project:
 

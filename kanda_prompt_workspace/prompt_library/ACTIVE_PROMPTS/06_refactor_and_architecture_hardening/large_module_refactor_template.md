@@ -12,8 +12,8 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 - Preserve public contracts.
 - Validate the active box and any touched external box.
 
-Version: 3.2.0
-Status: Reusable large-module refactor template aligned with Large Module Creation and Refactor Protocol v7.2, including AST-assisted heuristic split audit, safe multi-island batch patch mode, sequential double-refactor delivery trains, practical helper-file granularity, and normal `.py` source-file ownership.
+Version: 3.4.0
+Status: Reusable large-module refactor template aligned with Large Module Creation and Refactor Protocol v8.0 and the final Planner-to-Workbench execution canon.
 Use: Load only when a file is above 500 lines, would exceed 500 lines, has high complexity, has too many responsibilities, or helper splitting is required.
 
 ## Purpose
@@ -44,7 +44,28 @@ Rules:
 - Do not treat examples as active project truth.
 - Use current source files, logs, audit output, and validation output as evidence.
 - If evidence is missing, request it before implementation unless the user explicitly authorized best-effort continuation.
-- For KANDA/PyArchitect governed patch work, keep transient install, extract, correction, audit, and validation-helper files under `<drive>/<project>_delete_after_daily_work`.
+- For KANDA/PyArchitect governed patch work, keep only disposable install ZIPs, extraction trees, correction scratch, Shadow workspaces, and temporary validation helpers under the ownership-free transient garbage root `<drive>/<project>_delete_after_daily_work`. Write durable audits, handoffs, and validation evidence under the selected project's canonical `*_show_project_to_AI` support root.
+
+## Current AST Safe Refactor integration
+
+For KPR-06-003 source-risk repair, consume the exact source identity and current
+preflight evidence before choosing architecture. Treat project index, consumer
+map, public contract, semantic dynamic-risk findings, dependency evidence, and
+known patterns as bounded evidence, not autonomous architecture authority.
+
+Use KPR-06-004 `Safe Refactor How To` as the reusable process refresher when
+context may be incomplete; keep it separate from target-specific KPR-06-003 truth.
+
+Before release, require behavior equivalence on meaningful semantic cases,
+consumer compatibility, dependency direction, semantic dynamic safety, strict
+101-499 line compliance, and a fresh AST Split Audit for every touched permanent
+Python source module. Development caches may accelerate iteration but never replace
+the final fresh family audit.
+
+Prefer descriptor-driven release assembly. Stage downloaded governed ZIPs from the
+active drive root into `<drive>/<project>_delete_after_daily_work` only after hash
+verification. Freeze remains preparation-only until human Preview and explicit
+Confirm and Write.
 
 ## Approval Gates
 
@@ -94,13 +115,13 @@ Define:
 
 Helper expansion rule:
 
-- If the target structure would leave any new or touched code/source module above 500 physical lines, create as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed.
-- Each helper must have a named responsibility and must obey the same size policy: ideal <= 400 physical lines, hard maximum <= 500 physical lines, and practical minimum around 100 substantive lines unless a documented exception applies.
-- A helper below roughly 100 substantive lines requires an explicit justification such as facade/re-export shim, package marker, constants module, validation helper, optional dependency adapter, circular-dependency breaker, stable seam, or another cohesive boundary.
+- Every resulting Python source module, including facades and helpers, must satisfy `100 < physical_lines < 500`; the exact valid integer range is 101-499.
+- There are no facade, constants, adapter, package-marker, or structural-role exceptions in this workflow.
+- Do not pad source files. When cohesive architecture cannot satisfy 101-499, return `PLAN_CORRECTION_REQUIRED` with Compliance Veto evidence.
 - Do not split by arbitrary line ranges. Split by responsibility, dependency direction, public API boundary, side-effect isolation, validation boundary, or no-leak ownership boundary.
 - Do not let helper modules accidentally own facade public API. Facades own public compatibility unless a separate governed architecture decision approves another owner.
 
-## Sequential double-refactor delivery train v7.2
+## Sequential double-refactor delivery train v7.4
 
 Use this only when several governed refactor patches are prepared together from one clean roadmap.
 
@@ -115,7 +136,7 @@ Rules:
 
 - Maximum per response: 4 ordered patch ZIPs.
 - Default maximum per ZIP: 2 related refactor slices.
-- Do not create more train cars or helper files once remaining modules are cohesive and below the 400-line ideal; use a completion guard instead.
+- Stop only when the approved architecture is complete and every resulting Python source file satisfies the strict 101-499 law without padding.
 - Each ZIP has its own feature id, install, validate, ZIP contract check, freeze code, freeze hint, and freeze entry.
 - Freeze Patch 1 before Patch 2; freeze Patch 2 before Patch 3; freeze Patch 3 before Patch 4.
 - Stop the train immediately if any patch fails install, validation, ZIP contract, freeze-prep, preview, or freeze.
@@ -132,8 +153,8 @@ Rules:
 - move whole functions, whole classes, or whole methods only;
 - avoid circular imports;
 - avoid catch-all helper files;
-- avoid micro-files created only to chase a line-count target; cohesive helpers around 250-400 lines are acceptable;
-- create as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed when that is necessary to keep every touched code/source module within the 500-line hard maximum;
+- enforce 101-499 physical lines for every resulting Python source file without padding or structural-role exceptions;
+- create only the cohesive responsibility modules needed to keep every resulting Python source file within 101-499 physical lines;
 - use ordinary importable `.py` files for runtime/source logic, not ZIP payload files or delivery-package structures;
 - add characterization tests before moving insufficiently tested behavior;
 - validate after every cluster;
@@ -202,4 +223,4 @@ Patch C: install -> validate -> freeze
 
 ## Final Rule
 
-Do not refactor to look organized while changing behavior accidentally. Do not hyperpopulate the project with tiny helper files when cohesive modules near the 400-line ideal would be safer and easier to maintain.
+Do not refactor to look organized while changing behavior accidentally. Preserve cohesion while enforcing the strict 101-499 physical-line law; do not pad code and do not invent architecture merely to satisfy line counts.

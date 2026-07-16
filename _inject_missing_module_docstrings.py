@@ -67,10 +67,6 @@ PACKAGE_ROLE_SUFFIXES = [
         "runtime_scenarios/",
         "Support runtime scenario evidence generation.",
     ),
-    (
-        "profiling/",
-        "Support profiling workflows for developer tooling.",
-    ),
 ]
 
 ROLE_PREFIXES = [

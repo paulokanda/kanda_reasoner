@@ -1,0 +1,39 @@
+{
+  "origin": "kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator.py",
+  "help_folder": "kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator_help",
+  "pattern": "conservative_helper_extraction",
+  "generated_by": "pass_043_ai_docstring_generator_split",
+  "public_origin_exports": [
+    "AIDocstringGenerator",
+    "GenerationResult",
+    "GenerationStats"
+  ],
+  "helpers": {
+    "__init__.py": {
+      "purpose": "Expose public helper models.",
+      "exports": [
+        "GenerationResult",
+        "GenerationStats"
+      ]
+    },
+    "models.py": {
+      "purpose": "Result dataclasses shared by the generator.",
+      "exports": [
+        "GenerationResult",
+        "GenerationStats"
+      ]
+    },
+    "heuristics.py": {
+      "purpose": "Private heuristic fallback helpers.",
+      "exports": []
+    },
+    "docstring_payloads.py": {
+      "purpose": "Private prompt and schema builders.",
+      "exports": []
+    },
+    "response_parsing.py": {
+      "purpose": "Private response parsing and rendering helpers.",
+      "exports": []
+    }
+  }
+}

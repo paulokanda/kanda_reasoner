@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "KANDA Context Routing Layer - Group Assimilation Index",
   "phase": "Phase 1 - Context Routing Kernel",
-  "generated_at": "2026-06-12",
+  "generated_at": "2026-07-14",
   "purpose": "Map human task intent to the 12 use-based prompt groups before selecting specialist prompts.",
   "rules": [
     "This index is routing metadata only.",
@@ -79,16 +79,19 @@
     {
       "group_id": "03_governance_freeze_and_handoff",
       "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff",
-      "responsibility": "Freeze validated work, update governance, and transfer state across sessions.",
-      "use_when": "When validation/freeze/governance/handoff is requested.",
+      "responsibility": "Freeze validated work, update governance, transfer state across sessions, and provide the Brick Wall Q01-Q40 implementation status gate.",
+      "use_when": "When Brick Wall status, validation, freeze, governance, handoff, or consequential implementation methodology is requested.",
       "do_not_use_when": "Do not freeze without validation evidence.",
       "required_for": [
         "freeze",
         "governance update",
-        "handoff"
+        "handoff",
+        "brick wall",
+        "Q01-Q40 implementation status"
       ],
-      "prompt_count": 6,
+      "prompt_count": 10,
       "main_prompts": [
+        "brick_wall_comprehensive_quality_gate.md",
         "active_governance_freeze_update.md",
         "current_workflow_handoff_template.md",
         "end_of_chat_governance_update_template.md",
@@ -96,12 +99,12 @@
         "reasoner_professional_engineering_governance.md",
         "workflow_handoff_template.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "available"
     },
     {
       "group_id": "04_box_architecture_and_boundaries",
       "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries",
-      "responsibility": "Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, and KBSC shield requirements.",
+      "responsibility": "Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, KBSC shield requirements, and route the governed architecture companion on demand.",
       "use_when": "Before implementation, architecture changes, refactors, cross-box touches, meaningful milestone shielding, or stronger ML preparation.",
       "do_not_use_when": "Do not use for simple explanation-only tasks.",
       "required_for": [
@@ -113,13 +116,14 @@
         "meaningful milestone shield",
         "stronger ML preparation"
       ],
-      "prompt_count": 5,
+      "prompt_count": 6,
       "main_prompts": [
         "box_architecture_canon.md",
         "closed_box_delivery_canon.md",
         "project_folder_organization_canon.md",
         "stateful_control_regression_canon.md",
-        "kanda_box_shielding_canon.md"
+        "kanda_box_shielding_canon.md",
+        "governed_architecture_companion_handoff.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },
@@ -157,7 +161,7 @@
         "architecture hardening",
         "problem ordering"
       ],
-      "prompt_count": 8,
+      "prompt_count": 11,
       "main_prompts": [
         "architecture_hardening_triage_protocol.md",
         "architecture_hardening_triage_template.md",
@@ -166,7 +170,10 @@
         "problem_set_roadmap_solver.md",
         "refactor_fragmentation_audit_runner.md",
         "tab1_tab2_audit_taxonomy.md",
-        "web_ai_large_module_refactor_exchange_protocol.md"
+        "web_ai_large_module_refactor_exchange_protocol.md",
+        "web_ai_planning_response_bundle_blueprint.md",
+        "web_ai_ast_split_risk_repair_protocol.md",
+        "safe_refactor_how_to.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },
@@ -541,6 +548,51 @@
       "minimum_viable_context": "P12 freeze evidence and FREEZE_MEMORY_STATUS OK when continuing after P12; current routing assets and validation path when canonizing RG-LAB-000; current project files and patch boundary when implementation is requested.",
       "missing_behavior": "HARD_STOP_before_ML_implementation; PARTIAL_for_RG_LAB_000_review; LAB_0_only_after_RG_LAB_000_freeze",
       "fast_path_allowed": "NO"
+    },
+    {
+      "task_intent": "BRICK_WALL_STATUS_CHECK",
+      "required_groups": [
+        "brick_wall_comprehensive_quality_gate",
+        "03_governance_freeze_and_handoff"
+      ],
+      "optional_groups": [
+        "project_tool_boundary_canon",
+        "box_architecture_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "missing_behavior": "HARD_STOP_before_coding_if_mandatory_pre_code_items_incomplete",
+      "fast_path_allowed": false
+    },
+    {
+      "task_intent": "GOVERNED_ARCHITECTURE_COMPANION",
+      "triggers": [
+        "governed architecture companion",
+        "canonical architecture gate",
+        "architecture handoff",
+        "tool project box shield no leak mcard",
+        "self-hosting architecture gate",
+        "unified architecture gate",
+        "load the full architecture companion",
+        "architecture-sensitive implementation"
+      ],
+      "required_groups": [
+        "04_box_architecture_and_boundaries",
+        "03_governance_freeze_and_handoff",
+        "05_patch_delivery_and_validation"
+      ],
+      "required_prompts": [
+        "governed_architecture_companion_handoff",
+        "brick_wall_comprehensive_quality_gate",
+        "router_bridge_governed_implementation",
+        "project_tool_boundary_canon",
+        "box_architecture_canon"
+      ],
+      "optional_groups": [
+        "kanda_box_shielding_canon",
+        "architecture_review_project_card_machine_canon"
+      ],
+      "missing_behavior": "HARD_STOP_before_implementation_if_canonical_owners_or_Brick_Wall_authorization_are_incomplete",
+      "fast_path_allowed": false
     }
   ]
 }

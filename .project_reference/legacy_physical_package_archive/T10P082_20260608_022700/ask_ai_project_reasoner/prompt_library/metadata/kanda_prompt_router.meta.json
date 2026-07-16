@@ -1,0 +1,56 @@
+{
+  "prompt_id": "kanda_prompt_router",
+  "display_name": "Kanda Prompt Router",
+  "category": "prompt_router",
+  "version": "1.0.1",
+  "status": "active",
+  "load_type": "daily_start_router",
+  "project_agnostic": true,
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\workbench\\bundle_manifest",
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "depends_on": [
+    "kanda_bundle_gated_development_workflow"
+  ],
+  "routes_to": [
+    "daily_start",
+    "high_risk_engineering",
+    "large_module_refactor",
+    "architecture_hardening",
+    "teach_ai_prompt_authoring",
+    "governance_freeze",
+    "end_of_day_handoff",
+    "domain_special_overlays",
+    "prompt_library_tools"
+  ],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "files_created": [],
+  "explainer": "Beginning-of-day router that maps task types to Tab 9 prompt groups and overlays.",
+  "how_it_works": "It classifies the user's task, recommends the smallest useful prompt stack, and prevents important prompts from becoming marooned.",
+  "mitigations": [
+    "Prevents overloading Daily Start with every specialized prompt.",
+    "Makes optional overlays discoverable when needed.",
+    "Requires new prompt-library assets to be routable.",
+    "Reduces duplicate prompt creation."
+  ],
+  "example_usage": "Load from Daily Start at the beginning of a work session, then follow the route table for the user's task.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-02",
+      "summary": "Initial beginning-of-day prompt router."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-07",
+      "summary": "Updated default output folder to lowercase workbench\\bundle_manifest."
+    }
+  ]
+}

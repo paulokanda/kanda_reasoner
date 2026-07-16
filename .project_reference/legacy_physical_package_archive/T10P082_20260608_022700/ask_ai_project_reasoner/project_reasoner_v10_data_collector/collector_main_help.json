@@ -1,0 +1,24 @@
+{
+  "helper_dir": "collector_main_help",
+  "helpers": [
+    "collector_main_source_part_1_private_impl.py",
+    "collector_main_source_part_2_private_impl.py",
+    "collector_main_source_part_3_private_impl.py",
+    "collector_main_source_part_4_private_impl.py",
+    "collector_main_source_part_5_private_impl.py"
+  ],
+  "origin": "collector_main.py",
+  "part_symbols": [
+    "_ENCODED_SOURCE_PART_1",
+    "_ENCODED_SOURCE_PART_2",
+    "_ENCODED_SOURCE_PART_3",
+    "_ENCODED_SOURCE_PART_4",
+    "_ENCODED_SOURCE_PART_5"
+  ],
+  "pass": "059C",
+  "public_facade": [
+    "run_collector",
+    "main"
+  ],
+  "strategy": "source_preserving_facade_split_duplicate_symbol_repair"
+}

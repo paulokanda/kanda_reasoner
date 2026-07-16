@@ -1,0 +1,27 @@
+{
+  "exports": [],
+  "help_folder": "kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help",
+  "helpers": {
+    "__init__.py": {
+      "exports": []
+    },
+    "window_help.py": {
+      "exports": []
+    },
+    "window_output_paths.py": {
+      "exports": []
+    },
+    "window_project_root.py": {
+      "exports": []
+    },
+    "window_state.py": {
+      "exports": []
+    },
+    "window_tool_patches.py": {
+      "exports": []
+    }
+  },
+  "origin": "kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py",
+  "purpose": "Private helper manifest for the refactored ReasonerToolsWindow main window implementation.",
+  "schema_version": "1.0"
+}

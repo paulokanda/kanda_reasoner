@@ -45,6 +45,7 @@ def build_safety_suite_parser() -> argparse.ArgumentParser:
     _add_api_contract_parser(subparsers)
     _add_property_test_parser(subparsers)
     _add_bom_scan_parser(subparsers)
+    _add_ruff_quality_parser(subparsers)
     _add_shadow_audit_parser(subparsers)
     _add_shadow_plan_parser(subparsers)
     _add_facade_fix_plan_parser(subparsers)
@@ -89,6 +90,7 @@ from .commands_parsers_private import (
     _add_api_contract_parser,
     _add_property_test_parser,
     _add_bom_scan_parser,
+    _add_ruff_quality_parser,
     _add_shadow_audit_parser,
     _add_shadow_plan_parser,
     _add_facade_fix_plan_parser,

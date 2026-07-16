@@ -1,0 +1,80 @@
+{
+  "prompt_id": "kanda_bundle_gated_development_workflow",
+  "display_name": "Kanda Bundle-Gated Development Workflow",
+  "category": "engineering_methodology",
+  "version": "1.0.3",
+  "status": "active",
+  "load_type": "parent_protocol",
+  "project_agnostic": true,
+  "governance_linked": true,
+  "modifies_governance": false,
+  "creates_files": true,
+  "default_output_folder": "<PROJECT_ROOT>\\workbench\\bundle_manifest",
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "depends_on": [
+    "teach_ai_tab9_prompt_authoring_guide",
+    "teach_ai_create_or_update_prompt_request",
+    "tab9_prompt_asset_placement_rules"
+  ],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<PRODUCT_PACKAGE>",
+    "<TASK_DESCRIPTION>",
+    "<TASK_SLUG>",
+    "<VALIDATION_COMMANDS>",
+    "<OUTPUT_FOLDER>"
+  ],
+  "files_created": [
+    {
+      "path": "<PROJECT_ROOT>\\workbench\\bundle_manifest\\BUNDLE_MANIFEST_<task_slug>.txt",
+      "purpose": "Bundle audit manifest."
+    }
+  ],
+  "explainer": "Parent workflow for plan -> bundle -> install -> validate -> repair/continue -> freeze.",
+  "how_it_works": "It requires focused bundles, local installation, focused validation, architecture/workflow validation, and explicit freeze approval.",
+  "mitigations": [
+    "Prevents direct unreviewed source mutation.",
+    "Protects box boundaries.",
+    "Separates handoff from governance freeze.",
+    "Requires local validation before baseline acceptance."
+  ],
+  "example_usage": "Load this as the parent protocol before asking an AI to implement, refactor, repair, hand off, or freeze work.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-02",
+      "summary": "Initial named Kanda Bundle-Gated Development methodology prompt."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Added prompt-library authoring rule linking to Teach AI Prompt Authoring assets."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Referenced Python Clean Code overlay for Python source bundles."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-06-02",
+      "summary": "Referenced by Kanda Prompt Router for bundle-gated implementation routes."
+    },
+    {
+      "version": "1.0.2",
+      "date": "2026-06-07",
+      "summary": "Updated default output folder to lowercase workbench\\bundle_manifest."
+    },
+    {
+      "version": "1.0.3",
+      "date": "2026-06-07",
+      "summary": "Updated validation command examples to prefer kanda_reasoner_app canonical CLI entrypoints."
+    }
+  ],
+  "recommended_with": [
+    "python_clean_code_overlay",
+    "kanda_prompt_router"
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_for": "KANDA_PROMPTS_AUDITED/prompt_library v3 navigation index",
-  "generated_at": "2026-06-12",
+  "generated_for": "architecture-review-project-card-machine-canon-router-bridge-v1",
+  "generated_at": "2026-07-14",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use trigger_phrases and user_intent_examples to detect intent; load the highest-priority matching prompt plus required companions; if uncertain, ask one focused clarification or load prompt_router + prompt_navigation_index.",
-  "prompt_count": 85,
+  "prompt_count": 89,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -637,6 +637,51 @@
       ]
     },
     {
+      "prompt_code": "KPR-03-001",
+      "prompt_id": "brick_wall_comprehensive_quality_gate",
+      "display_name": "Brick Wall - Comprehensive Quality Gate",
+      "filename": "brick_wall_comprehensive_quality_gate.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 40,
+      "trigger_phrases": [
+        "brick wall",
+        "show brick wall",
+        "brick wall check",
+        "update brick wall",
+        "where are we on brick wall",
+        "run the quality wall"
+      ],
+      "user_intent_examples": [
+        "Brick wall.",
+        "Show Brick Wall and tell me where this implementation stands.",
+        "Update the Brick Wall checklist after validation."
+      ],
+      "aliases": [
+        "KPR-03-001",
+        "brick wall",
+        "brick wall quality gate",
+        "brick_wall_comprehensive_quality_gate",
+        "brick_wall_comprehensive_quality_gate.md",
+        "comprehensive quality gate",
+        "Q01-Q40 checklist"
+      ],
+      "when_to_load": "Whenever the user says Brick Wall or requests the live Q01-Q40 governed implementation status for KANDA Reasoner work.",
+      "when_not_to_load": "Do not load for unrelated medical, writing, or general-information tasks, and do not use it as a substitute for exact source or specialist owner prompts.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon",
+        "box_architecture_canon",
+        "kanda_box_shielding_canon"
+      ],
+      "recommended_companion_prompts": [
+        "architecture_review_project_card_machine_canon",
+        "bundle_gated_development_workflow",
+        "pre_output_contract_gates",
+        "freeze_code_intake_and_form_protocol"
+      ],
+      "missing_behavior": "HARD_STOP before coding when mandatory Brick Wall pre-code gates are incomplete."
+    },
+    {
       "prompt_id": "active_governance_freeze_update",
       "display_name": "Active Governance Freeze Update",
       "filename": "active_governance_freeze_update.md",
@@ -1003,6 +1048,46 @@
       "required_companion_prompts": [
         "box_architecture_canon",
         "bundle_gated_development_workflow"
+      ]
+    },
+    {
+      "prompt_id": "boundary_first_repair_protocol",
+      "display_name": "Boundary-First Repair Protocol",
+      "filename": "boundary_first_repair_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 3,
+      "trigger_phrases": [
+        "symptom owner divergence",
+        "repair at ownership boundary",
+        "boundary first repair",
+        "symptom in one box defect in another",
+        "shared host state leak",
+        "cross box regression after unrelated change",
+        "handoff contamination",
+        "repair the leak not the symptom",
+        "trace state owner before patching",
+        "downstream symptom upstream defect"
+      ],
+      "user_intent_examples": [
+        "The regression appears in Workbench after a Planner change; trace the real owner before patching.",
+        "Repair the ownership leak at its boundary and validate the downstream box shield.",
+        "A shared host may be carrying feature-private state across boxes; find the first proven violation."
+      ],
+      "aliases": [
+        "boundary first repair",
+        "boundary-first repair protocol",
+        "boundary_first_repair_protocol",
+        "boundary_first_repair_protocol.md",
+        "repair at owner boundary",
+        "symptom owner divergence",
+        "repair leak not symptom"
+      ],
+      "when_to_load": "When symptom location may differ from defect ownership, especially across boxes, shared hosts, handoffs, persistence, roots, public contracts, or async lifecycles.",
+      "when_not_to_load": "Do not load for explanation-only tasks, proven purely local defects, or new box/shield design with no regression diagnosis.",
+      "required_companion_prompts": [
+        "box_architecture_canon",
+        "kanda_box_shielding_canon"
       ]
     },
     {
@@ -1486,7 +1571,7 @@
     },
     {
       "prompt_id": "large_module_refactor_protocol",
-      "display_name": "Large Module Creation and Refactor Protocol v7.2",
+      "display_name": "Large Module Creation and Refactor Protocol v8.0",
       "filename": "large_module_refactor_protocol.md",
       "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
       "category": "06_refactor_and_architecture_hardening",
@@ -1504,7 +1589,7 @@
         "module above 500 lines",
         "double refactor train",
         "sequential refactor train",
-        "large module protocol v7.2"
+        "large module protocol v8.0"
       ],
       "user_intent_examples": [
         "This file is too big; split it safely without breaking API."
@@ -1518,11 +1603,11 @@
         "large_module_refactor_protocol.md",
         "module",
         "refactor",
-        "large module protocol v7.2",
+        "large module protocol v8.0",
         "sequential double-refactor delivery train",
         "double refactor train"
       ],
-      "when_to_load": "When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v7.2 routing or a sequential double-refactor delivery train.",
+      "when_to_load": "When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v8.0 routing or a sequential double-refactor delivery train.",
       "when_not_to_load": "Do not load for small local edits.",
       "required_companion_prompts": [
         "box_architecture_canon",
@@ -2903,22 +2988,32 @@
       "filename": "project_tool_boundary_canon.md",
       "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
       "category": "12_generalized_project_canons",
-      "priority": 35,
+      "priority": 5,
       "trigger_phrases": [
-        "project versus tool",
-        "project vs tool",
-        "tool identity",
-        "active project identity",
-        "project in use",
-        "selected project root",
-        "active project root",
-        "target project",
-        "my_project",
+        "E:/kanda_reasoner/kanda_reasoner_show_project_to_AI",
+        "Large File Refactor Workbench Preview",
         "PROJECT_ROOT",
+        "Preview versus Shadow",
+        "active project identity",
+        "active project root",
+        "canonical external sibling support root",
+        "daily-work garbage only",
         "do not hardcode kanda_reasoner",
+        "forbidden nested support root",
         "freeze paths active project",
         "handoff path active project",
-        "patch staging active project"
+        "large_file_refactor_shadow",
+        "large_file_refactor_workbench",
+        "my_project",
+        "patch staging active project",
+        "project in use",
+        "project versus tool",
+        "project vs tool",
+        "selected project root",
+        "support root inside project source",
+        "target project",
+        "tool identity",
+        "workbench preview root"
       ],
       "user_intent_examples": [
         "Keep KANDA Reasoner separate from the active project in every coding task.",
@@ -2932,11 +3027,55 @@
         "active project boundary",
         "selected project boundary"
       ],
-      "when_to_load": "When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.",
-      "when_not_to_load": "Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.",
+      "when_to_load": "Always at startup. Apply to every coding, patching, validation, freeze, staging, handoff, Workbench, source-inspection, or project-root task.",
+      "when_not_to_load": "The canon remains loaded as a boundary invariant; simple non-project writing tasks normally require no additional action from it.",
       "required_companion_prompts": [
         "box_architecture_canon",
         "bundle_gated_development_workflow"
+      ],
+      "load_type": "always_startup"
+    },
+    {
+      "prompt_id": "architecture_review_project_card_machine_canon",
+      "prompt_code": "KPR-12-005",
+      "display_name": "Architecture Review Project Card Machine Canon",
+      "filename": "architecture_review_project_card_machine_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 36,
+      "trigger_phrases": [
+        "architecture review card machine",
+        "card machine principle",
+        "insert module to refactor",
+        "eject module after refactor",
+        "Architecture Review tab lifecycle",
+        "Architecture Review subtabs lifecycle",
+        "AST Split Audit lifecycle",
+        "Planner Workbench lifecycle",
+        "project root switch during audit",
+        "target switch during refactor",
+        "stale async audit result",
+        "clear state after refactor",
+        "completion transaction card",
+        "RefactorReceipt lifecycle",
+        "tool retains module state"
+      ],
+      "user_intent_examples": [
+        "Make Architecture Review work like a card machine: read the project module, refactor it in the active project, then forget card-specific Tool state.",
+        "When the project root or module target changes, unload the previous card state across AST Audit, Planner, Workbench, and Completion.",
+        "After verified completion, eject the card from Tool memory but keep source changes, helpers, Preview, transactions, and receipt in the project."
+      ],
+      "aliases": [
+        "architecture review card machine",
+        "project card machine canon",
+        "card lifecycle canon",
+        "architecture_review_project_card_machine_canon"
+      ],
+      "when_to_load": "When Architecture Review, AST Split Audit, Planner, Workbench, Completion, project-root switching, target switching, async results, transactions, apply/rollback, receipt, or post-completion state cleanup must preserve project ownership and card lifecycle.",
+      "when_not_to_load": "Do not load for payment-card discussion, generic UI styling, or Tool/Project boundary tasks with no Architecture Review lifecycle consequence.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon",
+        "router_bridge_governed_implementation"
       ]
     },
     {
@@ -3243,6 +3382,54 @@
         "box_architecture_canon",
         "project_specific_prompt_generalization"
       ]
+    },
+    {
+      "prompt_code": "KPR-04-007",
+      "prompt_id": "governed_architecture_companion_handoff",
+      "display_name": "Governed Architecture Companion Handoff",
+      "filename": "governed_architecture_companion_handoff.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 7,
+      "trigger_phrases": [
+        "governed architecture companion",
+        "canonical architecture gate",
+        "architecture handoff",
+        "tool project box shield no leak mcard",
+        "self-hosting architecture gate",
+        "unified architecture gate",
+        "load the full architecture companion",
+        "architecture-sensitive implementation"
+      ],
+      "user_intent_examples": [
+        "Load the governed architecture companion before this cross-box patch.",
+        "Apply the full architecture gate for this self-hosting KANDA change.",
+        "Use the architecture handoff to coordinate Brick Wall, Box, NO_LEAK, MCard, and Shield."
+      ],
+      "aliases": [
+        "KPR-04-007",
+        "governed_architecture_companion_handoff",
+        "governed_architecture_companion_handoff.md",
+        "governed architecture companion",
+        "architecture companion handoff",
+        "full KANDA architecture handoff"
+      ],
+      "when_to_load": "On demand for architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, startup-delivery, validation, freeze, or durable-evidence work that benefits from one unified gate companion.",
+      "when_not_to_load": "Do not load for normal startup, medical work, writing-only tasks, simple Fast Path explanation, or as a replacement for canonical owners.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "router_bridge_governed_implementation",
+        "project_tool_boundary_canon",
+        "box_architecture_canon"
+      ],
+      "recommended_companion_prompts": [
+        "kanda_box_shielding_canon",
+        "architecture_review_project_card_machine_canon",
+        "pre_output_contract_gates",
+        "bundle_gated_development_workflow",
+        "freeze_code_intake_and_form_protocol"
+      ],
+      "missing_behavior": "HARD_STOP if canonical owners, exact source, or Brick Wall authorization remain unresolved."
     }
   ]
 }

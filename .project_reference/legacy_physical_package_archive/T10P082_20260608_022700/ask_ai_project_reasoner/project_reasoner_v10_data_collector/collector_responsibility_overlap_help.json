@@ -1,0 +1,29 @@
+{
+  "helper_folder": "kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap_help",
+  "helper_modules": {
+    "__init__.py": [],
+    "extraction.py": [],
+    "scoring.py": []
+  },
+  "moved_private_helpers": {
+    "extraction.py": [
+      "_symbol_name_set",
+      "_call_name_roots",
+      "_file_record_map"
+    ],
+    "scoring.py": [
+      "_jaccard",
+      "_strong_signal_count",
+      "_passes_gate"
+    ]
+  },
+  "origin": "kanda_reasoner_app/reasoner_context_collector/collector_responsibility_overlap.py",
+  "pass_id": "046",
+  "pattern": "private_helper_extraction",
+  "root_exports": [
+    "build_overlap_hotspots",
+    "build_responsibility_overlap_index",
+    "build_responsibility_overlap_summary"
+  ],
+  "schema_version": 1
+}

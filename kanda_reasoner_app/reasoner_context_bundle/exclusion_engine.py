@@ -3,9 +3,12 @@
 
 from __future__ import annotations
 
-import fnmatch
 from pathlib import Path
 
+from kanda_reasoner_app.project_exclusion_path_matching import (
+    file_rule_matches,
+    folder_rule_matches,
+)
 from kanda_reasoner_app.project_exclusion_policy import (
     should_exclude_reasoner_project_path,
 )
@@ -79,61 +82,6 @@ def _path_for_decision(path: str | Path, root: Path) -> Path:
     return safe_resolve(root / candidate)
 
 
-def _folder_matches(rel_path: str, rule: str) -> bool:
-    """Support folder matches behavior.
-    
-    Parameters
-    ----------
-    rel_path : str
-        The rel path value.
-    rule : str
-        The rule value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    rule_text = str(rule).strip().lower().replace("\\", "/").strip("/")
-    if not rule_text:
-        return False
-    rel_low = rel_path.lower().replace("\\", "/").strip("/")
-    parts = [part.lower() for part in rel_low.split("/") if part]
-    return (
-        rule_text in parts
-        or fnmatch.fnmatch(rel_low, rule_text)
-        or fnmatch.fnmatch(rel_low, rule_text + "/*")
-        or any(fnmatch.fnmatch(part, rule_text) for part in parts)
-    )
-
-
-def _file_matches(rel_path: str, name: str, rule: str) -> bool:
-    """Support file matches behavior.
-    
-    Parameters
-    ----------
-    rel_path : str
-        The rel path value.
-    name : str
-        The name value.
-    rule : str
-        The rule value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    pattern = str(rule).strip().lower().replace("\\", "/")
-    if not pattern:
-        return False
-    return fnmatch.fnmatch(name.lower(), pattern) or fnmatch.fnmatch(
-        rel_path.lower(), pattern
-    )
-
-
 def _matched_rule(rel_path: str, path: Path, rules: ExclusionRules) -> tuple[str, str, str]:
     """Support matched rule behavior.
     
@@ -153,10 +101,10 @@ def _matched_rule(rel_path: str, path: Path, rules: ExclusionRules) -> tuple[str
     """
     
     for folder in rules.folders:
-        if _folder_matches(rel_path, folder):
+        if folder_rule_matches(rel_path, folder, path_is_dir=path.is_dir()):
             return str(folder), "folder", "Matched excluded folder rule."
     for file_rule in rules.files:
-        if _file_matches(rel_path, path.name, file_rule):
+        if file_rule_matches(rel_path, path.name, file_rule):
             return str(file_rule), "file", "Matched excluded file pattern."
     suffix_low = path.suffix.lower()
     for extension in rules.extensions:

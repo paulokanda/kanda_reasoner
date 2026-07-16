@@ -6,7 +6,7 @@
   "status": "active_candidate",
   "load_type": "tier_0_session_kernel",
   "source_stage": "kanda_context_routing_layer_phase1",
-  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library. Includes startup-visible CODE_MODULE_HARD_MAX_500_LINES bridge for the <=500-line hard gate on every new or touched code/source module. Includes startup-visible BOX_LOGIC_STARTUP_SHIELD bridge for mandatory beginning-of-chat box-boundary enforcement.",
+  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library. Includes startup-visible CODE_MODULE_HARD_MAX_500_LINES and CODE_MODULE_QUALITY_CANON_V1 bridges: ideal <=400, maximum <=500, PEP 8/SOLID/DRY canonical, and helper decomposition required instead of compressed formatting, plus durable generated-document and validation-evidence routing from disposable daily-work into the selected project support root.",
   "priority": 5,
   "required_companion_prompts": [
     "session_start_upload_checklist",
@@ -22,7 +22,9 @@
   "notes": [
     "Startup Code Module Size Hard Gate Bridge v1 is mandatory beginning-of-chat context: every new or touched code/source module must be <=500 physical lines after creation, update, modification, refactor, or split; route over-limit code work to large_module_refactor_protocol before delivery.",
     "Box Logic Startup Shield v1 is mandatory beginning-of-chat context: identify the active box, owner paths, allowed files, out-of-scope files, cross-box touches, public contracts, validation scope, and boundary risks before implementation, repair, refactor, prompt update, governance update, bundle, GUI, validation, freeze, patch, or artifact delivery.",
-    "Terminal Cleanup Contract Bridge v1 is mandatory beginning-of-chat context: install success uses about 2 seconds then Clear-Host and all non-install-success terminal blocks use Enter, Enter, one final Clear-Host; route emitted terminal commands to terminal_cleanup_contract and pre_output_contract_gates."
+    "Terminal Cleanup Contract Bridge v1 is mandatory beginning-of-chat context: install success uses about 2 seconds then Clear-Host and all non-install-success terminal blocks use Enter, Enter, one final Clear-Host; route emitted terminal commands to terminal_cleanup_contract and pre_output_contract_gates.",
+    "Code Module Quality Canon v1 is mandatory beginning-of-chat context: measure Python line counts after PEP 8 formatting; preserve SOLID and DRY; never compress formatting or duplicate logic to fit the maximum; create cohesive helpers instead.",
+    "Durable Documentation Artifact Routing Canon v1 is mandatory beginning-of-chat context: daily-work is transient; generated project-specific .txt/.md artifacts and successful validation evidence must persist under the selected project's sibling _show_project_to_AI support root."
   ],
   "startup_markers": [
     "BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_START",
@@ -30,6 +32,10 @@
     "BEGINNING_OF_DAY_BOX_LOGIC_SHIELD_V1_START",
     "BOX_LOGIC_STARTUP_SHIELD",
     "BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_START",
-    "TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE"
+    "TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE",
+    "CODE_MODULE_QUALITY_CANON_V1",
+    "BEGINNING_OF_DAY_DURABLE_DOCUMENT_ROUTING_BRIDGE_V1_START",
+    "DURABLE_DOCUMENT_ARTIFACT_ROUTING_CANON_V1",
+    "DURABLE_VALIDATION_EVIDENCE_OWNER_V1"
   ]
 }

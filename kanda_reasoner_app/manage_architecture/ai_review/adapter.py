@@ -10,8 +10,9 @@ from .formatter import format_advisory_review_text
 from .models import Tab1AIReviewRequest, Tab1AIReviewResult
 from .review_message_builder import build_tab1_ai_review_messages
 
-__all__ = ["Tab1AIReviewAdapter"]
+__all__ = ["AUTO_MODEL_LABEL", "Tab1AIReviewAdapter"]
 
+AUTO_MODEL_LABEL = "Auto (first available Ollama model)"
 MODEL_REGISTRY_MODULE = "kanda_reasoner_app.reasoner_engine.v10_model_registry"
 MODEL_REGISTRY_CLASS = "LocalModelRegistry"
 LOCAL_AI_MODULE = "kanda_reasoner_app.reasoner_engine.v10_qwen_ai_models"
@@ -78,6 +79,33 @@ class Tab1AIReviewAdapter:
         if models:
             return models[0]
         return requested
+
+    def chat_exact(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        model_name: str,
+        temperature: float,
+        max_tokens: int,
+    ) -> tuple[str, str]:
+        """Run raw chat with exactly one currently available selected model."""
+        selected = str(model_name or "").strip()
+        models = self.list_models()
+        if not selected or selected not in models:
+            raise RuntimeError(
+                "Selected Ollama model is not available: "
+                + selected
+                + ". Refresh AI Models first."
+            )
+        ai = self._make_ai()
+        response_text = ai.chat(
+            messages,
+            model=selected,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            use_cache=False,
+        )
+        return str(response_text or ""), selected
 
     def review(self, request: Tab1AIReviewRequest) -> Tab1AIReviewResult:
         """Run one advisory review and return a safe result object."""

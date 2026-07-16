@@ -159,6 +159,13 @@
       ],
       "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.manage_architecture_source_part_21_private_impl",
       "path": "manage_architecture_help/manage_architecture_source_part_21_private_impl.py"
+    },
+    {
+      "exports": [
+        "apply_manage_architecture_warning_policies"
+      ],
+      "module": "kanda_reasoner_app.manage_architecture.manage_architecture_help.source_loader_warning_policy_private_impl",
+      "path": "manage_architecture_help/source_loader_warning_policy_private_impl.py"
     }
   ],
   "origin": "manage_architecture.py"

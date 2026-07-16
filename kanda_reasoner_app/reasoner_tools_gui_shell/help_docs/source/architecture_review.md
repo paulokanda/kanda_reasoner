@@ -6,10 +6,10 @@ Page summary: Architecture Review is a building inspection desk for code. Before
 
 ## How To Use This
 
-1. Open the `Architecture Review` tab and click `Load this tool now` if the panel has not loaded yet.
+1. Open the `Architecture Review` tab, select `Check & Update Architecture`, and click `Load this tool now` if the panel has not loaded yet.
 2. Check `Project root`; use `Browse...` when the field is not the repository you want to inspect.
 3. Leave `Mode` on `validate` for the first pass. Use `diff` to preview generated changes, `scan` to print the manifest JSON, and `write` only when you deliberately want the worker to write architecture artifacts.
-4. Click `Run Selected Mode` or one of the mode buttons, then read the `Output` panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.
+4. Click the green action button. Its name changes to `Validate Project`, `Preview Changes`, `Scan Project`, or `Write Architecture Files` according to the selected mode. Then read the `Output` panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.
 5. Use `AI Review First Check` only after deterministic output exists. Treat it as an advisory second opinion over the latest output, not as the authority.
 6. Use `Save Output` when the result needs to become handoff evidence for a review, bundle, issue, or later help-page update.
 
@@ -81,10 +81,10 @@ Table AR-1 is rendered as stacked control records instead of a wide four-column 
 
 ### Command and toolbar controls
 
-- `Run Selected Mode`
+- `Validate Project`, `Preview Changes`, `Scan Project`, or `Write Architecture Files`
   - Area: Command.
-  - Technical contract: Runs the current combo selection through `run_mode`.
-  - In plain English: Start the selected inspection.
+  - Technical contract: The same green action button changes its label with the selected technical mode and runs that mode through `run_mode`.
+  - In plain English: The button says exactly what will happen before you click it.
 - `Validate`
   - Area: Command.
   - Technical contract: Runs validation without writing generated artifacts.

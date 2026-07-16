@@ -1,0 +1,39 @@
+{
+  "exports": [
+    "WorkflowManagerWindow",
+    "WorkflowRunWorker",
+    "get_recent_roots",
+    "get_recent_scripts",
+    "main",
+    "record_root",
+    "record_script"
+  ],
+  "help_folder": "kanda_reasoner_app/manage_workflows/manage_workflows_gui_help",
+  "helpers": {
+    "workflow_gui_constants.py": {
+      "exports": []
+    },
+    "workflow_gui_history.py": {
+      "exports": [
+        "get_recent_roots",
+        "get_recent_scripts",
+        "record_root",
+        "record_script"
+      ]
+    },
+    "workflow_gui_window.py": {
+      "exports": [
+        "WorkflowManagerWindow",
+        "main"
+      ]
+    },
+    "workflow_gui_worker.py": {
+      "exports": [
+        "WorkflowRunWorker"
+      ]
+    }
+  },
+  "origin": "kanda_reasoner_app/manage_workflows/manage_workflows_gui.py",
+  "purpose": "Helper manifest for the refactored workflow manager GUI.",
+  "schema_version": "1.0"
+}

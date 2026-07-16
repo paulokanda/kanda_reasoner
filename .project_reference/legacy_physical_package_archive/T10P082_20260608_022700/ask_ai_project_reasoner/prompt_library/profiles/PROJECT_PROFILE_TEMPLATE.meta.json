@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "project_profile_template",
+  "display_name": "Project Profile Template",
+  "version": "1.0.0",
+  "status": "template",
+  "category": "prompt_engineering",
+  "subcategory": "project_profile",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": true,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library\\profiles",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<PRODUCT_PACKAGE>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "explainer": "Template used to adapt the general prompt library to one specific project without changing the reusable prompts.",
+  "how_it_works": "The user copies this template, fills project variables, records source scope and validation commands, then uses the profile to assemble project-specific prompt stacks.",
+  "files_created": [
+    {
+      "path": "kanda_reasoner_app\\prompt_library\\profiles\\<PROJECT_NAME>_profile.md",
+      "purpose": "Human-readable project profile derived from this template."
+    },
+    {
+      "path": "kanda_reasoner_app\\prompt_library\\profiles\\<PROJECT_NAME>_adaptation_variables.json",
+      "purpose": "Machine-readable project variables for stack assembly."
+    }
+  ],
+  "risks": [
+    "Project-specific facts may accidentally be copied into reusable prompt bodies.",
+    "A profile may be mistaken for source truth."
+  ],
+  "mitigations": [
+    "Keep project-specific facts in profiles and variables only.",
+    "State that source files, logs, and validation output outrank profile text."
+  ],
+  "safe_usage": "Use this template to create a project profile before assembling prompts for a specific project.",
+  "validation_requirements": [
+    "must_have_project_identity",
+    "must_have_adaptation_variables",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "example_usage": "Create a profile for a project by replacing placeholders such as <PROJECT_ROOT> and <PRODUCT_PACKAGE>.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial text-only project profile template."
+    }
+  ]
+}

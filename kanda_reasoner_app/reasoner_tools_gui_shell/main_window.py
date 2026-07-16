@@ -148,8 +148,8 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
 
         subtitle = QLabel(
             "Unified workflow shell for architecture, workflows, docstrings, "
-            "Show Project to AI handoff generation, daily refactor reporting, "
-            "and AI reasoning."
+            "Show Project to AI handoff generation, integrated refactor "
+            "evidence, and AI reasoning."
         )
         subtitle.setAlignment(_qt_core_attr("Qt").AlignCenter)
         subtitle.setWordWrap(True)
@@ -181,13 +181,14 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         _qt_core_attr("QTimer").singleShot(0, self._load_initial_tab)
 
     def _ordered_tool_specs(self, specs: Iterable[ToolSpec]) -> tuple[ToolSpec, ...]:
-        """Return registered tool specs in the persisted user tab order.
+        """Return visible tool specs in the persisted user tab order.
 
-        Saved tab order is advisory. Unknown tab IDs are ignored and newly added
-        tabs are appended in the canonical registry order so future releases do
-        not hide new tools.
+        Saved tab order is advisory. Unknown or hidden tab IDs are ignored,
+        and newly added visible tabs are appended in canonical registry order.
         """
-        canonical_specs = tuple(specs)
+        canonical_specs = tuple(
+            spec for spec in specs if spec.visible_in_shell
+        )
         saved_order = self._prefs.get("tab_order", [])
         if not isinstance(saved_order, list):
             return canonical_specs

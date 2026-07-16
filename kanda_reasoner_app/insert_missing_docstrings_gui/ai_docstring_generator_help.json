@@ -23,6 +23,10 @@
         "GenerationStats"
       ]
     },
+    "generation_guardrails.py": {
+      "purpose": "Private structured-claim and output-quality guardrails.",
+      "exports": []
+    },
     "heuristics.py": {
       "purpose": "Private heuristic fallback helpers.",
       "exports": []

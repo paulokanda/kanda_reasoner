@@ -125,9 +125,10 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "cerebellum",
         "Cerebellum",
-        "Refactor Report",
+        "Architecture Review",
         "Correction and refinement",
-        "Identifies areas that should be refined, cleaned, simplified, or structurally improved.",
+        "Combines audit findings with integrated Refactor Report evidence "
+        "to identify structural improvements.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),

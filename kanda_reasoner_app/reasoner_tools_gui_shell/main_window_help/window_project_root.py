@@ -140,6 +140,8 @@ class _WindowProjectRootMixin:
             base_name = path.name[: -len(suffix)].strip()
             if not base_name:
                 return None
+            if base_name == path.parent.name and path.parent.exists() and path.parent.is_dir():
+                return path.parent.expanduser().resolve(strict=False)
             peer = (path.parent / base_name).expanduser().resolve(strict=False)
             if peer.exists() and peer.is_dir():
                 return peer

@@ -1,0 +1,234 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Helper manifest for the refactored workflow manager CLI validator.",
+  "origin": "kanda_reasoner_app/manage_workflows/manage_workflows.py",
+  "help_folder": "kanda_reasoner_app/manage_workflows/manage_workflows_help",
+  "exports": [
+    "CheckResult",
+    "DEFAULT_WORKFLOW_DETECTOR_REGISTRY",
+    "WorkflowDetector",
+    "WorkflowDetectorContext",
+    "WorkflowDetectorRegistry",
+    "WorkflowIssue",
+    "clear_history",
+    "collect_generated_outputs",
+    "command_list_results",
+    "detect_validation_reference_misroutes",
+    "detect_workflow_artifact_route_issues",
+    "detect_workflow_cross_project_generalization_issues",
+    "detect_workflow_documentation_drift_issues",
+    "detect_workflow_environment_contract_issues",
+    "detect_workflow_idempotency_issues",
+    "detect_workflow_interaction_contract_issues",
+    "detect_workflow_reader_ai_contract_issues",
+    "detect_workflow_rollback_fail_safe_issues",
+    "detect_workflow_step_order_issues",
+    "detect_workflow_step_target_integrity",
+    "generate_manifest",
+    "generate_workflows_md",
+    "get_history_roots",
+    "load_manifest_or_default",
+    "main",
+    "print_history",
+    "print_results",
+    "record_root",
+    "register_workflow_detector",
+    "run_import_checks",
+    "run_tests",
+    "run_workflow_detector_results",
+    "run_workflow_detectors",
+    "scan_project",
+    "summarize_results",
+    "validate_command_output_content",
+    "validate_expected_json_files",
+    "validate_expected_output_files",
+    "validate_project",
+    "workflow_issue_to_check_result"
+  ],
+  "origin_all": [
+    "CheckResult",
+    "clear_history",
+    "collect_generated_outputs",
+    "command_list_results",
+    "generate_manifest",
+    "generate_workflows_md",
+    "get_history_roots",
+    "load_manifest_or_default",
+    "main",
+    "print_history",
+    "print_results",
+    "run_import_checks",
+    "run_tests",
+    "scan_project",
+    "summarize_results",
+    "validate_project"
+  ],
+  "public_exports": [
+    "run_workflow_detector_results"
+  ],
+  "helpers": {
+    "workflow_cli.py": {
+      "exports": [
+        "main",
+        "run_workflow_detector_results",
+        "validate_project"
+      ]
+    },
+    "workflow_command_runner.py": {
+      "exports": [
+        "command_list_results",
+        "run_tests"
+      ]
+    },
+    "workflow_constants.py": {
+      "exports": []
+    },
+    "workflow_file_contract.py": {
+      "exports": [
+        "validate_expected_json_files",
+        "validate_expected_output_files"
+      ],
+      "purpose": "Expected-file contract helpers for Tab 2 workflow command execution."
+    },
+    "workflow_generation.py": {
+      "exports": [
+        "collect_generated_outputs",
+        "generate_manifest",
+        "generate_workflows_md",
+        "load_manifest_or_default"
+      ]
+    },
+    "workflow_history.py": {
+      "exports": [
+        "clear_history",
+        "get_history_roots",
+        "print_history",
+        "record_root"
+      ]
+    },
+    "workflow_import_checks.py": {
+      "exports": [
+        "run_import_checks"
+      ]
+    },
+    "workflow_io.py": {
+      "exports": []
+    },
+    "workflow_models.py": {
+      "exports": [
+        "CheckResult"
+      ]
+    },
+    "workflow_output_contract.py": {
+      "exports": [
+        "validate_command_output_content"
+      ],
+      "purpose": "Command output contract helpers for Tab 2 workflow command execution."
+    },
+    "workflow_placeholder_contract.py": {
+      "exports": [],
+      "purpose": "Private placeholder contract helpers for Tab 2 workflow command execution."
+    },
+    "workflow_project_scan.py": {
+      "exports": [
+        "scan_project"
+      ]
+    },
+    "workflow_reporting.py": {
+      "exports": [
+        "print_results",
+        "summarize_results"
+      ]
+    },
+    "workflow_issue_models.py": {
+      "exports": [
+        "WorkflowIssue",
+        "workflow_issue_to_check_result"
+      ],
+      "purpose": "Tab 2 workflow detector infrastructure."
+    },
+    "workflow_detector_context.py": {
+      "exports": [
+        "WorkflowDetectorContext"
+      ],
+      "purpose": "Tab 2 workflow detector infrastructure."
+    },
+    "workflow_detector_registry.py": {
+      "exports": [
+        "DEFAULT_WORKFLOW_DETECTOR_REGISTRY",
+        "WorkflowDetector",
+        "WorkflowDetectorRegistry",
+        "register_workflow_detector",
+        "run_workflow_detectors"
+      ],
+      "purpose": "Tab 2 workflow detector infrastructure."
+    },
+    "workflow_step_target_detectors.py": {
+      "exports": [
+        "detect_workflow_step_target_integrity"
+      ],
+      "purpose": "Tab 2 workflow step target integrity detectors."
+    },
+    "workflow_step_order_detectors.py": {
+      "exports": [
+        "detect_workflow_step_order_issues"
+      ],
+      "purpose": "Tab 2 workflow step order detector."
+    },
+    "workflow_interaction_contract_detectors.py": {
+      "exports": [
+        "detect_workflow_interaction_contract_issues"
+      ],
+      "purpose": "Tab 2 workflow interaction contract detector."
+    },
+    "workflow_artifact_route_detectors.py": {
+      "exports": [
+        "detect_workflow_artifact_route_issues"
+      ],
+      "purpose": "Tab 2 generated-artifact route and dual JSON workflow contract detectors."
+    },
+    "workflow_reader_ai_contract_detectors.py": {
+      "exports": [
+        "detect_workflow_reader_ai_contract_issues"
+      ],
+      "purpose": "Tab 2 workflow reader AI contract detector."
+    },
+    "workflow_idempotency_detectors.py": {
+      "exports": [
+        "detect_workflow_idempotency_issues"
+      ],
+      "purpose": "Tab 2 workflow idempotency detector."
+    },
+    "workflow_validation_reference_detectors.py": {
+      "exports": [
+        "detect_validation_reference_misroutes"
+      ],
+      "purpose": "Tab 2 workflow detector for outdated validation reference misroutes."
+    },
+    "workflow_rollback_fail_safe_detectors.py": {
+      "exports": [
+        "detect_workflow_rollback_fail_safe_issues"
+      ],
+      "purpose": "Tab 2 rollback and fail-safe workflow detector."
+    },
+    "workflow_documentation_drift_detectors.py": {
+      "exports": [
+        "detect_workflow_documentation_drift_issues"
+      ],
+      "purpose": "Tab 2 workflow documentation drift detector."
+    },
+    "workflow_cross_project_generalization_detectors.py": {
+      "exports": [
+        "detect_workflow_cross_project_generalization_issues"
+      ],
+      "purpose": "Tab 2 cross-project generalization workflow detector."
+    },
+    "workflow_environment_contract_detectors.py": {
+      "exports": [
+        "detect_workflow_environment_contract_issues"
+      ],
+      "purpose": "Tab 2 remaining help parity detector for encoding, empty output, dependency, and path-root contracts."
+    }
+  }
+}
+

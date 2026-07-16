@@ -1,0 +1,421 @@
+# T9T013 Roadmap - Teach AI Prompt Authoring Complete Lifecycle
+
+## Status
+
+Planning only. Do not implement from this roadmap until the user approves.
+
+## Current baseline inspected
+
+Archive inspected:
+
+```text
+developer_tools.2.6.2026_11h_before_tools.7z
+```
+
+Relevant current structure:
+
+```text
+ask_ai_project_reasoner/prompt_library/groups/PROMPT_GROUPS.json
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.md
+ask_ai_project_reasoner/prompt_library/active/KANDA_BUNDLE_GATED_DEVELOPMENT_WORKFLOW.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_MASTER_INDEX.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_CURRENT_STATE.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_ROADMAP.md
+```
+
+The current Tab 9 group catalog contains this dashboard group:
+
+```text
+group_id: teach_ai_prompt_authoring
+display_name: Teach AI Prompt Authoring
+prompt_ids:
+- teach_ai_tab9_prompt_authoring_guide
+- teach_ai_create_or_update_prompt_request
+- tab9_prompt_asset_placement_rules
+```
+
+## Problem
+
+When the user says something like:
+
+```text
+create a new prompt that...
+```
+
+the current Teach AI Prompt Authoring material already tells the AI to create a
+prompt file, metadata file, and possibly update PROMPT_GROUPS.json.
+
+However, it does not yet force the full prompt-library lifecycle:
+
+```text
+1. identify whether an existing parent prompt or overlay already applies;
+2. update related prompts so they know the new prompt exists;
+3. register the new prompt in the correct group/spinning box;
+4. update stacks when the prompt should be loaded at the beginning of a chat;
+5. update master index/current state/roadmap;
+6. create complete installable bundle with manifest;
+7. provide local validation commands;
+8. avoid claiming Tab 9 visibility unless group/catalog matching is validated.
+```
+
+## Goal
+
+Make Teach AI Prompt Authoring behave like a complete Tab 9 prompt asset
+authoring protocol.
+
+After this change, if the user asks an AI to create a new prompt, the prompt
+authoring guide should make the AI think:
+
+```text
+There may already be a prompt for this.
+I must inspect the prompt library first.
+If I create a new prompt, I must register it, update related prompts, update
+indexes, and deliver a complete bundle.
+```
+
+## Non-goals
+
+Do not implement Python runtime changes.
+
+Do not change Tab 9 GUI code.
+
+Do not edit active governance.
+
+Do not change Tabs 1 through 8.
+
+Do not make Tab 9 execute prompts automatically.
+
+Do not add a new spinning cube unless the user explicitly requests a new group.
+
+## Implementation track
+
+Recommended bundle ID:
+
+```text
+T9T013_teach_ai_prompt_authoring_complete_lifecycle
+```
+
+Bundle type:
+
+```text
+text-only prompt-library bundle
+```
+
+Active box:
+
+```text
+tab_9_prompt_engineering_text_library
+```
+
+## Files to update
+
+### 1. Teaching request prompt
+
+```text
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md
+```
+
+Update from v1.0.0 to v1.1.0.
+
+Add explicit instructions:
+
+- inspect existing prompt library before creating a new prompt;
+- identify existing relevant parent prompts, overlays, stacks, and groups;
+- decide whether the task should update an existing prompt instead of creating a new one;
+- if creating a new prompt, update all required catalog/index/current-state/roadmap files;
+- make the prompt visible in Tab 9 by updating PROMPT_GROUPS.json when needed;
+- update related prompts so they know when to recommend or load the new prompt;
+- deliver a complete bundle using Kanda Bundle-Gated Development.
+
+Suggested added wording:
+
+```text
+Before creating a new prompt, inspect the existing prompt library for an existing
+parent prompt, overlay, stack, or group that already covers the requested task.
+If one exists, prefer updating or linking that asset instead of creating a
+duplicated prompt.
+```
+
+### 2. Teach AI authoring guide
+
+```text
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md
+```
+
+Update from v1.0.0 to v1.1.0.
+
+Add a new section:
+
+```text
+## Complete Prompt Asset Lifecycle
+```
+
+Required lifecycle:
+
+```text
+1. Classify the request.
+2. Search for existing prompt assets.
+3. Decide create vs update vs link.
+4. Choose folder and prompt_id.
+5. Create/update .md prompt.
+6. Create/update .meta.json.
+7. Register prompt in PROMPT_GROUPS.json when dashboard visibility is required.
+8. Update stacks when the prompt belongs at chat startup or handoff.
+9. Update related prompts that should recommend the new prompt.
+10. Update PROMPT_LIBRARY_MASTER_INDEX.md.
+11. Update PROMPT_LIBRARY_CURRENT_STATE.md.
+12. Update PROMPT_LIBRARY_ROADMAP.md.
+13. Add bundle manifest under workbench/_bundle_temp.
+14. Provide install and validation commands.
+```
+
+Add another section:
+
+```text
+## Cross-Prompt Awareness Rules
+```
+
+Rules:
+
+- parent methodology prompts should reference important overlays;
+- authoring prompts should reference newly added authoring overlays;
+- handoff prompts should know about prompts that affect handoff;
+- governance prompts should know only about governance-related prompts;
+- daily-start stacks should include only prompts intended for beginning-of-chat use;
+- never update unrelated prompts only for visibility.
+
+### 3. Placement rules
+
+```text
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.md
+```
+
+Update from v1.0.0 to v1.1.0.
+
+Add a section:
+
+```text
+## Dashboard Visibility Contract
+```
+
+Rules:
+
+- Tab 9 group boxes are controlled by `groups/PROMPT_GROUPS.json`.
+- A prompt appears under a group only if the prompt identifier can be matched by
+  `prompt_id`, display name, file stem, or relative path.
+- Metadata `prompt_id` should match the value placed in `PROMPT_GROUPS.json`.
+- If a prompt is created but not added to a group, it may still exist in the
+  library but may not appear under the intended spinning box.
+
+### 4. Group catalog
+
+```text
+ask_ai_project_reasoner/prompt_library/groups/PROMPT_GROUPS.json
+```
+
+Add `kanda_bundle_gated_development_workflow` to at least one appropriate group.
+
+Recommended placement:
+
+```text
+teach_ai_prompt_authoring
+```
+
+Rationale:
+
+- It is a parent protocol for creating prompt bundles.
+- Teach AI Prompt Authoring should load it before asking another AI to create or
+  update prompt-library assets.
+
+Optional secondary placement:
+
+```text
+high_risk_engineering
+```
+
+Rationale:
+
+- It is also a general implementation safety methodology.
+
+Do not create a new group unless the user wants a new spinning cube.
+
+### 5. Master index
+
+```text
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_MASTER_INDEX.md
+```
+
+Add or update an entry stating:
+
+- Teach AI Prompt Authoring now performs full lifecycle prompt asset updates;
+- Kanda Bundle-Gated Development is the parent delivery method;
+- new prompts should be linked to related prompts, groups, stacks, and indexes.
+
+### 6. Current state
+
+```text
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_CURRENT_STATE.md
+```
+
+Add:
+
+```text
+T9T013 - Teach AI Prompt Authoring complete lifecycle
+```
+
+Record that the authoring guide now requires complete bundle/catalog/index
+awareness.
+
+### 7. Roadmap
+
+```text
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_ROADMAP.md
+```
+
+Add T9T013 under completed/current planned text-only steps.
+
+### 8. Metadata files
+
+Update metadata sidecars for modified teaching files:
+
+```text
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.meta.json
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.meta.json
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.meta.json
+```
+
+Add change_log entries and, where appropriate, dependency on:
+
+```text
+kanda_bundle_gated_development_workflow
+```
+
+### 9. Bundle manifest
+
+Create:
+
+```text
+workbench/_bundle_temp/BUNDLE_MANIFEST_t9t013_teach_ai_prompt_authoring_complete_lifecycle.txt
+```
+
+## Suggested validation checks
+
+### Text checks
+
+```powershell
+Test-Path "ask_ai_project_reasoner\prompt_library\teaching\TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md"
+Test-Path "ask_ai_project_reasoner\prompt_library\teaching\TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md"
+Test-Path "ask_ai_project_reasoner\prompt_library\teaching\TAB9_PROMPT_ASSET_PLACEMENT_RULES.md"
+Test-Path "ask_ai_project_reasoner\prompt_library\groups\PROMPT_GROUPS.json"
+```
+
+### Required string checks
+
+```powershell
+Select-String -Path "ask_ai_project_reasoner\prompt_library\teaching\TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md" -Pattern "Complete Prompt Asset Lifecycle"
+Select-String -Path "ask_ai_project_reasoner\prompt_library\teaching\TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md" -Pattern "Cross-Prompt Awareness Rules"
+Select-String -Path "ask_ai_project_reasoner\prompt_library\teaching\TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md" -Pattern "inspect the existing prompt library"
+Select-String -Path "ask_ai_project_reasoner\prompt_library\teaching\TAB9_PROMPT_ASSET_PLACEMENT_RULES.md" -Pattern "Dashboard Visibility Contract"
+Select-String -Path "ask_ai_project_reasoner\prompt_library\groups\PROMPT_GROUPS.json" -Pattern "kanda_bundle_gated_development_workflow"
+```
+
+### JSON validation
+
+```powershell
+python -c "import json, pathlib; json.loads(pathlib.Path('ask_ai_project_reasoner/prompt_library/groups/PROMPT_GROUPS.json').read_text(encoding='utf-8'))"
+```
+
+### Project validation
+
+```powershell
+python ask_ai_project_reasoner\manage_architecture\manage_architecture.py --root E:\developer_tools --validate
+python ask_ai_project_reasoner\manage_workflows\manage_workflows.py --root E:\developer_tools --validate
+```
+
+Expected:
+
+```text
+Architecture: No validation issues
+Workflow: pass=8 fail=0 warn=0 skip=3
+```
+
+## Manual Tab 9 validation
+
+After installation:
+
+1. Open Tab 9.
+2. Locate the `Teach AI Prompt Authoring` cube.
+3. Open the group window.
+4. Confirm the group contains:
+   - Teach AI Tab 9 Prompt Authoring Guide;
+   - Teach AI Create Or Update Prompt Request;
+   - Tab 9 Prompt Asset Placement Rules;
+   - Kanda Bundle-Gated Development Workflow.
+5. Copy the full group stack.
+6. Confirm the copied stack includes the bundle-gated cycle:
+   `plan -> bundle -> install -> validate -> repair/continue -> freeze`.
+
+## Risk analysis
+
+### Risk 1 - Prompt duplication
+
+If the authoring prompt always creates new prompts, the library can become
+duplicative.
+
+Mitigation:
+
+```text
+Require existing prompt inspection before creation.
+```
+
+### Risk 2 - Catalog mismatch
+
+A prompt may be created but not appear under the intended spinning box.
+
+Mitigation:
+
+```text
+Require PROMPT_GROUPS.json update and string validation.
+```
+
+### Risk 3 - Over-linking prompts
+
+Updating too many unrelated prompts can make the library noisy.
+
+Mitigation:
+
+```text
+Only update prompts that should genuinely recommend, depend on, or load the new
+prompt.
+```
+
+### Risk 4 - Governance confusion
+
+A prompt-library update may be mistaken for canon.
+
+Mitigation:
+
+```text
+Repeat that prompt-library assets are not governance unless a governance freeze
+bundle is explicitly approved.
+```
+
+## Recommended final scope for T9T013
+
+Implement only this:
+
+```text
+1. Update the three teaching prompts/rules.
+2. Register kanda_bundle_gated_development_workflow in the Teach AI group.
+3. Update master index/current state/roadmap.
+4. Update metadata sidecars.
+5. Add bundle manifest.
+```
+
+Do not add Python tests unless the user asks for a code gate.
+
+Do not edit GUI code.
+
+Do not edit governance canon.

@@ -1,0 +1,103 @@
+{
+  "origin": "kanda_reasoner_app/project_reasoner_v10/index_loader.py",
+  "entry_point": "kanda_reasoner_app/project_reasoner_v10/index_loader.py",
+  "help_folder": "kanda_reasoner_app/project_reasoner_v10/index_loader_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with actual helper __all__ exports.",
+  "pattern": "mixed",
+  "pattern_note": "__init__.py package reexports are intentionally excluded from helper entries.",
+  "generated_by": "reasoner_correction_pass_014b_helper_manifest_all_alignment",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "exports": [
+    "build_boundary_indexes",
+    "build_core_file_and_symbol_indexes",
+    "build_hotspot_indexes",
+    "build_import_and_call_graph_indexes",
+    "build_runtime_indexes",
+    "build_snippet_lookup_index",
+    "build_ui_action_indexes",
+    "build_widget_indexes",
+    "initialize_index_state",
+    "load_full_sections",
+    "resolve_runtime_source_file"
+  ],
+  "summary": {
+    "total_helpers": 4,
+    "public_helpers": 4,
+    "internal_helpers": 0,
+    "entry_exports": [
+      "JsonProjectIndex"
+    ],
+    "exported_symbols": [
+      "build_boundary_indexes",
+      "build_core_file_and_symbol_indexes",
+      "build_hotspot_indexes",
+      "build_import_and_call_graph_indexes",
+      "build_runtime_indexes",
+      "build_snippet_lookup_index",
+      "build_ui_action_indexes",
+      "build_widget_indexes",
+      "initialize_index_state",
+      "load_full_sections",
+      "resolve_runtime_source_file"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "index_builders.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "build_boundary_indexes",
+        "build_core_file_and_symbol_indexes",
+        "build_hotspot_indexes",
+        "build_import_and_call_graph_indexes",
+        "build_runtime_indexes",
+        "build_snippet_lookup_index",
+        "build_ui_action_indexes",
+        "build_widget_indexes"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "path_resolution.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "resolve_runtime_source_file"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "section_loading.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "load_full_sections"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "state_init.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "initialize_index_state"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    }
+  },
+  "dependency_graph": {
+    "index_builders.py": {},
+    "path_resolution.py": {},
+    "section_loading.py": {},
+    "state_init.py": {}
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

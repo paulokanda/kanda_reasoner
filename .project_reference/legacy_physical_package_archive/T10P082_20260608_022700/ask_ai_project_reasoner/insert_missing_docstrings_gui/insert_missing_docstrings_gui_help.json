@@ -1,0 +1,225 @@
+{
+  "origin": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py",
+  "help_folder": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help",
+  "helpers": {
+    "__init__.py": {
+      "exports": [],
+      "depends_on": []
+    },
+    "ai_settings.py": {
+      "exports": [
+        "build_ai_config",
+        "load_config_from_file",
+        "ollama_tags_url",
+        "persist_runtime_config",
+        "refresh_models",
+        "save_config_to_file"
+      ],
+      "depends_on": []
+    },
+    "constants.py": {
+      "exports": [
+        "DEFAULT_WORKER_NAME",
+        "DEFAULT_PROJECT_ROOT",
+        "DEFAULT_BASE_URL",
+        "DEFAULT_MODEL"
+      ],
+      "depends_on": []
+    },
+    "dialogs.py": {
+      "exports": [
+        "browse_report_path",
+        "browse_root",
+        "confirm_write",
+        "save_output",
+        "show_help"
+      ],
+      "depends_on": []
+    },
+    "layout_builder.py": {
+      "exports": [
+        "build_ui",
+        "wire_events",
+        "set_ai_controls_enabled"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_editor.py": {
+      "exports": [
+        "DocstringReviewEditorDialog"
+      ],
+      "depends_on": [
+        "manual_docstring_review_support.py"
+      ]
+    },
+    "preferences.py": {
+      "exports": [
+        "PREFS_FILENAME",
+        "safe_bool",
+        "safe_int",
+        "safe_text",
+        "prefs_path",
+        "load_prefs",
+        "save_prefs"
+      ],
+      "depends_on": []
+    },
+    "report_review_panel.py": {
+      "exports": [
+        "review_status_for_row",
+        "review_severity_for_row",
+        "review_action_hint_for_row",
+        "load_report_rows",
+        "refresh_review_summary",
+        "row_needs_review",
+        "matches_review_filter",
+        "populate_review_list",
+        "show_review_item_details",
+        "open_docstring_review_window"
+      ],
+      "depends_on": [
+        "manual_docstring_review_editor.py"
+      ]
+    },
+    "run_controls.py": {
+      "exports": [
+        "append_text",
+        "cleanup_worker",
+        "effective_report_path",
+        "handle_worker_error",
+        "handle_worker_progress",
+        "handle_worker_success",
+        "run_mode",
+        "run_selected_mode",
+        "stop_running_selected_mode"
+      ],
+      "depends_on": []
+    },
+    "scope_controls.py": {
+      "exports": [
+        "update_scope_controls",
+        "effective_target_module",
+        "effective_target_package",
+        "browse_target_path"
+      ],
+      "depends_on": []
+    },
+    "tab1_audit_docstring_source.py": {
+      "exports": [
+        "MISSING_DOCSTRING_CODE",
+        "TAB1_AUDIT_SOURCE_LABEL",
+        "Tab1AuditDocstringSourceResult",
+        "Tab1MissingDocstringFinding",
+        "extract_missing_docstring_findings",
+        "read_missing_docstrings_from_tab1_audit",
+        "refresh_tab1_audit_docstring_source",
+        "tab1_audit_source_is_enabled"
+      ],
+      "depends_on": []
+    },
+    "tab1_audit_write_contracts.py": {
+      "exports": [
+        "TAB1_AUDIT_WRITE_ROUTE_STATUS_EMPTY",
+        "TAB1_AUDIT_WRITE_ROUTE_STATUS_READY",
+        "TAB1_AUDIT_WRITE_ROUTE_STATUS_SKIPPED",
+        "Tab1AuditWritePlan",
+        "Tab1AuditWriteTarget"
+      ],
+      "depends_on": []
+    },
+    "window_state.py": {
+      "exports": [
+        "current_prefs_payload",
+        "initialize_window"
+      ],
+      "depends_on": []
+    },
+    "worker_thread.py": {
+      "exports": [
+        "DocstringRunWorker"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_support.py": {
+      "exports": [
+        "save_manual_review_state",
+        "apply_saved_manual_review_state",
+        "backup_source_file",
+        "classify_location_after_tab1_refresh",
+        "docstring_text_from_row",
+        "docstring_text_or_placeholder",
+        "format_review_row_context",
+        "format_tab1_findings_for_editor",
+        "format_tab1_snippets",
+        "manual_review_is_inside_project_root",
+        "project_root_for_window",
+        "refresh_tab1_findings_for_window",
+        "manual_review_safe_int",
+        "next_filtered_location_index",
+        "review_location_matches_state_filter",
+        "manual_review_state_summary_text"
+      ],
+      "depends_on": [
+        "tab1_audit_docstring_source.py"
+      ]
+    },
+    "manual_review_boundary_note.py": {
+      "purpose": "Provide a public boundary note for the Tab 3 manual review window.",
+      "exports": [
+        "MANUAL_REVIEW_BOUNDARY_NOTE"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_export.py": {
+      "purpose": "Export manual docstring review state summaries.",
+      "exports": [
+        "export_manual_review_summary"
+      ],
+      "depends_on": [
+        "manual_docstring_review_support.py"
+      ]
+    },
+    "manual_docstring_review_ai.py": {
+      "purpose": "Suggest one manual-review docstring through a local AI endpoint.",
+      "exports": [
+        "suggest_manual_review_docstring"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_heuristic.py": {
+      "purpose": "Suggest deterministic AST-aware manual-review docstrings.",
+      "exports": [
+        "suggest_manual_review_heuristic"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_preview.py": {
+      "purpose": "Build approved-only manual docstring review previews.",
+      "exports": [
+        "build_approved_review_preview"
+      ],
+      "depends_on": []
+    },
+    "manual_docstring_review_batch.py": {
+      "purpose": "Apply approved manual docstring review drafts in guarded batches.",
+      "exports": [
+        "apply_approved_review_batch"
+      ],
+      "depends_on": [
+        "manual_docstring_review_support.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "manual_review_boundary_note.py": [],
+    "manual_docstring_review_export.py": [
+      "manual_docstring_review_support.py"
+    ],
+    "manual_docstring_review_ai.py": [],
+    "manual_docstring_review_heuristic.py": [],
+    "manual_docstring_review_preview.py": [],
+    "manual_docstring_review_batch.py": [
+      "manual_docstring_review_support.py"
+    ]
+  }
+}

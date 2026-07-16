@@ -111,15 +111,15 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
     {
         "region_id": "cerebellum",
         "region_name": "Cerebellum",
-        "target_tab_id": "refactor_report",
-        "target_tab_label": "Refactor Report",
+        "target_tab_id": "architecture_review",
+        "target_tab_label": "Architecture Review",
         "analogy_title": "Correction and refinement",
         "analogy_text": (
-            "The cerebellum fine-tunes movement and correction, like Refactor "
-            "Report fine-tunes project health by identifying what should be "
-            "improved."
+            "The cerebellum fine-tunes movement and correction, like "
+            "Architecture Review combines audit findings with integrated "
+            "Refactor Report evidence to identify what should be improved."
         ),
-        "tooltip_text": "Cerebellum -> Refactor Report",
+        "tooltip_text": "Cerebellum -> Architecture Review",
         "category": "Project Tools",
     },
     {

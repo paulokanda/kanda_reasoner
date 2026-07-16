@@ -1,4 +1,4 @@
-﻿# Reasoner Startup Canon
+# Reasoner Startup Canon
 
 ## Box Logic Requirement
 
@@ -125,10 +125,24 @@ Forbidden delivery:
 - Do not flatten folders.
 - Do not wrap the ZIP in an unnecessary top-level folder.
 
-Large module law:
-- Ideal: <= 400 lines.
-- Maximum: <= 500 lines.
-- Above 500 lines: use the approved large-module protocol.
+Durable generated documentation law:
+- `<project>_delete_after_daily_work` is transient and disposable.
+- Important generated project-specific `.txt`, `.md`, validation evidence,
+  handoffs, reports, and receipts must be written or copied to the selected
+  project's sibling `<project>_show_project_to_AI` support root.
+- Validation evidence belongs under
+  `<project>_show_project_to_AI\project_validation_evidence\<feature_id>\`
+  unless a more specific canonical Project Support owner applies.
+- Canonical source documentation remains in its source owner.
+
+Large module and Python quality law:
+- Ideal: <= 400 physical lines.
+- Maximum: <= 500 physical lines.
+- PEP 8 compliance is canonical and line counts are evaluated after compliant formatting.
+- SOLID responsibility/dependency design and DRY implementation are canonical.
+- Never violate PEP 8, compress code layout, or duplicate logic to stay under 500 lines.
+- If compliant code would exceed 500 lines, use the approved large-module protocol
+  and create cohesive helper modules as needed.
 - Prefer true helper decomposition when safe.
 - Use source-preserving facade only as a tactical stabilization option when semantic extraction is too risky.
 - Even for source-preserving facade work, deliver final files directly in a ZIP; do not require a install script.

@@ -3,34 +3,19 @@
 
 from __future__ import annotations
 
-import math
-from importlib import import_module
 from typing import Any
+
+from PySide6.QtCore import QEvent, QObject, QSize
+
+from ._running_indicator_sonar_panel import _SonarFloatingPanel
 
 __all__ = ["Tab1ActivityIndicator", "install_tab1_activity_indicator"]
 
-
 _HIDE_AFTER_FINISH_MS = 2200
+_ANIMATION_INTERVAL_MS = 25
 _PANEL_WIDTH = 390
 _PANEL_HEIGHT = 184
 _PANEL_MARGIN = 22
-
-
-# Green sonar palette. Variable names keep the v1 compatibility validator
-# fragments, but the visual design now follows the original green sonar demo.
-_BLUE_BG = "#040A06"
-_BLUE_BG_2 = "#07120A"
-_BLUE_BORDER = "#00CC66"
-_BLUE_DIM = "#00441E"
-_BLUE_MID = "#00CC66"
-_BLUE_BRIGHT = "#AAFFCC"
-_BLUE_TEXT = "#D9FFE8"
-_BLUE_MUTED = "#6FE6A5"
-_GRID_LINE = "#003318"
-_SUCCESS = "#00FF88"
-_WARNING = "#FFCC44"
-_ERROR = "#FF4444"
-
 
 _MODE_CONTEXT = {
     "validate": (
@@ -56,468 +41,17 @@ _MODE_CONTEXT = {
 }
 
 
-def _qt_core_attr(name: str) -> Any:
-    """Return a PySide6.QtCore attribute at GUI import time."""
-    return getattr(import_module("PySide6.QtCore"), name)
-
-
-def _qt_gui_attr(name: str) -> Any:
-    """Return a PySide6.QtGui attribute at GUI import time."""
-    return getattr(import_module("PySide6.QtGui"), name)
-
-
-def _qt_widgets_attr(name: str) -> Any:
-    """Return a PySide6.QtWidgets attribute at GUI import time."""
-    return getattr(import_module("PySide6.QtWidgets"), name)
-
-
-QColor = _qt_gui_attr("QColor")
-QFont = _qt_gui_attr("QFont")
-QGraphicsDropShadowEffect = _qt_widgets_attr("QGraphicsDropShadowEffect")
-QHBoxLayout = _qt_widgets_attr("QHBoxLayout")
-QLabel = _qt_widgets_attr("QLabel")
-QPainter = _qt_gui_attr("QPainter")
-QPainterPath = _qt_gui_attr("QPainterPath")
-QPen = _qt_gui_attr("QPen")
-QPointF = _qt_core_attr("QPointF")
-QRadialGradient = _qt_gui_attr("QRadialGradient")
-QRectF = _qt_core_attr("QRectF")
-QFrame = _qt_widgets_attr("QFrame")
-QSize = _qt_core_attr("QSize")
-QSizePolicy = _qt_widgets_attr("QSizePolicy")
-QObject = _qt_core_attr("QObject")
-QTimer = _qt_core_attr("QTimer")
-QVBoxLayout = _qt_widgets_attr("QVBoxLayout")
-QWidget = _qt_widgets_attr("QWidget")
-Qt = _qt_core_attr("Qt")
-QEvent = _qt_core_attr("QEvent")
-
-
-class _BlueSonarScope(QWidget):
-    """Compact green sonar sweep with blip-hit ripple waves."""
-
-    def __init__(self, parent: Any = None) -> None:
-        """Support init behavior.
-        
-        Parameters
-        ----------
-        parent : Any, optional
-            The optional parent value.
-        """
-        
-        super().__init__(parent)
-        self._angle = 0.0
-        self._last_angle = 0.0
-        self._time = 0.0
-        self._state = "running"
-        self._waves: list[dict[str, float]] = []
-        self._blips = [
-            {"angle": 26.0, "distance": 0.52, "brightness": 0.0},
-            {"angle": 124.0, "distance": 0.70, "brightness": 0.0},
-            {"angle": 218.0, "distance": 0.46, "brightness": 0.0},
-            {"angle": 304.0, "distance": 0.78, "brightness": 0.0},
-        ]
-        self.setMinimumSize(104, 104)
-        self.setMaximumSize(118, 118)
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-
-    def set_state(self, state: str) -> None:
-        """Set the state.
-        
-        Parameters
-        ----------
-        state : str
-            The state value.
-        """
-        
-        self._state = str(state or "running")
-        self.update()
-
-    def tick(self, dt: float) -> None:
-        """Support tick behavior.
-        
-        Parameters
-        ----------
-        dt : float
-            The dt value.
-        """
-        
-        self._time += dt
-        self._last_angle = self._angle
-        self._angle = (self._angle + 78.0 * dt) % 360.0
-        if self._state == "running":
-            self._energize_crossed_blips()
-        for blip in self._blips:
-            blip["brightness"] = max(0.0, blip["brightness"] - dt * 1.35)
-        for wave in self._waves:
-            wave["radius"] += dt * 0.72
-            wave["alpha"] -= dt * 1.05
-        self._waves = [wave for wave in self._waves if wave["alpha"] > 0.0]
-        self.update()
-
-    def paintEvent(self, _event: Any) -> None:
-        """Support paint event behavior.
-        
-        Parameters
-        ----------
-        _event : Any
-            The event value.
-        """
-        
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        self._draw_scope(painter)
-        painter.end()
-
-    def _sweep_crossed(self, target_angle: float) -> bool:
-        """Support sweep crossed behavior.
-        
-        Parameters
-        ----------
-        target_angle : float
-            The target angle value.
-        
-        Returns
-        -------
-        bool
-            True if the condition is met; otherwise, False.
-        """
-        
-        prev = self._last_angle
-        curr = self._angle
-        return prev <= target_angle < curr if curr >= prev else target_angle >= prev or target_angle < curr
-
-    def _energize_crossed_blips(self) -> None:
-        """Support energize crossed blips behavior.
-        """
-        
-        for blip in self._blips:
-            if self._sweep_crossed(float(blip["angle"])):
-                blip["brightness"] = 1.0
-                self._waves.append({
-                    "angle": float(blip["angle"]),
-                    "distance": float(blip["distance"]),
-                    "radius": 0.02,
-                    "alpha": 1.0,
-                })
-
-    def _point(self, centre: Any, radius: float, angle_degrees: float, distance: float) -> Any:
-        """Support point behavior.
-        
-        Parameters
-        ----------
-        centre : Any
-            The centre value.
-        radius : float
-            The radius value.
-        angle_degrees : float
-            The angle degrees value.
-        distance : float
-            The distance value.
-        
-        Returns
-        -------
-        Any
-            The any result.
-        """
-        
-        angle = math.radians(angle_degrees - 90)
-        return QPointF(
-            centre.x() + radius * distance * math.cos(angle),
-            centre.y() + radius * distance * math.sin(angle),
-        )
-
-    def _draw_scope(self, painter: Any) -> None:
-        """Support draw scope behavior.
-        
-        Parameters
-        ----------
-        painter : Any
-            The painter value.
-        """
-        
-        width = self.width()
-        height = self.height()
-        centre = QPointF(width / 2.0, height / 2.0)
-        radius = min(width, height) / 2.0 - 5.0
-
-        background = QRadialGradient(centre, radius)
-        background.setColorAt(0.0, QColor("#051209"))
-        background.setColorAt(0.72, QColor("#030A05"))
-        background.setColorAt(1.0, QColor("#020705"))
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(background)
-        painter.drawEllipse(centre, radius, radius)
-
-        grid_pen = QPen(QColor(_GRID_LINE), 0.8)
-        grid_pen.setCosmetic(True)
-        painter.setPen(grid_pen)
-        painter.setBrush(Qt.NoBrush)
-        for fraction in (0.33, 0.66, 1.0):
-            painter.drawEllipse(centre, radius * fraction, radius * fraction)
-        for degrees in range(0, 360, 45):
-            edge = self._point(centre, radius, float(degrees), 1.0)
-            painter.drawLine(centre, edge)
-
-        self._draw_sweep_trail(painter, centre, radius)
-        self._draw_blip_waves(painter, centre, radius)
-        self._draw_blips(painter, centre, radius)
-        self._draw_bezel(painter, centre, radius)
-
-    def _draw_sweep_trail(self, painter: Any, centre: Any, radius: float) -> None:
-        """Support draw sweep trail behavior.
-        
-        Parameters
-        ----------
-        painter : Any
-            The painter value.
-        centre : Any
-            The centre value.
-        radius : float
-            The radius value.
-        """
-        
-        trail_degrees = 115.0
-        steps = 34
-        for index in range(steps):
-            fraction = index / float(steps)
-            angle_degrees = (self._angle - (1.0 - fraction) * trail_degrees) % 360.0
-            color = QColor(_BLUE_MID)
-            color.setAlphaF(0.04 + fraction * 0.22)
-            path = QPainterPath()
-            path.moveTo(centre)
-            path.arcTo(
-                QRectF(centre.x() - radius, centre.y() - radius, radius * 2, radius * 2),
-                90 - angle_degrees,
-                -(trail_degrees / float(steps)),
-            )
-            path.lineTo(centre)
-            painter.setPen(Qt.NoPen)
-            painter.setBrush(color)
-            painter.drawPath(path)
-
-        tip = self._point(centre, radius, self._angle, 1.0)
-        for width, alpha in ((7.0, 0.10), (3.5, 0.28), (1.3, 0.96)):
-            line_color = QColor(_BLUE_BRIGHT)
-            line_color.setAlphaF(alpha)
-            painter.setPen(QPen(line_color, width, Qt.SolidLine, Qt.RoundCap))
-            painter.drawLine(centre, tip)
-
-    def _draw_blip_waves(self, painter: Any, centre: Any, radius: float) -> None:
-        """Support draw blip waves behavior.
-        
-        Parameters
-        ----------
-        painter : Any
-            The painter value.
-        centre : Any
-            The centre value.
-        radius : float
-            The radius value.
-        """
-        
-        painter.setBrush(Qt.NoBrush)
-        for wave in self._waves:
-            point = self._point(centre, radius, wave["angle"], wave["distance"])
-            color = QColor(_BLUE_BRIGHT)
-            color.setAlphaF(max(0.0, min(0.75, wave["alpha"] * 0.70)))
-            painter.setPen(QPen(color, 1.25))
-            wave_radius = radius * wave["radius"]
-            painter.drawEllipse(point, wave_radius, wave_radius)
-
-    def _draw_blips(self, painter: Any, centre: Any, radius: float) -> None:
-        """Support draw blips behavior.
-        
-        Parameters
-        ----------
-        painter : Any
-            The painter value.
-        centre : Any
-            The centre value.
-        radius : float
-            The radius value.
-        """
-        
-        state_color = _ERROR if self._state == "error" else _SUCCESS if self._state == "success" else _BLUE_BRIGHT
-        for blip in self._blips:
-            point = self._point(centre, radius, blip["angle"], blip["distance"])
-            brightness = blip["brightness"]
-            halo = QRadialGradient(point, 14.0)
-            halo_color = QColor(state_color)
-            halo_color.setAlphaF(0.18 + brightness * 0.34)
-            halo.setColorAt(0.0, halo_color)
-            halo_end = QColor(state_color)
-            halo_end.setAlphaF(0.0)
-            halo.setColorAt(1.0, halo_end)
-            painter.setPen(Qt.NoPen)
-            painter.setBrush(halo)
-            painter.drawEllipse(point, 14.0, 14.0)
-
-            dot = QColor(state_color)
-            dot.setAlphaF(0.55 + brightness * 0.45)
-            painter.setBrush(dot)
-            painter.drawEllipse(point, 3.4 + brightness * 1.2, 3.4 + brightness * 1.2)
-
-    def _draw_bezel(self, painter: Any, centre: Any, radius: float) -> None:
-        """Support draw bezel behavior.
-        
-        Parameters
-        ----------
-        painter : Any
-            The painter value.
-        centre : Any
-            The centre value.
-        radius : float
-            The radius value.
-        """
-        
-        painter.setBrush(Qt.NoBrush)
-        painter.setPen(QPen(QColor(_BLUE_BORDER), 1.5))
-        painter.drawEllipse(centre, radius, radius)
-
-
-class _SonarFloatingPanel(QFrame):
-    """Floating lower-right Architecture Review monitor panel."""
-
-    def __init__(self, parent: Any = None) -> None:
-        """Support init behavior.
-        
-        Parameters
-        ----------
-        parent : Any, optional
-            The optional parent value.
-        """
-        
-        super().__init__(parent)
-        self.setObjectName("tab1SonarActivityPanel")
-        self.setFixedSize(_PANEL_WIDTH, _PANEL_HEIGHT)
-        self.setAttribute(Qt.WA_StyledBackground, True)
-
-        shadow = QGraphicsDropShadowEffect(self)
-        shadow.setBlurRadius(30)
-        shadow.setOffset(0, 10)
-        shadow.setColor(QColor(0, 0, 0, 160))
-        self.setGraphicsEffect(shadow)
-
-        root = QHBoxLayout(self)
-        root.setContentsMargins(14, 12, 14, 12)
-        root.setSpacing(12)
-
-        self.scope = _BlueSonarScope(self)
-        root.addWidget(self.scope, 0, Qt.AlignVCenter)
-
-        text_box = QWidget(self)
-        text_layout = QVBoxLayout(text_box)
-        text_layout.setContentsMargins(0, 0, 0, 0)
-        text_layout.setSpacing(3)
-
-        self.title_label = QLabel("Architecture Review", self)
-        self.title_label.setObjectName("tab1SonarTitle")
-        self.status_label = QLabel("Running", self)
-        self.status_label.setObjectName("tab1SonarStatus")
-        self.detail_labels = [QLabel("", self) for _ in range(3)]
-        for label in self.detail_labels:
-            label.setObjectName("tab1SonarDetail")
-            label.setWordWrap(True)
-
-        text_layout.addWidget(self.title_label)
-        text_layout.addWidget(self.status_label)
-        for label in self.detail_labels:
-            text_layout.addWidget(label)
-        text_layout.addStretch(1)
-        root.addWidget(text_box, 1)
-
-        self._apply_style("running")
-        self.hide()
-
-    def set_content(self, title: str, status: str, details: tuple[str, str, str], state: str) -> None:
-        """Set the content.
-        
-        Parameters
-        ----------
-        title : str
-            The title value.
-        status : str
-            The status value.
-        details : tuple[str, str, str]
-            The details value.
-        state : str
-            The state value.
-        """
-        
-        self.title_label.setText(str(title or "Architecture Review"))
-        self.status_label.setText(str(status or "Running"))
-        for index, label in enumerate(self.detail_labels):
-            label.setText(str(details[index] if index < len(details) else ""))
-        self.scope.set_state(state)
-        self._apply_style(state)
-
-    def _apply_style(self, state: str) -> None:
-        """Support apply style behavior.
-        
-        Parameters
-        ----------
-        state : str
-            The state value.
-        """
-        
-        accent = _BLUE_BORDER
-        if state == "success":
-            accent = _SUCCESS
-        elif state == "error":
-            accent = _ERROR
-        elif state == "warning":
-            accent = _WARNING
-        self.setStyleSheet(
-            "QFrame#tab1SonarActivityPanel {"
-            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
-            "stop:0 " + _BLUE_BG_2 + ", stop:1 " + _BLUE_BG + ");"
-            "border: 1px solid " + accent + ";"
-            "border-radius: 16px;"
-            "}"
-            "QLabel#tab1SonarTitle {"
-            "color: " + _BLUE_TEXT + ";"
-            "font-family: Segoe UI;"
-            "font-size: 11pt;"
-            "font-weight: 700;"
-            "}"
-            "QLabel#tab1SonarStatus {"
-            "color: " + accent + ";"
-            "font-family: Segoe UI;"
-            "font-size: 9pt;"
-            "font-weight: 700;"
-            "padding-bottom: 4px;"
-            "}"
-            "QLabel#tab1SonarDetail {"
-            "color: " + _BLUE_MUTED + ";"
-            "font-family: Segoe UI;"
-            "font-size: 8.5pt;"
-            "}"
-        )
-
-
 class Tab1ActivityIndicator(QObject):
     """Floating green sonar monitor shown while Tab 1 work runs."""
 
     def __init__(self, window: Any) -> None:
-        """Support init behavior.
-        
-        Parameters
-        ----------
-        window : Any
-            The window value.
-        """
-        
+        """Create the controller, panel, and event-filter lifecycle."""
         super().__init__(window)
         self._window = window
         self._host = self._resolve_host_widget(window)
         self._panel = _SonarFloatingPanel(self._host)
-        self._timer = QTimer(self._panel)
-        self._timer.setInterval(25)
-        self._timer.timeout.connect(self._tick)
-        self._hide_timer = QTimer(self._panel)
-        self._hide_timer.setSingleShot(True)
-        self._hide_timer.timeout.connect(self.set_idle)
+        self._animation_timer_id: int | None = None
+        self._hide_timer_id: int | None = None
         self._last_state = "idle"
         self._install_event_filters()
         self.set_idle()
@@ -574,50 +108,38 @@ class Tab1ActivityIndicator(QObject):
         )
 
     def set_idle(self) -> None:
-        """Hide the floating panel and stop animation."""
+        """Hide the floating panel and stop both timer lifecycles."""
         self._last_state = "idle"
-        if self._timer.isActive():
-            self._timer.stop()
-        if self._hide_timer.isActive():
-            self._hide_timer.stop()
+        self._stop_animation_timer()
+        self._cancel_hide_timer()
         self._panel.hide()
 
     def eventFilter(self, watched: Any, event: Any) -> bool:
-        """Support event filter behavior.
-        
-        Parameters
-        ----------
-        watched : Any
-            The watched value.
-        event : Any
-            The event object.
-        
-        Returns
-        -------
-        bool
-            True if the condition is met; otherwise, False.
-        """
-        
+        """Reposition when the host or window is resized or shown."""
+        del watched
         event_type = event.type() if event is not None else None
         if event_type in (QEvent.Resize, QEvent.Show):
             self._reposition()
         return False
 
+    def timerEvent(self, event: Any) -> None:
+        """Advance animation or complete the delayed-hide timer event."""
+        timer_id = event.timerId()
+        if self._animation_timer_id == timer_id:
+            self._tick()
+            return
+        if self._hide_timer_id == timer_id:
+            self._cancel_hide_timer()
+            self.set_idle()
+            return
+        super().timerEvent(event)
+
     def _resolve_host_widget(self, window: Any) -> Any:
-        """Support resolve host widget behavior.
-        
-        Parameters
-        ----------
-        window : Any
-            The window value.
-        
-        Returns
-        -------
-        Any
-            The any result.
-        """
-        
-        central_widget = getattr(window, "centralWidget", None)
+        """Return the central widget when the window exposes one."""
+        try:
+            central_widget = window.centralWidget
+        except AttributeError:
+            return window
         if callable(central_widget):
             host = central_widget()
             if host is not None:
@@ -625,74 +147,85 @@ class Tab1ActivityIndicator(QObject):
         return window
 
     def _install_event_filters(self) -> None:
-        """Support install event filters behavior.
-        """
-        
+        """Install this QObject as a filter on the host and window."""
         for widget in (self._host, self._window):
-            install = getattr(widget, "installEventFilter", None)
+            try:
+                install = widget.installEventFilter
+            except AttributeError:
+                continue
             if callable(install):
                 install(self)
 
-    def _start(self, title: str, status: str, details: tuple[str, str, str]) -> None:
-        """Support start behavior.
-        
-        Parameters
-        ----------
-        title : str
-            The title value.
-        status : str
-            The status value.
-        details : tuple[str, str, str]
-            The details value.
-        """
-        
+    def _start(
+        self,
+        title: str,
+        status: str,
+        details: tuple[str, str, str],
+    ) -> None:
+        """Enter running state and ensure animation timer ownership."""
         self._last_state = "running"
-        if self._hide_timer.isActive():
-            self._hide_timer.stop()
+        self._cancel_hide_timer()
         self._panel.set_content(title, status, details, "running")
         self._reposition()
         self._panel.show()
         self._panel.raise_()
-        if not self._timer.isActive():
-            self._timer.start()
+        self._start_animation_timer()
 
-    def _stop(self, status: str, details: tuple[str, str, str], state: str) -> None:
-        """Support stop behavior.
-        
-        Parameters
-        ----------
-        status : str
-            The status value.
-        details : tuple[str, str, str]
-            The details value.
-        state : str
-            The state value.
-        """
-        
+    def _stop(
+        self,
+        status: str,
+        details: tuple[str, str, str],
+        state: str,
+    ) -> None:
+        """Show one terminal state and schedule delayed hiding."""
         self._last_state = state
-        if self._timer.isActive():
-            self._timer.stop()
+        self._stop_animation_timer()
         self._panel.set_content("Architecture Review", status, details, state)
         self._reposition()
         self._panel.show()
         self._panel.raise_()
-        self._hide_timer.start(_HIDE_AFTER_FINISH_MS)
+        self._cancel_hide_timer()
+        self._hide_timer_id = self.startTimer(_HIDE_AFTER_FINISH_MS)
+
+    def _start_animation_timer(self) -> None:
+        """Start the repeating animation timer when not already active."""
+        if self._animation_timer_id is None:
+            self._animation_timer_id = self.startTimer(_ANIMATION_INTERVAL_MS)
+
+    def _stop_animation_timer(self) -> None:
+        """Stop the repeating animation timer when active."""
+        if self._animation_timer_id is None:
+            return
+        timer_id = self._animation_timer_id
+        self._animation_timer_id = None
+        self.killTimer(timer_id)
+
+    def _cancel_hide_timer(self) -> None:
+        """Stop the delayed-hide timer when active."""
+        if self._hide_timer_id is None:
+            return
+        timer_id = self._hide_timer_id
+        self._hide_timer_id = None
+        self.killTimer(timer_id)
 
     def _tick(self) -> None:
-        """Support tick behavior.
-        """
-        
+        """Advance the sonar scope by one 25 ms animation step."""
         self._panel.scope.tick(0.025)
 
     def _reposition(self) -> None:
-        """Support reposition behavior.
-        """
-        
+        """Move the panel to the lower-right corner of its host."""
         host = self._host
         if host is None:
             return
-        width = int(getattr(host, "width")()) if hasattr(host, "width") else 0
-        height = int(getattr(host, "height")()) if hasattr(host, "height") else 0
+        try:
+            width_getter = host.width
+            height_getter = host.height
+        except AttributeError:
+            return
+        if not callable(width_getter) or not callable(height_getter):
+            return
+        width = int(width_getter())
+        height = int(height_getter())
         if width <= 0 or height <= 0:
             return
         size = QSize(_PANEL_WIDTH, _PANEL_HEIGHT)
@@ -701,8 +234,12 @@ class Tab1ActivityIndicator(QObject):
         self._panel.move(x, y)
 
 
-def install_tab1_activity_indicator(window: Any, buttons_layout: Any) -> Tab1ActivityIndicator:
+def install_tab1_activity_indicator(
+    window: Any,
+    buttons_layout: Any,
+) -> Tab1ActivityIndicator:
     """Install and return the Tab 1 floating green sonar activity monitor."""
+    del buttons_layout
     indicator = Tab1ActivityIndicator(window)
     window._tab1_activity_indicator = indicator
     return indicator

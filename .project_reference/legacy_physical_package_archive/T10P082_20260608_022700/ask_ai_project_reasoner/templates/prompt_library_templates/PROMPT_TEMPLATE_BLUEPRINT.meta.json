@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "prompt_template_blueprint",
+  "display_name": "Prompt Template Blueprint",
+  "filename": "PROMPT_TEMPLATE_BLUEPRINT.md",
+  "version": "1.0.0",
+  "status": "template",
+  "category": "prompt_engineering",
+  "subcategory": "template_foundation",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "protected": false,
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": true,
+  "default_output_folder": "<PROJECT_ROOT>\\_project_reference\\templates\\prompt_library_templates",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<PRODUCT_PACKAGE>",
+    "<TASK_DESCRIPTION>",
+    "<TASK_SLUG>",
+    "<GOVERNANCE_FOLDER>",
+    "<VALIDATION_COMMANDS>",
+    "<OUTPUT_FOLDER>",
+    "<SOURCE_FILES>",
+    "<LOG_FILES>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "explainer": "Reusable blueprint used to create structured, project-agnostic prompts for the Tab 9 prompt library.",
+  "how_it_works": "The blueprint forces every prompt to declare identity, purpose, project-agnostic variables, triggers, inputs, outputs, file effects, safety boundaries, validation requirements, user-facing help metadata, prompt body, examples, and change log.",
+  "files_created": [
+    {
+      "path": "<PROJECT_ROOT>\\_project_reference\\templates\\prompt_library_templates\\<NEW_PROMPT>.md",
+      "purpose": "New reusable prompt text created from this blueprint."
+    },
+    {
+      "path": "<PROJECT_ROOT>\\_project_reference\\templates\\prompt_library_templates\\<NEW_PROMPT>.meta.json",
+      "purpose": "Metadata sidecar that describes the new prompt."
+    }
+  ],
+  "risks": [
+    "A project-specific prompt may accidentally be stored as reusable.",
+    "A prompt may imply code or governance changes even though Tab 9 is text-only."
+  ],
+  "mitigations": [
+    "Require project-specific details to be expressed through placeholders or clearly labeled examples.",
+    "Require safety boundaries that forbid source-code, runtime, and governance edits unless a separate implementation workflow is explicitly invoked."
+  ],
+  "safe_usage": "Use this blueprint to create prompt-library text artifacts. Do not use it to patch code, run tools, or update active governance.",
+  "validation_requirements": [
+    "must_have_required_sections",
+    "must_use_project_placeholders",
+    "must_have_metadata_sidecar",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "example_usage": "Create a new project-agnostic prompt by replacing adaptation variables and filling each required section.",
+  "last_validated": null,
+  "last_validated_by": null,
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-05-31",
+      "summary": "Initial text-only Tab 9 prompt-template blueprint metadata."
+    }
+  ]
+}

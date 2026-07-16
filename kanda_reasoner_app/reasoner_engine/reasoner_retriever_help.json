@@ -10,9 +10,9 @@
   "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
   "exports": [],
   "summary": {
-    "total_helpers": 19,
+    "total_helpers": 30,
     "public_helpers": 19,
-    "internal_helpers": 0,
+    "internal_helpers": 11,
     "entry_exports": [
       "ProjectRetriever",
       "norm_text",
@@ -39,6 +39,9 @@
     ],
     "exported_symbols": [
       "CandidateFileContext",
+      "ProjectRetrieverCoreMixin",
+      "ProjectRetrieverIntentSectionMixin",
+      "ProjectRetrieverSnippetEvidenceMixin",
       "RetrievalQueryContext",
       "apply_advanced_and_runtime_scoring",
       "apply_exact_and_call_scoring",
@@ -56,8 +59,14 @@
       "collect_symbols",
       "detect_query_intents",
       "extract_live_identifier_terms",
+      "extract_question_excluded_file_names",
+      "extract_question_excluded_path_fragments",
+      "extract_question_file_names",
+      "extract_question_symbol_names",
       "extract_runtime_anchors_from_detail",
+      "extract_strict_requested_file_paths",
       "file_name_from_path",
+      "filter_bundle_to_requested_files",
       "find_anchor_line_in_file",
       "find_live_source_candidates",
       "get_profile_alias_terms",
@@ -82,11 +91,14 @@
       "is_which_method_calls_question",
       "last_part_match_in_query",
       "merge_retrieval_bundles",
+      "missing_requested_files",
       "module_name_for_file",
       "norm_text",
-      "ProjectRetrieverCoreMixin",
-      "ProjectRetrieverIntentSectionMixin",
-      "ProjectRetrieverSnippetEvidenceMixin",
+      "path_is_project_qa_run_analysis_distractor",
+      "path_matches_project_qa_run_analysis_trace_file",
+      "path_matches_requested_file",
+      "path_matches_strict_requested_path",
+      "project_qa_run_analysis_trace_requested",
       "question_has_profile_alias",
       "read_snippet",
       "reindex_file_evidence",
@@ -104,6 +116,7 @@
       "score_runtime_signal_matches",
       "score_symbol_snippet_candidate",
       "snippet_radius_for_symbol",
+      "strict_evidence_requested",
       "text_has_profile_alias",
       "tokenize_query"
     ],
@@ -171,8 +184,8 @@
       "consumed_by": []
     },
     "query_intents.py": {
-      "purpose": "Support V10 project reasoning and evidence handling.",
-      "reason": "Helper module owned by this helper folder.",
+      "purpose": "Public facade and aggregate detector for retrieval-intent classification.",
+      "reason": "Preserves all established consumer imports while delegating a cohesive private predicate group.",
       "stability": "stable",
       "exports": [
         "is_startup_question",
@@ -192,7 +205,10 @@
         "is_documentation_intent_question",
         "detect_query_intents"
       ],
-      "depends_on": [],
+      "depends_on": [
+        "_query_intent_location_and_explanation.py",
+        "query_text.py"
+      ],
       "consumed_by": []
     },
     "query_text.py": {
@@ -254,8 +270,8 @@
       "reason": "Helper module owned by this helper folder.",
       "stability": "stable",
       "exports": [
-        "retrieve_symbols",
-        "build_symbol_evidence"
+        "build_symbol_evidence",
+        "retrieve_symbols"
       ],
       "depends_on": [],
       "consumed_by": []
@@ -353,6 +369,110 @@
       ],
       "depends_on": [],
       "consumed_by": []
+    },
+    "_query_intent_location_and_explanation.py": {
+      "purpose": "Private implementation owner for location, explanation, and topomap intent predicates.",
+      "reason": "Extracted from query_intents.py to preserve public function ownership and satisfy the source-module line law.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": [
+        "query_intents.py"
+      ]
+    },
+    "exact_code_anchors.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "extract_question_file_names",
+        "extract_question_excluded_file_names",
+        "extract_question_excluded_path_fragments",
+        "extract_strict_requested_file_paths",
+        "path_matches_strict_requested_path",
+        "extract_question_symbol_names",
+        "path_matches_requested_file",
+        "strict_evidence_requested",
+        "missing_requested_files",
+        "filter_bundle_to_requested_files",
+        "project_qa_run_analysis_trace_requested",
+        "path_matches_project_qa_run_analysis_trace_file",
+        "path_is_project_qa_run_analysis_distractor"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_core.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_evidence.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "file_retrieval_validate_manifests.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "retriever_consensus_private_impl.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "retriever_routing_private_impl.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "snippet_retrieval_validate_manifests.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "symbol_retrieval_evidence_private_impl.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "symbol_retrieval_retrieve_private_impl.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "symbol_retrieval_support_private_impl.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "internal",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
     }
   },
   "dependency_graph": {
@@ -361,7 +481,10 @@
     "file_retrieval.py": {},
     "live_source_fallback.py": {},
     "profile_support.py": {},
-    "query_intents.py": {},
+    "query_intents.py": {
+      "_query_intent_location_and_explanation.py": {},
+      "query_text.py": {}
+    },
     "query_text.py": {},
     "retriever_core_mixin.py": {},
     "retriever_intent_section_mixin.py": {},
@@ -369,7 +492,23 @@
     "section_retrieval.py": {},
     "snippet_expansion.py": {},
     "snippet_retrieval.py": {},
-    "symbol_retrieval.py": {}
+    "symbol_retrieval.py": {},
+    "_query_intent_location_and_explanation.py": {},
+    "exact_code_anchors.py": {},
+    "file_retrieval_context.py": {},
+    "file_retrieval_core.py": {},
+    "file_retrieval_evidence.py": {},
+    "file_retrieval_scoring_exact.py": {},
+    "file_retrieval_scoring_explain.py": {},
+    "file_retrieval_scoring_runtime.py": {},
+    "file_retrieval_scoring_semantic.py": {},
+    "file_retrieval_validate_manifests.py": {},
+    "retriever_consensus_private_impl.py": {},
+    "retriever_routing_private_impl.py": {},
+    "snippet_retrieval_validate_manifests.py": {},
+    "symbol_retrieval_evidence_private_impl.py": {},
+    "symbol_retrieval_retrieve_private_impl.py": {},
+    "symbol_retrieval_support_private_impl.py": {}
   },
   "domain_overlay": "GENERIC",
   "domain_specific": {}

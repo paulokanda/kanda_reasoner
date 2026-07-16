@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "teach_ai_create_or_update_prompt_request",
+  "display_name": "Teach AI Create Or Update Prompt Request",
+  "version": "1.4.0",
+  "status": "active",
+  "category": "prompt_library_teaching",
+  "subcategory": "copyable_request",
+  "load_type": "on_request",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "kanda_reasoner_app\\prompt_library\\teaching",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "depends_on": [
+    "teach_ai_tab9_prompt_authoring_guide",
+    "kanda_bundle_gated_development_workflow",
+    "python_clean_code_overlay",
+    "kanda_prompt_router"
+  ],
+  "required_before": [],
+  "explainer": "Copyable request prompt for asking an AI to create or update a Tab 9 prompt-library asset safely.",
+  "how_it_works": "The request tells the AI the target scope, forbidden actions, placement rules, metadata needs, and validation expectations.",
+  "files_created": [],
+  "risks": [
+    "The AI may treat prompt-library work as source-code work."
+  ],
+  "mitigations": [
+    "The request explicitly prohibits code changes unless a GUI/code gate is requested."
+  ],
+  "safe_usage": "Paste this request into a chat when asking for a new Tab 9 prompt or prompt update.",
+  "validation_requirements": [
+    "json_parse",
+    "utf8_no_bom",
+    "ascii",
+    "no_hardcoded_absolute_paths"
+  ],
+  "example_usage": "Replace <DESCRIBE_THE_PROMPT_TO_CREATE_OR_UPDATE> with the desired prompt task.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial copyable Tab 9 prompt authoring request."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added lean pre-flight and bundle-gated lifecycle handoff without duplicating the full guide."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-06-02",
+      "summary": "Added lean preflight awareness of Python Clean Code overlay."
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-06-02",
+      "summary": "Added lean routing preflight for created or updated prompts."
+    },
+    {
+      "version": "1.4.0",
+      "date": "2026-06-07",
+      "summary": "Added complete prompt-library lifecycle checklist, lowercase workbench\\bundle_manifest, and strict text-only boundaries."
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
-  "aligned_with": "large_module_refactor_protocol_v7.2",
+  "aligned_with": "large_module_refactor_protocol_v7.4",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
   "owner_group": "06_refactor_and_architecture_hardening",
   "prompt_id": "large_module_refactor_template",
   "schema_version": "1.0",
   "status": "active",
   "title": "Large Module Refactor Template",
-  "updated_for": "large-module-refactor-practical-granularity-v7-2",
-  "version": "7.2"
+  "updated_for": "large-file-refactor-workbench-final-canon-v7-4",
+  "version": "3.3.0"
 }

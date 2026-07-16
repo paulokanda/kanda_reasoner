@@ -38,7 +38,6 @@ class WorkflowManifestCanonicalImportProbeTests(unittest.TestCase):
 
         self.assertIn("reasoner_tools_gui", modules)
         self.assertIn("_inject_missing_module_docstrings", modules)
-        self.assertIn("profiling", modules)
 
     def test_import_probe_has_no_duplicate_modules(self) -> None:
         modules = self._include_modules()

@@ -33,6 +33,7 @@ _ROOT_COMMANDS = {
     "shadow-plan",
     "facade-fix-plan",
     "push-plan",
+    "ruff-quality",
 }
 
 

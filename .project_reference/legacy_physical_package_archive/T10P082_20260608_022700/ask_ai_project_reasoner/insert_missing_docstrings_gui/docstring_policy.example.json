@@ -1,0 +1,27 @@
+{
+  "style": "numpy",
+  "module_summary_max_sentences": 2,
+  "max_source_lines_in_prompt": 80,
+  "max_import_lines_in_prompt": 10,
+  "max_sibling_docstrings_in_prompt": 3,
+  "include_attributes_for_classes": true,
+  "include_raises_section": true,
+  "include_private_by_default": true,
+  "require_module_docstrings": true,
+  "require_init_module_docstrings": false,
+  "prefer_todo_for_unknowns": true,
+  "class_requires_attributes_when_detected": true,
+  "notes_enabled": false,
+  "required_sections_by_kind": {
+    "module": [],
+    "class": [],
+    "function": [
+      "Parameters",
+      "Returns"
+    ],
+    "method": [
+      "Parameters",
+      "Returns"
+    ]
+  }
+}

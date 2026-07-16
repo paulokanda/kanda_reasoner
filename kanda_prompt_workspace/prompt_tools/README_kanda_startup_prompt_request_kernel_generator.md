@@ -25,6 +25,11 @@ Inside `first_prompts_to_ai.zip`:
 06_session_start_upload_checklist.md
 07_daily_patch_delivery_guardrails.md
 08_handoff_at_end_of_work.md
+09_patch_install_delivery_error_register.md
+10_prompt_router_reasoner_startup_check.md
+11_chatgpt_kanda_routing_choice_output_protocol.md
+12_error_memory_ai_formulary_startup_canon.md
+13_durable_document_artifact_routing_canon.md
 README_STARTUP_PROMPT_REQUEST_KERNEL.md
 STARTUP_PROMPT_REQUEST_KERNEL_MANIFEST.json
 ```
@@ -57,7 +62,7 @@ The handoff must preserve completed work, validation evidence, freeze state, cur
 2. Open `first_prompt_files/tell_AI_read_before_all.md`.
 3. Paste its command into the AI chat.
 4. Wait for `STARTUP PACK LOAD CHECK`.
-5. Confirm `00`, `01` to `08`, `README`, and `MANIFEST` are all loaded.
+5. Confirm `00`, `01` to `13`, `README`, and `MANIFEST` are all loaded.
 6. Only then send the real task.
 
 ## Startup delivery maintenance workflow
@@ -86,8 +91,13 @@ The boot command in `tell_AI_read_before_all.md` must require the receiving AI t
 6. 06_session_start_upload_checklist.md
 7. 07_daily_patch_delivery_guardrails.md
 8. 08_handoff_at_end_of_work.md
-9. README_STARTUP_PROMPT_REQUEST_KERNEL.md
-10. STARTUP_PROMPT_REQUEST_KERNEL_MANIFEST.json
+9. 09_patch_install_delivery_error_register.md
+10. 10_prompt_router_reasoner_startup_check.md
+11. 11_chatgpt_kanda_routing_choice_output_protocol.md
+12. 12_error_memory_ai_formulary_startup_canon.md
+13. 13_durable_document_artifact_routing_canon.md
+14. README_STARTUP_PROMPT_REQUEST_KERNEL.md
+15. STARTUP_PROMPT_REQUEST_KERNEL_MANIFEST.json
 ```
 
 ## Preserved architecture
@@ -98,6 +108,7 @@ The boot command in `tell_AI_read_before_all.md` must require the receiving AI t
 - `first_prompt_files/` remains human delivery output.
 - `07_daily_patch_delivery_guardrails.md` is a generated startup copy of the canonical daily delivery guardrail.
 - `08_handoff_at_end_of_work.md` is a generated startup copy of the canonical end-of-work handoff guardrail.
+- `13_durable_document_artifact_routing_canon.md` is a generated startup copy of the durable documentation and validation-evidence routing canon.
 - Generated delivery files are not canonical source.
 
 ## Obsolete delivery names

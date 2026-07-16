@@ -13,6 +13,34 @@ This file is loaded at every startup so the AI remembers the safe delivery rules
 
 The full patch workflow still belongs to the Patch Delivery and Validation prompt group. This file is a short daily guardrail that prevents repeated delivery mistakes.
 
+## Transient garbage non-ownership rule
+
+`<drive>:\<project_name>_delete_after_daily_work\` is a garbage/staging path only. Its name may be derived from the selected project for deterministic routing and collision avoidance, but the folder is not part of the Tool box, the Active Project box, or project support. Anything placed there must be disposable or regenerable. Durable evidence and source truth must be written to their canonical owners before transient cleanup.
+
+
+## Durable documentary artifact routing
+
+The canonical owner prompt is `durable_document_artifact_routing_canon.md`.
+
+Generated project-specific `.txt`, `.md`, and similar documentary artifacts that
+must survive the day must be written or copied under:
+
+```text
+<project_drive>\<project_name>_show_project_to_AI\
+```
+
+Validation evidence must not remain only in `_delete_after_daily_work`. After a
+successful validation, persist a durable copy under:
+
+```text
+<project_drive>\<project_name>_show_project_to_AI\project_validation_evidence\<feature_id>\
+```
+
+A legacy validator may keep an operational evidence copy in daily-work for
+compatibility, but the final delivery must also identify the durable evidence
+path. Existing specialized Project Support owners take precedence over the
+general `project_documentation` folder.
+
 ## Daily guardrail
 
 When creating or delivering any install ZIP, patch bundle, installer, validator, or delivery README:

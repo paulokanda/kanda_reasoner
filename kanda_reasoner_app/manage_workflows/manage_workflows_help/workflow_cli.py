@@ -33,8 +33,9 @@ from .workflow_constants import (
 )
 from .workflow_generation import (
     collect_generated_outputs,
-    generate_manifest,
     load_manifest_or_default,
+    prepare_effective_manifest,
+    preservation_violations,
 )
 from .workflow_history import (
     clear_history,
@@ -48,6 +49,7 @@ from .workflow_import_checks import (
 from .workflow_io import (
     diff_text,
     normalize_generated_output_for_diff,
+    read_text,
     write_text_if_changed,
 )
 from .workflow_models import (
@@ -275,7 +277,15 @@ def _run(root: Path, mode: str) -> int:
         return 1 if summary.get("fail", 0) else 0
 
     discovered = scan_project(root)
-    manifest = generate_manifest(root, discovered)
+    try:
+        manifest, _ = prepare_effective_manifest(
+            root,
+            discovered,
+            fail_on_invalid_existing=True,
+        )
+    except ValueError as exc:
+        print(f"Workflow manifest error: {exc}", file=sys.stderr)
+        return 1
     outputs = collect_generated_outputs(root, manifest)
 
     if mode == "scan":
@@ -303,6 +313,13 @@ def _run(root: Path, mode: str) -> int:
         if any(r.status == "fail" for r in preflight):
             print_results([r for r in preflight if r.status == "fail"])
             print("\nRefusing to write because validation has failures.")
+            return 1
+
+        violations = preservation_violations(root, manifest)
+        if violations:
+            print("Refusing to write because curated configuration changed:")
+            for violation in violations:
+                print(f"- {violation}")
             return 1
 
         changed = 0
@@ -376,7 +393,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
 
     mode_group = parser.add_mutually_exclusive_group()
-    mode_group.add_argument("--scan", action="store_true", help="Print the generated workflow manifest template.")
+    mode_group.add_argument("--scan", action="store_true", help="Print the effective curated workflow manifest.")
     mode_group.add_argument("--validate", action="store_true", help="Execute configured workflows.")
     mode_group.add_argument("--diff", action="store_true", help="Show diffs for generated outputs.")
     mode_group.add_argument("--write", action="store_true", help="Write workflow_manifest.json and WORKFLOWS.md.")

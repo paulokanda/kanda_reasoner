@@ -34,6 +34,7 @@ class ToolSpec:
     help_catalog: str | None = None
     tab_id: str | None = None
     tab_kind: str = "lazy_tool"
+    visible_in_shell: bool = True
 
 
 TOOLS: tuple[ToolSpec, ...] = (
@@ -101,6 +102,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         source_hint=_source_path("daily_rfctr_report", "daily_refactor_report.py"),
         help_catalog="refactor_report.json",
         tab_id="refactor_report",
+        visible_in_shell=False,
     ),
     ToolSpec(
         step_title="Project Q&A",

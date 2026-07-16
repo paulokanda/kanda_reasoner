@@ -1,0 +1,42 @@
+{
+  "helper_folder": "kanda_reasoner_app/json_splitter/json_splitter_split_reassemble_validation_help",
+  "helper_modules": {
+    "core.py": {
+      "moved_symbols": [
+        "CHUNK_SCHEMA",
+        "ROUTE_MANIFEST_SCHEMA",
+        "stable_hash",
+        "_load_json",
+        "_safe_text",
+        "_safe_int",
+        "_get_entries",
+        "_sort_key_for_entry",
+        "_rebuild_container",
+        "_set_nested_value",
+        "_get_nested_value",
+        "_resolve_source_file",
+        "_expected_chunk_from_source",
+        "_expected_coverage_keys",
+        "_sorted_key_sample",
+        "_validate_partitions_against_source",
+        "_find_single_manifest",
+        "_chunk_value_from_doc",
+        "_validate_route_manifest",
+        "_reassemble_from_manifest"
+      ],
+      "public_exports": [
+        "CHUNK_SCHEMA",
+        "stable_hash"
+      ]
+    }
+  },
+  "origin": "kanda_reasoner_app/json_splitter/json_splitter_split_reassemble_validation.py",
+  "pattern": "single_core_helper_recovery",
+  "root_public_api": [
+    "CHUNK_SCHEMA",
+    "stable_hash",
+    "validate_split_reassemble_output",
+    "main"
+  ]
+}
+

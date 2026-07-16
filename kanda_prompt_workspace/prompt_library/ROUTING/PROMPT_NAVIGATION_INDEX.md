@@ -200,6 +200,19 @@ This file maps natural human requests to the correct clean prompt ID and compani
 
 ## Governance Freeze And Handoff (`03_governance_freeze_and_handoff`)
 
+### `brick_wall_comprehensive_quality_gate` - Brick Wall - Comprehensive Quality Gate
+
+- **Prompt code:** `KPR-03-001`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md`
+- **Priority:** `40`
+- **Trigger phrases:** `brick wall`; `show brick wall`; `brick wall check`; `update brick wall`; `where are we on brick wall`; `run the quality wall`
+- **User intent examples:** `Brick wall.`; `Show Brick Wall and tell me where this implementation stands.`; `Update the Brick Wall checklist after validation.`
+- **Aliases:** `KPR-03-001`; `brick wall`; `brick wall quality gate`; `brick_wall_comprehensive_quality_gate`; `brick_wall_comprehensive_quality_gate.md`; `comprehensive quality gate`; `Q01-Q40 checklist`
+- **When to load:** Whenever the user says Brick Wall or requests the live Q01-Q40 governed implementation status for KANDA Reasoner work.
+- **When not to load:** Do not load for unrelated tasks and do not use it as a substitute for exact source or specialist owner prompts.
+- **Required companion prompts:** `project_tool_boundary_canon`; `box_architecture_canon`; `kanda_box_shielding_canon`
+- **Recommended companion prompts:** `architecture_review_project_card_machine_canon`; `bundle_gated_development_workflow`; `pre_output_contract_gates`; `freeze_code_intake_and_form_protocol`
+
 ### `active_governance_freeze_update` — Active Governance Freeze Update
 
 - **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/active_governance_freeze_update.md`
@@ -267,6 +280,17 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`
 
 ## Box Architecture And Boundaries (`04_box_architecture_and_boundaries`)
+
+### `boundary_first_repair_protocol` - Boundary-First Repair Protocol
+
+- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md`
+- **Priority:** `3`
+- **Trigger phrases:** `symptom owner divergence`; `repair at ownership boundary`; `boundary first repair`; `symptom in one box defect in another`; `shared host state leak`; `cross box regression after unrelated change`; `handoff contamination`; `repair the leak not the symptom`; `trace state owner before patching`; `downstream symptom upstream defect`
+- **User intent examples:** `The regression appears in Workbench after a Planner change; trace the real owner before patching.`; `Repair the ownership leak at its boundary and validate the downstream box shield.`; `A shared host may be carrying feature-private state across boxes; find the first proven violation.`
+- **Aliases:** `boundary first repair`; `boundary-first repair protocol`; `boundary_first_repair_protocol`; `boundary_first_repair_protocol.md`; `repair at owner boundary`; `symptom owner divergence`; `repair leak not symptom`
+- **When to load:** When symptom location may differ from defect ownership, especially across boxes, shared hosts, handoffs, persistence, roots, public contracts, or async lifecycles.
+- **When not to load:** Do not load for explanation-only tasks, proven purely local defects, or new box/shield design with no regression diagnosis.
+- **Required companion prompts:** `box_architecture_canon`; `kanda_box_shielding_canon`
 
 ### `box_architecture_canon` — Box Architecture Canon
 
@@ -426,14 +450,14 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** Do not load as the main protocol when actual hardening work is underway.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
 
-### `large_module_refactor_protocol` — Large Module Refactor Protocol v7.2
+### `large_module_refactor_protocol` — Large Module Refactor Protocol v8.0
 
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md`
 - **Priority:** `30`
 - **Trigger phrases:** `module too big`; `file too large`; `split module`; `refactor large file`; `reduce module size`; `double refactor train`; `sequential refactor train`
 - **User intent examples:** `This file is too big; split it safely without breaking API.`
 - **Aliases:** `architecture`; `hardening`; `large`; `large module refactor protocol`; `large_module_refactor_protocol`; `large_module_refactor_protocol.md`; `module`; `refactor`
-- **When to load:** When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v7.2 routing or a sequential double-refactor delivery train, practical helper granularity, and normal .py source-file ownership.
+- **When to load:** When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v8.0 routing or a sequential double-refactor delivery train, practical helper granularity, and normal .py source-file ownership.
 - **When not to load:** Do not load for small local edits.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
 
@@ -872,12 +896,13 @@ This file maps natural human requests to the correct clean prompt ID and compani
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md`
 - **Prompt code:** `KPR-12-001`
-- **Priority:** `35`
-- **Trigger phrases:** `project versus tool`; `project vs tool`; `tool identity`; `active project identity`; `project in use`; `selected project root`; `active project root`; `target project`; `my_project`; `PROJECT_ROOT`; `do not hardcode kanda_reasoner`; `freeze paths active project`; `handoff path active project`; `patch staging active project`
+- **Priority:** `5`
+- **Load type:** `always_startup`
+- **Trigger phrases:** `project versus tool`; `project vs tool`; `tool identity`; `active project identity`; `project in use`; `selected project root`; `active project root`; `target project`; `my_project`; `PROJECT_ROOT`; `do not hardcode kanda_reasoner`; `freeze paths active project`; `handoff path active project`; `patch staging active project`; `forbidden nested support root`; `support root inside project source`; `E:/kanda_reasoner/kanda_reasoner_show_project_to_AI`; `canonical external sibling support root`
 - **User intent examples:** `Keep KANDA Reasoner separate from the active project in every coding task.`; `Make sure freeze paths use the project in use, not always kanda_reasoner.`; `Canonize the distinction between the tool and <my_project>.`
 - **Aliases:** `project tool boundary`; `project_tool_boundary_canon`; `tool target boundary`; `active project boundary`; `selected project boundary`
-- **When to load:** When coding, patching, validating, freezing, staging, handoff generation, or routing could confuse KANDA Reasoner as the tool with the selected active project as the target.
-- **When not to load:** Do not load for simple explanation-only tasks or non-code drafting when no project-root, freeze, patch, handoff, or routing consequence exists.
+- **When to load:** Always at startup. Apply to every coding, patching, validation, freeze, staging, handoff, Workbench, source-inspection, or project-root task.
+- **When not to load:** The canon remains loaded as a boundary invariant; simple non-project writing tasks normally require no additional action from it.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`
 
 ### `data_transform_pipeline_invariants` — Data Transform Pipeline Invariants
@@ -945,3 +970,32 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When to load:** When an entity has stable identity plus selectable transforms/views/states.
 - **When not to load:** Do not load for simple one-state data models.
 - **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_START -->
+
+## Governed Architecture Companion - KPR-04-007
+
+Prompt ID: `governed_architecture_companion_handoff`
+
+Canonical path:
+
+```text
+ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md
+```
+
+Load mode: `on_request`
+
+Route here when the task is architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, or needs a unified visible gate coordinating Brick Wall, Tool/Project, Box, NO_LEAK, MCard, Shield, exact source, Error Memory, validation, startup, and freeze safeguards.
+
+Do not load it during normal startup. The startup stack carries only a compact bridge. This companion never replaces current canonical owners, and final coding authorization remains with Brick Wall.
+
+Required companions:
+
+```text
+brick_wall_comprehensive_quality_gate
+router_bridge_governed_implementation
+project_tool_boundary_canon
+box_architecture_canon
+```
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_END -->

@@ -16,13 +16,15 @@ Use this folder when the task involves:
 - checking which prompts should be requested;
 - deciding whether a task can use the fast path;
 - separating simple explanation from implementation work;
-- confirming the active navigation stack.
+- confirming the active navigation stack;
+- routing durable generated documentation and validation evidence away from disposable daily-work storage.
 
 ## Main artifacts
 
 - start_of_day_master_stack.md
 - ai_prompt_request_canon.md
 - prompt_router_reasoner_startup_check.md
+- durable_document_artifact_routing_canon.md
 
 ## Routing role
 

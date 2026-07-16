@@ -12,8 +12,8 @@ Before any implementation, repair, refactor, prompt update, governance update, o
 * Preserve public contracts.
 * Validate the active box and any touched external box.
 
-Version: 7.3
-Status: Large-module creation and refactor protocol, expanded canon for safe splitting, public API preservation, validation gates, dependency-direction mapping, GUI inventory, optional type-check gates, safe wide responsibility-island extraction, AST-assisted heuristic split audit, safe multi-island batch patches, patch-train delivery bundles, sequential double-refactor delivery trains, practical helper-file granularity, normal `.py` source ownership, external Web AI Planner-version delegation, and a speed-acceleration layer covering codemod-assisted moves, tiered validation gates, parallel test execution, audit-cache reuse, and parallel-safe backlog batching.
+Version: 8.0
+Status: Large-module creation and refactor protocol integrating the Planner-to-Workbench canon with the AST Safe Refactor Infrastructure, KPR-06-003 target evidence, KPR-06-004 process refresher, exact source identity, consumer/public-contract preflight, semantic-safety checks, profile-based behavior equivalence, fresh touched-family AST audits, descriptor-driven governed release construction, root-drive staging, local validation truth, and human freeze authority.
 Use: Invoke when creating or refactoring a relevant code module that is above 500 lines, would exceed 500 lines, has high complexity, has too many responsibilities, or the user opens a large-module creation/refactor pass.
 
 ## Canonical prompt location
@@ -34,43 +34,238 @@ The protocol must favor incremental, validated extraction over cosmetic reorgani
 
 When the existing module is very large and many modules remain to refactor, the protocol may use a faster wide-cluster strategy, but only by dependency/responsibility island. When two islands are proven independent by the Multi-Island Execution Layer, they may travel in one governed patch ZIP. When several such governed patches can be prepared safely, they may be delivered together as an ordered delivery train, but they must be installed, validated, and frozen one by one before the next patch is applied. Do not split by physical halves, arbitrary line ranges, visual file position, or line-count-only targets.
 
+## Current AST Safe Refactor execution layer (v8.0)
+
+The v8.0 canon adds the current AST Safe Refactor Infrastructure behind
+`Architecture Review -> Large Module AST Split Audit`. This layer accelerates
+refactoring but does not replace Planner, Workbench, human strategic authority,
+or Web AI architecture reasoning.
+
+The current reusable service family is:
+
+```text
+kanda_ast_safe_refactor_orchestrator.py
+kanda_ast_safe_refactor_routine.py
+kanda_refactor_project_index.py
+kanda_refactor_semantic_safety.py
+kanda_refactor_probe_engine.py
+kanda_refactor_release_builder.py
+AST_SAFE_REFACTOR_ROUTINE.md
+```
+
+Their role is deterministic support and enforcement:
+
+- verify exact KPR exchange source identity;
+- build bounded consumer and public-contract evidence;
+- detect semantic reflection and dynamic-call risks;
+- check dependency direction and Box/no-leak boundaries;
+- execute baseline/candidate behavior probes;
+- verify the candidate source family;
+- run fresh authoritative AST audits;
+- assemble descriptor-driven governed releases.
+
+They must not autonomously choose architecture. Architecture remains an AI/human
+reasoning decision informed by evidence and current source truth.
+
+### KPR-06-003 and KPR-06-004 coordination
+
+Use the prompts as separate complementary layers:
+
+```text
+KPR-06-004 Safe Refactor How To
+= reusable process and delivery awareness
+
+KPR-06-003 Web AI AST Split Risk Repair Protocol
+= exact target path, source bytes, hash, byte length, newline contract,
+  preflight evidence, native AST audit, and current source truth
+```
+
+For a real RISK module, KPR-06-003 is the target authority. KPR-06-004 is a
+refresher and recovery layer; it must not override current source or audit
+evidence. The `Safe Refactor How To` button may copy the refresher plus current
+canonical routine support artifacts, while `Send Web AI to make SAFE` carries
+the current target-specific exchange.
+
+### Required exact source identity
+
+Before editing a KPR-06-003 target, require and verify as supplied:
+
+```text
+TARGET_RELATIVE_PATH
+SOURCE_SHA256
+SOURCE_BYTE_LENGTH
+SOURCE_TEXT_ENDS_WITH_NEWLINE
+CURRENT_SAFETY_LABEL
+AST_SAFE_REFACTOR_PREFLIGHT_EVIDENCE_BEGIN ... END
+AST_AUDIT_RESULT_BEGIN ... END
+TARGET_SOURCE_BEGIN ... END
+```
+
+Stop on target, hash, or byte-length mismatch. Do not normalize arbitrary source
+text to force identity and do not silently refactor another file version.
+
+### Required pre-refactor evidence
+
+Before choosing the split, inspect or generate:
+
+- exact hard-blocker map and source locations;
+- consumer imports, aliases, and direct symbol use;
+- `__all__` state, including unresolved dynamic state;
+- public functions/classes, signatures, defaults, decorators, bases, and annotations;
+- semantic reflection/dynamic-call findings;
+- current dependency direction;
+- Box ownership, no-leak boundaries, and shielding constraints;
+- available characterization tests and probe opportunities;
+- quality attributes relevant to the split: behavior preservation, modifiability,
+  auditability, Box integrity, installability, recoverability, determinism, and
+  validation portability.
+
+Treat this evidence as decision support, not automatic architecture authority.
+Known patterns are advisory only.
+
+### Architecture decision and transformation plan
+
+For nontrivial work, compare plausible options before editing:
+
+1. smallest explicit in-place repair;
+2. public facade plus one cohesive helper;
+3. public facade plus evaluation helper;
+4. public facade plus invariants helper;
+5. public facade plus evaluation and invariants helpers;
+6. domain-specific split justified by actual responsibilities.
+
+Record problem, forces, options, chosen/rejected alternatives, owner boundary,
+dependency direction, trade-offs, line-size forecast, and validation obligations.
+Then define an ordered transformation plan. Use a prerequisite graph only when
+the refactor genuinely has dependent prerequisite steps.
+
+### Behavior equivalence requirement
+
+Structural safety is not enough. Use the probe engine or an equivalent focused
+harness to run the same semantic cases against baseline and candidate. Select a
+profile such as contract, collector, pure mapping, serialization, GUI state, CLI,
+or custom, then add module-specific cases. Compare as applicable:
+
+- normalized return values and serialized output;
+- exception classes and exact deterministic messages;
+- visible side effects and contract-sensitive ordering;
+- import/public API behavior;
+- repeated-call determinism and idempotence where applicable.
+
+For `structural_refactor_only`, expected intentional observable behavior change is
+zero unless the human separately approves a feature change.
+
+### Required fitness functions and fresh family authority
+
+Before release, require the relevant checks to pass:
+
+```text
+SOURCE_IDENTITY_FITNESS: PASS
+BOX_BOUNDARY_FITNESS: PASS
+NO_LEAK_FITNESS: PASS
+PUBLIC_CONTRACT_FITNESS: PASS
+CONSUMER_COMPATIBILITY_FITNESS: PASS
+DEPENDENCY_DIRECTION_FITNESS: PASS
+BEHAVIOR_EQUIVALENCE_FITNESS: PASS
+LINE_LAW_101_499_FITNESS: PASS
+SEMANTIC_DYNAMIC_SAFETY: PASS
+FRESH_FAMILY_AST_FITNESS: PASS
+INSTALLABILITY_FITNESS: PASS
+```
+
+Every touched permanent Python source module must receive a fresh AST Split Audit
+at the release gate. Incremental development checks and cached evidence may speed
+iteration but never replace the final fresh touched-family audit. A SAFE claim
+requires truthful fresh evidence with zero hard blockers.
+
+### Anti-gaming and shielding law
+
+Do not make the label green by hiding the problem. Forbidden behavior includes:
+
+- changing classifier logic or thresholds;
+- renaming dangerous calls to evade heuristics;
+- moving dynamic/reflection behavior into unaudited helpers;
+- introducing helper-to-facade back references without an approved design;
+- reaching through private Planner, Workbench, AQR, or Freeze internals;
+- storing hidden mutable state on shared GUI hosts;
+- mutating `MODULE_TOO_LARGE` queue semantics to retain modules that truthfully
+  fall below the threshold after fresh validation.
+
+### Governed release and local truth
+
+Use descriptor-driven release construction when the reusable builder supports the
+work. A freezeable release should contain, as applicable:
+
+```text
+INSTALL.ps1
+VALIDATE.ps1
+FREEZE.ps1
+KANDA_FREEZE_HINT.json
+PACKAGE_MANIFEST.json
+payload/
+focused validator
+```
+
+The outer install instructions must place the downloaded ZIP at the active project
+drive root, stage a verified copy into
+`<drive>/<project>_delete_after_daily_work`, compare root/staged SHA-256, remove
+the root copy only after safe staging, validate ZIP contract, and install from
+the daily-work area. Never search Downloads or Desktop as fallback locations.
+
+Sandbox validation is preparation. Local project validation is authoritative for
+the user's environment. Freeze remains:
+
+```text
+Install
+-> Validate
+-> human feature test
+-> Freeze evidence preparation
+-> Preview Freeze Entry
+-> human review
+-> explicit Confirm and Write
+-> refresh startup freeze context
+```
+
+The release builder may prepare evidence but must never write canonical frozen
+memory directly.
+
 ## Module-size and complexity law
 
-Module-size law for code modules:
+### Canonical PEP 8, SOLID, and DRY precedence
 
-* Ideal: <= 400 lines.
-* Maximum: <= 500 lines.
-* When creating a new code module, do not create a file above 500 lines; split by responsibility before delivery.
-* When refactoring an existing code module above 500 lines, split by responsibility.
-* Complexity trigger: consider splitting even under 500 lines if the module has more than 10 top-level functions/classes, more than 5 distinct responsibilities, high cyclomatic complexity, repeated workflow sections, or a clear god-module pattern.
-* Gradual exception: a module may remain above 500 lines only when it is explicitly tracked as an active refactor exception with a staged backlog and validation plan.
-* This rule applies to code/source modules, especially `.py` files.
-* This rule does not apply to plain text, Markdown, documentation, prompt, manifest, JSON, log, report, or other non-code content files.
+For Python source, PEP 8 compliance, SOLID responsibility and dependency design,
+and DRY implementation are canonical requirements of this protocol. The size
+law is resolved through architecture, never by degrading source quality.
 
-Practical granularity rule for helper files:
+* Measure physical lines after PEP 8-compliant formatting is applied or verified.
+* Never remove required top-level or class-level blank lines, collapse imports,
+  combine statements, compress function/class layout, or use any other PEP 8
+  violation to make a module fit the size gate.
+* Never duplicate implementation, validation, constants, or compatibility logic
+  merely to avoid a helper extraction; preserve one authoritative DRY owner.
+* Apply SOLID with judgment: split by cohesive responsibility, stable interface,
+  dependency direction, side-effect boundary, or validation ownership. Do not
+  create abstraction layers or micro-files that have no independent responsibility.
+* If a PEP 8-compliant and cohesive module exceeds the applicable size limit,
+  retain compliant formatting and create as many cohesive main-module helpers as
+  needed. Every helper must satisfy the same PEP 8, SOLID, DRY, ownership, API,
+  behavior, and physical-line requirements.
+* Formatting and quality validation must occur before final line-count validation.
+  A line-count PASS produced by non-compliant compressed formatting is invalid.
 
-* The 400-line ideal is a healthy target band, not a command to atomize code.
-* A cohesive helper file around 250-400 lines is acceptable and often preferable to many tiny files.
-* Do not create new source/helper `.py` files with only a few lines merely to satisfy a line-count target.
-* Avoid creating helper modules below roughly 80-100 substantive lines unless they are required package markers, public facade/re-export compatibility shims, generated validators, narrowly-scoped constants, or deliberately documented stable seams.
-* Before creating a new helper module under roughly 80-100 substantive lines, state why it should not be merged into an adjacent cohesive helper.
-* Prefer fewer, cohesive responsibility modules over project hyperpopulation. Hyperpopulated micro-files make features harder to find, increase import-surface risk, and increase missed-feature risk during future maintenance.
-* Completion guards should stop a refactor train when remaining files are cohesive and below the practical target band; do not continue splitting tiny cohesive files just to create another train car.
+The current controlling Large File Refactor Workbench source law is strict:
 
-Helper expansion rule:
+* Every resulting Python source module, including facades, helpers, constants modules, adapters, validators, and complementary source modules, must satisfy `100 < physical_lines < 500`.
+* The exact valid integer range is 101-499 physical lines.
+* 100 lines is blocked. 500 lines is blocked.
+* There are no facade, package-marker, constants, adapter, generated-validator, or structural-role exceptions in this workflow.
+* Do not add artificial padding or dead code to satisfy the minimum.
+* If the approved architecture cannot satisfy 101-499 while remaining cohesive and behavior-preserving, return `PLAN_CORRECTION_REQUIRED` with structured Compliance Veto evidence; the Workbench must not merge, split, rename, or reassign Planner architecture.
+* The same canonical physical-line counter must govern Planner projection, Execution Feasibility, Preview, sealed payload validation, Shadow validation, post-apply validation, and final receipt/proof evidence.
+* Split by responsibility, dependency direction, API boundary, side-effect isolation, validation boundary, and No-Leak ownership—not arbitrary line ranges.
+* Cohesion remains mandatory inside the strict size law: prefer the smallest number of responsibility modules that satisfy architecture, behavior, dependency, and 101-499 constraints.
 
-* When a new or touched code/source module would exceed the 500-physical-line hard maximum, split the work into as many cohesive helper, auxiliary, derived, adapter, or complementary modules as needed to preserve behavior, ownership, readability, and validation safety.
-* Additional helper modules are allowed and expected when they are needed to keep the main module and every helper module within the module-size law.
-* Every helper, auxiliary, derived, adapter, or complementary code/source module must obey the same size law: ideal <= 400 physical lines, hard maximum <= 500 physical lines, and practical minimum around 100 substantive lines unless a documented exception applies.
-* Do not create tiny helper files merely to satisfy a line-count target. A helper below roughly 100 substantive lines is allowed only when it is justified as a facade or re-export shim, package marker, constants module, validation helper, optional dependency adapter, circular-dependency breaker, stable seam, or another explicitly documented cohesive boundary.
-* Prefer cohesive responsibility modules over catch-all helpers or project hyperpopulation. Split by responsibility, dependency direction, public API boundary, side-effect isolation, validation boundary, or no-leak ownership boundary, not by arbitrary line ranges.
-
-Traditional source-file rule:
-
-* Runtime/source logic should live in normal importable `.py` files with clear names and ordinary Python imports.
-* Do not hide source behavior inside ZIP payload files, embedded archive members, generated source strings, or delivery-package structures as part of normal project logic.
-* The `payload/` folder inside an installable patch ZIP is allowed as delivery packaging only. It must not become an application/runtime architecture pattern.
-* Use source-preserving shard files only as a temporary, explicitly-labeled stabilization exception when semantic extraction is too risky, and plan later semantic cleanup.
+This strict rule supersedes older heuristic wording in historical version notes or examples that referred to an ideal 400-line target, approximate 80-100-line minimums, or structural-role exceptions.
 
 ## Mandatory phases
 
@@ -407,17 +602,17 @@ Architecture Review
   Save/Export Audit Results
 ```
 
-The user selects the active project root and a target `.py` module. The tool runs read-only, displays the Markdown report in the audit output panel, writes Markdown and JSON reports to daily-work staging, and copies or exports an AI handoff on request.
+The user selects the active project root and a target `.py` module. The tool runs read-only, displays the Markdown report in the audit output panel, writes durable Markdown and JSON reports under the selected project's external `*_show_project_to_AI` support root, and copies or exports an AI handoff on request. Temporary scratch files used while producing those reports may use the ownership-free transient garbage root.
 
 ### Output location
 
-For governed KANDA work, audit outputs must be staged under:
+For governed KANDA work, durable audit outputs must be written under:
 
 ```text
-<drive>/<project>_delete_after_daily_work/large_module_split_audits/
+<drive>/<project>_show_project_to_AI/large_module_split_audits/
 ```
 
-The tool must not write transient audit files into the project root. It may copy human-approved handoff content to the clipboard. It must not write frozen memory, modify source, or create refactor patches.
+The ownership-free transient garbage root `<drive>/<project>_delete_after_daily_work/` may hold only disposable scratch files created while generating those outputs. It must not be the owner of audit reports, handoffs, validation evidence, or source truth. The tool must not write audit files into the active project source root. It may copy human-approved handoff content to the clipboard. It must not write frozen memory, modify source, or create refactor patches.
 
 ### Required report content
 
@@ -758,6 +953,19 @@ The core authority remains this protocol. The specialized exchange workflow is d
 KPR-06-001
 web_ai_large_module_refactor_exchange_protocol
 ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md
+
+KPR-06-002
+web_ai_planning_response_bundle_blueprint
+ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md
+
+
+KPR-06-003
+web_ai_ast_split_risk_repair_protocol
+ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md
+
+KPR-06-004
+safe_refactor_how_to
+ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md
 ```
 
 Required workflow:
@@ -767,9 +975,9 @@ Generate native Heuristic or Local AI plan
 -> Copy Comprehensive Planning for Web AI
 -> send the copied planning package plus the specialist companion prompt to external Web AI
 -> external Web AI searches for bounded improvement rather than blindly copying or fully redesigning the plan
--> external Web AI returns a governed import ZIP
--> install external artifact
--> Receive Planning from Web AI
+-> external Web AI returns a governed import ZIP plus exact Panel 4 paste block
+-> install external artifact as the canonical path
+-> select Imported Web AI Version or use Panel 4 paste fallback
 -> deterministic validation and human review
 -> Load as Imported Web AI Version
 -> compare versions
@@ -782,6 +990,10 @@ The Web AI import ZIP is delivery infrastructure, not runtime source architectur
 
 The Planner action `AI Refactor Version How To` is a thin wrapper that copies the canonical specialist prompt. GUI code must not embed a stale duplicate of the specialist prompt body.
 
+When Task 0 AST Split Audit reports `RISK REFACTORING`, the Architecture Review send wrapper may load KPR-06-003 and copy the exact target path, source SHA-256, full target source, current safety label, and complete audit result to external Web AI. Source repair must address the real blocker, preserve behavior and public contracts, and require a fresh rerun that truthfully reports `SAFE REFACTORING`; changing the classifier or hiding risky behavior in an unaudited helper is forbidden.
+
+When the AI needs the complete reusable implementation-and-delivery refresher for safe large-module source refactoring, or the user invokes `Safe Refactor How To`, load KPR-06-004. Keep KPR-06-004 separate from target-specific KPR-06-003 evidence: the runbook teaches the process, while KPR-06-003 carries current target identity and audit truth.
+
 The `Copy Comprehensive Planning for Web AI` package must explicitly expose the native base identity, hashes, known modules, known movable symbols, deterministic evidence, improvement objective, allowed/forbidden actions, response schema, installer contract, validation contract, and freeze-evidence boundary.
 
 ## Delivery model
@@ -793,7 +1005,8 @@ For KANDA/PyArchitect governed patch work:
 * deliver a patch ZIP with Install, Validate, and Freeze instructions;
 * a governed patch ZIP may contain one island, or up to two islands that passed the Multi-Island Execution Layer independence test;
 * a sequential double-refactor delivery train may contain up to four ordered governed patch ZIPs in one response, but each inner patch must be installed, validated, ZIP-contract-checked, freeze-prepped, previewed, and frozen in strict sequence;
-* stage transient install, extract, correction, validation-helper, and audit files under `<drive>/<project>_delete_after_daily_work`;
+* stage only disposable install ZIPs, extraction trees, correction scratch, Shadow workspaces, and temporary validation helpers under the ownership-free transient garbage root `<drive>/<project>_delete_after_daily_work`;
+* write durable audit reports, handoffs, and validation evidence to their canonical `*_show_project_to_AI` support owners before garbage cleanup;
 * do not put transient files in the active project root;
 * keep delivery ZIP `payload/` structure as packaging only; do not make runtime source logic depend on zipped payload files or generated delivery artifacts;
 * include a root-level `KANDA_FREEZE_HINT.json` when the patch is freezeable, naming every island the patch contains;
@@ -887,7 +1100,7 @@ Per-cluster approval is optional only when the user explicitly authorized contin
 * Do not freeze without local validation evidence.
 * Do not let codemod, IDE-assisted, AST-assisted, or parallel-execution speed tooling skip or weaken a validation gate that manual extraction would otherwise require.
 * Do not treat AST split audit output as automatic approval; it is evidence for AI/human review.
-* Do not write AST audit reports into the active project root; use daily-work staging.
+* Do not write AST audit reports into the active project root or the transient garbage root; write durable reports under the selected project's `*_show_project_to_AI` support root.
 * Do not pair more than two substantive islands/slices in one governed patch ZIP.
 * Do not pair two islands unless every Multi-Island Execution Layer independence criterion holds; ambiguity defaults to separate patches.
 * Do not install multiple patches and validate or freeze only at the end.
@@ -914,3 +1127,45 @@ Per-cluster approval is optional only when the user explicitly authorized contin
 * v7.2: Added practical helper-file granularity and traditional source-file rules: cohesive helpers near the 400-line ideal are acceptable, needless micro-files should be avoided, refactor trains should stop when remaining helpers are small/cohesive, and normal runtime/source logic should live in ordinary importable `.py` files rather than ZIP payload/delivery structures.
 
 * v7.3: Added external Web AI Planner-version delegation to KPR-06-001, including bounded improvement search, canonical specialist-prompt wrapper behavior, imported-version ZIP/install/validate/freeze-evidence workflow, and stronger Comprehensive Planning package requirements.
+* v7.4: Canonized the complete Planner-to-Workbench execution chain, strict 101-499 physical-line rule with no structural-role exceptions, exact sealed-payload identity, serial mutation lane, journaled apply/recovery, and controlled real-module proof requirements.
+
+* v8.0: Integrated AST Safe Refactor Infrastructure, KPR-06-003/KPR-06-004 coordination, exact source/byte identity, consumer/public-contract preflight, semantic-safety detection, profile-based behavior equivalence, fresh touched-family AST authority, descriptor-driven release construction, root-drive staging, and local-truth freeze governance.
+
+## Final Large File Refactor Planner -> Workbench execution canon (v7.4)
+
+After the human explicitly selects a Planner version, execution uses this ownership chain:
+
+```text
+AST Split Audit -> evidence
+Large File Refactor Planner -> architecture truth
+Explicit Workbench load -> immutable PlannerSnapshot
+RefactorBaseline -> BEFORE truth
+Execution Basis Set -> mutation/API/dependency/test freshness scope
+Execution Feasibility -> EXECUTABLE or PLAN_CORRECTION_REQUIRED
+WorkbenchExecutionContract -> exact executability truth
+TransformationRecipe -> deterministic mechanics only
+LibCST exact transformation -> artifact bytes
+Sealed payload -> Preview, Shadow, and real apply byte truth
+Preview + Preflight + backup readiness
+Shadow backend + provenance proof
+Structural/API/topology/runtime/behavior validation
+Semantic Diff first, Text Diff second
+Explicit warning acknowledgment
+Explicit transaction-summary confirmation
+Final basis recheck
+Refactor Large Module
+Journaled serial-lane exact-byte apply
+Post-apply and behavior validation
+RefactorReceipt
+Completion or hash-verified rollback/recovery
+```
+
+`Refactor Large Module` must never invoke AI, redesign the plan, regenerate different payload bytes, run post-seal formatting/autofix, or bypass the per-project serial mutation lane. Every real operation records `INTENT_RECORDED` before mutation and `APPLIED` plus `VERIFIED` after durable hash checks. `RECOVERY_PENDING` keeps the serial project lane closed. Rollback verifies current hashes and enters `ROLLBACK_CONFLICT` rather than overwriting external drift.
+
+The final controlled proof target is `kanda_reasoner_app/reasoner_symbol_atlas/main_helper_mapper.py`, baseline 786 physical lines with SHA-256 `6637b1dde8639665f37f948d1bf7ba0711ecbe4d418ce304a01503f291f99f55`, using the approved 197/145/429 plan. The proof must run on a disposable full project copy and demonstrate Shadow behavior equivalence, first journaled apply, post-apply behavior pass, exact rollback restoration, fresh second transaction, `COMPLETED_VALIDATED`, RefactorReceipt integrity, strict 101-499 final module sizes, and unchanged live-project source hash.
+
+Transformation rules proven by that controlled target are canonical: preserve decorators in LibCST source extraction; normalize only non-semantic docstring whitespace in structural comparison; allow only exact evidence-recorded function-local facade imports to be ignored by body-equivalence normalization; and use function-local imports for moved functions that depend on facade-owned globals so facade ownership remains authoritative without import-time cycles or duplicated constants.
+
+
+
+Controlled validation clones, synthetic project replicas, test-only project copies, and disposable Shadow fixtures are transient garbage. They must be rooted under the ownership-free `*_delete_after_daily_work` transient garbage root or a clearly disposable child of that root. Never create drive-root sibling clones such as `<project>_patch6_controlled_real` or `<project>_patch6_controlled_shadow`.

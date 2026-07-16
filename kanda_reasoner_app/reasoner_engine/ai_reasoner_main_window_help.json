@@ -9,8 +9,8 @@
   "generated_by": "reasoner_engine_main_window_manifest_contract_repair",
   "ai_instruction": "Keep this manifest aligned with the canonical ai_reasoner_main_window_help folder while the GUI migration remains staged.",
   "summary": {
-    "total_helpers": 14,
-    "public_helpers": 12,
+    "total_helpers": 17,
+    "public_helpers": 15,
     "internal_helpers": 2,
     "entry_exports": [
       "JsonProjectReasonerV10",
@@ -159,15 +159,49 @@
     },
     "window_controller_bridge.py": {
       "purpose": "Private state accessor and controller delegate mixin for the Project Q&A main window facade.",
-      "reason": "Keep ai_reasoner_main_window.py below the module-size threshold without moving GUI construction or entry-point behavior.",
+      "reason": "Private helper module; __all__ left empty to avoid exporting private names.",
       "stability": "stable",
-      "exports": [
-        "_WindowControllerBridgeMixin"
-      ],
+      "exports": [],
       "depends_on": [],
       "consumed_by": [
         "ai_reasoner_main_window.py"
       ]
+    },
+    "project_json_path_resolver.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "ProjectJsonPathResolution",
+        "current_project_root_from_window",
+        "is_deprecated_project_json_path",
+        "resolve_project_json_path",
+        "should_replace_project_json_path"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "project_qa_analysis_runner.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "main",
+        "run_project_qa_analysis"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "project_qa_copy_error_ask_controller.py": {
+      "purpose": "Helper module owned by this helper folder.",
+      "reason": "Helper module owned by this helper folder.",
+      "stability": "stable",
+      "exports": [
+        "ask_local_ai_with_copy_errors",
+        "install_project_qa_copy_error_ask_handler"
+      ],
+      "depends_on": [],
+      "consumed_by": []
     }
   },
   "dependency_graph": {
@@ -184,7 +218,10 @@
     "static_context_controller.py": {},
     "ui_builder.py": {},
     "ui_components.py": {},
-    "window_controller_bridge.py": {}
+    "window_controller_bridge.py": {},
+    "project_json_path_resolver.py": {},
+    "project_qa_analysis_runner.py": {},
+    "project_qa_copy_error_ask_controller.py": {}
   },
   "domain_overlay": "GENERIC",
   "domain_specific": {}

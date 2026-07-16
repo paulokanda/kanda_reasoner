@@ -81,9 +81,6 @@ if False:
     import kanda_reasoner_app.runtime_scenarios.runtime_scenario_writer
     import kanda_reasoner_app.runtime_scenarios.runtime_trace_retention
     import kanda_reasoner_app.runtime_scenarios.runtime_trace_retention_config
-    import profiling
-    import profiling.eeg_profiler
-    import profiling.run_with_trace
 
 
 def test_static_import_contract_chunk_04_is_parseable() -> None:

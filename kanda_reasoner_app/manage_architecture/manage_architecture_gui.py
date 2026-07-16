@@ -2,7 +2,10 @@
 """Qt GUI for running architecture scan, validate, diff, and write modes."""
 from __future__ import annotations
 
-from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
+from kanda_reasoner_app.templates.floating_windows import (
+    show_auto_close_action_window,
+    show_error_copy_close_window,
+)
 from kanda_reasoner_app.manage_architecture.architecture_audit_actions_gui import ArchitectureAuditActionsMixin
 from kanda_reasoner_app.manage_architecture.architecture_review_subtabs import build_architecture_review_ui
 from kanda_reasoner_app.manage_architecture.large_module_split_audit_gui import LargeModuleSplitAuditGuiMixin

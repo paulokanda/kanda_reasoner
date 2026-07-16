@@ -1,0 +1,22 @@
+{
+  "generated_at_utc": "2026-05-26T02:32:13.375575+00:00",
+  "pass": "033",
+  "purpose": "Archive docstring benchmark and sample assets outside active project scan scope while preserving their relative paths.",
+  "records": [
+    {
+      "from": "kanda_reasoner_app\\insert_missing_docstrings_gui\\benchmark_corpus",
+      "kind": "directory",
+      "to": "_project_reference\\docstring_tool_reference\\kanda_reasoner_app\\insert_missing_docstrings_gui\\benchmark_corpus"
+    },
+    {
+      "from": "kanda_reasoner_app\\insert_missing_docstrings_gui\\benchmark_runner.py",
+      "kind": "file",
+      "to": "_project_reference\\docstring_tool_reference\\kanda_reasoner_app\\insert_missing_docstrings_gui\\benchmark_runner.py"
+    },
+    {
+      "from": "kanda_reasoner_app\\insert_missing_docstrings_gui\\sample_project",
+      "kind": "directory",
+      "to": "_project_reference\\docstring_tool_reference\\kanda_reasoner_app\\insert_missing_docstrings_gui\\sample_project"
+    }
+  ]
+}

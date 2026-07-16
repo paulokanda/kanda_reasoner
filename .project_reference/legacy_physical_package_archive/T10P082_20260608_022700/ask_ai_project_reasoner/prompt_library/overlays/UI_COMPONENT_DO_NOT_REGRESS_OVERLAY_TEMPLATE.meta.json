@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_id": "ui_component_do_not_regress_overlay_template",
+  "display_name": "UI Component Do-Not-Regress Overlay Template",
+  "version": "1.0.0",
+  "status": "template",
+  "category": "domain_overlay",
+  "subcategory": "ui_component_regression",
+  "load_type": "conditional",
+  "project_agnostic": true,
+  "safe_to_copy": true,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "governance_linked": false,
+  "modifies_governance": false,
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\kanda_reasoner_app\\prompt_library\\overlays",
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>",
+    "<DOMAIN_NAME>"
+  ],
+  "depends_on": [],
+  "required_before": [],
+  "explainer": "Reusable overlay for preserving frozen UI component behavior during GUI maintenance.",
+  "how_it_works": "The overlay records component ownership, frozen behavior, regression risks, and manual GUI checks before implementation.",
+  "files_created": [],
+  "risks": [
+    "A domain-specific rule may be copied into a general prompt without clear trigger conditions.",
+    "An overlay may be treated as active governance even though it is only a reusable prompt template."
+  ],
+  "mitigations": [
+    "Each overlay template requires trigger and non-trigger conditions.",
+    "Each overlay states that it does not modify source code, runtime behavior, or active governance."
+  ],
+  "validation_requirements": [
+    "must_have_required_sections",
+    "must_use_project_placeholders",
+    "must_not_hardcode_project_paths",
+    "must_not_modify_code",
+    "must_not_write_governance"
+  ],
+  "example_usage": "Copy this overlay template, replace adaptation variables, and present it to an AI together with the general project prompt stack when the task matches the trigger conditions.",
+  "change_log": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-01",
+      "summary": "Initial text-only domain overlay template."
+    }
+  ]
+}

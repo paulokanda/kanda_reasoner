@@ -41,7 +41,7 @@
       "generated_filename": "05_start_of_day_master_stack.md",
       "prompt_id": "start_of_day_master_stack",
       "load_mode": "always_startup",
-      "role": "Defines start-of-day/session startup flow, baseline session behavior, the beginning-of-day Code Module Size Bridge, Box Logic bridge, and No-Leak Logic Bridge."
+      "role": "Defines start-of-day/session startup flow, baseline session behavior, the Code Module Size, Box Logic, No-Leak, Governed Architecture Companion, Durable Documentation Artifact Routing, and Terminal Cleanup bridges."
     },
     {
       "load_order": 6,
@@ -98,6 +98,22 @@
       "prompt_id": "error_memory_ai_formulary_startup_canon",
       "load_mode": "always_startup",
       "role": "Teaches AI to emit KANDA_ERROR_LESSON_JSON receive blocks for the Error Memory tab after errors, correction patches, install failures, and validation repairs."
+    },
+    {
+      "load_order": 13,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
+      "generated_filename": "13_durable_document_artifact_routing_canon.md",
+      "prompt_id": "durable_document_artifact_routing_canon",
+      "load_mode": "always_startup",
+      "role": "Defines durable ownership for generated project-specific documentation and validation evidence, keeping daily-work transient and routing durable artifacts to the selected project support root."
+    },
+    {
+      "load_order": 14,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "generated_filename": "14_project_tool_boundary_canon.md",
+      "prompt_id": "project_tool_boundary_canon",
+      "load_mode": "always_startup",
+      "role": "Mandatory Tool-versus-Project boundary canon that keeps project support outside source and forbids nested *_show_project_to_AI roots."
     }
   ]
 }

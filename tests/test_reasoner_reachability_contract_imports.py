@@ -2,7 +2,7 @@
 
 The imports are guarded by TYPE_CHECKING so runtime test collection stays light
 while architecture validation can see explicit ownership for dynamic helpers,
-source-preserving shards, collector plug-ins, and profiling entry modules.
+source-preserving shards, and collector plug-ins.
 """
 
 from __future__ import annotations
@@ -65,7 +65,6 @@ if TYPE_CHECKING:
     import kanda_reasoner_app.reasoner_runtime_collector.runtime_trace_state
     import kanda_reasoner_app.runtime_scenarios.runtime_hotspot_hooks
     import kanda_reasoner_app.runtime_scenarios.runtime_scenario_runtime
-    import profiling.eeg_profiler
 
 
 def test_reachability_contract_imports_are_declared() -> None:

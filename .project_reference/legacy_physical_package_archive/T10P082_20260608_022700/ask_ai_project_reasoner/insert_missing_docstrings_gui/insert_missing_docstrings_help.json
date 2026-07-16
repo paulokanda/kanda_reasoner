@@ -1,0 +1,217 @@
+{
+  "origin": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings.py",
+  "help_folder": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_help/",
+  "refactor_date": "2026-05-02",
+  "refactor_goal": "isolate backend scanning, insertion, reporting, AST guard, CLI, and write orchestration into single-responsibility modules",
+  "ai_instruction": "Read this manifest before editing any file in help_folder or origin.",
+  "helpers": {
+    "project_exclusion_rules.py": {
+      "purpose": "Project-specific exclusion and scope selection helpers",
+      "exports": [
+        "load_project_exclusion_rules",
+        "normalize_rel_path",
+        "should_exclude_path",
+        "iter_python_files",
+        "iter_selected_python_files",
+        "resolve_target_module_path",
+        "resolve_target_package_path",
+        "is_test_like_path",
+        "is_relaxed_path"
+      ],
+      "depends_on": []
+    },
+    "source_io.py": {
+      "purpose": "Source text IO and parsing helpers",
+      "exports": [
+        "UTF8_BOM",
+        "read_source_text",
+        "write_source_text",
+        "parse_source"
+      ],
+      "depends_on": []
+    },
+    "symbol_naming.py": {
+      "purpose": "Symbol naming, public API, and module identifier helpers",
+      "exports": [
+        "to_module_id",
+        "split_words",
+        "prettify_name",
+        "expr_to_text",
+        "extract_public_symbols",
+        "extract_internal_import_modules"
+      ],
+      "depends_on": []
+    },
+    "heuristic_docstrings.py": {
+      "purpose": "Deterministic heuristic docstring builders",
+      "exports": [
+        "function_summary",
+        "class_summary",
+        "module_summary",
+        "build_module_docstring",
+        "build_class_docstring",
+        "iter_function_parameters",
+        "build_function_docstring"
+      ],
+      "depends_on": [
+        "symbol_naming.py"
+      ]
+    },
+    "insertion_formatting.py": {
+      "purpose": "Docstring payload formatting and insertion helpers",
+      "exports": [
+        "module_path_comment",
+        "build_module_header_payload",
+        "indentation_for_body",
+        "wrap_docstring_lines",
+        "render_docstring_body",
+        "payload_with_optional_uncertainty",
+        "module_insert_index",
+        "has_inline_body",
+        "is_overload_function",
+        "apply_insertions_to_text"
+      ],
+      "depends_on": [
+        "project_exclusion_rules.py"
+      ]
+    },
+    "reporting.py": {
+      "purpose": "JSONL report construction and write verification output helpers",
+      "exports": [
+        "build_report_row",
+        "function_report_kind_and_name",
+        "result_source",
+        "result_confidence",
+        "result_generation_source",
+        "result_failure_reason",
+        "result_issues",
+        "result_review_status",
+        "result_review_action_hint",
+        "result_review_severity",
+        "write_report_jsonl",
+        "mark_report_rows_for_write_result",
+        "print_post_write_verification"
+      ],
+      "depends_on": [
+        "project_exclusion_rules.py"
+      ]
+    },
+    "ast_safety.py": {
+      "purpose": "AST guard helpers that permit only docstring changes",
+      "exports": [
+        "docstring_free_ast_dump",
+        "validate_docstring_only_change"
+      ],
+      "depends_on": [
+        "source_io.py"
+      ]
+    },
+    "insertion_collector.py": {
+      "purpose": "Single-file missing-docstring insertion collection",
+      "exports": [
+        "collect_missing_docstring_insertions"
+      ],
+      "depends_on": [
+        "source_io.py",
+        "symbol_naming.py",
+        "heuristic_docstrings.py",
+        "insertion_formatting.py",
+        "reporting.py"
+      ]
+    },
+    "diff_output.py": {
+      "purpose": "Unified diff rendering for docstring previews",
+      "exports": [
+        "diff_text"
+      ],
+      "depends_on": []
+    },
+    "run_orchestrator.py": {
+      "purpose": "Batch scan, diff, write, and post-write orchestration",
+      "exports": [
+        "run"
+      ],
+      "depends_on": [
+        "project_exclusion_rules.py",
+        "source_io.py",
+        "file_processing.py",
+        "reporting.py",
+        "diff_output.py"
+      ]
+    },
+    "cli.py": {
+      "purpose": "Command-line parser and entry point for the docstring inserter",
+      "exports": [
+        "build_parser",
+        "main"
+      ],
+      "depends_on": [
+        "run_orchestrator.py"
+      ]
+    },
+    "__init__.py": {
+      "purpose": "Helper package for the refactored docstring inserter backend",
+      "exports": [],
+      "depends_on": []
+    },
+    "file_processing.py": {
+      "purpose": "Per-file processing and batch change collection",
+      "exports": [
+        "load_manifest",
+        "collect_changes"
+      ],
+      "depends_on": [
+        "project_exclusion_rules.py",
+        "source_io.py",
+        "insertion_collector.py",
+        "insertion_formatting.py",
+        "ast_safety.py",
+        "reporting.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "project_exclusion_rules.py": [],
+    "source_io.py": [],
+    "symbol_naming.py": [],
+    "heuristic_docstrings.py": [
+      "symbol_naming.py"
+    ],
+    "insertion_formatting.py": [
+      "project_exclusion_rules.py"
+    ],
+    "reporting.py": [
+      "project_exclusion_rules.py"
+    ],
+    "ast_safety.py": [
+      "source_io.py"
+    ],
+    "insertion_collector.py": [
+      "source_io.py",
+      "symbol_naming.py",
+      "heuristic_docstrings.py",
+      "insertion_formatting.py",
+      "reporting.py"
+    ],
+    "diff_output.py": [],
+    "run_orchestrator.py": [
+      "project_exclusion_rules.py",
+      "source_io.py",
+      "file_processing.py",
+      "reporting.py",
+      "diff_output.py"
+    ],
+    "cli.py": [
+      "run_orchestrator.py"
+    ],
+    "__init__.py": [],
+    "file_processing.py": [
+      "project_exclusion_rules.py",
+      "source_io.py",
+      "insertion_collector.py",
+      "insertion_formatting.py",
+      "ast_safety.py",
+      "reporting.py"
+    ]
+  }
+}

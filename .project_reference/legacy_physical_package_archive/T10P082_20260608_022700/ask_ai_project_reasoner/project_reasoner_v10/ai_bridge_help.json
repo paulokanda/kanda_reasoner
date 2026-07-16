@@ -1,0 +1,168 @@
+{
+  "origin": "kanda_reasoner_app/project_reasoner_v10/ai_bridge.py",
+  "entry_point": "kanda_reasoner_app/project_reasoner_v10/ai_bridge.py",
+  "help_folder": "kanda_reasoner_app/project_reasoner_v10/ai_bridge_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with helper module public surfaces.",
+  "pattern": "mixed",
+  "pattern_note": "Manifest records helper exports and local helper dependencies.",
+  "generated_by": "reasoner_correction_pass_014_helper_manifest_contract",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "summary": {
+    "total_helpers": 7,
+    "public_helpers": 6,
+    "internal_helpers": 1,
+    "entry_exports": [
+      "AIWorkerBridge",
+      "LocalAIReasoner"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "__init__.py": {
+      "purpose": "",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "bridge_signals.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "AIWorkerBridge"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "deterministic_answers.py": {
+      "purpose": "Deterministic evidence-backed answer helpers for Project Reasoner V10.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "score_file_locator_candidate",
+        "answer_deterministic_from_prompt",
+        "repair_one_line_symbol_ids",
+        "answer_one_line_from_prompt"
+      ],
+      "depends_on": [
+        "prompt_extraction.py",
+        "prompt_modes.py"
+      ],
+      "consumed_by": []
+    },
+    "focus_snippets.py": {
+      "purpose": "Focused snippet selection helpers for Project Reasoner AI bridge.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "score_snippet_candidate",
+        "select_focus_snippets_from_prompt",
+        "build_generative_focus_message"
+      ],
+      "depends_on": [
+        "prompt_extraction.py",
+        "prompt_modes.py"
+      ],
+      "consumed_by": []
+    },
+    "grounding_checks.py": {
+      "purpose": "Grounding validation helpers for Project Reasoner AI bridge.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "sanitize_invalid_ids",
+        "has_forbidden_paths",
+        "has_forbidden_symbols",
+        "looks_ungrounded_deterministic",
+        "looks_ungrounded_generative",
+        "has_forbidden_ids",
+        "answer_ignored_required_snippets",
+        "grounding_failure_reason"
+      ],
+      "depends_on": [
+        "prompt_extraction.py",
+        "prompt_modes.py"
+      ],
+      "consumed_by": []
+    },
+    "prompt_extraction.py": {
+      "purpose": "Prompt parsing helpers for Project Reasoner AI bridge.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "extract_runtime_anchors_from_detail",
+        "extract_snippet_text_blob",
+        "extract_snippet_blocks",
+        "extract_file_evidence_blocks",
+        "extract_symbol_evidence_blocks",
+        "extract_user_question",
+        "extract_allowed_ids",
+        "extract_cited_ids",
+        "extract_allowed_symbols",
+        "extract_allowed_file_paths",
+        "extract_path_like_mentions",
+        "extract_symbol_like_mentions",
+        "extract_symbol_id_map",
+        "extract_file_id_map",
+        "extract_symbol_score_map",
+        "extract_file_score_map",
+        "extract_locator_target",
+        "extract_one_line_triplet"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "deterministic_answers.py",
+        "focus_snippets.py",
+        "grounding_checks.py",
+        "prompt_modes.py"
+      ]
+    },
+    "prompt_modes.py": {
+      "purpose": "Prompt classification helpers for Project Reasoner AI bridge.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "is_code_localized_prompt",
+        "is_runtime_heavy_prompt",
+        "is_one_line_prompt",
+        "is_direct_responsibility_prompt",
+        "is_deterministic_prompt",
+        "is_locator_plus_explanation_prompt",
+        "is_generative_prompt"
+      ],
+      "depends_on": [
+        "prompt_extraction.py"
+      ],
+      "consumed_by": [
+        "deterministic_answers.py",
+        "focus_snippets.py",
+        "grounding_checks.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "__init__.py": {},
+    "bridge_signals.py": {},
+    "deterministic_answers.py": {
+      "prompt_extraction.py": "imports",
+      "prompt_modes.py": "imports"
+    },
+    "focus_snippets.py": {
+      "prompt_extraction.py": "imports",
+      "prompt_modes.py": "imports"
+    },
+    "grounding_checks.py": {
+      "prompt_extraction.py": "imports",
+      "prompt_modes.py": "imports"
+    },
+    "prompt_extraction.py": {},
+    "prompt_modes.py": {
+      "prompt_extraction.py": "imports"
+    }
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

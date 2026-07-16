@@ -17,7 +17,7 @@ This card is routing metadata. It helps the AI understand when this prompt folde
 It does not replace the prompts inside this folder and must not become a behavioral master prompt.
 
 ## Responsibility
-Guide testing, documentation, resilience, logging, metrics, security, type safety, and validation quality.
+Guide testing, documentation, resilience, logging, metrics, security, type safety, validation quality, and evidence-first anti-hallucination review.
 
 ## Use When
 Use when a patch affects tests, docs, error handling, security, observability, serialization, or quality gates.
@@ -50,6 +50,9 @@ Do not use as the primary owner for domain architecture or delivery mechanics.
 - resilience
 - docstrings
 - validation
+- anti hallucination
+- evidence first coding
+- verify AI code claims
 
 ## Minimum Viable Context
 - python_testing_pytest or python_documentation_developer_experience selected by task
@@ -65,6 +68,16 @@ Do not use as the primary owner for domain architecture or delivery mechanics.
 | `python_testing_pytest` | `python_testing_pytest.md` | on_request | Designs and runs Python tests using pytest. |
 | `python_validation_serialisation_type_safety` | `python_validation_serialisation_type_safety.md` | on_request | Improves validation, serialization, and typing safety in Python. |
 | `tab4_docstring_quality_roadmap` | `tab4_docstring_quality_roadmap.md` | on_request | Improves docstring quality and Tab 4 documentation workflow. |
+| `anti_hallucination_full_group` | `anti_hallucination_full_group.md` | routed | Routes high-risk work through the complete independent-audit, web-disconfirmation, literature, and master-protocol train. |
+| `anti_hallucination_short_group` | `anti_hallucination_short_group.md` | routed | Routes routine governed work through the compact anti-hallucination train and escalates high-risk work to the full group. |
+| `anti_hallucination_independent_ai_audit_full` | `anti_hallucination_independent_ai_audit_full.md` | on_request | Performs deep independent adversarial review and builds an assumption/claim ledger. |
+| `anti_hallucination_web_evidence_audit_full` | `anti_hallucination_web_evidence_audit_full.md` | on_request | Performs current-source verification plus deliberate disconfirmation search. |
+| `anti_hallucination_book_literature_audit_full` | `anti_hallucination_book_literature_audit_full.md` | on_request | Performs selective literature-level architecture audit only when justified. |
+| `anti_hallucination_master_protocol_full` | `anti_hallucination_master_protocol_full.md` | on_request | Applies the complete evidence-first anti-hallucination engineering protocol. |
+| `anti_hallucination_independent_ai_audit_short` | `anti_hallucination_independent_ai_audit_short.md` | on_request | Compact adversarial audit for routine governed work. |
+| `anti_hallucination_web_evidence_audit_short` | `anti_hallucination_web_evidence_audit_short.md` | on_request | Compact evidence and disconfirmation audit. |
+| `anti_hallucination_book_literature_audit_short` | `anti_hallucination_book_literature_audit_short.md` | on_request | Compact selective literature audit. |
+| `anti_hallucination_protocol_short` | `anti_hallucination_protocol_short.md` | on_request | Compact evidence-first anti-hallucination engineering protocol. |
 
 ## Routing Rule
 Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.

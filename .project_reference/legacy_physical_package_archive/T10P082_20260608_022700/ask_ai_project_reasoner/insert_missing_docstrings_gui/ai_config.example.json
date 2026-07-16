@@ -1,0 +1,22 @@
+{
+  "base_url": "http://localhost:11434/v1",
+  "model": "qwen2.5-coder:7b",
+  "timeout_seconds": 30.0,
+  "max_tokens": 512,
+  "temperature": 0.0,
+  "fallback_to_heuristic": false,
+  "workers": 1,
+  "cache_enabled": true,
+  "cache_path": ".docstring_cache.json",
+  "docstring_style": "numpy",
+  "include_private": true,
+  "min_confidence": "low",
+  "max_line_length": 88,
+  "max_todo_ratio": 0.5,
+  "allow_invented_params": false,
+  "allow_invented_raises": false,
+  "uncertain_annotation": true,
+  "max_docstring_length": 4000,
+  "use_structured_outputs": true,
+  "require_ai_success": true
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0.0",
+  "status": "active",
+  "purpose": "Read-only prompt groups for Tab 9 Prompt Engineering Library dashboard cards.",
+  "groups": [
+    {
+      "group_id": "daily_start",
+      "display_name": "Daily Start Prompts",
+      "color_role": "blue",
+      "font_weight": "bold",
+      "description": "Prompts and router logic to open when a new engineering chat starts.",
+      "prompt_ids": [
+        "0000_0_1_general_prompt_stack_load_order",
+        "kanda_prompt_router",
+        "0000_0_8_universal_delivery_protocol",
+        "0000_1_0_project_startup_canon_template",
+        "0000_2_1_daily_startup_loader_template"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "end_of_day_handoff",
+      "display_name": "End of Day / Handoff",
+      "color_role": "green",
+      "font_weight": "bold",
+      "description": "Prompts and notes used to close a work session or hand off unfinished work.",
+      "prompt_ids": [
+        "0000_6_0_workflow_handoff_template",
+        "text_library_freeze_handoff",
+        "prompt_library_current_state",
+        "prompt_library_roadmap"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "governance_freeze",
+      "display_name": "Governance Freeze",
+      "color_role": "gold",
+      "font_weight": "bold",
+      "description": "Governance-sensitive prompts used only after validation and explicit approval.",
+      "prompt_ids": [
+        "0000_4_0_end_of_chat_governance_update_template",
+        "governance_update_overlay_notes_template",
+        "prompt_pack_release_notes_template"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "high_risk_engineering",
+      "display_name": "High-Risk Engineering",
+      "color_role": "orange",
+      "font_weight": "bold",
+      "description": "Prompts for runtime behavior, schema, persistence, public APIs, GUI lifecycle, and multi-box work.",
+      "prompt_ids": [
+        "0000_3_6_professional_engineering_governance_layer",
+        "0000_1_0_project_startup_canon_template",
+        "architecture_hardening_overlay_template",
+        "kanda_bundle_gated_development_workflow",
+        "python_clean_code_overlay"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "large_module_refactor",
+      "display_name": "Large Module Refactor",
+      "color_role": "purple",
+      "font_weight": "bold",
+      "description": "Prompts for files above 500 lines, helper splits, staged refactors, and API-preserving decomposition.",
+      "prompt_ids": [
+        "0000_5_5_large_module_refactor_protocol_template",
+        "large_module_overlay_profile_template",
+        "python_clean_code_overlay"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "architecture_hardening",
+      "display_name": "Architecture Hardening",
+      "color_role": "red",
+      "font_weight": "bold",
+      "description": "Prompts for warning cleanup, layer-boundary safety, duplicate ownership, shadow paths, and state-safety triage.",
+      "prompt_ids": [
+        "0000_8_1_architecture_hardening_triage_protocol_template",
+        "architecture_hardening_overlay_template",
+        "project_agnostic_prompt_review_checklist",
+        "prompt_metadata_consistency_checklist"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "domain_special_overlays",
+      "display_name": "Domain / Special Overlays",
+      "color_role": "teal",
+      "font_weight": "bold",
+      "description": "Reusable templates for project-specific frozen decision tables and do-not-regress overlays.",
+      "prompt_ids": [
+        "domain_decision_table_overlay_template",
+        "ui_component_do_not_regress_overlay_template",
+        "architecture_hardening_overlay_template",
+        "governance_update_overlay_notes_template"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "prompt_library_tools",
+      "display_name": "Prompt Library Tools",
+      "color_role": "gray",
+      "font_weight": "bold",
+      "description": "Templates and checklists for maintaining, validating, exporting, and documenting prompt packs.",
+      "prompt_ids": [
+        "prompt_template_blueprint",
+        "prompt_pack_manifest_template",
+        "prompt_pack_export_checklist",
+        "prompt_pack_import_checklist",
+        "prompt_validation_report_template",
+        "prompt_library_qa_checklist",
+        "prompt_library_release_checklist",
+        "prompt_library_master_index"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "teach_ai_prompt_authoring",
+      "display_name": "Teach AI Prompt Authoring",
+      "color_role": "gold",
+      "font_weight": "bold",
+      "description": "Teach an AI how to create or update prompts so they fit Tab 9 Prompt Library logic.",
+      "prompt_ids": [
+        "teach_ai_tab9_prompt_authoring_guide",
+        "teach_ai_create_or_update_prompt_request",
+        "tab9_prompt_asset_placement_rules",
+        "kanda_bundle_gated_development_workflow"
+      ],
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    }
+  ]
+}

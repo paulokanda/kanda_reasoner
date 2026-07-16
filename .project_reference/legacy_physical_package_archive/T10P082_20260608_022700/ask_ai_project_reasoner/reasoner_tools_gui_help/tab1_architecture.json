@@ -1,0 +1,556 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "1. First step: check/correct architecture",
+  "purpose": "Explain architecture errors that Tab 1 should expose, including what they mean and what can happen if not corrected.",
+  "created_for": "Future GUI helper button content",
+  "placement_reason": "Stored under _project_reference/TAB_HELP so this is documentation/helper data only and does not change runtime behavior.",
+  "implementation_status_note": "W022C/W022D help parity verified: all 25 Tab 1 architecture help categories are mapped to implemented Tab 1 architecture validation issue codes. This JSON is beginner-facing helper content and does not change runtime behavior.",
+  "display_lines": [
+    "1. Duplicate public symbols - Two or more files define or export the same public class, function, or constant name. A beginner can think of it like two workers wearing the same name tag.",
+    "2. Symbol shadowing - A local name hides another name with the same spelling. It is like putting a new label over an old label, so the original becomes hard to see.",
+    "3. Wrong owner box - Code lives in the wrong part of the system. It is like storing kitchen tools inside the bathroom cabinet.",
+    "4. Cross-box boundary violations - One part of the app reaches directly into another part that it should not control. It is like a cashier changing the chef's recipe without asking.",
+    "5. Circular imports - Two files depend on each other in a loop. File A needs File B, while File B needs File A.",
+    "6. Side effect on import - A module performs visible work just by being imported. Imports should define names, not start actions, change folders, write files, or launch tools.",
+    "7. Mixed responsibility files - One file tries to do too many unrelated jobs. It is like one person being the driver, mechanic, accountant, and doctor at the same time.",
+    "8. Stale or deprecated variants - Old versions, backup files, or temporary copies remain in the project and look active.",
+    "9. Misplaced tests - A test file exists, but it is in the wrong folder or tests the wrong target.",
+    "10. Test protection gap - Important active source code has no direct or indirect test protection, so future changes can break it without the validation workflow noticing.",
+    "11. Unsafe path and platform assumptions - The code assumes a path style, operating system, or encoding that may not match the real environment.",
+    "12. Canonical vs working-copy boundary errors - The app confuses the protected official JSON with the local AI working copy.",
+    "13. Generated artifact contract errors - Generated files do not match the expected format, name, location, or required sections.",
+    "14. Public API instability - A public function, class, or export changes without compatibility planning.",
+    "15. Dead code and unreachable files - Files or functions exist but nothing uses them.",
+    "16. Inconsistent source of truth - Two project documents or code sections disagree about what is active or correct.",
+    "17. Test asserts internal detail - A test depends on private implementation details instead of public behavior, making safe refactors look broken.",
+    "18. Import heaviness and slow startup risk - A lightweight tool imports heavy modules too early.",
+    "19. Bundle safety issues - A delivered ZIP changes too much, lacks a manifest, or modifies the wrong files.",
+    "20. Project-wide AI confusion risks - The project is arranged in a way that makes AI likely to choose the wrong file, owner, or symbol.",
+    "21. Cross-box public symbol collision - Different boxes expose the same public name. This is more specific than ordinary duplicates because it crosses architecture boundaries.",
+    "22. Shared mutable state coupling - Mutable state is shared across architecture boxes, so one box can silently change another box's runtime behavior.",
+    "23. Inconsistent error contract at boundaries - One box raises errors, another swallows errors, and another returns None. The boundary has no common rule.",
+    "24. Tests assert implementation internals instead of public contracts - A test checks private details instead of checking what the user or public API should observe.",
+    "25. Missing __all__ or uncontrolled public surface - A module does not clearly say which names are public. Everything can look exportable."
+  ],
+  "errors": [
+    {
+      "number": 1,
+      "error": "Duplicate public symbols",
+      "plain_explanation": "Two or more files define or export the same public class, function, or constant name. A beginner can think of it like two workers wearing the same name tag.",
+      "if_not_corrected": "The AI or developer may edit the wrong file, import the wrong function, or believe one feature is fixed while another duplicate is still active.",
+      "easy_example": "Two files both define PromptBuilder. One is old and one is active. The AI edits the old one, so the app behavior does not change.",
+      "evidence_to_check": [
+        "symbol_index",
+        "web_ai_symbol_index",
+        "primary_definition_index",
+        "files",
+        "DUPLICATE_PUBLIC_SYMBOL"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "duplicate_public_symbol_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "DUPLICATE_PUBLIC_SYMBOL"
+      ]
+    },
+    {
+      "number": 2,
+      "error": "Symbol shadowing",
+      "plain_explanation": "A local name hides another name with the same spelling. It is like putting a new label over an old label, so the original becomes hard to see.",
+      "if_not_corrected": "The code may call a local variable or local helper instead of the intended imported function. This can create subtle bugs.",
+      "easy_example": "A file imports json, then later creates a variable called json. After that, json.dumps may fail because json is no longer the module.",
+      "evidence_to_check": [
+        "files",
+        "source_file_index",
+        "symbol_index",
+        "imports",
+        "SYMBOL_SHADOWING"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "shadowed_symbol_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "SYMBOL_SHADOWING"
+      ]
+    },
+    {
+      "number": 3,
+      "error": "Wrong owner box",
+      "plain_explanation": "Code lives in the wrong part of the system. It is like storing kitchen tools inside the bathroom cabinet.",
+      "if_not_corrected": "Future changes become risky because the person or AI looking for the correct owner may patch the symptom instead of the real module.",
+      "easy_example": "Prompt-building rules are placed inside the AI bridge, even though the Prompt Builder box should own prompt construction.",
+      "evidence_to_check": [
+        "web_ai_file_responsibility_index",
+        "boundary_index",
+        "semantic_roles",
+        "files",
+        "WRONG_OWNER_BOX"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "box_owner_boundary_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "WRONG_OWNER_BOX"
+      ]
+    },
+    {
+      "number": 4,
+      "error": "Cross-box boundary violations",
+      "plain_explanation": "One part of the app reaches directly into another part that it should not control. It is like a cashier changing the chef's recipe without asking.",
+      "if_not_corrected": "Boxes become tightly coupled. A safe change in one area can unexpectedly break another area.",
+      "easy_example": "The GUI imports private splitter internals instead of using the splitter public API.",
+      "evidence_to_check": [
+        "import_graph",
+        "call_edges",
+        "boundary_violation_index",
+        "boundary_handoffs",
+        "CROSS_BOX_BOUNDARY_VIOLATION"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "cross_box_boundary_violation_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "CROSS_BOX_BOUNDARY_VIOLATION"
+      ]
+    },
+    {
+      "number": 5,
+      "error": "Circular imports",
+      "plain_explanation": "Two files depend on each other in a loop. File A needs File B, while File B needs File A.",
+      "if_not_corrected": "The app may fail during startup or fail only sometimes depending on import order.",
+      "easy_example": "main_window.py imports ui_builder.py, and ui_builder.py imports main_window.py back.",
+      "evidence_to_check": [
+        "import_graph",
+        "files",
+        "module_summary_index",
+        "CIRCULAR_IMPORT"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "circular_import_detector_gate",
+      "priority": "medium_high",
+      "implemented_issue_codes": [
+        "CIRCULAR_IMPORT"
+      ]
+    },
+    {
+      "number": 6,
+      "error": "Side effect on import",
+      "plain_explanation": "A file does real work just because it is imported. Importing should usually only define functions, classes, and constants.",
+      "if_not_corrected": "Opening a module for inspection may start the GUI, write files, run the collector, or change settings unexpectedly.",
+      "easy_example": "A validator imports a module and the module immediately starts collecting the project structure. Importing a helper module immediately opens a GUI window, changes the current directory, writes a file, or starts a subprocess.",
+      "evidence_to_check": [
+        "source_file_index",
+        "call_edges",
+        "entry_points_detail",
+        "files",
+        "SIDE_EFFECT_ON_IMPORT"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "import_side_effect_detector_gate",
+      "priority": "medium",
+      "implemented_issue_code": "SIDE_EFFECT_ON_IMPORT",
+      "parity_keywords": [
+        "side effect on import",
+        "SIDE_EFFECT_ON_IMPORT"
+      ],
+      "implemented_issue_codes": [
+        "SIDE_EFFECT_ON_IMPORT"
+      ]
+    },
+    {
+      "number": 7,
+      "error": "Mixed responsibility files",
+      "plain_explanation": "One file tries to do too many unrelated jobs. It is like one person being the driver, mechanic, accountant, and doctor at the same time.",
+      "if_not_corrected": "The file becomes hard to understand, hard to test, and dangerous to refactor.",
+      "easy_example": "One file owns GUI layout, JSON collection, splitter validation, and AI prompt rules.",
+      "evidence_to_check": [
+        "web_ai_file_responsibility_index",
+        "semantic_roles",
+        "symbol_index",
+        "files",
+        "MIXED_RESPONSIBILITY_FILE"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "mixed_responsibility_file_detector_gate",
+      "priority": "medium_high",
+      "implemented_issue_codes": [
+        "MIXED_RESPONSIBILITY_FILE"
+      ]
+    },
+    {
+      "number": 8,
+      "error": "Stale or deprecated variants",
+      "plain_explanation": "Old versions, backup files, or temporary copies remain in the project and look active.",
+      "if_not_corrected": "The AI or developer may edit an old file instead of the real active one.",
+      "easy_example": "json_splitter_7.py, json_splitter_8.py, and old_json_splitter_backup.py all exist, but only one is active.",
+      "evidence_to_check": [
+        "files",
+        "canonical_conflict_index",
+        "legacy_shadow_hotspots",
+        "implementation_chronology_index",
+        "STALE_VARIANT_SOURCE_OF_TRUTH",
+        "DEPRECATED_VARIANT_STILL_REFERENCED"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "deprecated_variant_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "STALE_VARIANT_SOURCE_OF_TRUTH",
+        "DEPRECATED_VARIANT_STILL_REFERENCED"
+      ]
+    },
+    {
+      "number": 9,
+      "error": "Misplaced tests",
+      "plain_explanation": "A test file exists, but it is in the wrong folder or tests the wrong target.",
+      "if_not_corrected": "The project may look tested while the actual active code is not protected.",
+      "easy_example": "A test named test_splitter.py actually imports an old deprecated splitter file.",
+      "evidence_to_check": [
+        "test_links",
+        "web_ai_test_protection_index",
+        "files",
+        "MISPLACED_TEST"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "misplaced_test_detector_gate",
+      "priority": "medium",
+      "implemented_issue_codes": [
+        "MISPLACED_TEST"
+      ]
+    },
+    {
+      "number": 10,
+      "error": "Test protection gap",
+      "plain_explanation": "Important files exist without focused tests. It is like having a bridge with no inspection record.",
+      "if_not_corrected": "Critical behavior can break silently during refactors.",
+      "easy_example": "PromptBuilder is central to AI answers, but no test checks that it includes file evidence. A public workflow detector is used by Tab 2, but no focused test or workflow validation protects that detector behavior.",
+      "evidence_to_check": [
+        "web_ai_test_protection_index",
+        "test_links",
+        "web_ai_file_responsibility_index",
+        "TEST_PROTECTION_GAP"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "test_protection_gap_detector_gate",
+      "priority": "high",
+      "implemented_issue_code": "TEST_PROTECTION_GAP",
+      "parity_keywords": [
+        "test protection gap",
+        "TEST_PROTECTION_GAP"
+      ],
+      "implemented_issue_codes": [
+        "TEST_PROTECTION_GAP"
+      ]
+    },
+    {
+      "number": 11,
+      "error": "Unsafe path and platform assumptions",
+      "plain_explanation": "The code assumes a path style, operating system, or encoding that may not match the real environment.",
+      "if_not_corrected": "The tool may work on one computer but fail on another, or write output to the wrong place.",
+      "easy_example": "A Windows-only path is hardcoded even though the project root should be selected by the user.",
+      "evidence_to_check": [
+        "files",
+        "collection_config",
+        "packaging_metadata",
+        "limitations",
+        "UNSAFE_PATH_PLATFORM_ASSUMPTION"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "unsafe_path_platform_assumption_detector_gate",
+      "priority": "medium_high",
+      "implemented_issue_codes": [
+        "UNSAFE_PATH_PLATFORM_ASSUMPTION"
+      ]
+    },
+    {
+      "number": 12,
+      "error": "Canonical vs working-copy boundary errors",
+      "plain_explanation": "The app confuses the protected official JSON with the local AI working copy.",
+      "if_not_corrected": "Local experiments may corrupt the canonical JSON used for web AI export.",
+      "easy_example": "A local-AI enrichment step writes into developer_tools__complete.json instead of developer_tools__complete_local_AI.json.",
+      "evidence_to_check": [
+        "persistence_io_index",
+        "call_edges",
+        "files",
+        "reasoner_project_truths",
+        "CANONICAL_WORKING_COPY_BOUNDARY"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "dual_json_boundary_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "CANONICAL_WORKING_COPY_BOUNDARY"
+      ]
+    },
+    {
+      "number": 13,
+      "error": "Generated artifact contract errors",
+      "plain_explanation": "Generated files do not match the expected format, name, location, or required sections.",
+      "if_not_corrected": "Downstream tools may read incomplete or stale outputs and still appear to work.",
+      "easy_example": "A split upload package is missing the route manifest, so web AI does not know which chunk to inspect.",
+      "evidence_to_check": [
+        "stable_evidence_id_summary",
+        "web_ai_readme",
+        "web_ai_route_manifest",
+        "split_manifest",
+        "GENERATED_ARTIFACT_CONTRACT"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "generated_artifact_contract_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "GENERATED_ARTIFACT_CONTRACT"
+      ]
+    },
+    {
+      "number": 14,
+      "error": "Public API instability",
+      "plain_explanation": "A public function, class, or export changes without compatibility planning.",
+      "if_not_corrected": "Other files, tests, workflows, or users may still call the old public name and crash.",
+      "easy_example": "select_focus_snippets_from_prompt is renamed to _select_focus_snippets_from_prompt, but ai_bridge.py still calls the old public name.",
+      "evidence_to_check": [
+        "__all__",
+        "symbol_index",
+        "call_edges",
+        "test_links",
+        "PUBLIC_API_INSTABILITY"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "public_api_instability_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "PUBLIC_API_INSTABILITY"
+      ]
+    },
+    {
+      "number": 15,
+      "error": "Dead code and unreachable files",
+      "plain_explanation": "Files or functions exist but nothing uses them.",
+      "if_not_corrected": "The project becomes noisy, and AI may waste attention on code that does not affect the app.",
+      "easy_example": "A deprecated GUI runner is still present but no workflow or import uses it.",
+      "evidence_to_check": [
+        "import_graph",
+        "call_edges",
+        "entry_points_detail",
+        "files",
+        "DEAD_CODE_UNREACHABLE_FILE"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "dead_code_unreachable_file_detector_gate",
+      "priority": "medium",
+      "implemented_issue_codes": [
+        "DEAD_CODE_UNREACHABLE_FILE"
+      ]
+    },
+    {
+      "number": 16,
+      "error": "Inconsistent source of truth",
+      "plain_explanation": "Two project documents or code sections disagree about what is active or correct.",
+      "if_not_corrected": "A developer or AI may follow outdated documentation instead of the real source.",
+      "easy_example": "The README says the splitter output folder is json_split, but the GUI writes to json_splitted.",
+      "evidence_to_check": [
+        "documentation_intent",
+        "web_ai_file_responsibility_index",
+        "source_file_index",
+        "files",
+        "STALE_VARIANT_SOURCE_OF_TRUTH"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "source_of_truth_consistency_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "STALE_VARIANT_SOURCE_OF_TRUTH"
+      ]
+    },
+    {
+      "number": 17,
+      "error": "Test asserts internal detail",
+      "plain_explanation": "The code hides errors, reports false success, or gives unclear failure messages.",
+      "if_not_corrected": "The app may fail silently, making the user believe output is valid when it is not.",
+      "easy_example": "A validator catches every exception and still prints PASS. A test imports a private helper or checks a private variable name instead of validating the public command, issue code, or output.",
+      "evidence_to_check": [
+        "control_flow",
+        "call_edges",
+        "files",
+        "runtime_trace_raw",
+        "TEST_ASSERTS_INTERNAL_DETAIL"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "error_handling_contract_detector_gate",
+      "priority": "high",
+      "implemented_issue_code": "TEST_ASSERTS_INTERNAL_DETAIL",
+      "parity_keywords": [
+        "test asserts internal detail",
+        "TEST_ASSERTS_INTERNAL_DETAIL"
+      ],
+      "implemented_issue_codes": [
+        "TEST_ASSERTS_INTERNAL_DETAIL"
+      ]
+    },
+    {
+      "number": 18,
+      "error": "Import heaviness and slow startup risk",
+      "plain_explanation": "A lightweight tool imports heavy modules too early.",
+      "if_not_corrected": "Startup becomes slow, fragile, or dependent on optional packages that are not needed yet.",
+      "easy_example": "The architecture checker imports the full PySide6 GUI just to read a pure helper function.",
+      "evidence_to_check": [
+        "import_graph",
+        "module_centrality_index",
+        "files",
+        "IMPORT_HEAVINESS_STARTUP"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "import_heaviness_detector_gate",
+      "priority": "medium",
+      "implemented_issue_codes": [
+        "IMPORT_HEAVINESS_STARTUP"
+      ]
+    },
+    {
+      "number": 19,
+      "error": "Bundle safety issues",
+      "plain_explanation": "A delivered ZIP changes too much, lacks a manifest, or modifies the wrong files.",
+      "if_not_corrected": "A small bug fix can accidentally become a broad rewrite.",
+      "easy_example": "A query-router cleanup bundle also changes the prompt builder and generated JSON.",
+      "evidence_to_check": [
+        "_project_reference/BUNDLE_MANIFEST",
+        "bundle manifest text",
+        "files changed list",
+        "BUNDLE_SAFETY"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "bundle_safety_detector_gate",
+      "priority": "medium_high",
+      "implemented_issue_codes": [
+        "BUNDLE_SAFETY"
+      ]
+    },
+    {
+      "number": 20,
+      "error": "Project-wide AI confusion risks",
+      "plain_explanation": "The project is arranged in a way that makes AI likely to choose the wrong file, owner, or symbol.",
+      "if_not_corrected": "AI assistance becomes less reliable, even if every individual file is syntactically valid.",
+      "easy_example": "Several files claim to own workflow validation, and none is clearly marked active.",
+      "evidence_to_check": [
+        "canonical_conflict_index",
+        "responsibility_overlap_index",
+        "primary_definition_index",
+        "web_ai_readme",
+        "PROJECT_WIDE_AI_CONFUSION"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "ai_confusion_risk_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "PROJECT_WIDE_AI_CONFUSION"
+      ]
+    },
+    {
+      "number": 21,
+      "error": "Cross-box public symbol collision",
+      "plain_explanation": "Different boxes expose the same public name. This is more specific than ordinary duplicates because it crosses architecture boundaries.",
+      "if_not_corrected": "Import order or user assumptions can decide which version is used, instead of a clear owner contract.",
+      "easy_example": "A collector box and splitter box both export write_report, but they mean different things.",
+      "evidence_to_check": [
+        "symbol_index",
+        "import_graph",
+        "boundary_index",
+        "web_ai_file_responsibility_index",
+        "CROSS_BOX_PUBLIC_SYMBOL_COLLISION"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "cross_box_public_symbol_collision_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "CROSS_BOX_PUBLIC_SYMBOL_COLLISION"
+      ]
+    },
+    {
+      "number": 22,
+      "error": "Shared mutable state coupling",
+      "plain_explanation": "Two files quietly read and write the same global state without a clear interface.",
+      "if_not_corrected": "A change in one box can unexpectedly change another box's behavior.",
+      "easy_example": "A GUI controller and a runtime helper both mutate the same global current_json_path. A global list or dictionary is imported and modified by multiple boxes instead of being passed through an explicit adapter or service.",
+      "evidence_to_check": [
+        "attribute_state_map",
+        "object_ownership",
+        "state_mutation_index",
+        "SHARED_MUTABLE_STATE_COUPLING"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "shared_mutable_global_coupling_gate",
+      "priority": "medium_high",
+      "implemented_issue_code": "SHARED_MUTABLE_STATE_COUPLING",
+      "parity_keywords": [
+        "shared mutable state coupling",
+        "SHARED_MUTABLE_STATE_COUPLING"
+      ],
+      "implemented_issue_codes": [
+        "SHARED_MUTABLE_STATE_COUPLING"
+      ]
+    },
+    {
+      "number": 23,
+      "error": "Inconsistent error contract at boundaries",
+      "plain_explanation": "One box raises errors, another swallows errors, and another returns None. The boundary has no common rule.",
+      "if_not_corrected": "Failures disappear or appear in the wrong place, making debugging very hard.",
+      "easy_example": "The splitter raises ValueError, the GUI catches Exception, and the workflow still says output is ready.",
+      "evidence_to_check": [
+        "call_edges",
+        "control_flow",
+        "runtime_trace_raw",
+        "errors",
+        "BOUNDARY_ERROR_CONTRACT"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "boundary_error_contract_detector_gate",
+      "priority": "medium_high",
+      "implemented_issue_codes": [
+        "BOUNDARY_ERROR_CONTRACT"
+      ]
+    },
+    {
+      "number": 24,
+      "error": "Tests assert implementation internals instead of public contracts",
+      "plain_explanation": "A test checks private details instead of checking what the user or public API should observe.",
+      "if_not_corrected": "Safe refactors can break tests, while real behavior bugs may be missed.",
+      "easy_example": "A test checks window._hidden_internal_list instead of checking that the UI shows the expected result.",
+      "evidence_to_check": [
+        "files",
+        "test_links",
+        "source_file_index",
+        "symbol_index",
+        "TEST_ASSERTS_INTERNAL_DETAIL"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "test_internal_detail_detector_gate",
+      "priority": "medium",
+      "implemented_issue_codes": [
+        "TEST_ASSERTS_INTERNAL_DETAIL"
+      ]
+    },
+    {
+      "number": 25,
+      "error": "Missing __all__ or uncontrolled public surface",
+      "plain_explanation": "A module does not clearly say which names are public. Everything can look exportable.",
+      "if_not_corrected": "Private helpers may become accidental public API, increasing duplicate-symbol noise and boundary confusion.",
+      "easy_example": "A helper function meant only for one file is imported by another box because it was not marked private or excluded from __all__.",
+      "evidence_to_check": [
+        "source_file_index",
+        "files",
+        "__all__",
+        "symbol_index",
+        "MISSING___ALL___FOR_EXPOSES",
+        "MISSING_PUBLIC_SURFACE_CONTROL"
+      ],
+      "code_status": "Implemented or mapped in Tab 1 architecture validation. Help parity verified by W022C/W022D.",
+      "planned_detector_gate": "public_surface_control_detector_gate",
+      "priority": "high",
+      "implemented_issue_codes": [
+        "MISSING___ALL___FOR_EXPOSES",
+        "MISSING_PUBLIC_SURFACE_CONTROL"
+      ]
+    }
+  ]
+}

@@ -86,6 +86,7 @@ must not load the full Box Architecture canon at session start. For any risky
 implementation, repair, refactor, prompt update, governance update, bundle, GUI
 ownership, public-contract, cross-box, or mutable-state task, route to
 `box_architecture_canon.md` before the risky step.
+If a regression is visible in one box but ownership may belong to another box, shared host, handoff, persistence owner, root decision, or async lifecycle, route to `boundary_first_repair_protocol.md` before editing the symptomatic box.
 
 ## Routing authority
 
@@ -205,6 +206,37 @@ The folder number must match the target ACTIVE_PROMPTS folder family. Do not reu
 
 
 
+
+<!-- BRICK_WALL_COMPREHENSIVE_QUALITY_GATE_V1_START -->
+## Brick Wall comprehensive quality gate route
+
+When the user says `brick wall`, `show brick wall`, `brick wall check`, or asks
+where the governed implementation stands, route directly to:
+
+```text
+KPR-03-001 brick_wall_comprehensive_quality_gate
+```
+
+Canonical prompt path:
+
+```text
+ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md
+```
+
+Required behavior:
+
+1. Display `BRICK WALL STATUS` before implementation code.
+2. Display and update the Q01-Q40 live coverage ledger.
+3. Mark items complete only from current evidence.
+4. Reset stale or unsupported evidence-sensitive ticks.
+5. Keep coding blocked until Error Memory, exact-source, Tool/Project, Box,
+   NO-LEAK, MCard when applicable, regression, and validation preconditions pass.
+6. Request only the smallest relevant specialist companion prompts.
+
+Brick Wall is routed. Do not load the full prompt at every startup and do not
+turn it into a competing owner canon.
+<!-- BRICK_WALL_COMPREHENSIVE_QUALITY_GATE_V1_END -->
+
 <!-- CHATGPT_KANDA_ROUTING_CHOICE_OUTPUT_PROTOCOL_V1_START -->
 ## ChatGPT KANDA Routing Choice Output Protocol route
 
@@ -238,10 +270,10 @@ If a legacy prompt lacks a known prompt_code, do not invent a code. Include prom
 <!-- PROJECT_TOOL_BOUNDARY_CANON_V1_START -->
 ## Project Tool Boundary Canon route
 
-When a coding, patch, freeze, handoff, validation, source-inspection, project-root, or staging-path task could confuse KANDA Reasoner as the tool with `<my_project>` as the selected target project, load or recommend:
+`project_tool_boundary_canon` is mandatory beginning-of-session context. It is loaded from the startup pack before project work. When a coding, patch, freeze, handoff, validation, source-inspection, project-root, or staging-path task could confuse KANDA Reasoner as the tool with `<my_project>` as the selected target project, apply it as a hard boundary invariant and route companion prompts as needed:
 
 ```text
-project_tool_boundary_canon
+project_tool_boundary_canon = always_startup
 ```
 
 Prompt identity:
@@ -251,18 +283,66 @@ KPR-12-001 = project_tool_boundary_canon
 ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md
 ```
 
+Explicit Workbench routing signals:
+
+```text
+Large File Refactor Workbench Preview
+workbench preview root
+Preview versus Shadow
+large_file_refactor_workbench
+daily-work garbage only
+```
+
 Required behavior:
 
 ```text
+canonical support root = <project_drive>/<active_project_slug>_show_project_to_AI
+forbidden nested root = <active_project_root>/<active_project_slug>_show_project_to_AI
+forbidden nested root detection = hard fail before support writes
 tool_project_slug = kanda_reasoner
 active_project_slug = selected project in use
 active_project_root = selected project source root
 active_project_support_root = <project_drive>/<active_project_slug>_show_project_to_AI
-active_project_daily_work_root = <project_drive>/<active_project_slug>_delete_after_daily_work
+transient_garbage_root = <project_drive>/<active_project_slug>_delete_after_daily_work
 ```
 
-Do not hardcode `kanda_reasoner` as the active target project unless KANDA Reasoner is explicitly the selected active project. Project-specific support writes use `<active_project_support_root>` or `<active_project_daily_work_root>`. Selected project source edits use `<active_project_root>` only when the task intentionally edits that selected project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden. This route is a boundary invariant and must be paired with the relevant implementation, box, patch, validation, freeze, or handoff prompt; it does not replace those prompts.
+Do not hardcode `kanda_reasoner` as the active target project unless KANDA Reasoner is explicitly the selected active project. Durable project-specific support writes use `<active_project_support_root>`. Disposable staging, Shadow workspaces, temporary validation assembly, and regenerable garbage only use `<transient_garbage_root>`, which is ownership-free and may be deleted without affecting Tool or Project truth. Workbench Preview belongs under `<active_project_support_root>/large_file_refactor_workbench/preview/<preview_id>`; disposable Shadow may be placed under `<transient_garbage_root>/large_file_refactor_shadow/<shadow_id>` without becoming Tool or Project state. Selected project source edits use `<active_project_root>` only when the task intentionally edits that selected project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden. This route is a boundary invariant and must be paired with the relevant implementation, box, patch, validation, freeze, or handoff prompt; it does not replace those prompts.
 <!-- PROJECT_TOOL_BOUNDARY_CANON_V1_END -->
+
+
+<!-- ARCHITECTURE_REVIEW_PROJECT_CARD_MACHINE_CANON_V1_START -->
+## Architecture Review Project Card Machine Canon route
+
+When Architecture Review, AST Split Audit, Planner, Workbench, Completion, project-root switching, target switching, stale async results, transaction locks, apply/rollback, receipt, or post-completion state cleanup must preserve project ownership and lifecycle, load or recommend:
+
+```text
+KPR-12-005 = architecture_review_project_card_machine_canon
+KPR-12-001 = project_tool_boundary_canon
+router_bridge_governed_implementation, for implementation
+```
+
+Canonical path:
+
+```text
+ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md
+```
+
+Required principle:
+
+```text
+KANDA Reasoner Tool = reusable card machine
+Active Project = card owner
+Selected large module = inserted card
+AST Audit = read
+Planner = interpret and plan
+Workbench = preview/validate/authorize
+Apply = write to Active Project source
+Receipt = project-owned durable evidence
+Eject = clear target-specific Tool memory only after verified terminal completion or verified rollback
+```
+
+Never delete project-owned source, helpers, Preview/evidence, transaction records, mutation-lane state, or RefactorReceipt as part of Tool card ejection.
+<!-- ARCHITECTURE_REVIEW_PROJECT_CARD_MACHINE_CANON_V1_END -->
 
 ## Fast Path
 
@@ -293,7 +373,7 @@ Fast Path is not allowed for:
 | 03_governance_freeze_and_handoff | 9 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 04_box_architecture_and_boundaries | 5 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 05_patch_delivery_and_validation | 10 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
-| 06_refactor_and_architecture_hardening | 8 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
+| 06_refactor_and_architecture_hardening | 10 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 07_prompt_authoring_and_audit | 3 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 08_python_engineering_core | 12 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
 | 09_python_quality_security_observability | 7 | See GROUP_ASSIMILATION_INDEX.md for responsibility and use cases. |
@@ -433,6 +513,26 @@ Request `cooperative_implementation_methodology.md` from `03_governance_freeze_a
 
 Do not load it for simple questions or as a replacement for Box Architecture, patch delivery, freeze memory, or prompt-authoring specialist prompts. It is a cooperation-method overlay only.
 
+
+
+## Boundary-First Repair Protocol routing hook
+
+Request `boundary_first_repair_protocol.md` from `04_box_architecture_and_boundaries` when a regression is visible in one box but the defect may be owned by another box, shared host, handoff producer, persistence/config owner, root decision, public-contract producer, or async lifecycle owner; or when a proposed patch starts editing the symptom box before ownership is proven.
+
+The protocol is routed/on-demand. It does not replace `box_architecture_canon` or `kanda_box_shielding_canon`. Use it to trace authority and state flow, identify the first proven ownership violation, repair there, and validate downstream shield behavior without widening unrelated production edits.
+
+Required companions normally include:
+
+```text
+1. boundary_first_repair_protocol
+2. box_architecture_canon
+3. kanda_box_shielding_canon when downstream invariants or shared-state regression risk exists
+4. project_tool_boundary_canon when Tool/Project/root identity can be confused
+5. owning-box exact source and affected downstream validation evidence
+6. 05_patch_delivery_and_validation if an installable patch or validation delivery is requested
+```
+
+May proceed now is PARTIAL for read-only diagnosis. It is NO for implementation until repair ownership, allowed files, out-of-scope files, cross-box touches, and validation scope are explicit.
 
 
 ## KANDA Box Shielding Canon routing hook
@@ -599,9 +699,11 @@ Do not downgrade the context load to medium/medium-high for this confirmation-by
 | explain / discuss / brainstorm | none beyond loaded kernel | selected group only if needed | DEGRADED WARNING if evidence thin |
 | create or modify code | 05 plus source files and validation steps; 04 if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08, 09, 10 depending on task | HARD STOP before implementation; new code modules must stay <=500 lines |
 | create a new folder with a databank | 04, 05, 09, 10 | 11 if production-ready storage | HARD STOP before implementation |
-| large code module / code file over 500 lines, or new code module expected to exceed 500 lines | 04, 05, 06 with large_module_refactor_protocol v7.3 plus large_module_refactor_template; AST Split Audit handoff when available | 08, 09 | HARD STOP before implementation; require candidate-island queue and patch composition decision before code changes |
-| several independent or dependency-ordered large-module refactor patches can be prepared together | 04, 05, 06 with large_module_refactor_protocol v7.3 and router_bridge_governed_implementation | 08, 09 | May prepare up to four ordered patch ZIPs, each normally with at most two related slices; every ZIP must install, validate, ZIP-contract-check, freeze-prep, preview, and freeze before the next ZIP; v7.3 also forbids needless micro-files and requires normal .py source logic |
-| external Web AI should improve a copied Large File Refactor Planner package or create an Imported Web AI Version ZIP | 04, 05, 06 with large_module_refactor_protocol v7.3 plus KPR-06-001 web_ai_large_module_refactor_exchange_protocol | 03 for freeze evidence | External AI is bounded to known planning objects; return governed import ZIP, then install -> Receive Planning from Web AI -> review -> load before Workbench handoff |
+| large code module / code file over 500 lines, or new code module expected to exceed 500 lines | 04, 05, 06 with large_module_refactor_protocol v8.0 plus large_module_refactor_template; AST Split Audit handoff when available | 08, 09 | HARD STOP before implementation; require candidate-island queue and patch composition decision before code changes |
+| several independent or dependency-ordered large-module refactor patches can be prepared together | 04, 05, 06 with large_module_refactor_protocol v8.0 and router_bridge_governed_implementation | 08, 09 | May prepare up to four ordered patch ZIPs, each normally with at most two related slices; every ZIP must install, validate, ZIP-contract-check, freeze-prep, preview, and freeze before the next ZIP; v8.0 also forbids needless micro-files and requires normal .py source logic |
+| external Web AI should improve a copied Large File Refactor Planner package or create an Imported Web AI Version ZIP | 04, 05, 06 with large_module_refactor_protocol v8.0 plus KPR-06-001 web_ai_large_module_refactor_exchange_protocol and KPR-06-002 web_ai_planning_response_bundle_blueprint | 03 for freeze evidence | External AI is bounded to known planning objects; return governed import ZIP plus identical Panel 4 paste block, then install canonical artifact or use paste fallback -> review -> load before Workbench handoff |
+| AST Split Audit reports RISK REFACTORING and external Web AI should repair the source before split planning | 04, 05, 06 with large_module_refactor_protocol v8.0 plus KPR-06-003 web_ai_ast_split_risk_repair_protocol and python_refactoring | 03 for freeze evidence, 09 for focused validation | Copy exact target path, source hash, source content, safety label, and complete audit result; repair real blockers without weakening the classifier; require fresh AST Split Audit SAFE evidence before success |
+| AI needs a complete safe-refactor process refresher, delivery runbook, or Safe Refactor How To clipboard bundle | 04, 05, 06 with KPR-06-004 safe_refactor_how_to; add KPR-06-003 for a current RISK target repair | 08 python_refactoring, 09 for focused validation | Load the reusable runbook plus current routine support artifacts; keep worked report example non-authoritative; preserve Box Logic, shielding, semantic behavior probes, touched-family fresh AST audit, drive-root staging, governed ZIP delivery, and human freeze confirmation |
 | architecture decision | 04 | 06, 11, 12 | STEP PAUSE before canon/patch |
 | Pilot/Copilot Phase 0 / post-M35 / P0 / Pilot projection / Copilot boundary | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for read-only planning; P0 only until frozen |
 | semantic readiness / embeddings / ML retrieval / routing_signal_scorer v3 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_semantic_readiness_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus source files and validation steps if patching | 04, 09, 08 depending on implementation/safety scope | HARD STOP before implementation; PARTIAL only for architecture discussion |
@@ -1164,3 +1266,57 @@ Use Direct Error Lesson ZIP only when the user asks for a manual import package.
 - **When not to load:** Do not load alone without the active-ready JSON template unless a routed prompt explicitly already loaded that output contract.
 - **Required companion prompts:** `error_memory_active_ready_json_template`; `error_memory_active_ready_correction_blueprint`
 
+
+
+## Anti-Hallucination Evidence-First Route
+
+Use `anti_hallucination_short_group` from `09_python_quality_security_observability` as the compact companion when governed software work contains meaningful uncertainty, external API or dependency claims, validation claims, or a material risk of unsupported assumptions.
+
+Escalate to `anti_hallucination_full_group` when the task is architectural, multi-file, unfamiliar, dependency-changing, security-sensitive, concurrency-sensitive, cross-box, difficult to roll back, or explicitly requests deep independent audit plus web and literature verification.
+
+The full group applies this sequence:
+
+1. `anti_hallucination_independent_ai_audit_full`
+2. `anti_hallucination_web_evidence_audit_full`
+3. `anti_hallucination_book_literature_audit_full`, only when architecture uncertainty justifies it
+4. `anti_hallucination_master_protocol_full`
+
+The short group applies the corresponding short prompts in the same order.
+
+Hard rules:
+
+- AI opinions are hypotheses, not evidence.
+- Search for disconfirming evidence, not support only.
+- Preserve `UNVERIFIED`, `DEFER_TO_SOURCE_INSPECTION`, and `DEFER_TO_RUNTIME_TEST` outcomes.
+- Project source truth and governance outrank generic web or book advice for project-specific claims.
+- Current official documentation and executable version evidence govern external API/tool claims.
+- Neither group replaces source inspection, deterministic validation, Error Memory, freeze governance, or human approval.
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_START -->
+
+## Governed Architecture Companion - KPR-04-007
+
+Prompt ID: `governed_architecture_companion_handoff`
+
+Canonical path:
+
+```text
+ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md
+```
+
+Load mode: `on_request`
+
+Route here when the task is architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, or needs a unified visible gate coordinating Brick Wall, Tool/Project, Box, NO_LEAK, MCard, Shield, exact source, Error Memory, validation, startup, and freeze safeguards.
+
+Do not load it during normal startup. The startup stack carries only a compact bridge. This companion never replaces current canonical owners, and final coding authorization remains with Brick Wall.
+
+Required companions:
+
+```text
+brick_wall_comprehensive_quality_gate
+router_bridge_governed_implementation
+project_tool_boundary_canon
+box_architecture_canon
+```
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_END -->

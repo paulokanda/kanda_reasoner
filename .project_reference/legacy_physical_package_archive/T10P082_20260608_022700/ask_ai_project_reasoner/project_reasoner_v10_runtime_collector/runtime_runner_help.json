@@ -1,0 +1,11 @@
+{
+  "helper_group": "runtime_runner_help",
+  "helpers": [
+    "runtime_runner_part_1_private_impl.py",
+    "runtime_runner_part_2_private_impl.py",
+    "runtime_runner_part_3_private_impl.py"
+  ],
+  "origin": "runtime_runner.py",
+  "public_facade": "runtime_runner.py",
+  "strategy": "private_top_level_and_method_split"
+}

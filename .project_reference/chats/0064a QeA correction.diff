@@ -1,0 +1,94 @@
+--- orig/kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/runtime_controller.py	2026-07-02 21:41:25.404918049 +0000
++++ source/kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/runtime_controller.py	2026-07-02 21:40:35.608533931 +0000
+@@ -21,9 +21,44 @@
+     """Coordinate runtime setup and JSON-loading actions for the main window."""
+ 
+     def _tool_project_root(self) -> Path:
+-        """Return the developer_tools root that owns Reasoner assets."""
++        """Return the developer_tools root that owns Reasoner assets.
++
++        Retained only as a last-resort fallback for callers that have no
++        active project selected yet (e.g. before any project root has ever
++        been chosen in this window or propagated from the shell). Normal
++        Local-AI JSON copy actions must use ``_active_project_root`` instead,
++        which resolves to the currently selected project, not to the
++        kanda_reasoner tool's own source location.
++        """
+         return Path(__file__).resolve().parents[3]
+ 
++    def _active_project_root(self, window: Any) -> Path:
++        """Return the currently selected project root for this window.
++
++        Reads ``window.project_root_edit`` first, since that field is kept in
++        sync with the shell-wide active project (see
++        ``main_window_help/window_project_root.py``). Falls back to the
++        project root recorded on an already-loaded JSON index when the field
++        is empty, so a loaded session still resolves correctly. Raises
++        ``ValueError`` with a user-facing message when no active project can
++        be determined, rather than silently falling back to the tool's own
++        source root.
++        """
++        candidate = window.project_root_edit.text().strip()
++        if not candidate:
++            candidate = getattr(window.project_index, "project_root", "") or ""
++        if not candidate:
++            raise ValueError(
++                "No active project is selected. Choose a project root above "
++                "before creating or refreshing the Local-AI JSON copy."
++            )
++        root = Path(candidate).expanduser().resolve(strict=False)
++        if not root.is_dir():
++            raise ValueError(
++                "Selected project root does not exist on disk: " + str(root)
++            )
++        return root
++
+     def _show_local_ai_json_copy_result(self, window: Any, *, title: str, action_label: str, result: Any) -> None:
+         """Show and log the result of a local-AI JSON copy operation."""
+         lines = [action_label, '', 'message: ' + str(getattr(result, 'message', '')), 'canonical_json: ' + str(getattr(result, 'canonical_json', '')), 'local_ai_json: ' + str(getattr(result, 'local_ai_json', '')), 'metadata_json: ' + str(getattr(result, 'metadata_json', '')), 'hashes_match: ' + str(getattr(result, 'hashes_match', '')), 'local_is_stale: ' + str(getattr(result, 'local_is_stale', '')), 'bytes_copied: ' + str(getattr(result, 'bytes_copied', ''))]
+@@ -33,9 +68,10 @@
+         show_auto_close_action_window(window, title=title, message=action_label, detail_text=text)
+ 
+     def ensure_local_ai_json_copy(self, window: Any) -> None:
+-        """Create the local-AI JSON copy if missing."""
++        """Create the local-AI JSON copy if missing, for the active project."""
+         try:
+-            result = ensure_local_ai_copy(self._tool_project_root())
++            project_root = self._active_project_root(window)
++            result = ensure_local_ai_copy(project_root)
+         except Exception as exc:
+             window._append_log('Local-AI JSON ensure failed: ' + str(exc))
+             show_error_copy_close_window(window, title='Local-AI JSON error', message='Failed to create or inspect local-AI JSON copy:\n' + str(exc))
+@@ -44,12 +80,30 @@
+ 
+     def refresh_local_ai_json_copy(self, window: Any) -> None:
+         """Refresh the local-AI JSON copy from the canonical complete JSON."""
+-        answer = QMessageBox.question(window, 'Refresh local-AI JSON', 'Refresh developer_tools__complete_local_AI.json from developer_tools__complete.json?\n\nThis overwrites only the local-AI working copy. The canonical complete JSON is not modified.', QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
++        try:
++            project_root = self._active_project_root(window)
++        except Exception as exc:
++            window._append_log('Local-AI JSON refresh failed: ' + str(exc))
++            show_error_copy_close_window(window, title='Local-AI JSON error', message='Failed to refresh local-AI JSON copy:\n' + str(exc))
++            return
++        project_name = project_root.name
++        answer = QMessageBox.question(
++            window,
++            'Refresh local-AI JSON',
++            'Refresh ' + project_name + '__complete_local_AI.json from '
++            + project_name + '__complete.json for project:\n' + str(project_root)
++            + '\n\nThis overwrites only the local-AI working copy under that '
++            "project's show_project_to_AI folder. The canonical complete JSON "
++            'is not modified.',
++            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
++            QMessageBox.StandardButton.No,
++        )
+         if answer != QMessageBox.StandardButton.Yes:
+             window._append_log('Local-AI JSON refresh cancelled.')
+             return
+         try:
+-            result = refresh_local_ai_copy(self._tool_project_root())
++            project_root = self._active_project_root(window)
++            result = refresh_local_ai_copy(project_root)
+         except Exception as exc:
+             window._append_log('Local-AI JSON refresh failed: ' + str(exc))
+             show_error_copy_close_window(window, title='Local-AI JSON error', message='Failed to refresh local-AI JSON copy:\n' + str(exc))

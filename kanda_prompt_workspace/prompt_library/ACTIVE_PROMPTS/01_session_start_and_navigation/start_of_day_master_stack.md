@@ -56,12 +56,18 @@ Mandatory summarized box-boundary rule:
 - If boundary risk, cross-box leakage, public-contract risk, mutable-state
   ownership risk, or box-responsibility confusion exists, route to
   `box_architecture_canon.md` before implementation or delivery.
+- If the visible symptom may be downstream of another owner, shared host, handoff,
+  persistence owner, root decision, or async lifecycle, route to
+  `boundary_first_repair_protocol.md` before editing the symptomatic box.
 
 This bridge is only the startup enforcement layer. It does not replace the full
 Box Architecture canon. When a task involves implementation, repair, refactor,
 prompt update, governance update, bundle creation, GUI ownership, public
 contracts, cross-box behavior, mutable-state ownership, or architecture-boundary
 risk, route to `box_architecture_canon.md` before doing the risky step.
+When symptom location and defect ownership may diverge, route additionally to
+`boundary_first_repair_protocol.md`; keep it routed/on-demand rather than
+loading the full specialist prompt at startup.
 
 Do not load the full Box Architecture prompt during normal startup unless the
 current task requires it.
@@ -84,7 +90,7 @@ Mandatory summarized no-leak rule:
 
 - Classify every touched item before mutation as tool-owned logic,
   active-project source, project-specific support state, generated/evidence
-  artifact, temporary daily-work artifact, external box dependency, or
+  artifact, transient garbage artifact, external box dependency, or
   out-of-scope file.
 - Prevent wrong-root writes, especially project-specific state written to a
   hardcoded KANDA Reasoner root or reusable tool code written into an
@@ -106,6 +112,71 @@ This bridge is only the startup enforcement layer. It does not replace the
 full Box Architecture, Box Shielding, or Project Tool Boundary canons.
 BEGINNING_OF_DAY_NO_LEAK_LOGIC_V1_END
 
+## Governed Architecture Companion Startup Bridge
+
+BEGINNING_OF_DAY_GOVERNED_ARCHITECTURE_COMPANION_BRIDGE_V1_START
+GOVERNED_ARCHITECTURE_COMPANION_STARTUP_BRIDGE: For governed KANDA code,
+patch, prompt-library, startup, GUI, workflow, persistence, validation, freeze,
+Error Memory, refactor, or durable-support work, carry these rules from the
+start of the session:
+
+- Brick Wall remains the final coding-authorization owner.
+- Resolve Tool-versus-Project identity, the primary box, public contract,
+  mutable-state owner, and NO_LEAK classification before writing.
+- Use exact current source, current validators, compact Error Memory, and
+  current freeze context; generated handoffs and ZIPs are not source truth.
+- Load MCard only for its canonical Architecture Review/Planner/Workbench/
+  transaction/eject triggers.
+- Load Shield Logic only when a meaningful milestone or authority/boundary risk
+  requires a tests-first shield.
+- Route to `governed_architecture_companion_handoff` on demand when the task is
+  architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, or needs
+  the unified architecture gate.
+- The full companion is non-canonical and must never replace its current
+  canonical prompt owners.
+
+Do not load the full companion during normal startup.
+BEGINNING_OF_DAY_GOVERNED_ARCHITECTURE_COMPANION_BRIDGE_V1_END
+
+## Durable Documentation Artifact Routing Bridge
+
+BEGINNING_OF_DAY_DURABLE_DOCUMENT_ROUTING_BRIDGE: This bridge is mandatory
+beginning-of-day context. Startup load/readiness reporting must make clear that
+daily-work is disposable and that important generated documentation and
+validation evidence belong to the selected Active Project support root.
+
+BEGINNING_OF_DAY_DURABLE_DOCUMENT_ROUTING_BRIDGE_V1_START
+DURABLE_DOCUMENT_ARTIFACT_ROUTING_CANON_V1: `<project>_delete_after_daily_work`
+is transient garbage/staging only. It must never be the sole owner of important
+project documentation, validation evidence, handoffs, reports, receipts, or
+other generated documentary artifacts needed after the session.
+
+Mandatory summarized durable-document rule:
+
+- Derive the durable sibling support root from the selected Active Project:
+  `<project_drive>\<project_name>_show_project_to_AI\`.
+- Generated project-specific `.txt`, `.md`, and similar documentary artifacts
+  default to durable Project Support unless explicitly classified as transient.
+- Canonical source documentation remains in its Tool or Project source owner;
+  do not move repository source docs merely because they use `.txt` or `.md`.
+- Validation evidence is durable. A temporary operational copy may exist in
+  `_delete_after_daily_work`, but successful evidence must also be persisted to
+  `<project>_show_project_to_AI\project_validation_evidence\<feature_id>\`.
+- Existing specialized owners such as `project_error_memory`,
+  `project_freeze_after_update`, `large_file_refactor_workbench`,
+  `first_prompt_files`, and `second_prompt_files` take precedence over the
+  general `project_documentation` folder.
+- Never hardcode `kanda_reasoner_show_project_to_AI` when another Active Project
+  is selected.
+- If durable ownership cannot be resolved, fail closed with
+  `DURABLE DOCUMENT ROUTING BLOCKED`.
+
+The full canonical owner is `durable_document_artifact_routing_canon.md`.
+DURABLE_VALIDATION_EVIDENCE_OWNER_V1: Daily-work evidence may support the live
+operation, but freeze, handoff, and next-session reasoning must not depend on a
+daily-work-only copy.
+BEGINNING_OF_DAY_DURABLE_DOCUMENT_ROUTING_BRIDGE_V1_END
+
 ## Code Module Size Bridge
 
 BEGINNING_OF_DAY_CODE_MODULE_SIZE_BRIDGE: This bridge is mandatory
@@ -119,10 +190,24 @@ KANDA/PyArchitect code creation, updates, modifications, refactors, and splits.
 The AI must carry this rule at the beginning of every chat and apply it before
 writing, changing, refactoring, or delivering code modules.
 
-Mandatory summarized line-count rule:
+Mandatory summarized line-count and quality rule:
+
+CODE_MODULE_QUALITY_CANON_V1: For Python source, PEP 8 compliance, SOLID responsibility and dependency design, and DRY implementation are canonical. The line-count law must be satisfied through cohesive architecture, never through degraded formatting or duplicated logic.
 
 - Ideal code/source module size: 400 physical lines or fewer.
 - Absolute hard maximum code/source module size: 500 physical lines or fewer.
+- Measure Python physical line counts only after PEP 8-compliant formatting has
+  been applied or verified.
+- Never remove required blank lines, collapse imports or declarations, combine
+  statements, compress class or function layout, or otherwise violate PEP 8 to
+  keep a module at or below the line-count maximum.
+- Apply SOLID and DRY when assigning module responsibilities, public seams, and
+  dependency direction. Do not duplicate logic merely to avoid creating a
+  helper, and do not create meaningless wrappers or micro-modules merely to hit
+  a line target.
+- If PEP 8-compliant, SOLID, and DRY code would exceed 500 physical lines, keep
+  the compliant formatting and create as many cohesive helper modules as needed.
+  Every helper must follow the same quality and line-count rules.
 - Every new or touched code/source module must be at most 500 physical lines
   after the change, including creation, update, modification, refactor, or
   split work.
@@ -191,7 +276,7 @@ Mandatory startup-visible terminal cleanup rule:
   bypass the Enter, Enter, `Clear-Host` cleanup.
 - Freeze-prep, validation-evidence merge, recovery, and repair commands must not
   use inline `python -c`; write and run a temporary UTF-8 `.py` helper under the
-  active project `_delete_after_daily_work` folder.
+  transient `_delete_after_daily_work` garbage folder named from the selected project slug.
 
 This bridge does not replace `terminal_cleanup_contract.md`; it makes the
 contract visible at startup. When producing an install, validation, freeze,

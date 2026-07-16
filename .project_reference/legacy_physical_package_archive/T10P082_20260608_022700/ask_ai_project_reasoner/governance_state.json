@@ -1,0 +1,54 @@
+﻿{
+  "version": "1.0",
+  "project_name": "eeg_kernel_ai_neural_data_analysis",
+  "governance_enabled": true,
+  "mode": "advisory",
+  "active_profile": "default",
+  "policies": {
+    "allow_architecture_reasoning": true,
+    "allow_code_explanations": true,
+    "allow_refactor_suggestions": true,
+    "allow_write_actions": false,
+    "require_evidence_for_claims": true,
+    "prefer_project_index_evidence": true,
+    "prefer_runtime_trace_evidence": true
+  },
+  "constraints": {
+    "respect_project_boundaries": true,
+    "respect_canonical_paths": true,
+    "avoid_guessing_missing_logic": true,
+    "flag_uncertainty_when_evidence_is_weak": true
+  },
+  "runtime": {
+    "cache_enabled": true,
+    "memory_enabled": true,
+    "trace_awareness_enabled": true
+  },
+  "rules": [
+    {
+      "id": "R001",
+      "title": "Prefer indexed evidence",
+      "enabled": true,
+      "description": "Answers should prioritize evidence from the loaded project index."
+    },
+    {
+      "id": "R002",
+      "title": "Prefer runtime evidence when available",
+      "enabled": true,
+      "description": "When runtime traces exist, use them to support real execution-path claims."
+    },
+    {
+      "id": "R003",
+      "title": "Do not overstate certainty",
+      "enabled": true,
+      "description": "If evidence is incomplete, explicitly present uncertainty."
+    },
+    {
+      "id": "R004",
+      "title": "No write actions by default",
+      "enabled": true,
+      "description": "The reasoner should remain read-oriented unless explicitly upgraded."
+    }
+  ],
+  "notes": "Minimal starter governance state for Project Reasoner V10."
+}

@@ -118,6 +118,37 @@ def _build_ui(self) -> None:
     on_demand_bridge_button_font.setBold(True)
     self.copy_on_demand_bridge_list_button.setFont(on_demand_bridge_button_font)
     project_root_row.addWidget(self.copy_on_demand_bridge_list_button)
+    self.anti_hallucination_label = QLabel("Anti-hallucination:")
+    anti_hallucination_label_palette = self.anti_hallucination_label.palette()
+    anti_hallucination_label_palette.setColor(QPalette.WindowText, QColor("#000000"))
+    self.anti_hallucination_label.setPalette(anti_hallucination_label_palette)
+    project_root_row.addWidget(self.anti_hallucination_label)
+    self.copy_anti_hallucination_full_button = QPushButton("full")
+    self.copy_anti_hallucination_short_button = QPushButton("short")
+    for anti_button in (
+        self.copy_anti_hallucination_full_button,
+        self.copy_anti_hallucination_short_button,
+    ):
+        anti_palette = anti_button.palette()
+        anti_palette.setColor(QPalette.ButtonText, QColor("#ff4d00"))
+        anti_button.setPalette(anti_palette)
+        anti_font = anti_button.font()
+        anti_font.setBold(True)
+        anti_button.setFont(anti_font)
+        project_root_row.addWidget(anti_button)
+    self.machine_card_label = QLabel("Machine-Card:")
+    machine_card_label_palette = self.machine_card_label.palette()
+    machine_card_label_palette.setColor(QPalette.WindowText, QColor("#000000"))
+    self.machine_card_label.setPalette(machine_card_label_palette)
+    project_root_row.addWidget(self.machine_card_label)
+    self.copy_machine_card_logic_button = QPushButton("MCard Logic")
+    machine_card_button_palette = self.copy_machine_card_logic_button.palette()
+    machine_card_button_palette.setColor(QPalette.ButtonText, QColor("#ff4d00"))
+    self.copy_machine_card_logic_button.setPalette(machine_card_button_palette)
+    machine_card_button_font = self.copy_machine_card_logic_button.font()
+    machine_card_button_font.setBold(True)
+    self.copy_machine_card_logic_button.setFont(machine_card_button_font)
+    project_root_row.addWidget(self.copy_machine_card_logic_button)
     collector_layout.addLayout(project_root_row)
     self._project_root_controls_moved_to_host = False
 
@@ -242,6 +273,17 @@ def _build_ui(self) -> None:
         )
         self.copy_on_demand_bridge_list_button.clicked.connect(
             lambda: _bridge_button_impl.copy_on_demand_bridge_list_to_clipboard(self)
+        )
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import anti_hallucination_prompt_buttons_private_impl as _anti_hallucination_impl
+        self.copy_anti_hallucination_full_button.clicked.connect(
+            lambda: _anti_hallucination_impl.copy_full_anti_hallucination_group_to_clipboard(self)
+        )
+        self.copy_anti_hallucination_short_button.clicked.connect(
+            lambda: _anti_hallucination_impl.copy_short_anti_hallucination_group_to_clipboard(self)
+        )
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import machine_card_prompt_button_private_impl as _machine_card_impl
+        self.copy_machine_card_logic_button.clicked.connect(
+            lambda: _machine_card_impl.copy_machine_card_logic_to_clipboard(self)
         )
     except Exception:
         pass

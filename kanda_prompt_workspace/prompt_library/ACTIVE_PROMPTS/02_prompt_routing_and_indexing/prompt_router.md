@@ -78,7 +78,7 @@ tool_project_slug = kanda_reasoner
 active_project_slug = selected project in use
 active_project_root = selected project source root
 active_project_support_root = <project_drive>/<active_project_slug>_show_project_to_AI
-active_project_daily_work_root = <project_drive>/<active_project_slug>_delete_after_daily_work
+transient_garbage_root = <project_drive>/<active_project_slug>_delete_after_daily_work
 ```
 
 KANDA Reasoner may be the tool that performs the work, but `<my_project>` is the target project in use. Even when the selected target project is KANDA Reasoner itself, the AI must still reason with separate tool identity and target project identity so the logic continues to work for any other selected project.
@@ -89,13 +89,53 @@ Load or recommend:
 project_tool_boundary_canon
 ```
 
-whenever implementation, patch delivery, freeze memory, handoff output, validation evidence, source inspection, project-root resolution, or staging paths could confuse the KANDA Reasoner tool with the active target project.
+whenever implementation, patch delivery, freeze memory, handoff output, validation evidence, source inspection, project-root resolution, staging paths, Workbench Preview ownership, or Preview-vs-Shadow classification could confuse the KANDA Reasoner tool with the active target project.
 
 Rule:
 
 ```text
-Do not hardcode kanda_reasoner as the active project unless KANDA Reasoner is explicitly the selected active project. Project-specific support writes use active_project_support_root or active_project_daily_work_root. Selected project source edits use active_project_root only when the task intentionally edits that project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden.
+Do not hardcode kanda_reasoner as the active project unless KANDA Reasoner is explicitly the selected active project. Durable project-specific support writes use active_project_support_root. Disposable staging, Shadow workspaces, temporary validation assembly, and regenerable garbage only use transient_garbage_root, which owns nothing and may be deleted without affecting Tool or Project truth. Workbench Preview belongs under active_project_support_root/large_file_refactor_workbench/preview/<preview_id>; disposable Shadow may be placed under transient_garbage_root/large_file_refactor_shadow/<shadow_id> without becoming Tool or Project state. Selected project source edits use active_project_root only when the task intentionally edits that project source. Reusable tool writes use the owning KANDA Reasoner tool path. Merging the tool box with the selected project box is forbidden.
 ```
+
+## Large File Refactor Workbench ownership route
+
+When a task mentions Workbench Preview, Preview root, structural validation evidence, preflight backup/readiness, rollback evidence, final Workbench validation state, Shadow workspace, cleanup, or daily-work lifetime semantics, load or recommend:
+
+```text
+project_tool_boundary_canon
+router_bridge_governed_implementation
+```
+
+Required distinction:
+
+```text
+Preview -> <active_project_support_root>/large_file_refactor_workbench/preview/<preview_id>
+Shadow -> <transient_garbage_root>/large_file_refactor_shadow/<shadow_id>
+Daily-work -> staging, extraction, temporary helpers, temporary validation assembly, Shadow, and regenerable garbage only
+```
+
+## Architecture Review project-card machine route
+
+When a task mentions Architecture Review tab/subtabs, AST Split Audit target lifecycle, project-root switching during audit, target switching, stale async audit/Planner results, Planner-to-Workbench handoff, Workbench snapshot replacement, Completion transaction, apply/rollback outcome, RefactorReceipt, clear state after refactor, or eject module after completion, load or recommend:
+
+```text
+KPR-12-005 architecture_review_project_card_machine_canon
+KPR-12-001 project_tool_boundary_canon
+router_bridge_governed_implementation, for implementation
+```
+
+Required lifecycle distinction:
+
+```text
+Tool = reusable card machine
+Active Project = card owner
+Selected module = inserted card
+Read/plan/preview/apply/verify = bounded operation lifecycle
+Eject = clear target-specific Tool memory only after verified terminal completion or verified rollback
+Project keeps source changes, helper modules, Preview/evidence, transactions, mutation-lane state, and RefactorReceipt
+```
+
+The route must block cross-project card targets, stale async repopulation, partial unload across AST/Planner/Workbench/Completion, and project/target switch while a mutation transaction is open.
 
 ## Router table
 
@@ -195,11 +235,21 @@ code file above 500 lines
 large module protocol v7
 large module protocol v7.2
 large module protocol v7.3
+large module protocol v7.4
 Web AI refactor version
 Imported Web AI Version
 AI Refactor Version How To
 Copy Comprehensive Planning for Web AI
 Receive Planning from Web AI
+Send Web Ai to split file
+planning response ZIP blueprint
+Panel 4 planning response paste
+RISK REFACTORING
+Send Web AI to make SAFE
+Safe Refactor How To
+how to safely refactor a large module
+AST safe refactor runbook
+AST Split Audit risk repair
 double refactor train
 sequential refactor train
 AST Split Audit
@@ -216,7 +266,10 @@ kanda_bundle_gated_development_workflow
 python_clean_code_overlay
 large_module_refactor_protocol
 large_module_refactor_template
-web_ai_large_module_refactor_exchange_protocol, when external/online Web AI planning improvement or imported Web AI Version packaging is requested
+web_ai_large_module_refactor_exchange_protocol, when external/online Web AI architecture correction is requested
+web_ai_planning_response_bundle_blueprint, when the AI must create the planning response ZIP, Install, Validate, Freeze preparation, and exact Panel 4 paste block
+web_ai_ast_split_risk_repair_protocol, when AST Split Audit reports RISK REFACTORING and external Web AI source repair is requested
+safe_refactor_how_to, when the AI needs a complete safe large-module refactor awareness/runbook or the user invokes Safe Refactor How To
 project_tool_boundary_canon, when project-root, staging, freeze, handoff, or validation paths are involved
 ```
 
@@ -231,7 +284,10 @@ Do not stack multiple inner patches before validation/freeze.
 A sequential double-refactor train may prepare up to four ordered patch ZIPs in one response, each normally containing at most two related refactor slices.
 Keep every inner patch on install -> validate -> freeze before proceeding to the next patch.
 When the user requests an external/online Web AI refactor version, load KPR-06-001 web_ai_large_module_refactor_exchange_protocol in addition to the core v7.3 canon.
-The external Web AI flow is native plan -> copy comprehensive package -> bounded external improvement -> governed import ZIP -> install -> Receive Planning from Web AI -> review -> Load as Imported Web AI Version.
+When delivery packaging is required, also load KPR-06-002 web_ai_planning_response_bundle_blueprint.
+When AST Split Audit reports RISK REFACTORING and external source repair is requested, load KPR-06-003 web_ai_ast_split_risk_repair_protocol and require a fresh SAFE rerun rather than classifier weakening.
+When the AI needs the complete reusable implementation-and-delivery refresher for safe large-module refactoring, or the user invokes Safe Refactor How To, load KPR-06-004 safe_refactor_how_to. Keep it distinct from target-specific KPR-06-003 evidence.
+The external Web AI flow is native plan -> send wrapper with current package -> bounded external improvement -> governed import ZIP plus identical Panel 4 paste block -> install canonical artifact or use paste fallback -> deterministic review -> Load as Imported Web AI Version.
 ```
 
 Group to open in Tab 9:

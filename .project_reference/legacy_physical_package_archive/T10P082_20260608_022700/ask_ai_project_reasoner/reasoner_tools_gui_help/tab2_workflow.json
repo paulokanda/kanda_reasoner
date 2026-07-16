@@ -1,0 +1,439 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "2. Second step: check/correct workflow",
+  "purpose": "Explain workflow errors that Tab 2 should expose, including what they mean and what can happen if not corrected.",
+  "created_for": "Future GUI helper button content",
+  "placement_reason": "Stored under _project_reference/TAB_HELP so this is documentation/helper data only and does not change runtime behavior.",
+  "implementation_status_note": "These items are defined in canon as errors that should be exposed. Most dedicated detectors are not yet frozen as implemented in Tab 1/Tab 2 code. This JSON is a beginner-facing explanation catalog to support a future help button.",
+  "display_lines": [
+    "1. Workflow step points to missing file - A button, command, or workflow document refers to a file that no longer exists.",
+    "2. Workflow step points to deprecated file - The workflow points to a file that exists, but it is old or no longer the active owner.",
+    "3. Button-to-action mismatch - The button label says one thing, but the connected function does another thing.",
+    "4. Step order dependency errors - A later step runs before the earlier step that creates its input.",
+    "5. Input/output contract mismatch - One step creates a file with one name or shape, but the next step expects another.",
+    "6. Output folder naming mismatch - Different parts of the workflow use different folder names for the same output.",
+    "7. Stale generated artifacts - Generated files are older than the source files or older than their inputs.",
+    "8. Missing validation step in workflow - The workflow creates output but does not check whether the output is valid.",
+    "9. Placeholder command misuse - Documentation shows a command with placeholders, but users may run it literally.",
+    "10. GUI state label mismatch - The UI does not clearly show the current loaded file, mode, or track.",
+    "11. Dual JSON track workflow mistakes - The workflow confuses canonical web-AI JSON with local-AI working JSON.",
+    "12. Route manifest ignored by upload workflow - The splitter creates a route guide, but the upload instructions do not include or use it.",
+    "13. web_ai_readme ignored by workflow - The complete JSON has a guide explaining which sections answer which questions, but the workflow does not tell AI to use it.",
+    "14. Missing deterministic route for AI question types - The workflow lacks a clear rule for which file or JSON section to inspect for common question types.",
+    "15. Broken local-AI Ask flow - Tab 7 sends a question, but the evidence, deterministic path, streaming path, or final answer handling breaks.",
+    "16. Workflow step does not expose enough logs - A step fails or succeeds without showing enough information to verify what happened.",
+    "17. Workflow step cannot be rerun idempotently - Running the same step twice changes things in unsafe or confusing ways.",
+    "18. Workflow references old validation logic - The workflow still calls an old validator that does not know the current contract.",
+    "19. Missing rollback or fail-safe workflow - A failing step damages or replaces the last good output instead of preserving it.",
+    "20. Workflow documentation drift - Documentation says the workflow works one way, but code works another way.",
+    "21. Missing cross-project generalization - The workflow only works for developer_tools and fails on other projects.",
+    "22. Workflow assumes wrong encoding or line endings - A workflow reads files using the wrong text encoding or assumes one line-ending style.",
+    "23. Workflow silently succeeds with empty output - A step says it worked, but the output is empty, tiny, or missing required content.",
+    "24. Declared dependency vs installed dependency version skew - The project says it needs one dependency version, but the environment has another.",
+    "25. Path root drift - The workflow is run from one folder but reads or writes as if it were in another folder."
+  ],
+  "errors": [
+    {
+      "number": 1,
+      "error": "Workflow step points to missing file",
+      "plain_explanation": "A button, command, or workflow document refers to a file that no longer exists.",
+      "if_not_corrected": "The user clicks a step and nothing useful runs, or the tool fails with a file-not-found error.",
+      "easy_example": "Step 4 still points to old_collector.py, but the active collector moved to runner.py.",
+      "evidence_to_check": [
+        "reasoner_tools_gui.py",
+        "documentation_intent",
+        "files",
+        "workflow metadata"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_file_path_existence_gate",
+      "priority": "high"
+    },
+    {
+      "number": 2,
+      "error": "Workflow step points to deprecated file",
+      "plain_explanation": "The workflow points to a file that exists, but it is old or no longer the active owner.",
+      "if_not_corrected": "The user may keep running old logic and think the current project is broken.",
+      "easy_example": "The GUI opens json_splitter_7.py even though json_splitter_8.py is the active splitter.",
+      "evidence_to_check": [
+        "files",
+        "canonical_conflict_index",
+        "legacy_shadow_hotspots",
+        "workflow metadata"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_deprecated_file_reference_gate",
+      "priority": "high"
+    },
+    {
+      "number": 3,
+      "error": "Button-to-action mismatch",
+      "plain_explanation": "The button label says one thing, but the connected function does another thing.",
+      "if_not_corrected": "Users lose trust because the UI does not do what it promises.",
+      "easy_example": "A button says Refresh Local-AI Copy but only checks whether the file exists.",
+      "evidence_to_check": [
+        "widget_ui_action_bridge",
+        "ui_action_index",
+        "qt_signal_map",
+        "reasoner_tools_gui.py"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "button_action_mismatch_gate",
+      "priority": "high"
+    },
+    {
+      "number": 4,
+      "error": "Step order dependency errors",
+      "plain_explanation": "A later step runs before the earlier step that creates its input.",
+      "if_not_corrected": "The workflow may read stale or missing files.",
+      "easy_example": "The splitter runs before the collector creates developer_tools__complete.json.",
+      "evidence_to_check": [
+        "documentation_intent",
+        "workflow metadata",
+        "file timestamps",
+        "split_manifest"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_step_order_dependency_gate",
+      "priority": "high"
+    },
+    {
+      "number": 5,
+      "error": "Input/output contract mismatch",
+      "plain_explanation": "One step creates a file with one name or shape, but the next step expects another.",
+      "if_not_corrected": "The next step may read the wrong file or fail even though the previous step succeeded.",
+      "easy_example": "The collector writes developer_tools__complete.json but the splitter is configured to read project_complete.json.",
+      "evidence_to_check": [
+        "persistence_io_index",
+        "workflow metadata",
+        "split_manifest",
+        "upload_index"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_step_io_contract_gate",
+      "priority": "high"
+    },
+    {
+      "number": 6,
+      "error": "Output folder naming mismatch",
+      "plain_explanation": "Different parts of the workflow use different folder names for the same output.",
+      "if_not_corrected": "One step writes to one folder while another step reads an older folder.",
+      "easy_example": "The code writes to json_splitted, but documentation tells the user to open json_split.",
+      "evidence_to_check": [
+        "reasoner_tools_gui.py",
+        "documentation_intent",
+        "collection_config",
+        "split_manifest"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_output_folder_name_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 7,
+      "error": "Stale generated artifacts",
+      "plain_explanation": "Generated files are older than the source files or older than their inputs.",
+      "if_not_corrected": "The tool may analyze yesterday's project instead of today's project.",
+      "easy_example": "developer_tools__complete_local_AI.json is older than developer_tools__complete.json but Tab 7 loads the local copy.",
+      "evidence_to_check": [
+        "file timestamps",
+        "split_manifest",
+        "upload_index",
+        "local_ai_copy_status"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_generated_artifact_freshness_gate",
+      "priority": "high"
+    },
+    {
+      "number": 8,
+      "error": "Missing validation step in workflow",
+      "plain_explanation": "The workflow creates output but does not check whether the output is valid.",
+      "if_not_corrected": "Bad output may be marked ready and sent to AI.",
+      "easy_example": "The splitter creates chunks but no split/reassemble validation runs afterward.",
+      "evidence_to_check": [
+        "documentation_intent",
+        "workflow metadata",
+        "validator scripts",
+        "split_manifest"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_missing_validation_gate",
+      "priority": "high"
+    },
+    {
+      "number": 9,
+      "error": "Placeholder command misuse",
+      "plain_explanation": "Documentation shows a command with placeholders, but users may run it literally.",
+      "if_not_corrected": "The command fails or edits the wrong path.",
+      "easy_example": "The guide says run python validate.py <SPLIT_OUTPUT_FOLDER>, but does not explain what to replace.",
+      "evidence_to_check": [
+        "documentation_intent",
+        "README files",
+        "prompt files",
+        "workflow docs"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "placeholder_command_misuse_gate",
+      "priority": "medium"
+    },
+    {
+      "number": 10,
+      "error": "GUI state label mismatch",
+      "plain_explanation": "The UI does not clearly show the current loaded file, mode, or track.",
+      "if_not_corrected": "The user may think they are using the canonical JSON while actually using the local AI JSON.",
+      "easy_example": "Tab 7 loads developer_tools__complete_local_AI.json but the label only says JSON loaded.",
+      "evidence_to_check": [
+        "widget_registry",
+        "widget_text_index",
+        "main_window_help/json_track.py",
+        "runtime_controller.py"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "gui_state_label_mismatch_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 11,
+      "error": "Dual JSON track workflow mistakes",
+      "plain_explanation": "The workflow confuses canonical web-AI JSON with local-AI working JSON.",
+      "if_not_corrected": "Local experiments can overwrite the canonical export or stale local evidence can be used by mistake.",
+      "easy_example": "A refresh button silently overwrites developer_tools__complete.json from the local copy.",
+      "evidence_to_check": [
+        "local_ai_json_working_copy",
+        "runtime_controller.py",
+        "persistence_io_index",
+        "json_track.py"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_dual_json_track_gate",
+      "priority": "high"
+    },
+    {
+      "number": 12,
+      "error": "Route manifest ignored by upload workflow",
+      "plain_explanation": "The splitter creates a route guide, but the upload instructions do not include or use it.",
+      "if_not_corrected": "Web AI has to search chunks blindly and may miss the answer.",
+      "easy_example": "The upload ZIP includes chunks but not developer_tools__complete__web_ai_route_manifest.json.",
+      "evidence_to_check": [
+        "web_ai_route_manifest",
+        "split_index",
+        "upload_index",
+        "documentation_intent"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_split_route_manifest_gate",
+      "priority": "high"
+    },
+    {
+      "number": 13,
+      "error": "web_ai_readme ignored by workflow",
+      "plain_explanation": "The complete JSON has a guide explaining which sections answer which questions, but the workflow does not tell AI to use it.",
+      "if_not_corrected": "AI may waste time searching irrelevant sections or give insufficient evidence.",
+      "easy_example": "A symbol question should route to web_ai_symbol_index, but the prompt tells AI to inspect chunks manually.",
+      "evidence_to_check": [
+        "web_ai_readme",
+        "web_ai_readme_summary",
+        "web_ai_route_manifest",
+        "prompts"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_web_ai_readme_route_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 14,
+      "error": "Missing deterministic route for AI question types",
+      "plain_explanation": "The workflow lacks a clear rule for which file or JSON section to inspect for common question types.",
+      "if_not_corrected": "Answers become slower, less precise, and more likely to miss obvious evidence.",
+      "easy_example": "A question asking who owns PromptBuilder does not route to primary_definition_index or file_responsibility_index.",
+      "evidence_to_check": [
+        "web_ai_readme",
+        "route_manifest",
+        "query_router.py",
+        "prompt_builder.py"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_question_route_coverage_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 15,
+      "error": "Broken local-AI Ask flow",
+      "plain_explanation": "Tab 7 sends a question, but the evidence, deterministic path, streaming path, or final answer handling breaks.",
+      "if_not_corrected": "The user may see Streaming forever, false INSUFFICIENT_EVIDENCE, or a crash.",
+      "easy_example": "The AI bridge calls select_focus_snippets_from_prompt, but only _select_focus_snippets_from_prompt exists.",
+      "evidence_to_check": [
+        "session_service.py",
+        "ai_bridge.py",
+        "query_router.py",
+        "prompt_builder.py",
+        "runtime logs"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "local_ai_ask_flow_health_gate",
+      "priority": "high"
+    },
+    {
+      "number": 16,
+      "error": "Workflow step does not expose enough logs",
+      "plain_explanation": "A step fails or succeeds without showing enough information to verify what happened.",
+      "if_not_corrected": "Debugging becomes guesswork.",
+      "easy_example": "A collector button says Done but does not show the output JSON path or validation result.",
+      "evidence_to_check": [
+        "GUI output widgets",
+        "runtime logs",
+        "workflow docs",
+        "widget_text_index"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_logging_visibility_gate",
+      "priority": "medium"
+    },
+    {
+      "number": 17,
+      "error": "Workflow step cannot be rerun idempotently",
+      "plain_explanation": "Running the same step twice changes things in unsafe or confusing ways.",
+      "if_not_corrected": "Old output may mix with new output, or local changes may be overwritten.",
+      "easy_example": "Running the splitter twice leaves old chunks in the output folder with new chunks.",
+      "evidence_to_check": [
+        "workflow scripts",
+        "persistence_io_index",
+        "output folders",
+        "split_manifest"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_idempotency_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 18,
+      "error": "Workflow references old validation logic",
+      "plain_explanation": "The workflow still calls an old validator that does not know the current contract.",
+      "if_not_corrected": "A broken output may pass because the validator is outdated.",
+      "easy_example": "The workflow uses a split validator that does not check the route manifest.",
+      "evidence_to_check": [
+        "validator scripts",
+        "workflow docs",
+        "reasoner_tools_gui.py",
+        "splitter files"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_old_validator_reference_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 19,
+      "error": "Missing rollback or fail-safe workflow",
+      "plain_explanation": "A failing step damages or replaces the last good output instead of preserving it.",
+      "if_not_corrected": "The user can lose the last valid JSON, split output, or local copy.",
+      "easy_example": "Collector fails halfway and leaves developer_tools__complete.json half-written.",
+      "evidence_to_check": [
+        "persistence_io_index",
+        "workflow scripts",
+        "atomic write helpers",
+        "runtime logs"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_rollback_failsafe_gate",
+      "priority": "high"
+    },
+    {
+      "number": 20,
+      "error": "Workflow documentation drift",
+      "plain_explanation": "Documentation says the workflow works one way, but code works another way.",
+      "if_not_corrected": "The user follows instructions that no longer match the app.",
+      "easy_example": "Docs say the prompt creates the JSON, but the real Step 4 collector creates it.",
+      "evidence_to_check": [
+        "documentation_intent",
+        "README files",
+        "workflow prompts",
+        "source_file_index"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_documentation_drift_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 21,
+      "error": "Missing cross-project generalization",
+      "plain_explanation": "The workflow only works for developer_tools and fails on other projects.",
+      "if_not_corrected": "Reasoner stops being a reusable project-auditing tool.",
+      "easy_example": "A workflow hardcodes E:\\developer_tools and cannot audit another project selected by the user.",
+      "evidence_to_check": [
+        "reasoner_project_truths",
+        "collection_config",
+        "workflow docs",
+        "source code paths"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_cross_project_generalization_gate",
+      "priority": "high"
+    },
+    {
+      "number": 22,
+      "error": "Workflow assumes wrong encoding or line endings",
+      "plain_explanation": "A workflow reads files using the wrong text encoding or assumes one line-ending style.",
+      "if_not_corrected": "Text may be corrupted, requirements may be parsed wrongly, or docs may be skipped.",
+      "easy_example": "A UTF-16 requirements file is read as UTF-8 and dependency extraction becomes wrong.",
+      "evidence_to_check": [
+        "limitations",
+        "packaging_metadata",
+        "documentation_intent",
+        "file reader code"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_encoding_line_ending_gate",
+      "priority": "medium_high"
+    },
+    {
+      "number": 23,
+      "error": "Workflow silently succeeds with empty output",
+      "plain_explanation": "A step says it worked, but the output is empty, tiny, or missing required content.",
+      "if_not_corrected": "All later steps may run on useless data.",
+      "easy_example": "The collector exits successfully but creates a JSON with zero files.",
+      "evidence_to_check": [
+        "project_summary",
+        "root_skeleton",
+        "output JSON counters",
+        "validation logs"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "silent_empty_output_detector_gate",
+      "priority": "highest"
+    },
+    {
+      "number": 24,
+      "error": "Declared dependency vs installed dependency version skew",
+      "plain_explanation": "The project says it needs one dependency version, but the environment has another.",
+      "if_not_corrected": "The tool may behave differently on another computer or after an update.",
+      "easy_example": "requirements.txt expects PySide6 6.8, but the environment has a different version that changes GUI behavior.",
+      "evidence_to_check": [
+        "packaging_metadata",
+        "runtime environment",
+        "requirements files",
+        "pyproject.toml"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "workflow_dependency_version_skew_gate",
+      "priority": "medium"
+    },
+    {
+      "number": 25,
+      "error": "Path root drift",
+      "plain_explanation": "The workflow is run from one folder but reads or writes as if it were in another folder.",
+      "if_not_corrected": "Outputs may be written to the wrong location, while the GUI reads stale files from the expected location.",
+      "easy_example": "The user runs the collector from a subfolder, and the complete JSON is created in the wrong docs folder.",
+      "evidence_to_check": [
+        "collector_info",
+        "collection_config",
+        "manifest source_file",
+        "current working directory"
+      ],
+      "code_status": "Defined in Reasoner canon/taxonomy. Dedicated report-only detector is not yet frozen as implemented in Tab 1/Tab 2 code.",
+      "planned_detector_gate": "path_root_drift_detector_gate",
+      "priority": "high"
+    }
+  ]
+}

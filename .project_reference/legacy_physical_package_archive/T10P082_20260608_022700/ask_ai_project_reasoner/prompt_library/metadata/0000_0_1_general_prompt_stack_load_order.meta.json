@@ -1,0 +1,59 @@
+{
+  "category": "load_order",
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "summary": "Initial general project prompt pack seed.",
+      "version": "1.0.0"
+    },
+    {
+      "date": "2026-06-01",
+      "summary": "Added beginning-of-chat closure warning requiring LETS TAKE A BREAK or LETS STOP NOW to trigger governance/handoff closing workflow.",
+      "version": "1.0.1"
+    }
+  ],
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\_project_reference\\prompt_library",
+  "depends_on": [],
+  "display_name": "General Prompt Stack Load Order",
+  "edit_policy": "draft_only",
+  "example_usage": "Copy this prompt from Tab 9, replace adaptation variables, and present it to an AI as part of a selected prompt stack.",
+  "explainer": "Routes the prompt stack for any project and tells the AI when to request special protocols.",
+  "files_created": [],
+  "governance_linked": false,
+  "how_it_works": "It establishes load order, precedence, and safety rules before any implementation begins. It also tells the AI to show an early end-of-chat closure warning so the user knows to request governance update or handoff materials before stopping.",
+  "load_type": "on_request",
+  "mitigations": [
+    "Require placeholder replacement before use.",
+    "Keep examples clearly marked and separate from active instructions.",
+    "The prompt requires an early warning telling the user to say LETS TAKE A BREAK or LETS STOP NOW to trigger safe closure workflow."
+  ],
+  "modifies_governance": false,
+  "project_agnostic": true,
+  "promotion_policy": "manual_only",
+  "prompt_id": "0000_0_1_general_prompt_stack_load_order",
+  "required_before": [],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "risks": [
+    "Prompt may be used without replacing adaptation variables.",
+    "Project-specific examples may be mistaken for active project truth.",
+    "User may end a chat without creating a handoff or governance update request when needed."
+  ],
+  "safe_to_copy": true,
+  "schema_version": "1.0.0",
+  "status": "active",
+  "subcategory": "general_project_prompt_pack",
+  "validation_requirements": [
+    "must_be_ascii",
+    "must_be_utf8_without_bom",
+    "must_use_project_placeholders",
+    "must_not_hardcode_absolute_paths",
+    "must_not_modify_source_code_from_tab9",
+    "must_include_beginning_of_chat_closure_warning"
+  ],
+  "version": "1.0.1"
+}

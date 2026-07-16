@@ -1,0 +1,317 @@
+"""Build the active-file manifest for one project context bundle."""
+
+from __future__ import annotations
+
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Iterator
+
+from .exclusion_engine import decide_path_exclusion
+from .exclusion_provider import load_bundle_exclusion_rules
+from .hashing import sha256_bytes, sha256_file, sha256_text_normalized
+from .json_writer import write_json_atomic
+from .output_paths import bundle_artifact_paths
+from .path_normalization import relative_posix_path, safe_resolve
+from .project_context import resolve_project_context
+from .schema_models import ExclusionDecision, ExclusionRules, ProjectContext
+
+__all__ = [
+    "TEXT_FILE_EXTENSIONS",
+    "build_file_manifest_payload",
+    "iter_active_project_files",
+    "GENERATED_EVIDENCE_PREFIXES",
+    "write_file_manifest_json",
+]
+
+SCHEMA_VERSION = 1
+BUNDLE_KIND = "file_manifest"
+GENERATOR_NAME = "project_context_bundle.file_manifest_builder"
+GENERATOR_VERSION = "1.0.2"
+
+GENERATED_EVIDENCE_PREFIXES = (
+    "project_analysis_evidence/json_complete/",
+    "project_analysis_evidence/json_splitted/",
+)
+
+TEXT_FILE_EXTENSIONS = (
+    ".bat",
+    ".cmd",
+    ".css",
+    ".csv",
+    ".html",
+    ".ini",
+    ".json",
+    ".md",
+    ".ps1",
+    ".py",
+    ".qss",
+    ".toml",
+    ".txt",
+    ".ui",
+    ".xml",
+    ".yaml",
+    ".yml",
+)
+
+_TEXT_READ_ENCODINGS = ("utf-8", "utf-8-sig")
+
+
+def _context(project: str | Path | ProjectContext) -> ProjectContext:
+    if isinstance(project, ProjectContext):
+        return project
+    return resolve_project_context(project)
+
+
+def _is_probable_binary(raw: bytes) -> bool:
+    if b"\x00" in raw[:4096]:
+        return True
+    return False
+
+
+def _newline_style(text: str) -> str:
+    has_crlf = "\r\n" in text
+    text_without_crlf = text.replace("\r\n", "")
+    has_lf = "\n" in text_without_crlf
+    has_cr = "\r" in text_without_crlf
+    if has_crlf and not has_lf and not has_cr:
+        return "crlf"
+    if has_lf and not has_crlf and not has_cr:
+        return "lf"
+    if has_cr and not has_crlf and not has_lf:
+        return "cr"
+    if has_crlf or has_lf or has_cr:
+        return "mixed"
+    return "none"
+
+
+def _decode_text(raw: bytes, suffix: str) -> tuple[bool, str, str]:
+    if _is_probable_binary(raw):
+        return False, "", ""
+    suffix_low = suffix.lower()
+    should_try_text = suffix_low in TEXT_FILE_EXTENSIONS or not suffix_low
+    if not should_try_text:
+        try:
+            raw.decode("utf-8")
+        except UnicodeDecodeError:
+            return False, "", ""
+    for encoding in _TEXT_READ_ENCODINGS:
+        try:
+            return True, raw.decode(encoding), encoding
+        except UnicodeDecodeError:
+            continue
+    return False, "", ""
+
+
+def _is_generated_evidence_path(path: Path, context: ProjectContext) -> bool:
+    relative = relative_posix_path(path, context.root).replace("\\", "/").lower().lstrip("/")
+    return any(relative.startswith(prefix) for prefix in GENERATED_EVIDENCE_PREFIXES)
+
+
+def _generated_artifact_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
+    relative = relative_posix_path(path, context.root)
+    return {
+        "path": relative,
+        "included": False,
+        "excluded": True,
+        "matched_rule": "generated_evidence_artifact",
+        "rule_type": "generated_artifact",
+        "reason": "Generated project evidence is listed as bundle metadata, not active source.",
+    }
+
+
+def _is_snapshot_text_extension(path: Path) -> bool:
+    suffix = path.suffix.lower()
+    return bool(suffix) and suffix in TEXT_FILE_EXTENSIONS
+
+
+def _kind_and_text_metadata(path: Path, raw: bytes) -> dict[str, Any]:
+    is_text, text, encoding = _decode_text(raw, path.suffix)
+    if not is_text:
+        return {
+            "kind": "binary",
+            "encoding": "binary",
+            "newline": "not_applicable",
+            "sha256_normalized": "",
+            "included_in_active_snapshot": False,
+            "snapshot_omission_reason": "binary_file_omitted",
+        }
+    included_in_snapshot = _is_snapshot_text_extension(path)
+    omission_reason = ""
+    if not included_in_snapshot:
+        omission_reason = "extension_not_in_snapshot_text_policy"
+    return {
+        "kind": "text",
+        "encoding": encoding,
+        "newline": _newline_style(text),
+        "sha256_normalized": sha256_text_normalized(text),
+        "included_in_active_snapshot": included_in_snapshot,
+        "snapshot_omission_reason": omission_reason,
+    }
+
+
+def _file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
+    raw = path.read_bytes()
+    relative_path = relative_posix_path(path, context.root)
+    metadata = _kind_and_text_metadata(path, raw)
+    stat = path.stat()
+    return {
+        "path": relative_path,
+        "name": path.name,
+        "extension": path.suffix.lower(),
+        "kind": metadata["kind"],
+        "size_bytes": stat.st_size,
+        "mtime_ns": stat.st_mtime_ns,
+        "encoding": metadata["encoding"],
+        "newline": metadata["newline"],
+        "sha256_raw": sha256_bytes(raw),
+        "sha256_normalized": metadata["sha256_normalized"],
+        "included_in_active_snapshot": metadata["included_in_active_snapshot"],
+        "snapshot_omission_reason": metadata.get("snapshot_omission_reason", ""),
+    }
+
+
+def _safe_file_record(path: Path, context: ProjectContext) -> dict[str, Any]:
+    try:
+        return _file_record(path, context)
+    except OSError as exc:
+        relative_path = relative_posix_path(path, context.root)
+        return {
+            "path": relative_path,
+            "name": path.name,
+            "extension": path.suffix.lower(),
+            "kind": "unreadable",
+            "size_bytes": 0,
+            "mtime_ns": 0,
+            "encoding": "unreadable",
+            "newline": "unknown",
+            "sha256_raw": "",
+            "sha256_normalized": "",
+            "included_in_active_snapshot": False,
+            "snapshot_omission_reason": "unreadable_file_omitted",
+            "read_error": str(exc),
+        }
+
+
+def _iter_project_entries(root: Path) -> Iterator[Path]:
+    try:
+        entries = sorted(root.iterdir(), key=lambda item: (not item.is_dir(), item.name.lower()))
+    except OSError:
+        return
+    for entry in entries:
+        yield entry
+
+
+def iter_active_project_files(
+    project: str | Path | ProjectContext,
+    rules: ExclusionRules | None = None,
+) -> Iterator[Path]:
+    """Yield active files for one project using that project's own rules."""
+    context = _context(project)
+    active_rules = rules if rules is not None else load_bundle_exclusion_rules(context)
+    root = safe_resolve(context.root)
+
+    def walk(current: Path) -> Iterator[Path]:
+        for entry in _iter_project_entries(current):
+            if entry.is_symlink():
+                continue
+            if _is_generated_evidence_path(entry, context):
+                continue
+            decision = decide_path_exclusion(entry, context, active_rules)
+            if decision.excluded:
+                continue
+            if entry.is_dir():
+                yield from walk(entry)
+            elif entry.is_file():
+                yield entry
+
+    yield from walk(root)
+
+
+def _iter_manifest_rows(
+    context: ProjectContext,
+    rules: ExclusionRules,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    files: list[dict[str, Any]] = []
+    excluded_samples: list[dict[str, Any]] = []
+    generated_artifact_samples: list[dict[str, Any]] = []
+    root = safe_resolve(context.root)
+
+    def walk(current: Path) -> None:
+        for entry in _iter_project_entries(current):
+            if entry.is_symlink():
+                continue
+            if _is_generated_evidence_path(entry, context):
+                if len(generated_artifact_samples) < 50:
+                    generated_artifact_samples.append(_generated_artifact_decision(entry, context))
+                continue
+            decision = decide_path_exclusion(entry, context, rules)
+            if decision.excluded:
+                if len(excluded_samples) < 50:
+                    excluded_samples.append(decision.as_dict())
+                continue
+            if entry.is_dir():
+                walk(entry)
+            elif entry.is_file():
+                record = _safe_file_record(entry, context)
+                record["exclusion"] = decision.as_dict()
+                files.append(record)
+
+    walk(root)
+    return files, excluded_samples, generated_artifact_samples
+
+
+def _counts(
+    files: list[dict[str, Any]],
+    excluded_samples: list[dict[str, Any]],
+    generated_artifact_samples: list[dict[str, Any]],
+) -> dict[str, int]:
+    return {
+        "active_files": len(files),
+        "text_files": sum(1 for item in files if item.get("kind") == "text"),
+        "binary_files": sum(1 for item in files if item.get("kind") == "binary"),
+        "unreadable_files": sum(1 for item in files if item.get("kind") == "unreadable"),
+        "included_in_active_snapshot": sum(
+            1 for item in files if item.get("included_in_active_snapshot") is True
+        ),
+        "excluded_path_samples": len(excluded_samples),
+        "generated_artifact_path_samples": len(generated_artifact_samples),
+    }
+
+
+def build_file_manifest_payload(project: str | Path | ProjectContext) -> dict[str, Any]:
+    """Build the file manifest payload for one active project."""
+    context = _context(project)
+    rules = load_bundle_exclusion_rules(context)
+    files, excluded_samples, generated_artifact_samples = _iter_manifest_rows(context, rules)
+    files.sort(key=lambda item: str(item.get("path", "")).lower())
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "bundle_kind": BUNDLE_KIND,
+        "generator": {
+            "name": GENERATOR_NAME,
+            "version": GENERATOR_VERSION,
+        },
+        "generated_at_utc": datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+        "project": {
+            "project_slug": context.project_slug,
+            "project_root_marker": "<PROJECT_ROOT>",
+            "evidence_root_relative": "project_analysis_evidence",
+            "json_complete_relative": "project_analysis_evidence/json_complete",
+        },
+        "source": {
+            "exclusion_rules": rules.as_dict(),
+            "contract": "project_specific_dynamic_rules",
+        },
+        "counts": _counts(files, excluded_samples, generated_artifact_samples),
+        "files": files,
+        "excluded_path_samples": excluded_samples,
+        "generated_artifact_path_samples": generated_artifact_samples,
+    }
+
+
+def write_file_manifest_json(project: str | Path | ProjectContext) -> Path:
+    """Write <project_slug>__file_manifest.json for one project."""
+    context = _context(project)
+    paths = bundle_artifact_paths(context)
+    payload = build_file_manifest_payload(context)
+    return write_json_atomic(paths.file_manifest_json, payload)

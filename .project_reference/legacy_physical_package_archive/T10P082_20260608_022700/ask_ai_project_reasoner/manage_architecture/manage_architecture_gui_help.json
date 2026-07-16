@@ -1,0 +1,45 @@
+{
+  "origin": "kanda_reasoner_app/manage_architecture/manage_architecture_gui.py",
+  "entry_point": "kanda_reasoner_app/manage_architecture/manage_architecture_gui.py",
+  "help_folder": "kanda_reasoner_app/manage_architecture/manage_architecture_gui_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with helper module public surfaces.",
+  "pattern": "mixed",
+  "pattern_note": "Manifest records helper exports and local helper dependencies.",
+  "generated_by": "reasoner_correction_pass_014_helper_manifest_contract",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "summary": {
+    "total_helpers": 2,
+    "public_helpers": 1,
+    "internal_helpers": 1,
+    "entry_exports": [],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "__init__.py": {
+      "purpose": "",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [],
+      "depends_on": [],
+      "consumed_by": []
+    },
+    "mode_options_hlp.py": {
+      "purpose": "PROJECT  : Architecture Manager Developer Tool",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "MODE_OPTIONS_HELP_TEXT",
+        "mode_help_summary"
+      ],
+      "depends_on": [],
+      "consumed_by": []
+    }
+  },
+  "dependency_graph": {
+    "__init__.py": {},
+    "mode_options_hlp.py": {}
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}

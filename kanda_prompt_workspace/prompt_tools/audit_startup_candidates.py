@@ -116,7 +116,6 @@ __all__ = [
     'allowed_scan_roots',
     'append_items',
     'ask_yes_no',
-    'atomic_write_text',
     'AuditResult',
     'compare_candidates_to_source_map',
     'create_report',

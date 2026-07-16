@@ -2036,20 +2036,6 @@ Structural source of truth for packages, modules, public symbols, helper-group r
 - `HoverFloatingWindowController` -> `kanda_reasoner_app.templates.floating_windows.float_window`
 - `attach_floating_window` -> `kanda_reasoner_app.templates.floating_windows.float_window`
 
-### profiling
-
-| Module | Owns | Exposes | Depends On | Used By | Helper Group |
-|---|---|---|---|---|---|
-| `profiling` |  |  |  |  |  |
-| `profiling.eeg_profiler` |  | RealTimePerformanceProfiler |  |  |  |
-| `profiling.run_with_trace` |  | run_with_trace_main, test_governance_probe |  |  |  |
-
-**Public Symbol Quick Reference**
-
-- `RealTimePerformanceProfiler` -> `profiling.eeg_profiler`
-- `run_with_trace_main` -> `profiling.run_with_trace`
-- `test_governance_probe` -> `profiling.run_with_trace`
-
 ## Validation Issues
 
 No validation issues.

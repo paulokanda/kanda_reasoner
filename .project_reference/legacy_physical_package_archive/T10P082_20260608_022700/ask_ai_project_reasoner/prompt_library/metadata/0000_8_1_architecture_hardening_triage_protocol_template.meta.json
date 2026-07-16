@@ -1,0 +1,51 @@
+{
+  "category": "architecture_hardening",
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "summary": "Initial general project prompt pack seed.",
+      "version": "1.0.0"
+    }
+  ],
+  "creates_files": false,
+  "default_output_folder": "<PROJECT_ROOT>\\_project_reference\\prompt_library",
+  "depends_on": [],
+  "display_name": "Architecture Hardening Triage Protocol Template",
+  "edit_policy": "draft_only",
+  "example_usage": "Copy this prompt from Tab 9, replace adaptation variables, and present it to an AI as part of a selected prompt stack.",
+  "explainer": "Reusable protocol for architecture-hardening campaigns.",
+  "files_created": [],
+  "governance_linked": false,
+  "how_it_works": "It triages findings into hard failures, transitional debt, and warnings before narrow owner-box patches.",
+  "load_type": "on_request",
+  "mitigations": [
+    "Require placeholder replacement before use.",
+    "Keep examples clearly marked and separate from active instructions."
+  ],
+  "modifies_governance": false,
+  "project_agnostic": true,
+  "promotion_policy": "manual_only",
+  "prompt_id": "0000_8_1_architecture_hardening_triage_protocol_template",
+  "required_before": [],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "risks": [
+    "Prompt may be used without replacing adaptation variables.",
+    "Project-specific examples may be mistaken for active project truth."
+  ],
+  "safe_to_copy": true,
+  "schema_version": "1.0.0",
+  "status": "active",
+  "subcategory": "general_project_prompt_pack",
+  "validation_requirements": [
+    "must_be_ascii",
+    "must_be_utf8_without_bom",
+    "must_use_project_placeholders",
+    "must_not_hardcode_absolute_paths",
+    "must_not_modify_source_code_from_tab9"
+  ],
+  "version": "1.0.0"
+}

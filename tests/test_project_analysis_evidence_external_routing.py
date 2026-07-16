@@ -32,7 +32,8 @@ class ProjectAnalysisEvidenceExternalRoutingTests(unittest.TestCase):
 
         self.assertTrue(
             _text(path).endswith(
-                "clinic_ai_show_project_to_AI/clinic_ai__complete.json"
+                "clinic_ai_show_project_to_AI/second_prompt_files/"
+                "clinic_ai__complete.json"
             )
         )
         self.assertNotIn("clinic_ai/project_analysis_evidence", _text(path))
@@ -43,7 +44,7 @@ class ProjectAnalysisEvidenceExternalRoutingTests(unittest.TestCase):
         evidence_root = project_analysis_evidence_root(root)
 
         self.assertTrue(_text(evidence_root).endswith("other_project_show_project_to_AI"))
-        self.assertEqual(analysis_json_complete_dir(root), evidence_root)
+        self.assertEqual(analysis_json_complete_dir(root), evidence_root / "second_prompt_files")
         self.assertEqual(analysis_json_parts_dir(root), evidence_root / "json_splitted")
 
     def test_ensure_does_not_recreate_in_source_project_analysis_evidence(self) -> None:
@@ -55,7 +56,7 @@ class ProjectAnalysisEvidenceExternalRoutingTests(unittest.TestCase):
 
             self.assertTrue(evidence_root.exists())
             self.assertTrue(analysis_json_complete_dir(root).is_dir())
-            self.assertTrue(analysis_json_parts_dir(root).is_dir())
+            self.assertFalse(analysis_json_parts_dir(root).exists())
             self.assertFalse((root / "project_analysis_evidence").exists())
 
     def test_source_has_no_hardcoded_project_paths(self) -> None:

@@ -69,6 +69,34 @@ def _freeze_state_owner_root(project_root: str | Path) -> Path:
     return project_analysis_evidence_root(project_root)
 
 
+def _normalized_path_text(value: str | Path) -> str:
+    """Return one resolved path identity for freeze confirmation checks."""
+
+    return str(Path(value).expanduser().resolve(strict=False))
+
+
+def _preview_root_binding_error(
+    preview: Mapping[str, Any],
+    selected_project_root: Path,
+    owner_root: Path,
+) -> str:
+    """Return a fail-closed error when a preview targets another root."""
+
+    expected_selected = _normalized_path_text(selected_project_root)
+    expected_owner = _normalized_path_text(owner_root)
+    selected_fields = ("selected_project_root", "display_project_root")
+    owner_fields = ("project_root", "freeze_state_owner_root")
+    for field in selected_fields:
+        value = str(preview.get(field) or "")
+        if not value or _normalized_path_text(value) != expected_selected:
+            return "Freeze preview selected-project binding is stale: " + field
+    for field in owner_fields:
+        value = str(preview.get(field) or "")
+        if not value or _normalized_path_text(value) != expected_owner:
+            return "Freeze preview owner-root binding is stale: " + field
+    return ""
+
+
 def _preview_for_ledger_engine(preview: Mapping[str, Any], owner_root: Path) -> dict[str, Any]:
     """Return an engine-facing preview with the owner root as project_root.
 
@@ -124,12 +152,23 @@ def validate_freeze_entry_preview(
     """Validate a freeze-entry preview without writing files."""
 
     try:
+        resolved_project_root = _resolved_project_root(project_root)
+        owner_root = _freeze_state_owner_root(resolved_project_root)
+        binding_error = _preview_root_binding_error(
+            preview,
+            resolved_project_root,
+            owner_root,
+        )
+        if binding_error:
+            return _contract_error(
+                operation="validate_freeze_entry_preview",
+                project_root=resolved_project_root,
+                message=binding_error,
+            )
         from project_freeze_ledger.freeze_tools.local_freeze_writer import (
             validate_freeze_entry_preview as _engine_validate_freeze_entry_preview,
         )
 
-        resolved_project_root = _resolved_project_root(project_root)
-        owner_root = _freeze_state_owner_root(resolved_project_root)
         engine_preview = _preview_for_ledger_engine(preview, owner_root)
         validation = _engine_validate_freeze_entry_preview(owner_root, engine_preview)
         result = dict(validation)
@@ -164,12 +203,29 @@ def write_confirmed_freeze_entry(
     """
 
     try:
+        resolved_project_root = _resolved_project_root(project_root)
+        if confirmation is not True:
+            return _contract_error(
+                operation="write_confirmed_freeze_entry",
+                project_root=resolved_project_root,
+                message="Explicit human Confirm and Write action is required.",
+            )
+        owner_root = _freeze_state_owner_root(resolved_project_root)
+        binding_error = _preview_root_binding_error(
+            preview,
+            resolved_project_root,
+            owner_root,
+        )
+        if binding_error:
+            return _contract_error(
+                operation="write_confirmed_freeze_entry",
+                project_root=resolved_project_root,
+                message=binding_error,
+            )
         from project_freeze_ledger.freeze_tools.local_freeze_writer import (
             write_confirmed_freeze_entry as _engine_write_confirmed_freeze_entry,
         )
 
-        resolved_project_root = _resolved_project_root(project_root)
-        owner_root = _freeze_state_owner_root(resolved_project_root)
         engine_preview = _preview_for_ledger_engine(preview, owner_root)
         result = _engine_write_confirmed_freeze_entry(
             owner_root,

@@ -16,16 +16,23 @@ __all__ = [
 ]
 
 import ast
-import textwrap
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 from .context_builder_help.inference_private_impl import (
     _annotation_from_default,
-    _dedupe_texts,
     _infer_return_annotation,
-    _raise_type_name,
-    _walk_without_nested_symbols,
+)
+from ._context_builder_ast_support import (
+    _collect_overload_siblings,
+    _decorator_names,
+    _extract_imports,
+    _extract_raises_types,
+    _extract_sibling_docstrings,
+    _extract_source_lines,
+    _find_parent_class,
+    _module_summary_block,
+    _safe_unparse,
 )
 
 
@@ -98,53 +105,8 @@ class SymbolContext:
         return self.name
 
 
-def _safe_unparse(node: ast.AST | None) -> str:
-    """Support safe unparse behavior.
-    
-    Parameters
-    ----------
-    node : ast.AST | None
-        The syntax tree node.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    if node is None:
-        return ""
-    try:
-        return ast.unparse(node)
-    except Exception:
-        return ""
 
 
-def _decorator_names(node: ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef) -> list[str]:
-    """Support decorator names behavior.
-    
-    Parameters
-    ----------
-    node : ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef
-        The syntax tree node.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    names: list[str] = []
-    for dec in node.decorator_list:
-        if isinstance(dec, ast.Name):
-            names.append(dec.id)
-        elif isinstance(dec, ast.Attribute):
-            names.append(dec.attr)
-        else:
-            text = _safe_unparse(dec)
-            if text:
-                names.append(text)
-    return names
 
 def _extract_parameters(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[ParameterInfo]:
     """Support extract parameters behavior.
@@ -215,91 +177,10 @@ def _extract_parameters(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[Pa
 
 
 
-def _extract_imports(tree: ast.Module, *, limit: int = 10) -> list[str]:
-    """Support extract imports behavior.
-    
-    Parameters
-    ----------
-    tree : ast.Module
-        The parsed syntax tree.
-    limit : int, optional
-        The optional limit value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    lines: list[str] = []
-    for node in tree.body:
-        if isinstance(node, (ast.Import, ast.ImportFrom)):
-            rendered = _safe_unparse(node)
-            if rendered:
-                lines.append(rendered)
-            if len(lines) >= limit:
-                break
-        elif not isinstance(node, (ast.Expr, ast.Assign, ast.AnnAssign)):
-            break
-    return lines
 
 
-def _extract_source_lines(node: ast.AST, file_lines: list[str], *, limit: int = 80) -> list[str]:
-    """Support extract source lines behavior.
-    
-    Parameters
-    ----------
-    node : ast.AST
-        The syntax tree node.
-    file_lines : list[str]
-        The file lines value.
-    limit : int, optional
-        The optional limit value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    lineno = getattr(node, "lineno", 1)
-    end_lineno = getattr(node, "end_lineno", lineno)
-    raw = file_lines[lineno - 1 : end_lineno]
-    dedented = textwrap.dedent("\n".join(raw)).splitlines()
-    if len(dedented) > limit:
-        return dedented[:limit] + ["# ... truncated for prompt ..."]
-    return dedented
 
 
-def _extract_sibling_docstrings(parent_body: list[ast.stmt], current_node: ast.AST, *, limit: int = 3) -> list[str]:
-    """Support extract sibling docstrings behavior.
-    
-    Parameters
-    ----------
-    parent_body : list[ast.stmt]
-        The parent body value.
-    current_node : ast.AST
-        The current node value.
-    limit : int, optional
-        The optional limit value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    docs: list[str] = []
-    for sibling in parent_body:
-        if sibling is current_node:
-            continue
-        if isinstance(sibling, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-            doc = ast.get_docstring(sibling, clean=False)
-            if doc:
-                docs.append(doc.strip())
-            if len(docs) >= limit:
-                break
-    return docs
 
 
 def _extract_class_attributes(class_node: ast.ClassDef) -> list[AttributeInfo]:
@@ -363,110 +244,13 @@ def _extract_class_attributes(class_node: ast.ClassDef) -> list[AttributeInfo]:
     return list(attrs.values())
 
 
-def _extract_raises_types(node: ast.FunctionDef | ast.AsyncFunctionDef) -> list[str]:
-    """Support extract raises types behavior.
-    
-    Parameters
-    ----------
-    node : ast.FunctionDef | ast.AsyncFunctionDef
-        The syntax tree node.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    result: list[str] = []
-    for inner in _walk_without_nested_symbols(node):
-        if not isinstance(inner, ast.Raise) or inner.exc is None:
-            continue
-        name = _raise_type_name(inner.exc)
-        if name:
-            result.append(name)
-    return _dedupe_texts(result)
 
 
 
-def _find_parent_class(tree: ast.Module, node: ast.AST) -> ast.ClassDef | None:
-    """Support find parent class behavior.
-    
-    Parameters
-    ----------
-    tree : ast.Module
-        The parsed syntax tree.
-    node : ast.AST
-        The syntax tree node.
-    
-    Returns
-    -------
-    ast.ClassDef | None
-        The class def result.
-    """
-    
-    for parent in ast.walk(tree):
-        if isinstance(parent, ast.ClassDef) and node in parent.body:
-            return parent
-    return None
 
 
-def _collect_overload_siblings(parent_body: list[ast.stmt], name: str, current_node: ast.AST) -> list[str]:
-    """Support collect overload siblings behavior.
-    
-    Parameters
-    ----------
-    parent_body : list[ast.stmt]
-        The parent body value.
-    name : str
-        The name value.
-    current_node : ast.AST
-        The current node value.
-    
-    Returns
-    -------
-    list[str]
-        The list of values.
-    """
-    
-    results: list[str] = []
-    for sibling in parent_body:
-        if sibling is current_node:
-            continue
-        if isinstance(sibling, (ast.FunctionDef, ast.AsyncFunctionDef)) and sibling.name == name:
-            decs = _decorator_names(sibling)
-            if "overload" not in decs:
-                continue
-            prefix = "async def" if isinstance(sibling, ast.AsyncFunctionDef) else "def"
-            try:
-                args_text = ast.unparse(sibling.args)
-                if not args_text.startswith("("):
-                    args_text = f"({args_text})"
-            except Exception:
-                args_text = "(...)"
-            return_text = ""
-            if getattr(sibling, "returns", None) is not None:
-                ret = _safe_unparse(sibling.returns)
-                if ret:
-                    return_text = f" -> {ret}"
-            results.append(f"{prefix} {sibling.name}{args_text}{return_text}")
-    return results
 
 
-def _module_summary_block(module_summary: Any | None) -> str:
-    """Support module summary block behavior.
-    
-    Parameters
-    ----------
-    module_summary : Any | None
-        The module summary value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    return getattr(module_summary, "context_block", "") if module_summary is not None else ""
 
 
 def _class_profile_attributes(module_summary: Any | None, class_name: str) -> list[AttributeInfo]:
@@ -487,17 +271,40 @@ def _class_profile_attributes(module_summary: Any | None, class_name: str) -> li
     
     if module_summary is None:
         return []
-    profiles = getattr(module_summary, "classes", [])
+    try:
+        profiles = module_summary.classes
+    except AttributeError:
+        return []
     for profile in profiles:
-        if getattr(profile, "name", None) != class_name:
+        try:
+            profile_name = profile.name
+        except AttributeError:
+            continue
+        if profile_name != class_name:
             continue
         attrs: list[AttributeInfo] = []
-        for item in getattr(profile, "init_attributes", []):
+        try:
+            init_attributes = profile.init_attributes
+        except AttributeError:
+            init_attributes = []
+        for item in init_attributes:
+            try:
+                item_name = item.name
+            except AttributeError:
+                item_name = ""
+            try:
+                type_hint = item.type_hint
+            except AttributeError:
+                type_hint = ""
+            try:
+                assigned_from = item.assigned_from
+            except AttributeError:
+                assigned_from = ""
             attrs.append(
                 AttributeInfo(
-                    name=getattr(item, "name", ""),
-                    type_hint=getattr(item, "type_hint", ""),
-                    description_hint=getattr(item, "assigned_from", ""),
+                    name=item_name,
+                    type_hint=type_hint,
+                    description_hint=assigned_from,
                 )
             )
         return attrs

@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from kanda_reasoner_app.project_analysis_evidence_paths import (  # noqa: E402
     analysis_json_complete_dir,
     analysis_json_parts_dir,
+    analysis_project_error_memory_dir,
     ensure_project_analysis_evidence_dirs,
     normalize_evidence_artifact_path,
     parts_index_file_path,
@@ -22,11 +23,18 @@ from kanda_reasoner_app.project_analysis_evidence_paths import (  # noqa: E402
     project_name_from_root,
     relative_primary_evidence_json_path,
     secondary_evidence_json_path,
+    show_project_to_ai_root_from_hint,
 )
 
 
 def _as_posix(path: Path) -> str:
     return path.as_posix().replace("\\", "/")
+
+
+def _expected_show_root(project_root: Path) -> Path:
+    if project_root.drive:
+        return Path(project_root.anchor) / "kanda_reasoner_show_project_to_AI"
+    return project_root.parent / "kanda_reasoner_show_project_to_AI"
 
 
 class ProjectAnalysisEvidencePathsTests(unittest.TestCase):
@@ -109,6 +117,48 @@ class ProjectAnalysisEvidencePathsTests(unittest.TestCase):
         path = normalize_evidence_artifact_path(root, "")
 
         self.assertEqual(path, primary_evidence_json_path(root))
+
+    def test_nested_show_project_hint_canonicalizes_to_external_sibling(self) -> None:
+        """A show-project folder inside the source root is never canonical."""
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            drive_root = Path(temp_dir)
+            project_root = drive_root / "kanda_reasoner"
+            project_root.mkdir()
+            nested_show_root = project_root / "kanda_reasoner_show_project_to_AI"
+            nested_error_root = nested_show_root / "project_error_memory"
+            nested_pending = nested_error_root / "pending_ai_assisted_error_lesson_intake"
+            nested_pending.mkdir(parents=True)
+            expected_show_root = _expected_show_root(project_root)
+
+            self.assertEqual(show_project_to_ai_root_from_hint(nested_show_root), expected_show_root)
+            self.assertEqual(show_project_to_ai_root_from_hint(nested_error_root), expected_show_root)
+            self.assertEqual(show_project_to_ai_root_from_hint(nested_pending), expected_show_root)
+            self.assertEqual(
+                analysis_project_error_memory_dir(nested_pending),
+                expected_show_root / "project_error_memory",
+            )
+
+    def test_in_source_project_error_memory_hint_canonicalizes_to_external_sibling(self) -> None:
+        """A project_error_memory folder inside source root maps to external memory."""
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            drive_root = Path(temp_dir)
+            project_root = drive_root / "kanda_reasoner"
+            project_root.mkdir()
+            legacy_error_root = project_root / "project_error_memory"
+            legacy_pending = legacy_error_root / "pending_ai_assisted_error_lesson_intake"
+            legacy_pending.mkdir(parents=True)
+            expected_show_root = _expected_show_root(project_root)
+
+            self.assertEqual(show_project_to_ai_root_from_hint(legacy_error_root), expected_show_root)
+            self.assertEqual(show_project_to_ai_root_from_hint(legacy_pending), expected_show_root)
+            self.assertEqual(
+                analysis_project_error_memory_dir(legacy_error_root),
+                expected_show_root / "project_error_memory",
+            )
 
 
 if __name__ == "__main__":

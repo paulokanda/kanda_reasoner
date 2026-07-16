@@ -16,8 +16,12 @@ from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QFileDialog, Q
 from .workflow_gui_constants import _WORKFLOW_GUI_DEFAULT_MANAGER_NAME, _WORKFLOW_GUI_DEFAULT_PROJECT_ROOT
 from .workflow_gui_history import get_recent_roots, get_recent_scripts, record_root, record_script
 from .workflow_gui_worker import WorkflowRunWorker
+from .workflow_gui_presentation import (
+    copy_workflow_audit_to_clipboard as _copy_workflow_audit_to_clipboard,
+    show_history as _show_history,
+    show_mode_help as _show_mode_help,
+)
 from kanda_reasoner_app.templates.floating_windows import show_auto_close_action_window
-from kanda_reasoner_app.refactor_report_evidence import build_refactor_report_evidence_text
 __all__ = ['WorkflowManagerWindow', 'main']
 
 class WorkflowManagerWindow(QMainWindow):
@@ -119,18 +123,14 @@ class WorkflowManagerWindow(QMainWindow):
         mode_action_toolbar_layout = QHBoxLayout(self._mode_action_toolbar_widget)
         mode_action_toolbar_layout.setContentsMargins(0, 0, 8, 0)
         mode_action_toolbar_layout.setSpacing(6)
-        self._run_button = QPushButton('Run Selected Mode')
+        self._run_button = QPushButton('Run Selected Action')
+        self._run_button.setObjectName('workflow_review_run_selected_action_button')
         self._run_button.setDefault(True)
-        self._run_button.setToolTip('Run the mode currently selected in the Mode list')
+        self._run_button.setToolTip(
+            'Run the action selected in Run options > Mode'
+        )
         self._run_button.clicked.connect(self.run_selected_mode)
         mode_action_toolbar_layout.addWidget(self._run_button)
-        self._mode_quick_buttons: dict[str, QPushButton] = {}
-        for mode in ('validate', 'diff', 'scan', 'write'):
-            btn = QPushButton(mode.capitalize())
-            btn.setToolTip(f'Run {mode} immediately')
-            btn.clicked.connect(lambda _=False, m=mode: self.run_mode(m))
-            self._mode_quick_buttons[mode] = btn
-            mode_action_toolbar_layout.addWidget(btn)
         self._cancel_operation_button = QPushButton('Cancel')
         self._cancel_operation_button.setObjectName('workflow_review_cancel_operation_button')
         self._cancel_operation_button.setToolTip('Cancel the currently running Workflow Review operation. Hard cancellation may stop a worker thread mid-run.')
@@ -180,6 +180,11 @@ class WorkflowManagerWindow(QMainWindow):
         self._workflow_audit_label = QLabel('Project Audit Workflow')
         self._workflow_audit_label.setStyleSheet('color: #000000; font-weight: bold;')
         layout.addWidget(self._workflow_audit_label)
+        scope_label = QLabel('Run only when workflow behavior changed')
+        scope_label.setObjectName('workflow_review_conditional_scope_label')
+        scope_label.setStyleSheet('color: #5F6368; font-style: italic;')
+        self._workflow_audit_scope_label = scope_label
+        layout.addWidget(scope_label)
         layout.addWidget(self._output, stretch=1)
         self.setStatusBar(QStatusBar(self))
         self.statusBar().showMessage('Ready')
@@ -369,8 +374,6 @@ class WorkflowManagerWindow(QMainWindow):
         run_button = getattr(self, '_run_button', None)
         if run_button is not None:
             run_button.setEnabled(not running)
-        for button in getattr(self, '_mode_quick_buttons', {}).values():
-            button.setEnabled(not running)
         cancel_button = getattr(self, '_cancel_operation_button', None)
         if cancel_button is not None:
             cancel_button.setEnabled(running)
@@ -428,65 +431,19 @@ class WorkflowManagerWindow(QMainWindow):
             thread.wait(1000)
 
     def show_history(self) -> None:
-        """Show the history.
-        """
-        
-        roots = get_recent_roots()
-        scripts = get_recent_scripts()
-        lines: list[str] = []
-        if roots:
-            lines.append('Recent project roots:')
-            for i, r in enumerate(roots, 1):
-                lines.append(f'  {i}. {r}')
-        else:
-            lines.append('No recent project roots.')
-        lines.append('')
-        if scripts:
-            lines.append('Recent worker scripts:')
-            for i, s in enumerate(scripts, 1):
-                lines.append(f'  {i}. {s}')
-        else:
-            lines.append('No recent worker scripts.')
-        QMessageBox.information(self, 'Session History', '\n'.join(lines))
+        """Show recent Workflow Review roots and worker scripts."""
+
+        _show_history(self)
 
     def show_mode_help(self) -> None:
-        """Show the mode help.
-        """
-        
-        script_name = self._current_script_path().name
-        is_arch = 'architecture' in script_name.lower()
-        if is_arch:
-            help_text = 'Validate\n  Checks docstrings, package declarations, EXPOSES/EXPORTS vs __all__,\n  module size, helper-group conventions, and duplicate public symbols.\n\nDiff\n  Previews changes to architecture_manifest.json, ARCHITECTURE.md,\n  and generated __init__.py facades - without writing anything.\n\nScan\n  Prints the full architecture manifest as JSON (read-only).\n\nWrite\n  Writes architecture_manifest.json, ARCHITECTURE.md, and minimal\n  __init__.py facades. Blocked if validation has errors.'
-        else:
-            help_text = 'Validate\n  Runs tests, runtime smoke commands, business checks, GUI flows,\n  integration commands, performance commands, and import probes.\n\nDiff\n  Previews changes to workflow_manifest.json and WORKFLOWS.md.\n\nScan\n  Prints the generated workflow manifest template as JSON.\n\nWrite\n  Writes workflow_manifest.json and WORKFLOWS.md.\n  Blocked if validation has failures.'
-        QMessageBox.information(self, f'Mode Help - {script_name}', help_text)
+        """Show help for the modes supported by the selected worker."""
+
+        _show_mode_help(self)
 
     def copy_workflow_audit_to_clipboard(self) -> None:
-        """Copy Workflow Review output with optional compact Refactor Report evidence."""
+        """Copy Workflow Review output and optional refactor evidence."""
 
-        audit_text = self._output.toPlainText()
-        if self._include_refactor_report_checkbox.isChecked():
-            root_path = self._current_root_path()
-            self.statusBar().showMessage('Running Refactor Report before copying Workflow Audit...')
-            QApplication.processEvents()
-            try:
-                audit_text += build_refactor_report_evidence_text(root_path)
-            except Exception as exc:
-                audit_text += (
-                    '\n\n---\n'
-                    'Refactor Report Evidence\n'
-                    f'Unable to auto-generate compact evidence for {root_path}:\n{exc}\n'
-                )
-                show_error_copy_close_window(
-                    self,
-                    title='Refactor Report evidence failed',
-                    message=f'Workflow Audit will still be copied, but Refactor Report evidence failed:\n{exc}',
-                )
-        QApplication.clipboard().setText(audit_text)
-        if self._include_refactor_report_checkbox.isChecked():
-            self.statusBar().showMessage('Copied Workflow Audit with compact Refactor Report evidence')
-        else:
-            self.statusBar().showMessage('Copied Workflow Audit to clipboard')
+        _copy_workflow_audit_to_clipboard(self)
 
     def save_output(self) -> None:
         """Save the output.

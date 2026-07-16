@@ -53,6 +53,16 @@ from .schemas import (
     normalize_report_text,
 )
 
+from .project_mutation_lane import (
+    PROJECT_MUTATION_LANE_FEATURE_ID,
+    MutationPort,
+    MutationRequest,
+    ProjectMutationLaneStore,
+    build_mutation_request,
+    default_project_mutation_lane_database,
+    physical_project_id,
+)
+
 __all__ = [
     "DEFAULT_HUMAN_DECISION",
     "DEFAULT_VALIDATION_STATUS",
@@ -91,4 +101,11 @@ __all__ = [
     "infer_refactor_playbook_risk_level",
     "normalize_refactor_target_path",
     "write_engineering_safety_report",
+    "PROJECT_MUTATION_LANE_FEATURE_ID",
+    "MutationPort",
+    "MutationRequest",
+    "ProjectMutationLaneStore",
+    "build_mutation_request",
+    "default_project_mutation_lane_database",
+    "physical_project_id",
 ]

@@ -24,10 +24,10 @@
     <section>
       <h2>How To Use This</h2>
       <ol>
-        <li>Open the <code>Architecture Review</code> tab and click <code>Load this tool now</code> if the panel has not loaded yet.</li>
+        <li>Open the <code>Architecture Review</code> tab, select <code>Check &amp; Update Architecture</code>, and click <code>Load this tool now</code> if the panel has not loaded yet.</li>
         <li>Check <code>Project root</code>; use <code>Browse...</code> when the field is not the repository you want to inspect.</li>
         <li>Leave <code>Mode</code> on <code>validate</code> for the first pass. Use <code>diff</code> to preview generated changes, <code>scan</code> to print the manifest JSON, and <code>write</code> only when you deliberately want the worker to write architecture artifacts.</li>
-        <li>Click <code>Run Selected Mode</code> or one of the mode buttons, then read the <code>Output</code> panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.</li>
+        <li>Click the green action button. Its name changes to <code>Validate Project</code>, <code>Preview Changes</code>, <code>Scan Project</code>, or <code>Write Architecture Files</code> according to the selected mode. Then read the <code>Output</code> panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.</li>
         <li>Use <code>AI Review First Check</code> only after deterministic output exists. Treat it as an advisory second opinion over the latest output, not as the authority.</li>
         <li>Use <code>Save Output</code> when the result needs to become handoff evidence for a review, bundle, issue, or later help-page update.</li>
       </ol>
@@ -118,10 +118,10 @@
 
         <h3>Command and toolbar controls</h3>
         <article class="control-card">
-          <h4><code>Run Selected Mode</code></h4>
+          <h4><code>Validate Project</code>, <code>Preview Changes</code>, <code>Scan Project</code>, or <code>Write Architecture Files</code></h4>
           <p><strong>Area:</strong> Command.</p>
-          <p><strong>Technical contract:</strong> Runs the current combo selection through <code>run_mode</code>.</p>
-          <p><strong>In plain English:</strong> Start the selected inspection.</p>
+          <p><strong>Technical contract:</strong> The same green action button changes its label with the selected technical mode and runs that mode through <code>run_mode</code>.</p>
+          <p><strong>In plain English:</strong> The button says exactly what will happen before you click it.</p>
         </article>
         <article class="control-card">
           <h4><code>Validate</code></h4>

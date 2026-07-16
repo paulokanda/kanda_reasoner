@@ -1,0 +1,62 @@
+﻿{
+  "exports": [
+    "APP_DISPLAY_NAME",
+    "APP_ICON_PATH",
+    "APP_TITLE_DETAIL",
+    "ToolLoadErrorPanel",
+    "IgnoreRulesTab",
+    "LazyToolTab",
+    "ReasonerToolsWindow",
+    "TOOLS",
+    "ToolSpec"
+  ],
+  "help_folder": "kanda_reasoner_app/reasoner_tools_gui_shell",
+  "helpers": {
+    "app_constants.py": {
+      "exports": [
+        "APP_DISPLAY_NAME",
+        "APP_ICON_PATH",
+        "APP_TITLE_DETAIL"
+      ]
+    },
+    "error_panels.py": {
+      "exports": [
+        "ToolLoadErrorPanel"
+      ]
+    },
+    "gui_support.py": {
+      "exports": []
+    },
+    "ignore_rules_tab.py": {
+      "exports": [
+        "IgnoreRulesTab"
+      ]
+    },
+    "launch.py": {
+      "exports": []
+    },
+    "lazy_tabs.py": {
+      "exports": [
+        "LazyToolTab"
+      ]
+    },
+    "main_window.py": {
+      "exports": [
+        "ReasonerToolsWindow"
+      ]
+    },
+    "tool_specs.py": {
+      "exports": [
+        "TOOLS",
+        "ToolSpec"
+      ]
+    }
+  },
+  "origin": "reasoner_tools_gui.py",
+  "origin_all": [
+    "main"
+  ],
+  "purpose": "Helper manifest for the refactored root Reasoner tools GUI shell.",
+  "schema_version": "1.0"
+}
+

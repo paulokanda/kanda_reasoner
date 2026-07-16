@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
-import fnmatch
 import json
 import os
 from pathlib import Path
 from typing import Iterable, Iterator
 
+from kanda_reasoner_app.project_exclusion_path_matching import (
+    should_exclude_path_with_rules,
+)
 from kanda_reasoner_app.project_root_resolver import is_reasoner_project_root
 
 PROJECT_EXCLUSION_RULE_ENV_NAMES = (
@@ -404,110 +406,20 @@ def load_reasoner_project_exclusion_rules(project_root: Path | str | None) -> di
     )
 
 
-def _relative_posix(path: Path, project_root: Path) -> str:
-    """Support relative posix behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    project_root : Path
-        The project root path.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    try:
-        return path.relative_to(project_root).as_posix()
-    except Exception:
-        return str(path).replace("\\", "/")
-
-
-def _is_project_root_hidden_reference_path(rel_path: str) -> bool:
-    """Return True for dot-prefixed root folders that are not active project source."""
-
-    rel_low = rel_path.lower().replace("\\", "/").strip("/")
-    if not rel_low:
-        return False
-    first_part = rel_low.split("/", 1)[0]
-    return first_part.startswith(PROJECT_ROOT_HIDDEN_REFERENCE_DIR_PREFIX)
-
-
-def _folder_rule_matches(rel_path: str, rule: str) -> bool:
-    """Support folder rule matches behavior.
-    
-    Parameters
-    ----------
-    rel_path : str
-        The rel path value.
-    rule : str
-        The rule value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    rule_text = rule.strip().lower().replace("\\", "/").strip("/")
-    if not rule_text:
-        return False
-    rel_low = rel_path.lower().replace("\\", "/").strip("/")
-    parts = [part.lower() for part in Path(rel_low).parts]
-    return (
-        rule_text in parts or fnmatch.fnmatch(rel_low, rule_text)
-        or fnmatch.fnmatch(rel_low, rule_text + "/*")
-        or any(fnmatch.fnmatch(part, rule_text) for part in parts)
-    )
-
-
 def should_exclude_reasoner_project_path(
     path: Path | str,
     project_root: Path | str | None,
     rules: dict[str, list[str]] | None = None,
 ) -> bool:
-    """Support should exclude reasoner project path behavior.
-    
-    Parameters
-    ----------
-    path : Path | str
-        The file or folder path.
-    project_root : Path | str | None
-        The project root path.
-    rules : dict[str, list[str]] | None, optional
-        The optional rules value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
+    """Return whether one path is excluded by the active project policy."""
     root = _safe_resolve(project_root or Path.cwd())
-    resolved = _safe_resolve(path)
-    try:
-        resolved.relative_to(root)
-    except Exception:
-        return True
     active_rules = rules if rules is not None else load_reasoner_project_exclusion_rules(root)
-    rel_path = _relative_posix(resolved, root)
-    if _is_project_root_hidden_reference_path(rel_path):
-        return True
-    name_low = resolved.name.lower()
-    suffix_low = resolved.suffix.lower()
-    for folder in active_rules.get("folders", []):
-        if _folder_rule_matches(rel_path, str(folder)):
-            return True
-    for file_rule in active_rules.get("files", []):
-        pattern = str(file_rule).strip().lower().replace("\\", "/")
-        if pattern and (
-            fnmatch.fnmatch(name_low, pattern) or fnmatch.fnmatch(rel_path.lower(), pattern)
-        ):
-            return True
-    return suffix_low in set(_normalize_extensions(active_rules.get("extensions", [])))
+    return should_exclude_path_with_rules(
+        path,
+        root,
+        active_rules,
+        hidden_root_prefix=PROJECT_ROOT_HIDDEN_REFERENCE_DIR_PREFIX,
+    )
 
 
 def iter_reasoner_project_files(

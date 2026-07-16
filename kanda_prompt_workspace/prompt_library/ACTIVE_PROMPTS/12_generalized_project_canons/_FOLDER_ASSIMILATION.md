@@ -37,6 +37,10 @@ Do not use as the session kernel or patch protocol.
 - project tool boundary
 - active project identity
 - selected project root
+- architecture review card machine
+- card lifecycle
+- insert module to refactor
+- eject module after completion
 
 ## Optional For
 - new project canon creation
@@ -73,11 +77,12 @@ Do not use as the session kernel or patch protocol.
 
 | Prompt ID | File Name | Load Type | Short Purpose |
 |---|---|---|---|
+| `architecture_review_project_card_machine_canon` | `architecture_review_project_card_machine_canon.md` | routed | Defines Architecture Review as a project-card machine lifecycle: insert project module, read/plan/refactor/verify, then eject target-specific Tool memory while retaining project-owned results. |
 | `data_transform_pipeline_invariants` | `data_transform_pipeline_invariants.md` | on_request | Preserves source truth, canonical working base, and derived runtime output boundaries. |
 | `desktop_help_document_layout_canon` | `desktop_help_document_layout_canon.md` | on_request | Defines desktop help layout, quick-start blocks, non-technical artifact explanation, book grounding, and help artwork rules. |
 | `domain_decision_table_template` | `domain_decision_table_template.md` | on_request | Template for converting domain rules into explicit decision tables. |
 | `plugin_package_import_canon` | `plugin_package_import_canon.md` | on_request | Defines safe import and validation rules for plugin packages. |
-| `project_tool_boundary_canon` | `project_tool_boundary_canon.md` | routed | Preserves the boundary between KANDA Reasoner as the tool/runtime and the selected active project as the implementation target. |
+| `project_tool_boundary_canon` | `project_tool_boundary_canon.md` | always_startup | Mandatory Tool-versus-Project boundary; forbids any nested `*_show_project_to_AI` root inside active Project source. |
 | `shared_visual_render_engine_canon` | `shared_visual_render_engine_canon.md` | on_request | Protects shared visual rendering contracts across tools. |
 | `transform_resolver_architecture_contract` | `transform_resolver_architecture_contract.md` | on_request | Defines base identity plus active transform resolver behavior. |
 

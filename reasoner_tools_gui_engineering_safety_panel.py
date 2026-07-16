@@ -6,169 +6,56 @@ import-safe: PySide6 is imported only inside create_engineering_safety_panel.
 The backend logic is reached through the canonical kanda_reasoner_app
 safety_suite_cli facade during the staged package migration.
 """
+
 from __future__ import annotations
 import _reasoner_tools_gui_engineering_safety_panel_commands as _panel_commands
+from _reasoner_tools_gui_engineering_safety_panel_catalog import (
+    _build_engineering_safety_panel_catalog,
+)
 
 from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import dataclass
 from io import StringIO
-from pathlib import Path
-import sys
 import traceback
 from typing import Iterable
 
 from kanda_reasoner_app.project_root_resolver import resolve_active_project_root
 
 DEFAULT_PROJECT_ROOT = str(resolve_active_project_root())
+
+
 @dataclass(frozen=True)
 class EngineeringSafetyPanelTool:
     """Description for one Engineering Safety panel action."""
+
     section: str
     label: str
     command_name: str
     description: str
+
     @property
     def command(self) -> str:
         """Backward-compatible alias for older tests or UI code."""
         return self.command_name
+
+
 ENGINEERING_SAFETY_PANEL_CATALOG: tuple[EngineeringSafetyPanelTool, ...] = (
-    EngineeringSafetyPanelTool(
-        section="Source Hygiene",
-        label="Scan BOM",
-        command_name="bom-scan",
-        description="Dry-run scan for UTF-8 BOM and decoding issues.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Source Hygiene",
-        label="Shadow Audit",
-        command_name="shadow-audit",
-        description="Read-only audit for public-symbol and facade conflicts.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Source Hygiene",
-        label="Plan Shadow Fix",
-        command_name="shadow-plan",
-        description="Build a read-only correction plan for shadow findings.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Source Hygiene",
-        label="Facade Fix Plan",
-        command_name="facade-fix-plan",
-        description="Plan safe mechanical facade cleanup without applying edits.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Engineering Safety",
-        label="Risk Change Radar",
-        command_name="risk-radar",
-        description="Estimate what can break before a patch.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Engineering Safety",
-        label="Crash Triage",
-        command_name="crash-triage",
-        description="Summarize a crash or traceback and first files to inspect.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Engineering Safety",
-        label="Refactor Playbook",
-        command_name="refactor-playbook",
-        description="Create a staged refactor plan with validation steps.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Governance Automation",
-        label="Release Notes",
-        command_name="release-notes",
-        description="Draft release notes from explicit bundle evidence.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Governance Automation",
-        label="Push Plan",
-        command_name="push-plan",
-        description="Show the default validation plan for every push.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Stack Compatibility",
-        label="Stack Brief",
-        command_name="stack-brief",
-        description="Draft dependency and runtime compatibility notes.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Draft Reliability",
-        label="API Contract",
-        command_name="api-contract",
-        description="Draft input/output guard recommendations.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Draft Reliability",
-        label="Property Test",
-        command_name="property-test",
-        description="Draft property-test guidance for a function.",
-    ),
-    # BEGIN PA021_PROJECT_SYMBOL_ATLAS_GUI_TOOLS
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Atlas Report",
-        command_name="atlas-report",
-        description="Build Project Symbol Atlas reports for the current project.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Evidence Freshness",
-        command_name="evidence-freshness",
-        description="Check whether Project Analysis Evidence still matches live source.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Find Symbol",
-        command_name="find-symbol",
-        description="Find an existing symbol before creating new code.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Find Owner",
-        command_name="find-owner",
-        description="Find the likely owner file for a symbol.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Facade Owner",
-        command_name="facade-owner",
-        description="Resolve whether a target file is a facade and identify the owner.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Main and Helpers",
-        command_name="main-helpers",
-        description="Map main file, helper files, and public API owner.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Related Files",
-        command_name="related-files",
-        description="Find tests, helpers, manifests, diagnostics, and related support files.",
-    ),
-    EngineeringSafetyPanelTool(
-        section="Project Symbol Atlas",
-        label="Pre-Patch Gate",
-        command_name="pre-patch-gate",
-        description="Run ownership checks before editing source files.",
-    ),
-    # END PA021_PROJECT_SYMBOL_ATLAS_GUI_TOOLS
-    EngineeringSafetyPanelTool(
-        section="Utilities",
-        label="List Tools",
-        command_name="list-tools",
-        description="List available Safety Suite CLI commands.",
-    ),
+    _build_engineering_safety_panel_catalog(EngineeringSafetyPanelTool)
 )
+
+
 def get_engineering_safety_panel_catalog() -> tuple[EngineeringSafetyPanelTool, ...]:
     """Return the immutable panel action catalog."""
     return ENGINEERING_SAFETY_PANEL_CATALOG
+
+
 def _project_root_text(project_root: str | None = None) -> str:
     """Return a non-empty project root text for default GUI commands."""
     if project_root is not None:
         return str(project_root)
     return str(resolve_active_project_root())
+
+
 def _call_safety_suite_cli(args: list[str]) -> tuple[int, str, str]:
     """Call the Safety Suite CLI in-process and capture text output."""
     stdout_buffer = StringIO()
@@ -176,6 +63,7 @@ def _call_safety_suite_cli(args: list[str]) -> tuple[int, str, str]:
     status = 0
     try:
         from kanda_reasoner_app.safety_suite_cli import commands
+
         cli_main = getattr(commands, "main", None)
         if cli_main is None:
             raise RuntimeError("safety_suite_cli.commands.main is not available")
@@ -203,6 +91,8 @@ def _call_safety_suite_cli(args: list[str]) -> tuple[int, str, str]:
         status = 1
         stderr_buffer.write(traceback.format_exc())
     return status, stdout_buffer.getvalue(), stderr_buffer.getvalue()
+
+
 def run_engineering_safety_panel_cli_command(
     command_name: str,
     project_root: str | None = None,
@@ -221,6 +111,8 @@ def run_engineering_safety_panel_cli_command(
     if stderr_text.strip():
         lines.extend(["", "STDERR:", stderr_text.strip()])
     return "\n".join(lines)
+
+
 def _group_tools_by_section(
     tools: Iterable[EngineeringSafetyPanelTool],
 ) -> dict[str, list[EngineeringSafetyPanelTool]]:
@@ -229,6 +121,8 @@ def _group_tools_by_section(
     for tool in tools:
         grouped.setdefault(tool.section, []).append(tool)
     return grouped
+
+
 def create_engineering_safety_panel():
     """Create the Engineering Safety tab panel.
 
@@ -237,11 +131,9 @@ def create_engineering_safety_panel():
     """
     from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
     from PySide6.QtWidgets import (  # type: ignore[import-not-found]
-
         QFileDialog,
         QGridLayout,
         QGroupBox,
-        QHBoxLayout,
         QLabel,
         QLineEdit,
         QPushButton,
@@ -266,7 +158,9 @@ def create_engineering_safety_panel():
     project_root_edit.setMaximumWidth(360)
 
     search_project_button = QPushButton("Browse...")
-    search_project_button.setToolTip("Select the active project root for Engineering Safety commands")
+    search_project_button.setToolTip(
+        "Select the active project root for Engineering Safety commands"
+    )
 
     project_root_controls_moved_to_host = {"moved": False}
 
@@ -305,8 +199,7 @@ def create_engineering_safety_panel():
         if selected:
             project_root_edit.setText(selected)
             output_box.setPlainText(
-                "Project root selected for Engineering Safety commands:\n"
-                + selected
+                "Project root selected for Engineering Safety commands:\n" + selected
             )
 
     search_project_button.clicked.connect(search_project_root)
@@ -343,8 +236,34 @@ def create_engineering_safety_panel():
             return
         QTimer.singleShot(150, lambda: poll_command(command_name, future))
 
+    correction_dialog_state: dict[str, object | None] = {"dialog": None}
+
+    def open_ruff_correction_dialog() -> None:
+        """Open the reviewed Ruff correction dialog for the active project."""
+        existing = correction_dialog_state.get("dialog")
+        if existing is not None and existing.isVisible():  # type: ignore[attr-defined]
+            existing.raise_()  # type: ignore[attr-defined]
+            existing.activateWindow()  # type: ignore[attr-defined]
+            return
+        from _reasoner_tools_gui_ruff_correction_dialog import (
+            create_ruff_correction_dialog,
+        )
+
+        dialog = create_ruff_correction_dialog(
+            panel,
+            current_project_root_text(),
+        )
+        correction_dialog_state["dialog"] = dialog
+        dialog.finished.connect(
+            lambda _result: correction_dialog_state.__setitem__("dialog", None)
+        )
+        dialog.show()
+
     def run_command(command_name: str) -> None:
         """Start a panel command without blocking the GUI event loop."""
+        if command_name == "ruff-correction-dialog":
+            open_ruff_correction_dialog()
+            return
         if running_commands:
             active = sorted(running_commands)[0]
             status_label.setText(f"Still running: {active}")
@@ -363,6 +282,7 @@ def create_engineering_safety_panel():
             current_project_root_text(),
         )
         QTimer.singleShot(150, lambda: poll_command(command_name, future))
+
     # END PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
 
     def move_project_root_controls_to_layout(
@@ -417,7 +337,9 @@ def create_engineering_safety_panel():
             button.setMinimumWidth(button_width)
             button.setMaximumWidth(button_width)
             button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            button.clicked.connect(lambda checked=False, name=tool.command_name: run_command(name))
+            button.clicked.connect(
+                lambda checked=False, name=tool.command_name: run_command(name)
+            )
             group_layout.addWidget(button, index // 2, index % 2)
 
         return group
@@ -433,19 +355,47 @@ def create_engineering_safety_panel():
         stack.addStretch(1)
         return host
 
-    button_layout.addWidget(build_group("Source Hygiene", grouped_sections["Source Hygiene"]), 0, 0)
-    button_layout.addWidget(build_group("Engineering Safety", grouped_sections["Engineering Safety"]), 0, 1)
-    button_layout.addWidget(build_group("Governance Automation", grouped_sections["Governance Automation"]), 1, 0)
-    button_layout.addWidget(build_group("Stack Compatibility", grouped_sections["Stack Compatibility"]), 1, 1)
+    button_layout.addWidget(
+        build_group("Source Hygiene", grouped_sections["Source Hygiene"]),
+        0,
+        0,
+    )
+    button_layout.addWidget(
+        build_group("Engineering Safety", grouped_sections["Engineering Safety"]),
+        0,
+        1,
+    )
+    button_layout.addWidget(
+        build_group(
+            "Governance Automation",
+            grouped_sections["Governance Automation"],
+        ),
+        1,
+        0,
+    )
+    button_layout.addWidget(
+        build_group(
+            "Stack Compatibility",
+            grouped_sections["Stack Compatibility"],
+        ),
+        1,
+        1,
+    )
     button_layout.addWidget(build_stack(("Draft Reliability", "Utilities")), 2, 0)
-    button_layout.addWidget(build_group("Project Symbol Atlas", grouped_sections["Project Symbol Atlas"]), 2, 1)
+    button_layout.addWidget(
+        build_group(
+            "Project Symbol Atlas",
+            grouped_sections["Project Symbol Atlas"],
+        ),
+        2,
+        1,
+    )
 
     button_layout.setRowStretch(3, 1)
     scroll.setWidget(button_host)
     outer.addWidget(scroll)
     outer.addWidget(output_box)
     return panel
-
 
 
 # GUI004W_PUBLIC_EXPORT_WRAPPERS_START
@@ -467,6 +417,8 @@ def build_engineering_safety_panel_cli_args(command_name: str, project_root=None
 def run_engineering_safety_panel_command(command_name: str, project_root=None):
     "Run a panel command and return an explicit command result."
     return _panel_commands._run_command(command_name, project_root)
+
+
 # GUI004W_PUBLIC_EXPORT_WRAPPERS_END
 
 __all__ = [

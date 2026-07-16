@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "pack_id": "<PROMPT_PACK_ID>",
+  "display_name": "<PROMPT_PACK_DISPLAY_NAME>",
+  "version": "1.0.0",
+  "status": "draft",
+  "project_agnostic": true,
+  "source_project": "<PROJECT_NAME_OR_GENERIC>",
+  "created_by": "<AUTHOR_OR_TOOL>",
+  "created_at": "<YYYY-MM-DD>",
+  "description": "<SHORT_DESCRIPTION>",
+  "intended_use": [
+    "<USE_CASE_1>",
+    "<USE_CASE_2>"
+  ],
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<PROJECT_NAME>",
+    "<TASK_DESCRIPTION>"
+  ],
+  "prompts": [
+    {
+      "prompt_id": "<PROMPT_ID>",
+      "prompt_file": "active/<PROMPT_FILE>.md",
+      "metadata_file": "metadata/<PROMPT_FILE>.meta.json",
+      "load_order": 1,
+      "required": true,
+      "category": "<CATEGORY>",
+      "purpose": "<PURPOSE>"
+    }
+  ],
+  "stacks": [
+    {
+      "stack_id": "<STACK_ID>",
+      "stack_file": "stacks/<STACK_FILE>.md",
+      "purpose": "<PURPOSE>"
+    }
+  ],
+  "validation": {
+    "metadata_json_parse": "not_run",
+    "required_fields": "not_run",
+    "hardcoded_path_scan": "not_run",
+    "project_agnostic_scan": "not_run",
+    "prompt_section_check": "not_run"
+  },
+  "files_created_or_modified_by_pack": [],
+  "governance_behavior": {
+    "modifies_governance": false,
+    "writes_active_governance": false,
+    "requires_user_approval_for_governance": true
+  },
+  "notes": []
+}

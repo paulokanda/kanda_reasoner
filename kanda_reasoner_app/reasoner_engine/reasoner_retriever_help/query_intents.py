@@ -1,19 +1,28 @@
 # project-path: kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/query_intents.py
-"""Support V10 project reasoning and evidence handling."""
+"""Classify retrieval-intent shapes while preserving the public facade."""
 
-# -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
-# MODULE ORIGIN : kanda_reasoner_app/reasoner_engine\reasoner_retriever.py
-# MANIFEST      : kanda_reasoner_app/reasoner_engine\reasoner_retriever_help.json
-# HELP FOLDER   : kanda_reasoner_app/reasoner_engine\reasoner_retriever_help
-# PURPOSE       : Classify retrieval-intent shapes from a normalized question string.
-# EXPORTS       : is_startup_question, is_explicit_call_chain_question, is_main_window_show_responsibility_question, is_qtimer_showmaximized_question, is_where_is_called_question, is_where_is_question, is_which_method_calls_question, is_explain_chain_question, is_explanatory_question, is_code_localized_explanation_question, is_topomap_explanation_question, is_topomap_implementation_question, is_runtime_heavy_question, is_packaging_metadata_question, is_documentation_intent_question, detect_query_intents
-# DEPENDS ON    : query_text.py
-# REFACTOR DATE : 2026-04-10
-# -"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR-"EUR
+# -----------------------------------------------------------------------------
+# MODULE ORIGIN : kanda_reasoner_app/reasoner_engine/reasoner_retriever.py
+# MANIFEST      : kanda_reasoner_app/reasoner_engine/reasoner_retriever_help.json
+# HELP FOLDER   : kanda_reasoner_app/reasoner_engine/reasoner_retriever_help
+# PURPOSE       : Preserve public query-intent imports and aggregate detections.
+# DEPENDS ON    : _query_intent_location_and_explanation.py, query_text.py
+# REFACTOR DATE : 2026-07-11
+# -----------------------------------------------------------------------------
 from __future__ import annotations
 
 import re
 
+from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help._query_intent_location_and_explanation import (
+    _is_code_localized_explanation_question,
+    _is_explain_chain_question,
+    _is_explanatory_question,
+    _is_topomap_explanation_question,
+    _is_topomap_implementation_question,
+    _is_where_is_called_question,
+    _is_where_is_question,
+    _is_which_method_calls_question,
+)
 from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help.query_text import norm_text
 
 __all__ = [
@@ -112,6 +121,11 @@ def is_main_window_show_responsibility_question(q: str) -> bool:
     ]
     return any(term in q for term in terms)
 
+def _matches_delayed_main_window_maximize_question(q: str) -> bool:
+    """Return whether the normalized query names the delayed maximize call."""
+    return "qtimer.singleshot" in q and "self.v.main_window.showmaximized" in q
+
+
 def is_qtimer_showmaximized_question(q: str) -> bool:
     """Return whether qtimer showmaximized question.
     
@@ -125,8 +139,7 @@ def is_qtimer_showmaximized_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    return "qtimer.singleshot" in q and "self.v.main_window.showmaximized" in q
+    return _matches_delayed_main_window_maximize_question(q)
 
 def is_where_is_called_question(q: str) -> bool:
     """Return whether where is called question.
@@ -141,25 +154,7 @@ def is_where_is_called_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    terms = [
-        "who calls ",
-        "where is ",
-        "where is the ",
-        "where is this ",
-        "where is it called",
-        "where is it invoked",
-        "where is actually called",
-        "where is actually invoked",
-        "called in ",
-        "invoked in ",
-        "references ",
-        "reference to ",
-        "who invokes ",
-    ]
-    return any(term in q for term in terms) and (
-        "call" in q or "called" in q or "invoke" in q or "invoked" in q or "reference" in q
-    )
+    return _is_where_is_called_question(q)
 
 def is_where_is_question(q: str) -> bool:
     """Return whether where is question.
@@ -174,31 +169,7 @@ def is_where_is_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    terms = [
-        "where is ",
-        "where is the ",
-        "where is this ",
-        "where defined",
-        "where is defined",
-        "where is declared",
-        "in which file is",
-        "what file defines",
-        "which file defines",
-        "what file contains",
-        "which file contains",
-        "what file records",
-        "which file records",
-        "what file has",
-        "which file has",
-        "what file includes",
-        "which file includes",
-        "what file is the source of",
-        "which file is the source of",
-        "where implemented",
-        "where is implemented",
-    ]
-    return any(term in q for term in terms)
+    return _is_where_is_question(q)
 
 def is_which_method_calls_question(q: str) -> bool:
     """Return whether which method calls question.
@@ -213,18 +184,7 @@ def is_which_method_calls_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    terms = [
-        "which method calls",
-        "what method calls",
-        "which function calls",
-        "what function calls",
-        "who calls",
-        "directly calls",
-        "calls qtimer.singleshot",
-        "calls self.",
-    ]
-    return any(term in q for term in terms)
+    return _is_which_method_calls_question(q)
 
 def is_explain_chain_question(q: str) -> bool:
     """Return whether explain chain question.
@@ -239,23 +199,7 @@ def is_explain_chain_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    terms = [
-        "explain chain",
-        "explain the chain",
-        "trace the chain",
-        "trace the startup",
-        "startup chain",
-        "execution chain",
-        "call chain",
-        "flow from",
-        "sequence from",
-        "explain directly in plain prose the chain",
-        "timeline chain",
-        "reset chain",
-        "cleanup chain",
-    ]
-    return any(term in q for term in terms)
+    return _is_explain_chain_question(q)
 
 def is_explanatory_question(q: str) -> bool:
     """Return whether explanatory question.
@@ -270,20 +214,7 @@ def is_explanatory_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    terms = [
-        "explain",
-        "trace",
-        "summarize",
-        "describe",
-        "walk through",
-        "architecture",
-        "flow",
-        "chain",
-        "implementation of",
-        "responsibility split",
-    ]
-    return any(term in q for term in terms)
+    return _is_explanatory_question(q)
 
 def is_code_localized_explanation_question(q: str) -> bool:
     """Return whether code localized explanation question.
@@ -298,37 +229,7 @@ def is_code_localized_explanation_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    explanation_terms = [
-        "explain",
-        "trace",
-        "walk through",
-        "describe",
-        "summarize",
-        "implementation",
-        "flow",
-        "chain",
-    ]
-    code_terms = [
-        "with code",
-        "show code",
-        "include code",
-        "code localization",
-        "code location",
-        "where in code",
-        "show snippets",
-        "show snippet",
-        "line numbers",
-        "file path and code",
-        "symbol and code",
-        "code evidence",
-        "with code evidence",
-        "line-level snippet",
-        "line-level snippets",
-        "line level snippet",
-        "line level snippets",
-    ]
-    return any(term in q for term in explanation_terms) and any(term in q for term in code_terms)
+    return _is_code_localized_explanation_question(q)
 
 def is_topomap_explanation_question(q: str) -> bool:
     """Return whether topomap explanation question.
@@ -343,28 +244,7 @@ def is_topomap_explanation_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    if "topomap" not in q and "amplitude map" not in q:
-        return False
-
-    implementation_terms = [
-        "implement",
-        "implements",
-        "implemented",
-        "implementation",
-        "creating",
-        "updating",
-        "participate in creating",
-        "participate in updating",
-        "modules participate",
-        "which code implements",
-        "which modules participate",
-    ]
-
-    return (
-        is_explanatory_question(q)
-        or any(term in q for term in implementation_terms)
-    )
+    return _is_topomap_explanation_question(q)
 
 def is_topomap_implementation_question(q: str) -> bool:
     """Return whether topomap implementation question.
@@ -379,23 +259,7 @@ def is_topomap_implementation_question(q: str) -> bool:
     bool
         True if the condition is met; otherwise, False.
     """
-    
-    if "topomap" not in q and "amplitude map" not in q:
-        return False
-
-    terms = [
-        "implement",
-        "implements",
-        "implemented",
-        "implementation",
-        "which code implements",
-        "which modules participate",
-        "participate in creating",
-        "participate in updating",
-        "creating",
-        "updating",
-    ]
-    return any(term in q for term in terms)
+    return _is_topomap_implementation_question(q)
 
 def is_runtime_heavy_question(q: str) -> bool:
     """Return whether runtime heavy question.
@@ -535,7 +399,7 @@ def detect_query_intents(q: str) -> dict[str, bool]:
         "startup": is_startup_question(q),
         "explicit_call_chain": is_explicit_call_chain_question(q),
         "main_window_show": is_main_window_show_responsibility_question(q),
-        "qtimer_showmaximized": is_qtimer_showmaximized_question(q),
+        "qtimer_showmaximized": _matches_delayed_main_window_maximize_question(q),
         "topomap_explanation": is_topomap_explanation_question(q),
         "topomap_implementation": is_topomap_implementation_question(q),
         "explanatory": is_explanatory_question(q),
@@ -553,9 +417,3 @@ def detect_query_intents(q: str) -> dict[str, bool]:
             or "unknown" in q
         ),
     }
-
-
-
-
-
-

@@ -1,0 +1,672 @@
+# kanda_reasoner_app/project_reasoner_v10_data_collector/runner.py
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+import traceback
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from PySide6.QtCore import QProcess, QTimer
+from PySide6.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QMessageBox,
+    QPlainTextEdit,
+    QPushButton,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
+
+from kanda_reasoner_app.project_reasoner_v10_data_collector import (
+    collector_main,
+)
+
+from kanda_reasoner_app.json_splitter.json_splitter_8 import JsonSplitterPanel
+from kanda_reasoner_app.runtime_scenarios.collector_scenario_traces import (
+    finalize_runtime_scenario,
+    log_runtime_error,
+    log_runtime_event,
+    start_runtime_scenario,
+)
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+_DEFAULT_PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
+
+_DEFAULT_OUTPUT_JSON = Path(__file__).parent / "project_reasoner_v10_index.json"
+
+_DEFAULT_RUNTIME_TRACE_JSON = (
+    _DEFAULT_PROJECT_ROOT
+    / "developer_tools"
+    / "kanda_reasoner_app"
+    / "project_reasoner_v10_runtime_collector"
+    / "outputs"
+    / "runtime_trace.json"
+)
+
+_PREFS_FILE = Path(__file__).resolve().parent / ".collector_runner_prefs.json"
+
+_CHILD_MODE_ARG = "--collector-child"
+
+_RUNTIME_RUNNER_SCRIPT = (
+    _DEFAULT_PROJECT_ROOT
+    / "developer_tools"
+    / "kanda_reasoner_app"
+    / "project_reasoner_v10_runtime_collector"
+    / "runtime_runner.py"
+)
+
+
+def _safe_log_runtime_event(
+    event_type: str,
+    source_symbol: str,
+    message: str,
+    tags: list[str] | None = None,
+    payload: dict | None = None,
+) -> None:
+    try:
+        log_runtime_event(
+            event_type=event_type,
+            source_file=(
+                "developer_tools/kanda_reasoner_app/"
+                "project_reasoner_v10_data_collector/runner.py"
+            ),
+            source_symbol=source_symbol,
+            message=message,
+            tags=tags,
+            payload=payload,
+        )
+    except Exception:
+        pass
+
+
+def _safe_log_runtime_error(
+    source_symbol: str,
+    message: str,
+    payload: dict | None = None,
+) -> None:
+    try:
+        log_runtime_error(
+            source_file=(
+                "developer_tools/kanda_reasoner_app/"
+                "project_reasoner_v10_data_collector/runner.py"
+            ),
+            source_symbol=source_symbol,
+            message=message,
+            payload=payload,
+        )
+    except Exception:
+        pass
+
+
+def _safe_finalize_runtime_scenario() -> None:
+    try:
+        finalize_runtime_scenario()
+    except Exception:
+        pass
+
+
+def _load_prefs() -> dict:
+    try:
+        if _PREFS_FILE.exists():
+            return json.loads(_PREFS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return {}
+
+
+def _save_prefs(
+    project_root: str,
+    output_json: str,
+    runtime_trace_json: str,
+) -> None:
+    try:
+        _PREFS_FILE.write_text(
+            json.dumps(
+                {
+                    "project_root": project_root,
+                    "output_json": output_json,
+                    "runtime_trace_json": runtime_trace_json,
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+    except Exception:
+        pass
+
+
+def _run_collector_child(
+    project_root: str,
+    output_json: str,
+    runtime_trace_json: str | None,
+) -> int:
+    try:
+        result = collector_main.run_collector(
+            project_root=project_root,
+            output_json=output_json,
+            runtime_trace_json=runtime_trace_json,
+        )
+        payload = {
+            "ok": True,
+            "file_count": len(result.get("files", [])),
+            "error_count": len(result.get("errors", [])),
+            "output_json": output_json,
+            "has_runtime_trace_summary": "runtime_trace_summary" in result,
+            "has_runtime_scenario_summary": "runtime_scenario_summary" in result,
+        }
+        print(json.dumps(payload), flush=True)
+        return 0
+    except Exception:
+        print(traceback.format_exc(), file=sys.stderr, flush=True)
+        return 1
+
+
+def make_empty_index_payload() -> dict:
+    return {"files": [], "errors": [], "project_summary": {}}
+
+
+def resolve_output_json_path(raw: str) -> Path:
+    p = Path(raw).expanduser()
+    if not p.suffix.lower().endswith(".json"):
+        p = p / "project_reasoner_v10_index.json"
+    return p.resolve()
+
+
+def derive_runtime_trace_json_path(output_json_raw: str) -> Path:
+    output_path = resolve_output_json_path(output_json_raw)
+    return output_path.with_name(f"{output_path.stem}_runtime_trace.json")
+
+
+# ---------------------------------------------------------------------------
+# Main window
+# ---------------------------------------------------------------------------
+
+
+class CollectorRunnerWindow(QMainWindow):
+    def __init__(self) -> None:
+        super().__init__()
+        self.setWindowTitle("Project Reasoner v10 - Data Collector")
+        self.resize(900, 600)
+
+        self._prefs = _load_prefs()
+        self._process: QProcess | None = None
+        self._current_output_json: str = ""
+        self._active_stage: str = ""
+        self._pending_project_root: str = ""
+        self._pending_output_json: str = ""
+        self._pending_runtime_trace_json: str = ""
+        self._close_begin_logged = False
+
+        self._busy_frames = ["-", "\\", "|", "/"]
+        self._busy_index = 0
+
+        self._busy_timer = QTimer(self)
+        self._busy_timer.setInterval(120)
+        self._busy_timer.timeout.connect(self._tick_busy_animation)
+
+        self._build_ui()
+        self._sync_runtime_trace_with_output_json()
+        self._connect_signals()
+
+        _safe_log_runtime_event(
+            event_type="ui_ready",
+            source_symbol="CollectorRunnerWindow.__init__",
+            message="Collector runner window initialized",
+            tags=["ui", "ready", "window"],
+            payload={},
+        )
+
+    def _connect_signals(self) -> None:
+        self.browse_project_button.clicked.connect(self._browse_project_root)
+        self.browse_output_button.clicked.connect(self._browse_output_json)
+        self.run_button.clicked.connect(self._run_collector)
+        self.close_button.clicked.connect(self._close_application)
+
+    def _sync_runtime_trace_with_output_json(self) -> None:
+        output_json_raw = self.output_json_edit.text().strip()
+        if not output_json_raw:
+            return
+
+        runtime_trace_path = derive_runtime_trace_json_path(output_json_raw)
+        self.runtime_trace_json_edit.setText(str(runtime_trace_path.resolve()))
+
+    # ------------------------------------------------------------------
+    # UI construction
+    # ------------------------------------------------------------------
+
+
+    def _build_ui(self) -> None:
+        central = QWidget()
+        self.setCentralWidget(central)
+        main_layout = QVBoxLayout(central)
+
+        self.tabs = QTabWidget()
+        main_layout.addWidget(self.tabs)
+
+        collector_tab = QWidget()
+        collector_layout = QVBoxLayout(collector_tab)
+
+        root_row = QHBoxLayout()
+        root_row.addWidget(QLabel("Project root:"))
+        self.project_root_edit = QLineEdit(
+            self._prefs.get("project_root", str(_DEFAULT_PROJECT_ROOT))
+        )
+        root_row.addWidget(self.project_root_edit)
+        self.browse_project_button = QPushButton("Browse...")
+        root_row.addWidget(self.browse_project_button)
+        collector_layout.addLayout(root_row)
+
+        out_row = QHBoxLayout()
+        out_row.addWidget(QLabel("Output JSON:"))
+        self.output_json_edit = QLineEdit(
+            self._prefs.get("output_json", str(_DEFAULT_OUTPUT_JSON.resolve()))
+        )
+        out_row.addWidget(self.output_json_edit)
+        self.browse_output_button = QPushButton("Browse...")
+        out_row.addWidget(self.browse_output_button)
+        collector_layout.addLayout(out_row)
+
+        self.runtime_trace_json_edit = QLineEdit(
+            self._prefs.get(
+                "runtime_trace_json",
+                str(_DEFAULT_RUNTIME_TRACE_JSON.resolve()),
+            )
+        )
+        self.runtime_trace_json_edit.hide()
+
+        self.browse_runtime_trace_button = QPushButton("Browse...")
+        self.browse_runtime_trace_button.hide()
+
+        button_row = QHBoxLayout()
+        self.run_button = QPushButton("Run Collector")
+        self.close_button = QPushButton("Close")
+        button_row.addWidget(self.run_button)
+        button_row.addWidget(self.close_button)
+        button_row.addStretch()
+        collector_layout.addLayout(button_row)
+
+        self.status_label = QLabel("Idle")
+        collector_layout.addWidget(self.status_label)
+
+        self.log_box = QPlainTextEdit()
+        self.log_box.setReadOnly(True)
+        collector_layout.addWidget(self.log_box)
+
+        self.splitter_panel = JsonSplitterPanel(self)
+
+        self.tabs.addTab(collector_tab, "Collector")
+        self.tabs.addTab(self.splitter_panel, "JSON Splitter")
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    def _append_log(self, text: str) -> None:
+        self.log_box.appendPlainText(text)
+        scroll_bar = self.log_box.verticalScrollBar()
+        scroll_bar.setValue(scroll_bar.maximum())
+
+    def _create_json_file_if_missing(self, output_json: Path) -> None:
+        if not output_json.exists():
+            output_json.parent.mkdir(parents=True, exist_ok=True)
+            output_json.write_text(
+                json.dumps(make_empty_index_payload(), indent=2),
+                encoding="utf-8",
+            )
+            self._append_log(f"Created empty index file: {output_json}")
+
+    def _start_busy_animation(self, stage_text: str) -> None:
+        self._busy_index = 0
+        self._active_stage = stage_text
+        self.run_button.setEnabled(False)
+        self.browse_project_button.setEnabled(False)
+        self.browse_output_button.setEnabled(False)
+        self.status_label.setText(stage_text + "...")
+        self._busy_timer.start()
+
+    def _stop_busy_animation(self, status_text: str) -> None:
+        self._busy_timer.stop()
+        self.run_button.setEnabled(True)
+        self.browse_project_button.setEnabled(True)
+        self.browse_output_button.setEnabled(True)
+        self.status_label.setText(status_text)
+        self.setWindowTitle("Project Reasoner v10 - Data Collector")
+        self._active_stage = ""
+
+    def _tick_busy_animation(self) -> None:
+        frame = self._busy_frames[self._busy_index % len(self._busy_frames)]
+        self._busy_index += 1
+        stage_text = self._active_stage or "Running"
+        self.status_label.setText(f"{stage_text} {frame}")
+        self.setWindowTitle(f"Project Reasoner v10 - Data Collector {frame}")
+
+    def _start_runtime_trace_process(self) -> None:
+        self._process = QProcess(self)
+        self._process.finished.connect(self._on_process_finished)
+        self._process.errorOccurred.connect(self._on_process_error)
+
+        env = os.environ.copy()
+        env["PROJECT_REASONER_PROJECT_ROOT"] = self._pending_project_root
+        env["PROJECT_REASONER_RUNTIME_TRACE_JSON"] = self._pending_runtime_trace_json
+        env["PROJECT_REASONER_RUNTIME_TRACE_OVERWRITE"] = "1"
+
+        process_env = self._process.processEnvironment()
+        for key, value in env.items():
+            process_env.insert(str(key), str(value))
+        self._process.setProcessEnvironment(process_env)
+
+        process_args = [str(_RUNTIME_RUNNER_SCRIPT.resolve())]
+
+        self._start_busy_animation("Running runtime runner")
+        self._process.start(sys.executable, process_args)
+
+    def _start_collector_process(self) -> None:
+        self._process = QProcess(self)
+        self._process.finished.connect(self._on_process_finished)
+        self._process.errorOccurred.connect(self._on_process_error)
+
+        process_args = [
+            str(Path(__file__).resolve()),
+            _CHILD_MODE_ARG,
+            self._pending_project_root,
+            self._pending_output_json,
+            self._pending_runtime_trace_json,
+        ]
+
+        self._start_busy_animation("Running collector")
+        self._process.start(sys.executable, process_args)
+
+    # ------------------------------------------------------------------
+    # Slots
+    # ------------------------------------------------------------------
+
+    def _browse_project_root(self) -> None:
+        folder = QFileDialog.getExistingDirectory(
+            self,
+            "Select project root",
+            self.project_root_edit.text(),
+        )
+        if folder:
+            self.project_root_edit.setText(folder)
+            _save_prefs(
+                self.project_root_edit.text().strip(),
+                self.output_json_edit.text().strip(),
+                self.runtime_trace_json_edit.text().strip(),
+            )
+
+    def _browse_output_json(self) -> None:
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Select output JSON",
+            self.output_json_edit.text(),
+            "JSON files (*.json)",
+        )
+        if path:
+            self.output_json_edit.setText(path)
+            self._sync_runtime_trace_with_output_json()
+            _save_prefs(
+                self.project_root_edit.text().strip(),
+                self.output_json_edit.text().strip(),
+                self.runtime_trace_json_edit.text().strip(),
+            )
+
+    def _close_application(self) -> None:
+        self.close()
+
+    def _on_process_finished(self, exit_code: int, _exit_status) -> None:
+        stdout_text = ""
+        stderr_text = ""
+
+        if self._process is not None:
+            stdout_text = bytes(self._process.readAllStandardOutput()).decode(
+                "utf-8",
+                errors="replace",
+            ).strip()
+            stderr_text = bytes(self._process.readAllStandardError()).decode(
+                "utf-8",
+                errors="replace",
+            ).strip()
+
+        if exit_code != 0:
+            failed_stage = self._active_stage or "Process"
+            self._stop_busy_animation("Failed")
+            self._append_log(f"[ERROR] {failed_stage} failed:")
+            self._append_log(stderr_text or stdout_text or "Unknown child-process error")
+
+            _safe_log_runtime_error(
+                source_symbol="CollectorRunnerWindow._on_process_finished",
+                message=f"{failed_stage} failed",
+                payload={
+                    "traceback": stderr_text or stdout_text or "Unknown child-process error",
+                    "stage": failed_stage,
+                    "exit_code": exit_code,
+                },
+            )
+
+            QMessageBox.critical(
+                self,
+                "Collector error",
+                stderr_text or stdout_text or "Unknown child-process error",
+            )
+            self._process = None
+            return
+
+        try:
+            result = json.loads(stdout_text) if stdout_text else {}
+        except Exception:
+            result = {}
+
+        if self._active_stage == "Running runtime runner":
+            runtime_trace_path = str(result.get("runtime_trace_json", "") or "").strip()
+            overwrote_existing = bool(result.get("overwrote_existing", False))
+            trace_size = int(result.get("size", 0))
+
+            if runtime_trace_path:
+                self._pending_runtime_trace_json = runtime_trace_path
+                self.runtime_trace_json_edit.setText(runtime_trace_path)
+
+            self._append_log(
+                "[OK] Runtime trace generated - "
+                f"overwrote_existing={overwrote_existing}, size={trace_size}"
+            )
+            self._append_log(f"  runtime_trace: {self._pending_runtime_trace_json}")
+
+            _save_prefs(
+                self._pending_project_root,
+                self._pending_output_json,
+                self._pending_runtime_trace_json,
+            )
+
+            _safe_log_runtime_event(
+                event_type="runtime_trace_generated",
+                source_symbol="CollectorRunnerWindow._on_process_finished",
+                message="Runtime trace generated successfully",
+                tags=["runtime", "trace", "collector"],
+                payload={
+                    "runtime_trace_json": self._pending_runtime_trace_json,
+                    "overwrote_existing": overwrote_existing,
+                    "size": trace_size,
+                },
+            )
+
+            self._process = None
+            self._start_collector_process()
+            return
+
+        file_count = int(result.get("file_count", 0))
+        error_count = int(result.get("error_count", 0))
+
+        self._stop_busy_animation("Finished")
+        self._append_log(f"[OK] Done - {file_count} files indexed, {error_count} errors.")
+        self._append_log(f"  Saved to: {self._current_output_json}")
+
+        _safe_log_runtime_event(
+            event_type="collector_run_finished",
+            source_symbol="CollectorRunnerWindow._on_process_finished",
+            message="Collector child process finished successfully",
+            tags=["collector", "finish"],
+            payload={
+                "file_count": file_count,
+                "error_count": error_count,
+                "output_json": self._current_output_json,
+            },
+        )
+
+        self._process = None
+
+    def _on_process_error(self, _process_error) -> None:
+        failed_stage = self._active_stage or "Process"
+        self._stop_busy_animation("Failed")
+        self._append_log(f"[ERROR] {failed_stage} process could not start.")
+        QMessageBox.critical(
+            self,
+            "Collector error",
+            f"{failed_stage} process could not start.",
+        )
+
+        _safe_log_runtime_error(
+            source_symbol="CollectorRunnerWindow._on_process_error",
+            message=f"{failed_stage} process could not start.",
+            payload={
+                "stage": failed_stage,
+            },
+        )
+
+        self._process = None
+
+    def _run_collector(self) -> None:
+        project_root = self.project_root_edit.text().strip()
+        output_json_raw = self.output_json_edit.text().strip()
+
+        self._sync_runtime_trace_with_output_json()
+        runtime_trace_raw = self.runtime_trace_json_edit.text().strip()
+
+        if not project_root:
+            QMessageBox.warning(self, "Missing input", "Please set the project root.")
+            return
+
+        if not Path(project_root).is_dir():
+            QMessageBox.warning(
+                self,
+                "Invalid path",
+                f"Project root does not exist:\n{project_root}",
+            )
+            return
+
+        if not runtime_trace_raw:
+            runtime_trace_raw = str(_DEFAULT_RUNTIME_TRACE_JSON.resolve())
+            self.runtime_trace_json_edit.setText(runtime_trace_raw)
+
+        output_json = resolve_output_json_path(output_json_raw)
+        runtime_trace_path = Path(runtime_trace_raw).expanduser().resolve()
+
+        self._create_json_file_if_missing(output_json)
+        runtime_trace_path.parent.mkdir(parents=True, exist_ok=True)
+
+        self._current_output_json = str(output_json)
+        self._pending_project_root = project_root
+        self._pending_output_json = str(output_json)
+        self._pending_runtime_trace_json = str(runtime_trace_path)
+
+        _save_prefs(
+            self._pending_project_root,
+            self._pending_output_json,
+            self._pending_runtime_trace_json,
+        )
+
+        self._append_log("Starting runtime trace generation...")
+        self._append_log(f"  root : {self._pending_project_root}")
+        self._append_log(f"  output: {self._pending_output_json}")
+        self._append_log(f"  runtime_trace: {self._pending_runtime_trace_json}")
+
+        _safe_log_runtime_event(
+            event_type="collector_run_started",
+            source_symbol="CollectorRunnerWindow._run_collector",
+            message="Collector run requested from GUI",
+            tags=["collector", "start", "gui"],
+            payload={
+                "project_root": self._pending_project_root,
+                "output_json": self._pending_output_json,
+                "runtime_trace_json": self._pending_runtime_trace_json,
+            },
+        )
+
+        self._start_runtime_trace_process()
+
+    def closeEvent(self, event) -> None:
+        _save_prefs(
+            self.project_root_edit.text().strip(),
+            self.output_json_edit.text().strip(),
+            self.runtime_trace_json_edit.text().strip(),
+        )
+
+        if not self._close_begin_logged:
+            self._close_begin_logged = True
+            _safe_log_runtime_event(
+                event_type="close_begin",
+                source_symbol="CollectorRunnerWindow.closeEvent",
+                message="Collector runner window closing",
+                tags=["close", "window"],
+                payload={},
+            )
+
+        super().closeEvent(event)
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+
+def main() -> None:
+    if len(sys.argv) >= 4 and sys.argv[1] == _CHILD_MODE_ARG:
+        project_root = sys.argv[2]
+        output_json = sys.argv[3]
+        runtime_trace_json = sys.argv[4] if len(sys.argv) >= 5 and sys.argv[4] else None
+        sys.exit(_run_collector_child(project_root, output_json, runtime_trace_json))
+
+    start_runtime_scenario(
+        scenario_name="project_reasoner_v10_data_collector_session",
+        app_entry=(
+            "developer_tools/kanda_reasoner_app/"
+            "project_reasoner_v10_data_collector/runner.py"
+        ),
+    )
+
+    app = QApplication(sys.argv)
+    window = CollectorRunnerWindow()
+    window.show()
+
+    _safe_log_runtime_event(
+        event_type="ui_shown",
+        source_symbol="main",
+        message="Collector runner window shown",
+        tags=["ui", "shown", "window"],
+        payload={},
+    )
+
+    exit_code = 0
+    try:
+        exit_code = app.exec()
+    finally:
+        _safe_finalize_runtime_scenario()
+
+    sys.exit(exit_code)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,223 @@
+# T9T013 Handoff For Other AI Review
+
+## Request to reviewing AI
+
+Please review this proposed roadmap before implementation.
+
+Do not implement code.
+
+Do not generate a ZIP.
+
+Return suggestions for improving the roadmap, especially around Tab 9 prompt
+group registration, cross-prompt awareness, and safety boundaries.
+
+## Project
+
+Kanda Reasoner / developer_tools
+
+## Current project root
+
+```text
+E:\developer_tools
+```
+
+## Current user goal
+
+The user wants the `Teach AI Prompt Authoring` prompt group to make future AIs do
+the complete prompt-library job when asked to create or update a prompt.
+
+Desired behavior:
+
+```text
+If the user says "create a new prompt that...", the AI should think:
+- check if an existing prompt already does this;
+- decide create vs update vs link;
+- create/update the prompt .md;
+- create/update metadata;
+- register the prompt in the correct Tab 9 group/spinning box;
+- update related prompts that should know the new prompt exists;
+- update index/current-state/roadmap;
+- create an installable bundle;
+- provide install and validation commands;
+- avoid governance/source changes unless explicitly requested.
+```
+
+## Current evidence from the code archive
+
+Archive inspected:
+
+```text
+developer_tools.2.6.2026_11h_before_tools.7z
+```
+
+Relevant files:
+
+```text
+ask_ai_project_reasoner/prompt_library/groups/PROMPT_GROUPS.json
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.md
+ask_ai_project_reasoner/prompt_library/active/KANDA_BUNDLE_GATED_DEVELOPMENT_WORKFLOW.md
+ask_ai_project_reasoner/prompt_library_gui/group_catalog.py
+ask_ai_project_reasoner/prompt_library_gui/library_catalog.py
+```
+
+Current group:
+
+```text
+group_id: teach_ai_prompt_authoring
+display_name: Teach AI Prompt Authoring
+prompt_ids:
+- teach_ai_tab9_prompt_authoring_guide
+- teach_ai_create_or_update_prompt_request
+- tab9_prompt_asset_placement_rules
+```
+
+Current catalog behavior:
+
+- `PROMPT_GROUPS.json` defines dashboard groups.
+- `group_catalog.py` loads group prompt_ids.
+- `library_catalog.py` loads prompt text files and metadata.
+- A group prompt_id can match metadata prompt_id, display_name, file stem, or
+  relative path after normalization.
+- Therefore, reliable dashboard visibility requires metadata prompt_id and
+  PROMPT_GROUPS.json prompt_ids to agree.
+
+## Proposed T9T013 scope
+
+Bundle name:
+
+```text
+T9T013_teach_ai_prompt_authoring_complete_lifecycle.zip
+```
+
+Active box:
+
+```text
+tab_9_prompt_engineering_text_library
+```
+
+Bundle type:
+
+```text
+text-only prompt-library bundle
+```
+
+No Python runtime changes.
+
+No GUI code changes.
+
+No active governance changes.
+
+## Proposed files to update
+
+```text
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.md
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_CREATE_OR_UPDATE_PROMPT_REQUEST.meta.json
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md
+ask_ai_project_reasoner/prompt_library/teaching/TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.meta.json
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.md
+ask_ai_project_reasoner/prompt_library/teaching/TAB9_PROMPT_ASSET_PLACEMENT_RULES.meta.json
+ask_ai_project_reasoner/prompt_library/groups/PROMPT_GROUPS.json
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_MASTER_INDEX.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_MASTER_INDEX.meta.json
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_CURRENT_STATE.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_CURRENT_STATE.meta.json
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_ROADMAP.md
+ask_ai_project_reasoner/prompt_library/PROMPT_LIBRARY_ROADMAP.meta.json
+workbench/_bundle_temp/BUNDLE_MANIFEST_t9t013_teach_ai_prompt_authoring_complete_lifecycle.txt
+```
+
+## Proposed logic changes
+
+### 1. Update Teach AI request prompt
+
+Make it require:
+
+```text
+- inspect existing prompt-library assets first;
+- decide create vs update vs link;
+- use Kanda Bundle-Gated Development;
+- create/update complete prompt assets;
+- update group/catalog/index/current-state/roadmap;
+- update related prompts that should know about the new prompt;
+- provide local validation commands.
+```
+
+### 2. Update Teach AI guide
+
+Add:
+
+```text
+## Complete Prompt Asset Lifecycle
+## Cross-Prompt Awareness Rules
+## Create vs Update vs Link Decision
+## Full Bundle Output Contract
+```
+
+### 3. Update placement rules
+
+Add:
+
+```text
+## Dashboard Visibility Contract
+```
+
+Explain how PROMPT_GROUPS.json and metadata prompt_id interact.
+
+### 4. Register bundle-gated prompt in Teach AI group
+
+Add this prompt_id to `teach_ai_prompt_authoring`:
+
+```text
+kanda_bundle_gated_development_workflow
+```
+
+### 5. Update prompt-library state docs
+
+Update master index, current state, and roadmap to show that Teach AI Prompt
+Authoring now uses complete lifecycle prompt authoring.
+
+## Questions for reviewing AI
+
+1. Is `teach_ai_prompt_authoring` the best group for
+   `kanda_bundle_gated_development_workflow`, or should it also be added to
+   `high_risk_engineering`?
+2. Should T9T013 create a new group, or is that unnecessary because the user did
+   not request a new spinning box?
+3. Are there any other prompt files that should be made aware of the new parent
+   methodology?
+4. Should the full lifecycle rules live in the teaching guide only, or should the
+   request prompt also include a compressed mandatory checklist?
+5. Are the proposed validation commands sufficient for text-only work?
+6. Does the roadmap risk over-updating unrelated prompts?
+7. Should the implementation add a small headless catalog test, or is that a
+   later code gate because current scope is text-only?
+
+## Review output requested
+
+Please return:
+
+```text
+1. keep roadmap as-is / modify roadmap / reject roadmap
+2. suggested changes
+3. files to add/remove from the proposed T9T013 bundle
+4. validation checks to add
+5. risks not covered
+6. final recommended implementation order
+```
+
+## Do-not-cross boundaries
+
+Do not suggest editing:
+
+```text
+active governance files
+Tabs 1 through 8
+Tab 9 GUI code
+architecture/workflow validators
+AI bridge internals
+runtime collectors
+```
+
+unless you explicitly classify it as a separate later gate.

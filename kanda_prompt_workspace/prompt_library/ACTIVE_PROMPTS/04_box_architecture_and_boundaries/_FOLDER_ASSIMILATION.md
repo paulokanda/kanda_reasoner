@@ -69,9 +69,21 @@ Do not use as a substitute for delivery scripts, validation scripts, or prompt a
 | `project_folder_organization_canon` | `project_folder_organization_canon.md` | on_request | Defines project folder boundaries and placement discipline. |
 | `stateful_control_regression_canon` | `stateful_control_regression_canon.md` | on_request | Protects dropdowns and stateful controls from regression during UI changes. |
 | `kanda_box_shielding_canon` | `kanda_box_shielding_canon.md` | on_request | Defines KBSC: tests-first box shielding as an architectural fitness-function suite for bounded contexts before stronger or cross-box work. |
+| `governed_architecture_companion_handoff` | `governed_architecture_companion_handoff.md` | on_request | Unified non-canonical architecture gate companion; loads current canonical owners and leaves final coding authorization to Brick Wall. |
+| `boundary_first_repair_protocol` | `boundary_first_repair_protocol.md` | routed | Traces symptom-owner divergence and repairs the first proven ownership boundary while validating downstream shields. |
 
 ## Routing Rule
 Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
 
 ## Boundary Rule
 This card may point to prompt files, but must not copy specialist rules from them.
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTING_V1_START -->
+
+## Governed Architecture Companion Route
+
+Load `governed_architecture_companion_handoff` only on demand when a task is architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, or combines several architecture safeguards. The prompt is a companion and never replaces Brick Wall or any canonical owner.
+
+Do not load the full prompt during normal startup. The startup stack carries only the compact Governed Architecture Companion Bridge.
+
+<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTING_V1_END -->

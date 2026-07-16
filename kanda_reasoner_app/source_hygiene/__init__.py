@@ -15,6 +15,10 @@ from .bom_scanner import (
     scan_project_for_bom,
 )
 from .report_writer import default_source_hygiene_report_dir, write_source_hygiene_report
+from .ruff_quality import (
+    RUFF_QUALITY_FEATURE_ID,
+    build_ruff_quality_report,
+)
 from .schemas import (
     DEFAULT_REPORT_TYPE,
     VALID_CONFIDENCE,
@@ -54,6 +58,7 @@ __all__ = [
     "DEFAULT_BOM_SCAN_SUFFIXES",
     "DEFAULT_REPORT_TYPE",
     "FacadeFixResult",
+    "RUFF_QUALITY_FEATURE_ID",
     "ShadowAuditFileSummary",
     "ShadowCorrectionPlanItem",
     "SourceHygieneFinding",
@@ -68,6 +73,7 @@ __all__ = [
     "audit_python_file_for_shadow_conflicts",
     "build_safe_facade_fix_plan",
     "build_shadow_conflict_plan",
+    "build_ruff_quality_report",
     "classify_shadow_finding",
     "default_source_hygiene_report_dir",
     "finding_to_plan_item",

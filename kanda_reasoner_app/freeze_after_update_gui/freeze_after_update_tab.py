@@ -18,10 +18,10 @@ from kanda_reasoner_app.freeze_after_update_gui._freeze_memory_exports import Fr
 from kanda_reasoner_app.freeze_after_update_gui._local_ai_formulary import (
     AUTO_LOCAL_AI_MODEL_LABEL,
     LocalFreezeAIFormularyRunner,
-    _list_local_ai_models,
-    _local_ai_response_looks_like_prompt_echo,
-    _model_name_from_local_ai_combo_text,
-    _validate_local_ai_form_against_heuristic,
+    list_local_ai_models,
+    local_ai_response_looks_like_prompt_echo,
+    model_name_from_local_ai_combo_text,
+    validate_local_ai_form_against_heuristic,
 )
 from kanda_reasoner_app.freeze_after_update_gui._local_freeze_dialog_widgets import (
     FreezeLocalFreezeDialogSupportMixin,
@@ -29,6 +29,15 @@ from kanda_reasoner_app.freeze_after_update_gui._local_freeze_dialog_widgets imp
 )
 from kanda_reasoner_app.freeze_after_update_gui._path_controls import FreezePathControlsMixin
 from kanda_reasoner_app.freeze_after_update_gui._ui_builder import FreezeUiBuilderMixin
+from kanda_reasoner_app.freeze_after_update_gui.local_freeze_confirmation_binding import (
+    FreezeActionStateController,
+    apply_freeze_form_inputs,
+    bind_freeze_confirmation_invalidation,
+    build_freeze_confirmation_binding,
+    collect_freeze_form_inputs,
+    freeze_confirmation_binding_matches,
+    render_freeze_findings,
+)
 from kanda_reasoner_app.freeze_after_update_gui.local_freeze_preview_log import build_local_freeze_preview_log_text
 from kanda_reasoner_app.templates.floating_windows import show_auto_close_action_window
 FREEZE_CONFIRM_ENABLED_STYLE = 'color: #008000; font-weight: bold;'
@@ -77,17 +86,6 @@ class FreezeAfterUpdateTab(
         local_ai_model_combo = widgets.local_ai_model_combo
         refresh_local_ai_models_button = widgets.refresh_local_ai_models_button
         mode_status_label = widgets.mode_status_label
-        feature_title_edit = widgets.feature_title_edit
-        primary_box_edit = widgets.primary_box_edit
-        box_type_edit = widgets.box_type_edit
-        validated_files_edit = widgets.validated_files_edit
-        generated_files_edit = widgets.generated_files_edit
-        protected_paths_edit = widgets.protected_paths_edit
-        do_not_regress_edit = widgets.do_not_regress_edit
-        validation_evidence_edit = widgets.validation_evidence_edit
-        known_warnings_edit = widgets.known_warnings_edit
-        planned_next_step_edit = widgets.planned_next_step_edit
-        notes_edit = widgets.notes_edit
         preview_text_edit = widgets.preview_text_edit
         autofill_button = widgets.autofill_button
         copy_to_ai_button = widgets.copy_to_ai_button
@@ -97,49 +95,45 @@ class FreezeAfterUpdateTab(
         ignore_freeze_button = widgets.ignore_freeze_button
         cancel_button = widgets.cancel_button
         self._local_freeze_preview = None
+        confirmation_binding: dict[str, str] | None = None
 
-        def set_freeze_action_buttons_state(can_confirm: bool, can_ignore: bool, reason: str='') -> None:
-            """Enable freeze action buttons only after a clean writable preview."""
-            confirm_write_button.setEnabled(can_confirm)
-            ignore_freeze_button.setEnabled(can_ignore)
-            if can_confirm:
-                confirm_write_button.setStyleSheet(FREEZE_CONFIRM_ENABLED_STYLE)
-                confirm_write_button.setToolTip('Write this validated local freeze entry and close the form immediately.')
-            else:
-                confirm_write_button.setStyleSheet(FREEZE_DISABLED_ACTION_STYLE)
-                confirm_reason = reason or 'Preview and validate a writable freeze entry before confirming.'
-                confirm_write_button.setToolTip(confirm_reason)
-            if can_ignore:
-                ignore_freeze_button.setStyleSheet(FREEZE_IGNORE_ENABLED_STYLE)
-                ignore_freeze_button.setToolTip('Discard this current writable freeze draft and mark the current freeze hint as ignored/used. No freeze entry is written.')
-            else:
-                ignore_freeze_button.setStyleSheet(FREEZE_DISABLED_ACTION_STYLE)
-                ignore_reason = reason or 'No current writable freeze draft is available to ignore.'
-                ignore_freeze_button.setToolTip(ignore_reason)
+        action_state = FreezeActionStateController(
+            confirm_button=confirm_write_button,
+            ignore_button=ignore_freeze_button,
+            confirm_enabled_style=FREEZE_CONFIRM_ENABLED_STYLE,
+            ignore_enabled_style=FREEZE_IGNORE_ENABLED_STYLE,
+            disabled_style=FREEZE_DISABLED_ACTION_STYLE,
+        )
+        action_state.disable(
+            "No writable freeze preview has been generated yet."
+        )
 
-        def disable_freeze_action_buttons(reason: str='') -> None:
-            """Disable both destructive/local-freeze action buttons with one reason."""
-            set_freeze_action_buttons_state(False, False, reason)
-        disable_freeze_action_buttons('No writable freeze preview has been generated yet.')
-
-        def collect_inputs() -> dict:
-            return {'feature_title': feature_title_edit.text().strip(), 'primary_box': primary_box_edit.text().strip(), 'box_type': box_type_edit.text().strip() or 'Module Box', 'validated_files': validated_files_edit.toPlainText(), 'generated_files': generated_files_edit.toPlainText(), 'protected_paths': protected_paths_edit.toPlainText(), 'do_not_regress_rules': do_not_regress_edit.toPlainText(), 'validation_evidence_summary': validation_evidence_edit.toPlainText(), 'known_warnings': known_warnings_edit.toPlainText().strip(), 'planned_next_step': planned_next_step_edit.toPlainText().strip(), 'notes': notes_edit.toPlainText().strip()}
+        def collect_inputs() -> dict[str, str]:
+            return collect_freeze_form_inputs(widgets)
 
         def apply_inputs(inputs: dict) -> None:
-            feature_title_edit.setText(str(inputs.get('feature_title', '')))
-            primary_box_edit.setText(str(inputs.get('primary_box', '')))
-            box_type_edit.setText(str(inputs.get('box_type', 'Module Box') or 'Module Box'))
-            validated_files_edit.setPlainText(str(inputs.get('validated_files', '')))
-            generated_files_edit.setPlainText(str(inputs.get('generated_files', '')))
-            protected_paths_edit.setPlainText(str(inputs.get('protected_paths', '')))
-            do_not_regress_edit.setPlainText(str(inputs.get('do_not_regress_rules', '')))
-            validation_evidence_edit.setPlainText(str(inputs.get('validation_evidence_summary', '')))
-            known_warnings_edit.setPlainText(str(inputs.get('known_warnings', '')))
-            planned_next_step_edit.setPlainText(str(inputs.get('planned_next_step', '')))
-            notes_edit.setPlainText(str(inputs.get('notes', '')))
+            apply_freeze_form_inputs(widgets, inputs)
+
+        def invalidate_current_confirmation(*_args: object) -> None:
+            nonlocal confirmation_binding
+            if self._local_freeze_preview is None and confirmation_binding is None:
+                return
+            self._local_freeze_preview = None
+            confirmation_binding = None
+            preview_text_edit.clear()
+            action_state.disable(
+                "The form or selected project changed after Preview. "
+                "Preview and validation must run again."
+            )
+
+        bind_freeze_confirmation_invalidation(
+            widgets,
+            self.project_root_edit,
+            invalidate_current_confirmation,
+        )
 
         def selected_local_ai_model_name() -> str:
-            return _model_name_from_local_ai_combo_text(str(local_ai_model_combo.currentText() or ''))
+            return model_name_from_local_ai_combo_text(str(local_ai_model_combo.currentText() or ''))
 
         def set_ai_fill_busy(is_busy: bool) -> None:
             autofill_button.setEnabled(not is_busy)
@@ -151,7 +145,7 @@ class FreezeAfterUpdateTab(
             heuristic_radio.setEnabled(not is_busy)
             local_ai_model_combo.setEnabled(not is_busy)
             if is_busy:
-                disable_freeze_action_buttons('Local AI fill is still running.')
+                action_state.disable('Local AI fill is still running.')
 
         def populate_local_ai_model_combo() -> list[str]:
             previous = selected_local_ai_model_name()
@@ -160,7 +154,7 @@ class FreezeAfterUpdateTab(
                 local_ai_model_combo.clear()
                 local_ai_model_combo.addItem(AUTO_LOCAL_AI_MODEL_LABEL)
                 try:
-                    models = _list_local_ai_models()
+                    models = list_local_ai_models()
                 except Exception as exc:
                     models = []
                     mode_status_label.setText('Local AI model refresh failed; Heuristics remains available. Error: ' + str(exc))
@@ -179,7 +173,7 @@ class FreezeAfterUpdateTab(
                 local_ai_model_combo.blockSignals(False)
 
         def fill_with_heuristics_only(reason: str='') -> None:
-            disable_freeze_action_buttons('No writable freeze preview has been generated yet.')
+            action_state.disable('No writable freeze preview has been generated yet.')
             self._local_freeze_preview = None
             apply_inputs(self._build_heuristic_local_freeze_inputs(project_root))
             if reason:
@@ -190,7 +184,7 @@ class FreezeAfterUpdateTab(
         def handle_local_ai_fill_result(response_text: str, model_name: str) -> None:
             set_ai_fill_busy(False)
             heuristic_inputs = self._build_heuristic_local_freeze_inputs(project_root)
-            if _local_ai_response_looks_like_prompt_echo(response_text):
+            if local_ai_response_looks_like_prompt_echo(response_text):
                 self._append_log('Local AI output rejected by quality gates: prompt echo detected. Heuristic draft kept.')
                 mode_status_label.setText('Local AI echoed the prompt; heuristic draft kept.')
                 QMessageBox.warning(dialog, 'Local AI fill rejected', 'Local AI echoed the prompt/instructions instead of returning a clean form. The heuristic draft was kept and previewed.')
@@ -205,7 +199,7 @@ class FreezeAfterUpdateTab(
                 QMessageBox.warning(dialog, 'Local AI fill fallback', 'Local AI ran, but its answer could not be parsed. The heuristic draft was kept and previewed.')
                 preview_local_freeze()
                 return
-            ok_to_apply, quality_reasons = _validate_local_ai_form_against_heuristic(updated_inputs, heuristic_inputs)
+            ok_to_apply, quality_reasons = validate_local_ai_form_against_heuristic(updated_inputs, heuristic_inputs)
             if not ok_to_apply:
                 self._append_log('Local AI output rejected by quality gates. Heuristic draft kept.')
                 for reason in quality_reasons:
@@ -214,7 +208,7 @@ class FreezeAfterUpdateTab(
                 QMessageBox.warning(dialog, 'Local AI fill rejected', 'Local AI returned a parseable form, but it weakened the heuristic baseline. The heuristic draft was kept.\n\n' + '\n'.join(('- ' + reason for reason in quality_reasons[:8])))
                 preview_local_freeze()
                 return
-            disable_freeze_action_buttons('Local AI changed the form. Preview and validation must run again.')
+            action_state.disable('Local AI changed the form. Preview and validation must run again.')
             self._local_freeze_preview = None
             apply_inputs(updated_inputs)
             self._append_log('Local AI filled the freeze formulary using model: ' + str(model_name) + '. Quality gates passed. No files were written.')
@@ -292,44 +286,36 @@ class FreezeAfterUpdateTab(
             else:
                 fill_with_heuristics_only()
 
-        def render_findings(result: dict) -> str:
-            lines = []
-            errors = result.get('errors') or []
-            warnings = result.get('warnings') or []
-            if errors:
-                lines.append('ERRORS:')
-                lines.extend((f'- {item}' for item in errors))
-                lines.append('')
-            if warnings:
-                lines.append('WARNINGS:')
-                lines.extend((f'- {item}' for item in warnings))
-                lines.append('')
-            return '\n'.join(lines)
-
         def preview_local_freeze() -> None:
+            nonlocal confirmation_binding
             self._local_freeze_preview = None
-            disable_freeze_action_buttons('Preview is being rebuilt.')
+            confirmation_binding = None
+            action_state.disable('Preview is being rebuilt.')
             inputs = collect_inputs()
             result = preview_freeze_entry(project_root, inputs)
             self._local_freeze_preview = result if result.get('ok') else None
             markdown = result.get('markdown') or ''
-            preview_text_edit.setPlainText(render_findings(result) + markdown)
+            preview_text_edit.setPlainText(render_freeze_findings(result) + markdown)
             validation_result = None
             if result.get('ok') and result.get('is_writable'):
                 validation_result = validate_freeze_entry_preview(project_root, result)
                 if validation_result.get('ok'):
                     self._local_freeze_preview = result
-                    set_freeze_action_buttons_state(True, True)
+                    confirmation_binding = build_freeze_confirmation_binding(
+                        project_root,
+                        inputs,
+                    )
+                    action_state.set_state(True, True)
                     self.status_label.setText('Local freeze preview ready. Review it, then confirm if correct.')
                     self._append_log('Local freeze entry preview is ready and writable. No files were written.')
                 else:
                     reason = 'Freeze preview validation blocked writing. Fix the errors before confirming or ignoring this freeze.'
-                    disable_freeze_action_buttons(reason)
-                    preview_text_edit.setPlainText(render_findings(validation_result) + markdown)
+                    action_state.disable(reason)
+                    preview_text_edit.setPlainText(render_freeze_findings(validation_result) + markdown)
                     self._append_log('Local freeze preview was generated but validation blocked writing.')
             else:
                 reason = 'No writable freeze entry is available. Fix missing fields or validation evidence first.'
-                disable_freeze_action_buttons(reason)
+                action_state.disable(reason)
                 self._append_log('Local freeze preview is not writable. Fix the required fields or validation evidence.')
             self._append_log_block(build_local_freeze_preview_log_text(result, validation_result))
 
@@ -374,7 +360,7 @@ class FreezeAfterUpdateTab(
                 except Exception as exc:
                     show_error_copy_close_window(receive_dialog, title='Could not parse AI formulary', message=f'The AI answer could not be parsed even after the tolerant extractor tried to select and repair the JSON block. Ask AI to do it again. Tell AI to return exactly one valid JSON object between KANDA_FREEZE_FORM_JSON_BEGIN and KANDA_FREEZE_FORM_JSON_END, with no markdown, no prose, and no extra text. You can also paste the JSON object only.\n\nError: {exc}')
                     return
-                disable_freeze_action_buttons('AI formulary changed the form. Preview and validation must run again.')
+                action_state.disable('AI formulary changed the form. Preview and validation must run again.')
                 self._local_freeze_preview = None
                 apply_inputs(updated_inputs)
                 self._append_log('Received AI formulary and applied it to the local freeze form. No files were written.')
@@ -389,7 +375,7 @@ class FreezeAfterUpdateTab(
         def ignore_this_freeze() -> None:
             self._local_freeze_preview = None
             preview_text_edit.clear()
-            disable_freeze_action_buttons('Freeze draft was ignored by the human.')
+            action_state.disable('Freeze draft was ignored by the human.')
             intake_used = mark_latest_freeze_hint_used(project_root, freeze_id='ignored-by-human')
             self.status_label.setText('Local freeze draft ignored. No freeze entry was written.')
             self._append_log('IGNORE THIS FREEZE selected. No frozen memory entry was written.')
@@ -413,6 +399,17 @@ class FreezeAfterUpdateTab(
                 self.status_label.setText('No valid local freeze preview was available. The form was closed.')
                 self._append_log('Local freeze write skipped: no valid preview was available.')
                 dialog.close()
+                return
+            current_project_root = self._project_root()
+            binding_ok, binding_error = freeze_confirmation_binding_matches(
+                confirmation_binding,
+                current_project_root or '',
+                collect_inputs(),
+            )
+            if not binding_ok:
+                invalidate_current_confirmation()
+                self.status_label.setText('Freeze confirmation became stale. Preview again before writing.')
+                self._append_log('LOCAL FREEZE WRITE BLOCKED: ' + binding_error)
                 return
             result = write_confirmed_freeze_entry(project_root, preview, confirmation=True)
             if not result.get('ok'):

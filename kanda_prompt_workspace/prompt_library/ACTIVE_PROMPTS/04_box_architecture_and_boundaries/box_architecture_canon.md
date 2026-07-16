@@ -63,7 +63,7 @@ one of:
 2. active-project source;
 3. project-specific support state;
 4. generated evidence or handoff artifact;
-5. temporary daily-work artifact;
+5. transient garbage artifact;
 6. external box dependency;
 7. out-of-scope file.
 
@@ -113,7 +113,7 @@ Tool-owned files:
 Project-owned files:
 Project-specific support files:
 Generated/evidence files:
-Temporary daily-work files:
+Transient garbage files:
 External boxes touched:
 Out-of-scope files:
 Leak risks:

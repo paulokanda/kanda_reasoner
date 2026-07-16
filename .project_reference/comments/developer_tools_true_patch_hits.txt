@@ -1,0 +1,19 @@
+E:\developer_tools\apps\eeg_kanda_dump_source.py:15: cd E:\eeg_kernel_ai_neural_data_analysis
+E:\developer_tools\apps\eeg_kanda_dump_source.py:16: python "E:\eeg_kernel_ai_neural_data_analysis\DEVELOPER\json_full_app\eeg_kanda_dump_source.py"
+E:\developer_tools\apps\eeg_migrate_step1_copy.py:26: DEST_ROOT   = r"E:\eeg_kernel_ai_neural_data_analysis"
+E:\developer_tools\apps\eeg_migrate_step2_imports.py:31: DEST_ROOT = r"E:\eeg_kernel_ai_neural_data_analysis"
+E:\developer_tools\kanda_reasoner_app\project_reasoner_v10\v10_help_index - Copy.py:47: "'E:\\eeg_kernel_ai_neural_data_analysis\\_local_ai_cache'."
+E:\developer_tools\kanda_reasoner_app\project_reasoner_v10\v10_help_index.py:35: "'E:\\eeg_kernel_ai_neural_data_analysis\\_local_ai_cache'.",
+E:\developer_tools\kanda_reasoner_app\reasoner_context_collector\tests\test_coverage_metadata.py:17: repo_root = Path("E:\\eeg_kernel_ai_neural_data_analysis")
+E:\developer_tools\kanda_reasoner_app\reasoner_context_collector\tests\test_coverage_metadata.py:29: repo_root = Path("E:\\eeg_kernel_ai_neural_data_analysis")
+E:\developer_tools\kanda_reasoner_app\reasoner_context_collector\.collector_runner_prefs.json:4: "runtime_trace_json": "E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\temp\\project_reasoner_v1_widget_text_runtime_trace.json"
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\hooks\qt_connection_monitor.py:22: project_root="E:\\eeg_kernel_ai_neural_data_analysis",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\hooks\qt_connection_monitor.py:23: output_path="E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\project_reasoner\\reasoner_runtime_collector\\outputs\\test_runtime_trace.json",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\hooks\qt_connection_monitor.py:35: project_root="E:\\eeg_kernel_ai_neural_data_analysis",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\hooks\qt_connection_monitor.py:36: output_path="E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\project_reasoner\\reasoner_runtime_collector\\outputs\\test_runtime_trace.json",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\tests\test_call_stack_context.py:18: project_root="E:\\eeg_kernel_ai_neural_data_analysis",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\tests\test_call_stack_context.py:19: output_path="E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\project_reasoner\\reasoner_runtime_collector\\outputs\\test_call_stack_trace.json",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\tests\test_call_stack_context.py:42: project_root="E:\\eeg_kernel_ai_neural_data_analysis",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\tests\test_call_stack_context.py:43: output_path="E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\project_reasoner\\reasoner_runtime_collector\\outputs\\test_call_stack_trace.json",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\.runtime_runner_prefs.json:2: "project_root": "E:\\eeg_kernel_ai_neural_data_analysis",
+E:\developer_tools\kanda_reasoner_app\reasoner_runtime_collector\.runtime_runner_prefs.json:3: "output_json": "E:\\eeg_kernel_ai_neural_data_analysis\\developer_tools\\kanda_reasoner_app\\reasoner_runtime_collector\\outputs\\runtime_trace.json",

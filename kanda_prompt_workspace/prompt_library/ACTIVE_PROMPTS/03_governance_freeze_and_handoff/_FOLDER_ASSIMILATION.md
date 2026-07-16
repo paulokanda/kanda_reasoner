@@ -29,6 +29,7 @@ Do not use for brainstorming, unvalidated patch acceptance, or as a substitute f
 - consequential implementation methodology discussion
 - freeze-code intake and freeze form correction
 - output-time contract checks
+- live Q01-Q40 implementation quality checkpoint
 
 ## Optional For
 - roadmap closeout
@@ -52,6 +53,9 @@ Do not use for brainstorming, unvalidated patch acceptance, or as a substitute f
 - terminal cleanup contract
 - strict freeze JSON
 - validation evidence marker
+- brick wall
+- Q01-Q40 checklist
+- implementation status checkpoint
 
 ## Minimum Viable Context
 - current_workflow_handoff_template
@@ -61,6 +65,7 @@ Do not use for brainstorming, unvalidated patch acceptance, or as a substitute f
 
 | Prompt ID | File Name | Load Type | Short Purpose |
 |---|---|---|---|
+| `brick_wall_comprehensive_quality_gate` | `brick_wall_comprehensive_quality_gate.md` | routed | Displays and maintains the evidence-backed Q01-Q40 Brick Wall status for governed implementation work. |
 | `active_governance_freeze_update` | `active_governance_freeze_update.md` | on_request | Freeze validated changes into active governance. |
 | `current_workflow_handoff_template` | `current_workflow_handoff_template.md` | on_request | Current workflow handoff. |
 | `end_of_chat_governance_update_template` | `end_of_chat_governance_update_template.md` | on_request | End-of-session governance update. |

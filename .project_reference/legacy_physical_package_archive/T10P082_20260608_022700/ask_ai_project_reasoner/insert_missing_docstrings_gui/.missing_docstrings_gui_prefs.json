@@ -1,0 +1,20 @@
+{
+  "project_root": "E:\\tab3_heuristic_challenge_project",
+  "mode": "scan",
+  "include_module": true,
+  "include_classes": true,
+  "include_functions": true,
+  "insert_file_address_at_top": true,
+  "confirm_write": false,
+  "ai_enabled": false,
+  "base_url": "http://localhost:11434/v1",
+  "model": "qwen2.5-coder:7b",
+  "config_path": "",
+  "include_private": true,
+  "min_confidence": "low",
+  "no_uncertain": false,
+  "workers": 4,
+  "scope": "Full project",
+  "target_path": "",
+  "report_path": "E:\\temp\\tab3_heuristic_challenge_project_missing_docstrings_20260606_212445.jsonl"
+}

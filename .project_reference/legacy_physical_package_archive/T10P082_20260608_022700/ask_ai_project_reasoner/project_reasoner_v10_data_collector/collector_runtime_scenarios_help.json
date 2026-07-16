@@ -1,0 +1,28 @@
+{
+  "helper_folder": "kanda_reasoner_app/reasoner_context_collector/collector_runtime_scenarios_help",
+  "helpers": {
+    "event_classification.py": [
+      "_event_matches_terms",
+      "_is_startup_event",
+      "_is_error_event"
+    ],
+    "hotspots.py": [
+      "build_runtime_scenario_hotspots"
+    ],
+    "normalization.py": [
+      "_safe_text",
+      "_safe_lower",
+      "_safe_int",
+      "_read_json",
+      "_normalize_path_text"
+    ]
+  },
+  "origin": "kanda_reasoner_app/reasoner_context_collector/collector_runtime_scenarios.py",
+  "pass": "047C",
+  "pattern": "broader_runtime_scenario_helper_extraction",
+  "public_origin_exports": [
+    "build_runtime_scenario_hotspots",
+    "build_runtime_scenario_index",
+    "build_runtime_scenario_summary"
+  ]
+}

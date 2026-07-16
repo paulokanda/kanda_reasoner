@@ -85,27 +85,54 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
 
 def write_text_if_changed(path: Path, content: str) -> bool:
-    """Write the text if changed.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    content : str
-        The content value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    current = path.read_text(encoding="utf-8") if path.exists() else None
+    """Atomically write changed managed text after validating JSON payloads."""
+    current = read_text(path) if path.exists() else None
     if current == content:
         return False
+
+    if path.name == WORKFLOW_MANIFEST_NAME:
+        try:
+            payload = json.loads(content)
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                f"Refusing to write invalid {WORKFLOW_MANIFEST_NAME}: {exc}"
+            ) from exc
+        if not isinstance(payload, dict):
+            raise ValueError(
+                f"Refusing to write {WORKFLOW_MANIFEST_NAME}: root must be an object."
+            )
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8", newline="\n")
-    return True
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="\n",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+            temporary_path = Path(handle.name)
+
+        if path.name == WORKFLOW_MANIFEST_NAME:
+            validated = json.loads(read_text(temporary_path))
+            if not isinstance(validated, dict):
+                raise ValueError(
+                    f"Temporary {WORKFLOW_MANIFEST_NAME} root must be an object."
+                )
+
+        os.replace(temporary_path, path)
+        temporary_path = None
+        return True
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+
 
 def diff_text(current: str, desired: str, fromfile: str, tofile: str) -> str:
     """Support diff text behavior.

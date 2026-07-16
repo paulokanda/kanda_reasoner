@@ -32,6 +32,13 @@
       "exports": [
         "WorkflowRunWorker"
       ]
+    },
+    "workflow_gui_presentation.py": {
+      "exports": [
+        "copy_workflow_audit_to_clipboard",
+        "show_history",
+        "show_mode_help"
+      ]
     }
   },
   "origin": "kanda_reasoner_app/manage_workflows/manage_workflows_gui.py",

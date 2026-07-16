@@ -1,0 +1,20 @@
+{
+  "origin": "kanda_reasoner_app/reasoner_context_collector/collector_widget_registry.py",
+  "help_folder": "kanda_reasoner_app/reasoner_context_collector/collector_widget_registry_help",
+  "refactor_date": "2026-05-28",
+  "refactor_goal": "Track private helper method extraction for collector_widget_registry.",
+  "generated_by": "reasoner_correction_pass_069b_helper_manifest_public_contract",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "helpers": {
+    "__init__.py": {
+      "purpose": "Package marker for widget registry helpers.",
+      "exports": [],
+      "depends_on": []
+    },
+    "widget_registry_methods_part_1_private_impl.py": {
+      "purpose": "Private AST visitor method implementations bound by collector_widget_registry.",
+      "exports": [],
+      "depends_on": []
+    }
+  }
+}

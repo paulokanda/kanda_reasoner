@@ -1,0 +1,162 @@
+{
+  "origin": "kanda_reasoner_app/project_reasoner_v10/prompt_builder.py",
+  "entry_point": "kanda_reasoner_app/project_reasoner_v10/prompt_builder.py",
+  "help_folder": "kanda_reasoner_app/project_reasoner_v10/prompt_builder_help",
+  "refactor_date": "2026-05-25",
+  "refactor_goal": "Align helper manifest contract with helper module public surfaces.",
+  "pattern": "mixed",
+  "pattern_note": "Manifest records helper exports and local helper dependencies.",
+  "generated_by": "reasoner_correction_pass_014_helper_manifest_contract",
+  "ai_instruction": "Keep this manifest aligned with helper module __all__ values.",
+  "summary": {
+    "total_helpers": 6,
+    "public_helpers": 6,
+    "internal_helpers": 0,
+    "entry_exports": [
+      "PROJECT_SCOPE_GUARDRAIL",
+      "PromptBuilder",
+      "_norm",
+      "_tokenize_query",
+      "_build_answer_style_instructions",
+      "is_which_method_calls_question"
+    ],
+    "high_level_flow": "origin file delegates to helper folder modules"
+  },
+  "helpers": {
+    "__init__.py": {
+      "purpose": "",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "append_callsite_evidence_section",
+        "append_file_evidence_section",
+        "append_memory_section",
+        "append_project_summary",
+        "append_source_snippets_section",
+        "append_symbol_evidence_section",
+        "append_widget_registry_section",
+        "build_answer_style_instructions",
+        "extract_exact_call_targets",
+        "is_chain_or_flow_question",
+        "is_code_localized_explanation_question",
+        "is_explain_implementation_question",
+        "is_which_method_calls_question",
+        "norm_text",
+        "prioritize_callsite_snippets",
+        "tokenize_query"
+      ],
+      "depends_on": [
+        "answer_style.py",
+        "callsite_evidence.py",
+        "prompt_classification.py",
+        "prompt_sections.py",
+        "widget_registry_section.py"
+      ],
+      "consumed_by": []
+    },
+    "answer_style.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "build_answer_style_instructions"
+      ],
+      "depends_on": [
+        "prompt_classification.py"
+      ],
+      "consumed_by": [
+        "__init__.py"
+      ]
+    },
+    "callsite_evidence.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "extract_exact_call_targets",
+        "prioritize_callsite_snippets",
+        "append_callsite_evidence_section"
+      ],
+      "depends_on": [
+        "prompt_classification.py"
+      ],
+      "consumed_by": [
+        "__init__.py"
+      ]
+    },
+    "prompt_classification.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "norm_text",
+        "tokenize_query",
+        "is_which_method_calls_question",
+        "is_code_localized_explanation_question",
+        "is_explain_implementation_question",
+        "is_chain_or_flow_question"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py",
+        "answer_style.py",
+        "callsite_evidence.py",
+        "widget_registry_section.py"
+      ]
+    },
+    "prompt_sections.py": {
+      "purpose": "Prompt section helpers for Project Reasoner.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "append_project_summary",
+        "append_memory_section",
+        "append_file_evidence_section",
+        "append_symbol_evidence_section",
+        "append_live_source_evidence_section",
+        "append_source_snippets_section",
+        "is_live_source_snippet"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py"
+      ]
+    },
+    "widget_registry_section.py": {
+      "purpose": "Support V10 project reasoning and evidence handling.",
+      "reason": "Helper module owned by the refactored helper folder.",
+      "stability": "stable",
+      "exports": [
+        "append_widget_registry_section"
+      ],
+      "depends_on": [
+        "prompt_classification.py"
+      ],
+      "consumed_by": [
+        "__init__.py"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "__init__.py": {
+      "answer_style.py": "imports",
+      "callsite_evidence.py": "imports",
+      "prompt_classification.py": "imports",
+      "prompt_sections.py": "imports",
+      "widget_registry_section.py": "imports"
+    },
+    "answer_style.py": {
+      "prompt_classification.py": "imports"
+    },
+    "callsite_evidence.py": {
+      "prompt_classification.py": "imports"
+    },
+    "prompt_classification.py": {},
+    "prompt_sections.py": {},
+    "widget_registry_section.py": {
+      "prompt_classification.py": "imports"
+    }
+  },
+  "domain_overlay": "GENERIC",
+  "domain_specific": {}
+}
