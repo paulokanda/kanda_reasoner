@@ -4,22 +4,34 @@
   "filename": "session_start_upload_checklist.md",
   "category": "01_session_start_and_navigation",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Human-facing checklist for what to upload at the beginning of a session.",
+  "load_type": "always_startup",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "Canonical human two-stage startup and Project-handoff upload checklist.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
   "routing_coverage": "complete_v3",
-  "priority": 20,
+  "priority": 3,
   "trigger_phrases": [
     "what files should I upload",
-    "upload checklist",
-    "session files",
-    "start checklist",
-    "what to send first"
+    "startup upload checklist",
+    "second upload readiness"
   ],
   "required_companion_prompts": [
-    "prompt_navigation_index",
-    "prompt_router"
+    "ai_prompt_request_canon",
+    "prompt_navigation_index"
+  ],
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "prompt_code": "KPR-01-002",
+  "title": "Session Start Upload Checklist",
+  "folder": "ACTIVE_PROMPTS/01_session_start_and_navigation",
+  "path": "ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "active_route": true,
+  "may_be_selected_for_new_work": true,
+  "aliases": [
+    "session_start_upload_checklist",
+    "Session Start Upload Checklist"
   ]
 }

@@ -1,88 +1,56 @@
-# Project Startup Canon Template
+---
+prompt_id: project_startup_canon_template
+prompt_code: KPR-01-006
+title: Project Startup Profile Authoring Template
+version: 2.0
+status: active
+load_type: on_request
+owner_box: 01_session_start_and_navigation
+source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+---
 
-## Box Logic Requirement
+# Project Startup Profile Authoring Template
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+## Mission
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+Draft a stable Project-specific startup profile or overlay without executing startup, changing global canons, or writing Project state.
 
+## Include only stable Project facts
 
-Version: 1.0.0
-Status: Reusable project profile template
-Use: Adapt this file to define project-specific architecture, safety, validation, and box rules.
+- Project identity and source root;
+- external Project-support root;
+- canonical architecture and workflow documents;
+- primary boxes and public contracts;
+- durable evidence and memory locations;
+- required local environment facts;
+- Project-specific restrictions;
+- approved overlay routes;
+- freshness and invalidation conditions.
 
-## Purpose
+## Exclude session-specific facts
 
-Define the project identity and the project-specific rules that the AI must obey during software engineering work.
+Do not embed the current task, current patch, current operation ID, temporary target, daily-work paths, transient validation output, mutable runtime state, or one-session decisions.
 
+## Global versus Project boundary
 
-## Project-Agnostic Contract
+- Global canons remain global owners.
+- The Project profile may narrow or specialize behavior but must not silently weaken global safety contracts.
+- Project source, support, Error Memory, Freeze Memory, and generated evidence remain Project-owned.
+- Tool and Project identity remain logically separate during self-hosting.
 
-This prompt must work for any software project. Replace variables before use.
+## Required output
 
-Required variables:
+Return `PROJECT STARTUP PROFILE DRAFT` containing:
 
-```text
-<PROJECT_ROOT>
-<PROJECT_NAME>
-<PRODUCT_PACKAGE>
-<TASK_DESCRIPTION>
-<TASK_SLUG>
-<GOVERNANCE_FOLDER>
-<VALIDATION_COMMANDS>
-<OUTPUT_FOLDER>
-<SOURCE_FILES>
-<LOG_FILES>
-```
+- proposed identity;
+- stable fields;
+- excluded transient fields;
+- canonical owner references;
+- unresolved conflicts;
+- validation obligations;
+- registration owner;
+- `source_write_authorization: NO`.
 
-Rules:
-- Do not hardcode one project root.
-- Do not assume one product package.
-- Do not treat examples as active project truth.
-- Use current source files, logs, and validation output as evidence.
-- If evidence is missing, request it before implementation.
+## Authority boundary
 
-## Adaptation Variables
-
-```text
-<PROJECT_NAME> =
-<PROJECT_ROOT> =
-<PRODUCT_PACKAGE> =
-<NON_CANONICAL_FOLDERS> =
-<DOMAIN_CRITICAL_STATE> =
-<DOMAIN_PIPELINE_RULES> =
-<GUI_FRAMEWORK> =
-<VALIDATION_COMMANDS> =
-```
-
-## Truth Hierarchy
-
-1. Actual source files and logs.
-2. Current user instruction for goals.
-3. Active governance files, if present.
-4. Current handoff.
-5. This project profile.
-6. Universal delivery protocol for delivery mechanics.
-7. Older prompts and examples.
-
-## Box Policy
-
-A box is one isolated responsibility area. Before editing, identify the current box, owner paths, forbidden boxes, inputs, outputs, handoff contract, and validation. Patch the owner box, not the symptom.
-
-## File and Module Rules
-
-Use standard Python 3.10+ when the project is Python. Preserve platform assumptions supplied by the project. Avoid import side effects, wildcard imports, circular imports, and hidden global state changes.
-
-## GUI Rules
-
-If the project has a GUI, use layouts, screen-aware sizing, safe signal blocking, and manual GUI checklists where relevant. Remove this section if the project has no GUI.
-
-## Freeze Rule
-
-Do not update canon before validation and explicit user approval.
+This template does not register an overlay, modify startup delivery, write Project files, select a Project, authorize coding, or freeze.

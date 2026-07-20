@@ -1,25 +1,38 @@
 {
+  "prompt_code": "KPR-04-004",
   "prompt_id": "stateful_control_regression_canon",
   "display_name": "Stateful Control Regression Canon",
   "filename": "stateful_control_regression_canon.md",
   "category": "04_box_architecture_and_boundaries",
+  "version": "2.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Protects dropdowns and stateful controls from regression during UI changes.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 5,
+  "load_type": "routed",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md",
+  "aliases": [
+    "KPR-04-004",
+    "stateful_control_regression_canon",
+    "stateful control regression",
+    "selection persistence",
+    "control hydration"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "GUI option-control semantic identity, persistence, hydration, restoration, fallback, caption, and sizing regression specialist.",
+  "priority": 4,
   "trigger_phrases": [
-    "dropdown broke",
-    "button state",
-    "stateful control",
-    "do not regress UI control",
-    "selection state"
+    "dropdown selection persistence",
+    "control hydration",
+    "stable option ID",
+    "restored selection",
+    "GUI option state regression",
+    "control sizing regression"
   ],
   "required_companion_prompts": [
-    "bundle_gated_development_workflow",
-    "implementation_roadmap_builder"
-  ]
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "optional_companion_prompts": [
+    "boundary_first_repair_protocol"
+  ],
+  "source_write_authorization": "NO"
 }

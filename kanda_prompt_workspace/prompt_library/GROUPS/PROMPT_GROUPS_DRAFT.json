@@ -3,94 +3,110 @@
     {
       "group_id": "01_session_start_and_navigation",
       "display_name": "Session Start and Navigation",
-      "description": "Start a session, load the base stack, and establish AI-human operating context.",
+      "description": "Minimal startup, two-stage readiness, compact delivery and lifecycle bridges, Error Memory admission, and durable-artifact routing.",
       "prompt_ids": [
-        "daily_reasoner_startup_loader",
-        "daily_session_start_prompt",
+        "ai_human_partnership_session_start",
+        "ai_prompt_request_canon",
+        "daily_patch_delivery_guardrails",
         "daily_startup_loader_template",
-        "general_prompt_stack_load_order",
+        "durable_document_artifact_routing_canon",
+        "error_memory_ai_formulary_startup_canon",
+        "handoff_at_end_of_work",
         "project_startup_canon_template",
-        "reasoner_startup_canon",
+        "prompt_router_reasoner_startup_check",
         "session_start_upload_checklist",
-        "ai_human_partnership_session_start"
-      ]
+        "start_of_day_master_stack"
+      ],
+      "prompt_count": 11
     },
     {
       "group_id": "02_prompt_routing_and_indexing",
       "display_name": "Prompt Routing and Indexing",
-      "description": "Map human intent to the correct prompt, route, overlay, or companion stack.",
+      "description": "Select current routing owners, exact prompt addresses, Project overlays, historical identity substitutions, and semantic-adoption safety boundaries.",
       "prompt_ids": [
+        "chatgpt_kanda_routing_choice_output_protocol",
+        "kanda_routing_system_canon",
         "project_overlay_selector",
         "prompt_navigation_index",
+        "prompt_substitution_map",
+        "routing_signal_scorer_v3_semantic_readiness_canon"
+      ],
+      "prompt_count": 6,
+      "retired_prompt_ids": [
         "prompt_router",
-        "prompt_substitution_map"
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon"
       ]
     },
     {
       "group_id": "03_governance_freeze_and_handoff",
       "display_name": "Governance, Freeze, and Handoff",
-      "description": "Freeze validated work, write handoffs, and preserve governance state.",
+      "description": "Own Brick Wall status, collaboration decisions, freeze intake, final artifact dispatch, and draft-only governance or handoff profile templates.",
       "prompt_ids": [
-        "end_of_chat_governance_update_template",
-        "active_governance_freeze_update",
+        "brick_wall_comprehensive_quality_gate",
+        "cooperative_implementation_methodology",
+        "freeze_code_intake_and_form_protocol",
+        "pre_output_contract_gates",
         "professional_engineering_governance_template",
-        "current_workflow_handoff_template",
-        "reasoner_professional_engineering_governance",
         "workflow_handoff_template"
-      ]
+      ],
+      "prompt_count": 6
     },
     {
       "group_id": "04_box_architecture_and_boundaries",
       "display_name": "Box Architecture and Boundaries",
-      "description": "Declare active box, ownership boundaries, public contracts, and cross-box validation.",
+      "description": "Route bounded ownership, boundary repair, risk-based shielding, artifact placement, and GUI option-state regression specialists.",
       "prompt_ids": [
-        "closed_box_delivery_canon",
-        "stateful_control_regression_canon",
         "box_architecture_canon",
-        "project_folder_organization_canon"
+        "boundary_first_repair_protocol",
+        "kanda_box_shielding_canon",
+        "project_folder_organization_canon",
+        "stateful_control_regression_canon"
       ]
     },
     {
       "group_id": "05_patch_delivery_and_validation",
       "display_name": "Patch Delivery and Validation",
-      "description": "Build installable patches, validate evidence, track patch status, and protect rollback.",
+      "description": "Coordinate release lifecycle, surgical delivery, active delivery regressions, correction incidents, terminal behavior, and recovery dispatch.",
       "prompt_ids": [
-        "universal_delivery_protocol",
+        "patch_install_delivery_error_register",
         "bundle_gated_development_workflow",
-        "evidence_freshness_gate",
         "implementation_and_delivery_protocol",
         "implementation_roadmap_builder",
-        "patch_registry_validation_freeze"
-      ]
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "router_bridge_user_detected_correction",
+        "terminal_cleanup_contract"
+      ],
+      "prompt_count": 7
     },
     {
       "group_id": "06_refactor_and_architecture_hardening",
       "display_name": "Refactor and Architecture Hardening",
-      "description": "Split large modules, triage architecture, and harden system design.",
+      "description": "Current architecture triage and large-module owners; historical roadmap, fragmentation-runner, and Tab taxonomy prompts are retired.",
       "prompt_ids": [
         "architecture_hardening_triage_protocol",
         "architecture_hardening_triage_template",
         "large_module_refactor_protocol",
-        "large_module_refactor_template",
-        "problem_set_roadmap_solver",
-        "refactor_fragmentation_audit_runner",
-        "tab1_tab2_audit_taxonomy"
-      ]
+        "large_module_refactor_template"
+      ],
+      "prompt_count": 4
     },
     {
       "group_id": "07_prompt_authoring_and_audit",
       "display_name": "Prompt Authoring and Audit",
-      "description": "Audit, update, generalize, reconcile, and maintain prompt canons.",
+      "description": "Audit, generalize, reconcile, identify, and apply authorized Prompt Library lifecycle changes through distinct owners.",
       "prompt_ids": [
-        "prompt_audit_canon",
         "project_specific_prompt_generalization",
-        "prompt_canon_reconciliation_protocol"
+        "prompt_audit_canon",
+        "prompt_canon_reconciliation_protocol",
+        "prompt_identity_code_registry_canon",
+        "prompt_insertion_and_router_registration_protocol"
       ]
     },
     {
       "group_id": "08_python_engineering_core",
       "display_name": "Python Engineering Core",
-      "description": "Core Python design, architecture, refactoring, patterns, and engineering judgement.",
+      "description": "Python-specific design, architecture, refactoring, patterns, performance, legacy-code, and maintainability specialists.",
       "prompt_ids": [
         "python_clean_architecture",
         "python_clean_code",
@@ -99,12 +115,11 @@
         "python_enterprise_architecture",
         "python_high_performance",
         "python_legacy_code_workflow",
-        "peopleware_team_boundary",
-        "practical_field_handbook_template",
         "python_pragmatic_programmer",
         "python_refactoring",
         "software_engineering_books_master"
-      ]
+      ],
+      "prompt_count": 10
     },
     {
       "group_id": "09_python_quality_security_observability",
@@ -147,14 +162,24 @@
     {
       "group_id": "12_generalized_project_canons",
       "display_name": "Generalized Project Canons",
-      "description": "Reusable architecture canons generalized from project-specific systems.",
+      "description": "Reusable generalized canons and templates, including Tool/Project identity, MCard lifecycle, Error Memory models, human-process guidance, and source-grounded handbook generation.",
       "prompt_ids": [
+        "architecture_review_project_card_machine_canon",
         "data_transform_pipeline_invariants",
+        "desktop_help_document_layout_canon",
         "domain_decision_table_template",
+        "error_memory_active_ready_correction_blueprint",
+        "error_memory_active_ready_json_template",
+        "error_memory_model_template",
+        "peopleware_team_boundary",
         "plugin_package_import_canon",
+        "practical_field_handbook_template",
+        "project_tool_boundary_canon",
+        "project_tool_boundary_startup_bridge",
         "shared_visual_render_engine_canon",
         "transform_resolver_architecture_contract"
-      ]
+      ],
+      "prompt_count": 14
     }
   ]
 }

@@ -1,12 +1,13 @@
 {
   "schema": "project-reasoner-tab-help-error-catalog/v1",
   "project": "Project Reasoner / developer_tools",
-  "tab": "Architecture Review",
-  "purpose": "Explain architecture errors that Tab 1 should expose, including what they mean and what can happen if not corrected.",
+  "tab": "Audit Project > Architecture Review",
+  "purpose": "Explain the Audit Project hierarchy and Architecture Review workflow, including its Engineering Safety and Workflow Review sibling tabs.",
   "created_for": "Future GUI helper button content",
   "placement_reason": "Stored under _project_reference/TAB_HELP so this is documentation/helper data only and does not change runtime behavior.",
   "implementation_status_note": "W022C/W022D help parity verified: all 25 Tab 1 architecture help categories are mapped to implemented Tab 1 architecture validation issue codes. This JSON is beginner-facing helper content and does not change runtime behavior.",
   "display_lines": [
+    "Audit Project contains Architecture Review, Engineering Safety, and Workflow Review as side-by-side child tabs in that order.",
     "1. Duplicate public symbols - Two or more files define or export the same public class, function, or constant name. A beginner can think of it like two workers wearing the same name tag.",
     "2. Symbol shadowing - A local name hides another name with the same spelling. It is like putting a new label over an old label, so the original becomes hard to see.",
     "3. Wrong owner box - Code lives in the wrong part of the system. It is like storing kitchen tools inside the bathroom cabinet.",

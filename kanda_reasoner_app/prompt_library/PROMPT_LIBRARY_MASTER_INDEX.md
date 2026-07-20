@@ -101,7 +101,7 @@ Created this master index, current-state note, roadmap, and quick start files.
 Path:
 
 ```text
-kanda_reasoner_app\prompt_library\active\KANDA_BUNDLE_GATED_DEVELOPMENT_WORKFLOW.md
+kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\05_patch_delivery_and_validation\bundle_gated_development_workflow.md
 ```
 
 Purpose:

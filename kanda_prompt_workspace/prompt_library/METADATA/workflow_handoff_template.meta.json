@@ -1,25 +1,31 @@
 {
+  "prompt_code": "KPR-03-006",
   "prompt_id": "workflow_handoff_template",
-  "display_name": "Workflow Handoff Template",
+  "display_name": "Generic Workflow Handoff Profile Template",
   "filename": "workflow_handoff_template.md",
   "category": "03_governance_freeze_and_handoff",
-  "status": "active",
+  "version": "2.0",
+  "status": "draft_template",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Generic handoff template for transferring project state.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 25,
-  "trigger_phrases": [
-    "create handoff",
-    "write handoff",
-    "handoff template",
-    "next AI instructions",
-    "transfer context"
+  "owner_box": "03_governance_freeze_and_handoff",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md",
+  "aliases": [
+    "KPR-03-006",
+    "workflow_handoff_template",
+    "workflow_handoff_template.md",
+    "generic workflow handoff profile template"
   ],
-  "required_companion_prompts": [
-    "evidence_freshness_gate",
-    "patch_registry_validation_freeze"
+  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "description": "Drafts a generic factual handoff profile only when a Project lacks a current generated handoff owner.",
+  "trigger_phrases": [
+    "generic workflow handoff template",
+    "draft handoff profile",
+    "external project handoff"
+  ],
+  "required_companion_prompts": [],
+  "recommended_companion_prompts": [
+    "handoff_at_end_of_work",
+    "durable_document_artifact_routing_canon"
   ]
 }

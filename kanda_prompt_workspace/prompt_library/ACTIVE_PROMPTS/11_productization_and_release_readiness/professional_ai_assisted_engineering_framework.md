@@ -1,544 +1,107 @@
 ---
-prompt_id: kanda_professional_ai_assisted_engineering_framework
+prompt_id: professional_ai_assisted_engineering_framework
+prompt_code: KPR-11-003
+title: AI-Assisted Engineering Operating Model Overview
 version: 2.0.0
-status: active_reusable_methodology_prompt
-prompt_type: parent_engineering_methodology
-scope: project-agnostic AI-assisted software engineering
-recommended_group: high_risk_engineering
+status: active
+load_type: on_request
+owner_box: 11_productization_and_release_readiness
+classification: thin_non_authoritative_human_ai_operating_model_overview
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
 ---
 
-# Professional AI-Assisted Engineering Framework
+# AI-Assisted Engineering Operating Model Overview
 
-## Box Logic Requirement
+## Purpose
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+Provide a concise map of human responsibility, AI responsibility, work states, evidence discipline, and dispatch to current specialist owners.
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+This prompt is a bounded technical contract. It is not a persona, a source-write
+authority, a release gate, or proof that implementation or validation occurred.
 
+## When to load
 
-AI + Human Engineering Partnership — Master Framework (v2.0)
+- The user asks how the human and AI should divide responsibilities.
+- A concise orientation to the current governed engineering workflow is useful.
+- A task needs the high-level work-state model before specialist routing.
 
-Purpose: Universal, project-agnostic reference for professional AI-assisted app engineering.
-Use: Insert this document (or its prompt form) at the start of any new AI session to load the full method.
-Applies to: Python apps, desktop GUIs, CLI tools, APIs, data pipelines, or any complex software.
-What this partnership actually is
+## When not to load
 
-This is not "vibe coding." It is not asking AI to generate an app and hoping it works.
+- A current specialist already owns the technical decision.
+- The prompt would be used as a master implementation, patch, validation, or freeze authority.
+- A historical KANDA roadmap is being treated as current project truth.
 
-It is a structured engineering method where:
+## Authority boundaries
 
-    The human determines direction, features, priorities, scope, and acceptance. The human tests, decides what is good enough, and decides what to build next. The human never needs to write code.
+This prompt owns:
 
-    The AI writes all code, designs patches, writes tests, validates architecture, generates handoffs, and flags risks. The AI never decides what to ship — it only proposes and executes.
+- human-versus-AI responsibility overview;
+- high-level work states and evidence expectations;
+- specialist-dispatch orientation;
+- non-authorization and uncertainty rules.
 
-    The process enforces discipline so that neither human judgment nor AI speed causes uncontrolled breakage.
+It delegates:
 
-The result is: technical lead (human) + AI pair programmer + automated validation gate.
-The 17 determinants of professional AI-assisted engineering
+- session initialization to current Class 01 owners;
+- routing to Class 02;
+- box ownership to Class 04;
+- implementation authorization to Brick Wall;
+- delivery/validation to Class 05;
+- technical decisions to the exact current specialist;
+- freeze and Error Memory to their current owners.
 
-Every one of these must be present for the partnership to produce professional software.
-Missing even one creates compounding risk as the app grows.
-Determinant 1 — Small, surgical patches
+Brick Wall and the current patch, validation, terminal, and freeze owners retain
+implementation and release authority.
 
-What it means: Every change targets one clearly identified problem in one clearly identified location. No patch rewrites multiple systems at once.
+## Task modes
 
-Why it matters: Large changes have large blast radii. When something breaks, you cannot tell which of the 12 things you changed caused it. Small patches are reversible, debuggable, and auditable.
+Choose one visible mode:
 
-Rules:
+- `ANALYZE`: identify the current state, evidence, and gaps.
+- `DESIGN`: produce a bounded contract or decision record.
+- `REVIEW`: evaluate an existing artifact or implementation.
+- `IMPLEMENTATION_GUIDANCE`: describe source work only after exact source and
+  separate authorization are available.
 
-    One patch = one problem = one owner box.
+## Required evidence
 
-    If a fix requires touching more than 3–4 files, question whether the scope is right.
+- the user objective and decision authority;
+- current task state and exact project identity;
+- available source/evidence and material gaps;
+- the current prompt navigation index.
 
-    Never let "while I'm here" additions sneak into a patch.
+## Governing rules
 
-    AI must identify the smallest possible change that solves the problem.
+- The human sets goals, priorities, acceptance decisions, and explicit approvals.
+- The AI inspects evidence, proposes bounded options, implements only when authorized, validates honestly, and reports uncertainty.
+- Do not copy specialist rules into this overview.
+- Do not claim current source access, execution, PASS, installation, or freeze without observed evidence.
+- Route to the smallest current owner rather than loading a universal stack.
+- A historical book or framework is advisory and never overrides current project governance.
 
-Signs this is breaking down: A patch ZIP contains 10+ files. AI says "I also fixed a few other things." Validation passes but behavior changes in an unrelated tab.
-Determinant 2 — Identify the correct owner box before writing any code
+## Validation obligations
 
-What it means: Before any code is written, the AI must identify which module, class, or file owns the behavior being changed — and confirm that no other file also owns it.
+For implemented work, require the smallest applicable deterministic checks,
+negative or failure-path coverage when risk is material, current-source evidence,
+and rollback or reversal evidence. Use `NOT_RUN`, `BLOCKED`, or `INCONCLUSIVE`
+when that is the truthful state.
 
-Why it matters: Duplicate ownership is one of the most common sources of bugs in complex apps. Two modules both trying to control the same behavior will fight each other unpredictably.
+## Required output
 
-Rules:
+Return a `AI-ASSISTED ENGINEERING OPERATING MODEL` containing:
 
-    Read the project's current evidence (architecture JSON, source structure) before proposing any patch.
+- human responsibilities;
+- AI responsibilities;
+- current work state;
+- evidence available and missing;
+- selected specialist routes;
+- approval or blocker state.
 
-    Never patch from memory. Always inspect current source state first.
+- unresolved assumptions and risks;
+- specialist handoffs;
+- source-write authorization: `NO` unless separately granted by Brick Wall.
 
-    If two files claim ownership of the same behavior, resolve the conflict before patching.
+## Version history
 
-    The AI must state the owner box explicitly before writing any code.
-
-Signs this is breaking down: AI says "I think it's in file X." Patching one tab breaks another unrelated tab. Architecture validation reports duplicate owners.
-Determinant 3 — Evidence-first workflow
-
-What it means: Every AI session begins by reading the latest uploaded project evidence — source analysis, architecture JSON, previous handoff — before generating any code.
-
-Why it matters: AI has no persistent memory between sessions. Without current evidence, it codes against a stale mental model. This produces patches that conflict with changes made since the last session.
-
-Rules:
-
-    Upload evidence at the start of every session. Preferred order: (1) AI handoff upload ZIP, (2) reconstruction ZIP if exact rebuild needed, (3) all-in-one ZIP as archive.
-
-    AI must confirm it has read the evidence before proposing any patch.
-
-    If evidence is missing, AI must ask for it — not proceed from memory.
-
-    Never treat project_reference or memo files as source of truth. Evidence files are truth.
-
-Signs this is breaking down: AI references a file structure that no longer matches reality. A patch fails because it assumes a function exists that was already removed. AI proposes a fix identical to one already tried and failed.
-Determinant 4 — Surgical ZIP delivery
-
-What it means: Every patch is delivered as a ZIP containing only the changed files, with an install manifest listing exactly what to install and where.
-
-Why it matters: Loose code pasted into chat is not installable, not auditable, and not reversible. A ZIP with a manifest is a deployable, trackable artifact.
-
-Rules:
-
-    No patch is delivered as raw code pasted in chat as the primary artifact.
-
-    Every ZIP includes an install_manifest.json listing: patch name, timestamp, changed files, backup paths.
-
-    The install manifest is the audit trail. Preserve it.
-
-    ZIP naming convention: <component>_<purpose>_surgical.zip.
-
-Signs this is breaking down: AI pastes the full file content into chat and says "replace your file with this." There is no install manifest. There is no record of what changed.
-Determinant 5 — Backup before install, restore on failure
-
-What it means: Before any patch file is installed, the exact current version of every file being overwritten is backed up to a timestamped directory.
-
-Why it matters: A patch that passes all tests can still break a live GUI in ways tests do not cover. If it does, the restore must be instant and exact — not "try to remember what it was before."
-
-Rules:
-
-    Back up only the files that will be overwritten. Do not back up the whole project.
-
-    Store backups outside the project root to avoid polluting the source tree.
-
-    Backup directory naming: <PATCH_NAME>_<timestamp>.
-
-    On failure: restore only the backed-up files. Do not restore untouched files.
-
-    Never delete backup directories after successful install. They are permanent audit evidence.
-
-Signs this is breaking down: There is no backup step in the install script. Restoring a failed patch requires manual file reconstruction. Backup directories are deleted after "successful" install.
-Determinant 6 — Focused tests per patch (unit + integration)
-
-What it means: Every patch ships with at least one test that directly validates the specific behavior the patch changes. Tests are split into unit (fast, isolated) and integration (real dependencies, slower).
-
-Why it matters: A patch without a focused test has no proof it did what it claimed. The only evidence is "it seemed to work." That is not engineering. Splitting unit from integration gives faster feedback.
-
-Rules:
-
-    The focused test must fail before the patch is applied and pass after.
-
-    Unit tests run first; integration tests run only if unit tests pass.
-
-    Tests must be runnable from a single command.
-
-    Tests must not require the GUI to be open.
-
-    Tests must exit with code 0 on pass, non-zero on fail.
-
-    If the behavior genuinely cannot be tested automatically, document why and add it to the GUI smoke checklist instead.
-
-Signs this is breaking down: AI says "this is hard to test automatically." Patch is delivered with no test file. Integration tests are skipped because "unit passed."
-Determinant 7 — Regression tests after every patch
-
-What it means: After every patch, the full regression test suite runs to confirm no previously working behavior was broken.
-
-Why it matters: A patch that fixes Tab 7 and breaks Tab 3 is not a net win. Without regression tests, you discover the breakage when a user hits it — not during validation.
-
-Rules:
-
-    Regression tests must cover all previously frozen features.
-
-    Regression suite must run in under 60 seconds for fast iteration.
-
-    A single regression failure blocks freeze — even if the focused test passes.
-
-    The regression test suite grows with every patch. Features that are frozen get regression coverage.
-
-Signs this is breaking down: Regression tests are skipped "because the change was small." A new patch quietly breaks old behavior that is only discovered sessions later. The regression suite has not grown in many patches.
-Determinant 8 — py_compile on every changed file
-
-What it means: After install, every Python file touched by the patch is run through python -m py_compile to catch syntax errors before any runtime test.
-
-Why it matters: A syntax error in a Python file produces a cryptic import error at runtime, not a clean "syntax error in file X at line Y." py_compile catches this instantly and cheaply.
-
-Rules:
-
-    Run py_compile on every changed file, not just the main patch file.
-
-    py_compile must exit 0 before any other test runs.
-
-    This step takes 1–2 seconds. There is no reason to skip it.
-
-Signs this is breaking down: Runtime tests fail with import errors that turn out to be syntax errors. py_compile step is omitted from the validation script.
-Determinant 9 — Workflow validation
-
-What it means: The project's workflow validator runs after py_compile and confirms that the project's own internal consistency rules pass — dependency contracts, module contracts, file presence contracts.
-
-Why it matters: An app can have syntactically valid Python that still violates the app's own structural rules — a module that imports something no longer present, a payload that references a removed function, a generated artifact whose hash no longer matches its source.
-
-Rules:
-
-    Workflow validation must report a specific pass/fail count, not just "OK."
-
-    A single workflow failure blocks freeze — even if all tests pass.
-
-    Workflow validation failures must be classified: patch-caused, or pre-existing/unrelated.
-
-    Generated artifacts (JSON exports, split manifests, compiled configs) must be regenerated before workflow validation if the patch touched the source they derive from.
-
-Signs this is breaking down: Workflow validation is not run before freeze. A stale generated artifact causes a workflow failure that gets blamed on the patch. Workflow validation exit code is ignored.
-Determinant 10 — Architecture validation
-
-What it means: The project's architecture validator runs after workflow validation and confirms that ownership rules, layer rules, and structural contracts are all clean.
-
-Why it matters: Complex apps develop architectural drift over time — domain logic creeping into GUI code, circular dependencies, modules with duplicate responsibility. Architecture validation catches this before it compounds.
-
-Rules:
-
-    Architecture validation must report "No validation issues" or list every issue with file and line.
-
-    Architecture validation is skipped only if workflow validation already failed (no point running it on a broken state).
-
-    Architecture warnings must be resolved before freeze, not deferred.
-
-    The AI must not introduce new architecture violations even in "small" patches.
-
-Signs this is breaking down: Architecture validation reports warnings that are ignored. The AI says "that warning was there before, it's not my fault." Architecture issues accumulate across patches.
-Determinant 11 — GUI smoke test checklist (for visual behavior)
-
-What it means: For any patch that changes visible behavior, a formal human checklist is completed before freeze. The checklist is written before the patch is applied, records expected outcome per step, and records actual outcome after apply.
-
-Why it matters: Automated tests cannot prove that a dropdown shows the right items, that a resize behaves correctly on screen, or that a dialog opens in the right position. Only human eyes can confirm visual behavior.
-
-Rules:
-
-    Every GUI patch must have a checklist. Even if "it looks fine."
-
-    Checklists are stored as evidence, not just done mentally and forgotten.
-
-    Checklist steps must be specific: "Click Refresh Models. Confirm dropdown shows qwen3-coder:30b and qwen2.5-coder:7b." Not "confirm models appear."
-
-    A checklist not completed = freeze not allowed.
-
-Signs this is breaking down: GUI patches are frozen based on "it looked fine when I tried it." There is no written record of what was checked. The checklist is the same generic 3-step list for every patch.
-Determinant 12 — Freeze only after all gates are clean
-
-What it means: "Frozen" means: this patch is permanently accepted, its tests are now regression tests, and its behavior is now a contract. A patch is only frozen when all previous determinants are satisfied.
-
-Why it matters: Premature freeze corrupts the integrity of the project. If a frozen patch secretly has unresolved issues, every future patch builds on a cracked foundation.
-
-The 9 freeze gates (all must be green):
-
-    Patch registry status is "installed"
-
-    Focused tests passed (unit + integration)
-
-    Regression tests passed
-
-    py_compile passed (exit 0)
-
-    Workflow validation passed (fail=0)
-
-    Architecture validation passed (no issues)
-
-    GUI checklist passed (if GUI patch)
-
-    Generated evidence is fresh (if patch touches evidence sources)
-
-    Human explicitly issued the freeze command
-
-Rules:
-
-    No gate can be bypassed, even for "small" patches.
-
-    "It probably works" is not a gate result.
-
-    The human issues the freeze command. The AI never auto-freezes.
-
-    Frozen patches become permanent regression coverage.
-
-Signs this is breaking down: AI says "you can freeze this, it looks good." Freeze is issued before workflow validation completes. A frozen patch is later discovered to have a known unresolved warning.
-Determinant 13 — Non‑Regression Performance Benchmarks
-
-What it means: Some patches must prove that they do not degrade startup time, memory usage, or response latency beyond a defined threshold.
-
-Why it matters: A patch that passes all functional tests but doubles the GUI startup time is not acceptable. Performance regressions are invisible without explicit benchmarks.
-
-When required: Any patch that touches __init__.py imports, event loop code, large data structures, or I/O paths.
-
-Implementation: Store a simple JSON benchmark profile in evidence. The validation chain runs --bench after regression tests; failure blocks freeze. Thresholds are project-specific (e.g., startup < 2 sec, memory increase < 10%).
-Determinant 14 — Documentation Synchronisation Gate
-
-What it means: If a patch changes a user‑visible feature, the corresponding documentation (README, help text, tooltips) must be updated in the same patch.
-
-Why it matters: Undocumented features are not features. Outdated help text creates user confusion and support burden.
-
-Rule: The patch manifest must include a flag touches_user_interface. If true, the focused test suite includes a check that the help text or user guide contains the new terminology.
-
-Not required for: Internal refactoring, architecture cleanup, test‑only changes.
-Determinant 15 — Dependency Freshness & Compatibility
-
-What it means: The framework must detect when a patch relies on a third‑party library whose version has changed since the last freeze.
-
-Why it matters: AI might generate code that uses a new API from a library that is pinned to an older version in the project. This causes runtime AttributeError that looks like a code bug but is actually a dependency mismatch.
-
-Implementation: The evidence folder stores a requirements_lock.json. The validation runner compares imported symbols against the locked version. A mismatch produces a missing‑dependency failure classification with the exact version needed.
-Determinant 16 — Rollback Depth & Recovery Audit
-
-What it means: The framework must track not only the most recent backup but also the last three frozen states and the ability to revert to any of them without manual reconstruction.
-
-Why it matters: A patch that passes all gates but later causes an obscure bug (discovered after 2 more patches) must be removable without replaying all subsequent patches.
-
-Rule: After each freeze, the project writes a complete recovery manifest: frozen_state_N.json listing all file hashes. The rollback script accepts --to-frozen N. This is different from surgical backup – it is a versioned state archive.
-Determinant 17 — AI Hallucination Detector (for generated code)
-
-What it means: A lightweight static analysis check that looks for patterns common to AI hallucinations: functions that are imported but never defined, TODO: comments that are not resolved, placeholder pass in non‑abstract methods, and references to non‑existent modules.
-
-Why it matters: AI sometimes writes code that looks plausible but calls a helper that was never written. Human review often misses it. A simple scanner catches it instantly.
-
-Implementation: A hallucination_scanner.py runs before focused tests. It exits non‑zero if it finds undefined_symbol or todo_without_issue markers. The AI must explicitly resolve each flag.
-The validation chain (canonical order)
-
-Every patch must pass this chain in order. Stop on first failure.
-text
-
-1. py_compile               → all changed files → exit 0
-2. Hallucination detector   → static analysis → exit 0
-3. Unit tests (focused)     → patch-specific fast tests → exit 0
-4. Integration tests (focused) → patch-specific slow tests → exit 0
-5. Regression tests         → full suite → exit 0
-6. Performance benchmarks    → if patch touches critical paths → within thresholds
-7. Workflow validation      → project consistency → fail=0
-8. Architecture validation  → structural rules → no issues
-9. GUI smoke checklist      → human visual confirmation (if GUI patch)
-10. Freeze gate check       → all 9 gates green → human freeze command
-
-A failure at step 7 does not mean the patch code is wrong. Classify the failure first:
-
-    patch-caused — the changed files introduced the failure
-
-    existing-unrelated — failure existed before this patch
-
-    generated-evidence-stale — a derived artifact needs regeneration
-
-    environmental — dependency, path, or environment issue
-
-    missing-dependency — required module or tool not installed
-
-    manual-GUI-needed — automated tests cannot cover this
-
-    unknown — needs manual investigation
-
-12 infrastructure modules every mature project needs (up from 10)
-
-These are not features of the app. They are the engineering scaffolding that makes AI-assisted development sustainable as the app grows complex.
-#	Module	Why it matters
-1	Evidence Freshness Gate + Timestamp Staleness	Detects stale generated artifacts before validation runs; warns if evidence >7 days old
-2	Patch Registry	Tracks every patch: created → installed → validated → frozen
-3	Unified Validation Runner	One command runs the full chain, writes a JSON result + raw log
-4	GUI Smoke Checklist System	Stores and records human visual confirmation per patch
-5	Freeze Governance Workflow	Mechanically enforces all 9 gates before freeze is allowed
-6	Git Checkpoint Gate	Recommends a checkpoint before install — second recovery layer
-7	Patch Install Manifest Indexer	Makes all install manifests discoverable by future sessions
-8	Failure Triage Classifier	Classifies failures automatically — saves debugging time
-9	Prompt & Protocol Enforcement	Governance prompts in the app — prevents AI session drift
-10	End-of-Session Handoff Generator	Auto-generates the session handoff doc at session end
-11	State‑Based Testing Sandbox	For patches modifying persistent state: runs tests in a disposable environment
-12	Human‑in‑the‑Loop Override Log	Records when human overrides a gate with a reason, for auditability
-Process improvements (tightening existing rules)
-1. Evidence Freshness Gate must include timestamp staleness
-
-In addition to SHA256 hash checking, the evidence freshness checker must warn if the complete JSON is older than a configurable threshold (default 7 days). Output: Complete JSON is fresh (2 days old) vs STALE (12 days old). This catches forgotten regeneration after many small changes.
-2. Structured logging sidecar for terminal logs
-
-Preserving raw terminal logs is good, but the validation runner should also write a parallel JSON log (same timestamp, different extension). That allows future AI sessions to parse pass/fail without OCR.
-Implementation: validation_runs/<patch>_<timestamp>.log (raw text) and validation_runs/<patch>_<timestamp>.results.json (structured). The CLI displays both to the user but stores both.
-3. Split “focused tests” into unit and integration
-
-Already reflected in Determinant 6 and the validation chain. This gives faster feedback: unit tests run in seconds; integration tests run only if unit tests pass.
-The 6 rules that make complex apps manageable
-
-These are the non-negotiable constraints on the method:
-
-    Never let one patch touch too many systems. Surgical scope is not optional.
-
-    Never accept "it probably works" without validation. Every claim is tested.
-
-    Never allow duplicate owners of the same behavior. Architecture must be clean.
-
-    Never let GUI code directly own domain logic. Separation of concerns is structural.
-
-    Never let AI-generated code bypass tests. AI speed is not a reason to skip gates.
-
-    Never freeze if architecture reports unresolved errors. Debt compounds.
-
-Human role — what the human does
-
-The human does not write code. The human:
-
-    Sets the direction: which feature to build, which bug to fix, which patch to prioritize
-
-    Reads and understands AI proposals before approving them
-
-    Performs GUI smoke testing — the one thing automated tests cannot replace
-
-    Decides when a patch is good enough to freeze
-
-    Decides when to change direction
-
-    Detects when AI is drifting from the method and redirects
-
-    Uploads evidence at session start and reviews session handoff at session end
-
-    Decides what to build next
-
-    May issue --override-gate for rare, documented exceptions (logged in override log)
-
-The human is the technical lead. The AI is the pair programmer. Both roles are required.
-AI role — what the AI does
-
-The AI does not decide what to ship. The AI:
-
-    Reads current project evidence before every action
-
-    Identifies the correct owner box before writing any code
-
-    Writes the smallest possible patch that solves the stated problem
-
-    Writes focused tests (unit + integration) alongside every patch
-
-    Generates the install script, backup script, and restore script
-
-    Runs and reports on the full validation chain
-
-    Classifies failures rather than guessing
-
-    Flags architectural risks before they become bugs
-
-    Generates the session handoff document at session end
-
-    Never auto-freezes. Never self-approves. Never skips a gate.
-
-Terminal log preservation — canonical rule
-
-This rule applies to every session, every script, every command:
-
-    Do not use Clear-Host, cls, clear, Reset-Host, or any terminal reset command.
-
-    Do not provide scripts that close the visible terminal session.
-
-    Do not truncate, overwrite, or reduce terminal log output.
-
-    Install, audit, validation, traceback, and diagnostic output must remain visible.
-
-    The terminal log is audit evidence. Treat it as permanent.
-
-Session start checklist
-
-At the start of every new AI session, the human provides and the AI confirms:
-
-    Latest project evidence uploaded (handoff ZIP or equivalent)
-
-    AI has read the evidence and confirmed current source state
-
-    Active patch registry reviewed — no patch confused as frozen that is not
-
-    Current session goal stated: one patch, one problem
-
-    Owner box identified before any code is written
-
-    Evidence freshness (including timestamp) checked
-
-Session end checklist
-
-At the end of every session, before closing:
-
-    All changed files documented
-
-    Patch ZIP name and install manifest path recorded
-
-    Validation chain results recorded (pass/fail per step)
-
-    Structured JSON results saved alongside raw log
-
-    Freeze status recorded: frozen / installed-not-frozen / created-not-installed
-
-    If overrides were used, they are logged with reasons
-
-    Next session first step written
-
-    Handoff document generated and saved
-
-What level of app complexity is achievable with this method?
-
-Honest answer: Very high — but only because the method is disciplined, not because AI is magic.
-
-What is achievable:
-
-    Multi-tab desktop GUI applications
-
-    Complex domain logic with multiple interdependent modules
-
-    Apps with generated evidence, validation pipelines, and self-describing architecture
-
-    Apps that grow over hundreds of patches without accumulating fatal technical debt
-
-What is not achievable without the method:
-
-    Any of the above. Without surgical patches, regression tests, architecture validation, and freeze discipline, complexity becomes unmanageable after 20–30 patches regardless of AI involvement.
-
-The method is what makes the app complex-capable. The AI is what makes the method fast.
-Prompt template — insert at start of any new session
-text
-
-You are my AI pair programmer. We are using a professional AI-assisted engineering method (v2.0).
-
-Before writing any code:
-1. Read the uploaded project evidence.
-2. Identify the correct owner box for the change.
-3. Confirm no duplicate ownership exists.
-4. Run evidence freshness check (hash + timestamp).
-
-Patch rules:
-- One problem, one patch, one owner box.
-- Deliver as a surgical ZIP with install_manifest.json.
-- Write focused unit + integration tests with the patch.
-- Never touch files outside the patch scope.
-- Never auto-freeze. I issue the freeze command.
-
-Validation chain (in order, stop on first failure):
-py_compile → hallucination detector → unit tests → integration tests → regression tests → performance benchmarks (if required) → workflow validation → architecture validation → GUI checklist (if visual) → freeze gate
-
-Terminal log rule:
-Never use Clear-Host, cls, clear, Reset-Host, or any log-clearing command.
-Leave all install, validation, traceback, and diagnostic output visible.
-Write both raw log and structured JSON results.
-
-If validation fails:
-Classify the failure before proposing a fix:
-patch-caused / existing-unrelated / generated-evidence-stale / environmental / missing-dependency / manual-GUI-needed / unknown
-
-At session end:
-Generate a session handoff document with: task, files changed, patch ZIP, install manifest path, validation results, freeze status, next steps, any overrides.
-
-My role: direction, priorities, testing, freeze decisions, override decisions.
-Your role: code, patches, tests, validation, analysis, handoffs.
-
-Confirm you have read the evidence before proposing any code.
-
-This document is project-agnostic. It applies to any Python application, any team size, any IDE or terminal environment.
-Version: 2.0 — includes performance benchmarks, documentation gate, dependency freshness, rollback depth, hallucination detector, two additional infrastructure modules, and process improvements.
+- 2.0.0: replaced the 544-line mega-framework with a thin, non-authoritative operating-model and dispatch overview.

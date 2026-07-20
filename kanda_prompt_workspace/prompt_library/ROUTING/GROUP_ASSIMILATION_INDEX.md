@@ -84,6 +84,10 @@ Use folder cards only after group routing narrows the task to one or more releva
 5. Do not route into live app folders.
 6. Do not treat this index as a substitute for specialist prompts.
 
+## Retired routing identity rule
+
+`prompt_router`, RG-PILOT-000, and RG-LAB-000 are not active group routes. Resolve them through KPR-02-005. Current semantic, Pilot, Copilot, LAB, MLRT, provider, or ML-routing proposals use KPR-02-006 plus KPR-02-002 and Brick Wall admission.
+
 ## Routing-index escalation discipline
 
 Use the three routing indexes in a deliberate escalation order.
@@ -99,39 +103,22 @@ Use the three routing indexes in a deliberate escalation order.
 
 | Group | Prompt count | Responsibility | Use when | Do not use when |
 |---|---:|---|---|---|
-| 01_session_start_and_navigation | 9 | Start sessions, load the small kernel, and establish AI-human operating context. | At beginning of day/session or when continuity is needed. | Do not use as a substitute for specialist implementation prompts. |
-| 02_prompt_routing_and_indexing | 7 | Route human intent to groups, prompts, overlays, substitution history, the KANDA Routing System Canon, semantic-readiness canon, RG-PILOT-000 Pilot/Copilot Phase 0 router canon, and RG-LAB-000 post-P12 ML LAB phase entry router canon. | When deciding what context should be loaded, or when post-M35 Pilot/Copilot/P0/P-series work is requested. | Do not use as a complete behavior protocol. |
-| 03_governance_freeze_and_handoff | 10 | Freeze validated work, update governance, transfer state across sessions, guide cooperative implementation methodology, run the Brick Wall Q01-Q40 status gate, control freeze-code intake/form review, and apply pre-output contract gates. | When Brick Wall status, validation/freeze/governance/handoff, freeze-code intake, freeze form correction, consequential implementation-method discussion, or high-risk artifact output is requested. | Do not freeze without validation evidence; do not use methodology, intake, or pre-output contracts as a substitute for specialist prompts. |
+| 01_session_start_and_navigation | 11 | Compact startup, two-stage readiness, closure, Error Memory admission, durable-artifact routing, overlays, and templates. | At startup, continuation, upload review, closure, Error Memory admission, durable routing, or startup authoring. | Do not use as implementation, patch-registry, or freeze authority. |
+| 02_prompt_routing_and_indexing | 6 | Select current routing owners, exact prompt paths, Project overlays, historical substitutions, and semantic/ML adoption safety. | When deciding what context should be loaded, resolving an old prompt identity, or evaluating a current KANDA semantic/ML proposal. | Do not use as a complete behavior protocol. |
+| 03_governance_freeze_and_handoff | 6 | Own Brick Wall status, cooperative decision discussion, freeze intake, final artifact-contract dispatch, and draft-only governance or handoff profiles. | Use for governed implementation status, consequential option discussion, freeze-intake review, final operational artifact checks, or explicit generic profile drafting. | Do not use as a substitute for specialist implementation, delivery, validation, Box, Tool/Project, Error Memory, or normal KANDA handoff owners. |
 | 04_box_architecture_and_boundaries | 6 | Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, KBSC shield requirements, and route the governed architecture companion on demand. | Before implementation, architecture changes, refactors, cross-box touches, meaningful milestone shielding, or stronger ML preparation. | Do not use for simple explanation-only tasks. |
-| 05_patch_delivery_and_validation | 10 | Package, deliver, validate, register, and classify implementation patches. | When code/files/ZIP/install/validation/freeze are involved. | Do not use as a reason to touch unrelated boxes. |
-| 06_refactor_and_architecture_hardening | 11 | Handle large modules, architecture hardening, fragmentation, and roadmap-solving. | When modules are large, risks are architectural, or problem sets need ordering. | Do not use for tiny text edits or simple explanation. |
+| 05_patch_delivery_and_validation | 7 | Coordinate release lifecycle, surgical delivery, active PIR routing, correction incidents, terminal behavior, and recovery dispatch. | When packaging, installing, validating, correcting, or emitting terminal output. | Do not use as implementation or freeze authority. |
+| 06_refactor_and_architecture_hardening | 8 | Current architecture/refactor owners plus bounded Web-AI planning, bundle, AST-repair, and Safe Refactor specialist routes. | When current structural evidence requires a Class 06 owner or specialist. | Do not let specialist prompts replace KPR-06-007, Class 05, Brick Wall, or human-confirmed freeze. |
 | 07_prompt_authoring_and_audit | 3 | Audit, generalize, reconcile, split, merge, deprecate, and create prompts safely. | When prompt files or prompt canons are being reviewed or changed. | Do not use for runtime code architecture unless prompts are involved. |
-| 08_python_engineering_core | 12 | Provide core Python engineering principles, architecture, refactoring, patterns, and code quality. | When implementation needs general Python engineering judgment. | Do not load the whole group for a narrow issue if one prompt is enough. |
+| 08_python_engineering_core | 10 | Python-specific architecture, refactoring, patterns, performance, legacy-code, and maintainability specialists. | When Python source or Python-system design needs one selected specialist. | Do not use for team-process advice or source-grounded handbook generation; use Class 12. |
 | 09_python_quality_security_observability | 17 | Guide testing, documentation, type safety, resilience, security, observability, and evidence-first anti-hallucination review. | When quality gates, docs, tests, logs, safety, validation, unsupported AI assumptions, or evidence verification concerns are central. | Do not use for pure routing or session-start tasks. |
 | 10_python_api_data_async_config | 4 | Guide APIs, async/concurrency, configuration, databases, and data/storage design. | When API/data/config/async/database work is requested. | Do not use for non-data UI-only changes. |
 | 11_productization_and_release_readiness | 6 | Guide release readiness, infrastructure, lifecycle, SRE, deployment, and productization. | When moving from prototype to reliable product/release operations. | Do not use for early brainstorming unless explicitly requested. |
-| 12_generalized_project_canons | 7 | Store generalized reusable project canons, project/tool boundary rules, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references. | When extracting project-agnostic rules from specific projects, preserving active-project versus tool identity, or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules. | Do not place project-specific facts here. |
+| 12_generalized_project_canons | 14 | Reusable generalized canons and templates, including Tool/Project identity, MCard lifecycle, Error Memory models, human-process guidance, and source-grounded handbook generation. | When one selected generalized canon or template is required. | Do not use as generic implementation, personnel-action, medical-diagnosis, surveillance, package, or freeze authority. |
 
 
 
 
-
-## RG-PILOT-000 Pilot/Copilot Phase 0 route
-
-Use `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon` from `02_prompt_routing_and_indexing` when post-M35 Pilot/Copilot Phase 0, P0, Pilot projection/simulation, Pilot disagreement taxonomy, Pilot implementation gate, Pilot router reproduction, Copilot boundary, training-data use, batch mode, persistence, or runtime-shadow work is requested.
-
-This route is on-request and must not become an always-loaded startup prompt. Pair it with `kanda_routing_system_canon`, `kanda_box_shielding_canon`, current M35 closure/freeze context, current project files, patch-delivery rules, and validation steps when implementation is requested.
-
-Canonical rule: if P0 is not locally validated and frozen, the next implementation milestone is P0 only.
-
-
-## RG-LAB-000 Post-P12 ML LAB phase entry route
-
-Use `routing_signal_scorer_v3_lab_phase_entry_router_canon` from `02_prompt_routing_and_indexing` when post-P12 LAB phase entry, LAB-0, ML lab/test, ML router prompt logic reliability testing, or continuation of ML implementation after LAB reliability is requested.
-
-This route is on-request and must not become an always-loaded startup prompt. Pair it with `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon`, `kanda_routing_system_canon`, `kanda_box_shielding_canon`, P12 freeze evidence, current project files, patch-delivery rules, and validation steps when implementation is requested.
-
-Canonical rule: after P12, canonize LAB entry first; build and validate the LAB before testing ML router prompt logic; validate ML router prompt logic reliability before continuing ML implementation.
 
 ## KANDA Routing System Canon route
 
@@ -152,7 +139,7 @@ KBSC is an on-request shielding canon. It must not be loaded for simple Fast Pat
 | START_DAY | 01_session_start_and_navigation, 02_prompt_routing_and_indexing | 03_governance_freeze_and_handoff | STEP_PAUSE | NO |
 | EXPLAIN_OR_BRAINSTORM | none | none | DEGRADED_WARNING | YES |
 | CREATE_OR_MODIFY_CODE | 05_patch_delivery_and_validation plus source files and validation steps; 04_box_architecture_and_boundaries if ownership boundaries, public contracts, app structure, cross-box behavior, GUI ownership, or startup delivery are involved | 08_python_engineering_core, 09_python_quality_security_observability, 10_python_api_data_async_config | HARD_STOP_before_implementation | NO |
-| GOVERNED_ARCHITECTURE_COMPANION | governed_architecture_companion_handoff, brick_wall_comprehensive_quality_gate, router_bridge_governed_implementation, project_tool_boundary_canon, box_architecture_canon | kanda_box_shielding_canon and architecture_review_project_card_machine_canon only when triggered | HARD_STOP_before_implementation_if_canonical_owners_or_Brick_Wall_authorization_are_incomplete | NO |
+| GOVERNED_ARCHITECTURE_COMPANION | governed_architecture_companion_handoff, brick_wall_comprehensive_quality_gate, brick_wall_comprehensive_quality_gate, project_tool_boundary_canon, box_architecture_canon | kanda_box_shielding_canon and architecture_review_project_card_machine_canon only when triggered | HARD_STOP_before_implementation_if_canonical_owners_or_Brick_Wall_authorization_are_incomplete | NO |
 | DATABASE_OR_STORAGE_ARCHITECTURE | 04_box_architecture_and_boundaries, 05_patch_delivery_and_validation, 09_python_quality_security_observability, 10_python_api_data_async_config | 11_productization_and_release_readiness | HARD_STOP_before_implementation | NO |
 | LARGE_MODULE_REFACTOR | 04_box_architecture_and_boundaries, 05_patch_delivery_and_validation, 06_refactor_and_architecture_hardening | 08_python_engineering_core, 09_python_quality_security_observability | HARD_STOP_before_implementation | NO |
 | PILOT_COPILOT_PHASE0_POST_M35 | 02_prompt_routing_and_indexing, routing_signal_scorer_v3_pilot_copilot_phase0_router_canon, kanda_routing_system_canon, kanda_box_shielding_canon; 05 plus current project files and validation steps if patching | 04_box_architecture_and_boundaries, 03_governance_freeze_and_handoff, 08_python_engineering_core, 09_python_quality_security_observability | HARD_STOP_before_implementation; PARTIAL_for_read_only_review; P0 only until frozen | NO |
@@ -539,3 +526,19 @@ Do not use this route for Error Memory GUI implementation patches unless the tas
 Use `governed_architecture_companion_handoff` from `04_box_architecture_and_boundaries` only on demand. The startup bridge keeps the compact rules visible, while the full companion is loaded for architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, or authority-sensitive work. Brick Wall remains the final coding-authorization owner.
 
 <!-- GOVERNED_ARCHITECTURE_COMPANION_GROUP_ROUTE_V1_END -->
+
+
+## 04_box_architecture_and_boundaries
+
+Responsibility: bounded ownership and focused boundary specialists.
+
+Active owners:
+- box_architecture_canon.md
+- boundary_first_repair_protocol.md
+- kanda_box_shielding_canon.md
+- project_folder_organization_canon.md
+- stateful_control_regression_canon.md
+
+Prompt count: 5
+
+Retired: closed_box_delivery_canon; governed_architecture_companion_handoff is a deprecated redirect only.

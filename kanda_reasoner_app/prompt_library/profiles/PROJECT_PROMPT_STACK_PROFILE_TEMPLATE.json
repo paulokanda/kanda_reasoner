@@ -5,36 +5,24 @@
   "project_agnostic_template": true,
   "active_prompt_ids": [
     "0000_0_1_general_prompt_stack_load_order",
-    "0000_0_8_universal_delivery_protocol",
+    "0000_0_8_implementation_and_delivery_protocol",
     "0000_1_0_project_startup_canon_template",
     "0000_2_1_daily_startup_loader_template"
   ],
   "daily_upload_order": [
-    "Prompt stack load order",
-    "Universal delivery protocol",
-    "Project startup canon or profile",
-    "Daily startup loader",
-    "Current active governance files or ZIP",
-    "Latest workflow handoff output",
+    "Current startup read-before-all file and startup ZIP",
+    "Current Project handoff package when continuing work",
     "Current task description",
     "Relevant source ZIP, logs, validation output, GUI observation, or screenshots"
   ],
   "conditional_prompt_routes": [
     {
-      "condition": "High-risk, runtime, schema, persistence, GUI lifecycle, public API, or multi-box work",
-      "prompt_id": "0000_3_6_professional_engineering_governance_layer"
-    },
-    {
       "condition": "Relevant file above 500 lines or intentional refactor",
-      "prompt_id": "0000_5_5_large_module_refactor_protocol_template"
-    },
-    {
-      "condition": "Official governance update after validated user-approved freeze",
-      "prompt_id": "0000_4_0_end_of_chat_governance_update_template"
+      "prompt_id": "large_module_refactor_protocol"
     },
     {
       "condition": "Architecture hardening, warning cleanup, layer-boundary, shadow-path, or state-safety campaign",
-      "prompt_id": "0000_8_1_architecture_hardening_triage_protocol_template"
+      "prompt_id": "architecture_hardening_triage_protocol"
     }
   ],
   "precedence_order": [
@@ -43,7 +31,7 @@
     "Current active governance files",
     "Latest handoff output",
     "Project startup canon or profile",
-    "Universal delivery protocol",
+    "Current Class 05 delivery owners",
     "Special prompts requested for the task",
     "Older prompts or memory"
   ],

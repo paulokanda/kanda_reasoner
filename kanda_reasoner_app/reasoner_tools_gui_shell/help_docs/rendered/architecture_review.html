@@ -12,6 +12,7 @@
       <div>
         <p class="part-label">KANDA Reasoner Help</p>
         <h1>Architecture Review</h1>
+      <p>Audit Project exposes Architecture Review, Engineering Safety, and Workflow Review as side-by-side child tabs in that order.</p>
         <p class="subtitle"><strong>Page summary:</strong> Architecture Review is a building inspection desk for code. Before a person or an AI repair crew changes the project, it checks owner rooms, permits, wiring, tests, manifests, public names, and evidence stamps so the next fix lands in the right place.</p>
       </div>
     </header>
@@ -24,7 +25,7 @@
     <section>
       <h2>How To Use This</h2>
       <ol>
-        <li>Open the <code>Architecture Review</code> tab, select <code>Check &amp; Update Architecture</code>, and click <code>Load this tool now</code> if the panel has not loaded yet.</li>
+        <li>Open the <code>Audit Project</code> tab, select <code>Architecture Review</code>, then select <code>Check Update Architecture</code>. Click <code>Load this tool now</code> if the panel has not loaded yet.</li>
         <li>Check <code>Project root</code>; use <code>Browse...</code> when the field is not the repository you want to inspect.</li>
         <li>Leave <code>Mode</code> on <code>validate</code> for the first pass. Use <code>diff</code> to preview generated changes, <code>scan</code> to print the manifest JSON, and <code>write</code> only when you deliberately want the worker to write architecture artifacts.</li>
         <li>Click the green action button. Its name changes to <code>Validate Project</code>, <code>Preview Changes</code>, <code>Scan Project</code>, or <code>Write Architecture Files</code> according to the selected mode. Then read the <code>Output</code> panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.</li>
@@ -35,14 +36,14 @@
 
     <section>
       <h2>What This Tab Owns</h2>
-      <p><strong>Technical:</strong> <code>Architecture Review</code> is registered as the lazy tool with tab id <code>architecture_review</code>, legacy help catalog <code>tab1_architecture.json</code>, source hint <code>kanda_reasoner_app/manage_architecture/manage_architecture_gui.py</code>, and runtime class <code>ArchitectureManagerWindow</code>. The shell help button resolves this rich local help page through the manifest before falling back to the legacy JSON catalog. The tool itself loads a sibling worker script, runs the selected mode in a <code>QThread</code>, captures stdout/stderr into the output panel, and exposes a read-only advisory AI review path over the last deterministic result.</p>
+      <p><strong>Technical:</strong> <code>Audit Project</code> is registered as the lazy tool with tab id <code>architecture_review</code> and hosts the <code>Architecture Review</code> workflow, legacy help catalog <code>tab1_architecture.json</code>, source hint <code>kanda_reasoner_app/manage_architecture/manage_architecture_gui.py</code>, and runtime class <code>ArchitectureManagerWindow</code>. The shell help button resolves this rich local help page through the manifest before falling back to the legacy JSON catalog. The tool itself loads a sibling worker script, runs the selected mode in a <code>QThread</code>, captures stdout/stderr into the output panel, and exposes a read-only advisory AI review path over the last deterministic result.</p>
       <p><strong>In plain English:</strong> This tab is the inspection desk before repair work. It checks whether the project has rooms with clear labels, wiring that does not loop back on itself, permits for generated files, and test records before anyone carries a toolbox into the wrong place.</p>
       <p><strong>Invariant:</strong> Local code and generated evidence are the truth. Books, official docs, and AI comments are used to explain the design, not to overrule what the current code does.</p>
     </section>
 
     <section>
       <h2>Routed Help And Loading Path</h2>
-      <p>The visible <code>Help</code> button belongs to the shell host, not the inner worker window. The shell reads the <code>ToolSpec</code> for <code>Architecture Review</code>, sees <code>help_catalog="tab1_architecture.json"</code>, and calls the rich help resolver. The resolver finds the manifest page with <code>legacy_help_catalog</code> equal to <code>tab1_architecture.json</code> and opens <code>rendered/architecture_review.html</code> with the shared local CSS.</p>
+      <p>The visible <code>Help</code> button belongs to the shell host, not the inner worker window. The shell reads the <code>ToolSpec</code> for <code>Audit Project</code>, sees <code>help_catalog="tab1_architecture.json"</code>, and calls the rich help resolver. The resolver finds the manifest page with <code>legacy_help_catalog</code> equal to <code>tab1_architecture.json</code> and opens <code>rendered/architecture_review.html</code> with the shared local CSS.</p>
       <p>If the rich rendered file or CSS is missing, the shell can fall back to the old catalog formatter. That fallback is useful for safety, but it is not the desired user experience. The canonical path for this tab is rendered as a wrapped route so the help page never grows wider than the desktop help window:</p>
       <ol class="route-steps">
         <li><code>Help</code> button.</li>

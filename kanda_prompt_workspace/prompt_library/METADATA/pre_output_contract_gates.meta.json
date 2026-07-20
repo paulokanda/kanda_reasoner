@@ -1,34 +1,34 @@
 {
+  "prompt_code": "KPR-03-004",
   "prompt_id": "pre_output_contract_gates",
-  "display_name": "Pre-Output Contract Gates",
+  "display_name": "Pre-Output Artifact Contract Gate",
   "filename": "pre_output_contract_gates.md",
   "category": "03_governance_freeze_and_handoff",
-  "status": "active_candidate",
+  "version": "2.0",
+  "status": "active",
   "load_type": "on_request",
-  "source_stage": "pre_output_contract_gates_v1",
-  "description": "Forces output-time contract checks before terminal code, patch delivery, freeze-form JSON, validation evidence, freeze hint sidecars, and multi-project freeze paths.",
-  "box_logic_required": true,
-  "routing_coverage": "complete_v1",
-  "priority": 35,
+  "owner_box": "03_governance_freeze_and_handoff",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
+  "aliases": [
+    "KPR-03-004",
+    "pre_output_contract_gates",
+    "pre_output_contract_gates.md",
+    "pre-output artifact contract gate"
+  ],
+  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "description": "Dispatches each operational or machine-consumed output to its exact current owner and blocks emission when contract or evidence is unresolved.",
   "trigger_phrases": [
     "pre-output contract",
-    "terminal cleanup contract",
-    "PowerShell install block",
-    "PowerShell validation block",
-    "patch delivery contract",
-    "freeze JSON strict output",
-    "validation evidence marker",
-    "KANDA_FREEZE_HINT.json sidecar contract",
-    "output-time compliance",
-    "make AI follow the canon"
+    "before terminal code",
+    "before zip delivery",
+    "before machine json"
   ],
   "required_companion_prompts": [
-    "daily_patch_delivery_guardrails",
-    "freeze_code_intake_and_form_protocol",
-    "terminal_cleanup_contract"
+    "brick_wall_comprehensive_quality_gate"
   ],
   "recommended_companion_prompts": [
-    "implementation_and_delivery_protocol",
-    "python_validation_serialisation_type_safety"
+    "terminal_cleanup_contract",
+    "durable_document_artifact_routing_canon"
   ]
 }

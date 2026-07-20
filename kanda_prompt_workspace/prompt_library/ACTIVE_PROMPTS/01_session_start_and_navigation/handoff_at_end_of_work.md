@@ -1,236 +1,136 @@
-# handoff_at_end_of_work.md
+---
+prompt_id: handoff_at_end_of_work
+prompt_code: KPR-01-008
+title: End-of-Work Handoff Guardrail
+version: 2.0
+status: active
+load_type: always_startup
+owner_box: 01_session_start_and_navigation
+source_stage: prompt-audit-wave3b-specialist-startup-bridges-v1
+---
 
-Version: 1.0
-Status: always-startup session-closure guardrail
-Role: force a complete contextualized handoff when project work is paused or ended
-Scope: end-of-work handoff behavior for long governed KANDA sessions
-Do not use as: implementation prompt, patch prompt, freeze entry, or replacement for validation evidence
+# End-of-Work Handoff Guardrail
 
 ## Purpose
 
-This prompt prevents loss of project context when a long governed work session pauses or ends.
+This always-startup prompt detects project-session closure and protects factual
+continuity. It owns the closure trigger and the minimum handoff contract. It does
+not replace startup, exact source, detailed Class 03 handoff templates, freeze
+intake, Error Memory schemas, MCard, or durable-artifact routing.
 
-When the user indicates that the work session is ending, pausing, or taking a break, the AI must not answer with only a short farewell.
+## Closure triggers
 
-Instead, it must create a complete contextualized handoff so the next AI chat can resume safely without guessing what was done, what was validated, what was frozen, and what remains next.
+Activate when project work is active and the user asks to pause, stop, wrap up,
+continue later, create a handoff, end the day, or move to a new chat. Close
+variants and clear contextual intent count even when wording differs.
 
-## Trigger phrases
+A casual goodbye with no active project work does not require a governed handoff.
 
-Treat these user phrases, and close variants, as end-of-work handoff triggers when project work is active:
+## Closure-mode behavior
 
-```text
-lets take a break
-let's take a break
-lets stop now
-let's stop now
-pause here
-pause this work
-stop for today
-finish this section
-end of day
-wrap this up
-create handoff
-handoff for next time
-we continue later
-we will continue later
-chat is huge
-```
+When activated:
 
-A trigger can be written with different capitalization or minor punctuation.
+1. Stop starting new implementation work.
+2. Finish only the minimum needed to describe the current settled state.
+3. Do not create a new patch, validation claim, freeze, or Error Memory lesson
+   unless it was already requested and can be completed honestly.
+4. Distinguish completed, partially completed, blocked, and not started work.
+5. Record exact next safe action and explicit do-not-do guidance.
+6. State what evidence is local, generated, uploaded, inferred, or missing.
+7. Route durable placement through `durable_document_artifact_routing_canon`.
+8. Require the normal startup and selected Project handoff in the next chat.
 
-If the user clearly asks only a casual non-project goodbye and no project work is active, a short response is acceptable.
+## Minimum handoff contract
 
-If project work is active, treat the trigger as a session-closure workflow.
-
-## Mandatory behavior
-
-When an end-of-work handoff trigger is detected during active project work, the AI must:
+Include the following when known:
 
 ```text
-1. Stop normal implementation flow.
-2. Do not create new code, patches, tests, or freezes unless the user explicitly asks before the break.
-3. Produce a complete contextualized handoff for the next AI.
-4. Include what was completed, validated, frozen, discussed, and not started.
-5. Include exact next safe action.
-6. Include warnings about what must not be modified or assumed.
-7. Make the handoff self-contained enough that a new AI can continue without reading the whole chat.
-```
-
-## Required handoff content
-
-The handoff must include these sections when known:
-
-```text
-1. Project name.
-2. Project root.
-3. Active workspace paths and boxes.
-4. Current task family or workflow.
-5. Completed work in this session.
-6. Installed patches and patch names.
-7. Validation evidence already provided.
-8. Freeze entries installed or planned.
-9. Current generated artifact names.
-10. Stale or forbidden names that must not be revived.
-11. Files changed.
-12. Files that must not be modified next.
-13. Current decision state.
-14. Work discussed but not implemented.
-15. Next safe action.
-16. Explicit do-not-do list for the next AI.
-17. Any open questions or risks.
-```
-
-Use only facts available in the current conversation, uploaded files, validation logs, or frozen memory.
-
-Do not invent validation evidence.
-
-If validation status is unknown, say that it is unknown.
-
-If a patch was prepared but not installed or not validated, say that clearly.
-
-## Required style
-
-The handoff should be direct, concrete, and operational.
-
-Prefer exact paths and filenames.
-
-Use Windows paths when the project uses Windows paths.
-
-Use project terminology already established by the user.
-
-Do not use vague summaries such as:
-
-```text
-We worked on the project and should continue next time.
-```
-
-Instead, write concrete continuation instructions.
-
-## Handoff template
-
-Use this structure unless a better project-specific structure is required:
-
-```text
-KANDA PROJECT HANDOFF - END OF WORK SESSION
-
+SESSION HANDOFF
 Session status:
-[paused / stopped / end of day]
-
 Project:
-[project name]
-
-Project root:
-[path]
-
-Important boxes:
-1. [box] - [role]
-2. [box] - [role]
-
-Completed in this session:
-- ...
-
-Installed patches:
-- [patch name] - [status]
-
-Validation evidence:
-- ...
-
-Frozen behavior / freeze entries:
-- ...
-
-Current active names:
-- ...
-
-Stale or forbidden names:
-- ...
-
+Tool root:
+Active Project root:
+Project Support root:
+Same physical root: YES / NO / UNKNOWN
+Primary owner box:
+Current task:
+Completed:
+Not completed:
 Files changed:
-- ...
-
-Files not to modify next:
-- ...
-
-Discussed but not implemented:
-- ...
-
+Artifacts generated:
+Patch status:
+Validation status:
+Freeze status:
+Relevant Error Memory:
+Current Brick Wall blocker:
+MCard state, if applicable:
 Next safe action:
-[one concrete next step]
-
 Do not do next:
-- ...
-
-Risks / open questions:
-- ...
-
-End of handoff.
+Evidence provenance:
+Durable handoff created: YES / NO
+Redaction status:
 ```
 
-## Interaction with freeze workflow
+Omit unknown detail only when it cannot be recovered safely; mark important
+unknowns instead of guessing.
 
-If a validated feature was completed but not frozen, say:
+## Evidence honesty
 
-```text
-Feature appears validation-ready but is not frozen yet.
-Next safe action: prepare Freeze Feature After Update entry under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory after confirming validation evidence.
-```
+- Do not convert sandbox validation into user-local validation.
+- Do not call a delivered patch installed.
+- Do not call a validated feature frozen without the frozen-memory entry.
+- Do not treat generated archives as canonical source authority.
+- Preserve exact feature, patch, validation, and freeze identities when known.
+- Mention unresolved warnings and blockers that affect the next safe action.
 
-If a feature was frozen and validation passed, say:
+## Owner bridges
 
-```text
-Feature is frozen and validation evidence was accepted.
-Do not refreeze unless the user explicitly requests a new freeze for new behavior.
-```
+- Detailed reusable handoff structure: `workflow_handoff_template` or the current
+  routed Class 03 handoff owner.
+- Current governed-work status and authorization: Brick Wall.
+- MCard continuity when applicable:
+  `architecture_review_project_card_machine_canon`.
+- Tool, Project, Project Support, and transient roots:
+  `project_tool_boundary_canon`.
+- Freeze data and human confirmation: `freeze_code_intake_and_form_protocol`.
+- Durable artifact lifetime and placement:
+  `durable_document_artifact_routing_canon`.
+- Error prevention lessons: `error_memory_ai_formulary_startup_canon`.
 
-## Interaction with startup delivery workflow
+This prompt may summarize those owners but must not reproduce their full schemas.
 
-If the session changed startup delivery, include current startup delivery names and stale names.
+## Next-chat requirement
 
-Current normal startup delivery names must be reported exactly when relevant:
+The handoff is continuity evidence, not startup authority. The next chat must
+still load the normal startup pack and the selected Project handoff before real
+project work. A handoff cannot issue `WAIT_FOR_TASK` or bypass Project readiness.
 
-```text
-tell_AI_read_before_all.md
-first_prompts_to_ai.zip
-prompt_library.zip
-```
+## Failure behavior
 
-The maintenance file must be reported when relevant:
+If active project work is ending but the factual state is incomplete, return the
+best grounded handoff and explicitly mark missing evidence. Do not replace it
+with a short farewell.
 
-```text
-zz_read_only_if_modifying_startup_delivery.md
-```
+## Scope exclusions
 
-Do not treat old startup paste filenames as active current files.
+This prompt does not:
 
-## Final rule
+- replace startup or PROJECT READY CHECK;
+- replace exact-source inspection;
+- define the complete detailed handoff schema;
+- define freeze-form or freeze-hint fields;
+- write frozen memory or authorize Confirm and Write;
+- define patch ZIP structure;
+- claim validation that did not occur;
+- own MCard implementation;
+- own Error Memory schema;
+- make chat text canonical source truth.
 
-When project work is active and the user says to take a break, stop, pause, or continue later, a complete contextualized handoff is mandatory.
+## Do-not-regress rules
 
-A short goodbye alone is a failure of this prompt.
-
-## Freeze-intake metadata in handoffs
-
-When ending or pausing governed implementation work that produced an installed or validated patch, include a short freeze-intake metadata block in the handoff.
-
-This block helps the next AI chat and the KANDA Reasoner app avoid guessing the wrong feature during New Local Freeze Entry.
-
-Required fields in the handoff block:
-
-- latest_patch_name
-- feature_title
-- feature_id, if available
-- primary_box
-- box_type
-- installed_payload_files
-- generated_files
-- protected_paths
-- validation_evidence_available
-- validation_evidence_summary
-- freeze_status: not_frozen / freeze_ready / frozen
-- next_freeze_action
-
-Do not invent validation. If validation has not yet passed, mark `validation_evidence_available` as false and state what validation is still missing.
-
-Do not reuse the validation list of an older feature merely because the local freeze form heuristic selected it. The handoff must identify the feature that was actually implemented in the current work segment.
-
-If a patch ZIP was delivered, state whether it contains `KANDA_FREEZE_HINT.json` and whether the sidecar is only delivery metadata or also an installed file.
-
+- Keep closure detection always-startup and semantically validated.
+- Do not permanently bind the prompt to one numeric startup position.
+- Keep the minimum continuity record factual and compact.
+- Keep detailed templates with Class 03.
+- Keep durable placement with the durable-document canon.
+- Keep next-chat startup mandatory.

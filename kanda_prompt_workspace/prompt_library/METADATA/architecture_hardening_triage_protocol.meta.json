@@ -1,26 +1,39 @@
 {
+  "prompt_code": "KPR-06-005",
   "prompt_id": "architecture_hardening_triage_protocol",
   "display_name": "Architecture Hardening Triage Protocol",
   "filename": "architecture_hardening_triage_protocol.md",
+  "version": "2.1.0",
   "category": "06_refactor_and_architecture_hardening",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Triages architectural problems before repair or refactor.",
+  "load_type": "routed",
+  "source_stage": "prompt-audit-wave6b-class06-consolidation-retirements-v1",
+  "description": "Classifies a verified architecture risk, resolves the current owner and protection gap, and selects the smallest justified hardening response.",
   "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 30,
+  "routing_coverage": "wave6b_architecture_hardening_triage_v2_1",
+  "priority": 32,
   "trigger_phrases": [
     "architecture hardening",
-    "triage architecture",
-    "architecture problem",
-    "hardening protocol",
-    "structural risk"
+    "triage architecture risk",
+    "architecture protection gap",
+    "structural risk",
+    "architecture validator error",
+    "duplicate architecture owner"
   ],
   "required_companion_prompts": [
+    "brick_wall_comprehensive_quality_gate",
     "box_architecture_canon",
-    "bundle_gated_development_workflow",
-    "python_refactoring"
+    "boundary_first_repair_protocol",
+    "kanda_box_shielding_canon",
+    "project_tool_boundary_canon"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md",
+  "do_not_regress": [
+    "Hardening is not rewriting.",
+    "Require a verified current architecture risk before admitting hardening work.",
+    "Discover the current owner and existing executable protection before proposing a new checker or subsystem.",
+    "Classify findings as HARD_FAILURE, PROTECTION_GAP, TRANSITIONAL_DEBT, WARNING, or NOT_APPLICABLE.",
+    "Delegate implementation authorization to Brick Wall and delivery or freeze mechanics to their current owners.",
+    "Map detector taxonomies to current owners and executable coverage before proposing any new detector surface."
   ]
 }

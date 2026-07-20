@@ -1,6 +1,8 @@
 # KANDA Prompt Navigation Index
 
-Version: v3 intent-routing index
+Version: v3 intent-routing compatibility report
+
+Authority notice: this expanded report is compatibility documentation. Current routing authority is `ROUTING/prompt_navigation_index.json` together with the canonical active `prompt_navigation_index.md`. `prompt_router` is deprecated pending consumer migration in Wave 2B and must not be selected for new routing work. Historical entries below do not override current route status.
 
 This file maps natural human requests to the correct clean prompt ID and companion prompt stack. The human does not need to know exact filenames. The AI should infer intent from trigger phrases, examples, aliases, and context.
 
@@ -9,102 +11,33 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - Match the user request against trigger phrases, user intent examples, aliases, and category context.
 - If multiple prompts match, prefer the lower numeric `priority` value, then load required companion prompts.
 - For implementation, refactor, prompt update, governance update, or bundle creation, include `box_architecture_canon` unless the selected prompt already is the box canon.
-- For patch or delivery work, include `bundle_gated_development_workflow`, `evidence_freshness_gate`, and `implementation_and_delivery_protocol` when relevant.
+- For patch or delivery work, select the smallest current Class 05 owner set and include the active PIR index before emitting patch-related output.
 - For freeze/governance, do not freeze unless validation/evidence has already passed.
 - For prompt import/generalization/reconciliation, use prompt-authoring/audit prompts, not Python source-code prompts.
 - For shielding requests, meaningful box milestones, stronger ML preparation, or authority-boundary protection, load `kanda_box_shielding_canon` with `box_architecture_canon` and the owning box context. Do not continue stronger work until the shield is validated and frozen.
-- If intent remains ambiguous, load `prompt_router` plus this navigation index and ask one focused clarification.
+- If intent remains ambiguous, use `ai_prompt_request_canon` with the canonical `prompt_navigation_index`, then ask one focused clarification. Do not select deprecated `prompt_router` for new work.
 
 ## Prompt Routes
 ## Session Start And Navigation (`01_session_start_and_navigation`)
 
-### `ai_human_partnership_session_start` — AI-Human Partnership Session Start
+Current direct routes:
 
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md`
-- **Priority:** `20`
-- **Trigger phrases:** `AI human partnership`; `how should I ask you`; `roles in this session`; `human AI workflow`; `avoid vibe coding`
-- **User intent examples:** `Set the roles: I lead, AI assists, validators decide.`
-- **Aliases:** `ai-human partnership session start`; `ai_human_partnership_session_start`; `ai_human_partnership_session_start.md`; `boot`; `human`; `partnership`; `session`; `start`; `startup`
-- **When to load:** When setting expectations for AI-human collaboration, discipline, and validation.
-- **When not to load:** Do not load for small one-off questions that need no workflow.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
+- `KPR-01-001 start_of_day_master_stack` - compact startup governance bridge.
+- `KPR-01-002 session_start_upload_checklist` - two-stage startup and Project readiness.
+- `KPR-01-003 prompt_router_reasoner_startup_check` - on-request readiness assessment.
+- `KPR-01-004 ai_human_partnership_session_start` - optional collaboration overlay.
+- `KPR-01-005 daily_startup_loader_template` - startup-loader authoring template.
+- `KPR-01-006 project_startup_canon_template` - Project startup-profile authoring template.
+- `KPR-01-007 daily_patch_delivery_guardrails` - compact patch-delivery bridge to Class 05.
+- `KPR-01-008 handoff_at_end_of_work` - session closure and minimum continuity guardrail.
+- `KPR-01-012 error_memory_ai_formulary_startup_canon` - Error Memory admission and workflow owner.
+- `KPR-01-013 durable_document_artifact_routing_canon` - durable documentary-artifact routing owner.
+- `KPR-01-014 ai_prompt_request_canon` - request admission.
 
-### `daily_reasoner_startup_loader` — Daily Reasoner Startup Loader
+`patch_install_delivery_error_register` moved to Class 05 as `KPR-05-001` and is
+conditionally required before patch-related output. It is not always-startup.
 
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/daily_reasoner_startup_loader.md`
-- **Priority:** `20`
-- **Trigger phrases:** `start reasoner session`; `daily reasoner start`; `load reasoner startup`; `begin KANDA reasoner work`; `what should I send today`
-- **User intent examples:** `Start today's KANDA Reasoner session and load the working protocol.`
-- **Aliases:** `boot`; `daily`; `daily reasoner startup loader`; `daily_reasoner_startup_loader`; `daily_reasoner_startup_loader.md`; `loader`; `reasoner`; `session`; `startup`
-- **When to load:** At the beginning of a Reasoner-focused development or prompt-maintenance session.
-- **When not to load:** Do not load for generic Python advice when no project context is needed.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `daily_session_start_prompt` — Daily Session Start Prompt
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/daily_session_start_prompt.md`
-- **Priority:** `20`
-- **Trigger phrases:** `start session`; `new session checklist`; `what should I upload`; `begin work today`; `session boot`
-- **User intent examples:** `Tell me what to send before we work on the project.`
-- **Aliases:** `boot`; `daily`; `daily session start prompt`; `daily_session_start_prompt`; `daily_session_start_prompt.md`; `session`; `start`; `startup`
-- **When to load:** At the start of any project session to define context, files, and expected output.
-- **When not to load:** Do not load after the active task and required files are already established.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `daily_startup_loader_template` — Daily Startup Loader Template
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/daily_startup_loader_template.md`
-- **Priority:** `20`
-- **Trigger phrases:** `create daily startup template`; `generic startup loader`; `new project daily loader`; `startup template`
-- **User intent examples:** `Create a daily startup loader template for a new project.`
-- **Aliases:** `boot`; `daily`; `daily startup loader template`; `daily_startup_loader_template`; `daily_startup_loader_template.md`; `loader`; `session`; `startup`
-- **When to load:** When designing or adapting a reusable daily-startup prompt template.
-- **When not to load:** Do not load for normal code implementation.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `general_prompt_stack_load_order` — General Prompt Stack Load Order
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/general_prompt_stack_load_order.md`
-- **Priority:** `20`
-- **Trigger phrases:** `load order`; `prompt stack order`; `which prompt first`; `startup stack`; `prompt precedence`
-- **User intent examples:** `Which prompts should be loaded first for this task?`
-- **Aliases:** `boot`; `general`; `general prompt stack load order`; `general_prompt_stack_load_order`; `general_prompt_stack_load_order.md`; `load`; `order`; `session`; `stack`; `startup`
-- **When to load:** When deciding the order and priority of prompts/canons in a session.
-- **When not to load:** Do not load when only a single isolated prompt is needed.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `project_startup_canon_template` — Project Startup Canon Template
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md`
-- **Priority:** `20`
-- **Trigger phrases:** `project startup canon`; `new project canon`; `startup canon template`; `initialize project rules`
-- **User intent examples:** `Make a startup canon for a new project.`
-- **Aliases:** `boot`; `project`; `project startup canon template`; `project_startup_canon_template`; `project_startup_canon_template.md`; `session`; `startup`
-- **When to load:** When creating a project-agnostic startup canon template.
-- **When not to load:** Do not load for existing project sessions that already have a startup canon.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `reasoner_startup_canon` — Reasoner Startup Canon
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/reasoner_startup_canon.md`
-- **Priority:** `20`
-- **Trigger phrases:** `reasoner canon`; `load reasoner canon`; `KANDA reasoner startup`; `reasoner operating rules`
-- **User intent examples:** `Start KANDA Reasoner with the official canon.`
-- **Aliases:** `boot`; `reasoner`; `reasoner startup canon`; `reasoner_startup_canon`; `reasoner_startup_canon.md`; `session`; `startup`
-- **When to load:** When the work specifically concerns KANDA Reasoner behavior, prompts, or app workflow.
-- **When not to load:** Do not load for non-Reasoner projects unless adapting it as a template.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
-
-### `session_start_upload_checklist` — Session Start Upload Checklist
-
-- **File:** `ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md`
-- **Priority:** `20`
-- **Trigger phrases:** `what files should I upload`; `upload checklist`; `session files`; `start checklist`; `what to send first`
-- **User intent examples:** `Tell me exactly what files to upload before starting.`
-- **Aliases:** `boot`; `checklist`; `session`; `session start upload checklist`; `session_start_upload_checklist`; `session_start_upload_checklist.md`; `start`; `startup`; `upload`
-- **When to load:** Before a session when required project evidence/files are not yet known.
-- **When not to load:** Do not load after all required files are already available.
-- **Required companion prompts:** `prompt_navigation_index`; `prompt_router`
+Deprecated compatibility records are not active routes: `daily_reasoner_startup_loader`, `daily_session_start_prompt`, `general_prompt_stack_load_order`, and `reasoner_startup_canon`.
 
 ## Prompt Routing And Indexing (`02_prompt_routing_and_indexing`)
 
@@ -119,29 +52,6 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When to load:** When routing-system behavior, prompt-call accuracy, context package manifests, prompt registration, startup routing, or routing indexes are being audited, changed, canonized, or frozen.
 - **When not to load:** Do not load for simple Fast Path explanations, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.
 - **Required companion prompts:** `ai_prompt_request_canon`; `prompt_navigation_index`; `GROUP_ASSIMILATION_INDEX`
-
-### `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon` - RG-PILOT-000 Pilot/Copilot Phase 0 Router Canon
-
-- **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md`
-- **Priority:** `1`
-- **Trigger phrases:** `Pilot/Copilot Phase 0`; `post-M35 continuation`; `start Pilot`; `start Copilot`; `create P0`; `Pilot scope charter`; `Pilot projection`; `Pilot simulation`; `Pilot disagreement taxonomy`; `Pilot implementation gate`; `Pilot router reproduction`; `reproduction-before-disagreement`; `Limited Shadow Runtime`; `human_review_mandatory`; `candidate_prompt_groups`; `simulated_required_prompt_groups`
-- **User intent examples:** `Canonize Pilot/Copilot router logic after M35.`; `Create P0 for Pilot/Copilot Phase 0.`; `Can we implement Pilot projection now?`
-- **Aliases:** `RG-PILOT-000`; `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon`; `Pilot/Copilot router canon`; `post-M35 Pilot canon`; `P0 router canon`
-- **When to load:** When KANDA work involves post-M35 Pilot/Copilot scope, P0, P-series milestones, Pilot projection/simulation, Copilot boundary, reproduction-before-disagreement, or any request that could grant Pilot/Copilot authority, prompt loading, persistence, training-data use, batch mode, or runtime shadow behavior.
-- **When not to load:** Do not load for ordinary lexical routing-scorer patches unrelated to Pilot/Copilot, simple Fast Path explanation-only tasks, or as a substitute for current project files and freeze evidence during implementation.
-- **Required companion prompts:** `kanda_routing_system_canon`; `kanda_box_shielding_canon`; `prompt_navigation_index`; `GROUP_ASSIMILATION_INDEX`
-
-
-### `routing_signal_scorer_v3_lab_phase_entry_router_canon` - RG-LAB-000 ML LAB Phase Entry Router Canon
-
-- **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md`
-- **Priority:** `1`
-- **Trigger phrases:** `RG-LAB-000`; `LAB phase`; `ML LAB`; `ML lab/test`; `lab/test logic`; `start LAB after P12`; `continue after P12`; `go next after P12`; `LAB-0`; `lab charter`; `test lab charter`; `router prompt logic lab`; `test ML router prompt logic`; `prompt choosing reliability`; `prompt selection reliability`; `ML router prompt logic reliability`; `continue ML implementation after lab`; `canonize LAB phase`; `canonize lab/test logic`
-- **User intent examples:** `Canonize the LAB phase entry before implementing lab tests.`; `After P12, what is the next safe step?`; `Start LAB-0 for the ML router prompt logic test lab.`; `Continue ML logic after the lab fulfills its mission.`
-- **Aliases:** `RG-LAB-000`; `routing_signal_scorer_v3_lab_phase_entry_router_canon`; `LAB phase entry canon`; `ML LAB router canon`; `post-P12 LAB canon`; `LAB-0 router canon`
-- **When to load:** When KANDA work involves post-P12 LAB/test phase entry, LAB-0, ML router prompt logic reliability testing, lab/test implementation planning, or any request to continue ML implementation after P12.
-- **When not to load:** Do not load for ordinary Fast Path explanations, simple non-KANDA ML discussion, or as a substitute for current project files and freeze evidence during implementation.
-- **Required companion prompts:** `routing_signal_scorer_v3_pilot_copilot_phase0_router_canon`; `kanda_routing_system_canon`; `kanda_box_shielding_canon`; `prompt_navigation_index`; `GROUP_ASSIMILATION_INDEX`
 
 ### `routing_signal_scorer_v3_semantic_readiness_canon` — Routing Signal Scorer v3 Semantic Readiness Canon
 
@@ -176,17 +86,6 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** Do not load as a substitute for the actual specialist prompt after routing is decided.
 - **Required companion prompts:** `general_prompt_stack_load_order`; `prompt_substitution_map`
 
-### `prompt_router` — Prompt Router
-
-- **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md`
-- **Priority:** `10`
-- **Trigger phrases:** `route prompt`; `prompt router`; `intent router`; `messy request to prompt`; `which stack`
-- **User intent examples:** `Route “ok freeze” to the correct governance prompt.`
-- **Aliases:** `index`; `navigator`; `prompt router`; `prompt_router`; `prompt_router.md`; `router`
-- **When to load:** When multiple prompts may match and the system must select the best route.
-- **When not to load:** Do not load when the exact specialist prompt is already explicitly chosen.
-- **Required companion prompts:** `general_prompt_stack_load_order`; `prompt_substitution_map`
-
 ### `prompt_substitution_map` — Prompt Substitution Map
 
 - **File:** `ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_substitution_map.md`
@@ -209,303 +108,232 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **User intent examples:** `Brick wall.`; `Show Brick Wall and tell me where this implementation stands.`; `Update the Brick Wall checklist after validation.`
 - **Aliases:** `KPR-03-001`; `brick wall`; `brick wall quality gate`; `brick_wall_comprehensive_quality_gate`; `brick_wall_comprehensive_quality_gate.md`; `comprehensive quality gate`; `Q01-Q40 checklist`
 - **When to load:** Whenever the user says Brick Wall or requests the live Q01-Q40 governed implementation status for KANDA Reasoner work.
-- **When not to load:** Do not load for unrelated tasks and do not use it as a substitute for exact source or specialist owner prompts.
+- **When not to load:** Do not load for unrelated medical, writing, or general-information tasks, and do not use it as a substitute for exact source or specialist owner prompts.
 - **Required companion prompts:** `project_tool_boundary_canon`; `box_architecture_canon`; `kanda_box_shielding_canon`
-- **Recommended companion prompts:** `architecture_review_project_card_machine_canon`; `bundle_gated_development_workflow`; `pre_output_contract_gates`; `freeze_code_intake_and_form_protocol`
 
-### `active_governance_freeze_update` — Active Governance Freeze Update
+### `cooperative_implementation_methodology` - Cooperative Implementation Methodology
 
-- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/active_governance_freeze_update.md`
+- **Prompt code:** `KPR-03-002`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md`
 - **Priority:** `25`
-- **Trigger phrases:** `ok freeze`; `freeze this`; `make official`; `canonize this`; `validated baseline`; `update governance`
-- **User intent examples:** `Validation passed; freeze this as official.`
-- **Aliases:** `active`; `active governance freeze update`; `active_governance_freeze_update`; `active_governance_freeze_update.md`; `freeze`; `governance`; `handoff`; `update`
-- **When to load:** Only after validation evidence confirms a change can become active governance.
-- **When not to load:** Do not load before validation or when work is still draft.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`; `current_workflow_handoff_template`
+- **Trigger phrases:** `cooperative implementation`; `proposal before code`; `compare implementation options`
+- **User intent examples:** `Compare consequential implementation options before governed admission.`
+- **Aliases:** `KPR-03-002`; `cooperative_implementation_methodology`; `cooperative_implementation_methodology.md`; `cooperative implementation methodology`
+- **When to load:** Compare consequential implementation options before governed admission.
+- **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
+- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`
 
-### `current_workflow_handoff_template` — Current Workflow Handoff Template
+### `freeze_code_intake_and_form_protocol` - Freeze Hint and Form Intake Protocol
 
-- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/current_workflow_handoff_template.md`
-- **Priority:** `25`
-- **Trigger phrases:** `current workflow handoff`; `handoff current work`; `what next AI should know`; `continue next time`; `active workflow summary`
-- **User intent examples:** `Write a handoff for the current implementation state.`
-- **Aliases:** `current`; `current workflow handoff template`; `current_workflow_handoff_template`; `current_workflow_handoff_template.md`; `freeze`; `governance`; `handoff`; `workflow`
-- **When to load:** When transferring unfinished current workflow to a later session or another AI.
-- **When not to load:** Do not load for finalized governance freeze; use freeze prompt instead.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`
+- **Prompt code:** `KPR-03-003`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md`
+- **Priority:** `30`
+- **Trigger phrases:** `freeze hint intake`; `freeze form`; `new local freeze entry`
+- **User intent examples:** `Carry one validated feature identity into project-owned freeze intake.`
+- **Aliases:** `KPR-03-003`; `freeze_code_intake_and_form_protocol`; `freeze_code_intake_and_form_protocol.md`; `freeze hint and form intake protocol`
+- **When to load:** Carry one validated feature identity into project-owned freeze intake.
+- **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
+- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`; `pre_output_contract_gates`
 
-### `end_of_chat_governance_update_template` — End-of-Chat Governance Update Template
+### `pre_output_contract_gates` - Pre-Output Artifact Contract Gate
 
-- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/end_of_chat_governance_update_template.md`
-- **Priority:** `25`
-- **Trigger phrases:** `end of chat update`; `session governance update`; `write end summary`; `governance note`; `end of day`
-- **User intent examples:** `Create an end-of-chat governance update template.`
-- **Aliases:** `chat`; `end-of-chat governance update template`; `end_of_chat_governance_update_template`; `end_of_chat_governance_update_template.md`; `freeze`; `governance`; `handoff`; `update`
-- **When to load:** At session close when producing structured governance notes.
-- **When not to load:** Do not load for immediate implementation without closing the session.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`; `current_workflow_handoff_template`
+- **Prompt code:** `KPR-03-004`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md`
+- **Priority:** `35`
+- **Trigger phrases:** `pre-output contract`; `before terminal code`; `before zip delivery`
+- **User intent examples:** `Dispatch an outgoing operational artifact to its exact current owner before emission.`
+- **Aliases:** `KPR-03-004`; `pre_output_contract_gates`; `pre_output_contract_gates.md`; `pre-output artifact contract gate`
+- **When to load:** Dispatch an outgoing operational artifact to its exact current owner before emission.
+- **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
+- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`
 
-### `professional_engineering_governance_template` — Professional Engineering Governance Template
+### `professional_engineering_governance_template` - Professional Engineering Governance Profile Template
 
+- **Prompt code:** `KPR-03-005`
 - **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/professional_engineering_governance_template.md`
 - **Priority:** `25`
-- **Trigger phrases:** `engineering governance template`; `professional governance`; `quality rules template`; `project governance`
-- **User intent examples:** `Create a professional engineering governance template for a project.`
-- **Aliases:** `engineering`; `freeze`; `governance`; `handoff`; `professional`; `professional engineering governance template`; `professional_engineering_governance_template`; `professional_engineering_governance_template.md`
-- **When to load:** When designing reusable engineering governance rules.
-- **When not to load:** Do not load for task-level patch implementation.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`; `current_workflow_handoff_template`
+- **Trigger phrases:** `governance profile template`; `draft project governance`
+- **User intent examples:** `Draft a Project-specific governance profile without creating a parallel authority.`
+- **Aliases:** `KPR-03-005`; `professional_engineering_governance_template`; `professional_engineering_governance_template.md`; `professional engineering governance profile template`
+- **When to load:** Draft a Project-specific governance profile without creating a parallel authority.
+- **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
+- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`
 
-### `reasoner_professional_engineering_governance` — Reasoner Professional Engineering Governance
+### `workflow_handoff_template` - Generic Workflow Handoff Profile Template
 
-- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/reasoner_professional_engineering_governance.md`
-- **Priority:** `25`
-- **Trigger phrases:** `reasoner governance`; `professional reasoner workflow`; `KANDA engineering rules`; `non vibe coding rules`
-- **User intent examples:** `Apply the KANDA Reasoner professional engineering governance.`
-- **Aliases:** `engineering`; `freeze`; `governance`; `handoff`; `professional`; `reasoner`; `reasoner professional engineering governance`; `reasoner_professional_engineering_governance`; `reasoner_professional_engineering_governance.md`
-- **When to load:** When the task touches KANDA Reasoner development methodology or validation gates.
-- **When not to load:** Do not load for unrelated general writing tasks.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`; `current_workflow_handoff_template`
-
-### `workflow_handoff_template` — Workflow Handoff Template
-
+- **Prompt code:** `KPR-03-006`
 - **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md`
 - **Priority:** `25`
-- **Trigger phrases:** `create handoff`; `write handoff`; `handoff template`; `next AI instructions`; `transfer context`
-- **User intent examples:** `Create a clean handoff so another AI can continue.`
-- **Aliases:** `freeze`; `governance`; `handoff`; `workflow`; `workflow handoff template`; `workflow_handoff_template`; `workflow_handoff_template.md`
-- **When to load:** When a reusable handoff document is needed.
-- **When not to load:** Do not load when only a short chat summary is requested.
-- **Required companion prompts:** `evidence_freshness_gate`; `patch_registry_validation_freeze`
+- **Trigger phrases:** `generic workflow handoff template`; `draft handoff profile`
+- **User intent examples:** `Draft a generic factual handoff only when no current generated owner exists.`
+- **Aliases:** `KPR-03-006`; `workflow_handoff_template`; `workflow_handoff_template.md`; `generic workflow handoff profile template`
+- **When to load:** Draft a generic factual handoff only when no current generated owner exists.
+- **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
+- **Required companion prompts:** none
 
-## Box Architecture And Boundaries (`04_box_architecture_and_boundaries`)
+## Class 04 - Box Architecture and Boundaries
 
-### `boundary_first_repair_protocol` - Boundary-First Repair Protocol
+### KPR-04-001 - Box Architecture Canon
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md`
-- **Priority:** `3`
-- **Trigger phrases:** `symptom owner divergence`; `repair at ownership boundary`; `boundary first repair`; `symptom in one box defect in another`; `shared host state leak`; `cross box regression after unrelated change`; `handoff contamination`; `repair the leak not the symptom`; `trace state owner before patching`; `downstream symptom upstream defect`
-- **User intent examples:** `The regression appears in Workbench after a Planner change; trace the real owner before patching.`; `Repair the ownership leak at its boundary and validate the downstream box shield.`; `A shared host may be carrying feature-private state across boxes; find the first proven violation.`
-- **Aliases:** `boundary first repair`; `boundary-first repair protocol`; `boundary_first_repair_protocol`; `boundary_first_repair_protocol.md`; `repair at owner boundary`; `symptom owner divergence`; `repair leak not symptom`
-- **When to load:** When symptom location may differ from defect ownership, especially across boxes, shared hosts, handoffs, persistence, roots, public contracts, or async lifecycles.
-- **When not to load:** Do not load for explanation-only tasks, proven purely local defects, or new box/shield design with no regression diagnosis.
-- **Required companion prompts:** `box_architecture_canon`; `kanda_box_shielding_canon`
+- Path: `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md`
+- Use for bounded ownership, public/private contract law, authoritative state,
+  dependencies, lifecycle vocabulary, and the Box Boundary Audit.
 
-### `box_architecture_canon` — Box Architecture Canon
+### KPR-04-006 - Boundary-First Repair Protocol
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md`
-- **Priority:** `5`
-- **Trigger phrases:** `active box`; `box logic`; `box architecture`; `box boundary audit`; `box boundary`; `owner paths`; `allowed files`; `forbidden files`; `cross box touch`; `public contract`; `private internals`; `private reach-in`
-- **User intent examples:** `Before editing, identify the active box and out-of-scope files.`; `Create a Box Boundary Audit before implementing this feature.`; `Prevent private reach-in and God Box expansion while patching.`; `Add Brain Navigator without contaminating Tab Registry or tab internals.`
-- **Aliases:** `architecture`; `boundaries`; `box`; `box architecture canon`; `box boundary audit`; `box logic canon`; `box_architecture_canon`; `box_architecture_canon.md`; `ownership`; `one primary box`; `private reach-in`; `god box`; `leaking registry`; `remember box`
-- **When to load:** Before implementation, refactor, prompt update, governance update, bundle creation, GUI ownership change, cross-box communication, or architecture-boundary work.
-- **When not to load:** Skip only for pure explanation or text-editing tasks with no implementation consequence.
-- **Required companion prompts:** `bundle_gated_development_workflow`; `implementation_roadmap_builder`
+- Path: `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md`
+- Use when the visible symptom may not belong to the true repair owner.
 
-### `closed_box_delivery_canon` — Closed-Box Delivery Canon
+### KPR-04-002 - KANDA Box Shielding Canon
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/closed_box_delivery_canon.md`
-- **Priority:** `5`
-- **Trigger phrases:** `closed box delivery`; `ingredient box`; `deliver box`; `box package`; `sealed component`
-- **User intent examples:** `Package this as a closed delivery box with clear boundaries.`
-- **Aliases:** `boundaries`; `box`; `closed`; `closed-box delivery canon`; `closed_box_delivery_canon`; `closed_box_delivery_canon.md`; `delivery`; `ownership`
-- **When to load:** When delivering or importing a component as a bounded unit.
-- **When not to load:** Do not load for conceptual discussion without delivery artifact.
-- **Required companion prompts:** `bundle_gated_development_workflow`; `implementation_roadmap_builder`
+- Path: `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md`
+- Use only after a risk-based shield applicability decision proves unique value.
 
-### `project_folder_organization_canon` — Project Folder Organization Canon
+### KPR-04-003 - Project Folder Organization Canon
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md`
-- **Priority:** `5`
-- **Trigger phrases:** `organize folder`; `project folder structure`; `where should files go`; `folder canon`; `project layout`
-- **User intent examples:** `Organize the project folder before implementation.`
-- **Aliases:** `boundaries`; `box`; `folder`; `organization`; `ownership`; `project`; `project folder organization canon`; `project_folder_organization_canon`; `project_folder_organization_canon.md`
-- **When to load:** When designing or cleaning project folder structure.
-- **When not to load:** Do not load for code logic changes that do not affect layout.
-- **Required companion prompts:** `bundle_gated_development_workflow`; `implementation_roadmap_builder`
+- Path: `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md`
+- Use for artifact classification, canonical placement, root/owner conflicts, and
+  folder migration obligations.
 
-### `stateful_control_regression_canon` — Stateful Control Regression Canon
+### KPR-04-004 - Stateful Control Regression Canon
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md`
-- **Priority:** `5`
-- **Trigger phrases:** `dropdown broke`; `button state`; `stateful control`; `do not regress UI control`; `selection state`
-- **User intent examples:** `Changing this UI must not break existing dropdown behavior.`
-- **Aliases:** `boundaries`; `box`; `control`; `ownership`; `regression`; `stateful`; `stateful control regression canon`; `stateful_control_regression_canon`; `stateful_control_regression_canon.md`
-- **When to load:** When working on GUI controls, state, dropdowns, buttons, or preserved selections.
-- **When not to load:** Do not load for non-interactive backend code.
-- **Required companion prompts:** `bundle_gated_development_workflow`; `implementation_roadmap_builder`
+- Path: `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md`
+- Use for GUI option identity, persistence, hydration, fallback, caption, and
+  sizing regressions.
 
-### `kanda_box_shielding_canon` — KANDA Box Shielding Canon
+### Retired Class 04 identities
 
-- **File:** `ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md`
-- **Priority:** `4`
-- **Trigger phrases:** `box shield`; `box shielding`; `shield logic`; `shielding method`; `KBSC`; `KANDA Box Shielding Canon`; `canonize shielding`; `architectural fitness function`; `bounded context shield`; `do not invade other box logic`; `authority creep`; `forbidden authority escalation`; `truth source priority ladder`; `dependency direction`; `no placeholder commitment`; `shield before stronger ML`; `routing signal scorer shield`; `similarity box shield`
-- **User intent examples:** `Create the shield before continuing to stronger ML.`; `Canonize the shielding method and insert it into the routing system.`; `Audit this box for authority creep and no-invasion behavior before the next patch.`
-- **Aliases:** `KBSC`; `box shield`; `box shielding canon`; `kanda box shielding canon`; `kanda_box_shielding_canon`; `kanda_box_shielding_canon.md`; `architectural fitness function`; `bounded context shield`; `shield before stronger ML`
-- **When to load:** When a meaningful box milestone must be protected before stronger/cross-box work, when shielding logic is being created or updated, or when advisory output risks becoming authority.
-- **When not to load:** Do not load for simple Fast Path explanations, small rewrites, or implementation tasks with no boundary, authority, or regression-shield risk.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`
-
+- `closed_box_delivery_canon` -> `KPR-04-001 box_architecture_canon`.
+- `KPR-04-007 governed_architecture_companion_handoff` -> current canonical
+  owner dispatch. The compact file is a deprecated redirect with no route.
 ## Patch Delivery And Validation (`05_patch_delivery_and_validation`)
 
-### `bundle_gated_development_workflow` — Bundle-Gated Development Workflow
+### `bundle_gated_development_workflow` - Bundle-Gated Development Workflow
 
+- **Code:** `KPR-05-002`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md`
-- **Priority:** `15`
-- **Trigger phrases:** `bundle gated`; `one patch one problem`; `safe patch`; `installable bundle`; `AI patch workflow`
-- **User intent examples:** `Create a small patch bundle, not a broad file replacement.`
-- **Aliases:** `bundle`; `bundle-gated development workflow`; `bundle_gated_development_workflow`; `bundle_gated_development_workflow.md`; `development`; `gated`; `patch`; `validation`; `workflow`
-- **When to load:** Before creating any source-changing or prompt-changing patch bundle.
-- **When not to load:** Do not load for read-only audits unless a patch will follow.
-- **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`
+- **Status / load:** `active` / `routed`
+- **When to load:** When an authorized change requires an installable or distributable release unit.
+- **When not to load:** Do not load for read-only audit, explanation-only work, or an edit that will not be packaged.
+- **Triggers:** `installable release`; `bundle gated release`; `package this change`; `release lifecycle`; `build a patch bundle`
+- **Aliases:** `KPR-05-002`; `bundle_gated_development_workflow`; `bundle gated development workflow`; `installable release lifecycle`; `kanda_bundle_gated_development_workflow`
+- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`; `patch_install_delivery_error_register`
+- **Optional companion prompts:** `project_tool_boundary_canon`; `box_architecture_canon`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`
 
-### `evidence_freshness_gate` — Evidence Freshness Gate
+### `implementation_and_delivery_protocol` - Implementation and Delivery Protocol
 
-- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/evidence_freshness_gate.md`
-- **Priority:** `15`
-- **Trigger phrases:** `stale evidence`; `fresh evidence`; `source hash mismatch`; `regenerate evidence`; `validation artifact`
-- **User intent examples:** `The validation failed because generated evidence is stale.`
-- **Aliases:** `bundle`; `evidence`; `evidence freshness gate`; `evidence_freshness_gate`; `evidence_freshness_gate.md`; `freshness`; `gate`; `patch`; `validation`
-- **When to load:** When generated evidence, manifests, timestamps, or source hashes may be stale.
-- **When not to load:** Do not load for tasks with no generated evidence or validation artifacts.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`
-
-### `implementation_and_delivery_protocol` — Implementation and Delivery Protocol
-
+- **Code:** `KPR-05-003`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md`
-- **Priority:** `15`
-- **Trigger phrases:** `implement and send`; `code and deliver`; `patch with install code`; `implementation protocol`; `send code to user`
-- **User intent examples:** `Implement this as a ZIP and include safe install instructions.`
-- **Aliases:** `bundle`; `delivery`; `implementation`; `implementation and delivery protocol`; `implementation_and_delivery_protocol`; `implementation_and_delivery_protocol.md`; `patch`; `validation`
-- **When to load:** When the AI must implement a change and deliver it safely.
-- **When not to load:** Do not load for analysis-only requests.
-- **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`; `bundle_gated_development_workflow`
+- **Status / load:** `active` / `routed`
+- **When to load:** After implementation authorization when an installable release needs payload and installer construction.
+- **When not to load:** Do not load for analysis-only work or before release admission.
+- **Triggers:** `construct patch payload`; `prepare installer`; `surgical delivery`; `baseline hash allowlist`; `rollback package`
+- **Aliases:** `KPR-05-003`; `implementation_and_delivery_protocol`; `implementation and delivery protocol`; `surgical patch construction`; `installer preparation`
+- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`; `bundle_gated_development_workflow`; `patch_install_delivery_error_register`
+- **Optional companion prompts:** `project_tool_boundary_canon`; `pre_output_contract_gates`; `terminal_cleanup_contract`
 
-### `implementation_roadmap_builder` — Implementation Roadmap Builder
+### `implementation_roadmap_builder` - Implementation Roadmap Builder - Draft Template
 
+- **Code:** `KPR-05-004`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md`
-- **Priority:** `15`
-- **Trigger phrases:** `roadmap implementation`; `implementation plan`; `before coding plan`; `task roadmap`; `plan patch`
-- **User intent examples:** `Build a roadmap before writing code.`
-- **Aliases:** `builder`; `bundle`; `implementation`; `implementation roadmap builder`; `implementation_roadmap_builder`; `implementation_roadmap_builder.md`; `patch`; `validation`
-- **When to load:** Before non-trivial implementation to define tasks, boxes, files, validation, and risks.
-- **When not to load:** Do not load for trivial edits under ten lines.
-- **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`; `bundle_gated_development_workflow`
+- **Status / load:** `active` / `on_request`
+- **When to load:** Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft.
+- **When not to load:** Do not auto-load for normal KANDA implementation or treat the tracker as execution evidence.
+- **Triggers:** `draft an implementation roadmap`; `roadmap template`; `make a progress tracker`; `conceptual implementation plan`
+- **Aliases:** `KPR-05-004`; `implementation_roadmap_builder`; `implementation roadmap draft`; `roadmap template`; `progress tracker template`
+- **Required companion prompts:** None
+- **Optional companion prompts:** `brick_wall_comprehensive_quality_gate`; `cooperative_implementation_methodology`; `workflow_handoff_template`
 
-### `patch_registry_validation_freeze` — Patch Registry Validation and Freeze
+### `patch_validate_freeze_error_memory_routine_blueprint` - Answer Validate Freeze Memorize Error Routine Blueprint
 
-- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_registry_validation_freeze.md`
-- **Priority:** `15`
-- **Trigger phrases:** `patch registry`; `patch status`; `freeze patch`; `validated patch`; `track patch`
-- **User intent examples:** `Register this patch and decide if it can be frozen.`
-- **Aliases:** `bundle`; `freeze`; `patch`; `patch registry validation and freeze`; `patch_registry_validation_freeze`; `patch_registry_validation_freeze.md`; `registry`; `validation`
-- **When to load:** When tracking patch lifecycle from draft to installed/validated/frozen.
-- **When not to load:** Do not load when no patch or versioned change exists.
-- **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`; `bundle_gated_development_workflow`; `current_workflow_handoff_template`
-
-### `patch_validate_freeze_error_memory_routine_blueprint` - Patch Validate Freeze Error Memory Routine Blueprint
-
+- **Code:** `KPR-05-005`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md`
-- **Priority:** `17`
-- **Trigger phrases:** `Copy Patch Validate Freeze Recovery Routine`; `Copy Patch Delivery Routine for AI`; `patch validate freeze routine`; `zip validate freeze error memory routine`; `Show Project to AI file creation failed`; `Show Project to AI ZIP creation failed`; `handoff ZIP generation failed`; `first prompt files failed`; `second prompt files failed`; `if file creation fails give this to AI`; `beginning of work recovery routine`
-- **User intent examples:** `Copy the routine to give AI when Show Project to AI file creation fails.`; `Give me the ZIP -> validate -> freeze -> Error Memory routine as one blueprint.`; `Add a Show Project to AI button that copies the patch delivery recovery routine.`
-- **Aliases:** `patch validate freeze routine`; `patch_validate_freeze_error_memory_routine_blueprint`; `Show Project to AI recovery blueprint`; `ZIP validate freeze Error Memory blueprint`; `patch delivery recovery routine`
-- **When to load:** When the user asks for a copyable AI handoff routine for Show Project to AI file/ZIP creation failures, patch ZIP delivery failures, validation/freeze failures, or the install -> validate -> freeze -> Error Memory recovery sequence.
-- **When not to load:** Do not load for ordinary patch delivery unless the user asks for the reusable handoff blueprint or a Show Project to AI / recovery copy button.
-- **Required companion prompts:** `router_bridge_governed_implementation`; `implementation_and_delivery_protocol`; `router_bridge_patch_delivery_contract`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `freeze_code_intake_and_form_protocol`; `error_memory_active_ready_correction_blueprint`; `error_memory_active_ready_json_template`; `error_memory_model_template`; `project_tool_boundary_canon`
+- **Status / load:** `active` / `on_request`
+- **When to load:** When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.
+- **When not to load:** Do not load for ordinary delivery when no reusable recovery handoff is requested.
+- **Triggers:** `Answer, Validate, Freeze, Memorize Error`; `Show Project to AI recovery routine`; `collector export failed`; `patch validation freeze recovery`; `copy recovery routine`
+- **Aliases:** `KPR-05-005`; `patch_validate_freeze_error_memory_routine_blueprint`; `Show Project to AI recovery blueprint`; `Answer Validate Freeze Memorize Error`; `recovery routine owner dispatch`
+- **Required companion prompts:** `project_tool_boundary_canon`; `brick_wall_comprehensive_quality_gate`
+- **Optional companion prompts:** `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `terminal_cleanup_contract`; `freeze_code_intake_and_form_protocol`; `error_memory_ai_formulary_startup_canon`
 
-### `universal_delivery_protocol` — Universal Delivery Protocol
+### `patch_install_delivery_error_register` - Patch Install Delivery Active Regression Index
 
-- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/universal_delivery_protocol.md`
-- **Priority:** `15`
-- **Trigger phrases:** `deliver zip`; `send implementation`; `package output`; `final delivery`; `artifact delivery`
-- **User intent examples:** `Package the change in a safe installable ZIP.`
-- **Aliases:** `bundle`; `delivery`; `patch`; `universal`; `universal delivery protocol`; `universal_delivery_protocol`; `universal_delivery_protocol.md`; `validation`
-- **When to load:** When producing deliverables, ZIPs, install scripts, reports, or patches.
-- **When not to load:** Do not load for brainstorming without deliverables.
-- **Required companion prompts:** `box_architecture_canon`; `evidence_freshness_gate`; `bundle_gated_development_workflow`
+- **Prompt code:** `KPR-05-001`
+- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md`
+- **Priority:** `11`
+- **Trigger phrases:** `patch install error`; `delivery regression`; `isolated ZIP`; `root-drive staging`; `validation evidence failure`
+- **User intent examples:** `Check current delivery regression classes before releasing a patch.`
+- **Aliases:** `KPR-05-001`; `patch_install_delivery_error_register`; `patch regression index`
+- **When to load:** Conditionally required before patch-related output and delivery-regression repair.
+- **When not to load:** Do not load at every startup and do not use as an append-only traceback log.
+- **Required companion prompts:** `daily_patch_delivery_guardrails`; `implementation_and_delivery_protocol`; `terminal_cleanup_contract`
+
+
+### `terminal_cleanup_contract` - Terminal Cleanup Contract
+
+- **Code:** `KPR-05-007`
+- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md`
+- **Status / load:** `active` / `always_startup`
+- **When to load:** Startup bridge is always visible; load the full prompt when emitting or auditing PowerShell terminal behavior.
+- **When not to load:** Do not load the full prompt for tasks with no terminal output.
+- **Triggers:** `terminal cleanup`; `Clear-Host`; `install success footer`; `PowerShell block`; `Press Enter to clear terminal`; `PowerShell shows >>`
+- **Aliases:** `KPR-05-007`; `terminal_cleanup_contract`; `terminal cleanup contract`; `PowerShell cleanup`; `clean PowerShell prompt`
+- **Required companion prompts:** None
+- **Optional companion prompts:** `pre_output_contract_gates`; `implementation_and_delivery_protocol`; `patch_install_delivery_error_register`
+
+### `router_bridge_user_detected_correction` - User-Detected Correction Incident Dispatcher
+
+- **Code:** `KPR-05-006`
+- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md`
+- **Status / load:** `active` / `routed`
+- **When to load:** Only when a real prior-answer, source, path, install, validation, delivery, startup, freeze, or Error Memory defect is identified.
+- **When not to load:** Do not load for ordinary feature work, speculative planning, or explanation without a demonstrated incident.
+- **Triggers:** `you made a mistake`; `validation failed`; `install failed`; `wrong path`; `wrong file`; `coded from memory`; `missing STATUS: IN_SYNC`; `freeze blocked`; `AI detected an implementation error`
+- **Aliases:** `KPR-05-006`; `router_bridge_user_detected_correction`; `user detected correction`; `correction incident`; `AI mistake correction`
+- **Required companion prompts:** `patch_install_delivery_error_register`
+- **Optional companion prompts:** `brick_wall_comprehensive_quality_gate`; `pre_output_contract_gates`; `terminal_cleanup_contract`; `freeze_code_intake_and_form_protocol`; `error_memory_ai_formulary_startup_canon`; `project_tool_boundary_canon`
 
 ## Refactor And Architecture Hardening (`06_refactor_and_architecture_hardening`)
 
 ### `architecture_hardening_triage_protocol` — Architecture Hardening Triage Protocol
 
+- **Prompt code:** `KPR-06-005`
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md`
-- **Priority:** `30`
-- **Trigger phrases:** `architecture hardening`; `triage architecture`; `architecture problem`; `hardening protocol`; `structural risk`
-- **User intent examples:** `Audit architecture before deciding the repair path.`
-- **Aliases:** `architecture`; `architecture hardening triage protocol`; `architecture_hardening_triage_protocol`; `architecture_hardening_triage_protocol.md`; `hardening`; `refactor`; `triage`
-- **When to load:** When structural/architectural problems are suspected.
-- **When not to load:** Do not load for isolated bug fixes with no architecture implications.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** Current evidence demonstrates an architecture risk requiring owner and protection-gap triage.
+- **When not to load:** Broad cleanup ideas, isolated local edits, or implementation authorization.
+- **Required companions:** `brick_wall_comprehensive_quality_gate`; `box_architecture_canon`; `boundary_first_repair_protocol`; `kanda_box_shielding_canon`; `project_tool_boundary_canon`
 
-### `architecture_hardening_triage_template` — Architecture Hardening Triage Template
+### `architecture_hardening_triage_template` — Architecture Hardening Triage Record Template
 
+- **Prompt code:** `KPR-06-006`
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md`
-- **Priority:** `30`
-- **Trigger phrases:** `architecture triage template`; `hardening checklist`; `architecture audit template`
-- **User intent examples:** `Create a reusable checklist for architecture hardening.`
-- **Aliases:** `architecture`; `architecture hardening triage template`; `architecture_hardening_triage_template`; `architecture_hardening_triage_template.md`; `hardening`; `refactor`; `triage`
-- **When to load:** When a reusable triage document/template is needed.
-- **When not to load:** Do not load as the main protocol when actual hardening work is underway.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
+- **Status:** `draft_template`
+- **Load type:** `explicit_on_request`
+- **When to load:** A fillable architecture-hardening triage record is explicitly requested.
+- **When not to load:** Actual hardening triage or any mutation authorization.
+- **Required companion:** `architecture_hardening_triage_protocol`
 
-### `large_module_refactor_protocol` — Large Module Refactor Protocol v8.0
+### `large_module_refactor_protocol` — Large Module Creation and Refactor Protocol
 
+- **Prompt code:** `KPR-06-007`
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md`
-- **Priority:** `30`
-- **Trigger phrases:** `module too big`; `file too large`; `split module`; `refactor large file`; `reduce module size`; `double refactor train`; `sequential refactor train`
-- **User intent examples:** `This file is too big; split it safely without breaking API.`
-- **Aliases:** `architecture`; `hardening`; `large`; `large module refactor protocol`; `large_module_refactor_protocol`; `large_module_refactor_protocol.md`; `module`; `refactor`
-- **When to load:** When a module/file is too large, has mixed responsibilities, or a large-module refactor should use AST-assisted v8.0 routing or a sequential double-refactor delivery train, practical helper granularity, and normal .py source-file ownership.
-- **When not to load:** Do not load for small local edits.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** A new or touched module exceeds or would exceed 500 physical lines, or current evidence proves material cohesion or dependency problems.
+- **When not to load:** Small local edits that remain within the size and cohesion contract.
+- **Required companions:** `brick_wall_comprehensive_quality_gate`; `box_architecture_canon`; `large_module_refactor_template`
 
-### `large_module_refactor_template` — Large Module Refactor Template
+### `large_module_refactor_template` — Large Module Refactor Planning Record Template
 
+- **Prompt code:** `KPR-06-008`
 - **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md`
-- **Priority:** `30`
-- **Trigger phrases:** `large module template`; `refactor template`; `split file template`
-- **User intent examples:** `Create a template for large-module refactor tasks.`
-- **Aliases:** `architecture`; `hardening`; `large`; `large module refactor template`; `large_module_refactor_template`; `large_module_refactor_template.md`; `module`; `refactor`
-- **When to load:** When documenting or scaffolding a repeated large-module refactor workflow.
-- **When not to load:** Do not load instead of the protocol for actual refactor.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
-
-### `problem_set_roadmap_solver` — Problem-Set Roadmap Solver
-
-- **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/problem_set_roadmap_solver.md`
-- **Priority:** `30`
-- **Trigger phrases:** `problem set roadmap`; `many problems`; `solve roadmap`; `batch issues`; `prioritize problems`
-- **User intent examples:** `Turn these issues into a sequenced roadmap.`
-- **Aliases:** `architecture`; `hardening`; `problem`; `problem-set roadmap solver`; `problem_set_roadmap_solver`; `problem_set_roadmap_solver.md`; `refactor`; `solver`
-- **When to load:** When many problems must be grouped, prioritized, and sequenced.
-- **When not to load:** Do not load for a single well-defined bug.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
-
-### `refactor_fragmentation_audit_runner` — Refactor Fragmentation Audit Runner
-
-- **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/refactor_fragmentation_audit_runner.md`
-- **Priority:** `30`
-- **Trigger phrases:** `fragmentation audit`; `too fragmented`; `refactor runner`; `fragmented modules`; `audit split`
-- **User intent examples:** `Check whether previous refactors created fragmentation.`
-- **Aliases:** `architecture`; `audit`; `fragmentation`; `hardening`; `refactor`; `refactor fragmentation audit runner`; `refactor_fragmentation_audit_runner`; `refactor_fragmentation_audit_runner.md`; `runner`
-- **When to load:** When module splitting/refactoring may have produced too many fragments or unclear ownership.
-- **When not to load:** Do not load before any fragmentation exists.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
-
-### `tab1_tab2_audit_taxonomy` — Tab 1 and Tab 2 Audit Taxonomy
-
-- **File:** `ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/tab1_tab2_audit_taxonomy.md`
-- **Priority:** `30`
-- **Trigger phrases:** `tab1 tab2 errors`; `architecture tab errors`; `workflow validation errors`; `audit taxonomy`; `tab validation`
-- **User intent examples:** `Classify Tab 1 and Tab 2 failures into a roadmap.`
-- **Aliases:** `architecture`; `audit`; `hardening`; `refactor`; `tab 1 and tab 2 audit taxonomy`; `tab1`; `tab1_tab2_audit_taxonomy`; `tab1_tab2_audit_taxonomy.md`; `tab2`; `taxonomy`
-- **When to load:** When interpreting KANDA Reasoner Tab 1/Tab 2 audit/validation output.
-- **When not to load:** Do not load for unrelated Python test failures.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_refactoring`
-
-## Prompt Authoring And Audit (`07_prompt_authoring_and_audit`)
+- **Status:** `draft_template`
+- **Load type:** `explicit_on_request`
+- **When to load:** A fillable large-module assessment or planning record is explicitly requested.
+- **When not to load:** Actual refactoring or any mutation authorization.
+- **Required companion:** `large_module_refactor_protocol`
 
 ### `prompt_insertion_and_router_registration_protocol` - Prompt Insertion and Router Registration Protocol
 
@@ -553,344 +381,338 @@ This file maps natural human requests to the correct clean prompt ID and compani
 
 ## Python Engineering Core (`08_python_engineering_core`)
 
-### `peopleware_team_boundary` — Peopleware Team Boundary
-
-- **File:** `ACTIVE_PROMPTS/08_python_engineering_core/peopleware_team_boundary.md`
-- **Priority:** `50`
-- **Trigger phrases:** `team workflow`; `peopleware`; `handoff between humans`; `communication risk`; `developer coordination`
-- **User intent examples:** `Improve human workflow and reduce coordination risk.`
-- **Aliases:** `boundary`; `peopleware`; `peopleware team boundary`; `peopleware_team_boundary`; `peopleware_team_boundary.md`; `python engineering`; `software design`; `team`
-- **When to load:** When the issue is team/process/communication rather than code mechanics.
-- **When not to load:** Do not load for solo coding implementation details.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
-
-### `practical_field_handbook_template` — Practical Field Handbook Template
-
-- **File:** `ACTIVE_PROMPTS/08_python_engineering_core/practical_field_handbook_template.md`
-- **Priority:** `50`
-- **Trigger phrases:** `field handbook`; `practical guide`; `operator handbook`; `how to use system`; `runbook style guide`
-- **User intent examples:** `Create a practical field handbook for using this tool.`
-- **Aliases:** `field`; `handbook`; `practical`; `practical field handbook template`; `practical_field_handbook_template`; `practical_field_handbook_template.md`; `python engineering`; `software design`
-- **When to load:** When producing user/operator guidance rather than source code.
-- **When not to load:** Do not load for implementation internals only.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
-
 ### `python_clean_architecture` — Python Clean Architecture
 
+- **Code:** `KPR-08-001`
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md`
 - **Priority:** `50`
-- **Trigger phrases:** `clean architecture`; `dependency rule`; `entities use cases adapters`; `architecture layers`; `decouple python`
-- **User intent examples:** `Apply Clean Architecture to this Python app.`
-- **Aliases:** `architecture`; `clean`; `python clean architecture`; `python engineering`; `python_clean_architecture`; `python_clean_architecture.md`; `software design`
-- **When to load:** When Python architecture/layering/dependency direction is central.
-- **When not to load:** Do not load for styling-only edits.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Trigger phrases:** `dependency direction`; `framework isolation`; `ports and adapters`; `composition root`; `clean architecture python`
+- **User intent examples:** `Review whether this Python system needs ports, adapters, or a clearer composition boundary.`
+- **Aliases:** `KPR-08-001`; `python clean architecture`; `python dependency direction`; `python_clean_architecture`
+- **When to load:** When dependency direction, framework isolation, ports/adapters, or a composition boundary is materially involved.
+- **When not to load:** Do not load for local readability, simple scripts, KANDA box ownership, or generic architecture discussion without Python dependency evidence.
+- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
 
 ### `python_clean_code` — Python Clean Code
 
+- **Code:** `KPR-08-002`
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md`
 - **Priority:** `50`
-- **Trigger phrases:** `clean code`; `readable code`; `function naming`; `small functions`; `code clarity`
-- **User intent examples:** `Make this Python module cleaner and easier to read.`
-- **Aliases:** `clean`; `code`; `python clean code`; `python engineering`; `python_clean_code`; `python_clean_code.md`; `software design`
-- **When to load:** When code readability, naming, functions, and maintainability are central.
-- **When not to load:** Do not load for performance-only optimization unless readability is also at stake.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Trigger phrases:** `python readability`; `function clarity`; `naming review`; `local code cohesion`; `python documentation clarity`
+- **User intent examples:** `Review this Python module for local readability and maintainability without changing its architecture.`
+- **Aliases:** `KPR-08-002`; `python clean code`; `clean_code_python`; `python_clean_code`
+- **When to load:** When local naming, readability, documentation, function clarity, or class cohesion is central.
+- **When not to load:** Do not load as architecture, refactoring, testing, typing, security, or resilience authority.
+- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
 
 ### `python_design_patterns` — Python Design Patterns
 
+- **Code:** `KPR-08-003`
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md`
 - **Priority:** `50`
-- **Trigger phrases:** `design pattern`; `factory pattern`; `strategy pattern`; `observer`; `adapter pattern`
-- **User intent examples:** `Which design pattern fits this Python problem?`
-- **Aliases:** `design`; `patterns`; `python design patterns`; `python engineering`; `python_design_patterns`; `python_design_patterns.md`; `software design`
-- **When to load:** When selecting or implementing reusable object/behavior patterns.
-- **When not to load:** Do not load for simple procedural code.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Trigger phrases:** `pattern selection`; `strategy or function`; `adapter pattern python`; `observer lifecycle`; `factory tradeoff`
+- **User intent examples:** `Decide whether this recurring Python design problem needs a named pattern or a simpler language feature.`
+- **Aliases:** `KPR-08-003`; `python design patterns`; `python pattern selection`; `python_design_patterns`
+- **When to load:** When a demonstrated structural or behavioral variation requires an explicit pattern-selection decision.
+- **When not to load:** Do not load for simple direct code, DDD, enterprise persistence patterns, GUI lifecycle, or async/distributed design owned elsewhere.
+- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
 
 ### `python_domain_driven_design` — Python Domain-Driven Design
 
+- **Code:** `KPR-08-004`
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md`
 - **Priority:** `50`
-- **Trigger phrases:** `domain driven design`; `DDD`; `bounded context`; `domain model`; `ubiquitous language`
-- **User intent examples:** `Model this app around domain concepts and bounded contexts.`
-- **Aliases:** `design`; `domain`; `driven`; `python domain-driven design`; `python engineering`; `python_domain_driven_design`; `python_domain_driven_design.md`; `software design`
-- **When to load:** When domain concepts, boundaries, and business rules drive architecture.
-- **When not to load:** Do not load for low-level utility scripts.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Trigger phrases:** `ubiquitous language`; `bounded context`; `domain invariants`; `aggregate boundary`; `domain event semantics`
+- **User intent examples:** `Determine whether domain complexity justifies DDD and define the smallest evidence-grounded model.`
+- **Aliases:** `KPR-08-004`; `python domain driven design`; `python DDD`; `python_domain_driven_design`
+- **When to load:** When domain language, invariants, subdomains, or bounded contexts materially drive the design.
+- **When not to load:** Do not load for simple CRUD, utility scripts, generic dependency direction, persistence implementation, or messaging delivery mechanics.
+- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
 
-### `python_enterprise_architecture` — Python Enterprise Architecture
+### `python_enterprise_architecture` - Python Enterprise Application Patterns
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md`
-- **Priority:** `50`
-- **Trigger phrases:** `enterprise architecture`; `repository pattern`; `unit of work`; `service layer`; `application architecture`
-- **User intent examples:** `Use enterprise application patterns for this Python app.`
-- **Aliases:** `architecture`; `enterprise`; `python engineering`; `python enterprise architecture`; `python_enterprise_architecture`; `python_enterprise_architecture.md`; `software design`
-- **When to load:** When application layers, transactions, repositories, services, or enterprise patterns matter.
-- **When not to load:** Do not load for one-off small scripts.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-005`
+- **Category:** `08_python_engineering_core`
+- **Load type:** `on_request`
+- **When to load:** When enterprise persistence patterns, application services, transactions, object identity, or concurrency-control patterns are the central concern.
+- **When not to load:** Do not load for small scripts, simple CRUD, generic dependency architecture, DDD modeling, database tuning, or unmeasured performance work.
+- **Aliases:** `KPR-08-005`; `python enterprise application patterns`; `python enterprise architecture`; `python_enterprise_architecture`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_high_performance` — Python High Performance
+### `python_high_performance` - Python Performance Evidence and Optimization
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md`
-- **Priority:** `50`
-- **Trigger phrases:** `performance`; `optimize python`; `slow code`; `memory usage`; `profiling`
-- **User intent examples:** `This Python code is slow; optimize without breaking behavior.`
-- **Aliases:** `high`; `performance`; `python engineering`; `python high performance`; `python_high_performance`; `python_high_performance.md`; `software design`
-- **When to load:** When runtime, memory, profiling, vectorization, or throughput is central.
-- **When not to load:** Do not load if performance is irrelevant.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-006`
+- **Category:** `08_python_engineering_core`
+- **Load type:** `on_request`
+- **When to load:** When runtime, latency, throughput, memory, I/O, profiling, or benchmark evidence is a primary requirement.
+- **When not to load:** Do not load when no named performance objective or suspected material bottleneck exists.
+- **Aliases:** `KPR-08-006`; `python performance evidence`; `python high performance`; `python_high_performance`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_legacy_code_workflow` — Python Legacy Code Workflow
+### `python_legacy_code_workflow` - Python Legacy Code Stabilization Workflow
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md`
-- **Priority:** `50`
-- **Trigger phrases:** `legacy code`; `working effectively with legacy code`; `safe change legacy`; `characterization tests`; `hard to change`
-- **User intent examples:** `Change legacy code safely without breaking behavior.`
-- **Aliases:** `code`; `legacy`; `python engineering`; `python legacy code workflow`; `python_legacy_code_workflow`; `python_legacy_code_workflow.md`; `software design`; `workflow`
-- **When to load:** When existing code is risky, poorly tested, or hard to understand.
-- **When not to load:** Do not load for greenfield modules.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-007`
+- **Category:** `08_python_engineering_core`
+- **Load type:** `on_request`
+- **When to load:** When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.
+- **When not to load:** Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.
+- **Aliases:** `KPR-08-007`; `A022`; `python legacy code stabilization`; `python legacy code workflow`; `python_legacy_code_workflow`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_pragmatic_programmer` — Python Pragmatic Programmer
+### `python_pragmatic_programmer` - Python Pragmatic Trade-off and Reversible Progress
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md`
-- **Priority:** `50`
-- **Trigger phrases:** `pragmatic programmer`; `DRY`; `orthogonality`; `tracer bullets`; `pragmatic code`
-- **User intent examples:** `Apply pragmatic programming principles to this project.`
-- **Aliases:** `pragmatic`; `programmer`; `python engineering`; `python pragmatic programmer`; `python_pragmatic_programmer`; `python_pragmatic_programmer.md`; `software design`
-- **When to load:** When broad engineering judgement, maintainability, and practical tradeoffs are needed.
-- **When not to load:** Do not load as the only prompt for specialized security/performance issues.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-008`
+- **Category:** `08_python_engineering_core`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When pragmatic trade-off, reversibility, or proportional automation is the central concern.
+- **When not to load:** Do not load as a replacement for a technical specialist.
+- **Aliases:** `KPR-08-008`; `pragmatic trade-off`; `python_pragmatic_programmer`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_refactoring` — Python Refactoring
+### `python_refactoring` - Python Behavior-Preserving Refactoring
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md`
-- **Priority:** `50`
-- **Trigger phrases:** `refactor python`; `extract function`; `move method`; `code smell`; `safe refactoring`
-- **User intent examples:** `Refactor this Python file while preserving behavior.`
-- **Aliases:** `python engineering`; `python refactoring`; `python_refactoring`; `python_refactoring.md`; `refactoring`; `software design`
-- **When to load:** When changing structure without intended behavior changes.
-- **When not to load:** Do not load for feature additions where behavior must change significantly.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-009`
+- **Category:** `08_python_engineering_core`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When bounded Python structure must improve without intended behavior change.
+- **When not to load:** Do not load for legacy stabilization, large-module decomposition, or feature behavior changes.
+- **Aliases:** `KPR-08-009`; `python refactoring`; `python_refactoring`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `software_engineering_books_master` — Software Engineering Books Master
+### `software_engineering_books_master` - Software Engineering Books Synthesis Map
 
 - **File:** `ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md`
-- **Priority:** `50`
-- **Trigger phrases:** `which engineering book prompt`; `books master`; `combine software books`; `engineering principles overview`
-- **User intent examples:** `Use the combined software-engineering book principles.`
-- **Aliases:** `books`; `engineering`; `master`; `python engineering`; `software`; `software design`; `software engineering books master`; `software_engineering_books_master`; `software_engineering_books_master.md`
-- **When to load:** When broad multi-source engineering guidance is needed.
-- **When not to load:** Do not load when a more specific engineering prompt is enough.
-- **Required companion prompts:** `box_architecture_canon`; `implementation_roadmap_builder`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-08-010`
+- **Category:** `08_python_engineering_core`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When an explicit cross-book principle comparison or educational specialist map is needed.
+- **When not to load:** Do not load as a master governance or implementation prompt.
+- **Aliases:** `KPR-08-010`; `software engineering books synthesis`; `software_engineering_books_master`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-## Python Quality Security Observability (`09_python_quality_security_observability`)
-
-### `python_documentation_developer_experience` — Python Documentation and Developer Experience
+### `python_documentation_developer_experience` - Python Documentation and Developer Experience
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_documentation_developer_experience.md`
-- **Priority:** `45`
-- **Trigger phrases:** `developer experience`; `onboarding docs`; `API docs`; `documentation`; `README quality`
-- **User intent examples:** `Create better developer docs and onboarding.`
-- **Aliases:** `developer`; `documentation`; `experience`; `observability`; `python documentation and developer experience`; `python_documentation_developer_experience`; `python_documentation_developer_experience.md`; `quality`; `security`
-- **When to load:** When docs, onboarding, help files, or developer usability are central.
-- **When not to load:** Do not load for runtime bug fixes.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-011`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When documentation architecture, onboarding, examples, docstrings, or DX is central.
+- **When not to load:** Do not load for local naming only or project-specific help styling.
+- **Aliases:** `KPR-09-011`; `python documentation`; `python_documentation_developer_experience`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_observability_logging_metrics_tracing` — Python Observability Logging Metrics and Tracing
+### `python_observability_logging_metrics_tracing` - Python Observability: Logging, Metrics, and Tracing
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_observability_logging_metrics_tracing.md`
-- **Priority:** `45`
-- **Trigger phrases:** `logging`; `metrics`; `tracing`; `observability`; `debug logs`
-- **User intent examples:** `Add structured logging and useful diagnostics.`
-- **Aliases:** `logging`; `metrics`; `observability`; `python observability logging metrics and tracing`; `python_observability_logging_metrics_tracing`; `python_observability_logging_metrics_tracing.md`; `quality`; `security`; `tracing`
-- **When to load:** When instrumentation, logs, metrics, traces, or diagnosis are central.
-- **When not to load:** Do not load for UI layout-only tasks.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-012`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When runtime telemetry and diagnosis are central.
+- **When not to load:** Do not load when no telemetry change is needed.
+- **Aliases:** `KPR-09-012`; `python observability`; `python_observability_logging_metrics_tracing`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_resilience_error_handling` — Python Resilience and Error Handling
+### `python_resilience_error_handling` - Python Failure Semantics and Resilience
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_resilience_error_handling.md`
-- **Priority:** `45`
-- **Trigger phrases:** `error handling`; `retries`; `circuit breaker`; `resilience`; `failure recovery`
-- **User intent examples:** `Make this workflow robust against transient failures.`
-- **Aliases:** `error`; `handling`; `observability`; `python resilience and error handling`; `python_resilience_error_handling`; `python_resilience_error_handling.md`; `quality`; `resilience`; `security`
-- **When to load:** When exception handling, retries, fallback, or resilience is central.
-- **When not to load:** Do not load for purely cosmetic changes.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-013`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When failure, deadline, retry, idempotency, degradation, or recovery semantics are central.
+- **When not to load:** Do not load for exception formatting alone.
+- **Aliases:** `KPR-09-013`; `python resilience`; `python_resilience_error_handling`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_security_threat_prevention` — Python Security and Threat Prevention
+### `python_security_threat_prevention` - Python Security and Threat Prevention
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_security_threat_prevention.md`
-- **Priority:** `45`
-- **Trigger phrases:** `security`; `threat prevention`; `secret handling`; `input sanitization`; `secure python`
-- **User intent examples:** `Review this Python code for security risks.`
-- **Aliases:** `observability`; `prevention`; `python security and threat prevention`; `python_security_threat_prevention`; `python_security_threat_prevention.md`; `quality`; `security`; `threat`
-- **When to load:** When security, trust boundaries, secrets, validation, or malicious input matter.
-- **When not to load:** Do not load for local-only toy code with no security surface, unless requested.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-014`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When trust boundaries, threats, authorization, secrets, archives, or hostile input are central.
+- **When not to load:** Do not load as a generic quality checklist.
+- **Aliases:** `KPR-09-014`; `python security`; `python_security_threat_prevention`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_testing_pytest` — Python Testing with Pytest
+### `python_testing_pytest` - Python Testing and Pytest Strategy
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_testing_pytest.md`
-- **Priority:** `45`
-- **Trigger phrases:** `pytest`; `unit tests`; `test coverage`; `write tests`; `regression test`
-- **User intent examples:** `Add pytest tests for this patch.`
-- **Aliases:** `observability`; `pytest`; `python testing with pytest`; `python_testing_pytest`; `python_testing_pytest.md`; `quality`; `security`; `testing`
-- **When to load:** When creating or updating tests, regression tests, fixtures, or test strategy.
-- **When not to load:** Do not load if no code/testing is involved.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-015`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When testing strategy, pytest, regression protection, or result interpretation is central.
+- **When not to load:** Do not impose universal coverage or mutation quotas.
+- **Aliases:** `KPR-09-015`; `python testing`; `python_testing_pytest`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_validation_serialisation_type_safety` — Python Validation, Serialisation, and Type Safety
+### `python_validation_serialisation_type_safety` - Python Boundary Validation, Serialization, and Type Safety
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/python_validation_serialisation_type_safety.md`
-- **Priority:** `45`
-- **Trigger phrases:** `pydantic`; `type safety`; `data validation`; `serialization`; `schema validation`
-- **User intent examples:** `Validate inputs and outputs with type-safe schemas.`
-- **Aliases:** `observability`; `python validation, serialisation, and type safety`; `python_validation_serialisation_type_safety`; `python_validation_serialisation_type_safety.md`; `quality`; `safety`; `security`; `serialisation`; `type`; `validation`
-- **When to load:** When data models, schemas, serialization, or type validation are central.
-- **When not to load:** Do not load for UI-only text changes.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-016`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When invalid or ambiguous data crossing a boundary is the principal risk.
+- **When not to load:** Do not use for domain authorization or API protocol semantics.
+- **Aliases:** `KPR-09-016`; `python validation`; `python_validation_serialisation_type_safety`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `tab4_docstring_quality_roadmap` — Tab 4 Docstring Quality Roadmap
+### `tab4_docstring_quality_roadmap` - Tab 4 Docstring Quality Roadmap - Deprecated Global Route
 
 - **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/tab4_docstring_quality_roadmap.md`
-- **Priority:** `45`
-- **Trigger phrases:** `docstring quality`; `tab4 docstrings`; `missing docstrings`; `docstring roadmap`; `documentation strings`
-- **User intent examples:** `Improve the missing-docstring handler quality.`
-- **Aliases:** `docstring`; `observability`; `quality`; `security`; `tab 4 docstring quality roadmap`; `tab4`; `tab4_docstring_quality_roadmap`; `tab4_docstring_quality_roadmap.md`
-- **When to load:** When Tab 4/docstring generation or documentation quality is central.
-- **When not to load:** Do not load for user manual documentation unrelated to code docstrings.
-- **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`; `python_testing_pytest`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-09-017`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `deprecated`
+- **Load type:** `never`
+- **When to load:** Never load as a global active route; this is a deprecated compatibility tombstone.
+- **When not to load:** Use KPR-09-011 for generic documentation and inspect current project source for Tab 4 status.
+- **Aliases:** `KPR-09-017`; `tab4_docstring_quality_roadmap`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-## Python Api Data Async Config (`10_python_api_data_async_config`)
-
-### `python_api_design` — Python API Design
+### `python_api_design` - Python API and External Interface Contracts
 
 - **File:** `ACTIVE_PROMPTS/10_python_api_data_async_config/python_api_design.md`
-- **Priority:** `50`
-- **Trigger phrases:** `REST API`; `GraphQL`; `API design`; `endpoint design`; `interface contract`
-- **User intent examples:** `Design a clean API boundary for this Python service.`
-- **Aliases:** `api`; `async`; `config`; `data`; `design`; `python api design`; `python_api_design`; `python_api_design.md`
-- **When to load:** When external/internal API contracts, endpoints, or service interfaces are central.
-- **When not to load:** Do not load for non-API GUI-only changes.
-- **Required companion prompts:** `box_architecture_canon`; `python_testing_pytest`; `python_validation_serialisation_type_safety`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-10-001`
+- **Category:** `10_python_api_data_async_config`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When an API or external interface contract is central.
+- **When not to load:** Do not load for internal function structure or persistence implementation.
+- **Aliases:** `KPR-10-001`; `python API design`; `python_api_design`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_async_parallel_distributed` — Python Async, Parallel, and Distributed Computing
+### `python_async_parallel_distributed` - Python Concurrency, Parallel, and Distributed Execution
 
 - **File:** `ACTIVE_PROMPTS/10_python_api_data_async_config/python_async_parallel_distributed.md`
-- **Priority:** `50`
-- **Trigger phrases:** `async`; `parallel`; `distributed`; `concurrency`; `background task`
-- **User intent examples:** `Make this workflow async-safe and concurrency-aware.`
-- **Aliases:** `api`; `async`; `config`; `data`; `distributed`; `parallel`; `python async, parallel, and distributed computing`; `python_async_parallel_distributed`; `python_async_parallel_distributed.md`
-- **When to load:** When concurrency, async, parallelism, queues, or distributed work are central.
-- **When not to load:** Do not load for simple synchronous scripts.
-- **Required companion prompts:** `box_architecture_canon`; `python_testing_pytest`; `python_validation_serialisation_type_safety`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-10-002`
+- **Category:** `10_python_api_data_async_config`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When concurrency model, task lifecycle, cancellation, backpressure, or distributed execution is central.
+- **When not to load:** Do not load for simple synchronous work or unmeasured performance assumptions.
+- **Aliases:** `KPR-10-002`; `python concurrency`; `python_async_parallel_distributed`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_configuration_feature_flags` — Python Configuration and Feature Flags
+### `python_configuration_feature_flags` - Python Configuration and Feature-Flag Lifecycle
 
 - **File:** `ACTIVE_PROMPTS/10_python_api_data_async_config/python_configuration_feature_flags.md`
-- **Priority:** `50`
-- **Trigger phrases:** `configuration`; `feature flags`; `settings`; `environment variables`; `config management`
-- **User intent examples:** `Move hard-coded settings into configuration safely.`
-- **Aliases:** `api`; `async`; `config`; `configuration`; `data`; `feature`; `flags`; `python configuration and feature flags`; `python_configuration_feature_flags`; `python_configuration_feature_flags.md`
-- **When to load:** When config, feature flags, environment-specific behavior, or settings are central.
-- **When not to load:** Do not load for logic-only changes.
-- **Required companion prompts:** `box_architecture_canon`; `python_testing_pytest`; `python_validation_serialisation_type_safety`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-10-003`
+- **Category:** `10_python_api_data_async_config`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When configuration schema, precedence, secret references, reload, or flag lifecycle is central.
+- **When not to load:** Do not load for constants, entitlements, or deployment injection alone.
+- **Aliases:** `KPR-10-003`; `python configuration`; `python_configuration_feature_flags`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_database_design_optimisation` — Python Database Design and Optimisation
+### `python_database_design_optimisation` - Python Database Design, Queries, and Migrations
 
 - **File:** `ACTIVE_PROMPTS/10_python_api_data_async_config/python_database_design_optimisation.md`
-- **Priority:** `50`
-- **Trigger phrases:** `database design`; `SQL optimization`; `schema design`; `query performance`; `migrations`
-- **User intent examples:** `Improve database schema/query design.`
-- **Aliases:** `api`; `async`; `config`; `data`; `database`; `design`; `optimisation`; `python database design and optimisation`; `python_database_design_optimisation`; `python_database_design_optimisation.md`
-- **When to load:** When database schema, queries, migrations, persistence, or data access are central.
-- **When not to load:** Do not load when no database or persistence is involved.
-- **Required companion prompts:** `box_architecture_canon`; `python_testing_pytest`; `python_validation_serialisation_type_safety`; `implementation_and_delivery_protocol`
+- **Code:** `KPR-10-004`
+- **Category:** `10_python_api_data_async_config`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When database schema, queries, migrations, transactions, or engine behavior is central.
+- **When not to load:** Do not load for application Repository design or work with no persistence.
+- **Aliases:** `KPR-10-004`; `python database design`; `python_database_design_optimisation`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-## Productization And Release Readiness (`11_productization_and_release_readiness`)
-
-### `kubernetes_deployment_operations` — Kubernetes Deployment and Operations
+### `kubernetes_deployment_operations` - Kubernetes Deployment and Operations
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md`
-- **Priority:** `55`
-- **Trigger phrases:** `kubernetes`; `deploy to k8s`; `containers operations`; `cluster deployment`; `helm`
-- **User intent examples:** `Think about deployment/operations for this Python app.`
-- **Aliases:** `deployment`; `kubernetes`; `kubernetes deployment and operations`; `kubernetes_deployment_operations`; `kubernetes_deployment_operations.md`; `operations`; `product`; `release`
-- **When to load:** When Kubernetes/container operations are relevant.
-- **When not to load:** Do not load for local desktop-only workflows unless deployment is planned.
-- **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
+- **Code:** `KPR-11-001`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When an actual container or Kubernetes workload needs deployment and operational design.
+- **When not to load:** Do not load for speculative Kubernetes adoption or as a universal production checklist.
+- **Aliases:** `KPR-11-001`; `kubernetes deployment`; `kubernetes_deployment_operations`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `productization_readiness_roadmap` — Productization Readiness Roadmap
+### `productization_readiness_roadmap` - Productization Readiness Roadmap
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/productization_readiness_roadmap.md`
-- **Priority:** `55`
-- **Trigger phrases:** `productization`; `release readiness`; `make production ready`; `ship this app`; `professionalize app`
-- **User intent examples:** `What must be done before this app is product-ready?`
-- **Aliases:** `operations`; `product`; `productization`; `productization readiness roadmap`; `productization_readiness_roadmap`; `productization_readiness_roadmap.md`; `readiness`; `release`
-- **When to load:** When assessing readiness for use, release, maintenance, or distribution.
-- **When not to load:** Do not load for early exploratory prototypes unless productization is requested.
-- **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
+- **Code:** `KPR-11-002`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `deprecated`
+- **Load type:** `never`
+- **When to load:** Never load globally; this is a deprecated historical project-specific roadmap tombstone.
+- **When not to load:** Use current project capability evidence and active Class 11 specialists.
+- **Aliases:** `KPR-11-002`; `productization_readiness_roadmap`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `professional_ai_assisted_engineering_framework` — Professional AI-Assisted Engineering Framework
+### `professional_ai_assisted_engineering_framework` - AI-Assisted Engineering Operating Model Overview
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md`
-- **Priority:** `55`
-- **Trigger phrases:** `professional AI engineering`; `AI assisted engineering`; `avoid vibe coding`; `human lead AI assistant`; `professional workflow`
-- **User intent examples:** `Define professional AI-assisted engineering rules for this project.`
-- **Aliases:** `assisted`; `engineering`; `framework`; `operations`; `product`; `professional`; `professional ai-assisted engineering framework`; `professional_ai_assisted_engineering_framework`; `professional_ai_assisted_engineering_framework.md`; `release`
-- **When to load:** When establishing or auditing the overall AI-human engineering method.
-- **When not to load:** Do not load for small isolated code snippets.
-- **Required companion prompts:** `evidence_freshness_gate`
+- **Code:** `KPR-11-003`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When a concise non-authoritative human/AI role and work-state overview is needed.
+- **When not to load:** Do not load as a master implementation, validation, or freeze authority.
+- **Aliases:** `KPR-11-003`; `AI-assisted engineering operating model`; `professional_ai_assisted_engineering_framework`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `professional_infrastructure_roadmap` — Professional Infrastructure Roadmap
+### `professional_infrastructure_roadmap` - Professional Infrastructure Roadmap
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_infrastructure_roadmap.md`
-- **Priority:** `55`
-- **Trigger phrases:** `missing professional infrastructure`; `infrastructure roadmap`; `what is missing to be professional`; `validation infrastructure`
-- **User intent examples:** `List what infrastructure is missing to make the project professional.`
-- **Aliases:** `infrastructure`; `operations`; `product`; `professional`; `professional infrastructure roadmap`; `professional_infrastructure_roadmap`; `professional_infrastructure_roadmap.md`; `release`
-- **When to load:** When identifying missing gates, registries, validators, or operational support.
-- **When not to load:** Do not load for one-off code formatting.
-- **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
+- **Code:** `KPR-11-004`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `deprecated`
+- **Load type:** `never`
+- **When to load:** Never load globally; this is a deprecated historical missing-infrastructure tombstone.
+- **When not to load:** Inspect current source and use a source-bound project capability-status matrix.
+- **Aliases:** `KPR-11-004`; `professional_infrastructure_roadmap`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_lifecycle_versioning_deprecation` — Python Lifecycle, Versioning, and Deprecation
+### `python_lifecycle_versioning_deprecation` - Python Lifecycle, Versioning, Deprecation, and End-of-Life
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/python_lifecycle_versioning_deprecation.md`
-- **Priority:** `55`
-- **Trigger phrases:** `versioning`; `deprecation`; `release lifecycle`; `legacy support`; `migration path`
-- **User intent examples:** `Plan versioning and deprecation for this module.`
-- **Aliases:** `deprecation`; `lifecycle`; `operations`; `product`; `python lifecycle, versioning, and deprecation`; `python_lifecycle_versioning_deprecation`; `python_lifecycle_versioning_deprecation.md`; `release`; `versioning`
-- **When to load:** When lifecycle, backward compatibility, deprecation, or migrations are central.
-- **When not to load:** Do not load for brand-new throwaway code.
-- **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
+- **Code:** `KPR-11-005`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When version policy, compatibility, deprecation, support or EOL is central.
+- **When not to load:** Do not load for legacy refactoring, database migration mechanics or packaging installation.
+- **Aliases:** `KPR-11-005`; `python lifecycle versioning`; `python_lifecycle_versioning_deprecation`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `python_site_reliability_engineering` — Python Site Reliability Engineering
+### `python_site_reliability_engineering` - Python Service Reliability Engineering
 
 - **File:** `ACTIVE_PROMPTS/11_productization_and_release_readiness/python_site_reliability_engineering.md`
-- **Priority:** `55`
-- **Trigger phrases:** `SRE`; `reliability`; `SLI`; `SLO`; `incident response`; `operational readiness`
-- **User intent examples:** `Apply SRE thinking to the app's reliability.`
-- **Aliases:** `engineering`; `operations`; `product`; `python site reliability engineering`; `python_site_reliability_engineering`; `python_site_reliability_engineering.md`; `release`; `reliability`; `site`
-- **When to load:** When reliability, operations, monitoring, service levels, or incident handling matter.
-- **When not to load:** Do not load for non-operational prompt-only edits.
-- **Required companion prompts:** `professional_ai_assisted_engineering_framework`; `evidence_freshness_gate`
-
-## Generalized Project Canons (`12_generalized_project_canons`)
+- **Code:** `KPR-11-006`
+- **Category:** `11_productization_and_release_readiness`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When an operationally owned production service needs SLI/SLO, incident, toil or capacity governance.
+- **When not to load:** Do not load for local tools or as a universal Google SRE checklist.
+- **Aliases:** `KPR-11-006`; `python SRE`; `python_site_reliability_engineering`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
 ### `error_memory_active_ready_correction_blueprint` - Error Memory Active-Ready Correction Blueprint
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md`
-- **Prompt code:** `KPR-12-002`
-- **Priority:** `32`
-- **Trigger phrases:** `correct this Error Memory draft`; `make this lesson active-ready`; `convert draft to active lesson`; `KANDA_ERROR_LESSON_JSON status draft`; `This lesson is not ready for active status`; `Memorize Error says missing active-ready fields`; `validation_command_summary is empty`; `source_patch_zip is empty`; `install_command_summary is empty`; `regression_check.type must be validation_command`; `regression_check.command is empty`; `regression_check.expected_marker is empty`
-- **User intent examples:** `Convert this KANDA_ERROR_LESSON_JSON draft into an active-ready lesson.`; `Memorize Error rejects this lesson because active-ready fields are missing; correct it safely.`; `Make this Error Memory draft active only if validation evidence is complete.`
-- **Aliases:** `error memory active-ready correction blueprint`; `error_memory_active_ready_correction_blueprint`; `draft to active error memory blueprint`; `active-ready Error Memory schema`
-- **When to load:** When a task asks to correct, promote, validate, or convert a `KANDA_ERROR_LESSON_JSON` draft into active-ready or active status.
-- **When not to load:** Do not load for ordinary code patches, generic Error Memory GUI behavior, or non-Error-Memory tasks unless an Error Memory lesson is being corrected or promoted.
-- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`; `prompt_navigation_index`; `prompt_router`
+- **Code:** `KPR-12-002`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** When a real Error Memory draft must be corrected or evaluated for active readiness.
+- **When not to load:** Do not load for ordinary code changes or to invent validation evidence.
+- **Aliases:** `KPR-12-002`; `Error Memory correction blueprint`; `error_memory_active_ready_correction_blueprint`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
 ### `project_tool_boundary_canon` - Project Tool Boundary Canon
 
@@ -905,97 +727,257 @@ This file maps natural human requests to the correct clean prompt ID and compani
 - **When not to load:** The canon remains loaded as a boundary invariant; simple non-project writing tasks normally require no additional action from it.
 - **Required companion prompts:** `box_architecture_canon`; `bundle_gated_development_workflow`
 
-### `data_transform_pipeline_invariants` — Data Transform Pipeline Invariants
+### `data_transform_pipeline_invariants` - Data Transform Pipeline Invariants
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md`
-- **Priority:** `40`
-- **Trigger phrases:** `data transform pipeline`; `source to derived`; `pipeline invariants`; `derived artifact`; `canonical working base`
-- **User intent examples:** `Preserve source-to-derived pipeline invariants.`
-- **Aliases:** `architecture pattern`; `data`; `data transform pipeline invariants`; `data_transform_pipeline_invariants`; `data_transform_pipeline_invariants.md`; `generalized canon`; `invariants`; `pipeline`; `transform`
-- **When to load:** When source data is transformed into derived artifacts and consistency must be protected.
-- **When not to load:** Do not load for static documents without transforms.
-- **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+- **Code:** `KPR-12-009`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When source-to-derived lineage, transform provenance or rebuild correctness is central.
+- **When not to load:** Do not load for transform selection resolution without pipeline lineage concerns.
+- **Aliases:** `KPR-12-009`; `data transform pipeline invariants`; `data_transform_pipeline_invariants`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `desktop_help_document_layout_canon` - Desktop Help Document Layout Canon
+### `desktop_help_document_layout_canon` - KANDA Desktop Help Document Layout Profile
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md`
-- **Priority:** `40`
-- **Trigger phrases:** `opener image below blue header`; `no-overflow help layout`; `help page width limit`; `code chain overflows help`; `table larger than page`; `cartoon larger than page`; `help image outside page`; `help text outside page`; `help content outside page`; `help table too wide`; `help table overflow`; `help page overflow`; `cartoon above how to use this`; `full width opener cartoon`; `full-width help cartoon`; `image note should not render`; `no visible image note`; `hide image note`; `hidden image metadata`; `desktop help layout`; `help document layout`; `book-style help`; `help file artwork`; `daily-life cartoon help`; `hand-made help illustration`; `hand-drawn help artwork`; `beautiful help artwork`; `raster help artwork`; `help artwork quality gate`; `box-shielded help docs`; `help optimization pass`; `technical-layer research`; `plain-English completeness`; `source rendered parity`; `stable help header`; `tab-name help header`; `no tab numbers in help`; `scalable help cartoons`; `QWebEngineView help`; `offline help HTML`; `help quick start`; `practical help quick start`; `how to use this help`; `non-technical help explanation`; `artifact explanation help`; `book-grounded help`; `scholarly help references`; `five-book grounding`; `book grounding map`; `full help rebuild`; `summary-linked cartoon`; `common user help`; `five book help grounding`; `five books per feature`; `totally new help file`; `summary linked cartoon`; `summary-linked help artwork`
-- **User intent examples:** `Place the funny help cartoon full-width below the blue title section and above How To Use This.`; `Fix a desktop help page where a route chain, control table, or issue-family table extends outside the page.`; `Remove visible Opener Image Note text from the desktop help page.`; `Create a desktop help file with book-style layout and local characterful artwork.`; `Update help artwork so simple SVG sketches cannot pass as beautiful hand-made illustration.`; `Optimize an existing help page without rewriting accurate sections.`; `Make a large help file with enough cartoons for all major themes.`; `Update a desktop help page so the header uses only the stable tab name, not Tab 1 or Tab 2.`; `Add a short How To Use This block below the title and opener image before the dense help sections.`; `Update a desktop help page so a non-technical user understands each artifact before the technical details.`; `Use optional book grounding for a major help-document subject without replacing official docs or local code truth.`; `Create a totally new desktop help file with five verified books for each major feature area.`; `Replace the opener with a funny hand-made cartoon tied to the page summary metaphor.`; `Rebuild this help page from scratch instead of making a narrow optimization pass.`
-- **Aliases:** `opener below blue header`; `full-width opener image`; `source-only image note`; `hidden help image metadata`; `help page width`; `help table fit`; `wide help table`; `no overflow help`; `desktop help`; `desktop help document layout canon`; `desktop_help_document_layout_canon`; `desktop_help_document_layout_canon.md`; `help artwork`; `help layout`; `offline help`; `QWebEngineView`; `help artwork quality gate`; `hand-made help art`; `help optimization`; `source rendered parity`; `technical help research`; `scalable help illustrations`; `stable help header`; `tab-name help header`; `no tab numbers in help`; `help quick start`; `practical quick-start block`; `how to use this`; `non technical help`; `common user help`; `artifact explanation help`; `book grounded help`; `scholarly help references`
-- **When to load:** When creating or updating local desktop help documents, optimizing existing help source/rendered output, offline help HTML/CSS, stable tab-name help headers, practical quick-start blocks for common users, non-technical artifact explanations, help artwork, book-style help layout, page-boundary/no-overflow help layout, route-chain wrapping, dense table fitting or splitting, local-code-grounded dual-audience explanations, optional or mandatory five-book grounding, book grounding maps, summary-linked opener cartoons, scalable help illustration planning, or box-shielded help-art quality gates, hidden/source-only artwork metadata, no visible image-note sections, full-width opener cartoons below the blue title/summary section and above How To Use This.
-- **When not to load:** Do not load for ordinary runtime UI rendering when no help/documentation asset is being created.
-- **Required companion prompts:** `box_architecture_canon`; `kanda_box_shielding_canon`; `project_specific_prompt_generalization`; `shared_visual_render_engine_canon`
+- **Code:** `KPR-12-010`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active_project_overlay`
+- **Load type:** `on_request`
+- **When to load:** When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed.
+- **When not to load:** Do not load as a universal documentation or runtime visual-engine canon.
+- **Aliases:** `KPR-12-010`; `KANDA desktop help layout`; `desktop_help_document_layout_canon`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `domain_decision_table_template` — Domain Decision Table Template
+### `domain_decision_table_template` - Versioned Domain Decision Table Template
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md`
-- **Priority:** `40`
-- **Trigger phrases:** `decision table`; `domain rules table`; `rule matrix`; `classification table`; `if then domain rules`
-- **User intent examples:** `Use a decision table for these domain rules.`
-- **Aliases:** `architecture pattern`; `decision`; `domain`; `domain decision table template`; `domain_decision_table_template`; `domain_decision_table_template.md`; `generalized canon`; `table`
-- **When to load:** When complex domain choices should be made explicit as a table/matrix.
-- **When not to load:** Do not load for simple linear instructions.
-- **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+- **Code:** `KPR-12-011`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When multiple discrete domain rules need a versioned, testable matrix.
+- **When not to load:** Do not load for continuous/probabilistic decisions or undefined domain policy.
+- **Aliases:** `KPR-12-011`; `domain decision table`; `domain_decision_table_template`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `plugin_package_import_canon` — Plugin Package Import Canon
+### `plugin_package_import_canon` - Plugin Package Import and Trust Canon
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md`
-- **Priority:** `40`
-- **Trigger phrases:** `plugin package`; `import plugin`; `plugin manifest`; `package import`; `extension package`
-- **User intent examples:** `Import this as a plugin package with manifest and payload.`
-- **Aliases:** `architecture pattern`; `generalized canon`; `import`; `package`; `plugin`; `plugin package import canon`; `plugin_package_import_canon`; `plugin_package_import_canon.md`
-- **When to load:** When adding/importing plugin-like packages or extension bundles.
-- **When not to load:** Do not load for ordinary direct source edits.
-- **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+- **Code:** `KPR-12-012`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When user-importable package trust, permissions and lifecycle are central.
+- **When not to load:** Do not load for ordinary patch ZIPs or to invent a universal plugin engine.
+- **Aliases:** `KPR-12-012`; `plugin package import`; `plugin_package_import_canon`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `shared_visual_render_engine_canon` — Shared Visual Render Engine Canon
+### `shared_visual_render_engine_canon` - Shared Visual Semantic Contract
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md`
-- **Priority:** `40`
-- **Trigger phrases:** `shared render engine`; `visual renderer`; `drawing engine`; `canvas rendering`; `render contract`
-- **User intent examples:** `Keep all visual outputs using the shared render engine.`
-- **Aliases:** `architecture pattern`; `engine`; `generalized canon`; `render`; `shared`; `shared visual render engine canon`; `shared_visual_render_engine_canon`; `shared_visual_render_engine_canon.md`; `visual`
-- **When to load:** When rendering/drawing/visual output contracts or shared visual engines are central.
-- **When not to load:** Do not load for non-visual backend logic.
-- **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+- **Code:** `KPR-12-013`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When multiple consumers represent the same conceptual visual object or scene.
+- **When not to load:** Do not load for static editorial artwork or generic UI styling.
+- **Aliases:** `KPR-12-013`; `shared visual semantics`; `shared_visual_render_engine_canon`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-### `transform_resolver_architecture_contract` — Transform Resolver Architecture Contract
+### `transform_resolver_architecture_contract` - Transform Resolver Architecture Contract
 
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md`
-- **Priority:** `40`
-- **Trigger phrases:** `transform resolver`; `base identity plus transform`; `resolver architecture`; `active transform`; `identity resolver`
-- **User intent examples:** `Use base identity plus active transform resolver architecture.`
-- **Aliases:** `architecture`; `architecture pattern`; `contract`; `generalized canon`; `resolver`; `transform`; `transform resolver architecture contract`; `transform_resolver_architecture_contract`; `transform_resolver_architecture_contract.md`
-- **When to load:** When an entity has stable identity plus selectable transforms/views/states.
-- **When not to load:** Do not load for simple one-state data models.
-- **Required companion prompts:** `box_architecture_canon`; `project_specific_prompt_generalization`
+- **Code:** `KPR-12-014`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When stable identities and selectable transforms must resolve into controlled operations.
+- **When not to load:** Do not load for pipeline lineage/rebuild or direct operation execution.
+- **Aliases:** `KPR-12-014`; `transform resolver contract`; `transform_resolver_architecture_contract`
+- **Required companions:** none; dispatch supporting concerns to current owners.
 
-<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_START -->
+### `web_ai_large_module_refactor_exchange_protocol`
 
-## Governed Architecture Companion - KPR-04-007
+- Prompt code: `KPR-06-001`
+- Load when: an exact Planner package needs bounded external architecture review.
+- Do not load for: target-specific AST repair, direct source implementation, delivery mechanics, or freeze writing.
+- Companions: `large_module_refactor_protocol`, `web_ai_planning_response_bundle_blueprint`, `brick_wall_comprehensive_quality_gate`.
 
-Prompt ID: `governed_architecture_companion_handoff`
+### `web_ai_planning_response_bundle_blueprint`
 
-Canonical path:
+- Prompt code: `KPR-06-002`
+- Load when: an already-reasoned planning payload must be packaged for Imported Web AI Version intake.
+- Do not load for: architecture reasoning, direct source implementation, or final freeze authority.
+- Companions: `web_ai_large_module_refactor_exchange_protocol`, current Class 05 delivery owners.
 
-```text
-ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md
-```
+### `web_ai_ast_split_risk_repair_protocol`
 
-Load mode: `on_request`
+- Prompt code: `KPR-06-003`
+- Load when: exact target source and current AST evidence require target-specific repair or a SAFE structural split.
+- Do not load for: generic Planner review, universal module-size law, or final freeze writing.
+- Companions: `large_module_refactor_protocol`, `python_refactoring`, `project_tool_boundary_canon`.
 
-Route here when the task is architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, or needs a unified visible gate coordinating Brick Wall, Tool/Project, Box, NO_LEAK, MCard, Shield, exact source, Error Memory, validation, startup, and freeze safeguards.
+## Wave 8A Class 12 human-process and handbook specialists
 
-Do not load it during normal startup. The startup stack carries only a compact bridge. This companion never replaces current canonical owners, and final coding authorization remains with Brick Wall.
+### `peopleware_team_boundary` — Peopleware Team Boundary
 
-Required companions:
+- **Prompt code:** `KPR-12-007`
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md`
+- **Load when:** a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.
+- **Do not load for:** solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.
+- **Companions:** `prompt_navigation_index`; `project_tool_boundary_canon` when project identity matters.
 
-```text
-brick_wall_comprehensive_quality_gate
-router_bridge_governed_implementation
-project_tool_boundary_canon
-box_architecture_canon
-```
+### `practical_field_handbook_template` — Practical Field Handbook Template
 
-<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTE_V1_END -->
+- **Prompt code:** `KPR-12-008`
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/practical_field_handbook_template.md`
+- **Load when:** a supplied or reliably identified source must become a practical audience-specific handbook.
+- **Do not load for:** invented source-faithful detail, substitute reproduction of a copyrighted work, or direct source implementation.
+- **Companions:** `prompt_navigation_index`; current evidence sources when current claims require verification.
+
+### `anti_hallucination_independent_ai_audit_full` - Independent Adversarial Engineering Audit - Full
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md`
+- **Code:** `KPR-09-003`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When a consequential plan needs adversarial review and claim/assumption separation.
+- **When not to load:** Do not label same-context self-review as independent.
+- **Aliases:** `KPR-09-003`; `independent adversarial audit`; `anti_hallucination_independent_ai_audit_full`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_web_evidence_audit_full` - Current Web Evidence and Disconfirmation Audit - Full
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md`
+- **Code:** `KPR-09-004`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When time-sensitive external claims require current primary-source verification.
+- **When not to load:** Do not expose private project data or fabricate web access.
+- **Aliases:** `KPR-09-004`; `web evidence audit`; `anti_hallucination_web_evidence_audit_full`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_book_literature_audit_full` - Verified Literature Architecture Audit - Full
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md`
+- **Code:** `KPR-09-005`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** When inspected literature can resolve a material architecture uncertainty.
+- **When not to load:** Do not attribute claims to uninspected books or force a source count.
+- **Aliases:** `KPR-09-005`; `verified literature audit`; `anti_hallucination_book_literature_audit_full`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_master_protocol_full` - Evidence Synthesis and Truthful Status Protocol - Full
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md`
+- **Code:** `KPR-09-006`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** As the final synthesis stage after evidence records exist.
+- **When not to load:** Do not load as a mega-canon or implementation authority.
+- **Aliases:** `KPR-09-006`; `evidence synthesis`; `anti_hallucination_master_protocol_full`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_independent_ai_audit_short` - Independent Adversarial Audit - Short
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_short.md`
+- **Code:** `KPR-09-007`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** For bounded routine adversarial screening.
+- **When not to load:** Escalate to KPR-09-003 when material risk or uncertainty appears.
+- **Aliases:** `KPR-09-007`; `anti_hallucination_independent_ai_audit_short`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_web_evidence_audit_short` - Current Web Evidence Audit - Short
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_short.md`
+- **Code:** `KPR-09-008`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** For bounded current-source verification.
+- **When not to load:** Escalate to KPR-09-004 when sources conflict or risk is material.
+- **Aliases:** `KPR-09-008`; `anti_hallucination_web_evidence_audit_short`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_book_literature_audit_short` - Verified Literature Audit - Short
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_short.md`
+- **Code:** `KPR-09-009`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** For a bounded verified literature check.
+- **When not to load:** Escalate to KPR-09-005 when comparison or provenance is complex.
+- **Aliases:** `KPR-09-009`; `anti_hallucination_book_literature_audit_short`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_protocol_short` - Evidence Synthesis Protocol - Short
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_protocol_short.md`
+- **Code:** `KPR-09-010`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `on_request`
+- **When to load:** For routine synthesis of bounded evidence records.
+- **When not to load:** Escalate to KPR-09-006 when evidence conflicts or risk is material.
+- **Aliases:** `KPR-09-010`; `anti_hallucination_protocol_short`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_full_group` - Evidence Verification Train - Full
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_full_group.md`
+- **Code:** `KPR-09-001`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** When consequential work requires the full staged evidence-verification train.
+- **When not to load:** Do not load for routine low-risk work or as implementation authority.
+- **Aliases:** `KPR-09-001`; `anti_hallucination_full_group`; `full evidence train`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `anti_hallucination_short_group` - Evidence Verification Train - Short
+
+- **File:** `ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_short_group.md`
+- **Code:** `KPR-09-002`
+- **Category:** `09_python_quality_security_observability`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** When routine governed work needs a compact staged evidence review.
+- **When not to load:** Escalate to KPR-09-001 for high-risk, conflicting, or uncertain work.
+- **Aliases:** `KPR-09-002`; `anti_hallucination_short_group`; `short evidence train`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `error_memory_active_ready_json_template` - Error Memory Marker-Wrapped JSON Output Envelope
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_json_template.md`
+- **Code:** `KPR-12-003`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** When the exact marker-wrapped final Error Memory output envelope is required.
+- **When not to load:** Do not use as field-schema authority or before readiness evidence exists.
+- **Aliases:** `KPR-12-003`; `Error Memory JSON envelope`; `error_memory_active_ready_json_template`
+- **Required companions:** none; dispatch supporting concerns to current owners.
+
+### `error_memory_model_template` - Error Memory Human-Readable Lesson Model
+
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md`
+- **Code:** `KPR-12-004`
+- **Category:** `12_generalized_project_canons`
+- **Status:** `active`
+- **Load type:** `routed`
+- **When to load:** When a human-readable Error Memory lesson model verified against current application schema is needed.
+- **When not to load:** Do not treat the template as stronger than current application schema/models.
+- **Aliases:** `KPR-12-004`; `Error Memory model`; `error_memory_model_template`
+- **Required companions:** none; dispatch supporting concerns to current owners.

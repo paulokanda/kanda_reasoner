@@ -1,113 +1,64 @@
-# Workflow Handoff Template
+---
+prompt_id: workflow_handoff_template
+prompt_code: KPR-03-006
+title: Generic Workflow Handoff Profile Template
+version: 2.0
+status: draft_template
+load_type: on_request
+owner_box: 03_governance_freeze_and_handoff
+source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
+---
 
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-Version: 1.0.0
-Status: Reusable engineering handoff template
-Use: Create a continuation note at the end of a work session, break, or unfinished task.
+# Generic Workflow Handoff Profile Template
 
 ## Purpose
 
-Create a precise, safe, evidence-grounded handoff for the next AI or next work session.
+Use this Project-agnostic draft template only when a new or external Project has
+no current generated handoff owner. Normal KANDA session closure remains owned
+by `handoff_at_end_of_work` and the current Project handoff exporter.
 
-
-## Project-Agnostic Contract
-
-This prompt must work for any software project. Replace variables before use.
-
-Required variables:
+## Draft handoff profile
 
 ```text
-<PROJECT_ROOT>
-<PROJECT_NAME>
-<PRODUCT_PACKAGE>
-<TASK_DESCRIPTION>
-<TASK_SLUG>
-<GOVERNANCE_FOLDER>
-<VALIDATION_COMMANDS>
-<OUTPUT_FOLDER>
-<SOURCE_FILES>
-<LOG_FILES>
+WORKFLOW HANDOFF
+Project:
+Tool root:
+Active Project root:
+Project Support root:
+Current task:
+Requested outcome:
+Verified completed work:
+Changed source files:
+Generated artifacts:
+Validation actually executed:
+Exact validation results:
+Installation state:
+Freeze state:
+Known warnings or failures:
+Unresolved decisions:
+Protected paths and do-not-regress rules:
+Next safe action:
+Required next-session files or evidence:
+Claims not yet proven:
 ```
 
-Rules:
-- Do not hardcode one project root.
-- Do not assume one product package.
-- Do not treat examples as active project truth.
-- Use current source files, logs, and validation output as evidence.
-- If evidence is missing, request it before implementation.
+## Rules
 
-## Handoff Is Not Governance
+1. Report only observed or validated facts.
+2. Separate completed, attempted, failed, pending, and not-applicable work.
+3. Include exact source and artifact identities when they matter.
+4. Preserve failure evidence and unresolved blockers.
+5. Distinguish Tool, Active Project, Project Support, and transient paths.
+6. Do not treat chat memory as durable evidence.
+7. Do not claim install, validation, freeze, or Error Memory completion without
+   the corresponding current evidence.
+8. Keep the next action bounded and executable.
+9. Redact secrets and unnecessary personal data.
+10. Route any permanent handoff schema or exporter change through its current
+    source owner and Class 07 insertion governance.
 
-This handoff is continuity evidence. It does not freeze official governance by itself. Use the governance update protocol only after validated work and explicit freeze approval.
+## Authority boundary
 
-
-## Bundle-Gated Development Status
-
-When this handoff follows AI-assisted implementation work, include the Kanda
-Bundle-Gated Development state:
-
-```text
-plan:
-bundle:
-installed locally:
-focused validation:
-architecture validation:
-workflow validation:
-manual validation:
-repair or continue decision:
-freeze status:
-```
-
-Use the rule:
-
-```text
-Handoff is continuity evidence only. It is not a freeze.
-```
-
-Do not claim baseline acceptance unless the user installed the bundle locally and
-reported passing validation.
-
-## Required Sections
-
-- Date
-- Project
-- Project root
-- Handoff type
-- Current active box
-- Owning paths
-- Boxes out of scope
-- Current task
-- User target outcome
-- Completed work
-- User-validated work
-- Delivered but pending validation
-- Discussed but not implemented
-- Open bugs
-- Known risks
-- Do-not-regress behavior
-- Files modified or delivered
-- Bundles delivered
-- Bundle-gated cycle status
-- Terminal validation status
-- Manual validation status
-- Source truth status
-- Testing honesty statement
-- Next safe step
-- Files to request next
-- Prompt files to request next
-
-## Final Rule
-
-Do not update canon from this handoff alone.
+This template drafts text. It does not write source, generate the official KANDA
+handoff package, update governance, authorize implementation, merge evidence, or
+write freeze memory.

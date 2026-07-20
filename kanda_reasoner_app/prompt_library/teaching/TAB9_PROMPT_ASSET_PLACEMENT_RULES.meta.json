@@ -21,8 +21,7 @@
     "<TASK_DESCRIPTION>"
   ],
   "depends_on": [
-    "teach_ai_tab9_prompt_authoring_guide",
-    "kanda_prompt_router"
+    "teach_ai_tab9_prompt_authoring_guide"
   ],
   "required_before": [],
   "explainer": "Defines correct package-owned locations for Tab 9 prompt-library assets.",
@@ -63,5 +62,6 @@
       "date": "2026-06-07",
       "summary": "Added lowercase workbench\\bundle_manifest placement contract and stricter dashboard visibility rules."
     }
-  ]
+  ],
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1"
 }

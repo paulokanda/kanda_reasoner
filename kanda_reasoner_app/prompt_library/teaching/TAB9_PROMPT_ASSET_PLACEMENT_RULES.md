@@ -79,7 +79,7 @@ Routing can be any one of these:
 
 ```text
 listed in PROMPT_GROUPS.json
-recommended by KANDA_PROMPT_ROUTER.md
+selected through the current canonical Prompt Library routing owners
 referenced by a parent methodology prompt
 referenced by an authoring guide
 included in a named prompt stack

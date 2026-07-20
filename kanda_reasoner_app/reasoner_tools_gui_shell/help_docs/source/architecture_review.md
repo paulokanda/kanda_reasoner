@@ -1,12 +1,14 @@
 # Architecture Review
 
+Audit Project exposes Architecture Review, Engineering Safety, and Workflow Review as side-by-side child tabs in that order.
+
 Page summary: Architecture Review is a building inspection desk for code. Before a person or an AI repair crew changes the project, it checks owner rooms, permits, wiring, tests, manifests, public names, and evidence stamps so the next fix lands in the right place.
 
 ![Architecture Review summary inspector](../assets/drawings/architecture_review_summary_inspector.png)
 
 ## How To Use This
 
-1. Open the `Architecture Review` tab, select `Check & Update Architecture`, and click `Load this tool now` if the panel has not loaded yet.
+1. Open the `Audit Project` tab, select `Architecture Review`, then select `Check Update Architecture`. Click `Load this tool now` if the panel has not loaded yet.
 2. Check `Project root`; use `Browse...` when the field is not the repository you want to inspect.
 3. Leave `Mode` on `validate` for the first pass. Use `diff` to preview generated changes, `scan` to print the manifest JSON, and `write` only when you deliberately want the worker to write architecture artifacts.
 4. Click the green action button. Its name changes to `Validate Project`, `Preview Changes`, `Scan Project`, or `Write Architecture Files` according to the selected mode. Then read the `Output` panel as evidence. The tab reports risks and artifacts; it does not silently approve a patch.
@@ -15,7 +17,7 @@ Page summary: Architecture Review is a building inspection desk for code. Before
 
 ## What This Tab Owns
 
-**Technical:** `Architecture Review` is registered as the lazy tool with tab id `architecture_review`, legacy help catalog `tab1_architecture.json`, source hint `kanda_reasoner_app/manage_architecture/manage_architecture_gui.py`, and runtime class `ArchitectureManagerWindow`. The shell help button resolves this rich local help page through the manifest before falling back to the legacy JSON catalog. The tool itself loads a sibling worker script, runs the selected mode in a `QThread`, captures stdout/stderr into the output panel, and exposes a read-only advisory AI review path over the last deterministic result.
+**Technical:** `Audit Project` is registered as the lazy tool with tab id `architecture_review` and hosts the `Architecture Review` workflow, legacy help catalog `tab1_architecture.json`, source hint `kanda_reasoner_app/manage_architecture/manage_architecture_gui.py`, and runtime class `ArchitectureManagerWindow`. The shell help button resolves this rich local help page through the manifest before falling back to the legacy JSON catalog. The tool itself loads a sibling worker script, runs the selected mode in a `QThread`, captures stdout/stderr into the output panel, and exposes a read-only advisory AI review path over the last deterministic result.
 
 **In plain English:** This tab is the inspection desk before repair work. It checks whether the project has rooms with clear labels, wiring that does not loop back on itself, permits for generated files, and test records before anyone carries a toolbox into the wrong place.
 
@@ -23,7 +25,7 @@ Page summary: Architecture Review is a building inspection desk for code. Before
 
 ## Routed Help And Loading Path
 
-The visible `Help` button belongs to the shell host, not the inner worker window. The shell reads the `ToolSpec` for `Architecture Review`, sees `help_catalog="tab1_architecture.json"`, and calls the rich help resolver. The resolver finds the manifest page with `legacy_help_catalog` equal to `tab1_architecture.json` and opens `rendered/architecture_review.html` with the shared local CSS.
+The visible `Help` button belongs to the shell host, not the inner worker window. The shell reads the `ToolSpec` for `Audit Project`, sees `help_catalog="tab1_architecture.json"`, and calls the rich help resolver. The resolver finds the manifest page with `legacy_help_catalog` equal to `tab1_architecture.json` and opens `rendered/architecture_review.html` with the shared local CSS.
 
 If the rich rendered file or CSS is missing, the shell can fall back to the old catalog formatter. That fallback is useful for safety, but it is not the desired user experience. The canonical path for this tab is rendered as a wrapped route so the help page never grows wider than the desktop help window:
 

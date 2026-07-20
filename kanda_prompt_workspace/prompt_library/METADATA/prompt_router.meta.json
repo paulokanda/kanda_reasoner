@@ -1,56 +1,21 @@
 {
   "prompt_id": "prompt_router",
-  "display_name": "Prompt Router",
+  "display_name": "Prompt Router Compatibility Redirect",
   "filename": "prompt_router.md",
   "category": "02_prompt_routing_and_indexing",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Routes messy human requests to prompt families and companion prompts.",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1",
+  "description": "Deprecated identity redirect from prompt_router and kanda_prompt_router to current request, navigation, routing-system, and substitution owners.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 10,
+  "priority": 0,
   "trigger_phrases": [
-    "route prompt",
-    "prompt router",
-    "intent router",
-    "messy request to prompt",
-    "which stack",
-    "Error Lesson ZIP",
-    "direct Error Memory import ZIP",
-    "formatted error lesson package",
-    "new error and solution JSON",
-    "zip install validate error appears in AI-assisted error lesson intake",
-    "error must appear in AI-assisted error lesson intake",
-    "default insertion of error in Error Memory logic",
-    "large module refactor",
-    "module above 500 lines",
-    "module too large",
-    "split large module",
-    "mixed responsibility refactor",
-    "large module protocol v6",
-    "MODULE_TOO_LARGE",
-    "large module protocol v7",
-    "AST Split Audit",
-    "candidate-island queue",
-    "two-island patch",
-    "multi-island patch",
-    "patch train",
-    "split handoff for AI",
-    "large module protocol v7.2",
-    "double refactor train",
-    "sequential refactor train"
+    "historical prompt_router reference",
+    "kanda_prompt_router compatibility lookup"
   ],
   "required_companion_prompts": [
-    "general_prompt_stack_load_order",
-    "prompt_substitution_map",
-    "error_memory_ai_formulary_startup_canon",
-    "bundle_gated_development_workflow",
-    "large_module_refactor_protocol",
-    "large_module_refactor_template",
-    "router_bridge_governed_implementation",
-    "project_tool_boundary_canon"
+    "prompt_substitution_map"
   ],
   "updated_at_utc": "2026-06-28T20:50:00Z",
   "large_module_router_binding": {
@@ -60,8 +25,24 @@
     "max_islands_per_inner_patch": 2,
     "patch_train_delivery_requires_serial_inner_patches": true
   },
-  "updated_for": "large-module-refactor-practical-granularity-v7-2",
+  "updated_for": "prompt-audit-wave2b-legacy-routing-retirement-v1",
   "tags": [
     "large module protocol v7.2"
-  ]
+  ],
+  "version": "2.0",
+  "aliases": [
+    "prompt_router",
+    "kanda_prompt_router",
+    "KANDA_PROMPT_ROUTER"
+  ],
+  "replacement_prompt_ids": [
+    "ai_prompt_request_canon",
+    "prompt_navigation_index",
+    "kanda_routing_system_canon",
+    "prompt_substitution_map"
+  ],
+  "title": "Prompt Router Compatibility Redirect",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "active_route": false,
+  "may_be_selected_for_new_work": false
 }

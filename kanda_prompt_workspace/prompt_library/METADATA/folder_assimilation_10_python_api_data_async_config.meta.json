@@ -3,11 +3,11 @@
   "display_name": "Folder Assimilation - Python API, Data, Async, and Config",
   "filename": "_FOLDER_ASSIMILATION.md",
   "category": "10_python_api_data_async_config",
-  "status": "audited_candidate",
+  "status": "active",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
-  "description": "Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions.",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Routes the current narrow Python API, Data, Async, and Configuration specialists without forced companion loading.",
   "routing_metadata_only": true,
   "priority": 20,
   "required_companion_prompts": [
@@ -22,5 +22,8 @@
     "config",
     "feature flag"
   ],
-  "card_path": "ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md"
+  "card_path": "ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md",
+  "version": "3.0",
+  "owner_box": "10_python_api_data_async_config",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1"
 }

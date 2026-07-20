@@ -1,78 +1,68 @@
-# Professional Engineering Governance Template
+---
+prompt_id: professional_engineering_governance_template
+prompt_code: KPR-03-005
+title: Professional Engineering Governance Profile Template
+version: 2.0
+status: draft_template
+load_type: on_request
+owner_box: 03_governance_freeze_and_handoff
+source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
+---
 
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-Version: 1.0.0
-Status: Reusable high-risk engineering companion
-Use: Add for runtime, schema, persistence, public API, GUI lifecycle, security, state, domain-safety, or multi-box work.
+# Professional Engineering Governance Profile Template
 
 ## Purpose
 
-Force requirements clarity, risk classification, architecture ownership, traceability, validation discipline, and no-regression behavior for high-risk software work.
+Use this draft-only template to design a Project-specific engineering governance
+profile when no current profile exists. It records Project choices and routes to
+existing global canons. It does not create a parallel Brick Wall, Box canon,
+Tool/Project canon, delivery protocol, or freeze system.
 
-
-## Project-Agnostic Contract
-
-This prompt must work for any software project. Replace variables before use.
-
-Required variables:
+## Draft profile
 
 ```text
-<PROJECT_ROOT>
-<PROJECT_NAME>
-<PRODUCT_PACKAGE>
-<TASK_DESCRIPTION>
-<TASK_SLUG>
-<GOVERNANCE_FOLDER>
-<VALIDATION_COMMANDS>
-<OUTPUT_FOLDER>
-<SOURCE_FILES>
-<LOG_FILES>
+PROJECT ENGINEERING GOVERNANCE PROFILE
+Project name:
+Project root:
+Project Support root:
+Project purpose:
+Primary runtime or product surfaces:
+Risk classes relevant to this Project:
+Current global canons adopted:
+Project-specific constraints:
+Protected milestones or interfaces:
+Required validation families:
+Required human approvals:
+Durable evidence owners:
+Known exclusions:
+Review date:
+Profile status: DRAFT / REVIEWED / ACTIVE_BY_GOVERNED_INSERTION
 ```
 
-Rules:
-- Do not hardcode one project root.
-- Do not assume one product package.
-- Do not treat examples as active project truth.
-- Use current source files, logs, and validation output as evidence.
-- If evidence is missing, request it before implementation.
+## Authoring rules
 
-## Requirements Engineering Rule
+1. Inspect current source, manifests, tests, and frozen Project memory first.
+2. Reference global canons by stable prompt ID; do not copy their full rules.
+3. Record only Project-specific choices that are not already globally owned.
+4. Distinguish preference, constraint, verified invariant, and historical note.
+5. Define measurable validation evidence for every Project-specific hard rule.
+6. Preserve unknowns instead of inventing policy.
+7. Route insertion and registration through Class 07 governance.
+8. Require Brick Wall admission before any profile-driven implementation.
 
-Before implementation, define:
+## Prohibited content
 
-- user-visible requirement
-- domain or safety requirement
-- functional requirement
-- non-functional requirement
-- out-of-scope behavior
-- testable acceptance condition
+Do not embed:
 
-## Risk Classification
+- a second Q01-Q40 checklist;
+- generic Box, NO_LEAK, Tool/Project, MCard, patch, terminal, or freeze rules;
+- machine path formulas owned elsewhere;
+- claims that the profile authorizes coding;
+- application-specific secrets or personal data.
 
-Low: local helper or pure validation.
-Medium: UI behavior, persistence metadata, test infrastructure, or local workflow change.
-High: runtime data pipeline, state management, schema migration, public API, security-sensitive logic, or multi-box behavior.
+## Output boundary
 
-## Architecture Ownership Rule
-
-Before editing, identify the owner box. If a change crosses boxes, declare the interop contract explicitly before coding.
-
-## Traceability Rule
-
-For domain-critical operations, define inputs, parameters, preconditions, outputs, failure behavior, and evidence trail.
-
-## Validation Minimum
-
-High-risk work is not validated by compile-only checks. Add focused tests, provenance checks, schema migration checks, or manual runtime/GUI checklists as appropriate.
+This prompt produces a draft profile only. The draft has no source mutation,
+implementation, validation, delivery, or freeze authority. A governed insertion
+release must assign its final identity, metadata, location, routes, validators,
+and lifecycle status.

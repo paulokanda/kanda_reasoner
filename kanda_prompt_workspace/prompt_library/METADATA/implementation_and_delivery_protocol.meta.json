@@ -1,27 +1,43 @@
 {
+  "prompt_code": "KPR-05-003",
   "prompt_id": "implementation_and_delivery_protocol",
   "display_name": "Implementation and Delivery Protocol",
   "filename": "implementation_and_delivery_protocol.md",
   "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Rules for building, packaging, and delivering code or prompt changes.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 15,
+  "load_type": "routed",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md",
+  "aliases": [
+    "KPR-05-003",
+    "implementation_and_delivery_protocol",
+    "implementation and delivery protocol",
+    "surgical patch construction",
+    "installer preparation"
+  ],
+  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "description": "Surgical payload, exact predecessor admission, archive safety, project-linked staging, backup, install transaction, and rollback protocol for an authorized release.",
+  "priority": 16,
   "trigger_phrases": [
-    "implement and send",
-    "code and deliver",
-    "patch with install code",
-    "implementation protocol",
-    "send code to user"
+    "construct patch payload",
+    "prepare installer",
+    "surgical delivery",
+    "baseline hash allowlist",
+    "rollback package"
   ],
   "required_companion_prompts": [
-    "box_architecture_canon",
-    "evidence_freshness_gate",
+    "brick_wall_comprehensive_quality_gate",
     "bundle_gated_development_workflow",
+    "patch_install_delivery_error_register"
+  ],
+  "optional_companion_prompts": [
+    "project_tool_boundary_canon",
+    "pre_output_contract_gates",
     "terminal_cleanup_contract"
-  ]
+  ],
+  "when_to_load": "After implementation authorization when an installable release needs payload and installer construction.",
+  "when_not_to_load": "Do not load for analysis-only work or before release admission.",
+  "source_write_authorization": "NO"
 }

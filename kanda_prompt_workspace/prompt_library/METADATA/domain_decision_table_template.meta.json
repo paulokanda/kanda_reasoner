@@ -1,25 +1,40 @@
 {
+  "prompt_code": "KPR-12-011",
   "prompt_id": "domain_decision_table_template",
-  "display_name": "Domain Decision Table Template",
+  "display_name": "Versioned Domain Decision Table Template",
   "filename": "domain_decision_table_template.md",
   "category": "12_generalized_project_canons",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Template for converting domain rules into explicit decision tables.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md",
+  "classification": "versioned_deterministic_domain_decision_table_template",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Represent multiple discrete domain rules as an explicit, versioned, testable decision table with precedence, coverage, traceability, and controlled unknown behavior. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "box_logic_required": false,
   "priority": 40,
   "trigger_phrases": [
-    "decision table",
-    "domain rules table",
-    "rule matrix",
-    "classification table",
-    "if then domain rules"
+    "domain decision table",
+    "rule precedence matrix",
+    "deterministic classification table"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "project_specific_prompt_generalization"
+  "aliases": [
+    "KPR-12-011",
+    "domain decision table",
+    "domain_decision_table_template"
+  ],
+  "user_intent_examples": [
+    "When multiple discrete domain rules need a versioned, testable matrix."
+  ],
+  "when_to_load": "When multiple discrete domain rules need a versioned, testable matrix.",
+  "when_not_to_load": "Do not load for continuous/probabilistic decisions or undefined domain policy.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
   ]
 }

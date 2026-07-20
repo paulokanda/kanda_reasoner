@@ -1,32 +1,43 @@
 {
+  "prompt_code": "KPR-05-002",
   "prompt_id": "bundle_gated_development_workflow",
   "display_name": "Bundle-Gated Development Workflow",
   "filename": "bundle_gated_development_workflow.md",
   "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Requires focused installable bundles, backup, validation, and freeze discipline.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "load_type": "routed",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
+  "aliases": [
+    "KPR-05-002",
+    "bundle_gated_development_workflow",
+    "bundle gated development workflow",
+    "installable release lifecycle",
+    "kanda_bundle_gated_development_workflow"
+  ],
+  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "description": "Classifies installable release applicability, tracks release lifecycle, and dispatches artifact, receiver, installer, validation, terminal, freeze, and Error Memory owners.",
   "priority": 15,
   "trigger_phrases": [
-    "bundle gated",
-    "one patch one problem",
-    "safe patch",
-    "installable bundle",
-    "AI patch workflow",
-    "Error Memory default insertion package",
-    "pending AI-assisted error lesson intake",
-    "zip install validate populate EM tab"
+    "installable release",
+    "bundle gated release",
+    "package this change",
+    "release lifecycle",
+    "build a patch bundle"
   ],
   "required_companion_prompts": [
-    "box_architecture_canon",
-    "evidence_freshness_gate"
+    "brick_wall_comprehensive_quality_gate",
+    "patch_install_delivery_error_register"
   ],
-  "do_not_regress": [
-    "Installer must stage pending Error Memory lessons under the dynamic Show Project project_error_memory folder.",
-    "Validation must check GUI autoload/host trigger when code support is involved."
-  ]
+  "optional_companion_prompts": [
+    "project_tool_boundary_canon",
+    "box_architecture_canon",
+    "implementation_and_delivery_protocol",
+    "pre_output_contract_gates"
+  ],
+  "when_to_load": "When an authorized change requires an installable or distributable release unit.",
+  "when_not_to_load": "Do not load for read-only audit, explanation-only work, or an edit that will not be packaged.",
+  "source_write_authorization": "NO"
 }

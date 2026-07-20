@@ -5,27 +5,14 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "kanda_routing_system_canon_registration_v1",
-  "description": "Defines the KANDA routing system as a context-selection operating system: Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, advisory similarity boundaries, freeze-aware routing, startup boot discipline, and no global prompt injection.",
-  "routing_coverage": "canon_v1",
+  "source_stage": "prompt-audit-wave2a-routing-owner-foundation-v1",
+  "description": "Defines KANDA routing architecture, owner boundaries, route records, conflict rules, and advisory-system limits.",
   "priority": 3,
   "trigger_phrases": [
     "routing system canon",
-    "KANDA Routing System Canon",
-    "canonize routing system",
-    "routing logic canon",
-    "context selection operating system",
-    "Prompt-Call Accuracy",
-    "Context Package Manifest",
-    "Prompt Registration v2",
-    "register prompt as routable context asset",
-    "prompt-call accuracy",
-    "routing-system update",
-    "startup routing behavior",
-    "prompt insertion rule",
-    "similarity advisory routing",
-    "freeze-aware routing",
-    "routing canon registration"
+    "routing architecture",
+    "route data authority",
+    "prompt registration architecture"
   ],
   "user_intent_examples": [
     "Canonize the routing system itself.",
@@ -45,8 +32,7 @@
   "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.",
   "required_companion_prompts": [
     "ai_prompt_request_canon",
-    "prompt_navigation_index",
-    "GROUP_ASSIMILATION_INDEX"
+    "prompt_navigation_index"
   ],
   "optional_companion_prompts": [
     "kanda_box_shielding_canon",
@@ -55,18 +41,10 @@
     "prompt_audit_canon"
   ],
   "authority_boundary": {
-    "may_define": [
-      "routing-system architecture",
-      "prompt-call accuracy rules",
-      "context package manifest standard",
-      "prompt registration rules"
-    ],
-    "must_not_decide": [
-      "final code implementation",
-      "freeze write without human confirmation",
-      "automatic prompt loading",
-      "router override from similarity scorer"
-    ]
+    "may_route_or_select_context": true,
+    "may_mutate_source": false,
+    "may_authorize_coding": false,
+    "may_authorize_freeze": false
   },
   "on_request_not_startup_always_loaded": true,
   "requires_context_package_manifest_for_routed_work": true,
@@ -76,5 +54,11 @@
     "may_proceed_now_from_similarity",
     "freeze_write_without_confirmation",
     "global_prompt_injection"
-  ]
+  ],
+  "prompt_code": "KPR-02-002",
+  "title": "KANDA Routing System Canon",
+  "version": "3.0",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+  "updated_for": "prompt-audit-wave2a-routing-owner-foundation-v1"
 }

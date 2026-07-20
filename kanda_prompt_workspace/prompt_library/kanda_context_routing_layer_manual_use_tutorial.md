@@ -76,7 +76,7 @@ They are short maps that say what the folder is for.
 After reading the folder card, load the exact specialist prompt(s), such as:
 
 - `box_architecture_canon.md`
-- `universal_delivery_protocol.md`
+- `implementation_and_delivery_protocol.md`
 - `implementation_and_delivery_protocol.md`
 - `large_module_refactor_protocol.md`
 - `prompt_audit_canon.md`
@@ -126,7 +126,7 @@ For this task, I need these prompt files before implementation:
 Required:
 1. box_architecture_canon.md - because ownership and boundaries may change.
 2. implementation_and_delivery_protocol.md - because files will be created or modified.
-3. universal_delivery_protocol.md - because delivery and validation are required.
+3. implementation_and_delivery_protocol.md - because delivery and validation are required.
 
 Recommended:
 1. python_testing_pytest.md - because tests may be needed.

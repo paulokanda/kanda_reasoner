@@ -7,12 +7,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .evidence_freshness import (
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_FRESH,
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_INVALID_EVIDENCE,
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_MISSING_EVIDENCE,
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_PROBABLY_STALE,
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_STALE,
-    PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_WRONG_PROJECT,
     ProjectSymbolAtlasEvidenceFreshnessOptions,
     check_reasoner_symbol_atlas_evidence_freshness,
 )
@@ -25,15 +19,19 @@ from .related_file_finder import (
     ProjectSymbolAtlasRelatedFileOptions,
     find_reasoner_symbol_atlas_related_files,
 )
+from .pre_patch_gate_helpers_private import (
+    _evidence_is_stale,
+    _matching_duplicate_findings,
+    _merge_tests,
+    _missing_test_protection,
+    _reasons,
+    _wrong_target_file,
+)
 from .schemas import (
     ProjectSymbol,
     ProjectSymbolAtlasReport,
     normalize_project_atlas_sequence,
     normalize_project_atlas_text,
-)
-from .shadow_report import (
-    ProjectSymbolAtlasShadowReportOptions,
-    collect_reasoner_symbol_atlas_shadow_findings,
 )
 
 PROJECT_SYMBOL_ATLAS_PRE_PATCH_STATUS_SAFE_TO_PATCH = "safe_to_patch"
@@ -289,115 +287,6 @@ def build_reasoner_symbol_atlas_pre_patch_gate_report(
     )
 
 
-def _matching_duplicate_findings(
-    options: ProjectSymbolAtlasPrePatchGateOptions,
-) -> tuple[ProjectSymbol, ...]:
-    """Support matching duplicate findings behavior.
-    
-    Parameters
-    ----------
-    options : ProjectSymbolAtlasPrePatchGateOptions
-        The option values.
-    
-    Returns
-    -------
-    tuple[ProjectSymbol, ...]
-        The tuple of values.
-    """
-    
-    symbol_name = normalize_project_atlas_text(options.symbol_name)
-    if not symbol_name:
-        return tuple()
-    try:
-        findings = collect_reasoner_symbol_atlas_shadow_findings(
-            options.project_root,
-            options=ProjectSymbolAtlasShadowReportOptions(
-                include_tests=False,
-                include_workbench=False,
-                include_facades=True,
-                include_import_symbols=False,
-                include_constants=True,
-                include_private=options.include_private,
-            ),
-        )
-    except (FileNotFoundError, NotADirectoryError):
-        return tuple()
-    return tuple(item for item in findings if item.name == symbol_name)
-
-
-def _wrong_target_file(target_path: str, primary_edit_target: str) -> bool:
-    """Support wrong target file behavior.
-    
-    Parameters
-    ----------
-    target_path : str
-        The target path value.
-    primary_edit_target : str
-        The primary edit target value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    target = _normalize_path(target_path)
-    primary = _normalize_path(primary_edit_target)
-    return bool(target and primary and target.lower() != primary.lower())
-
-
-def _evidence_is_stale(status: str, fail_on_stale: bool) -> bool:
-    """Support evidence is stale behavior.
-    
-    Parameters
-    ----------
-    status : str
-        The status value.
-    fail_on_stale : bool
-        The fail on stale value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    if not fail_on_stale:
-        return False
-    return status in {
-        PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_PROBABLY_STALE,
-        PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_STALE,
-        PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_WRONG_PROJECT,
-        PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_INVALID_EVIDENCE,
-    }
-
-
-def _missing_test_protection(
-    options: ProjectSymbolAtlasPrePatchGateOptions,
-    related_test_files: tuple[str, ...],
-) -> bool:
-    """Support missing test protection behavior.
-    
-    Parameters
-    ----------
-    options : ProjectSymbolAtlasPrePatchGateOptions
-        The option values.
-    related_test_files : tuple[str, ...]
-        The related test files value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    if not options.require_test_protection:
-        return False
-    if not options.include_tests:
-        return False
-    return len(related_test_files) == 0
-
-
 def _status_for_decision(
     safe_to_patch: bool,
     wrong_target_file: bool,
@@ -447,127 +336,6 @@ def _status_for_decision(
     if needs_owner_review:
         return PROJECT_SYMBOL_ATLAS_PRE_PATCH_STATUS_NEEDS_OWNER_REVIEW
     return PROJECT_SYMBOL_ATLAS_PRE_PATCH_STATUS_INSUFFICIENT_EVIDENCE
-
-
-def _reasons(
-    responsibility_reasons: tuple[str, ...],
-    related_evidence: tuple[str, ...],
-    duplicate_findings: tuple[ProjectSymbol, ...],
-    evidence_status: str,
-    duplicate_symbol_risk: bool,
-    facade_patch_risk: bool,
-    wrong_target_file: bool,
-    missing_test_protection: bool,
-    evidence_stale: bool,
-    safe_to_patch: bool,
-) -> tuple[str, ...]:
-    """Support reasons behavior.
-    
-    Parameters
-    ----------
-    responsibility_reasons : tuple[str, ...]
-        The responsibility reasons value.
-    related_evidence : tuple[str, ...]
-        The related evidence value.
-    duplicate_findings : tuple[ProjectSymbol, ...]
-        The duplicate findings value.
-    evidence_status : str
-        The evidence status value.
-    duplicate_symbol_risk : bool
-        The duplicate symbol risk value.
-    facade_patch_risk : bool
-        The facade patch risk value.
-    wrong_target_file : bool
-        The wrong target file value.
-    missing_test_protection : bool
-        The missing test protection value.
-    evidence_stale : bool
-        The evidence stale value.
-    safe_to_patch : bool
-        The safe to patch value.
-    
-    Returns
-    -------
-    tuple[str, ...]
-        The tuple of values.
-    """
-    
-    values: list[str] = []
-    for value in responsibility_reasons + related_evidence:
-        _append_unique(values, value)
-    _append_unique(values, "Evidence freshness status: " + evidence_status)
-    for finding in duplicate_findings:
-        _append_unique(values, "Duplicate public symbol risk: " + finding.name)
-    if duplicate_symbol_risk:
-        _append_unique(values, "Duplicate public symbol found before patching.")
-    if facade_patch_risk:
-        _append_unique(values, "Target appears to be a facade; patch real owner instead.")
-    if wrong_target_file:
-        _append_unique(values, "Target differs from selected primary edit target.")
-    if missing_test_protection:
-        _append_unique(values, "No related focused test file was found.")
-    if evidence_stale:
-        _append_unique(values, "Evidence is stale or wrong-project and was treated as unsafe.")
-    if safe_to_patch:
-        _append_unique(values, "No blocking ownership risk detected.")
-    return tuple(values)
-
-
-def _merge_tests(first: tuple[str, ...], second: tuple[str, ...]) -> tuple[str, ...]:
-    """Support merge tests behavior.
-    
-    Parameters
-    ----------
-    first : tuple[str, ...]
-        The first value.
-    second : tuple[str, ...]
-        The second value.
-    
-    Returns
-    -------
-    tuple[str, ...]
-        The tuple of values.
-    """
-    
-    values: list[str] = []
-    for item in first + second:
-        _append_unique(values, item)
-    return tuple(values)
-
-
-def _normalize_path(path_text: str) -> str:
-    """Support normalize path behavior.
-    
-    Parameters
-    ----------
-    path_text : str
-        The path text value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    if not path_text:
-        return ""
-    return str(Path(path_text)).replace("\\", "/")
-
-
-def _append_unique(values: list[str], value: str) -> None:
-    """Support append unique behavior.
-    
-    Parameters
-    ----------
-    values : list[str]
-        The input values.
-    value : str
-        The input value.
-    """
-    
-    cleaned = normalize_project_atlas_text(value)
-    if cleaned and cleaned not in values:
-        values.append(cleaned)
 
 
 def _format_summary(decision: ProjectSymbolAtlasPrePatchGateDecision) -> str:

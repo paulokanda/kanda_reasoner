@@ -3,10 +3,10 @@
   "display_name": "Folder Assimilation - Prompt Routing and Indexing",
   "filename": "_FOLDER_ASSIMILATION.md",
   "category": "02_prompt_routing_and_indexing",
-  "status": "audited_candidate",
+  "status": "active",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1",
   "description": "Map task intent to required groups, optional groups, minimum viable context, and specialist prompt requests.",
   "routing_metadata_only": true,
   "priority": 20,
@@ -21,5 +21,11 @@
     "find correct prompt",
     "context router"
   ],
-  "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md"
+  "card_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
+  "folder_id": "02_prompt_routing_and_indexing",
+  "version": "2.1",
+  "updated_for": "prompt-audit-wave2b-legacy-routing-retirement-v1",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "prompt_count": 6,
+  "historical_record_count": 3
 }

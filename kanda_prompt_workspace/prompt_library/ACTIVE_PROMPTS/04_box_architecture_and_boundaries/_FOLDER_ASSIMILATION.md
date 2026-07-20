@@ -2,88 +2,46 @@
 folder_id: 04_box_architecture_and_boundaries
 folder_name: Box Architecture and Boundaries
 artifact_type: folder_assimilation_card
-version: 1.0
-status: audited_candidate
+version: 2.0
+status: active
 scope: routing_metadata_only
 load_mode: selected_when_needed
 owner_box: Context Routing Layer
-created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
+updated_for: prompt-audit-wave4b-box-architecture-boundaries-v1
 ---
 
 # Box Architecture and Boundaries - Folder Assimilation Card
 
 ## Purpose
-Routing metadata for selecting this prompt folder. It does not replace the prompts inside it.
 
-## Responsibility
-Define owner boxes, audits, public contracts, private internals, forbidden touches, dependencies, fallback behavior, anti-contamination rules, and KBSC shielding.
+Route only the smallest Class 04 specialist set. This card does not replace the
+prompts and does not authorize coding.
 
-## Use When
-Use before code, architecture, module splitting, cross-box wiring, GUI ownership changes, prompt-library updates, bundle creation, shielding, milestone hardening, stronger ML prep, or ownership-boundary changes.
+## Active owners
 
-## Do Not Use When
-Do not use as a substitute for delivery scripts, validation scripts, or prompt audit decisions.
+- `KPR-04-001 box_architecture_canon`: bounded ownership, public/private law,
+  authoritative state, dependencies, lifecycle vocabulary, and Box Boundary
+  Audit.
+- `KPR-04-002 kanda_box_shielding_canon`: proven risk-based invariant shielding.
+- `KPR-04-003 project_folder_organization_canon`: artifact classification and
+  current-owner placement dispatch.
+- `KPR-04-004 stateful_control_regression_canon`: GUI option identity,
+  persistence, hydration, fallback, caption, and sizing regressions.
+- `KPR-04-006 boundary_first_repair_protocol`: symptom-owner divergence and
+  earliest causally sufficient repair-owner diagnosis.
 
-## Required For
-- implementation patch
-- architecture change
-- cross-box touch
-- module split
-- new feature with ownership
-- box shield after a meaningful milestone
-- stronger ML or probabilistic routing preparation
+## Retired identities
 
-## Optional For
-- architecture explanation
-- boundary teaching
+- `closed_box_delivery_canon` is replaced by `box_architecture_canon`.
+- `KPR-04-007 governed_architecture_companion_handoff` is a deprecated redirect
+  only. Do not load or reconstruct the former compiled mega-prompt.
 
-## Never Load For
-- pure text editing with no implementation consequence
+## Selection rules
 
-## Depends On Groups
-- 05_patch_delivery_and_validation
+Use Box Architecture for architecture ownership. Add Boundary-First only when
+repair ownership is uncertain. Add Shielding only after applicability is proven.
+Use Project Folder only for placement/root/cleanliness questions. Use Stateful
+Control only for GUI option-state and hydration regressions.
 
-## Common Task Triggers
-- owner box
-- box boundary
-- box boundary audit
-- box architecture
-- architecture
-- dependencies
-- public contract
-- private internals
-- private reach-in
-- god box
-- leaking registry
-- one primary box
-
-## Minimum Viable Context
-- box_architecture_canon
-
-## Main Prompts In This Folder
-
-| Prompt ID | File Name | Load Type | Short Purpose |
-|---|---|---|---|
-| `box_architecture_canon` | `box_architecture_canon.md` | on_request | Defines Box Architecture, audits, ownership, allowed touches, contracts, internals, and cross-box validation. |
-| `closed_box_delivery_canon` | `closed_box_delivery_canon.md` | on_request | Generalized closed-box delivery rules for safe project modifications. |
-| `project_folder_organization_canon` | `project_folder_organization_canon.md` | on_request | Defines project folder boundaries and placement discipline. |
-| `stateful_control_regression_canon` | `stateful_control_regression_canon.md` | on_request | Protects dropdowns and stateful controls from regression during UI changes. |
-| `kanda_box_shielding_canon` | `kanda_box_shielding_canon.md` | on_request | Defines KBSC: tests-first box shielding as an architectural fitness-function suite for bounded contexts before stronger or cross-box work. |
-| `governed_architecture_companion_handoff` | `governed_architecture_companion_handoff.md` | on_request | Unified non-canonical architecture gate companion; loads current canonical owners and leaves final coding authorization to Brick Wall. |
-| `boundary_first_repair_protocol` | `boundary_first_repair_protocol.md` | routed | Traces symptom-owner divergence and repairs the first proven ownership boundary while validating downstream shields. |
-
-## Routing Rule
-Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
-
-## Boundary Rule
-This card may point to prompt files, but must not copy specialist rules from them.
-
-<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTING_V1_START -->
-
-## Governed Architecture Companion Route
-
-Load `governed_architecture_companion_handoff` only on demand when a task is architecture-sensitive, self-hosting, cross-box, lifecycle-heavy, authority-sensitive, or combines several architecture safeguards. The prompt is a companion and never replaces Brick Wall or any canonical owner.
-
-Do not load the full prompt during normal startup. The startup stack carries only the compact Governed Architecture Companion Bridge.
-
-<!-- GOVERNED_ARCHITECTURE_COMPANION_ROUTING_V1_END -->
+Brick Wall remains final coding authority. Tool/Project owns roots. Class 05
+owns delivery. Generated artifacts are not source truth.

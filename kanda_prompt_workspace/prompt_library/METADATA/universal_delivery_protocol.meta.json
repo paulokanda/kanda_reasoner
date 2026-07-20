@@ -3,10 +3,10 @@
   "display_name": "Universal Delivery Protocol",
   "filename": "universal_delivery_protocol.md",
   "category": "05_patch_delivery_and_validation",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Defines consistent delivery style for code, prompts, reports, and install instructions.",
+  "status": "deprecated",
+  "load_type": "never",
+  "source_stage": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "description": "Historical compatibility tombstone. Current authority: implementation_and_delivery_protocol.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
   "routing_coverage": "complete_v3",
@@ -18,9 +18,10 @@
     "final delivery",
     "artifact delivery"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "evidence_freshness_gate",
-    "bundle_gated_development_workflow"
-  ]
+  "required_companion_prompts": [],
+  "updated_for": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "version": "2.0",
+  "active_route": false,
+  "canonical_replacement": "implementation_and_delivery_protocol",
+  "recommended_companion_prompts": []
 }

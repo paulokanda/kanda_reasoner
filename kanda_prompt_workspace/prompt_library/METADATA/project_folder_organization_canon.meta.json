@@ -1,25 +1,39 @@
 {
+  "prompt_code": "KPR-04-003",
   "prompt_id": "project_folder_organization_canon",
   "display_name": "Project Folder Organization Canon",
   "filename": "project_folder_organization_canon.md",
   "category": "04_box_architecture_and_boundaries",
+  "version": "4.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Defines project folder boundaries and placement discipline.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 5,
+  "load_type": "routed",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md",
+  "aliases": [
+    "KPR-04-003",
+    "project_folder_organization_canon",
+    "project folder organization canon",
+    "artifact placement assessment",
+    "where should this file go"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "Artifact-classification and canonical placement dispatcher that consumes current Tool/Project root ownership.",
+  "priority": 4,
   "trigger_phrases": [
-    "organize folder",
     "project folder structure",
-    "where should files go",
-    "folder canon",
-    "project layout"
+    "where should this file go",
+    "artifact placement",
+    "wrong root write",
+    "generated artifact placement",
+    "source tree contamination"
   ],
   "required_companion_prompts": [
-    "bundle_gated_development_workflow",
-    "implementation_roadmap_builder"
-  ]
+    "project_tool_boundary_canon"
+  ],
+  "optional_companion_prompts": [
+    "durable_document_artifact_routing_canon",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "source_write_authorization": "NO"
 }

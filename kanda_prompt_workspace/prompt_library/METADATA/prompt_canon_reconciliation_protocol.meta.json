@@ -1,32 +1,31 @@
-﻿{
-    "prompt_id":  "prompt_canon_reconciliation_protocol",
-    "display_name":  "Prompt Canon Reconciliation Protocol",
-    "filename":  "prompt_canon_reconciliation_protocol.md",
-    "category":  "07_prompt_authoring_and_audit",
-    "status":  "active",
-    "load_type":  "on_request",
-    "source_stage":  "mechanically_reconciled_from_prompt_library",
-    "description":  "Reconciles overlapping prompt canons and updates the active prompt set.",
-    "box_logic_required":  true,
-    "renamed_in_clean_reconciliation_v2":  true,
-    "routing_coverage":  "complete_v3",
-    "priority":  35,
-    "trigger_phrases":  [
-                            "reconcile prompts",
-                            "deduplicate prompts",
-                            "clean prompt folder",
-                            "rename prompts",
-                            "prompt canon reconciliation",
-                            "create a new prompt",
-                            "update an existing prompt",
-                            "complete prompt asset lifecycle"
-                        ],
-    "required_companion_prompts":  [
-                                       "prompt_navigation_index",
-                                       "prompt_router",
-                                       "prompt_substitution_map",
-                                       "bundle_gated_development_workflow"
-                                   ],
-    "t9t013_complete_lifecycle":  true,
-    "t9t013_scope":  "kanda_prompt_workspace_ACTIVE_PROMPTS_text_only"
+{
+  "prompt_id": "prompt_canon_reconciliation_protocol",
+  "display_name": "Prompt Canon Reconciliation Protocol",
+  "filename": "prompt_canon_reconciliation_protocol.md",
+  "category": "07_prompt_authoring_and_audit",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "on_request",
+  "owner_box": "07_prompt_authoring_and_audit",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_canon_reconciliation_protocol.md",
+  "aliases": [
+    "canon_reconciliation_and_prompt_update"
+  ],
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A067 audit reconciliation and canonical owner resolution",
+  "description": "Makes the governed create, update, link, consolidate, overlay, deprecate, delete-after-migration, reference, or reject decision without modifying source.",
+  "priority": 34,
+  "trigger_phrases": [
+    "reconcile prompt canons",
+    "create or update prompt decision",
+    "consolidate overlapping prompts",
+    "deprecate duplicate prompt",
+    "choose canonical prompt owner"
+  ],
+  "required_companion_prompts": [
+    "prompt_audit_canon",
+    "project_specific_prompt_generalization",
+    "prompt_identity_code_registry_canon",
+    "prompt_insertion_and_router_registration_protocol"
+  ]
 }

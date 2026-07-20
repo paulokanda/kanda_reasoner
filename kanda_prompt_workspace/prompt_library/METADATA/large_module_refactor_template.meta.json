@@ -1,11 +1,38 @@
 {
-  "aligned_with": "large_module_refactor_protocol_v7.4",
-  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
-  "owner_group": "06_refactor_and_architecture_hardening",
+  "prompt_code": "KPR-06-008",
   "prompt_id": "large_module_refactor_template",
+  "display_name": "Large Module Refactor Planning Record Template",
+  "filename": "large_module_refactor_template.md",
+  "version": "4.0.0",
   "schema_version": "1.0",
-  "status": "active",
-  "title": "Large Module Refactor Template",
-  "updated_for": "large-file-refactor-workbench-final-canon-v7-4",
-  "version": "3.3.0"
+  "category": "06_refactor_and_architecture_hardening",
+  "owner_group": "06_refactor_and_architecture_hardening",
+  "status": "draft_template",
+  "load_type": "explicit_on_request",
+  "source_stage": "prompt-audit-wave6a-core-architecture-refactor-owners-v1",
+  "updated_for": "large-module-refactor-planning-record-v4",
+  "aligned_with": "large_module_refactor_protocol_v9.0",
+  "description": "Draft-only record shape for one source-grounded large-module assessment and decomposition proposal.",
+  "box_logic_required": true,
+  "routing_coverage": "wave6a_large_module_refactor_record_template_v4",
+  "priority": 53,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "project_agnostic": true,
+  "creates_files": false,
+  "trigger_phrases": [
+    "large module refactor record",
+    "large module planning template",
+    "module split worksheet"
+  ],
+  "required_companion_prompts": [
+    "large_module_refactor_protocol"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
+  "do_not_regress": [
+    "Keep this prompt draft-only and non-authoritative.",
+    "Keep source identity, ownership, consumer, characterization, architecture comparison, validation, and rollback fields.",
+    "Do not duplicate delivery, terminal, freeze, Planner, Workbench, or AST implementation doctrine.",
+    "Completing the template does not authorize source mutation."
+  ]
 }

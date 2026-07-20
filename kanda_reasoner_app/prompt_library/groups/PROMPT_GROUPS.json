@@ -11,8 +11,6 @@
       "description": "Prompts and router logic to open when a new engineering chat starts.",
       "prompt_ids": [
         "0000_0_1_general_prompt_stack_load_order",
-        "kanda_prompt_router",
-        "0000_0_8_universal_delivery_protocol",
         "0000_1_0_project_startup_canon_template",
         "0000_2_1_daily_startup_loader_template"
       ],
@@ -24,9 +22,8 @@
       "display_name": "End of Day / Handoff",
       "color_role": "green",
       "font_weight": "bold",
-      "description": "Prompts and notes used to close a work session or hand off unfinished work.",
+      "description": "Release notes and current-state documents used beside the current Project handoff exporter.",
       "prompt_ids": [
-        "0000_6_0_workflow_handoff_template",
         "text_library_freeze_handoff",
         "prompt_library_current_state",
         "prompt_library_roadmap"
@@ -39,9 +36,8 @@
       "display_name": "Governance Freeze",
       "color_role": "gold",
       "font_weight": "bold",
-      "description": "Governance-sensitive prompts used only after validation and explicit approval.",
+      "description": "Supporting notes only; current freeze intake and confirmation are owned by the workspace Prompt Library and application freeze flow.",
       "prompt_ids": [
-        "0000_4_0_end_of_chat_governance_update_template",
         "governance_update_overlay_notes_template",
         "prompt_pack_release_notes_template"
       ],
@@ -53,12 +49,10 @@
       "display_name": "High-Risk Engineering",
       "color_role": "orange",
       "font_weight": "bold",
-      "description": "Prompts for runtime behavior, schema, persistence, public APIs, GUI lifecycle, and multi-box work.",
+      "description": "Application-local supporting prompts; current governed authorization remains with workspace Brick Wall and specialist owners.",
       "prompt_ids": [
-        "0000_3_6_professional_engineering_governance_layer",
         "0000_1_0_project_startup_canon_template",
         "architecture_hardening_overlay_template",
-        "kanda_bundle_gated_development_workflow",
         "python_clean_code_overlay"
       ],
       "copy_stack_enabled": true,
@@ -69,9 +63,8 @@
       "display_name": "Large Module Refactor",
       "color_role": "purple",
       "font_weight": "bold",
-      "description": "Prompts for files above 500 lines, helper splits, staged refactors, and API-preserving decomposition.",
+      "description": "Application-local supporting overlays only; current governed large-module authority is workspace KPR-06-007.",
       "prompt_ids": [
-        "0000_5_5_large_module_refactor_protocol_template",
         "large_module_overlay_profile_template",
         "python_clean_code_overlay"
       ],
@@ -83,9 +76,8 @@
       "display_name": "Architecture Hardening",
       "color_role": "red",
       "font_weight": "bold",
-      "description": "Prompts for warning cleanup, layer-boundary safety, duplicate ownership, shadow paths, and state-safety triage.",
+      "description": "Application-local supporting overlays and checklists only; current governed triage authority is workspace KPR-06-005.",
       "prompt_ids": [
-        "0000_8_1_architecture_hardening_triage_protocol_template",
         "architecture_hardening_overlay_template",
         "project_agnostic_prompt_review_checklist",
         "prompt_metadata_consistency_checklist"
@@ -136,8 +128,7 @@
       "prompt_ids": [
         "teach_ai_tab9_prompt_authoring_guide",
         "teach_ai_create_or_update_prompt_request",
-        "tab9_prompt_asset_placement_rules",
-        "kanda_bundle_gated_development_workflow"
+        "tab9_prompt_asset_placement_rules"
       ],
       "copy_stack_enabled": true,
       "open_as_floating_window": true

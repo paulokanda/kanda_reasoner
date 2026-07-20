@@ -1,10 +1,10 @@
 {
   "prompt_id": "kanda_prompt_router",
   "display_name": "Kanda Prompt Router",
-  "category": "prompt_router",
+  "category": "compatibility_redirect",
   "version": "1.0.1",
-  "status": "active",
-  "load_type": "daily_start_router",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
   "project_agnostic": true,
   "governance_linked": false,
   "modifies_governance": false,
@@ -13,7 +13,7 @@
   "edit_policy": "draft_only",
   "promotion_policy": "manual_only",
   "depends_on": [
-    "kanda_bundle_gated_development_workflow"
+    "bundle_gated_development_workflow"
   ],
   "routes_to": [
     "daily_start",
@@ -52,5 +52,12 @@
       "date": "2026-06-07",
       "summary": "Updated default output folder to lowercase workbench\\bundle_manifest."
     }
-  ]
+  ],
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1",
+  "replacement_prompt_ids": [
+    "ai_prompt_request_canon",
+    "prompt_navigation_index",
+    "kanda_routing_system_canon"
+  ],
+  "active_route": false
 }

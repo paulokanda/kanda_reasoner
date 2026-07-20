@@ -1,94 +1,102 @@
-﻿# Project-Specific Prompt Generalization
+---
+prompt_id: project_specific_prompt_generalization
+title: Project-Specific Prompt Generalization
+version: 2.0
+status: active
+load_type: on_request
+owner_box: 07_prompt_authoring_and_audit
+---
 
-Version: 1.0
-Status: Active prompt-library candidate
-Use: Load when importing prompts, canons, handoffs, roadmaps, or domain rules from another project into KANDA Reasoner.
-
-
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-## Generalization Rule
-
-This prompt was generalized from EEG/KANDA project materials. Do not copy EEG-specific nouns, paths, labels, channel names, montage rules, electrode coordinates, or clinical assumptions into KANDA Reasoner unless the current project explicitly needs them. Preserve only the transferable engineering pattern.
-
+# Project-Specific Prompt Generalization
 
 ## Purpose
 
-Convert useful project-specific canon into reusable KANDA Reasoner prompt assets without contaminating the prompt stack with another project's domain assumptions.
+Analyze prompt material from another project or domain and determine how its useful behavior can be reused without importing foreign assumptions, private data, stale roots, or duplicate ownership.
 
-## Core Rule
+This prompt is an analysis specialist. It does not authorize Prompt Library writes.
 
-A source canon from another project is not inserted directly. It must pass through four gates:
+## Use when
 
-1. **Extract the engineering pattern.** Identify the reusable architecture idea, validation discipline, UI-state rule, pipeline invariant, packaging rule, or workflow law.
-2. **Remove project-specific payload.** Strip fixed project roots, domain names, clinical labels, source-file names, hard-coded UI labels, coordinates, and any data model that belongs only to the source project.
-3. **Rename into project-agnostic language.** Replace domain words with generic owner-box terms such as source truth, canonical working base, derived runtime product, control-state registry, resolver, plugin package, visual render engine, and decision table.
-4. **Route it in KANDA Reasoner.** Mark whether it becomes an active prompt, optional special prompt, reference-only file, deprecated source, or index candidate.
+Use this prompt when the source material comes from another project, domain, historical workspace, handoff, roadmap, or prompt system and the task is to:
 
-## Import Decision Table
+- extract a reusable engineering pattern;
+- remove project-specific contamination;
+- decide between a global canon and a project overlay;
+- preserve necessary domain constraints while improving reuse;
+- recommend reuse, update, registration, reference-only retention, or rejection.
 
-| Source material type | Action | Example generalized output |
-|---|---|---|
-| Domain-specific clinical/math rule | Reference-only unless KANDA Reasoner needs that domain | Keep as source inventory only |
-| Architecture invariant | Generalize and add prompt | immutable source -> derived product |
-| GUI/dropdown/control-state safety | Generalize and add prompt | control-state do-not-regress canon |
-| Plugin package format | Generalize and add prompt | extension package import canon |
-| Visual rendering contract | Generalize and add prompt | shared render engine canon |
-| Prompt stack/load order from old project | Use only as router idea; do not replace active KANDA Reasoner stack | update router addendum |
-| Handoff from old project | Extract unresolved risks only; do not make canon | report/reference only |
+Do not use it for ordinary prompt editing that does not involve external-project or domain-specific material.
 
-## Contamination Checks
+## Required context
 
-Reject or quarantine imported text if it contains:
+Before a final decision, inspect:
 
-- hard-coded source project root;
-- domain labels not used by KANDA Reasoner;
-- coordinate tables or clinical identities;
-- instructions that override KANDA Reasoner governance;
-- statements like "frozen" that were frozen only in the source project;
-- source project folder names as active truth;
-- unverified claims that implementation already exists in KANDA Reasoner.
+- the exact source material and its source hash;
+- source project, date, authority, and reuse status;
+- sensitive or confidential content classification;
+- current related Prompt Library prompts, metadata, folder card, and routing assets;
+- `prompt_audit_canon` and `prompt_canon_reconciliation_protocol`;
+- the current active project, Tool root, Project root, support root, and transient root when paths appear in the source.
 
-## Required Output When Generalizing
+## Generalization procedure
 
-Every batch generalization should output:
+1. Record provenance and classify the source as current, historical, advisory, generated, or unknown.
+2. Redact credentials, patient information, personal data, proprietary identifiers, and unrelated private paths before reuse.
+3. Separate transferable behavior from project-specific nouns, labels, file names, UI text, hardware, regulations, clinical assumptions, and deployment constraints.
+4. Preserve a domain constraint when removing it would weaken safety, correctness, or the actual behavior contract.
+5. Search existing Prompt Library owners before proposing any new prompt.
+6. Apply this preference order:
+   - reject as non-transferable or unsafe;
+   - use an existing prompt unchanged;
+   - keep a project-specific overlay or folder card;
+   - update an existing canonical prompt;
+   - link or register an existing asset;
+   - create a new prompt only when no current owner is sufficient and the gap is verified.
+7. Compare the proposed generalized result with the source for semantic loss, false universality, lost exceptions, weakened validation, and changed intent.
+8. Dispatch the recommendation to the correct Class 07 owner.
 
-- source inventory;
-- accepted generalized ideas;
-- rejected/reference-only ideas;
-- updated prompt files;
-- new prompt files;
-- index-update candidate;
-- sandbox review/self-check;
-- install/extract command that preserves terminal logs.
+## Result classifications
 
-<!-- T9T013_KANDA_DEPRECATED_ROOT_GUARD_START -->
+Use exactly one primary result:
 
-## T9T013 Deprecated Root Regression Guard
+- `REJECTED`
+- `REFERENCE_ONLY`
+- `USE_EXISTING`
+- `PROJECT_OVERLAY`
+- `REUSABLE_TEMPLATE`
+- `UPDATE_EXISTING`
+- `LINK_OR_REGISTER_EXISTING`
+- `NEW_PROMPT_CANDIDATE`
+- `BLOCKED_NEEDS_EVIDENCE`
 
-When generalizing prompt-library work, never preserve obsolete local roots as active truth.
+`NEW_PROMPT_CANDIDATE` is not implementation authorization.
 
-For this workspace, prompt assets are expected under:
+## Required output
 
-```text
-kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/
-kanda_prompt_workspace/prompt_library/METADATA/
-```
+Return a `GENERALIZATION RECORD` containing:
 
-If a handoff, roadmap, install block, validation block, or generated bundle refers to an unrelated project root as the active project root, classify that as a regression unless the user explicitly says they are working in that project.
+- source identity, authority, date, and hash;
+- sensitive-content and redaction decision;
+- transferable behavior;
+- necessary domain constraints retained;
+- contamination removed;
+- existing owners inspected;
+- semantic-loss findings;
+- primary result classification;
+- recommended owner and target asset;
+- unresolved risks;
+- required next Class 07 prompt;
+- source-write authorization: `NO`.
 
-Generalize path rules into owner boxes and active workspace-relative paths. Do not turn deprecated local paths into active instructions.
+## Owner dispatch
 
-<!-- T9T013_KANDA_DEPRECATED_ROOT_GUARD_END -->
+- Read-only prompt quality and overlap evidence: `prompt_audit_canon`.
+- Create, update, consolidate, deprecate, link, or reject decision: `prompt_canon_reconciliation_protocol`.
+- Prompt identity and KPR code: `prompt_identity_code_registry_canon`.
+- Authorized source, metadata, folder, and route mutation: `prompt_insertion_and_router_registration_protocol`.
+- Installable bundle: Class 05 delivery owners only after authorization.
+- Freeze: current freeze owners only after local validation and human confirmation.
 
+## Non-authorization rule
+
+A completed generalization record does not authorize source writes, routing changes, generated-artifact regeneration, patch delivery, or freeze. Brick Wall and the applicable implementation owner must authorize those actions separately.

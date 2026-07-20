@@ -2,92 +2,48 @@
 folder_id: 12_generalized_project_canons
 folder_name: Generalized Project Canons
 artifact_type: folder_assimilation_card
-version: 1.0
-status: audited_candidate
+version: 4.0
+status: active
 scope: routing_metadata_only
 load_mode: selected_when_needed
-owner_box: Context Routing Layer
-created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
+owner_box: 12_generalized_project_canons
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
 ---
 
 # Generalized Project Canons - Folder Assimilation Card
 
 ## Purpose
-Routing metadata for selecting this prompt folder. It does not replace the prompts inside it.
 
-## Responsibility
-Provide reusable canons for project/tool boundaries, plugins, visual rendering, desktop help layout, quick-start help blocks, transforms, data pipelines, and decision tables.
+Route to one reusable project canon or project-specific overlay without copying
+its behavior or authorizing source work.
 
-## Use When
-Use when the project needs reusable architectural canons.
+## Current specialists
 
-## Do Not Use When
-Do not use as the session kernel or patch protocol.
+| Code | Prompt ID | Narrow owner |
+|---|---|---|
+| `KPR-12-001` | `project_tool_boundary_canon` | Tool, Project, Support and transient identity |
+| `KPR-12-002` | `error_memory_active_ready_correction_blueprint` | Error Memory draft/readiness/promotion workflow |
+| `KPR-12-003` | `error_memory_active_ready_json_template` | marker-wrapped Error Memory output envelope |
+| `KPR-12-004` | `error_memory_model_template` | human-readable model verified against app schema |
+| `KPR-12-005` | `architecture_review_project_card_machine_canon` | Architecture Review target-card lifecycle |
+| `KPR-12-006` | `project_tool_boundary_startup_bridge` | compact startup bridge to KPR-12-001 |
+| `KPR-12-007` | `peopleware_team_boundary` | bounded human/process classification |
+| `KPR-12-008` | `practical_field_handbook_template` | source-grounded handbook structure |
+| `KPR-12-009` | `data_transform_pipeline_invariants` | data lineage and rebuild invariants |
+| `KPR-12-010` | `desktop_help_document_layout_canon` | optional KANDA desktop-help profile |
+| `KPR-12-011` | `domain_decision_table_template` | versioned deterministic decision tables |
+| `KPR-12-012` | `plugin_package_import_canon` | plugin/package trust and lifecycle |
+| `KPR-12-013` | `shared_visual_render_engine_canon` | canonical visual semantics across backends |
+| `KPR-12-014` | `transform_resolver_architecture_contract` | pure transform resolution and trace |
 
-## Required For
-- plugin package import canon
-- desktop help document layout
-- help quick start
-- non-technical help explanation
-- book-grounded help references
-- shared render engine
-- transform resolver
-- data pipeline invariant
-- domain decision table
-- project tool boundary
-- active project identity
-- selected project root
-- architecture review card machine
-- card lifecycle
-- insert module to refactor
-- eject module after completion
+## Boundaries
 
-## Optional For
-- new project canon creation
-- cross-project reuse planning
-
-## Never Load For
-- routine freeze
-- simple prompt audit without domain canon impact
-
-## Depends On Groups
-- 04_box_architecture_and_boundaries
-- 08_python_engineering_core
-
-## Common Task Triggers
-- plugin
-- desktop help
-- help document layout
-- help quick start
-- non-technical help
-- book-grounded help
-- visual render
-- transform resolver
-- pipeline invariant
-- decision table
-- project versus tool
-- project vs tool
-- active project root
-- target project
-
-## Minimum Viable Context
-- one selected generalized canon matching the task
-
-## Main Prompts In This Folder
-
-| Prompt ID | File Name | Load Type | Short Purpose |
-|---|---|---|---|
-| `architecture_review_project_card_machine_canon` | `architecture_review_project_card_machine_canon.md` | routed | Defines Architecture Review as a project-card machine lifecycle: insert project module, read/plan/refactor/verify, then eject target-specific Tool memory while retaining project-owned results. |
-| `data_transform_pipeline_invariants` | `data_transform_pipeline_invariants.md` | on_request | Preserves source truth, canonical working base, and derived runtime output boundaries. |
-| `desktop_help_document_layout_canon` | `desktop_help_document_layout_canon.md` | on_request | Defines desktop help layout, quick-start blocks, non-technical artifact explanation, book grounding, and help artwork rules. |
-| `domain_decision_table_template` | `domain_decision_table_template.md` | on_request | Template for converting domain rules into explicit decision tables. |
-| `plugin_package_import_canon` | `plugin_package_import_canon.md` | on_request | Defines safe import and validation rules for plugin packages. |
-| `project_tool_boundary_canon` | `project_tool_boundary_canon.md` | always_startup | Mandatory Tool-versus-Project boundary; forbids any nested `*_show_project_to_AI` root inside active Project source. |
-| `shared_visual_render_engine_canon` | `shared_visual_render_engine_canon.md` | on_request | Protects shared visual rendering contracts across tools. |
-| `transform_resolver_architecture_contract` | `transform_resolver_architecture_contract.md` | on_request | Defines base identity plus active transform resolver behavior. |
-
-## Routing Rule
-Request this card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder.
-
-## Boundary Rule
-This card may point to prompt files, but must not copy specialist rules from them.
+- Load only the exact matching canon or overlay.
+- Error Memory application schema/models remain machine authority.
+- KPR-12-010 is a project-specific help profile, not a universal documentation
+  or rendering canon.
+- KPR-12-009 owns lineage; KPR-12-014 owns resolution; neither executes runtime
+  operations.
+- No Class 12 prompt authorizes implementation, patch delivery, validation or
+  freeze.

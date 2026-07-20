@@ -1,72 +1,49 @@
 ---
 folder_id: 10_python_api_data_async_config
-folder_name: Python API, Data, Async, and Config
+folder_name: Python API, Data, Async, and Configuration
 artifact_type: folder_assimilation_card
-version: 1.0
-status: audited_candidate
+version: 3.0
+status: active
 scope: routing_metadata_only
 load_mode: selected_when_needed
-owner_box: Context Routing Layer
-created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
+owner_box: 10_python_api_data_async_config
+source_stage: prompt-audit-wave9a-python-specialist-stack-reconciliation-v1
+updated_for: prompt-audit-wave9a-python-specialist-stack-reconciliation-v1
 ---
 
-# Python API, Data, Async, and Config - Folder Assimilation Card
+# Python API, Data, Async, and Configuration - Folder Assimilation Card
 
 ## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
 
-## Responsibility
-Guide API design, async/parallel architecture, database design, configuration, and feature-flag decisions.
+Route to the smallest applicable specialist in this folder. This card is
+metadata only and does not copy specialist behavior or authorize source work.
 
-## Use When
-Use when the task touches APIs, data storage, async work, distributed work, configuration, or feature flags.
+## Load rule
 
-## Do Not Use When
-Do not use for GUI-only layout changes or prompt-only audit work.
+Load this folder card only after the routing layer identifies a material concern
+owned here. Do not load all specialists as a bundle.
 
-## Required For
-- API design
-- database design
-- async architecture
-- configuration system
-- feature flags
+## Current specialists
 
-## Optional For
-- data model review
-- backend architecture planning
+| Code | Prompt ID | Narrow owner |
+|---|---|---|
+| `KPR-10-001` | `python_api_design` | API and external interface contracts |
+| `KPR-10-002` | `python_async_parallel_distributed` | concurrency and distributed execution |
+| `KPR-10-003` | `python_configuration_feature_flags` | configuration and feature-flag lifecycle |
+| `KPR-10-004` | `python_database_design_optimisation` | database design, queries, and migrations |
 
-## Never Load For
-- read-only explanation of existing prompt routing
+## Canonical identity records
 
-## Depends On Groups
-- 08_python_engineering_core
-- 09_python_quality_security_observability
+- `KPR-10-001 python_api_design`
+- `KPR-10-002 python_async_parallel_distributed`
+- `KPR-10-003 python_configuration_feature_flags`
+- `KPR-10-004 python_database_design_optimisation`
 
-## Common Task Triggers
-- API
-- database
-- async
-- parallel
-- config
-- feature flag
+## Boundaries
 
-## Minimum Viable Context
-- one selected specialist prompt matching the technical area
-
-## Main Prompts In This Folder
-
-| Prompt ID | File Name | Load Type | Short Purpose |
-|---|---|---|---|
-| `python_api_design` | `python_api_design.md` | on_request | Designs REST, GraphQL, and interface APIs for Python systems. |
-| `python_async_parallel_distributed` | `python_async_parallel_distributed.md` | on_request | Guides async, parallel, and distributed Python design. |
-| `python_configuration_feature_flags` | `python_configuration_feature_flags.md` | on_request | Designs configuration, settings, and feature-flag behavior. |
-| `python_database_design_optimisation` | `python_database_design_optimisation.md` | on_request | Improves database design, query behavior, and data persistence. |
-
-## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
-
-## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+- Required companions are not forced by this card.
+- Cross-domain concerns are dispatched to their exact current owners.
+- Brick Wall and delivery owners retain implementation, validation, package,
+  terminal, and freeze authority.
+- `tab4_docstring_quality_roadmap` is a deprecated compatibility tombstone and
+  is not an active Class 09 route.

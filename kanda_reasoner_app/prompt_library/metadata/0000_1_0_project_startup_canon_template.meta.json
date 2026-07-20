@@ -17,7 +17,7 @@
   "files_created": [],
   "governance_linked": false,
   "how_it_works": "It turns the universal workflow into a project-specific rule set through placeholders and adaptation variables.",
-  "load_type": "on_request",
+  "load_type": "compatibility_only",
   "mitigations": [
     "Require placeholder replacement before use.",
     "Keep examples clearly marked and separate from active instructions."
@@ -38,7 +38,7 @@
   ],
   "safe_to_copy": true,
   "schema_version": "1.0.0",
-  "status": "active",
+  "status": "deprecated",
   "subcategory": "general_project_prompt_pack",
   "validation_requirements": [
     "must_be_ascii",
@@ -47,5 +47,11 @@
     "must_not_hardcode_absolute_paths",
     "must_not_modify_source_code_from_tab9"
   ],
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "do_not_use_as_source_authority": true,
+  "replacement_prompt_ids": [
+    "project_startup_canon_template"
+  ],
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1"
 }

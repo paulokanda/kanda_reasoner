@@ -5,21 +5,28 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Selects and applies the correct project overlay without corrupting the base workflow.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "source_stage": "prompt-audit-wave2a-routing-owner-foundation-v1",
+  "description": "Selects one current Project overlay matching the active Project identity without becoming the overlay or mutating source.",
   "priority": 10,
   "trigger_phrases": [
-    "which overlay",
-    "project overlay",
-    "use project-specific rules",
-    "select overlay",
-    "generalize to project"
+    "select project overlay",
+    "which project overlay applies",
+    "overlay conflict",
+    "overlay freshness"
   ],
   "required_companion_prompts": [
-    "general_prompt_stack_load_order",
-    "prompt_substitution_map"
-  ]
+    "project_tool_boundary_canon"
+  ],
+  "prompt_code": "KPR-02-003",
+  "title": "Project Overlay Selector",
+  "version": "2.0",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/project_overlay_selector.md",
+  "updated_for": "prompt-audit-wave2a-routing-owner-foundation-v1",
+  "authority_boundary": {
+    "may_route_or_select_context": true,
+    "may_mutate_source": false,
+    "may_authorize_coding": false,
+    "may_authorize_freeze": false
+  }
 }

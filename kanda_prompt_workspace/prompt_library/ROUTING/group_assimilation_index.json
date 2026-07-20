@@ -16,87 +16,78 @@
     {
       "group_id": "01_session_start_and_navigation",
       "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation",
-      "responsibility": "Start sessions, load the small kernel, and establish AI-human operating context.",
-      "use_when": "At beginning of day/session or when continuity is needed.",
-      "do_not_use_when": "Do not use as a substitute for specialist implementation prompts.",
+      "responsibility": "Start sessions with a compact kernel, establish two-stage readiness, preserve continuity, and route specialist startup bridges.",
+      "use_when": "At startup, continuation, upload-readiness review, startup-template authoring, or explicit readiness assessment.",
+      "do_not_use_when": "Do not use as a substitute for specialist implementation, delivery, validation, or freeze prompts.",
       "required_for": [
         "session start",
         "continuation",
-        "daily kernel"
+        "two-stage Project readiness"
       ],
-      "prompt_count": 9,
+      "prompt_count": 11,
       "main_prompts": [
         "ai_human_partnership_session_start.md",
         "ai_prompt_request_canon.md",
-        "daily_reasoner_startup_loader.md",
-        "daily_session_start_prompt.md",
+        "daily_patch_delivery_guardrails.md",
         "daily_startup_loader_template.md",
-        "general_prompt_stack_load_order.md",
+        "durable_document_artifact_routing_canon.md",
+        "error_memory_ai_formulary_startup_canon.md",
+        "handoff_at_end_of_work.md",
         "project_startup_canon_template.md",
-        "reasoner_startup_canon.md",
-        "session_start_upload_checklist.md"
+        "prompt_router_reasoner_startup_check.md",
+        "session_start_upload_checklist.md",
+        "start_of_day_master_stack.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "current"
     },
     {
       "group_id": "02_prompt_routing_and_indexing",
       "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
-      "responsibility": "Route human intent to groups, prompts, overlays, substitution history, prompt-call accuracy rules, the KANDA Routing System Canon, semantic-readiness canon for ML/embedding routing work, RG-PILOT-000 for post-M35 Pilot/Copilot Phase 0 routing work, and RG-LAB-000 for post-P12 ML LAB phase entry routing.",
-      "use_when": "When deciding what context should be loaded, when routing-system behavior is being changed or audited, when Context Package Manifest / Prompt Registration v2 rules are involved, when ML/embedding/semantic retrieval work needs semantic-readiness routing guardrails, when post-M35 Pilot/Copilot/P0/P-series work is requested, or when post-P12 LAB phase entry / ML router reliability-testing roadmap work is requested.",
-      "do_not_use_when": "Do not use as a complete behavior protocol.",
+      "responsibility": "Select current routing owners and exact prompt paths; resolve retired aliases through KPR-02-005.",
+      "use_when": "When deciding what context to load, changing routing architecture, selecting a Project overlay, resolving a historical prompt identity, or evaluating KANDA semantic/ML adoption.",
+      "do_not_use_when": "Do not use as an implementation, patch-delivery, freeze, or source-authority protocol.",
       "required_for": [
         "routing",
         "prompt selection",
-        "context map",
-        "routing-system canonization",
-        "Context Package Manifest",
-        "Prompt Registration v2",
-        "semantic-readiness canonization",
-        "routing_signal_scorer v3",
-        "embedding readiness",
-        "Metadata Vector Manifest",
-        "post-M35 Pilot/Copilot Phase 0 router canonization",
-        "P0 scope charter routing",
-        "Pilot/Copilot P-series milestone routing",
-        "post-P12 LAB phase entry router canonization",
-        "LAB-0 charter routing",
-        "ML lab/test routing",
-        "ML router prompt logic reliability routing"
+        "exact prompt lookup",
+        "overlay selection",
+        "historical identity lookup",
+        "semantic adoption safety"
       ],
-      "prompt_count": 8,
+      "prompt_count": 6,
       "main_prompts": [
+        "chatgpt_kanda_routing_choice_output_protocol.md",
         "kanda_routing_system_canon.md",
-        "routing_signal_scorer_v3_semantic_readiness_canon.md",
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
-        "routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
         "project_overlay_selector.md",
         "prompt_navigation_index.md",
-        "prompt_router.md",
-        "prompt_substitution_map.md"
+        "prompt_substitution_map.md",
+        "routing_signal_scorer_v3_semantic_readiness_canon.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "active_current",
+      "retired_prompt_ids": [
+        "prompt_router",
+        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon"
+      ]
     },
     {
       "group_id": "03_governance_freeze_and_handoff",
       "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff",
-      "responsibility": "Freeze validated work, update governance, transfer state across sessions, and provide the Brick Wall Q01-Q40 implementation status gate.",
-      "use_when": "When Brick Wall status, validation, freeze, governance, handoff, or consequential implementation methodology is requested.",
-      "do_not_use_when": "Do not freeze without validation evidence.",
+      "responsibility": "Own Brick Wall status, cooperative decision discussion, feature freeze intake, outgoing artifact contract dispatch, and draft-only governance or handoff profiles.",
+      "use_when": "Use for governed implementation status, consequential option discussion, freeze-intake review, final operational artifact checks, or explicit generic profile drafting.",
+      "do_not_use_when": "Do not use as a substitute for specialist implementation, delivery, validation, Box, Tool/Project, Error Memory, or normal KANDA handoff owners.",
       "required_for": [
-        "freeze",
-        "governance update",
-        "handoff",
-        "brick wall",
-        "Q01-Q40 implementation status"
+        "Brick Wall status",
+        "freeze intake",
+        "operational artifact emission"
       ],
-      "prompt_count": 10,
+      "prompt_count": 6,
       "main_prompts": [
         "brick_wall_comprehensive_quality_gate.md",
-        "active_governance_freeze_update.md",
-        "current_workflow_handoff_template.md",
-        "end_of_chat_governance_update_template.md",
+        "cooperative_implementation_methodology.md",
+        "freeze_code_intake_and_form_protocol.md",
+        "pre_output_contract_gates.md",
         "professional_engineering_governance_template.md",
-        "reasoner_professional_engineering_governance.md",
         "workflow_handoff_template.md"
       ],
       "phase_1_folder_card_status": "available"
@@ -104,34 +95,29 @@
     {
       "group_id": "04_box_architecture_and_boundaries",
       "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries",
-      "responsibility": "Declare boxes, ownership, boundaries, contracts, dependencies, contamination risks, KBSC shield requirements, and route the governed architecture companion on demand.",
-      "use_when": "Before implementation, architecture changes, refactors, cross-box touches, meaningful milestone shielding, or stronger ML preparation.",
-      "do_not_use_when": "Do not use for simple explanation-only tasks.",
+      "responsibility": "Declare bounded ownership and route focused boundary repair, risk-based shielding, artifact placement, and stateful GUI control regression owners.",
+      "use_when": "When consequential work has ownership, public-contract, cross-box, repair-owner, shield, placement, or GUI option-state risk.",
+      "do_not_use_when": "Do not use for simple explanation-only tasks or as implementation authorization.",
       "required_for": [
-        "implementation",
-        "architecture",
-        "refactor",
-        "box ownership",
-        "box shielding",
-        "meaningful milestone shield",
-        "stronger ML preparation"
+        "architecture ownership",
+        "cross-box touch",
+        "boundary-risk diagnosis"
       ],
-      "prompt_count": 6,
+      "prompt_count": 5,
       "main_prompts": [
         "box_architecture_canon.md",
-        "closed_box_delivery_canon.md",
-        "project_folder_organization_canon.md",
-        "stateful_control_regression_canon.md",
+        "boundary_first_repair_protocol.md",
         "kanda_box_shielding_canon.md",
-        "governed_architecture_companion_handoff.md"
+        "project_folder_organization_canon.md",
+        "stateful_control_regression_canon.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },
     {
       "group_id": "05_patch_delivery_and_validation",
       "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation",
-      "responsibility": "Package, deliver, validate, register, and classify implementation patches.",
-      "use_when": "When code/files/ZIP/install/validation/freeze are involved.",
+      "responsibility": "Coordinate release lifecycle, surgical delivery, active PIR routing, correction incidents, terminal behavior, and recovery dispatch.",
+      "use_when": "When code, files, ZIP, install, validation, recovery, or freeze preparation is involved.",
       "do_not_use_when": "Do not use as a reason to touch unrelated boxes.",
       "required_for": [
         "patch",
@@ -139,78 +125,84 @@
         "validation",
         "freeze evidence"
       ],
-      "prompt_count": 10,
+      "prompt_count": 7,
       "main_prompts": [
         "bundle_gated_development_workflow.md",
-        "evidence_freshness_gate.md",
         "implementation_and_delivery_protocol.md",
         "implementation_roadmap_builder.md",
-        "patch_registry_validation_freeze.md",
-        "universal_delivery_protocol.md"
+        "patch_install_delivery_error_register.md",
+        "patch_validate_freeze_error_memory_routine_blueprint.md",
+        "router_bridge_user_detected_correction.md",
+        "terminal_cleanup_contract.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },
     {
       "group_id": "06_refactor_and_architecture_hardening",
       "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening",
-      "responsibility": "Handle large modules, architecture hardening, fragmentation, and roadmap-solving.",
-      "use_when": "When modules are large, risks are architectural, or problem sets need ordering.",
-      "do_not_use_when": "Do not use for tiny text edits or simple explanation.",
+      "responsibility": "Classify current structural risks, govern behavior-preserving decomposition, and route bounded Web-AI planning, bundle, AST-repair, and Safe Refactor specialists without duplicate authority.",
+      "use_when": "When current structural evidence requires a Class 06 core owner or one of the bounded KPR-06-001 through KPR-06-004 specialist routes.",
+      "do_not_use_when": "Do not let Web-AI specialist prompts replace KPR-06-007, Class 05 delivery owners, Brick Wall, or human-confirmed freeze.",
       "required_for": [
         "large module",
         "architecture hardening",
         "problem ordering"
       ],
-      "prompt_count": 11,
+      "prompt_count": 8,
       "main_prompts": [
         "architecture_hardening_triage_protocol.md",
         "architecture_hardening_triage_template.md",
         "large_module_refactor_protocol.md",
         "large_module_refactor_template.md",
-        "problem_set_roadmap_solver.md",
-        "refactor_fragmentation_audit_runner.md",
-        "tab1_tab2_audit_taxonomy.md",
         "web_ai_large_module_refactor_exchange_protocol.md",
         "web_ai_planning_response_bundle_blueprint.md",
         "web_ai_ast_split_risk_repair_protocol.md",
         "safe_refactor_how_to.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "not_created_by_design",
+      "minimum_viable_context": [
+        "architecture_hardening_triage_protocol",
+        "large_module_refactor_protocol",
+        "box_architecture_canon",
+        "brick_wall_comprehensive_quality_gate"
+      ]
     },
     {
       "group_id": "07_prompt_authoring_and_audit",
       "relative_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit",
-      "responsibility": "Audit, generalize, reconcile, split, merge, deprecate, and create prompts safely.",
-      "use_when": "When prompt files or prompt canons are being reviewed or changed.",
+      "responsibility": "Audit, generalize, reconcile, assign identity, and apply authorized Prompt Library lifecycle mutations through distinct stage owners.",
+      "use_when": "When prompt files, metadata, identity, lifecycle, or registration are being reviewed or changed.",
       "do_not_use_when": "Do not use for runtime code architecture unless prompts are involved.",
       "required_for": [
         "prompt audit",
-        "prompt canon update",
-        "prompt conflict"
+        "external prompt generalization",
+        "prompt canon reconciliation",
+        "prompt identity or code decision",
+        "authorized prompt insertion or registration"
       ],
-      "prompt_count": 3,
+      "prompt_count": 5,
       "main_prompts": [
         "project_specific_prompt_generalization.md",
         "prompt_audit_canon.md",
-        "prompt_canon_reconciliation_protocol.md"
+        "prompt_canon_reconciliation_protocol.md",
+        "prompt_identity_code_registry_canon.md",
+        "prompt_insertion_and_router_registration_protocol.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "active_current"
     },
     {
       "group_id": "08_python_engineering_core",
       "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core",
-      "responsibility": "Provide core Python engineering principles, architecture, refactoring, patterns, and code quality.",
-      "use_when": "When implementation needs general Python engineering judgment.",
-      "do_not_use_when": "Do not load the whole group for a narrow issue if one prompt is enough.",
+      "responsibility": "Provide Python-specific engineering principles for architecture, refactoring, patterns, performance, legacy code, and maintainability.",
+      "use_when": "When Python source or Python-system design needs one of the listed specialists.",
+      "do_not_use_when": "Do not load for team-process advice or source-grounded handbook generation; use Class 12.",
       "required_for": [
         "core Python implementation",
         "refactoring",
         "design patterns"
       ],
-      "prompt_count": 12,
+      "prompt_count": 10,
       "main_prompts": [
-        "peopleware_team_boundary.md",
-        "practical_field_handbook_template.md",
         "python_clean_architecture.md",
         "python_clean_code.md",
         "python_design_patterns.md",
@@ -295,31 +287,44 @@
     {
       "group_id": "12_generalized_project_canons",
       "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons",
-      "responsibility": "Store generalized reusable project canons, project/tool boundary rules, architecture contracts, desktop help-document layout rules, practical quick-start rules, and optional book-grounded help references, and routed Error Memory active-ready lesson correction blueprints.",
-      "use_when": "When extracting project-agnostic rules from specific projects, preserving active-project versus tool identity, or creating reusable desktop help-document layout, practical help quick-starts, or characterful help artwork rules.",
-      "do_not_use_when": "Do not place project-specific facts here.",
+      "responsibility": "Store reusable generalized canons and templates, including Tool/Project identity, MCard lifecycle, Error Memory models, software-team human factors, and source-grounded handbook generation.",
+      "use_when": "When a task needs one selected generalized canon or template rather than Python implementation law.",
+      "do_not_use_when": "Do not use as generic implementation, personnel-action, medical-diagnosis, surveillance, package, or freeze authority.",
       "required_for": [
+        "project versus tool identity",
+        "project support ownership",
+        "MCard lifecycle",
+        "stale card result rejection",
         "generalization",
         "reusable canon",
-        "project-agnostic rules",
-        "desktop help layout",
-        "help document layout",
-        "help quick start",
-        "non-technical help explanation",
-        "book-grounded help references",
-        "Error Memory active-ready lesson correction"
+        "Error Memory active-ready lesson correction",
+        "plugin import",
+        "desktop help",
+        "rendering",
+        "transform",
+        "pipeline invariant",
+        "decision table",
+        "software-team human/process classification",
+        "source-grounded practical handbook"
       ],
-      "prompt_count": 8,
+      "prompt_count": 14,
       "main_prompts": [
+        "architecture_review_project_card_machine_canon.md",
         "data_transform_pipeline_invariants.md",
         "desktop_help_document_layout_canon.md",
         "domain_decision_table_template.md",
+        "error_memory_active_ready_correction_blueprint.md",
+        "error_memory_active_ready_json_template.md",
+        "error_memory_model_template.md",
+        "peopleware_team_boundary.md",
         "plugin_package_import_canon.md",
+        "practical_field_handbook_template.md",
+        "project_tool_boundary_canon.md",
+        "project_tool_boundary_startup_bridge.md",
         "shared_visual_render_engine_canon.md",
-        "transform_resolver_architecture_contract.md",
-        "error_memory_active_ready_correction_blueprint.md"
+        "transform_resolver_architecture_contract.md"
       ],
-      "phase_1_folder_card_status": "not_created_by_design"
+      "phase_1_folder_card_status": "active"
     }
   ],
   "task_routes": [
@@ -432,7 +437,7 @@
       "minimum_viable_context": [
         "large_module_refactor_protocol",
         "box_architecture_canon",
-        "validation_protocol"
+        "brick_wall_comprehensive_quality_gate"
       ],
       "missing_behavior": "HARD_STOP_before_implementation",
       "fast_path_allowed": false
@@ -501,55 +506,6 @@
       "routing_note": "Semantic-readiness work is Routed Work Path. Planning may proceed partially, but implementation must wait for semantic-readiness canon, KBSC boundary, current routing_signal_scorer shield context, validation plan, and freeze path."
     },
     {
-      "route_id": "routing_signal_scorer_v3_pilot_copilot_phase0_route",
-      "task_intent": "Post-M35 Pilot/Copilot Phase 0, P0, Pilot projection/simulation, Pilot gates, Pilot router reproduction, Copilot boundary, training-data use, batch mode, persistence, or runtime-shadow requests.",
-      "required_groups": [
-        "02_prompt_routing_and_indexing",
-        "04_box_architecture_and_boundaries",
-        "05_patch_delivery_and_validation"
-      ],
-      "required_prompts": [
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
-        "kanda_routing_system_canon",
-        "kanda_box_shielding_canon"
-      ],
-      "routing_note": "Pilot/Copilot Phase 0 work is Routed Work Path. Planning may proceed partially, but implementation must wait for RG-PILOT-000, M35 closure evidence, current project files, validation plan, and freeze path. If P0 is not frozen, P0 is the only safe implementation milestone."
-    },
-    {
-      "task_intent": "POST_P12_LAB_PHASE_ENTRY_OR_ML_ROUTER_RELIABILITY",
-      "triggers": [
-        "RG-LAB-000",
-        "LAB phase",
-        "LAB-0",
-        "post-P12 LAB",
-        "start LAB after P12",
-        "continue after P12",
-        "go next after P12",
-        "ML lab/test",
-        "router prompt logic lab",
-        "test ML router prompt logic",
-        "ML router prompt logic reliability",
-        "continue ML implementation after lab"
-      ],
-      "required_groups": [
-        "02_prompt_routing_and_indexing",
-        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon",
-        "kanda_routing_system_canon",
-        "kanda_box_shielding_canon"
-      ],
-      "optional_groups": [
-        "04_box_architecture_and_boundaries",
-        "03_governance_freeze_and_handoff",
-        "05_patch_delivery_and_validation",
-        "08_python_engineering_core",
-        "09_python_quality_security_observability"
-      ],
-      "minimum_viable_context": "P12 freeze evidence and FREEZE_MEMORY_STATUS OK when continuing after P12; current routing assets and validation path when canonizing RG-LAB-000; current project files and patch boundary when implementation is requested.",
-      "missing_behavior": "HARD_STOP_before_ML_implementation; PARTIAL_for_RG_LAB_000_review; LAB_0_only_after_RG_LAB_000_freeze",
-      "fast_path_allowed": "NO"
-    },
-    {
       "task_intent": "BRICK_WALL_STATUS_CHECK",
       "required_groups": [
         "brick_wall_comprehensive_quality_gate",
@@ -564,35 +520,19 @@
       "fast_path_allowed": false
     },
     {
-      "task_intent": "GOVERNED_ARCHITECTURE_COMPANION",
-      "triggers": [
-        "governed architecture companion",
-        "canonical architecture gate",
-        "architecture handoff",
-        "tool project box shield no leak mcard",
-        "self-hosting architecture gate",
-        "unified architecture gate",
-        "load the full architecture companion",
-        "architecture-sensitive implementation"
-      ],
+      "route_id": "current_semantic_ml_expansion_safety",
+      "task_intent": "Current KANDA semantic, embedding, vector, provider, Pilot, Copilot, LAB, MLRT, or ML-routing expansion proposal.",
       "required_groups": [
-        "04_box_architecture_and_boundaries",
+        "02_prompt_routing_and_indexing",
         "03_governance_freeze_and_handoff",
-        "05_patch_delivery_and_validation"
+        "04_box_architecture_and_boundaries"
       ],
       "required_prompts": [
-        "governed_architecture_companion_handoff",
-        "brick_wall_comprehensive_quality_gate",
-        "router_bridge_governed_implementation",
-        "project_tool_boundary_canon",
-        "box_architecture_canon"
+        "routing_signal_scorer_v3_semantic_readiness_canon",
+        "kanda_routing_system_canon",
+        "brick_wall_comprehensive_quality_gate"
       ],
-      "optional_groups": [
-        "kanda_box_shielding_canon",
-        "architecture_review_project_card_machine_canon"
-      ],
-      "missing_behavior": "HARD_STOP_before_implementation_if_canonical_owners_or_Brick_Wall_authorization_are_incomplete",
-      "fast_path_allowed": false
+      "routing_note": "Require a verified present gap, review of existing capabilities, exact current source, boundary analysis, and Brick Wall admission. Historical RG-PILOT-000 and RG-LAB-000 do not authorize a new milestone ladder."
     }
   ]
 }

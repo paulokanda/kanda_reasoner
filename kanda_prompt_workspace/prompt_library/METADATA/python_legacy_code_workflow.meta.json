@@ -1,27 +1,52 @@
 {
+  "prompt_code": "KPR-08-007",
   "prompt_id": "python_legacy_code_workflow",
-  "display_name": "Python Legacy Code Workflow",
+  "display_name": "Python Legacy Code Stabilization Workflow",
   "filename": "python_legacy_code_workflow.md",
   "category": "08_python_engineering_core",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Safely changes legacy Python code using characterization and seams.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "08_python_engineering_core",
+  "canonical_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md",
+  "classification": "legacy_code_stabilization_characterization_specialist",
+  "source_stage": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
+  "updated_for": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
+  "description": "Stabilizes risky inherited Python code through source identity, behavior discovery, safe characterization, seams, rollback, and explicit residual risk.",
+  "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [
-    "legacy code",
-    "working effectively with legacy code",
-    "safe change legacy",
-    "characterization tests",
-    "hard to change"
+    "legacy code stabilization",
+    "characterization test",
+    "safe change legacy code",
+    "change point test point",
+    "dependency seam",
+    "poorly understood code"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "implementation_roadmap_builder",
+  "aliases": [
+    "KPR-08-007",
+    "A022",
+    "python legacy code stabilization",
+    "python legacy code workflow",
+    "python_legacy_code_workflow"
+  ],
+  "user_intent_examples": [
+    "Stabilize this risky inherited module before changing behavior."
+  ],
+  "when_to_load": "When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.",
+  "when_not_to_load": "Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [
     "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+    "python_refactoring",
+    "large_module_refactor_protocol",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "do_not_regress": [
+    "Do not define all legacy code solely as code without tests.",
+    "Do not use raw production data or uncontrolled side effects for characterization.",
+    "Do not require sys.path mutation or importlib.reload as default seams.",
+    "Do not categorically refuse every bounded emergency change.",
+    "Do not force companion prompts or startup loading."
   ]
 }

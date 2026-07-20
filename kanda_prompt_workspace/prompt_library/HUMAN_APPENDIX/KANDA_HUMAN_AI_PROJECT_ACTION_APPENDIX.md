@@ -86,7 +86,7 @@ Deliver or ask AI to request:
 - general_prompt_stack_load_order.md
 - session_start_upload_checklist.md
 - prompt_navigation_index.md
-- current_workflow_handoff_template.md, if continuing prior work
+- workflow_handoff_template.md, if continuing prior work
 ```
 
 AI should ask for:
@@ -111,8 +111,8 @@ Continue from the last handoff.
 Deliver or ask AI to request:
 
 ```text
-- current_workflow_handoff_template.md
-- active_governance_freeze_update.md, if prior work was frozen
+- workflow_handoff_template.md
+- freeze_code_intake_and_form_protocol.md, if prior work was frozen
 - prompt_navigation_index.md
 - latest project ZIP or changed files
 ```
@@ -172,8 +172,6 @@ Deliver or ask AI to request:
 ```text
 - implementation_roadmap_builder.md
 - bundle_gated_development_workflow.md
-- evidence_freshness_gate.md
-- patch_registry_validation_freeze.md
 - error log or validation output
 - exact files touched by the failing patch
 ```
@@ -201,7 +199,6 @@ Deliver or ask AI to request:
 ```text
 - code_implementation_delivery_protocol.md
 - bundle_gated_development_workflow.md
-- patch_registry_validation_freeze.md
 - box_architecture_canon.md
 - target source files
 ```
@@ -323,10 +320,8 @@ Ok freeze this.
 Deliver or ask AI to request:
 
 ```text
-- active_governance_freeze_update.md
-- patch_registry_validation_freeze.md
-- evidence_freshness_gate.md
-- current_workflow_handoff_template.md
+- freeze_code_intake_and_form_protocol.md
+- workflow_handoff_template.md
 - validation results
 ```
 
@@ -355,8 +350,8 @@ Create a handoff for next AI.
 Deliver or ask AI to request:
 
 ```text
-- current_workflow_handoff_template.md
-- active_governance_freeze_update.md, if anything was frozen
+- workflow_handoff_template.md
+- freeze_code_intake_and_form_protocol.md, if anything was frozen
 - validation outputs
 - list of installed patches
 - remaining issues

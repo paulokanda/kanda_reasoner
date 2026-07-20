@@ -1,74 +1,107 @@
+---
+prompt_id: data_transform_pipeline_invariants
+prompt_code: KPR-12-009
+title: Data Transform Pipeline Invariants
+version: 2.0.0
+status: active
+load_type: on_request
+owner_box: 12_generalized_project_canons
+classification: versioned_data_lineage_canonical_base_derived_output_canon
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+---
+
 # Data Transform Pipeline Invariants
 
-Version: 1.0
-Status: Active prompt-library candidate
-Use: Load when implementing data import, normalization, transformations, filters, derived outputs, previews, analysis artifacts, or any pipeline where user interaction can change runtime output.
+## Purpose
 
+Preserve explicit lineage between acquired source, versioned canonical base, transform plan, and derived outputs across batch, incremental, and streaming pipelines.
 
-## Box Logic Requirement
+This prompt is a bounded technical contract. It is not a persona, a source-write
+authority, a release gate, or proof that implementation or validation occurred.
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+## When to load
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+- Source-to-derived lineage or rebuild correctness is central.
+- Transforms can drift, compound, reorder, or invalidate cached outputs.
+- A pipeline needs explicit deterministic or nondeterministic modes.
 
+## When not to load
 
-## Generalization Rule
+- The task is only resolving UI selections into an operation; use KPR-12-014.
+- No source/canonical/derived distinction exists.
+- The task is domain policy rather than pipeline lineage.
 
-This prompt was generalized from EEG/KANDA project materials. Do not copy EEG-specific nouns, paths, labels, channel names, montage rules, electrode coordinates, or clinical assumptions into KANDA Reasoner unless the current project explicitly needs them. Preserve only the transferable engineering pattern.
+## Authority boundaries
 
+This prompt owns:
 
-## Generalized Pipeline Model
+- source, canonical-base and derived-output identity;
+- versioned lineage and transform-state provenance;
+- rebuild, invalidation and cache-key requirements;
+- declared batch, incremental and streaming modes;
+- determinism profile and late-data/correction handling.
 
-The transferable architecture from the source project is:
+It delegates:
 
-```text
-SourceTruth -> CanonicalWorkingBase -> DerivedRuntimeProduct
-```
+- transform combination and precedence resolution to KPR-12-014;
+- domain invariants to the domain owner;
+- storage mechanics to KPR-10-004;
+- UI/view state to the relevant presentation owner.
 
-## Definitions
+Brick Wall and the current patch, validation, terminal, and freeze owners retain
+implementation and release authority.
 
-### SourceTruth
+## Task modes
 
-The immutable imported or acquired truth. It is preserved for provenance and recovery. It must not be filtered, transformed, patched, reinterpreted, or used as a scratch object.
+Choose one visible mode:
 
-### CanonicalWorkingBase
+- `ANALYZE`: identify the current state, evidence, and gaps.
+- `DESIGN`: produce a bounded contract or decision record.
+- `REVIEW`: evaluate an existing artifact or implementation.
+- `IMPLEMENTATION_GUIDANCE`: describe source work only after exact source and
+  separate authorization are available.
 
-A normalized, validated working base derived from SourceTruth. It may contain safe normalization, metadata repair, identity resolution, and compatibility fields. After creation, it should be treated as stable input for runtime rebuilds.
+## Required evidence
 
-### DerivedRuntimeProduct
+- source and canonical schema versions;
+- ordered transform plan and parameters;
+- pipeline mode and determinism profile;
+- cache/invalidation/rebuild semantics;
+- late-arriving data, corrections, deletion and privacy obligations.
 
-A disposable output created from CanonicalWorkingBase plus current transform state. It can be rebuilt whenever signal-affecting or data-affecting state changes. It must not become the new SourceTruth.
+## Governing rules
 
-## Non-Negotiable Invariants
+- Do not silently transform a previously derived output as though it were the canonical base.
+- Canonical data may change only through an explicit versioned correction, migration, or accepted source update.
+- Record whether transform order is commutative, intentionally ordered, or invalid.
+- For incremental and streaming modes, define watermark, replay, deduplication, correction and late-data behavior.
+- Derived outputs must record source/canonical version, transform-plan identity and implementation/profile version.
+- Separate data-affecting state from view-only state.
+- Declare nondeterminism, randomness, external model use or environment dependence instead of claiming deterministic rebuilds.
 
-- The visible/output product must never become the next source of truth.
-- Applying a new transform on top of an already transformed output is forbidden unless the transform is explicitly cumulative by design and validated as such.
-- Same final active state must yield the same derived output regardless of user-click order.
-- View-only controls must not rebuild or mutate data truth.
-- Data-affecting controls rebuild DerivedRuntimeProduct from CanonicalWorkingBase.
-- Runtime previews are disposable and must be regenerable.
-- Generated analysis artifacts must record which source/canonical/transform state produced them.
+## Validation obligations
 
-## Control Classes
+For implemented work, require the smallest applicable deterministic checks,
+negative or failure-path coverage when risk is material, current-source evidence,
+and rollback or reversal evidence. Use `NOT_RUN`, `BLOCKED`, or `INCONCLUSIVE`
+when that is the truthful state.
 
-| Class | Meaning | Examples | Allowed action |
-|---|---|---|---|
-| View-only control | Display state only | zoom, theme, scroll, font, visibility | update view state only |
-| Derived-output control | affects runtime output | filters, reference transforms, derived selections | rebuild derived output |
-| Source/canonical control | affects identity/provenance | import metadata, normalization, registry | requires explicit owner box and validation |
-| Analysis control | creates secondary artifacts | reports, maps, tables, summaries | consume derived/canonical state, do not mutate truth |
+## Required output
 
-## Validation Questions
+Return a `DATA TRANSFORM LINEAGE RECORD` containing:
 
-- Can this change mutate SourceTruth? If yes, reject.
-- Can this change make DerivedRuntimeProduct become the next source? If yes, reject.
-- Can user-click order change final output for same active state? If yes, redesign.
-- Is the state class view-only, derived-output, source/canonical, or analysis?
-- Which box owns the transform state?
-- Which tests prove deterministic rebuild from canonical base?
+- source/canonical/output identities;
+- pipeline mode and determinism profile;
+- ordered transform plan;
+- lineage and cache key;
+- rebuild/invalidation/correction behavior;
+- resolver and storage handoffs.
+
+- unresolved assumptions and risks;
+- specialist handoffs;
+- source-write authorization: `NO` unless separately granted by Brick Wall.
+
+## Version history
+
+- 2.0.0: added versioned provenance, pipeline modes, nondeterminism, late-data, correction, and resolver boundaries.

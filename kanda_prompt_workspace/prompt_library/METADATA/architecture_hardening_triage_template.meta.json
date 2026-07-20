@@ -1,24 +1,38 @@
 {
+  "prompt_code": "KPR-06-006",
   "prompt_id": "architecture_hardening_triage_template",
-  "display_name": "Architecture Hardening Triage Template",
+  "display_name": "Architecture Hardening Triage Record Template",
   "filename": "architecture_hardening_triage_template.md",
+  "version": "2.0.0",
   "category": "06_refactor_and_architecture_hardening",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Reusable template for architecture hardening triage.",
+  "status": "draft_template",
+  "load_type": "explicit_on_request",
+  "source_stage": "prompt-audit-wave6a-core-architecture-refactor-owners-v1",
+  "description": "Draft-only record shape for one source-grounded architecture-hardening triage.",
   "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 30,
+  "routing_coverage": "wave6a_architecture_hardening_record_template_v2",
+  "priority": 52,
+  "edit_policy": "draft_only",
+  "promotion_policy": "manual_only",
+  "project_agnostic": true,
+  "creates_files": false,
+  "required_placeholders": [
+    "<PROJECT_ROOT>",
+    "<TARGET_RELATIVE_PATH>",
+    "<SOURCE_FINGERPRINT>"
+  ],
   "trigger_phrases": [
+    "architecture hardening triage record",
     "architecture triage template",
-    "hardening checklist",
-    "architecture audit template"
+    "architecture audit worksheet"
   ],
   "required_companion_prompts": [
-    "box_architecture_canon",
-    "bundle_gated_development_workflow",
-    "python_refactoring"
+    "architecture_hardening_triage_protocol"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md",
+  "do_not_regress": [
+    "Keep this prompt draft-only and non-authoritative.",
+    "Do not route it instead of KPR-06-005 for actual hardening triage.",
+    "Completing the template does not authorize source mutation, delivery, validation claims, or freeze writes."
   ]
 }

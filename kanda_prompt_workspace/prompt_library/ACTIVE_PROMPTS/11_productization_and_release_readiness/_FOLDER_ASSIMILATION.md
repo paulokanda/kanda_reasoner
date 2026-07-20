@@ -2,76 +2,41 @@
 folder_id: 11_productization_and_release_readiness
 folder_name: Productization and Release Readiness
 artifact_type: folder_assimilation_card
-version: 1.0
-status: audited_candidate
+version: 3.0
+status: active
 scope: routing_metadata_only
 load_mode: selected_when_needed
-owner_box: Context Routing Layer
-created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
+owner_box: 11_productization_and_release_readiness
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
 ---
 
 # Productization and Release Readiness - Folder Assimilation Card
 
 ## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
 
-## Responsibility
-Guide release maturity, lifecycle, versioning, deprecation, infrastructure, Kubernetes, SRE, and operational readiness.
+Route to the smallest current Class 11 specialist. This card is metadata only
+and does not authorize implementation or repeat specialist contracts.
 
-## Use When
-Use when moving from local tool to product, release, infrastructure, operations, deprecation, or production-readiness planning.
+## Current active specialists
 
-## Do Not Use When
-Do not use for early small internal patching unless release readiness is directly affected.
+| Code | Prompt ID | Narrow owner |
+|---|---|---|
+| `KPR-11-001` | `kubernetes_deployment_operations` | workload-specific Kubernetes deployment and operations |
+| `KPR-11-003` | `professional_ai_assisted_engineering_framework` | thin human/AI operating-model overview and dispatch |
+| `KPR-11-005` | `python_lifecycle_versioning_deprecation` | compatibility, versioning, deprecation, support and EOL |
+| `KPR-11-006` | `python_site_reliability_engineering` | production-service SLI/SLO, incident and reliability governance |
 
-## Required For
-- release readiness
-- versioning
-- deprecation
-- SRE
-- infrastructure roadmap
-- Kubernetes deployment
+## Deprecated historical identities
 
-## Optional For
-- future product strategy
-- professionalization review
+- `KPR-11-002 productization_readiness_roadmap` — never load globally.
+- `KPR-11-004 professional_infrastructure_roadmap` — never load globally.
 
-## Never Load For
-- minor prompt index update
-- simple source collector request
+## Routing boundaries
 
-## Depends On Groups
-- 05_patch_delivery_and_validation
-- 09_python_quality_security_observability
-
-## Common Task Triggers
-- release
-- production
-- deprecation
-- versioning
-- SRE
-- Kubernetes
-- infrastructure
-
-## Minimum Viable Context
-- productization_readiness_roadmap or python_lifecycle_versioning_deprecation selected by task
-
-## Main Prompts In This Folder
-
-| Prompt ID | File Name | Load Type | Short Purpose |
-|---|---|---|---|
-| `kubernetes_deployment_operations` | `kubernetes_deployment_operations.md` | on_request | Uses Kubernetes deployment and operations concepts where appropriate. |
-| `productization_readiness_roadmap` | `productization_readiness_roadmap.md` | on_request | Roadmap for turning the project into a release-ready product. |
-| `professional_ai_assisted_engineering_framework` | `professional_ai_assisted_engineering_framework.md` | on_request | Defines the full professional AI-human engineering operating model. |
-| `professional_infrastructure_roadmap` | `professional_infrastructure_roadmap.md` | on_request | Identifies missing infrastructure for professional AI-assisted engineering. |
-| `python_lifecycle_versioning_deprecation` | `python_lifecycle_versioning_deprecation.md` | on_request | Manages Python lifecycle, release versioning, deprecation, and legacy transition. |
-| `python_site_reliability_engineering` | `python_site_reliability_engineering.md` | on_request | Applies SRE principles to Python systems. |
-
-## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
-
-## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+- Select one exact owner from demonstrated need.
+- Do not force companions or load the folder as a universal production stack.
+- Current project source and project-owned evidence override historical roadmap
+  claims.
+- Brick Wall and Class 05 retain implementation, delivery, validation and freeze
+  authority.

@@ -20,8 +20,14 @@ __all__ = [
     'classify_precomputed_artifact_activation_request',
     'validate_precomputed_artifact_contract',
 ]
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
 from typing import Any
+
+from .precomputed_semantic_evidence_artifact_design_helpers_private import (
+    _append_missing,
+    _as_strings,
+    _find_forbidden_fields,
+)
 
 
 PRECOMPUTED_ARTIFACT_FEATURE_ID = "routing_signal_scorer_v3_precomputed_semantic_evidence_artifact_design_v1"
@@ -265,88 +271,6 @@ FORBIDDEN_VECTOR_PROVIDER_RUNTIME_FIELDS = frozenset(
         "runtime_artifact_path",
     }
 )
-
-
-def _is_sequence(value: Any) -> bool:
-    """Support is sequence behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
-
-
-def _as_strings(value: Any) -> set[str]:
-    """Support as strings behavior.
-    
-    Parameters
-    ----------
-    value : Any
-        The input value.
-    
-    Returns
-    -------
-    set[str]
-        The set result.
-    """
-    
-    if not _is_sequence(value):
-        return set()
-    return {item for item in value if isinstance(item, str)}
-
-
-def _append_missing(errors: list[str], label: str, missing: set[str]) -> None:
-    """Support append missing behavior.
-    
-    Parameters
-    ----------
-    errors : list[str]
-        The error values.
-    label : str
-        The label value.
-    missing : set[str]
-        The missing value.
-    """
-    
-    if missing:
-        errors.append(f"missing {label}: {', '.join(sorted(missing))}")
-
-
-def _find_forbidden_fields(mapping: Mapping[str, Any], forbidden: set[str] | frozenset[str]) -> set[str]:
-    """Support find forbidden fields behavior.
-    
-    Parameters
-    ----------
-    mapping : Mapping[str, Any]
-        The mapping value.
-    forbidden : set[str] | frozenset[str]
-        The forbidden value.
-    
-    Returns
-    -------
-    set[str]
-        The set result.
-    """
-    
-    found: set[str] = set()
-    for key, value in mapping.items():
-        if key in forbidden:
-            found.add(key)
-        if isinstance(value, Mapping):
-            found.update(_find_forbidden_fields(value, forbidden))
-        elif _is_sequence(value):
-            for item in value:
-                if isinstance(item, Mapping):
-                    found.update(_find_forbidden_fields(item, forbidden))
-    return found
 
 
 def build_precomputed_artifact_design_status() -> dict[str, Any]:

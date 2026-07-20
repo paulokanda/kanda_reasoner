@@ -5,20 +5,46 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Maps old, generic, or project-specific prompt concepts to current KANDA prompt concepts.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Resolves final Class 11 and Class 12 active owners, project overlays, and deprecated historical roadmap identities.",
   "priority": 10,
   "trigger_phrases": [
-    "substitute prompt",
-    "replace prompt",
-    "old prompt new prompt",
-    "prompt substitution",
-    "rename prompt reference"
+    "old prompt name",
+    "what replaced this prompt",
+    "prompt deprecation lookup",
+    "historical prompt alias"
   ],
-  "required_companion_prompts": [
-    "general_prompt_stack_load_order"
-  ]
+  "required_companion_prompts": [],
+  "prompt_code": "KPR-02-005",
+  "title": "Prompt Substitution Map",
+  "version": "10.0",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_substitution_map.md",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "authority_boundary": {
+    "may_route_or_select_context": true,
+    "may_mutate_source": false,
+    "may_authorize_coding": false,
+    "may_authorize_freeze": false
+  },
+  "retirement_records": {
+    "prompt_router": [
+      "ai_prompt_request_canon",
+      "prompt_navigation_index",
+      "kanda_routing_system_canon"
+    ],
+    "kanda_prompt_router": [
+      "ai_prompt_request_canon",
+      "prompt_navigation_index",
+      "kanda_routing_system_canon"
+    ],
+    "RG-PILOT-000": [
+      "routing_signal_scorer_v3_semantic_readiness_canon",
+      "kanda_routing_system_canon"
+    ],
+    "RG-LAB-000": [
+      "routing_signal_scorer_v3_semantic_readiness_canon",
+      "kanda_routing_system_canon"
+    ]
+  }
 }

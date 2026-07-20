@@ -1,150 +1,84 @@
-﻿# Session Start Upload Checklist
+---
+prompt_id: session_start_upload_checklist
+prompt_code: KPR-01-002
+title: Session Start Upload Checklist
+version: 2.0
+status: active
+load_type: always_startup
+owner_box: 01_session_start_and_navigation
+source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+---
 
-Version: 1.1
-Status: Human-facing operational checklist / prompt-library support asset
-Source generalized from: PyKANDA daily upload checklist v1.2
-Project: KANDA Reasoner / project-agnostic PyArchitect workflow
+# Session Start Upload Checklist
 
-## Box Logic Requirement
+## Mission
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+Own the human-facing two-stage upload sequence for a KANDA session.
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+This checklist determines whether the startup and Project handoff inputs are present. It does not authorize coding, reconstruct missing source, validate local execution, or replace Brick Wall.
 
-## Purpose
+## Stage 1 - startup delivery
 
-Use this checklist at the start of a KANDA Reasoner or PyArchitect engineering session so the AI receives the correct operating context before proposing code, patch bundles, prompt updates, or governance changes.
+Required normal startup inputs:
 
-This is not itself an implementation prompt. It is a human upload checklist that tells the user which context files, evidence, logs, and task materials should be sent before work begins.
+1. `tell_AI_read_before_all.md` - read first.
+2. `first_prompts_to_ai.zip` - open `00_START_HERE_FOR_AI.md` first, then the numbered members in source-map order.
+3. `prompt_library.zip` - keep available; open only exact selected prompt paths.
 
-## Core rule
+Conditional input:
 
-Do not let the AI work from memory alone. The session should begin from current evidence, current governance, current task context, and latest validation state.
+- `zz_read_only_if_modifying_startup_delivery.md` - read only when the task changes startup delivery, its source map, generator, names, content, or validation.
 
-## Startup kernel staleness check
+Do not require retired prompts, loose generated numbered files, old paste filenames, deprecated startup canons, or the whole Prompt Library.
 
-The startup kernel can become stale relative to active project freeze memory.
-At session start, compare the startup delivery generation time, when available from `STARTUP_PROMPT_REQUEST_KERNEL_MANIFEST.json`, with the newest active project freeze entry summarized in `09_active_project_freeze_context.md`.
+After Stage 1, return only the governed `STARTUP PACK LOAD CHECK`, confirm the required members loaded, and wait for the second upload group.
 
-If active project freeze memory contains entries newer than the startup kernel generation time, flag:
+## Stage 2 - selected Project handoff
 
-```text
-STARTUP_KERNEL_STALENESS_REVIEW
-```
+Read in this order:
 
-This warning does not automatically fail startup and does not authorize automatic repair.
-It means the AI should avoid relying on stale startup assumptions and should request startup regeneration, active freeze context refresh, or `zz_read_only_if_modifying_startup_delivery.md` before modifying startup delivery, source maps, freeze-context generation, or governed routing behavior.
+1. `_RUN_COLLECTOR_STATUS.txt`, when present.
+2. `<project_slug>__ai_handoff_upload_readme.txt`.
+3. Compact Error Memory files:
+   - `<project_slug>__error_memory_ai_prompt.md`;
+   - `<project_slug>__error_lessons_compact.json`;
+   - `<project_slug>__error_memory_manifest.json`.
+4. `<project_slug>__ai_handoff_upload*.zip` in numeric order.
+5. Inside the handoff ZIP: `UPLOAD_README.txt`, AI briefing, routing manifest, bundle manifest, patch-safety routes, file manifest, source-archive manifest, validation state, and compact Error Memory.
+6. Full Error Memory ZIP only when the compact memory, repeated-error debugging, an audit request, insufficiency, or a conflict requires it.
+7. Source archive parts only when exact source inspection or reconstruction is required.
+8. PNG asset parts only when exact reconstruction requires those assets.
+9. All-in-one handoff only as fallback when the primary handoff ZIP is unavailable.
 
-Do not inject full freeze memory into the normal startup. Keep compact startup freeze context plus on-demand full freeze review.
+Generated source archives and handoffs are evidence, not canonical source authority.
 
-## Send every start of chat
+## Stage 2 readiness response
 
-1. Current prompt stack load order or prompt navigation index.
-2. Current universal delivery protocol.
-3. Current project startup canon.
-4. Current daily startup loader.
-5. Current active governance files or active governance ZIP.
-6. Latest active workflow handoff or session handoff.
-7. Current task description.
-8. Relevant source ZIP, prompt ZIP, logs, validation output, screenshots, traceback, or observed behavior.
-9. Current project root and active product root, if they matter for the task.
-10. Current validation baseline, including architecture validation and workflow validation if available.
+After the required second-upload files are loaded, return:
 
-## Send only when needed
+`PROJECT READY CHECK`
 
-### High-risk engineering work
+Include:
 
-Send the professional engineering governance layer when the task involves:
+- Project slug;
+- Active Project root;
+- KANDA Tool root;
+- whether they are the same physical root;
+- compact Error Memory status;
+- second-upload handoff status;
+- Tier-1 gate status;
+- next action.
 
-- runtime behavior
-- GUI lifecycle
-- local model / AI routing
-- schema changes
-- persistence
-- multi-box behavior
-- public API changes
-- generated evidence changes
-- validator changes
-- workflow gates
+End with `WAIT_FOR_TASK` only when the required handoff is complete.
 
-### Governance freeze
+## Hard blockers
 
-Send the end-of-chat or active governance update protocol only after validation is clean and the user explicitly wants a freeze/canon update.
+Do not accept the real Project task before Stage 2 readiness.
+Do not claim local validation from generated handoff evidence.
+Do not infer missing source, hashes, freeze entries, Error Memory, or validation markers.
+Do not ask for a prompt that already exists at a selected exact path in `prompt_library.zip`.
+Do not open the entire Prompt Library when one addressed prompt is sufficient.
 
-### Large module or helper split
+## Authority boundary
 
-Send the large-module refactor protocol when the user says things like:
-
-- module is too big
-- split this file
-- extract helper
-- reduce mixed responsibility
-- preserve public API while refactoring
-
-### Handoff or break in work
-
-Send the current workflow handoff template when the user says things like:
-
-- create a handoff
-- next AI should know
-- continue next time
-- summarize where we are
-
-### Many warnings/errors
-
-Send the problem-set roadmap solver when the task is to order many failures, warnings, or validation issues.
-
-### Architecture hardening
-
-Send the architecture hardening triage protocol when the task involves ownership, boundary violations, stale variants, import heaviness, public API instability, or mixed responsibility.
-
-### Uploaded reports, chunks, or merged evidence
-
-Send the canonical reader / merger protocol when the task involves reading many uploaded chunks, evidence reports, split JSON exports, or generated project analysis files.
-
-### Cross-box or multi-tab work
-
-Send the tab/box boundary protocol when the task touches more than one tab, package, workflow, or responsibility box.
-
-## Required AI behavior after upload
-
-After the files are uploaded, the AI should confirm:
-
-1. Which evidence files were received.
-2. Which files are source truth, governance truth, generated evidence, or reference-only.
-3. What the active box is.
-4. What is explicitly out of scope.
-5. Whether the task is audit-only, roadmap-only, implementation, freeze, or handoff.
-6. Which validation gates would be required before freeze.
-
-## Main reminder for the user
-
-If the AI starts proposing code before declaring the active box, stop it and say:
-
-> Declare the active KANDA box before patching.
-
-If the AI proposes a large patch touching unrelated systems, stop it and say:
-
-> One problem, one patch, one owner box.
-
-If the AI claims success without local validation, stop it and say:
-
-> Local validation is the source of truth. Do not freeze yet.
-
-## What was generalized from the source file
-
-The source PyKANDA checklist was project-specific, with PyKANDA names, root paths, and file names. This generalized version preserves the workflow logic but removes project-specific root assumptions and makes the checklist reusable for KANDA Reasoner and future PyArchitect projects.
-## AI Prompt Request Canon Requirement
-
-At the start of the session and before any non-trivial project action, load or enforce i_prompt_request_canon.
-
-The AI must classify the user's request and, when the needed prompt stack or project evidence is missing, ask the human for the correct prompts/files before implementation, refactor, prompt-library modification, architecture change, database/storage work, validation, freeze, or handoff.
-
-For example, if the human says "we will start creating a new folder with a databank," the AI must recognize a new architecture/data-storage task and request the relevant prompt stack: session start, AI prompt request canon, Box Logic, folder organization, database design, validation/type safety, security, implementation roadmap, and bundle-gated workflow.
-
+This checklist may classify files as required, conditional, missing, stale, or not applicable. It cannot mutate source, install a patch, validate locally, write Error Memory, write Freeze Memory, or grant implementation authority.

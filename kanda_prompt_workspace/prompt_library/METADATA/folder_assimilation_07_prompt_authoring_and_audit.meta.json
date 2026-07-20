@@ -1,25 +1,29 @@
 {
   "prompt_id": "folder_assimilation_07_prompt_authoring_and_audit",
-  "display_name": "Folder Assimilation - Prompt Authoring and Audit",
+  "display_name": "Prompt Authoring and Audit Folder Assimilation Card",
   "filename": "_FOLDER_ASSIMILATION.md",
   "category": "07_prompt_authoring_and_audit",
-  "status": "audited_candidate",
+  "version": "2.0",
+  "status": "active",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
-  "description": "Audit, generalize, reconcile, split, deprecate, or improve prompt files without contaminating unrelated prompts.",
+  "owner_box": "Context Routing Layer",
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A065-A069 owner separation and five-stage Class 07 lifecycle",
+  "description": "Routes each prompt-authoring stage to one canonical Class 07 owner and separates analysis, decision, identity, mutation, delivery, and freeze authority.",
   "routing_metadata_only": true,
-  "priority": 20,
+  "priority": 30,
   "required_companion_prompts": [
-    "prompt_navigation_index",
-    "GROUP_ASSIMILATION_INDEX"
+    "prompt_audit_canon",
+    "prompt_canon_reconciliation_protocol",
+    "prompt_insertion_and_router_registration_protocol"
   ],
   "trigger_phrases": [
-    "audit this prompt",
-    "compare prompts",
-    "generalize",
-    "deprecated prompt",
-    "to be inserted"
+    "audit prompt",
+    "generalize external prompt",
+    "reconcile prompt canons",
+    "assign prompt identity",
+    "insert or register prompt"
   ],
   "card_path": "ACTIVE_PROMPTS/07_prompt_authoring_and_audit/_FOLDER_ASSIMILATION.md"
 }

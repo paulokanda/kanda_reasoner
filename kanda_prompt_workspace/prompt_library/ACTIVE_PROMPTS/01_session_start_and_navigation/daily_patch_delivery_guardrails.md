@@ -1,636 +1,151 @@
-# Daily Patch Delivery Guardrails
+---
+prompt_id: daily_patch_delivery_guardrails
+prompt_code: KPR-01-007
+title: Daily Patch Delivery Guardrails
+version: 3.0
+status: active
+load_type: always_startup
+owner_box: 01_session_start_and_navigation
+source_stage: prompt-audit-wave3b-specialist-startup-bridges-v1
+---
 
-Version: 2.2
-Status: startup guardrail
-Prompt ID: daily_patch_delivery_guardrails
-Load mode: always_startup
-Scope: daily startup, patch delivery safety, root-to-staging ZIP movement, sandbox pre-delivery validation, root cleanliness, terminal hygiene
-Do not use as: full patch implementation protocol, full bundle workflow, or freeze ledger
+# Daily Patch Delivery Guardrails
 
 ## Purpose
 
-This file is loaded at every startup so the AI remembers the safe delivery rules before creating any patch ZIP, install command, validation command, or delivery bundle.
+This is the compact always-startup bridge for governed patch delivery. It keeps
+high-risk release invariants visible before any ZIP link, PowerShell block,
+validation command, freeze instruction, or Error Memory delivery is shown.
 
-The full patch workflow still belongs to the Patch Delivery and Validation prompt group. This file is a short daily guardrail that prevents repeated delivery mistakes.
+Detailed implementation belongs to the current Class 05 delivery owners. This
+prompt routes to those owners and must not become a second installer, validator,
+freeze protocol, terminal contract, or Error Memory schema.
 
-## Transient garbage non-ownership rule
+## Activation
 
-`<drive>:\<project_name>_delete_after_daily_work\` is a garbage/staging path only. Its name may be derived from the selected project for deterministic routing and collision avoidance, but the folder is not part of the Tool box, the Active Project box, or project support. Anything placed there must be disposable or regenerable. Durable evidence and source truth must be written to their canonical owners before transient cleanup.
+Apply this bridge whenever the response may contain any of the following:
 
+- a patch or bundle ZIP;
+- install, validation, recovery, diagnostic, or freeze PowerShell;
+- patch manifests, payload lists, or source fingerprints;
+- validation evidence intended for durable storage or freeze;
+- a correction caused by an install, validation, packaging, or delivery error.
 
-## Durable documentary artifact routing
+For explanation-only discussion with no deliverable, use the smallest relevant
+owner and do not invent release evidence.
 
-The canonical owner prompt is `durable_document_artifact_routing_canon.md`.
+## Required owner route
 
-Generated project-specific `.txt`, `.md`, and similar documentary artifacts that
-must survive the day must be written or copied under:
+Before patch-related output, load or apply the current owners needed by the
+specific task:
 
-```text
-<project_drive>\<project_name>_show_project_to_AI\
-```
+- `pre_output_contract_gates` for the visible output gate;
+- `terminal_cleanup_contract` for terminal footer behavior;
+- `implementation_and_delivery_protocol` for patch construction;
+- `pre_output_contract_gates` for same-response delivery duties;
+- `patch_install_delivery_error_register` for active regression classes;
+- `freeze_code_intake_and_form_protocol` for freeze intake and human confirmation;
+- `error_memory_ai_formulary_startup_canon` when a corrected error has durable
+  prevention value;
+- `durable_document_artifact_routing_canon` for durable documentary evidence;
+- Brick Wall and the active Box owner for authorization and scope.
 
-Validation evidence must not remain only in `_delete_after_daily_work`. After a
-successful validation, persist a durable copy under:
+## Hard invariants
 
-```text
-<project_drive>\<project_name>_show_project_to_AI\project_validation_evidence\<feature_id>\
-```
+1. A patch is a governed release event, not an isolated ZIP attachment.
+2. Exact current source and source fingerprints are required before mutation.
+3. Unknown source states, unknown hashes, or ambiguous ownership fail closed.
+4. Generated startup ZIPs, extracted bundles, and validation outputs are not
+   canonical source authority.
+5. The root-drive ZIP is staged into the project-derived transient daily-work
+   root before extraction. The detailed command belongs to Class 05.
+6. `<project>_delete_after_daily_work` is transient garbage and never the sole
+   owner of durable evidence.
+7. Durable evidence is routed by `durable_document_artifact_routing_canon`.
+8. Installation, validation, and freeze are separate authorization states.
+9. Validation success must be supported by local evidence; terminal text alone
+   does not authorize freeze.
+10. Freeze Preview remains read-only. Confirm and Write remains explicitly
+    human-confirmed.
+11. A corrected delivery error triggers Error Memory admission review, but this
+    prompt does not create or define lesson schemas.
+12. User-facing PowerShell must obey the current terminal and project delivery
+    contracts. Do not duplicate those implementations here.
 
-A legacy validator may keep an operational evidence copy in daily-work for
-compatibility, but the final delivery must also identify the durable evidence
-path. Existing specialized Project Support owners take precedence over the
-general `project_documentation` folder.
+## Patch delivery readiness record
 
-## Daily guardrail
-
-When creating or delivering any install ZIP, patch bundle, installer, validator, or delivery README:
-
-1. Do not place temporary install scripts, validation helpers, README files, extracted patch files, or one-use delivery files directly in the active project root.
-2. The user downloads each install ZIP to the root of the same drive as the project, for example:
-
-```text
-<drive>:\PATCH_NAME.zip
-```
-
-The installer must then move the ZIP into:
-
-```text
-<drive>:\<project_in_use_name>_delete_after_daily_work\
-```
-
-before extracting or installing anything.
-
-3. The ZIP must contain only files that are intended to be installed or updated.
-4. Install commands and validation commands must be sent as separate copy-paste terminal blocks.
-5. Terminal commands must target Windows 11 and the PyCharm terminal.
-6. Install, validation, freeze, recovery, diagnostic, and error terminal blocks must apply `terminal_cleanup_contract.md`.
-7. Do not duplicate or override terminal footer details here; the canonical contract owns install-success and non-install-success cleanup.
-8. Install failure and validation failure must show the log/error before cleanup so the user can copy or send the output if needed.
-9. If the AI forgets the terminal cleanup rule, it must not guess. It must return to `terminal_cleanup_contract.md`, this guardrail, and the router canon first, then ask the human if still uncertain.
-10. Install blocks must contain a fail-safe error cleanup path. The terminal must never be closed.
-13. Remind the user to use Freeze Feature After Update only at meaningful regression-risk checkpoints, not after every small update.
-14. Freeze-prep or validation-evidence merge commands must not use inline `python -c` in user-facing PowerShell. Write the Python helper as a temporary UTF-8 `.py` file under `_delete_after_daily_work`, execute that file, and keep the terminal open.
-
-
-
-## Pre-output contract gate hook
-
-Before the AI emits any PowerShell block, terminal command, patch ZIP delivery instruction, validation command, freeze-form JSON, validation evidence summary intended for freezing, or `KANDA_FREEZE_HINT.json`, it must apply the output-time contract gate.
-
-For detailed rules, request or apply `pre_output_contract_gates` from `03_governance_freeze_and_handoff`.
-
-Minimum startup hook:
-
-1. Terminal output must be classified as install success, validation, freeze, diagnostic, install error, validation error, freeze error, or other terminal before writing the footer.
-2. Terminal cleanup is owned by `terminal_cleanup_contract.md`; apply it for install success and every non-install-success terminal block.
-3. Do not duplicate the terminal footer implementation in this startup guardrail.
-4. Patch ZIP delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first at `<drive>:\PATCH_NAME.zip`, stage the ZIP into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, extract only from staging, and must freshly extract.
-5. Freeze-form JSON must use exact markers and valid JSON only.
-6. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes.
-7. Freeze-ready patch ZIPs must include root-level `KANDA_FREEZE_HINT.json` unless intentionally non-freezeable.
-8. Any patch ZIP link must be blocked unless the ZIP passes `python scripts/validate_patch_zip.py <zip_path>` in the sandbox or local release pipeline.
-9. The root sidecar and the freeze-form JSON must be rendered from the same freeze payload source. Do not hand-type them separately.
-10. Freeze-intake and frozen memory paths must use the selected active project root.
-11. Freeze-prep and validation-evidence merge commands must not use inline `python -c`; use a temporary UTF-8 `.py` helper under `_delete_after_daily_work` to prevent PowerShell quote stripping. The helper runner must make the active project importable by setting `$env:PYTHONPATH = $PROJECT_ROOT` before `python $HELPER_PY` and the helper file should insert `project_root` into `sys.path` before importing `kanda_reasoner_app`.
-
-This hook is output-time compliance. It does not replace the router and must not over-route simple Fast Path explanation-only tasks.
-
-
-<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_START -->
-## Canonical freeze-ready patch delivery sequence
-
-For every freezeable KANDA/PyArchitect patch, the delivery order is mandatory and must not be inverted, skipped, or diluted:
-
-1. **Send the patch ZIP only after contract validation.** The ZIP must contain only the changed project files plus a root-level `KANDA_FREEZE_HINT.json` sidecar. If the ZIP contract cannot be verified, block delivery with `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
-2. **Send the install PowerShell after the ZIP.** The install block must stage the ZIP from `<drive>:\PATCH_NAME.zip` into `<drive>:\<project_name>_delete_after_daily_work\`, delete the root-drive ZIP copy after successful staging, extract only from the staged ZIP, and install only changed project files.
-3. **Do not install the freeze sidecar into the project root.** `KANDA_FREEZE_HINT.json` is freeze-intake delivery metadata. It may be scanned or consumed from the staged ZIP / daily-work intake location, but it must not be copied as a normal project source file.
-4. **Send the validation PowerShell after the install block.** Validation must be a separate local action after install and must emit recognizable evidence, including `VALIDATION OK: <feature_id>`. When startup delivery, generated evidence, or sync state is validated, it must also emit `STATUS: IN_SYNC`.
-5. **Freeze only after local validation passes.** The Freeze Feature After Update flow must use the feature-specific `KANDA_FREEZE_HINT.json` / freeze-intake data plus current validation evidence, then require Preview and explicit human Confirm and Write.
-6. **Refresh AI exposure after freeze.** A successful local freeze write must refresh AI-send exposure and startup freeze context so the next startup pack knows the frozen behavior.
-
-Short form:
+Before showing a patch artifact, determine:
 
 ```text
-patch ZIP with root KANDA_FREEZE_HINT.json
--> install changed files only, keeping KANDA_FREEZE_HINT.json out of project root
--> run local validation with VALIDATION OK and STATUS: IN_SYNC when applicable
--> freeze through Preview + Confirm and Write
--> refresh AI-send and startup freeze context
+PATCH DELIVERY READINESS
+Active Project:
+Primary owner box:
+Exact source inspected: YES / NO
+Current source fingerprints recorded: YES / NO
+Relevant Error Memory checked: YES / NO
+Required delivery owners loaded: YES / NO
+Patch ZIP validated: YES / NO / NOT_BUILT
+Install block ready: YES / NO / NOT_APPLICABLE
+Validation block ready: YES / NO / NOT_APPLICABLE
+Durable evidence path identified: YES / NO
+Freeze path identified: YES / NO / NOT_APPLICABLE
+Human confirmation still required: YES
+May release: YES / NO
+Blocking reason:
 ```
 
-Install success is not validation. A freeze hint is not validation evidence. Old feature validation must not be reused for the current feature.
-<!-- PATCH_FREEZE_DELIVERY_SEQUENCE_CANON_V1_END -->
+If any required field is unresolved, do not show a ZIP link or claim readiness.
 
-## Startup-loaded install error register hook
+## Root and artifact summary
 
-The startup pack must also load `patch_install_delivery_error_register`.
-
-Before emitting a patch ZIP link, install block, validation block, or freeze-ready patch metadata, the AI must apply both:
-
-1. `daily_patch_delivery_guardrails`
-2. `patch_install_delivery_error_register`
-
-This exists because PIR-001 showed that correct feature implementation can still fail at the final delivery wrapper.
-
-Hard rule from PIR-001:
-
-- User saves the patch ZIP at `<drive>:\PATCH_NAME.zip`.
-- Installer stages it into `<drive>:\<project_name>_delete_after_daily_work\`.
-- Installer deletes the root-drive ZIP copy after successful staging.
-- Installer extracts only from the staged ZIP.
-- Installer must not use a Downloads/Desktop-first search fallback.
-- Installer must not require the user to manually place the ZIP directly in `_delete_after_daily_work`.
-
-If a future install delivery error occurs, pause feature implementation and append a new PIR entry to `patch_install_delivery_error_register.md` before continuing.
-
-## Required KANDA terminal cleanup behavior
-
-Terminal cleanup behavior is owned by `terminal_cleanup_contract.md`.
-
-Apply that prompt before emitting any Windows 11 PowerShell install, validation,
-freeze, recovery, diagnostic, or error block. This daily guardrail intentionally
-references the canonical contract instead of copying terminal footer
-implementation details.
-
-<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_START -->
-
-## Terminal footer self-audit - v15
-
-Before emitting any KANDA/PyArchitect PowerShell or terminal block, apply the
-output-time self-audit in `terminal_cleanup_contract.md`. If the exact command
-text conflicts with that contract, block the answer and repair the command
-before showing it.
-
-<!-- TERMINAL_FOOTER_SELF_AUDIT_V15_END -->
-
-## Mandatory sandbox pre-delivery validation rule
-
-Before the AI gives the user any download link, install block, validation block, or patch ZIP as final delivery, it must test the deliverable in its own sandbox first.
-
-Required sandbox checks before delivery:
-
-1. Build the patch ZIP in the sandbox.
-2. Re-open or extract the ZIP in the sandbox and verify it contains only the intended updated/installable files.
-3. Verify no installer script, validation helper, README, temporary file, `__pycache__`, `.git`, backup folder, or scratch artifact is accidentally included.
-4. Run `python -m py_compile` on every changed Python file and every Python validation/helper file generated for the user, when Python files exist.
-5. Run focused sandbox tests or text checks that can be executed safely without the user's machine.
-6. If the patch changes prompts, startup files, or generated delivery artifacts, run exact-text checks for the new guardrail phrases and run the relevant generator/checker in sandbox when available.
-7. Inspect the install block itself before delivery and confirm it implements the root-to-staging ZIP movement rule below.
-8. Report sandbox validation honestly as sandbox validation only. Never claim user-local validation until the user provides local output.
-
-If the AI cannot run a sandbox check, it must say which check could not be run and why, then reduce the claim accordingly.
-
-
-## PATCH_DELIVERY_RELEASE fail-closed contract
-
-Patch ZIP delivery is an output-time release event. Before the AI provides any patch ZIP download link, install block, validation block, or freeze metadata, it must run the governed release gate:
-
-1. Build the ZIP in the sandbox.
-2. Confirm `KANDA_FREEZE_HINT.json` is at ZIP root, not inside the payload folder.
-3. Confirm every mandatory freeze-hint field is present, non-empty, and not placeholder text.
-4. Run or simulate the checked-in validator:
+The stable summary is:
 
 ```text
-python scripts/validate_patch_zip.py <zip_path>
+<drive>:\<project>.zip or another governed drive-root delivery location
+    -> verified staging
+<drive>:\<project>_delete_after_daily_work\
+    -> transient extraction, helpers, and operational copies
+<drive>:\<project>_show_project_to_AI\
+    -> durable project-support artifacts and evidence
 ```
 
-5. Confirm the install block follows the root-drive staging template and contains no Downloads/Desktop fallback.
-6. If any check fails, do not emit the ZIP link. Return `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` with the failed check.
+The active `project_tool_boundary_canon` owns the actual Tool, Project, Project
+Support, and transient-root formulas. Do not hardcode one project's paths into a
+reusable patch.
 
-This rule exists because prior failures occurred after correct routing, during final ZIP/link/PowerShell output. Treat it as a hard gate, not a reminder.
+## Failure behavior
 
-## Installer ZIP staging rule
-
-When the AI creates terminal install code for any KANDA/PyArchitect patch ZIP, the install code must implement the strict root-drive-to-staging flow before installation. This replaces and forbids the old generic installer search template.
-
-Required installer behavior, in this exact priority order:
-
-1. Detect the active project root from the current PyCharm terminal location or from the explicit `$PROJECT_ROOT`.
-2. Detect `DRIVE_ROOT` dynamically from `$PROJECT_ROOT`. Do not hardcode `E:\`, `C:\`, or any other fixed drive.
-3. Look first for the downloaded patch ZIP at the project drive root:
+When the gate cannot prove safe delivery, return:
 
 ```text
-<drive>:\PATCH_NAME.zip
+PATCH DELIVERY BLOCKED
+Missing owner or evidence:
+Unknown source state:
+Next safe action:
+May emit patch ZIP: NO
+May claim validation: NO
+May freeze: NO
 ```
 
-4. Create this staging folder if it does not exist:
-
-```text
-<drive>:\<project_in_use_name>_delete_after_daily_work\
-```
-
-5. If the expected ZIP exists at the drive root, move or copy-stage it into the staging folder before extraction or installation. The installer must literally implement this behavior, not merely mention it.
-6. After successful staging, delete the temporary downloaded ZIP copy from the drive root so no duplicate root copy remains.
-7. If the ZIP is already in the staging folder and no root copy exists, use the staged ZIP.
-8. Install and extract only from the ZIP path inside the delete-after-daily-work staging folder.
-9. If the expected ZIP is neither in the drive root nor already in the staging folder, stop and show exactly:
-
-```text
-zip is not in root of drive:\ where project is
-```
-
-10. Do not ask the user to manually move the ZIP into the staging folder. The installer must perform the root-drive staging operation.
-11. Only after the ZIP is confirmed inside the staging folder should the install code extract and copy project files.
-
-Forbidden installer behavior for this situation:
-
-- Do not search `Downloads` or `Desktop` before the project drive root.
-- Do not use a generic candidate search where `Downloads` or `Desktop` can beat `<drive>:\PATCH_NAME.zip`.
-- Do not leave the root-drive downloaded ZIP copy behind after successful staging.
-- Do not extract from the project root or from the drive root.
-- Do not install from an extracted folder created in an earlier run.
-- Do not rely on a vague newest-ZIP search when the patch filename is known.
-
-Canonical installer opening pattern:
-
-```powershell
-$PROJECT_ROOT = "<PROJECT_ROOT>"
-$PATCH_NAME = "PATCH_NAME"
-$PROJECT_NAME = Split-Path $PROJECT_ROOT -Leaf
-$DRIVE_ROOT = [System.IO.Path]::GetPathRoot($PROJECT_ROOT)
-$WORK_DIR = Join-Path $DRIVE_ROOT ($PROJECT_NAME + "_delete_after_daily_work")
-$ROOT_PATCH_ZIP = Join-Path $DRIVE_ROOT ($PATCH_NAME + ".zip")
-$WORK_PATCH_ZIP = Join-Path $WORK_DIR ($PATCH_NAME + ".zip")
-
-if (-not (Test-Path $WORK_DIR)) {
-    New-Item -ItemType Directory -Path $WORK_DIR -Force | Out-Null
-}
-
-if (Test-Path $ROOT_PATCH_ZIP) {
-    Copy-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force
-    if (Test-Path $WORK_PATCH_ZIP) {
-        Remove-Item -Path $ROOT_PATCH_ZIP -Force
-    }
-}
-
-if (-not (Test-Path $WORK_PATCH_ZIP)) {
-    throw "zip is not in root of drive:\ where project is"
-}
-```
-
-Hard breach conditions for the installer staging rule:
-
-- BREACH if the install block extracts from `<drive>:\PATCH_NAME.zip` or `$ROOT_PATCH_ZIP`.
-- BREACH if the install block stages by copy but does not delete the root-drive copy after successful staging.
-- BREACH if the install block runs `Expand-Archive` before the ZIP is confirmed inside `<drive>:\<project_in_use_name>_delete_after_daily_work\`.
-- BREACH if the install block asks the user to manually move the ZIP into `_delete_after_daily_work` instead of performing root-drive staging itself.
-- BREACH if the install block searches Downloads, Desktop, or generic newest-ZIP locations before the project drive root.
-- BREACH if the install block creates extraction, validation, helper, correction, or staging files inside the active project root instead of daily work.
-
-The words `Downloads` and `Desktop` must not appear in KANDA patch install blocks unless the user explicitly asks for a one-off diagnostic search outside the governed installer flow.
-
-## Validation phrase rule
-
-Installer guidance must include the exact phrase "move the ZIP" so validation can confirm that ZIP staging is explicitly described.
-
-## Root cleanliness rule
-
-Do not pollute the active project root with files such as:
-
-```text
-install_*.ps1
-README_*_PATCH.md
-*_install.py
-*_validate.py
-STARTUP_DELIVERY_*_README.md
-```
-
-Temporary patch files belong in the delete-after-daily-work staging folder or another clearly temporary patch staging folder.
-
-The active project root should receive only real project files that belong to the project.
-
-## Box ownership rule
-
-Patch delivery must respect the active box:
-
-```text
-prompt_library/      = canonical prompt source
-prompt_tools/        = generators and source maps
-first_prompt_files/    = generated human-facing startup delivery artifacts
-delete_after_daily_work folder = temporary patch ZIPs and extracted patch helpers
-```
-
-Do not treat generated delivery files as canonical source.
-
-Do not manually edit generated startup ZIP contents as the durable fix.
-
-If a generated startup delivery artifact is wrong, update the canonical source, source map, or generator, then regenerate.
-
-## Required behavior before creating patch ZIPs
-
-Before delivering a patch ZIP, the AI should verify:
-
-```text
-Patch target box:
-Files to install:
-Files not to touch:
-ZIP staging location:
-Install command:
-Validation command:
-Root cleanliness check:
-Drive-root ZIP move implemented: yes/no
-Sandbox pre-delivery validation completed: yes/no
-Freeze checkpoint needed: yes/no
-```
-
-If the task changes startup delivery generation, request the startup delivery maintenance prompt before implementation.
-
-## Final rule
-
-This daily guardrail is mandatory at startup.
-
-If it conflicts with a loose or ad hoc delivery habit, this guardrail wins.
-
-For complex patch delivery, request the full Patch Delivery and Validation prompt group before creating the final bundle.
-
-## Freeze hint sidecar for patch ZIPs
-
-Version: 1.0
-Status: required delivery metadata for governed patch ZIPs
-Purpose: prevent KANDA Reasoner from guessing the wrong feature when the human later opens New Local Freeze Entry.
-
-When delivering a governed patch ZIP, include a root-level metadata sidecar named:
-
-`KANDA_FREEZE_HINT.json`
-
-This sidecar is delivery metadata for the app and for the human. It is not frozen memory, not a source file, and not project-specific memory. It may remain inside the staged patch ZIP under the delete-after-daily-work folder. Do not install it into the project root unless a separate governed app contract explicitly requires that.
-
-The sidecar must describe the feature that the patch implements, not the older feature that the local heuristic might infer from nearby files.
-
-Minimum required JSON keys:
-
-`schema_version`
-`kind`
-`patch_name`
-`feature_id`
-`feature_title`
-`primary_box`
-`box_type`
-`validated_files`
-`generated_files`
-`protected_paths`
-`do_not_regress_rules`
-`validation_evidence_summary`
-`known_warnings`
-`planned_next_step`
-`notes`
-
-Use the same text conventions as the Freeze Feature After Update form: project-relative paths, one path per line encoded with `\n` inside JSON strings, and validation evidence only when it is actually known.
-
-If the patch is delivered before the user's local validation has run, do not invent local validation. In `validation_evidence_summary`, record only sandbox validation and clearly state that local validation evidence must be filled from the user's validation output after validation passes.
-
-When the user later provides local validation output, the AI must correct the freeze form using that validation output and the sidecar feature identity. Do not reuse stale heuristic feature titles or validation lists from older freezes.
-
-`KANDA_FREEZE_HINT.json` must never instruct the app to bypass Preview or Confirm and Write. It only pre-fills freeze entry fields. Human review and confirmation remain mandatory.
-
-The sidecar must preserve these boundaries:
-
-- project-specific frozen memory belongs under `<project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory`.
-- project-specific frozen memory must not be stored inside `project_freeze_ledger`.
-- generated startup artifacts are not source of truth.
-- external AI review remains advanced/fallback and not the normal freeze path.
-- local freeze write must refresh AI startup freeze context after success.
-
-Patch-answer requirement:
-
-When giving a patch ZIP to the user, explicitly mention whether the ZIP includes `KANDA_FREEZE_HINT.json`. Do not count the sidecar as an installed source file. If listing payload files, separate installed payload files from delivery metadata files.
-
-Validation requirement:
-
-Before delivery, the AI must inspect the ZIP and confirm that `KANDA_FREEZE_HINT.json` exists, is valid JSON, includes the required keys, and names the same feature as the patch being delivered. If the patch is intentionally non-freezeable, the AI must say why no freeze hint is included.
-
-
-## Install error fail-safe footer
-
-Every install block must protect the install body with a `try { ... } catch { ... }` or text-equivalent wrapper. This prevents install failures from bypassing cleanup.
-
-Install error behavior:
-
-* Show `INSTALL ERROR` and the error message.
-* Wait for Enter.
-* Wait for Enter again.
-* Clear the terminal once.
-* Keep the terminal open.
-* Do not use `exit`, `Stop-Process`, or any command that closes the terminal.
-
-Install error footer:
-
-```powershell
-Write-Host ""
-Write-Host "INSTALL ERROR. Review the error below before clearing the terminal."
-Write-Host $_.Exception.Message
-Write-Host ""
-Read-Host "Press Enter to clear terminal"
-Read-Host "Press Enter again to clear"
-Clear-Host
-$global:LASTEXITCODE = 1
-return
-```
-
-<!-- KANDA_GUARDRAIL:error_event_owner_canon_pointer:v2 -->
-## Error Memory owner-canon pointer for corrected-error patch delivery
-
-If a patch corrects a reported or detected error, do not treat code validation alone as closure. Apply `error_memory_ai_formulary_startup_canon` as the owner of the Error Memory intake track. The patch must include/stage a pending lesson through the dynamic `<drive>:\<project>_show_project_to_AI\project_error_memory\pending_ai_assisted_error_lesson_intake` path, or clearly state the Error Memory track is still pending human review. Do not write directly into Lessons.
-
----
-<!-- KANDA_ADDENDUM:daily_guardrail_error_memory_active_ready_packaging:v1 -->
-
-## Error Memory packaged lesson active-ready gate
-
-When a patch ZIP, installer, validator, or delivery bundle includes
-`payload/error_memory_receive_blocks/KANDA_ERROR_LESSON_JSON_*.txt`, the AI must
-validate each packaged lesson before delivery.
-
-Block delivery and repair the package when an active lesson is missing any of:
-
-```text
-schema_version
-lesson_id
-status
-operation_phase
-symptom
-root_cause
-correct_fix
-long_term_prevention
-do_not_repeat_rule
-exception
-fingerprint
-prevention_triggers
-regression_check
-validation_evidence
-redaction
-raw_error_snapshot_scrubbed
-```
-
-`redaction.applied` and `redaction.export_safe` must both be true for active
-lessons. Missing redaction metadata is a packaging error, not something the user
-should fix manually after install.
-
-<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_BEGIN -->
-
-## Patch validation evidence merge paradigm
-
-For every freeze-capable patch ZIP delivery, validation is not complete until the
-local validation evidence is also merged into the project-local freeze hint
-intake record.
-
-Required validation command shape after all validators pass:
-
-```text
-run ZIP contract validation
-run feature validators
-capture the passed local validation output in a short evidence file or here-string
-run scripts\merge_freeze_validation_evidence.py with --project-root, --feature-id,
---feature-title, and --evidence-file
-require FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>
-```
-
-This is mandatory when the ZIP includes root-level `KANDA_FREEZE_HINT.json` and
-is intended to be frozen through Freeze Feature After Update.
-
-Do not rely on the pre-validation sidecar to populate `validation_evidence_summary`.
-`KANDA_FREEZE_HINT.json` is delivered before local validation and may contain
-sandbox evidence or a local-validation-pending note. The saved freeze-intake
-record must be upgraded after validation passes so New Local Freeze Entry loads
-recognizer-friendly evidence.
-
-A freeze-ready validation log should include:
-
-```text
-ZIP CONTRACT: PASS
-VALIDATION OK: <feature_id>
-FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>
-VALIDATION COMMAND COMPLETE
-```
-
-If startup sync is part of the validation, keep the exact marker:
-
-```text
-STATUS: IN_SYNC
-```
-
-If the merge helper is unavailable or fails, do not tell the user to freeze from
-the stale preview. Provide the validation evidence text and instruct the user to
-merge or paste it into the freeze form before Confirm and Write.
-
-<!-- PATCH_VALIDATION_EVIDENCE_MERGE_PARADIGM_V1_END -->
-
-<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_BEGIN -->
-
-## Patch ZIP keyed validation evidence merge - v2
-
-When a validation block merges local validation evidence into freeze hint intake,
-it must not assume `latest_freeze_hint.json` already belongs to the feature that
-was just validated. A previous patch can leave a stale latest hint for another
-feature.
-
-For every freeze-capable patch validation block:
-
-1. Capture local validation markers after the validator passes.
-2. Call `scripts/merge_freeze_validation_evidence.py` with `--patch-zip` pointing
-   to the staged patch ZIP and with the current `--feature-id`.
-3. Require the merge helper to load the matching root-level `KANDA_FREEZE_HINT.json`
-   from that patch ZIP before merging evidence if the current latest hint is for
-   another feature.
-4. Treat a feature-id mismatch without a matching `--patch-zip` as a validation
-   failure, not as a reason to merge evidence into the wrong freeze form.
-5. Freeze-ready evidence must include `VALIDATION OK: <feature_id>` and
-   `FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>`.
-
-This prevents stale freeze-intake data from causing `FREEZE BLOCKED - no
-recognizable validation evidence found` after local validation already passed.
-
-<!-- PATCH_VALIDATION_EVIDENCE_MERGE_BY_PATCH_ZIP_V2_END -->
-
-<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_BEGIN -->
-
-## Error Memory lesson block schema gate - v1
-
-Any ZIP, patch, direct Error Lesson ZIP, or clipboard receive block that carries
-`KANDA_ERROR_LESSON_JSON` must be schema-valid before delivery.
-
-Machine gate:
-
-```text
-python scripts\validate_patch_zip.py <staged_patch_zip>
-```
-
-must inspect every packaged `KANDA_ERROR_LESSON_JSON_*.txt` file and block the
-ZIP if the lesson JSON lacks `schema_version`, `project_slug`, required active
-lesson fields, `redaction`, `exception`, `fingerprint`, `prevention_triggers`,
-or `validation_evidence` when `status` is `active`.
-
-Required minimum for every packaged lesson block:
-
-```text
-schema_version: "1.0"
-project_slug: non-empty selected project slug
-lesson_id: present
-status: draft, active, deprecated, or superseded
-redaction.applied: true
-redaction.export_safe: true
-```
-
-Do not answer with only a corrected manual JSON block when an Error Memory
-lesson was generated with missing schema fields. Correct the creation/validation
-path so the next generated package is blocked before release.
-
-<!-- ERROR_MEMORY_LESSON_BLOCK_SCHEMA_GATE_V1_END -->
-
-
-<!-- DAILY_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_BEGIN -->
-
-## Daily Error Memory active-ready output gate - v21
-
-Before emitting any ZIP link, patch package, Direct Error Lesson ZIP,
-marker-wrapped `KANDA_ERROR_LESSON_JSON`, or terminal instructions that stage an
-Error Memory lesson, the AI must apply the Error Memory active-ready output gate
-from `error_memory_ai_formulary_startup_canon`.
-
-Block and repair the answer before delivery if an active lesson is missing any
-of these high-risk fields:
-
-```text
-raw_error_text
-raw_error_snapshot_scrubbed
-redaction
-exception
-fingerprint
-prevention_triggers
-regression_check
-validation_command_summary
-validation_evidence
-install_command_summary
-notes
-```
-
-The exact regression phrase to catch is:
-
-```text
-This lesson is not active-ready. Required fields, prevention triggers, and redaction metadata must be present before saving as active.
-```
-
-Do not emit a corrected manual JSON block alone when the prompt/guardrail path is
-what allowed AI to generate the malformed lesson.
-
-<!-- DAILY_ERROR_MEMORY_ACTIVE_READY_OUTPUT_GATE_V21_END -->
-
-<!-- DAILY_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_BEGIN -->
-
-## Daily Error Memory JSON forward-slash gate - v22
-
-Before emitting any patch ZIP, Direct Error Lesson ZIP, pending intake file,
-validation evidence, or marker-wrapped `KANDA_ERROR_LESSON_JSON`, apply the v22
-Error Memory JSON forward-slash active-ready gate.
-
-Block delivery if an active lesson has `regression_check.command` with any
-backslash or control character. Use slash-only commands such as:
-
-```text
-python validation/test_name.py
-```
-
-Do not correct only the final pasted text. Correct the generation prompt/package
-and validate the exact outgoing JSON before delivery.
-
-<!-- DAILY_ERROR_MEMORY_JSON_FORWARD_SLASH_GATE_V22_END -->
+## Scope exclusions
+
+This prompt does not define:
+
+- ZIP member lists or payload schemas;
+- `INSTALL.ps1`, `VALIDATE.ps1`, or `FREEZE.ps1` implementations;
+- PowerShell cleanup footers;
+- freeze-hint or freeze-form field schemas;
+- Error Memory field lists or lesson JSON templates;
+- validation-evidence merge commands;
+- startup-delivery regeneration logic;
+- implementation authorization.
+
+## Do-not-regress rules
+
+- Keep this file compact and always-startup.
+- Keep detailed patch behavior in Class 05.
+- Keep terminal behavior with `terminal_cleanup_contract`.
+- Keep durable evidence out of transient-only storage.
+- Keep exact-source, validation, and human-freeze gates fail closed.
+- Never repair a delivery regression by weakening fingerprint or validation
+  requirements.

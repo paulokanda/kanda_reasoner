@@ -1,16 +1,16 @@
 {
   "prompt_id": "daily_session_start_prompt",
-  "display_name": "Daily Session Start Prompt",
+  "display_name": "Daily Session Start Prompt Compatibility Record",
   "filename": "daily_session_start_prompt.md",
   "category": "01_session_start_and_navigation",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
   "description": "Starts a daily AI-human engineering session with the expected operating rules.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
   "routing_coverage": "complete_v3",
-  "priority": 20,
+  "priority": 0,
   "trigger_phrases": [
     "start session",
     "new session checklist",
@@ -19,7 +19,17 @@
     "session boot"
   ],
   "required_companion_prompts": [
-    "prompt_navigation_index",
-    "prompt_router"
-  ]
+    "prompt_substitution_map"
+  ],
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "title": "Daily Session Start Prompt Compatibility Record",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "active_route": false,
+  "may_be_selected_for_new_work": false,
+  "replacement_prompt_ids": [
+    "session_start_upload_checklist"
+  ],
+  "deprecation_reason": "Superseded by the current compact startup and routing owners.",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_session_start_prompt.md"
 }

@@ -1,78 +1,115 @@
-# Architecture Hardening Triage Template
+# Architecture Hardening Triage Record Template
 
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-Version: 1.0.0
-Status: Reusable architecture-hardening protocol
-Use: Load for architecture hardening, warning cleanup, shadow conflicts, layer-boundary safety, or state-safety campaigns.
+Prompt code: `KPR-06-006`
+Prompt id: `architecture_hardening_triage_template`
+Version: 2.0.0
+Status: `draft_template`
+Load type: `explicit_on_request`
+Owner box: `06_refactor_and_architecture_hardening`
 
 ## Purpose
 
-Audit, classify, triage, and safely harden architecture without broad rewrites or unrelated source edits.
+Use this draft-only template to record one source-grounded architecture
+hardening triage. It is not an active hardening protocol and does not authorize
+source changes, delivery, validation claims, or freeze writes.
 
+Use `KPR-06-005 architecture_hardening_triage_protocol` for the governing
+triage method.
 
-## Project-Agnostic Contract
-
-This prompt must work for any software project. Replace variables before use.
-
-Required variables:
-
-```text
-<PROJECT_ROOT>
-<PROJECT_NAME>
-<PRODUCT_PACKAGE>
-<TASK_DESCRIPTION>
-<TASK_SLUG>
-<GOVERNANCE_FOLDER>
-<VALIDATION_COMMANDS>
-<OUTPUT_FOLDER>
-<SOURCE_FILES>
-<LOG_FILES>
-```
-
-Rules:
-- Do not hardcode one project root.
-- Do not assume one product package.
-- Do not treat examples as active project truth.
-- Use current source files, logs, and validation output as evidence.
-- If evidence is missing, request it before implementation.
-
-## Core Workflow
+## Required identity
 
 ```text
-audit -> classify -> add or tune checkers if needed -> triage findings -> separate hard failures from transitional debt -> patch smallest owner box -> validate -> wait for user validation -> freeze or handoff
+Record type: CONCEPTUAL / SOURCE_GROUNDED / IMPLEMENTATION_CANDIDATE
+Project root:
+Project name:
+Selected target:
+Target relative path:
+Source SHA-256 or current fingerprint:
+Source byte length when relevant:
+Operation identity:
+Lifecycle generation:
+Evidence timestamp:
 ```
 
-## Finding Classes
+## Ownership and boundary record
 
-Hard failure: must be fixed before gate can pass.
-Transitional debt: real issue that cannot be safely fixed in this pass.
-Warning or observation: worth tracking but not blocking.
+```text
+Primary box:
+Canonical owner:
+Allowed files:
+Out-of-scope files:
+Supporting touches:
+Public contracts:
+Private boundaries:
+Tool root:
+Project source root:
+Project Support root:
+Transient root:
+```
 
-## Hardening Targets
+## Evidence record
 
-- public facade and symbol ownership safety
-- layer-boundary safety
-- runtime state and lifecycle safety
-- duplicate normalizer and responsibility overlap safety
-- non-canonical folder contamination
-- stale generated artifact handling
+```text
+Current architecture finding:
+Exact source locations:
+Runtime or test evidence:
+Architecture-validator evidence:
+Relevant frozen behavior:
+Relevant Error Memory lessons:
+Current validators and coverage:
+Generated-artifact provenance:
+Disconfirming evidence searched:
+Unknown evidence:
+```
 
-## Allowlist Rule
+## Classification
 
-Allowlist only transitional debt. Do not weaken checker rules globally. New unallowlisted findings must remain visible.
+Choose one:
 
-## Final Rule
+```text
+HARD_FAILURE
+PROTECTION_GAP
+TRANSITIONAL_DEBT
+WARNING
+NOT_APPLICABLE
+```
 
-Hardening is not rewriting. Patch one risk class at a time and preserve working behavior.
+Classification reason:
+
+## Response comparison
+
+```text
+No-change option:
+Current-validator repair:
+Owner-local repair:
+Boundary or facade repair:
+Narrow shielding option:
+Bounded refactor option:
+Deferred-debt option:
+Selected smallest response:
+Rejected broader responses:
+```
+
+## Validation and continuity
+
+```text
+Required focused validators:
+Required regression validators:
+Rollback obligation:
+Durable evidence destination:
+Freeze impact:
+Current blockers:
+```
+
+## Authorization
+
+```text
+Brick Wall implementation authorization: NOT GRANTED / GRANTED SEPARATELY
+May write source: NO / YES BY SEPARATE AUTHORITY
+May build a patch: NO / YES BY SEPARATE AUTHORITY
+May claim validation: NO / YES FROM EXECUTED EVIDENCE
+May freeze: NO / YES AFTER HUMAN CONFIRMATION
+Next safe action:
+```
+
+Completing this record does not itself authorize any mutation.

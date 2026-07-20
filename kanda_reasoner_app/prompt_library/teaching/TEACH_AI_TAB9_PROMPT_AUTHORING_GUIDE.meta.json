@@ -21,10 +21,9 @@
     "<TASK_DESCRIPTION>"
   ],
   "depends_on": [
-    "kanda_bundle_gated_development_workflow",
+    "bundle_gated_development_workflow",
     "tab9_prompt_asset_placement_rules",
-    "python_clean_code_overlay",
-    "kanda_prompt_router"
+    "python_clean_code_overlay"
   ],
   "required_before": [],
   "explainer": "Teaches an AI the complete Tab 9 prompt-library logic for creating or updating prompts.",
@@ -70,5 +69,6 @@
       "date": "2026-06-07",
       "summary": "Added complete lifecycle sections, cross-prompt awareness, dashboard visibility, and lowercase workbench\\bundle_manifest contract."
     }
-  ]
+  ],
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1"
 }

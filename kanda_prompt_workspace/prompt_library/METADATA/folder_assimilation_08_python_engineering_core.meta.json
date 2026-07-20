@@ -3,11 +3,11 @@
   "display_name": "Folder Assimilation - Python Engineering Core",
   "filename": "_FOLDER_ASSIMILATION.md",
   "category": "08_python_engineering_core",
-  "status": "audited_candidate",
+  "status": "active",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
-  "description": "Provide broad Python engineering judgment for clean architecture, refactoring, DDD, performance, patterns, legacy code, and professional practice.",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Routes the current narrow Python Engineering Core specialists without forced companion loading.",
   "routing_metadata_only": true,
   "priority": 20,
   "required_companion_prompts": [
@@ -22,5 +22,8 @@
     "performance",
     "refactoring"
   ],
-  "card_path": "ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md"
+  "card_path": "ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md",
+  "version": "3.0",
+  "owner_box": "08_python_engineering_core",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1"
 }

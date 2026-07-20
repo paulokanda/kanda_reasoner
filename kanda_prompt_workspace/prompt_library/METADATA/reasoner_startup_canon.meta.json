@@ -1,16 +1,16 @@
 {
   "prompt_id": "reasoner_startup_canon",
-  "display_name": "Reasoner Startup Canon",
+  "display_name": "Reasoner Startup Canon Compatibility Record",
   "filename": "reasoner_startup_canon.md",
   "category": "01_session_start_and_navigation",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
   "description": "KANDA Reasoner startup canon and baseline behavior.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
   "routing_coverage": "complete_v3",
-  "priority": 20,
+  "priority": 0,
   "trigger_phrases": [
     "reasoner canon",
     "load reasoner canon",
@@ -18,7 +18,20 @@
     "reasoner operating rules"
   ],
   "required_companion_prompts": [
-    "prompt_navigation_index",
-    "prompt_router"
-  ]
+    "prompt_substitution_map"
+  ],
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "title": "Reasoner Startup Canon Compatibility Record",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "active_route": false,
+  "may_be_selected_for_new_work": false,
+  "replacement_prompt_ids": [
+    "start_of_day_master_stack",
+    "session_start_upload_checklist",
+    "ai_prompt_request_canon",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "deprecation_reason": "Superseded by the current compact startup and routing owners.",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/reasoner_startup_canon.md"
 }

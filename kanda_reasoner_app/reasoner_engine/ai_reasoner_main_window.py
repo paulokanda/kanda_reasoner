@@ -90,7 +90,7 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
         """
         
         super().__init__()
-        self.setWindowTitle("Project JSON Explorer V10 - Local AI Reasoner")
+        self.setWindowTitle("Local AI - KANDA Reasoner")
         self.resize(1880, 1080)
 
         self.project_index = JsonProjectIndex()

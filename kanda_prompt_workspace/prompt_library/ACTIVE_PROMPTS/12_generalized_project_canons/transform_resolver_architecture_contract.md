@@ -1,88 +1,108 @@
+---
+prompt_id: transform_resolver_architecture_contract
+prompt_code: KPR-12-014
+title: Transform Resolver Architecture Contract
+version: 2.0.0
+status: active
+load_type: on_request
+owner_box: 12_generalized_project_canons
+classification: pure_versioned_transform_resolution_contract
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+---
+
 # Transform Resolver Architecture Contract
-
-Version: 1.0
-Status: Active prompt-library candidate
-Use: Load when a project separates source identity from active runtime transforms, avoids invalid combinations, or needs a resolver that maps user selections into concrete runtime operations.
-
-
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-## Generalization Rule
-
-This prompt was generalized from EEG/KANDA project materials. Do not copy EEG-specific nouns, paths, labels, channel names, montage rules, electrode coordinates, or clinical assumptions into KANDA Reasoner unless the current project explicitly needs them. Preserve only the transferable engineering pattern.
-
 
 ## Purpose
 
-Generalize the source project's reference architecture contract. The reusable idea is a two-layer architecture:
+Resolve a versioned base identity and ordered transform plan against capabilities and policy into a structured operation result without performing the operation.
 
-```text
-Base Identity + Active Transform -> Concrete Runtime Operation
-```
+This prompt is a bounded technical contract. It is not a persona, a source-write
+authority, a release gate, or proof that implementation or validation occurred.
 
-## Layer 1: Base Identity
+## When to load
 
-The base identity answers:
+- Stable identities and selectable transforms must resolve into controlled operations.
+- UI, API, plugin, validator or persistence layers risk duplicating transform-selection logic.
+- Precedence, capability, conflict or unsupported states need one resolver.
 
-```text
-What is the trusted source/canonical identity of the current data or object?
-```
+## When not to load
 
-It is owned by import, diagnostic, registry, or session identity boxes.
+- The task is pipeline lineage/rebuild ownership; use KPR-12-009.
+- No transform selection or identity mapping exists.
+- Execution rather than resolution is the only concern.
 
-## Layer 2: Active Transform
+## Authority boundaries
 
-The active transform answers:
+This prompt owns:
 
-```text
-What operation should the runtime output use now?
-```
+- typed/versioned base identity;
+- ordered transform plan and parameters;
+- capability and applicable-policy inputs;
+- precedence, conflict and compatibility resolution;
+- structured result states and decision trace;
+- resolver profile/version identity.
 
-It is owned by the runtime transform/control-state box.
+It delegates:
 
-## Resolver Rule
+- operation execution to the runtime owner;
+- pipeline lineage/rebuild/invalidation to KPR-12-009;
+- UI state and presentation to the UI owner;
+- authorization policy to security/domain owners.
 
-A single resolver maps:
+Brick Wall and the current patch, validation, terminal, and freeze owners retain
+implementation and release authority.
 
-```text
-Base Identity + Active Transform -> Concrete Runtime Operation
-```
+## Task modes
 
-Do not scatter this mapping across GUI dropdowns, validators, plugins, and runtime code.
+Choose one visible mode:
 
-## Invalid Combination Rule
+- `ANALYZE`: identify the current state, evidence, and gaps.
+- `DESIGN`: produce a bounded contract or decision record.
+- `REVIEW`: evaluate an existing artifact or implementation.
+- `IMPLEMENTATION_GUIDANCE`: describe source work only after exact source and
+  separate authorization are available.
 
-Some transforms may be blocked depending on base identity. The resolver must return structured results:
+## Required evidence
 
-- allowed / blocked;
-- concrete operation;
-- reason;
-- user-facing message;
-- validation code;
-- fallback if available.
+- base identity and schema/version;
+- ordered transforms, parameters and source of selection;
+- capability set and policy version;
+- precedence/conflict/unsupported rules;
+- operation registry and consumer contracts.
 
-## Runtime Rebuild Rule
+## Governing rules
 
-If the transform changes runtime output, discard and rebuild the derived runtime product from the canonical base. Do not apply a new transform on top of an already transformed output unless explicitly cumulative and validated.
+- Keep resolution pure and side-effect-free.
+- Return structured states such as RESOLVED, UNSUPPORTED, CONFLICT, AMBIGUOUS, INVALID and STALE rather than silently selecting a fallback.
+- Define transform order and precedence explicitly; do not rely on UI click order.
+- Include resolver/profile version and a decision trace in the result.
+- Do not execute operations, mutate pipelines, write persistence, or rebuild caches inside the resolver.
+- Reject stale async results when base identity, transform plan, capability set or policy version changed.
+- Bind concrete operations to stable registry identities rather than scattered conditional branches.
 
-## Tests
+## Validation obligations
 
-At minimum, test:
+For implemented work, require the smallest applicable deterministic checks,
+negative or failure-path coverage when risk is material, current-source evidence,
+and rollback or reversal evidence. Use `NOT_RUN`, `BLOCKED`, or `INCONCLUSIVE`
+when that is the truthful state.
 
-- each base identity;
-- each active transform;
-- blocked combinations;
-- unknown identity;
-- migration of legacy values;
-- display labels do not control runtime meaning.
+## Required output
+
+Return a `TRANSFORM RESOLUTION RECORD` containing:
+
+- base/plan/capability/policy identities;
+- precedence and compatibility rules;
+- structured resolution result;
+- decision trace and profile version;
+- stale-result behavior;
+- execution and pipeline handoffs.
+
+- unresolved assumptions and risks;
+- specialist handoffs;
+- source-write authorization: `NO` unless separately granted by Brick Wall.
+
+## Version history
+
+- 2.0.0: expanded input/result states, formalized transform order and precedence, and separated pure resolution from execution and pipeline rebuild.

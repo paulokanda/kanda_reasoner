@@ -1,35 +1,35 @@
 {
+  "prompt_code": "KPR-03-003",
   "prompt_id": "freeze_code_intake_and_form_protocol",
-  "display_name": "Freeze Code Intake and Form Protocol",
+  "display_name": "Freeze Hint and Form Intake Protocol",
   "filename": "freeze_code_intake_and_form_protocol.md",
   "category": "03_governance_freeze_and_handoff",
-  "status": "active_candidate",
+  "version": "2.0",
+  "status": "active",
   "load_type": "on_request",
-  "source_stage": "freeze_hint_intake_box_v1_followup",
-  "description": "Ensures AI carries feature-specific freeze data through patch ZIP sidecars, freeze form review, multi-project freeze-intake state, and local freeze confirmation rules.",
-  "box_logic_required": true,
-  "routing_coverage": "complete_v1",
-  "priority": 30,
+  "owner_box": "03_governance_freeze_and_handoff",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+  "aliases": [
+    "KPR-03-003",
+    "freeze_code_intake_and_form_protocol",
+    "freeze_code_intake_and_form_protocol.md",
+    "freeze hint and form intake protocol"
+  ],
+  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "description": "Carries one current validated feature identity into project-owned freeze intake while preserving read-only Preview and explicit human Confirm and Write.",
   "trigger_phrases": [
-    "freeze code",
-    "freeze this feature",
-    "Freeze Feature After Update",
-    "New Local Freeze Entry",
+    "freeze hint intake",
     "freeze form",
-    "freeze formulary",
-    "KANDA_FREEZE_HINT.json",
-    "prepare freeze entry",
-    "review freeze JSON",
-    "after validation freeze it",
-    "patch ZIP should be freeze-ready"
+    "new local freeze entry",
+    "preview freeze entry"
   ],
   "required_companion_prompts": [
-    "active_governance_freeze_update",
-    "daily_patch_delivery_guardrails"
+    "brick_wall_comprehensive_quality_gate",
+    "pre_output_contract_gates"
   ],
   "recommended_companion_prompts": [
-    "cooperative_implementation_methodology",
-    "box_architecture_canon",
-    "implementation_and_delivery_protocol"
+    "durable_document_artifact_routing_canon",
+    "error_memory_ai_formulary_startup_canon"
   ]
 }

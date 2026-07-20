@@ -13,10 +13,10 @@
   "edit_policy": "draft_only",
   "promotion_policy": "manual_only",
   "depends_on": [
-    "kanda_bundle_gated_development_workflow"
+    "bundle_gated_development_workflow"
   ],
   "recommended_with": [
-    "kanda_bundle_gated_development_workflow",
+    "bundle_gated_development_workflow",
     "high_risk_engineering",
     "large_module_refactor"
   ],

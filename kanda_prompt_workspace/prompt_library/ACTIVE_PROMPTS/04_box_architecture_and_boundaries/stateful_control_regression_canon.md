@@ -1,92 +1,116 @@
+---
+prompt_id: stateful_control_regression_canon
+prompt_code: KPR-04-004
+title: Stateful Control Regression Canon
+version: 2.0
+status: active
+load_type: routed
+owner_box: 04_box_architecture_and_boundaries
+source_stage: prompt-audit-wave4b-box-architecture-boundaries-v1
+---
+
 # Stateful Control Regression Canon
-
-Version: 1.0
-Status: Active special prompt candidate
-Use: Load when working on dropdowns, comboboxes, option panels, captions, persisted selections, control hydration, sizing, option registries, or UI state regressions.
-
-
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-## Generalization Rule
-
-This prompt was generalized from EEG/KANDA project materials. Do not copy EEG-specific nouns, paths, labels, channel names, montage rules, electrode coordinates, or clinical assumptions into KANDA Reasoner unless the current project explicitly needs them. Preserve only the transferable engineering pattern.
-
 
 ## Purpose
 
-Generalize the EEG dropdown canon into a project-agnostic rule for any stateful UI control: controls must have one sizing policy, one state owner, one hydration source, and one renderer/adapter contract.
+Protect semantic option identity, selected-value persistence, hydration,
+restoration, fallback, caption adaptation, and declared sizing policy for
+stateful GUI option controls. Typical families include combo boxes, dropdowns,
+radio groups, segmented controls, toggles, option panels, and button groups.
 
-## Canonical Control-State Rule
+This prompt does not own domain truth, persistence implementation, generic GUI
+architecture, visual style, delivery, freeze, or source-write authorization.
 
-A dropdown/control must separate:
+## Owner split
 
-- option registry;
-- selected value;
-- user-visible caption;
-- internal stable identifier;
-- sizing/rendering policy;
-- hydration/loading logic;
-- runtime effect triggered by selection.
+- Domain owner: truth represented by the selection.
+- Option-provider owner: current available IDs and capabilities.
+- Persistence owner: storage key, serialization, schema version, and migration.
+- GUI component: presentation, caption adapter, focus, popup, and view-local
+  interaction state.
+- Declared sizing facade: control-family sizing policy across DPI, font, theme,
+  locale, and accessibility profiles.
+- Boundary-First Repair: diagnosis when the visible control is not the defect
+  owner.
+- Brick Wall: implementation authorization.
 
-Do not let one widget own all of these.
+## Stable identity and migration
 
-## Single Sizing Authority
+Persist semantic IDs, not display text, unless a legacy contract explicitly
+requires migration. Define:
 
-For any repeated control family, there must be one canonical sizing helper. Wrappers may call it, but must not create competing width/height calculators.
+- ID schema and version;
+- uniqueness and ordering rules;
+- renamed, removed, disabled, duplicate, unknown, and corrupted IDs;
+- migration from legacy labels or prior schema versions;
+- deterministic fallback for empty or partially loaded providers.
 
-Sizing must consider:
+## Hydration and event origin
 
-- visible caption text;
-- popup option text;
-- placeholder text;
-- formatted adapter text;
-- longest possible loaded state;
-- compact/expanded layout mode.
+Programmatic hydration must distinguish at least:
 
-## Stable Identifier Rule
+- `USER_SELECTED`;
+- `RESTORED`;
+- `DEFAULTED`;
+- `MIGRATED`;
+- `INVALID_VALUE_CORRECTED`;
+- `EXTERNAL_DATA_UPDATE`;
+- `STALE_RESULT_REJECTED`.
 
-Never use display text as the only truth if the option has domain or workflow meaning. Use:
+Suppress or classify signals during hydration so restoration does not persist
+again, launch work, invalidate evidence, alter another control, or create a
+feedback loop.
+
+When asynchronous work is involved, bind model population and restoration to
+the current request, generation, transaction, or operation identity. An older
+result must not overwrite a newer user choice.
+
+## Model and provider replacement
+
+When options change after initial hydration, explicitly decide whether to
+preserve the semantic selection, migrate it, fall back, or report unresolved.
+Define behavior for missing providers, empty models, partial loading, disabled
+options, and duplicated IDs.
+
+## Stateful control regression review
 
 ```text
-stable_id -> display_label -> adapter_caption -> runtime_payload
+STATEFUL CONTROL REGRESSION REVIEW
+Owning box:
+Control family:
+Domain selected-value owner:
+Option-provider owner:
+Persistence owner and key:
+Stable ID schema and version:
+Legacy migration:
+Hydration source:
+Operation / request / generation identity:
+Signals suppressed or event origin classified:
+User versus programmatic event distinction:
+Invalid / removed / duplicate ID fallback:
+Model replacement behavior:
+Caption adapter:
+Sizing policy or public facade:
+Accessibility / keyboard / focus profile:
+Existing focused validators:
+Missing regression protection:
+Boundary-First diagnosis required: YES / NO
+Regression status: COMPLETE / BLOCKED / NOT_APPLICABLE
+May begin coding: NO
+May write source: NO
 ```
 
-## Hydration Rule
+## Validation categories
 
-Control options must be hydrated from the owning registry or state model. A random GUI module must not hand-build the same option list.
+Use applicable checks for stable-ID round trip, migration, invalid fallback,
+signal suppression, event origin, stale async rejection, model replacement,
+caption, DPI/font/locale sizing, keyboard/focus/accessibility, and consumer
+compatibility. Project-specific visual overlays may add manual interaction
+profiles but do not replace this semantic-state owner.
 
-## Do-Not-Regress Checklist
+## Routing boundary
 
-Before freezing a control-state patch, test:
-
-- initial load;
-- reload/refresh;
-- saved preference restore;
-- missing old selection fallback;
-- long label sizing;
-- placeholder behavior;
-- manual selection behavior;
-- disabled/unavailable option behavior;
-- stable_id preserved even if visible caption changes;
-- no duplicate option ownership.
-
-## Forbidden Patterns
-
-- multiple independent dropdown-width calculators;
-- display label used as persistent ID;
-- GUI control directly mutates data truth;
-- hard-coded option list duplicated across boxes;
-- reset on refresh without clear reason;
-- stale selection silently mapped to wrong option;
-- UI caption adapter changing runtime meaning.
+Load for option-state, selection persistence, hydration, caption, and sizing
+regressions. Do not route generic state, ownership, or non-interactive backend
+work here. A completed review returns evidence to Brick Wall and never authorizes
+source writes or freeze.

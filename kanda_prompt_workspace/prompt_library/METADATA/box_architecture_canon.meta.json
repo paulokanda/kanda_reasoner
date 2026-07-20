@@ -1,50 +1,45 @@
 {
+  "prompt_code": "KPR-04-001",
   "prompt_id": "box_architecture_canon",
   "display_name": "Box Architecture Canon",
   "filename": "box_architecture_canon.md",
   "category": "04_box_architecture_and_boundaries",
+  "version": "2.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Defines Box Architecture: active box ownership, Box Boundary Audit, public contracts, private internals, dependency boundaries, fallback behavior, and anti-contamination rules.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 5,
+  "load_type": "routed",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
+  "aliases": [
+    "KPR-04-001",
+    "box_architecture_canon",
+    "box architecture canon",
+    "box boundary audit",
+    "closed_box_delivery_canon",
+    "closed box delivery canon"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "Canonical bounded-responsibility ownership, public/private contract, authoritative state, dependency, lifecycle, and Box Boundary Audit laws.",
+  "priority": 3,
   "trigger_phrases": [
-    "active box",
-    "box logic",
     "box architecture",
     "box boundary audit",
-    "box boundary",
-    "owner paths",
-    "allowed files",
-    "forbidden files",
-    "cross box touch",
+    "active box",
     "public contract",
-    "private internals",
     "private reach-in",
+    "authoritative state owner",
+    "cross-box touch",
     "god box",
-    "leaking registry",
-    "hidden mutable state",
-    "one primary box",
-    "one patch one box",
-    "brain navigator box",
-    "remember box",
-    "tab registry",
-    "navigation controller",
-    "box manifest",
-    "box lifecycle",
-    "fallback behavior",
-    "disable behavior",
-    "project agnostic root",
-    "project local evidence"
+    "leaking registry"
   ],
   "required_companion_prompts": [
-    "bundle_gated_development_workflow",
-    "implementation_roadmap_builder"
+    "brick_wall_comprehensive_quality_gate"
   ],
-  "box_architecture_canon_version": "1.1",
+  "optional_companion_prompts": [
+    "project_tool_boundary_canon",
+    "boundary_first_repair_protocol",
+    "kanda_box_shielding_canon"
+  ],
   "requires_box_boundary_audit": true,
-  "pre_code_audit_required_for_project_changes": true
+  "source_write_authorization": "NO"
 }

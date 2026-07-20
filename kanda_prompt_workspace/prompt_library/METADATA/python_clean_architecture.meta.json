@@ -1,27 +1,42 @@
 {
   "prompt_id": "python_clean_architecture",
+  "prompt_code": "KPR-08-001",
   "display_name": "Python Clean Architecture",
   "filename": "python_clean_architecture.md",
+  "canonical_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md",
   "category": "08_python_engineering_core",
   "status": "active",
+  "version": "2.0.0",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Applies clean architecture boundaries to Python systems.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "source_stage": "prompt-audit-wave8b-python-architecture-design-boundaries-v1",
+  "classification": "python_dependency_direction_specialist",
+  "description": "Evaluates Python dependency direction, ports and adapters, framework isolation, composition boundaries, and incremental migration without imposing a universal layer model.",
+  "box_logic_required": false,
+  "routing_coverage": "complete_wave8b",
   "priority": 50,
   "trigger_phrases": [
-    "clean architecture",
-    "dependency rule",
-    "entities use cases adapters",
-    "architecture layers",
-    "decouple python"
+    "dependency direction",
+    "framework isolation",
+    "ports and adapters",
+    "composition root",
+    "clean architecture python"
   ],
-  "required_companion_prompts": [
+  "aliases": [
+    "KPR-08-001",
+    "python clean architecture",
+    "python dependency direction",
+    "python_clean_architecture"
+  ],
+  "user_intent_examples": [
+    "Review whether this Python system needs ports, adapters, or a clearer composition boundary."
+  ],
+  "when_to_load": "When dependency direction, framework isolation, ports/adapters, or a composition boundary is materially involved.",
+  "when_not_to_load": "Do not load for local readability, simple scripts, KANDA box ownership, or generic architecture discussion without Python dependency evidence.",
+  "required_companion_prompts": [],
+  "supporting_owner_dispatch": [
     "box_architecture_canon",
-    "implementation_roadmap_builder",
-    "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+    "python_domain_driven_design",
+    "python_enterprise_architecture",
+    "python_testing_pytest"
   ]
 }

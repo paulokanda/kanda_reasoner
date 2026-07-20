@@ -1,130 +1,47 @@
-# Productization Readiness Roadmap
-
-## Box Logic Requirement
-
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
-
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-Version: 1.0.0
-Status: Strategic product-readiness roadmap
-Prompt ID: kanda_productization_readiness_roadmap
-Prompt type: professionalization / release readiness protocol
-Scope: Move Kanda Reasoner from internal tool toward polished developer product and, later, commercial SaaS/product readiness.
-
-## Honesty rule
-
-Do not promise literal 100% certainty. Interpret "100% professional readiness" as
-a release-grade target with defined gates, documentation, tests, packaging, CI,
-support workflow, security, and user-facing polish.
-
-## Track A comes first: polished product for other developers
-
-A developer who is not the original author must be able to install, run,
-validate, understand, and safely use Kanda Reasoner on a new project without
-chat history.
-
-### Gates
-
-1. Stable installation.
-2. Single command validation.
-3. Warning cleanup phase.
-4. Critical API test protection.
-5. Public API stabilization.
-6. Documentation: README, INSTALL, QUICKSTART, ARCHITECTURE, VALIDATION,
-   CONTRIBUTING, TROUBLESHOOTING, RELEASE_NOTES, and GOVERNANCE pointer.
-7. UX polish: first-run flow, project root selector, validation buttons, help
-   buttons, visible safe baseline, copyable commands, and clear error summaries.
-8. Packaging: source distribution, portable ZIP, pip package, or later Windows executable.
-9. Example project with expected validation output.
-10. Release discipline: semver, changelog, release checklist, checksum.
-
-## Track B comes second: commercial SaaS/product readiness
-
-Do not start serious SaaS before Track A is credible.
-
-Required gates:
-
-1. Product positioning.
-2. User journey.
-3. Security and privacy: no training on user code unless opt-in, encryption,
-   access controls, audit logs, secrets detection, data retention, deletion.
-4. Deployment architecture: frontend, API, queue, worker sandbox, storage,
-   database, auth, billing, observability.
-5. Sandboxed execution for customer code.
-6. Billing and licensing.
-7. Support model.
-8. Reliability metrics.
-9. Legal/compliance review including LGPD/GDPR concerns.
-10. Enterprise/local/on-prem path.
-
-## Recommended implementation order
-
-1. Stabilize current local product.
-2. Low-risk warning cleanup.
-3. Test protection.
-4. Developer documentation.
-5. Packaging and release.
-6. Product UX polish.
-7. SaaS feasibility prototype.
-8. Commercial launch readiness.
-
-## Non-negotiable baseline
-
-Every professionalization change still follows Kanda Bundle-Gated Development:
-
-```text
-Task 0 audit -> Task 1 roadmap -> Task 2 implementation runner -> dry run -> apply -> rollback on failure -> Tab 1 validation -> Tab 2 validation -> freeze only if clean
-```
-
-Do not add product features while Tab 1 Errors or Tab 2 failures are unresolved.
-
+---
+prompt_id: productization_readiness_roadmap
+prompt_code: KPR-11-002
+title: Productization Readiness Roadmap
+version: 2.0.0
+status: deprecated
+load_type: never
+owner_box: 11_productization_and_release_readiness
+classification: deprecated_historical_compatibility_tombstone
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
 ---
 
-## Professional workflow infrastructure productization update
+# Productization Readiness Roadmap — Deprecated Compatibility Tombstone
 
-### Professional infrastructure required before product readiness
+## Status
 
-Before Kanda Reasoner can be considered a polished developer product, the
-engineering workflow itself must be productized.
+Global active route: `NO`.
 
-Required infrastructure modules:
+This identity is retained only so historical references fail closed and redirect
+to current owners. It must not be loaded as an implementation or roadmap prompt.
 
-1. Evidence Freshness Gate with hash and timestamp checks.
-2. Patch Registry with created, installed, validated, frozen, failed, restored,
-   and abandoned states.
-3. Unified Validation Runner with raw log plus structured JSON result sidecar.
-4. GUI Smoke Checklist System for visual/manual validation.
-5. Freeze Governance Workflow with explicit user freeze.
-6. Git Checkpoint Gate for recommended pre-patch checkpoints.
-7. Patch Install Manifest Indexer for backup/install discovery.
-8. Failure Triage Classifier.
-9. Prompt and Protocol Enforcement through Tab 9 routing.
-10. End-of-Session Handoff Generator.
-11. State-Based Testing Sandbox for persistent-state-sensitive patches.
-12. Human Override Log for rare, justified gate overrides.
+## Deprecation reason
 
-Productization gates should include:
+The former body was a KANDA-specific historical SaaS/product roadmap whose missing-capability claims are not current source authority.
 
-```text
-fresh evidence
-patch state known
-validation result saved
-manual GUI checklist recorded when visual
-no unresolved workflow failure
-no unresolved architecture failure
-no hidden terminal-log clearing
-no freeze without explicit human command
-```
+## Current redirects
 
-Track A product readiness must come before SaaS readiness. A SaaS or public
-product should not start until the local product has a stable installation path,
-single-command validation, documentation, clean release packaging, test
-protection, and visible validation state.
+- Use a current project-owned capability-status matrix for live readiness.
+- Use KPR-11-003 for the high-level human/AI operating model.
+- Use KPR-11-005 for versioning, support, deprecation and EOL.
+- Use KPR-11-006 for production reliability readiness.
+- Use KPR-11-001 only when Kubernetes deployment is actually planned.
+
+## Do not regress
+
+- Do not restore broad active aliases or direct startup loading.
+- Do not treat historical missing-capability lists as current source truth.
+- Do not create a new infrastructure, registry, routing, or governance engine
+  merely to satisfy this historical document.
+- Inspect current source and current project-owned evidence before proposing work.
+- Preserve this file as a tombstone until all durable historical references are
+  migrated or explicitly retired.
+
+## Version history
+
+- 2.0.0: deprecated the historical active body and retained a fail-closed redirect.

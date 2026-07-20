@@ -1,24 +1,40 @@
 {
+  "prompt_code": "KPR-11-003",
   "prompt_id": "professional_ai_assisted_engineering_framework",
-  "display_name": "Professional AI-Assisted Engineering Framework",
+  "display_name": "AI-Assisted Engineering Operating Model Overview",
   "filename": "professional_ai_assisted_engineering_framework.md",
   "category": "11_productization_and_release_readiness",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Defines the full professional AI-human engineering operating model.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "11_productization_and_release_readiness",
+  "canonical_path": "ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md",
+  "classification": "thin_non_authoritative_human_ai_operating_model_overview",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Provide a concise map of human responsibility, AI responsibility, work states, evidence discipline, and dispatch to current specialist owners. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [
-    "professional AI engineering",
-    "AI assisted engineering",
-    "avoid vibe coding",
-    "human lead AI assistant",
-    "professional workflow"
+    "AI human engineering operating model",
+    "human AI responsibility split",
+    "engineering work state overview"
   ],
-  "required_companion_prompts": [
-    "evidence_freshness_gate"
+  "aliases": [
+    "KPR-11-003",
+    "AI-assisted engineering operating model",
+    "professional_ai_assisted_engineering_framework"
+  ],
+  "user_intent_examples": [
+    "When a concise non-authoritative human/AI role and work-state overview is needed."
+  ],
+  "when_to_load": "When a concise non-authoritative human/AI role and work-state overview is needed.",
+  "when_not_to_load": "Do not load as a master implementation, validation, or freeze authority.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
   ]
 }

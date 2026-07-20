@@ -117,8 +117,6 @@ AI should request/load:
 
 - relevant validation logs
 - `bundle_gated_development_workflow`
-- `evidence_freshness_gate`
-- `patch_registry_validation_freeze`
 - relevant domain prompt based on the error type
 
 You should provide:
@@ -173,7 +171,7 @@ AI should request/load:
 - `project_specific_prompt_generalization`
 - `prompt_canon_reconciliation_protocol`
 - `prompt_navigation_index`
-- `prompt_router`
+- `ai_prompt_request_canon`
 - target prompt folder
 - source prompt files
 
@@ -200,8 +198,7 @@ AI should request/load:
 
 - `implementation_and_delivery_protocol`
 - `bundle_gated_development_workflow`
-- `universal_delivery_protocol`
-- `patch_registry_validation_freeze`
+- `implementation_and_delivery_protocol`
 - active box prompts
 - relevant engineering prompt
 
@@ -227,9 +224,7 @@ You can say:
 
 AI should request/load:
 
-- `active_governance_freeze_update`
-- `evidence_freshness_gate`
-- `patch_registry_validation_freeze`
+- `freeze_code_intake_and_form_protocol`
 - latest validation output
 - latest handoff/status report
 
@@ -253,7 +248,7 @@ You can say:
 
 AI should request/load:
 
-- `current_workflow_handoff_template`
+- `workflow_handoff_template`
 - latest task history
 - current freeze status
 - installed patches

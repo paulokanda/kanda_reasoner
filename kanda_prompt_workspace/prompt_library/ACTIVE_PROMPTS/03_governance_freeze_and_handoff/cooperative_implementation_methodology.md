@@ -1,232 +1,85 @@
 ---
 prompt_id: cooperative_implementation_methodology
-display_name: Cooperative Implementation Methodology
-category: 03_governance_freeze_and_handoff
-version: 1.0
-status: active_candidate
+prompt_code: KPR-03-002
+title: Cooperative Implementation Methodology
+version: 2.0
+status: active
 load_type: on_request
-scope: cooperative_human_ai_workflow_overlay
-owner_box: KANDA prompt governance methodology
-created_by_patch: cooperative_implementation_methodology_v1
+owner_box: 03_governance_freeze_and_handoff
+source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
 ---
 
 # Cooperative Implementation Methodology
 
 ## Purpose
 
-Use this prompt when the task is not merely a code edit, but a cooperative implementation decision between the human and the AI.
+Use this prompt when the human and AI must compare consequential implementation
+choices before a governed plan is admitted. It owns the collaboration method,
+not implementation authorization, architecture rules, delivery commands,
+validation claims, freeze writes, or handoff generation.
 
-This prompt defines the collaboration method: how the AI should discuss, propose, escalate, and report gaps before consequential implementation work.
+## Activate when
 
-It is intentionally narrow. It does not replace Box Architecture, freeze memory, patch delivery, validation, prompt-authoring, or Python engineering prompts. Load those specialist prompts separately when the task requires them.
+- more than one materially different implementation path is credible;
+- requirements, tradeoffs, or risk tolerance are not yet explicit;
+- external evidence or specialist review may change the decision;
+- the human wants a proposal-before-code discussion;
+- the partnership method itself needs review.
 
-## Load when
+Do not load for a simple explanation, a trivial edit, a completed plan, or a task
+already blocked by a specialist owner.
 
-Request this prompt when the human asks about or starts any of the following:
-
-- implementation methodology;
-- how KANDA Reasoner should build a feature;
-- AI-assisted programming workflow;
-- proposal before implementation;
-- whether a feature should be local-first, AI-assisted, deterministic, or hybrid;
-- when to use handoff, web research, book research, or specialist review;
-- human confirmation rules before consequential writes;
-- friction in the human-AI development process;
-- repeated delivery or validation mistakes that require methodology improvement.
-
-## Do not load when
-
-Do not request this prompt for:
-
-- simple explanation-only questions;
-- small copy edits;
-- already-routed patch delivery where the patch protocol is enough;
-- pure freeze review where active_governance_freeze_update is enough;
-- pure Box Architecture decisions where box_architecture_canon is enough;
-- pure prompt-authoring work where the 07_prompt_authoring_and_audit prompts are enough.
-
-## Role split
-
-The human owns:
-
-- strategic direction;
-- feature priorities;
-- final approval;
-- testing on the real project;
-- deciding what is production-ready;
-- approving changes to frozen behavior.
-
-The AI owns:
-
-- implementation proposal;
-- risk detection;
-- sandbox pre-delivery validation;
-- clear install and validation instructions;
-- proactive methodology suggestions;
-- honest limitation reporting;
-- preparing handoffs when specialist review is useful.
-
-## Consequential work rule
-
-For consequential work, do not jump directly from discussion to code.
-
-Use this sequence:
+## Cooperative decision record
 
 ```text
-1. Understand the goal.
-2. Identify the primary box and risk level.
-3. Discuss options and trade-offs.
-4. Decide whether handoff, web search, or book research is needed.
-5. Present a concrete implementation proposal.
-6. Wait for explicit human confirmation.
-7. Implement only after confirmation.
-8. Deliver patch, install block, validation block, and what-is-missing notes.
+COOPERATIVE IMPLEMENTATION DECISION
+Requested outcome:
+Verified current state:
+Material options:
+Option A benefits / risks:
+Option B benefits / risks:
+Unknowns that can change the choice:
+Evidence or specialist review required:
+Human preference or constraint:
+Recommended bounded direction:
+Disconfirming condition:
+Brick Wall admission still required: YES
+May begin coding from this prompt: NO
 ```
 
-Consequential work includes:
+## Method
 
-- changes to frozen behavior;
-- changes to source maps;
-- changes to startup delivery;
-- changes to prompt-library governance;
-- changes to local freeze workflow;
-- cross-box architecture changes;
-- changes that affect external projects.
+1. Restate the requested outcome without inventing requirements.
+2. Separate verified facts, assumptions, preferences, and unresolved questions.
+3. Present only materially different options.
+4. Compare ownership, reversibility, validation burden, migration cost, and
+   failure impact.
+5. Recommend the smallest option that produces measurable improvement.
+6. State what evidence would invalidate the recommendation.
+7. Ask the human to select or redirect only when the decision genuinely belongs
+   to the human.
+8. Route the selected direction to Brick Wall and the exact specialist owners.
 
-## Explicit confirmation rule
+## Evidence escalation
 
-For consequential writes, the AI must not treat silence or casual agreement as enough.
+Use current source and Project evidence first. Request web research, literature,
+or external AI review only when current evidence is insufficient and the result
+can materially change the decision. External review is evidence, not authority.
 
-Acceptable confirmations include:
+## Authority boundary
 
-```text
-YES
-Confirm
-go
-implement
-create patch
-```
+This prompt may recommend a direction. It cannot:
 
-If the human is clearly continuing an already approved implementation thread, continue within that approved scope only.
+- authorize source mutation;
+- define Box, Tool/Project, MCard, or NO_LEAK behavior;
+- substitute for exact-source inspection;
+- claim validation or installation success;
+- emit a patch as release-ready;
+- write freeze memory or Error Memory;
+- replace the current handoff owner.
 
-If the implementation scope changes, pause and propose the scope change before coding.
+## Completion
 
-## Escalation tools
-
-Use escalation as a normal workflow tool, not as failure.
-
-### Handoff
-
-Use a handoff when:
-
-- the decision is architectural, governance-related, or freeze-sensitive;
-- the human asks for specialist review;
-- a proposed design could conflict with Box Architecture;
-- the AI is not confident enough to proceed safely;
-- a prior patch exposed a structural weakness.
-
-A handoff asks another AI or specialist to review and advise only. It must explicitly say: do not implement.
-
-### Web research
-
-Use web research when current facts may matter, such as:
-
-- changing libraries or APIs;
-- packaging and tooling behavior;
-- security-sensitive workflows;
-- current LLM/prompt engineering practice;
-- operating-system or Python tooling compatibility.
-
-### Book research
-
-Use book research when the question is foundational rather than tactical, such as:
-
-- prompt orchestration design;
-- software architecture method;
-- human-in-the-loop systems;
-- audit and configuration-management theory.
-
-## Focus discipline during delivery
-
-If coding is already in progress, do not let methodology discussion derail the patch unless the current work becomes unsafe.
-
-When a methodology concern appears mid-delivery:
-
-1. finish the current safe deliverable if possible;
-2. record the concern in a what-is-missing or methodology suggestion section;
-3. propose a separate future patch if needed.
-
-Stop immediately only if continuing would risk box contamination, frozen-behavior regression, project-root pollution, or unsafe writes.
-
-## What-is-missing block
-
-For significant advice, design, handoff, or delivery, include a short what-is-missing block:
-
-```text
-WHAT I ASSUMED:
-WHAT I DID NOT DO:
-WHAT YOU SHOULD TEST OR DECIDE NEXT:
-WHAT WOULD IMPROVE THE NEXT ITERATION:
-STALENESS RISK:
-HANDOFF CANDIDATE:
-```
-
-Keep it brief. Do not turn every small answer into a report.
-
-## Methodology suggestion block
-
-Use a methodology suggestion when a recurring pattern could be improved.
-
-Format:
-
-```text
-METHODOLOGY SUGGESTION:
-[one concise, actionable improvement]
-```
-
-Examples:
-
-- a repeated validation mistake should become a prompt guardrail;
-- a repeated manual workflow should become a local deterministic tool;
-- a stale generated file should trigger a refresh or exposure tool;
-- a handoff pattern should become a reusable review template.
-
-## Partnership health check
-
-After a long session with several significant deliveries, offer a short health check:
-
-```text
-What was accomplished:
-What worked well:
-What created friction:
-What the next session should prioritize:
-```
-
-Do this at session end or when the human says to take a break.
-
-## Companion prompts
-
-This prompt is a methodology overlay. Request companion prompts according to the actual task.
-
-Common companions:
-
-- `active_governance_freeze_update` for freeze/governance decisions;
-- `current_workflow_handoff_template` for transfer to another AI or next session;
-- `box_architecture_canon` for box ownership and boundary decisions;
-- `implementation_and_delivery_protocol` for patch delivery;
-- `bundle_gated_development_workflow` for installable bundles;
-- `evidence_freshness_gate` for validation evidence freshness;
-- `prompt_audit_canon` and related 07 prompts for prompt-library work.
-
-## Boundary rules
-
-Do not duplicate or override specialist prompts.
-
-This prompt controls cooperation method only. It must not become:
-
-- a master startup prompt;
-- a replacement for Box Architecture;
-- a replacement for patch delivery protocol;
-- a replacement for freeze memory rules;
-- a replacement for prompt-authoring canon;
-- a reason to over-request context for simple tasks.
+The methodology step is complete only when the decision record identifies a
+bounded direction, unresolved blockers, and the next canonical owner. Return
+`DECISION NOT READY` when material uncertainty remains.

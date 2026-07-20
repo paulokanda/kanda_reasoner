@@ -29,42 +29,42 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "region_id": "broca_area",
         "region_name": "Broca Area (language area)",
         "target_tab_id": "project_qa",
-        "target_tab_label": "Project Q&A",
+        "target_tab_label": "Local AI",
         "analogy_title": "Language production and clear answers",
         "analogy_text": (
-            "Broca Area is associated with expressive language, like Project "
-            "Q&A turns project context into clear explanations, answers, and "
+            "Broca Area is associated with expressive language, like Local AI "
+            "turns project context into clear explanations, answers, and "
             "implementation guidance."
         ),
-        "tooltip_text": "Broca Area -> Project Q&A",
+        "tooltip_text": "Broca Area -> Local AI",
         "category": "Project Tools",
     },
     {
         "region_id": "parietal_lobe",
         "region_name": "Parietal lobe",
-        "target_tab_id": "workflow_review",
-        "target_tab_label": "Workflow Review",
+        "target_tab_id": "architecture_review",
+        "target_tab_label": "Audit Project",
         "analogy_title": "Integration and workflow coordination",
         "analogy_text": (
             "The parietal lobe integrates information across space and "
-            "sensation, like Workflow Review coordinates how project tasks "
-            "connect and execute."
+            "sensation, like the Workflow Review child tab inside Audit "
+            "Project coordinates how project tasks connect and execute."
         ),
-        "tooltip_text": "Parietal lobe -> Workflow Review",
+        "tooltip_text": "Parietal lobe -> Audit Project > Workflow Review",
         "category": "Core Review",
     },
     {
         "region_id": "brainstem_midbrain",
         "region_name": "Brainstem / Midbrain region",
-        "target_tab_id": "engineering_safety",
-        "target_tab_label": "Engineering Safety",
+        "target_tab_id": "architecture_review",
+        "target_tab_label": "Audit Project",
         "analogy_title": "Survival layer and safety control",
         "analogy_text": (
             "The brainstem and midbrain protect core survival functions, like "
-            "Engineering Safety protects the app from unsafe architecture and "
-            "implementation mistakes."
+            "Audit Project groups Architecture Review and Engineering Safety "
+            "before fragile changes are made."
         ),
-        "tooltip_text": "Brainstem / Midbrain -> Engineering Safety",
+        "tooltip_text": "Brainstem / Midbrain -> Audit Project",
         "category": "Core Review",
     },
     {
@@ -126,13 +126,13 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "region_id": "temporal_lobe",
         "region_name": "Temporal lobe",
         "target_tab_id": "project_qa",
-        "target_tab_label": "Project Q&A",
+        "target_tab_label": "Local AI",
         "analogy_title": "Meaning, memory, and language",
         "analogy_text": (
             "The temporal lobe supports memory, meaning, and language, like "
-            "Project Q&A interprets the project and answers questions about it."
+            "Local AI interprets the project and answers questions about it."
         ),
-        "tooltip_text": "Temporal lobe -> Project Q&A",
+        "tooltip_text": "Temporal lobe -> Local AI",
         "category": "Project Tools",
     },
     {

@@ -1,57 +1,40 @@
 {
+  "prompt_code": "KPR-04-002",
   "prompt_id": "kanda_box_shielding_canon",
   "display_name": "KANDA Box Shielding Canon",
   "filename": "kanda_box_shielding_canon.md",
   "category": "04_box_architecture_and_boundaries",
+  "version": "2.0",
   "status": "active",
-  "load_type": "on_request",
-  "source_stage": "human_canonized_prompt_registration_v1",
-  "description": "Defines KBSC: tests-first box shielding as an architectural fitness-function suite for bounded contexts, protecting authority boundaries, dependency direction, truth-source priority, public contracts, side effects, regression-critical outputs, and no-invasion behavior before stronger or cross-box work.",
-  "box_logic_required": true,
-  "routing_coverage": "complete_v1",
+  "load_type": "routed",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
+  "aliases": [
+    "KPR-04-002",
+    "KBSC",
+    "kanda_box_shielding_canon",
+    "box shield",
+    "architectural fitness function"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "Risk-based architectural invariant shielding and bounded fitness-function method for one box.",
   "priority": 4,
   "trigger_phrases": [
     "box shield",
-    "box shielding",
-    "shield logic",
-    "shielding method",
     "KBSC",
-    "KANDA Box Shielding Canon",
-    "canonize shielding",
     "architectural fitness function",
-    "fitness function suite",
-    "bounded context shield",
-    "do not invade other box logic",
-    "authority creep",
-    "forbidden authority escalation",
-    "truth source priority ladder",
-    "dependency direction",
-    "no placeholder commitment",
-    "shield before stronger ML",
-    "routing signal scorer shield",
-    "similarity box shield"
+    "shield applicability",
+    "authority regression protection",
+    "shield before stronger work"
   ],
   "required_companion_prompts": [
     "box_architecture_canon",
-    "bundle_gated_development_workflow"
+    "brick_wall_comprehensive_quality_gate"
   ],
   "optional_companion_prompts": [
-    "cooperative_implementation_methodology",
-    "pre_output_contract_gates",
-    "prompt_canon_reconciliation_protocol",
-    "prompt_audit_canon"
+    "boundary_first_repair_protocol"
   ],
-  "kbsc_version": "1.0",
-  "requires_box_boundary_audit": true,
-  "requires_tests_first": true,
-  "pre_stronger_ml_shield_required": true,
-  "forbidden_authority": [
-    "final_route",
-    "required_prompts",
-    "may_proceed_now",
-    "automatic_prompt_loading",
-    "router_override",
-    "neighboring_box_state",
-    "human_confirmation_bypass"
-  ]
+  "requires_shield_applicability_decision": true,
+  "source_write_authorization": "NO"
 }

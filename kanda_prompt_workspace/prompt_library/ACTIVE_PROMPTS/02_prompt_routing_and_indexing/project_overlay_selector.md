@@ -1,172 +1,81 @@
 ---
-audit_id: P002_OVERLAY
-canonical_id: project_overlay_selector
-name: Project Overlay - Reasoner
-version: 1.0
-status: audited_candidate
-project_agnostic: false
-type: project_overlay
-group: project_overlay
-load_mode: stack
-requires:
-  - general_prompt_stack_load_order.md
-description: Project-specific overlay that resolves variables and Reasoner-specific prompt routing without contaminating the project-agnostic parent prompt.
-created_from:
-  - 0000 0.1 PYARCHITECT REASONER PROMPT STACK LOAD ORDER v1.1.md
+prompt_id: project_overlay_selector
+prompt_code: KPR-02-003
+title: Project Overlay Selector
+version: 2.0
+status: active
+load_type: on_request
+owner_box: 02_prompt_routing_and_indexing
+source_stage: prompt-audit-wave2a-routing-owner-foundation-v1
 ---
 
 # Project Overlay Selector
 
-## Box Logic Requirement
+## Mission
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+Select an existing current Project overlay that matches the active Project identity. The selector never becomes the overlay and never writes Project or Prompt Library files.
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
-
-
-Status: Project-specific audited candidate  
-Use: Load after the project-agnostic prompt router when working on Kanda Reasoner / Project Reasoner.
-
-## Purpose
-
-Resolve project-specific values for Kanda Reasoner / Project Reasoner while keeping the general PyArchitect prompt router project-agnostic.
-
-This overlay contains project facts. Do not merge this file into the project-agnostic load-order prompt.
-
-## Current Project Identity
-
-Project name:
+## Required inputs
 
 ```text
-Kanda Reasoner / Project Reasoner
+active_project_id
+active_project_slug
+active_project_root
+current overlay registrations or metadata
+current Tool/Project identity record
+requested task scope
 ```
 
-Current user-specified project root for this audit installation:
+## Selection algorithm
+
+1. resolve current Project identity through KPR-12-001;
+2. inspect registered overlay metadata, not generated summaries;
+3. reject overlays for another Project or stale root identity;
+4. reject generated overlay artifacts presented as source;
+5. require exactly one current compatible overlay or return no match;
+6. if several overlays match, return unresolved conflict and route to Class 07 reconciliation;
+7. if no overlay matches, continue with global canon or route to the Project startup template when a new overlay is genuinely required.
+
+## Output
 
 ```text
-E:\kanda_reasoner
+PROJECT OVERLAY SELECTION
+Active Project ID:
+Active Project root:
+Selected overlay ID:
+Selected overlay source path:
+Overlay version and provenance:
+Project identity match: YES / NO / UNRESOLVED
+Stale or generated-as-source risk: YES / NO / UNRESOLVED
+Selection decision: SELECTED / NO_MATCH / CONFLICT / BLOCKED
+May write from this selector: NO
+Next owner:
 ```
 
-Product package:
+## Hard stops
 
-```text
-E:\kanda_reasoner\kanda_reasoner_app
-```
+Block selection when:
 
-Prompt library source folder:
+- Project identity is unresolved;
+- more than one current overlay claims the same scope;
+- the overlay targets another Project;
+- the overlay source does not exist;
+- only generated evidence exists;
+- the overlay contains hardcoded legacy KANDA roots for a different Project;
+- the selector is asked to authorize implementation, delivery, or freeze.
 
-```text
-E:\kanda_reasoner\kanda_reasoner_app\prompt_library
-```
+## Boundaries
 
-Audited prompt destination folder:
+- KPR-12-001 owns Tool/Project identity and roots.
+- Project startup owners define new overlay templates.
+- Class 07 owns overlay prompt creation, audit, identity, reconciliation, and insertion.
+- Brick Wall owns implementation authorization.
+- Freeze and delivery remain with their current owners.
 
-```text
-E:\kanda_reasoner\project_freeze_ledger\KANDA_PROMPTS_AUDITED
-```
+## Trigger scope
 
-Important note:
-Older Reasoner prompts may mention <PROJECT_ROOT>. Treat that path as historical unless current user instruction, current source files, or current project evidence confirms it.
+Load for Project overlay selection, overlay conflicts, overlay freshness, or global-versus-Project route decisions. Do not load for ordinary current routing when the active overlay is already proven.
 
-## Reasoner Daily Load Order
+## Version history
 
-When working on Kanda Reasoner / Project Reasoner, load this order unless the human gives a narrower task:
-
-1. general_prompt_stack_load_order.md
-2. project_overlay_selector.md
-3. 0000 0.8 PYARCHITECT UNIVERSAL DELIVERY PROTOCOL or current equivalent.
-4. Project startup canon or current Reasoner startup canon.
-5. Daily startup loader or current Reasoner daily loader.
-6. Current active governance files or governance ZIP, if needed for the task.
-7. Latest workflow handoff output, if available.
-8. Current task description.
-9. Relevant source ZIP, logs, screenshots, validation output, or observed behavior.
-
-## Reasoner Special Prompt Routing
-
-Request the professional engineering governance layer when the task affects:
-
-- architecture;
-- schema;
-- retrieval;
-- prompt construction;
-- AI bridge;
-- runtime behavior;
-- GUI lifecycle;
-- persistence;
-- multi-box work;
-- public APIs.
-
-Request the large module refactor protocol when:
-
-- a relevant Python file is above the project line limit;
-- the user opens a large-module refactor;
-- a module must be split by responsibility.
-
-Request the problem set roadmap solver when:
-
-- the user gives multiple problems;
-- the user asks for the best solving order;
-- several problems may need bundling or separation.
-
-Request the architecture hardening triage protocol when the task involves:
-
-- layer-boundary cleanup;
-- public facade ownership;
-- duplicate public symbols;
-- duplicate normalizers;
-- project-root hardcoding;
-- stale generated artifacts;
-- prompt/retrieval/AI-bridge ownership drift.
-
-Request the governance update prompt only when:
-
-- work was validated;
-- the relevant output was reviewed;
-- official active governance must be updated;
-- the required governance baseline files are available.
-
-## Reasoner Prompt Audit Rule
-
-When auditing Reasoner prompts:
-
-1. Preserve raw prompt files until replacements are created.
-2. Split project-specific facts into this overlay or a newer overlay.
-3. Keep reusable engineering rules inside project-agnostic prompts.
-4. Move misplaced rules into integration candidates.
-5. Deprecate the old project-specific prompt only after replacements are validated.
-6. Do not silently delete useful content.
-
-## Reasoner Delivery Preference
-
-For implementation bundles:
-
-- ZIP files should preserve final project-relative paths.
-- ZIP files should be saved by the user at the drive root used for this project when practical.
-- Use Windows CMD or PowerShell install code when installation/extraction supervision is needed.
-- Use separate validation terminal code after install.
-- The user pastes validation output back to the AI.
-- The AI may freeze a routine implementation step after reviewing complete clean validation output.
-
-## Current Audited Prompt Installation Target
-
-For the current prompt audit bundle, install into:
-
-```text
-E:\kanda_reasoner\project_freeze_ledger\KANDA_PROMPTS_AUDITED
-```
-
-This folder is an audited prompt destination. It is not the live prompt library unless the human later promotes it.
-
-## Project-Specific Safety Boundaries
-
-- Do not treat old <PROJECT_ROOT> paths as current active root unless the human confirms.
-- Do not edit the live prompt library just because audited prompts exist.
-- Do not update governance from this overlay alone.
-- Do not promote audited prompt candidates into active canon without validation and the correct prompt/governance workflow.
+- 2.0: replaced the hardcoded historical KANDA overlay with a true read-only selector.

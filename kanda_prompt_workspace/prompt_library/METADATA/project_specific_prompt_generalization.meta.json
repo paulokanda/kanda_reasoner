@@ -1,32 +1,28 @@
-﻿{
-    "prompt_id":  "project_specific_prompt_generalization",
-    "display_name":  "Project-Specific Prompt Generalization",
-    "filename":  "project_specific_prompt_generalization.md",
-    "category":  "07_prompt_authoring_and_audit",
-    "status":  "active",
-    "load_type":  "on_request",
-    "source_stage":  "mechanically_reconciled_from_prompt_library",
-    "description":  "Generalizes useful project-specific canons into reusable KANDA prompts.",
-    "box_logic_required":  true,
-    "renamed_in_clean_reconciliation_v2":  true,
-    "routing_coverage":  "complete_v3",
-    "priority":  35,
-    "trigger_phrases":  [
-                            "generalize prompts",
-                            "project-specific prompts",
-                            "remove EEG specificity",
-                            "make project agnostic",
-                            "generalization",
-                            "create a new prompt",
-                            "update an existing prompt",
-                            "complete prompt asset lifecycle"
-                        ],
-    "required_companion_prompts":  [
-                                       "prompt_navigation_index",
-                                       "prompt_router",
-                                       "prompt_substitution_map",
-                                       "bundle_gated_development_workflow"
-                                   ],
-    "t9t013_complete_lifecycle":  true,
-    "t9t013_scope":  "kanda_prompt_workspace_ACTIVE_PROMPTS_text_only"
+{
+  "prompt_id": "project_specific_prompt_generalization",
+  "display_name": "Project-Specific Prompt Generalization",
+  "filename": "project_specific_prompt_generalization.md",
+  "category": "07_prompt_authoring_and_audit",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "on_request",
+  "owner_box": "07_prompt_authoring_and_audit",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/project_specific_prompt_generalization.md",
+  "aliases": [],
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A065 audit reconciliation and Brick Wall Q01-Q40 ownership boundaries",
+  "description": "Analyzes external-project prompt material, removes contamination, preserves necessary domain constraints, checks semantic loss, and recommends reuse, overlay, update, registration, creation, or rejection.",
+  "priority": 35,
+  "trigger_phrases": [
+    "generalize an external project prompt",
+    "remove project-specific contamination",
+    "adapt another project canon",
+    "convert a project rule into reusable or overlay form"
+  ],
+  "required_companion_prompts": [
+    "prompt_audit_canon",
+    "prompt_canon_reconciliation_protocol",
+    "prompt_identity_code_registry_canon",
+    "prompt_insertion_and_router_registration_protocol"
+  ]
 }

@@ -1,27 +1,40 @@
 {
+  "prompt_code": "KPR-08-009",
   "prompt_id": "python_refactoring",
-  "display_name": "Python Refactoring",
+  "display_name": "Python Behavior-Preserving Refactoring",
   "filename": "python_refactoring.md",
   "category": "08_python_engineering_core",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Guides safe Python refactoring with behavior preservation.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "08_python_engineering_core",
+  "canonical_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md",
+  "classification": "bounded_behavior_preserving_refactoring_specialist",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Plan and review small or medium Python refactors that improve structure without intentionally changing the public behavior contract.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [
-    "refactor python",
-    "extract function",
-    "move method",
-    "code smell",
-    "safe refactoring"
+    "python refactoring",
+    "behavior preserving refactor",
+    "code smell transformation"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "implementation_roadmap_builder",
-    "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+  "aliases": [
+    "KPR-08-009",
+    "python refactoring",
+    "python_refactoring"
+  ],
+  "user_intent_examples": [
+    "When bounded Python structure must improve without intended behavior change."
+  ],
+  "when_to_load": "When bounded Python structure must improve without intended behavior change.",
+  "when_not_to_load": "Do not load for legacy stabilization, large-module decomposition, or feature behavior changes.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve narrow ownership and truthful evidence states.",
+    "Do not force companion prompts or direct startup loading.",
+    "Do not claim execution or validation without current observed evidence."
   ]
 }

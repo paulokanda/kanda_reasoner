@@ -3,14 +3,12 @@
   "display_name": "Prompt Navigation Index",
   "filename": "prompt_navigation_index.md",
   "category": "02_prompt_routing_and_indexing",
-  "status": "active_candidate",
-  "load_type": "tier_0_authoritative_router",
-  "source_stage": "kanda_context_routing_layer_phase1",
-  "description": "Authoritative human-readable router that maps task intent to required groups, selected specialist prompts, missing-context levels, and Fast Path behavior.",
+  "status": "active",
+  "load_type": "always_startup",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, and route owner relationships.",
   "priority": 7,
-  "routing_coverage": "phase1_group_kernel",
   "required_companion_prompts": [
-    "start_of_day_master_stack",
     "ai_prompt_request_canon",
     "group_assimilation_index"
   ],
@@ -18,14 +16,18 @@
     "what prompt should I use",
     "route this request",
     "prompt map",
-    "context routing",
-    "Error Lesson ZIP",
-    "formatted Error Memory lesson ZIP",
-    "direct import ZIP",
-    "Memorize Error",
-    "Error Memory default insertion autoload",
-    "Direct Error Lesson ZIP",
-    "Copy error/draft to AI",
-    "Paste error formatted from AI"
-  ]
+    "exact prompt path"
+  ],
+  "version": "5.0",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "prompt_code": "KPR-02-004",
+  "title": "Prompt Navigation Index",
+  "authority_boundary": {
+    "may_route_or_select_context": true,
+    "may_mutate_source": false,
+    "may_authorize_coding": false,
+    "may_authorize_freeze": false
+  }
 }

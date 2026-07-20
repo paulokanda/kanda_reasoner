@@ -1,35 +1,34 @@
 {
+  "prompt_code": "KPR-03-002",
   "prompt_id": "cooperative_implementation_methodology",
   "display_name": "Cooperative Implementation Methodology",
   "filename": "cooperative_implementation_methodology.md",
   "category": "03_governance_freeze_and_handoff",
-  "status": "active_candidate",
+  "version": "2.0",
+  "status": "active",
   "load_type": "on_request",
-  "source_stage": "human_ai_methodology_extracted_v1",
-  "description": "Defines KANDA's cooperative human-AI implementation method for consequential work without duplicating Box Architecture, freeze memory, patch delivery, or prompt-authoring canons.",
-  "box_logic_required": true,
-  "routing_coverage": "complete_v1",
-  "priority": 25,
+  "owner_box": "03_governance_freeze_and_handoff",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+  "aliases": [
+    "KPR-03-002",
+    "cooperative_implementation_methodology",
+    "cooperative_implementation_methodology.md",
+    "cooperative implementation methodology"
+  ],
+  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
+  "description": "Structures consequential human-AI option comparison and routes the selected direction to governed specialist owners without authorizing coding.",
   "trigger_phrases": [
-    "implementation methodology",
-    "AI assisted programming workflow",
     "cooperative implementation",
     "proposal before code",
-    "when should we use handoff",
-    "when should we do web research",
-    "book research before implementation",
-    "methodology improvement",
-    "human confirmation before implementation",
-    "partnership health check"
+    "compare implementation options",
+    "partnership methodology"
   ],
   "required_companion_prompts": [
-    "current_workflow_handoff_template",
-    "active_governance_freeze_update"
+    "brick_wall_comprehensive_quality_gate"
   ],
   "recommended_companion_prompts": [
     "box_architecture_canon",
-    "implementation_and_delivery_protocol",
-    "evidence_freshness_gate",
-    "bundle_gated_development_workflow"
+    "workflow_handoff_template"
   ]
 }

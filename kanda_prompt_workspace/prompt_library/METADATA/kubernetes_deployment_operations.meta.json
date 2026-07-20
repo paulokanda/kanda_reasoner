@@ -1,25 +1,40 @@
 {
+  "prompt_code": "KPR-11-001",
   "prompt_id": "kubernetes_deployment_operations",
   "display_name": "Kubernetes Deployment and Operations",
   "filename": "kubernetes_deployment_operations.md",
   "category": "11_productization_and_release_readiness",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Uses Kubernetes deployment and operations concepts where appropriate.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "11_productization_and_release_readiness",
+  "canonical_path": "ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md",
+  "classification": "workload_specific_kubernetes_deployment_operations_specialist",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Design and review container and Kubernetes deployment contracts for a named workload, cluster profile, rollout strategy, and operational owner. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [
-    "kubernetes",
-    "deploy to k8s",
-    "containers operations",
-    "cluster deployment",
-    "helm"
+    "kubernetes deployment review",
+    "container workload rollout",
+    "pod security and supply chain"
   ],
-  "required_companion_prompts": [
-    "professional_ai_assisted_engineering_framework",
-    "evidence_freshness_gate"
+  "aliases": [
+    "KPR-11-001",
+    "kubernetes deployment",
+    "kubernetes_deployment_operations"
+  ],
+  "user_intent_examples": [
+    "When an actual container or Kubernetes workload needs deployment and operational design."
+  ],
+  "when_to_load": "When an actual container or Kubernetes workload needs deployment and operational design.",
+  "when_not_to_load": "Do not load for speculative Kubernetes adoption or as a universal production checklist.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
   ]
 }

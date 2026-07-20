@@ -64,7 +64,7 @@ _project_reference\BUNDLE_MANIFEST
 The prompt library includes:
 
 ```text
-kanda_reasoner_app\prompt_library\active\KANDA_BUNDLE_GATED_DEVELOPMENT_WORKFLOW.md
+kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS\05_patch_delivery_and_validation\bundle_gated_development_workflow.md
 ```
 
 This prompt formalizes the implementation cycle:
@@ -109,7 +109,7 @@ The Teach AI Prompt Authoring group contains:
 teach_ai_tab9_prompt_authoring_guide
 teach_ai_create_or_update_prompt_request
 tab9_prompt_asset_placement_rules
-kanda_bundle_gated_development_workflow
+bundle_gated_development_workflow
 ```
 
 ## Current Recommended Next Step

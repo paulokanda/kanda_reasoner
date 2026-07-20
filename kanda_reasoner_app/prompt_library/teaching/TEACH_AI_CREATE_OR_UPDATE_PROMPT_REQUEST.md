@@ -15,7 +15,7 @@ The full method is defined by:
 ```text
 TEACH_AI_TAB9_PROMPT_AUTHORING_GUIDE.md
 TAB9_PROMPT_ASSET_PLACEMENT_RULES.md
-KANDA_BUNDLE_GATED_DEVELOPMENT_WORKFLOW.md
+kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md
 ```
 
 ## Copyable Request

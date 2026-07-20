@@ -1,27 +1,38 @@
 {
+  "prompt_code": "KPR-09-017",
   "prompt_id": "tab4_docstring_quality_roadmap",
-  "display_name": "Tab 4 Docstring Quality Roadmap",
+  "display_name": "Tab 4 Docstring Quality Roadmap - Deprecated Global Route",
   "filename": "tab4_docstring_quality_roadmap.md",
   "category": "09_python_quality_security_observability",
-  "status": "active",
-  "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Improves docstring quality and Tab 4 documentation workflow.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "version": "2.0.0",
+  "status": "deprecated",
+  "load_type": "never",
+  "owner_box": "09_python_quality_security_observability",
+  "canonical_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/tab4_docstring_quality_roadmap.md",
+  "classification": "project_specific_historical_roadmap_tombstone",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Tab 4 Docstring Quality Roadmap - Deprecated Global Route",
+  "box_logic_required": false,
   "priority": 45,
-  "trigger_phrases": [
-    "docstring quality",
-    "tab4 docstrings",
-    "missing docstrings",
-    "docstring roadmap",
-    "documentation strings"
+  "trigger_phrases": [],
+  "aliases": [
+    "KPR-09-017",
+    "tab4_docstring_quality_roadmap"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "bundle_gated_development_workflow",
-    "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+  "user_intent_examples": [
+    "Never load as a global active route; this is a deprecated compatibility tombstone."
+  ],
+  "when_to_load": "Never load as a global active route; this is a deprecated compatibility tombstone.",
+  "when_not_to_load": "Use KPR-09-011 for generic documentation and inspect current project source for Tab 4 status.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [
+    "python_documentation_developer_experience",
+    "python_testing_pytest"
+  ],
+  "do_not_regress": [
+    "Preserve narrow ownership and truthful evidence states.",
+    "Do not force companion prompts or direct startup loading.",
+    "Do not claim execution or validation without current observed evidence."
   ]
 }

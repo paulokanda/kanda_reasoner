@@ -71,9 +71,9 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "broca_area",
         "Broca Area (language area)",
-        "Project Q&A",
+        "Local AI",
         "Language production and clear answers",
-        "Broca Area supports expressive language, like Project Q&A turns project context into clear explanations, answers, and implementation guidance.",
+        "Broca Area supports expressive language, like Local AI turns project context into clear explanations, answers, and implementation guidance.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
@@ -135,7 +135,7 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "temporal_lobe",
         "Temporal lobe",
-        "Project Q&A",
+        "Local AI",
         "Meaning, memory, and language",
         "Interprets project context and answers questions about code, structure, and implementation intent.",
         "Ready to open through the injected Tab Navigation Controller callback.",

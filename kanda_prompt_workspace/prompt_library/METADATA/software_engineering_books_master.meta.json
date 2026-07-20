@@ -1,26 +1,40 @@
 {
+  "prompt_code": "KPR-08-010",
   "prompt_id": "software_engineering_books_master",
-  "display_name": "Software Engineering Books Master",
+  "display_name": "Software Engineering Books Synthesis Map",
   "filename": "software_engineering_books_master.md",
   "category": "08_python_engineering_core",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Consolidates software-engineering book principles for AI-assisted development.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "08_python_engineering_core",
+  "canonical_path": "ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md",
+  "classification": "non_authoritative_books_synthesis_dispatch_map",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Compare software-engineering principles from recognized literature, explain tensions between them, and dispatch the task to the current technical specialist.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [
-    "which engineering book prompt",
-    "books master",
-    "combine software books",
-    "engineering principles overview"
+    "software engineering books comparison",
+    "engineering principle conflict",
+    "book to specialist map"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "implementation_roadmap_builder",
-    "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+  "aliases": [
+    "KPR-08-010",
+    "software engineering books synthesis",
+    "software_engineering_books_master"
+  ],
+  "user_intent_examples": [
+    "When an explicit cross-book principle comparison or educational specialist map is needed."
+  ],
+  "when_to_load": "When an explicit cross-book principle comparison or educational specialist map is needed.",
+  "when_not_to_load": "Do not load as a master governance or implementation prompt.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve narrow ownership and truthful evidence states.",
+    "Do not force companion prompts or direct startup loading.",
+    "Do not claim execution or validation without current observed evidence."
   ]
 }

@@ -12,12 +12,15 @@ import _reasoner_tools_gui_engineering_safety_panel_commands as _panel_commands
 from _reasoner_tools_gui_engineering_safety_panel_catalog import (
     _build_engineering_safety_panel_catalog,
 )
+from _reasoner_tools_gui_engineering_safety_full_audit import (
+    _install_complete_engineering_review,
+)
 
 from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import dataclass
 from io import StringIO
 import traceback
-from typing import Iterable
+from typing import Callable, Iterable
 
 from kanda_reasoner_app.project_root_resolver import resolve_active_project_root
 
@@ -123,7 +126,9 @@ def _group_tools_by_section(
     return grouped
 
 
-def create_engineering_safety_panel():
+def create_engineering_safety_panel(
+    project_root_provider: Callable[[], object] | None = None,
+):
     """Create the Engineering Safety tab panel.
 
     PySide6 is imported lazily so importing this module remains safe in tests and
@@ -131,14 +136,13 @@ def create_engineering_safety_panel():
     """
     from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
     from PySide6.QtWidgets import (  # type: ignore[import-not-found]
-        QFileDialog,
         QGridLayout,
         QGroupBox,
         QLabel,
-        QLineEdit,
         QPushButton,
         QScrollArea,
         QSizePolicy,
+        QTabWidget,
         QTextEdit,
         QVBoxLayout,
         QWidget,
@@ -146,23 +150,22 @@ def create_engineering_safety_panel():
 
     panel = QWidget()
     outer = QVBoxLayout(panel)
+    outer.setContentsMargins(0, 0, 0, 0)
+    outer.setSpacing(8)
 
-    project_root_label = QLabel("Project Root:")
-    project_root_label.setStyleSheet(
-        "color: #0B3D91; font-weight: bold; padding-left: 4px;"
-    )
-    project_root_edit = QLineEdit(str(resolve_active_project_root()))
-    project_root_edit.setObjectName("engineering_safety_project_root_edit")
-    project_root_edit.setPlaceholderText("Project root")
-    project_root_edit.setMinimumWidth(180)
-    project_root_edit.setMaximumWidth(360)
+    audit_tabs = QTabWidget(panel)
+    audit_tabs.setObjectName("engineering_safety_audit_tabs")
+    pontual_audit_page = QWidget(audit_tabs)
+    pontual_audit_page.setObjectName("engineering_safety_pontual_audit_page")
+    pontual_audit_layout = QVBoxLayout(pontual_audit_page)
+    pontual_audit_layout.setContentsMargins(0, 0, 0, 0)
+    pontual_audit_layout.setSpacing(8)
+    audit_tabs.addTab(pontual_audit_page, "Pontual Audit")
+    outer.addWidget(audit_tabs, 1)
 
-    search_project_button = QPushButton("Browse...")
-    search_project_button.setToolTip(
-        "Select the active project root for Engineering Safety commands"
-    )
-
-    project_root_controls_moved_to_host = {"moved": False}
+    panel.engineering_safety_audit_tabs = audit_tabs
+    panel.engineering_safety_pontual_audit_page = pontual_audit_page
+    panel.engineering_safety_project_root_provider = project_root_provider
 
     status_label = QLabel("")
     status_label.setVisible(False)
@@ -182,27 +185,15 @@ def create_engineering_safety_panel():
     button_layout.setColumnStretch(1, 1)
 
     def current_project_root_text() -> str:
-        """Return the current project root selected in the panel."""
-        text = project_root_edit.text().strip()
-        if text:
-            return text
+        """Return the project root selected by the shared Audit Project header."""
+        if project_root_provider is not None:
+            try:
+                selected = str(project_root_provider() or "").strip()
+            except Exception:  # noqa: BLE001
+                selected = ""
+            if selected:
+                return selected
         return str(resolve_active_project_root())
-
-    def search_project_root() -> None:
-        """Let the user select the project root used by safety commands."""
-        start = project_root_edit.text().strip() or str(resolve_active_project_root())
-        selected = QFileDialog.getExistingDirectory(
-            panel,
-            "Select project root",
-            start,
-        )
-        if selected:
-            project_root_edit.setText(selected)
-            output_box.setPlainText(
-                "Project root selected for Engineering Safety commands:\n" + selected
-            )
-
-    search_project_button.clicked.connect(search_project_root)
 
     # BEGIN PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
     from concurrent.futures import ThreadPoolExecutor
@@ -212,8 +203,20 @@ def create_engineering_safety_panel():
 
     def set_tool_buttons_enabled(enabled: bool) -> None:
         """Enable or disable all tool buttons while a command is running."""
-        for button in button_host.findChildren(QPushButton):
+        for button in panel.findChildren(QPushButton):
             button.setEnabled(enabled)
+
+    _install_complete_engineering_review(
+        panel,
+        audit_tabs,
+        command_executor,
+        running_commands,
+        set_tool_buttons_enabled,
+        current_project_root_text,
+        get_engineering_safety_panel_catalog,
+        run_engineering_safety_panel_command,
+        status_label,
+    )
 
     def finish_command(command_name: str, future: object) -> None:
         """Collect a completed command result on the GUI thread."""
@@ -284,33 +287,6 @@ def create_engineering_safety_panel():
         QTimer.singleShot(150, lambda: poll_command(command_name, future))
 
     # END PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
-
-    def move_project_root_controls_to_layout(
-        destination_layout,
-        insert_index: int | None = None,
-    ) -> None:
-        """Move Engineering Safety Project Root controls into the host header."""
-        if project_root_controls_moved_to_host["moved"]:
-            return
-
-        project_root_label.setParent(None)
-        project_root_edit.setParent(None)
-        search_project_button.setParent(None)
-
-        if insert_index is None:
-            destination_layout.addSpacing(12)
-            destination_layout.addWidget(project_root_label, 0)
-            destination_layout.addWidget(project_root_edit, 0)
-            destination_layout.addWidget(search_project_button, 0)
-        else:
-            destination_layout.insertSpacing(insert_index, 12)
-            destination_layout.insertWidget(insert_index + 1, project_root_label, 0)
-            destination_layout.insertWidget(insert_index + 2, project_root_edit, 0)
-            destination_layout.insertWidget(insert_index + 3, search_project_button, 0)
-
-        project_root_controls_moved_to_host["moved"] = True
-
-    panel.move_project_root_controls_to_layout = move_project_root_controls_to_layout
 
     def run_ai_review_first_check() -> None:
         """Run the first Engineering Safety check exposed in the tab header."""
@@ -393,8 +369,8 @@ def create_engineering_safety_panel():
 
     button_layout.setRowStretch(3, 1)
     scroll.setWidget(button_host)
-    outer.addWidget(scroll)
-    outer.addWidget(output_box)
+    pontual_audit_layout.addWidget(scroll, 1)
+    pontual_audit_layout.addWidget(output_box)
     return panel
 
 

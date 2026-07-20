@@ -1,26 +1,39 @@
 {
+  "prompt_code": "KPR-05-004",
   "prompt_id": "implementation_roadmap_builder",
-  "display_name": "Implementation Roadmap Builder",
+  "display_name": "Implementation Roadmap Builder - Draft Template",
   "filename": "implementation_roadmap_builder.md",
   "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Builds a staged implementation roadmap before patch work.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 15,
-  "trigger_phrases": [
-    "roadmap implementation",
-    "implementation plan",
-    "before coding plan",
-    "task roadmap",
-    "plan patch"
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md",
+  "aliases": [
+    "KPR-05-004",
+    "implementation_roadmap_builder",
+    "implementation roadmap draft",
+    "roadmap template",
+    "progress tracker template"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "evidence_freshness_gate",
-    "bundle_gated_development_workflow"
-  ]
+  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "description": "Explicit draft-only adaptive roadmap and optional human tracker template with no implementation or validation authority.",
+  "priority": 8,
+  "trigger_phrases": [
+    "draft an implementation roadmap",
+    "roadmap template",
+    "make a progress tracker",
+    "conceptual implementation plan"
+  ],
+  "required_companion_prompts": [],
+  "optional_companion_prompts": [
+    "brick_wall_comprehensive_quality_gate",
+    "cooperative_implementation_methodology",
+    "workflow_handoff_template"
+  ],
+  "when_to_load": "Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft.",
+  "when_not_to_load": "Do not auto-load for normal KANDA implementation or treat the tracker as execution evidence.",
+  "source_write_authorization": "NO",
+  "template_role": "draft_only_non_authoritative"
 }

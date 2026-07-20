@@ -1,25 +1,40 @@
 {
+  "prompt_code": "KPR-12-012",
   "prompt_id": "plugin_package_import_canon",
-  "display_name": "Plugin Package Import Canon",
+  "display_name": "Plugin Package Import and Trust Canon",
   "filename": "plugin_package_import_canon.md",
   "category": "12_generalized_project_canons",
+  "version": "2.0.0",
   "status": "active",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Defines safe import and validation rules for plugin packages.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md",
+  "classification": "portable_package_plugin_trust_transaction_lifecycle_canon",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Define safe inspection, trust assessment, import planning, transactional installation, enablement, update, rollback, disablement, and removal for user-importable packages or plugins. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "box_logic_required": false,
   "priority": 40,
   "trigger_phrases": [
-    "plugin package",
-    "import plugin",
-    "plugin manifest",
-    "package import",
-    "extension package"
+    "plugin package import",
+    "extension bundle trust",
+    "transactional plugin installation"
   ],
-  "required_companion_prompts": [
-    "box_architecture_canon",
-    "project_specific_prompt_generalization"
+  "aliases": [
+    "KPR-12-012",
+    "plugin package import",
+    "plugin_package_import_canon"
+  ],
+  "user_intent_examples": [
+    "When user-importable package trust, permissions and lifecycle are central."
+  ],
+  "when_to_load": "When user-importable package trust, permissions and lifecycle are central.",
+  "when_not_to_load": "Do not load for ordinary patch ZIPs or to invent a universal plugin engine.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
   ]
 }

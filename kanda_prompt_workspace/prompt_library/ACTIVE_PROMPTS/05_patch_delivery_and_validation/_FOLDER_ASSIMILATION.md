@@ -1,74 +1,58 @@
 ---
 folder_id: 05_patch_delivery_and_validation
-folder_name: Patch Delivery and Validation
-artifact_type: folder_assimilation_card
-version: 1.0
-status: audited_candidate
-scope: routing_metadata_only
-load_mode: selected_when_needed
-owner_box: Context Routing Layer
-created_by_patch: kanda_context_routing_layer_phase2_folder_cards_v1
+version: 3.0
+status: current
+source_stage: prompt-audit-wave5b-router-terminal-compatibility-v1
 ---
 
-# Patch Delivery and Validation - Folder Assimilation Card
-
-## Purpose
-This card is routing metadata. It helps the AI understand when this prompt folder should be requested.
-It does not replace the prompts inside this folder and must not become a behavioral master prompt.
+# Folder Assimilation Card - Patch Delivery and Validation
 
 ## Responsibility
-Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates.
 
-## Use When
-Use whenever a ZIP, install script, validation script, patch manifest, or validation classification is needed.
+Own governed release lifecycle, surgical package construction, active delivery
+regression routing, correction-incident dispatch, terminal-output behavior, and
+Show Project recovery dispatch. This folder cannot authorize implementation or
+freeze and does not replace Brick Wall, Tool/Project identity, Box Architecture,
+Pre-Output, validation specialists, or human confirmation.
 
-## Do Not Use When
-Do not use to decide ownership boundaries without the Box Architecture group.
+## Active owner set
 
-## Required For
-- implementation bundle
-- validation script
-- install script
-- patch delivery
-- freeze evidence
+- `KPR-05-001 patch_install_delivery_error_register`: active PIR index.
+- `KPR-05-002 bundle_gated_development_workflow`: release lifecycle and owner
+  dispatch.
+- `KPR-05-003 implementation_and_delivery_protocol`: surgical payload,
+  baseline, installer transaction, backup, and rollback.
+- `KPR-05-004 implementation_roadmap_builder`: draft-only roadmap template.
+- `KPR-05-005 patch_validate_freeze_error_memory_routine_blueprint`: Show
+  Project recovery wrapper.
+- `KPR-05-006 router_bridge_user_detected_correction`: correction-incident
+  admission and current-owner dispatch.
+- `KPR-05-007 terminal_cleanup_contract`: interactive PowerShell entry,
+  classification, provenance, and cleanup behavior.
 
-## Optional For
-- read-only patch planning
-- delivery model explanation
+## Historical compatibility tombstones
 
-## Never Load For
-- prompt-library routing with no file placement
+- `brick_wall_comprehensive_quality_gate`: inactive redirect to Brick Wall.
+- `pre_output_contract_gates`: inactive redirect to Pre-Output.
+- `implementation_and_delivery_protocol`: inactive redirect; generic residue is draft-only.
 
-## Depends On Groups
-- 04_box_architecture_and_boundaries
+Tombstones have no route, no prompt code, and no authorization power.
 
-## Common Task Triggers
-- zip
-- install
-- validation
-- patch
-- bundle
-- expected output
+## Minimum viable context
 
-## Minimum Viable Context
-- implementation_and_delivery_protocol
-- universal_delivery_protocol
+- patch-related output: active PIR index plus exact artifact and receiver owners;
+- installable release: bundle workflow and implementation/delivery protocol;
+- correction incident: KPR-05-006 plus only affected specialist owners;
+- interactive terminal output: compact startup bridge and KPR-05-007 when full
+  detail is needed;
+- Show Project recovery: KPR-05-005.
 
-## Main Prompts In This Folder
+## Hard boundaries
 
-| Prompt ID | File Name | Load Type | Short Purpose |
-|---|---|---|---|
-| `bundle_gated_development_workflow` | `bundle_gated_development_workflow.md` | on_request | Requires focused installable bundles, backup, validation, and freeze discipline. |
-| `evidence_freshness_gate` | `evidence_freshness_gate.md` | on_request | Checks whether evidence, generated artifacts, and validation inputs are fresh enough to trust. |
-| `implementation_and_delivery_protocol` | `implementation_and_delivery_protocol.md` | on_request | Rules for building, packaging, and delivering code or prompt changes. |
-| `implementation_roadmap_builder` | `implementation_roadmap_builder.md` | on_request | Builds a staged implementation roadmap before patch work. |
-| `patch_registry_validation_freeze` | `patch_registry_validation_freeze.md` | on_request | Tracks patch provenance, validation status, and freeze readiness. |
-| `universal_delivery_protocol` | `universal_delivery_protocol.md` | on_request | Defines consistent delivery style for code, prompts, reports, and install instructions. |
-
-## Routing Rule
-Request this folder card only after `GROUP_ASSIMILATION_INDEX.md` selects this folder as required or useful for the task.
-Do not load every folder card at session start.
-
-## Boundary Rule
-This card may point to prompt files, but it must not copy specialist rules from those prompt files.
-If this card needs a new behavioral rule, create or update the correct specialist prompt instead.
+- Exact source and metadata are authoritative.
+- Generated archives and handoff JSON are evidence, not editing sources.
+- Final ZIPs require the canonical ZIP contract before delivery.
+- Unknown predecessor hashes fail before mutation.
+- Freeze sidecars are release metadata, not installed source or completed freeze.
+- Preview is read-only; Confirm and Write is explicitly human-confirmed.
+- No prompt in this folder can authorize coding by itself.

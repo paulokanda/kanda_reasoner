@@ -1,8 +1,0 @@
-{
-  "startup_kernel_include": true,
-  "startup_load_mode": "always_startup",
-  "startup_generated_filename": "08_handoff_at_end_of_work.md",
-  "prompt_id": "handoff_at_end_of_work",
-  "startup_role": "Defines mandatory end-of-work handoff behavior so long governed sessions resume safely in a later AI chat.",
-  "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/handoff_at_end_of_work.md"
-}

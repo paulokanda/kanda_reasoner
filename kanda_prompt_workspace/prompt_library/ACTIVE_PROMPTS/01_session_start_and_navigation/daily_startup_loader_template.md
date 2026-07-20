@@ -1,80 +1,54 @@
-# Daily Startup Loader Template
+---
+prompt_id: daily_startup_loader_template
+prompt_code: KPR-01-005
+title: Daily Startup Loader Authoring Template
+version: 2.0
+status: active
+load_type: on_request
+owner_box: 01_session_start_and_navigation
+source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+---
 
-## Box Logic Requirement
+# Daily Startup Loader Authoring Template
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+## Mission
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+Produce a draft, project-agnostic startup-loader specification for review. Do not execute the startup workflow and do not register the draft automatically.
 
+## Required inputs
 
-Version: 1.0.0
-Status: Reusable daily startup loader template
-Use: Send after the load-order prompt and project startup canon at the beginning of a work session.
+- intended project or tool type;
+- canonical source owner;
+- minimum always-loaded context;
+- on-demand context sources;
+- readiness checkpoints;
+- missing-context behavior;
+- generated artifact owner;
+- validation and regeneration commands;
+- migration aliases, if any.
 
-## Purpose
+## Draft structure
 
-Tell the AI what to request at the beginning of a work session and how to decide which special prompts are required.
+1. identity and version;
+2. one-sentence mission;
+3. canonical source and generated-output boundary;
+4. minimal startup inputs;
+5. on-demand retrieval path;
+6. readiness response;
+7. hard blockers;
+8. authority boundary;
+9. validation obligations;
+10. migration and rollback notes.
 
+## Authoring rules
 
-## Project-Agnostic Contract
+- Keep startup minimal.
+- Reference specialist owners instead of copying their detailed rules.
+- Treat generated startup files as outputs.
+- Do not invent current source paths, hashes, validators, or load order.
+- Do not add a context engine, registry, mega-prompt, or parallel startup owner.
+- Do not write source, metadata, routing, or generated artifacts from this template.
 
-This prompt must work for any software project. Replace variables before use.
+## Required output
 
-Required variables:
-
-```text
-<PROJECT_ROOT>
-<PROJECT_NAME>
-<PRODUCT_PACKAGE>
-<TASK_DESCRIPTION>
-<TASK_SLUG>
-<GOVERNANCE_FOLDER>
-<VALIDATION_COMMANDS>
-<OUTPUT_FOLDER>
-<SOURCE_FILES>
-<LOG_FILES>
-```
-
-Rules:
-- Do not hardcode one project root.
-- Do not assume one product package.
-- Do not treat examples as active project truth.
-- Use current source files, logs, and validation output as evidence.
-- If evidence is missing, request it before implementation.
-
-## Required First Action
-
-The AI must not implement immediately. First, it must state which prompt files and source evidence are needed for the current task.
-
-## Daily Startup Checklist
-
-Collect:
-
-1. Current task description.
-2. Active governance files or ZIP, if the project uses governance.
-3. Latest workflow handoff output, if any.
-4. Relevant source files or targeted source ZIP.
-5. Current error log, validation output, or observed behavior.
-6. Target outcome.
-7. Confirmation of loaded protocols.
-
-## Daily Implementation Flow
-
-1. Confirm loaded prompts.
-2. Ask for missing special prompts.
-3. Read active governance and handoff if available.
-4. Audit request against frozen rules.
-5. Request current files if needed.
-6. Classify complexity.
-7. Roadmap first for complex updates.
-8. Implement one focused bundle.
-9. Validate internally.
-10. Deliver ZIP.
-11. Wait for user validation.
-12. Freeze/canonize only if explicitly approved.
+Return `DAILY STARTUP LOADER DRAFT` with unresolved placeholders clearly marked and `source_write_authorization: NO`.

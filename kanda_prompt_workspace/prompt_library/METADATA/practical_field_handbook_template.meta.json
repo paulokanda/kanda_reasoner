@@ -2,26 +2,33 @@
   "prompt_id": "practical_field_handbook_template",
   "display_name": "Practical Field Handbook Template",
   "filename": "practical_field_handbook_template.md",
-  "category": "08_python_engineering_core",
-  "status": "active",
+  "category": "12_generalized_project_canons",
+  "status": "active_template",
   "load_type": "on_request",
-  "source_stage": "mechanically_reconciled_from_prompt_library",
-  "description": "Template for practical field-handbook style instructions.",
-  "box_logic_required": true,
-  "renamed_in_clean_reconciliation_v2": true,
-  "routing_coverage": "complete_v3",
-  "priority": 50,
+  "source_stage": "prompt-audit-wave8a-human-handbook-reclassification-v1",
+  "description": "Source-grounded template for audience-specific practical handbooks with edition, provenance, evidence, and copyright controls.",
+  "box_logic_required": false,
+  "priority": 68,
   "trigger_phrases": [
-    "field handbook",
-    "practical guide",
-    "operator handbook",
-    "how to use system",
-    "runbook style guide"
+    "practical field handbook",
+    "source grounded handbook",
+    "book study guide",
+    "framework handbook",
+    "specification guide",
+    "operator handbook"
   ],
   "required_companion_prompts": [
-    "box_architecture_canon",
-    "implementation_roadmap_builder",
-    "python_testing_pytest",
-    "implementation_and_delivery_protocol"
+    "prompt_navigation_index"
+  ],
+  "prompt_code": "KPR-12-008",
+  "when_to_load": "When a supplied or reliably identified source must become a practical audience-specific handbook.",
+  "when_not_to_load": "Do not load when the source cannot be identified and the user expects source-faithful detail, or for direct source implementation.",
+  "do_not_regress": [
+    "Keep source access mode and exact edition or version identity explicit.",
+    "Distinguish source-derived material, user-provided notes, modern commentary, implementation suggestions, and unknowns.",
+    "Do not invent chapters, quotations, citations, page references, or current practices.",
+    "Keep synthesis copyright-safe and avoid reconstructing a substitute copy of the source.",
+    "Do not force a fixed handbook structure when source coverage or user need does not support it.",
+    "Delegate implementation, package, terminal, validation evidence, and freeze authority."
   ]
 }

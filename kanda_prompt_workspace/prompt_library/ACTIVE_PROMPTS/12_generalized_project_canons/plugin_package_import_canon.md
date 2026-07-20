@@ -1,106 +1,109 @@
-# Plugin Package Import Canon
+---
+prompt_id: plugin_package_import_canon
+prompt_code: KPR-12-012
+title: Plugin Package Import and Trust Canon
+version: 2.0.0
+status: active
+load_type: on_request
+owner_box: 12_generalized_project_canons
+classification: portable_package_plugin_trust_transaction_lifecycle_canon
+source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+---
 
-Version: 1.0
-Status: Active prompt-library candidate
-Use: Load when designing user-importable packages, plugin bundles, extension formats, import/export workflows, package validation, or app-specific portable artifacts.
+# Plugin Package Import and Trust Canon
 
+## Purpose
 
-## Box Logic Requirement
+Define safe inspection, trust assessment, import planning, transactional installation, enablement, update, rollback, disablement, and removal for user-importable packages or plugins.
 
-Before any implementation, repair, refactor, prompt update, governance update, or bundle creation, the AI must:
+This prompt is a bounded technical contract. It is not a persona, a source-write
+authority, a release gate, or proof that implementation or validation occurred.
 
-- Identify the active box before implementation.
-- State owner paths.
-- State files allowed to change.
-- State files explicitly out of scope.
-- Declare cross-box touches.
-- Preserve public contracts.
-- Validate the active box and any touched external box.
+## When to load
 
+- A user-importable package, extension, plugin, theme, template, workflow, or code bundle is planned.
+- Archive trust, permissions, installation destination, update or uninstall is central.
+- A portable application-owned container format is being reviewed.
 
-## Generalization Rule
+## When not to load
 
-This prompt was generalized from EEG/KANDA project materials. Do not copy EEG-specific nouns, paths, labels, channel names, montage rules, electrode coordinates, or clinical assumptions into KANDA Reasoner unless the current project explicitly needs them. Preserve only the transferable engineering pattern.
+- The artifact is an ordinary governed patch ZIP.
+- No import or activation lifecycle exists.
+- The task is to create a universal plugin engine without verified product need.
 
+## Authority boundaries
 
-## Core Rule
+This prompt owns:
 
-A plugin package is an application-owned portable container with a manifest, payload, optional assets, optional docs, and optional code. The container format must be simple, inspectable, validate-before-install, and project-agnostic.
+- portable package structure and manifest contract;
+- archive inspection and containment;
+- publisher/authenticity/trust state;
+- declared capabilities and permissions;
+- import plan, transactional install and lifecycle states;
+- update, rollback, disable and uninstall records.
 
-## Recommended Container Pattern
+It delegates:
 
-Use ZIP as the underlying container unless a project-wide decision replaces it. The outside extension may be app-specific, but the inside should remain standard ZIP.
+- project/tool destination identity to KPR-12-001;
+- code security and sandboxing to KPR-09-014;
+- application-specific activation mechanics to the product owner;
+- patch delivery to Class 05.
 
-Generic naming pattern:
+Brick Wall and the current patch, validation, terminal, and freeze owners retain
+implementation and release authority.
 
-```text
-<name>.<plugin_type>.<app_extension>
-```
+## Task modes
 
-Examples:
+Choose one visible mode:
 
-```text
-custom_theme.theme.kanda
-analysis_template.report.kanda
-workflow_gate.validation.kanda
-visual_palette.palette.kanda
-```
+- `ANALYZE`: identify the current state, evidence, and gaps.
+- `DESIGN`: produce a bounded contract or decision record.
+- `REVIEW`: evaluate an existing artifact or implementation.
+- `IMPLEMENTATION_GUIDANCE`: describe source work only after exact source and
+  separate authorization are available.
 
-## Internal Structure
+## Required evidence
 
-Minimum:
+- package bytes/hash, archive format and manifest version;
+- publisher/signature or explicit unsigned trust state;
+- payload inventory, capabilities, permissions and dependencies;
+- target application/version and destination root;
+- install/update/uninstall/rollback strategy and negative tests.
 
-```text
-manifest.json
-payload/
-```
+## Governing rules
 
-Optional:
+- Reject absolute paths, traversal, drive-qualified members, links or extraction targets outside the staging root.
+- Validate archive limits, duplicate members, case collisions, compression ratios and declared payload hashes before install.
+- Separate inspection, installation, enablement and execution states.
+- Unsigned or unknown-publisher packages require an explicit trust decision and must not be described as verified.
+- Executable code is high risk: require least privilege, capability allowlists, isolation where available, and explicit activation.
+- Install transactionally with preview, backup, rollback verification and durable receipt.
+- Define dependency resolution, compatibility, update, disable, uninstall and orphan-data policy.
+- Do not create a generic plugin runtime unless an actual application requirement and owner exist.
 
-```text
-assets/
-docs/
-code/
-tests/
-examples/
-```
+## Validation obligations
 
-## Manifest Requirements
+For implemented work, require the smallest applicable deterministic checks,
+negative or failure-path coverage when risk is material, current-source evidence,
+and rollback or reversal evidence. Use `NOT_RUN`, `BLOCKED`, or `INCONCLUSIVE`
+when that is the truthful state.
 
-The manifest must declare:
+## Required output
 
-- package name;
-- plugin type;
-- package version;
-- schema version;
-- target app family;
-- compatibility constraints;
-- payload files;
-- optional assets;
-- validation rules;
-- permissions requested;
-- whether code execution is required;
-- checksum or integrity metadata.
+Return a `PLUGIN PACKAGE TRUST AND LIFECYCLE RECORD` containing:
 
-## Import Safety
+- package/manifest/hash identity;
+- archive-safety and trust result;
+- capabilities/permissions/dependencies;
+- destination and import plan;
+- install/enable/update/rollback/uninstall lifecycle;
+- negative-test and receipt evidence.
 
-Import must be staged:
+- unresolved assumptions and risks;
+- specialist handoffs;
+- source-write authorization: `NO` unless separately granted by Brick Wall.
 
-1. open package read-only;
-2. validate ZIP/container;
-3. parse manifest;
-4. validate schema;
-5. validate payload files;
-6. check compatibility;
-7. quarantine unsafe or unknown code;
-8. preview import plan;
-9. apply only after user approval;
-10. record import evidence.
+## Version history
 
-## Code Plugin Rule
-
-If a plugin contains executable code, treat it as high-risk. Require explicit permission, sandboxing if possible, dependency scan, and rollback path.
-
-## Freeze Rule
-
-A new plugin type is not frozen until at least one valid package and one invalid package are both tested.
+- 2.0.0: added archive containment, authenticity, permissions, transactional lifecycle, destination ownership, and code-isolation boundaries.

@@ -9,16 +9,17 @@ that merely mentions inactive reference folders.
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .complete_json_adapter import (
-    collect_reasoner_symbol_atlas_complete_json_files,
     load_reasoner_symbol_atlas_complete_json,
 )
-from .output_policy import is_active_atlas_path
+from .json_active_scope_quality_helpers_private import (
+    _scan_json_active_scope_payload,
+    _select_json_path,
+)
 from .schemas import (
     ProjectSymbol,
     ProjectSymbolAtlasReport,
@@ -221,10 +222,34 @@ def check_reasoner_symbol_atlas_json_active_scope_quality(
             notes=(str(exc),),
         )
 
-    scanner = _QualityScanner(max_items=max(1, int(options.max_items)))
-    scanner.scan(payload)
-    active_count = scanner.active_path_occurrence_count
-    text_count = scanner.text_occurrence_count
+    scan = _scan_json_active_scope_payload(
+        payload=payload,
+        max_items=max(1, int(options.max_items)),
+        active_path_field_names=ACTIVE_PATH_FIELD_NAMES,
+        active_path_sections=ACTIVE_PATH_SECTIONS,
+        truth_text_field_names=TRUTH_TEXT_FIELD_NAMES,
+        inactive_text_markers=INACTIVE_TEXT_MARKERS,
+    )
+    active_occurrences = tuple(
+        ProjectSymbolAtlasJsonActiveScopeOccurrence(
+            json_location=item.json_location,
+            occurrence_type=item.occurrence_type,
+            marker=item.marker,
+            value_excerpt=item.value_excerpt,
+        )
+        for item in scan.active_occurrences
+    )
+    text_occurrences = tuple(
+        ProjectSymbolAtlasJsonActiveScopeOccurrence(
+            json_location=item.json_location,
+            occurrence_type=item.occurrence_type,
+            marker=item.marker,
+            value_excerpt=item.value_excerpt,
+        )
+        for item in scan.text_occurrences
+    )
+    active_count = scan.active_path_occurrence_count
+    text_count = scan.text_occurrence_count
     if active_count:
         status = PROJECT_SYMBOL_ATLAS_JSON_QUALITY_STATUS_ACTIVE_LEAK
         notes = (
@@ -247,10 +272,10 @@ def check_reasoner_symbol_atlas_json_active_scope_quality(
         status=status,
         active_path_occurrence_count=active_count,
         text_occurrence_count=text_count,
-        key_occurrence_count=scanner.key_occurrence_count,
-        checked_value_count=scanner.checked_value_count,
-        active_occurrences=tuple(scanner.active_occurrences),
-        text_occurrences=tuple(scanner.text_occurrences),
+        key_occurrence_count=scan.key_occurrence_count,
+        checked_value_count=scan.checked_value_count,
+        active_occurrences=active_occurrences,
+        text_occurrences=text_occurrences,
         notes=notes,
     )
 
@@ -302,279 +327,3 @@ def build_reasoner_symbol_atlas_json_active_scope_report(
         symbols=tuple(symbols),
         input_sources=("complete_json", data["json_path"], "json_active_scope_quality"),
     )
-
-
-class _QualityScanner:
-    """Internal recursive scanner for complete JSON payloads."""
-
-    def __init__(self, max_items: int) -> None:
-        """Support init behavior.
-        
-        Parameters
-        ----------
-        max_items : int
-            The max items value.
-        """
-        
-        self.max_items = max_items
-        self.active_occurrences: list[ProjectSymbolAtlasJsonActiveScopeOccurrence] = []
-        self.text_occurrences: list[ProjectSymbolAtlasJsonActiveScopeOccurrence] = []
-        self.active_path_occurrence_count = 0
-        self.text_occurrence_count = 0
-        self.key_occurrence_count = 0
-        self.checked_value_count = 0
-
-    def scan(self, value: Any, path: tuple[str, ...] = ()) -> None:
-        """Support scan behavior.
-        
-        Parameters
-        ----------
-        value : Any
-            The input value.
-        path : tuple[str, ...], optional
-            The file or folder path.
-        """
-        
-        if isinstance(value, dict):
-            for key, item in value.items():
-                key_text = str(key)
-                child_path = (*path, key_text)
-                marker = _inactive_marker_in_text(key_text)
-                if marker:
-                    occurrence = ProjectSymbolAtlasJsonActiveScopeOccurrence(
-                        json_location=_format_json_path(child_path),
-                        occurrence_type="active_path_key" if _is_path_like_text(key_text) else "text_key",
-                        marker=marker,
-                        value_excerpt=_excerpt(key_text),
-                    )
-                    if occurrence.occurrence_type == "active_path_key":
-                        self._add_active(occurrence)
-                    else:
-                        self._add_text(occurrence)
-                self.scan(item, child_path)
-            return
-        if isinstance(value, list):
-            for index, item in enumerate(value):
-                self.scan(item, (*path, "[" + str(index) + "]"))
-            return
-        if isinstance(value, str):
-            self.checked_value_count += 1
-            marker = _inactive_marker_in_text(value)
-            if not marker:
-                return
-            occurrence_type = _classify_string_occurrence(path, value)
-            occurrence = ProjectSymbolAtlasJsonActiveScopeOccurrence(
-                json_location=_format_json_path(path),
-                occurrence_type=occurrence_type,
-                marker=marker,
-                value_excerpt=_excerpt(value),
-            )
-            if occurrence_type.startswith("active_"):
-                self._add_active(occurrence)
-            else:
-                self._add_text(occurrence)
-
-    def _add_active(self, occurrence: ProjectSymbolAtlasJsonActiveScopeOccurrence) -> None:
-        """Support add active behavior.
-        
-        Parameters
-        ----------
-        occurrence : ProjectSymbolAtlasJsonActiveScopeOccurrence
-            The occurrence value.
-        """
-        
-        self.active_path_occurrence_count += 1
-        if len(self.active_occurrences) < self.max_items:
-            self.active_occurrences.append(occurrence)
-
-    def _add_text(self, occurrence: ProjectSymbolAtlasJsonActiveScopeOccurrence) -> None:
-        """Support add text behavior.
-        
-        Parameters
-        ----------
-        occurrence : ProjectSymbolAtlasJsonActiveScopeOccurrence
-            The occurrence value.
-        """
-        
-        if occurrence.occurrence_type == "text_key":
-            self.key_occurrence_count += 1
-        self.text_occurrence_count += 1
-        if len(self.text_occurrences) < self.max_items:
-            self.text_occurrences.append(occurrence)
-
-
-def _select_json_path(project_root: Path, json_path: str) -> Path | None:
-    """Support select json path behavior.
-    
-    Parameters
-    ----------
-    project_root : Path
-        The project root path.
-    json_path : str
-        The json path value.
-    
-    Returns
-    -------
-    Path | None
-        The resolved path.
-    """
-    
-    if json_path.strip():
-        return Path(json_path).expanduser().resolve(strict=False)
-    candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
-    return candidates[0] if candidates else None
-
-
-def _classify_string_occurrence(path: tuple[str, ...], value: str) -> str:
-    """Support classify string occurrence behavior.
-    
-    Parameters
-    ----------
-    path : tuple[str, ...]
-        The file or folder path.
-    value : str
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    field_name = _field_name(path)
-    if field_name in TRUTH_TEXT_FIELD_NAMES:
-        return "source_or_documentation_text"
-    if field_name in ACTIVE_PATH_FIELD_NAMES and _is_path_like_text(value):
-        return "active_path_field"
-    if _top_level_section(path) in ACTIVE_PATH_SECTIONS and _is_path_like_text(value):
-        return "active_index_path_value"
-    return "source_or_documentation_text"
-
-
-def _inactive_marker_in_text(value: str) -> str:
-    """Support inactive marker in text behavior.
-    
-    Parameters
-    ----------
-    value : str
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    normalized = str(value).replace("\\", "/").lower()
-    for marker in INACTIVE_TEXT_MARKERS:
-        if marker in normalized:
-            return marker
-    return ""
-
-
-def _field_name(path: tuple[str, ...]) -> str:
-    """Support field name behavior.
-    
-    Parameters
-    ----------
-    path : tuple[str, ...]
-        The file or folder path.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    for part in reversed(path):
-        if not part.startswith("["):
-            return part
-    return ""
-
-
-def _top_level_section(path: tuple[str, ...]) -> str:
-    """Support top level section behavior.
-    
-    Parameters
-    ----------
-    path : tuple[str, ...]
-        The file or folder path.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    for part in path:
-        if not part.startswith("["):
-            return part
-    return ""
-
-
-def _is_path_like_text(value: str) -> bool:
-    """Support is path like text behavior.
-    
-    Parameters
-    ----------
-    value : str
-        The input value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    text = str(value).strip().replace("\\", "/")
-    if not text or len(text) > 500:
-        return False
-    if "\n" in text:
-        return False
-    if text.startswith(("http://", "https://")):
-        return False
-    if text.startswith("python ") and ("tests/" in text or "tests_archive/" in text):
-        return True
-    if any(marker in text.lower() for marker in INACTIVE_TEXT_MARKERS):
-        return "/" in text or text.endswith((".py", ".md", ".json", ".txt"))
-    return False
-
-
-def _format_json_path(path: Iterable[str]) -> str:
-    """Support format json path behavior.
-    
-    Parameters
-    ----------
-    path : Iterable[str]
-        The file or folder path.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    parts: list[str] = []
-    for item in path:
-        if item.startswith("[") and parts:
-            parts[-1] = parts[-1] + item
-        else:
-            parts.append(item)
-    return "/".join(parts)
-
-
-def _excerpt(value: str) -> str:
-    """Support excerpt behavior.
-    
-    Parameters
-    ----------
-    value : str
-        The input value.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    return " ".join(str(value).split())[:220]

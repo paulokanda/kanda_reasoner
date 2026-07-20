@@ -1,12 +1,13 @@
 {
   "schema": "project-reasoner-tab-help-error-catalog/v1",
   "project": "Project Reasoner / developer_tools",
-  "tab": "Workflow Review",
-  "purpose": "Explain workflow errors that Tab 2 should expose, including what they mean and what can happen if not corrected.",
+  "tab": "Audit Project > Workflow Review",
+  "purpose": "Explain the Workflow Review workflow nested as the rightmost Audit Project child tab, including the workflow errors it exposes.",
   "created_for": "Future GUI helper button content",
   "placement_reason": "Stored under _project_reference/TAB_HELP so this is documentation/helper data only and does not change runtime behavior.",
   "implementation_status_note": "These items are defined in canon as errors that should be exposed. Most dedicated detectors are not yet frozen as implemented in Tab 1/Tab 2 code. This JSON is a beginner-facing explanation catalog to support a future help button.",
   "display_lines": [
+    "Workflow Review is nested inside Audit Project to the right of Engineering Safety.",
     "1. Workflow step points to missing file - A button, command, or workflow document refers to a file that no longer exists.",
     "2. Workflow step points to deprecated file - The workflow points to a file that exists, but it is old or no longer the active owner.",
     "3. Button-to-action mismatch - The button label says one thing, but the connected function does another thing.",

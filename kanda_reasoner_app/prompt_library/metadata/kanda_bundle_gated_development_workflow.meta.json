@@ -3,8 +3,8 @@
   "display_name": "Kanda Bundle-Gated Development Workflow",
   "category": "engineering_methodology",
   "version": "1.0.3",
-  "status": "active",
-  "load_type": "parent_protocol",
+  "status": "deprecated",
+  "load_type": "never",
   "project_agnostic": true,
   "governance_linked": true,
   "modifies_governance": false,
@@ -74,7 +74,12 @@
     }
   ],
   "recommended_with": [
-    "python_clean_code_overlay",
-    "kanda_prompt_router"
-  ]
+    "python_clean_code_overlay"
+  ],
+  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "active_route": false,
+  "canonical_replacement": "bundle_gated_development_workflow",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
+  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "description": "Historical application-local redirect to KPR-05-002; not an active workflow owner."
 }

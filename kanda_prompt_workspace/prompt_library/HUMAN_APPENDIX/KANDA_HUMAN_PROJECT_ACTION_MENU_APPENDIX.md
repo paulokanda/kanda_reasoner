@@ -162,8 +162,6 @@ AI should request/load:
 - exact validation logs or traceback
 - changed-file context
 - `bundle_gated_development_workflow`
-- `evidence_freshness_gate`
-- `patch_registry_validation_freeze`
 - relevant domain prompt based on the error type
 - relevant Python engineering prompt if code will be changed
 
@@ -285,7 +283,7 @@ HARD_STOP before canon conflict resolution without human decision.
 
 Note:
 
-`prompt_router` may be useful as an optional or advanced routing artifact when explicit routing logic is being audited. It should not replace the manual routing kernel unless the human explicitly asks for router-level analysis.
+`prompt_router` is a deprecated historical identity. Use `prompt_substitution_map` for compatibility lookup and current KPR routing owners for active work.
 
 ---
 
@@ -302,8 +300,7 @@ AI should request/load:
 
 - `implementation_and_delivery_protocol`
 - `bundle_gated_development_workflow`
-- `universal_delivery_protocol`
-- `patch_registry_validation_freeze`
+- `implementation_and_delivery_protocol`
 - active box prompts
 - relevant engineering prompt
 - source files and evidence needed for the patch
@@ -349,9 +346,7 @@ You can say:
 
 AI should request/load:
 
-- `active_governance_freeze_update`
-- `evidence_freshness_gate`
-- `patch_registry_validation_freeze`
+- `freeze_code_intake_and_form_protocol`
 - latest validation output
 - latest handoff/status report
 - relevant governance/freeze folder card
@@ -394,7 +389,7 @@ You can say:
 
 AI should request/load:
 
-- `current_workflow_handoff_template`
+- `workflow_handoff_template`
 - latest task history
 - current freeze status
 - installed patches

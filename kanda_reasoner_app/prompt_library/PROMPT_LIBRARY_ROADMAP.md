@@ -72,7 +72,7 @@ plan -> bundle -> install -> validate -> repair/continue -> freeze
 
 ### T9T013 - Teach AI Prompt Authoring Complete Lifecycle
 
-Status: current bundle.
+Status: historical application entry; current owner is KPR-05-002.
 
 Updates Teach AI Prompt Authoring so future AIs do the complete prompt-library job when asked to create or update a prompt.
 
@@ -90,7 +90,7 @@ PowerShell validation expectations
 text-only safety boundaries
 ```
 
-Registers `kanda_bundle_gated_development_workflow` in:
+Registers `bundle_gated_development_workflow` in:
 
 ```text
 teach_ai_prompt_authoring

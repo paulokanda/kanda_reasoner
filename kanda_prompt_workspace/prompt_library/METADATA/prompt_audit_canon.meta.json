@@ -1,32 +1,28 @@
-﻿{
-    "prompt_id":  "prompt_audit_canon",
-    "display_name":  "Prompt Audit Canon",
-    "filename":  "prompt_audit_canon.md",
-    "category":  "07_prompt_authoring_and_audit",
-    "status":  "active",
-    "load_type":  "on_request",
-    "source_stage":  "mechanically_reconciled_from_prompt_library",
-    "description":  "Rules for auditing, updating, generalizing, and deprecating prompt files.",
-    "box_logic_required":  true,
-    "renamed_in_clean_reconciliation_v2":  true,
-    "routing_coverage":  "complete_v3",
-    "priority":  35,
-    "trigger_phrases":  [
-                            "audit prompts",
-                            "prompt batch audit",
-                            "review prompt files",
-                            "prompt canon audit",
-                            "prompt quality",
-                            "create a new prompt",
-                            "update an existing prompt",
-                            "complete prompt asset lifecycle"
-                        ],
-    "required_companion_prompts":  [
-                                       "prompt_navigation_index",
-                                       "prompt_router",
-                                       "prompt_substitution_map",
-                                       "bundle_gated_development_workflow"
-                                   ],
-    "t9t013_complete_lifecycle":  true,
-    "t9t013_scope":  "kanda_prompt_workspace_ACTIVE_PROMPTS_text_only"
+{
+  "prompt_id": "prompt_audit_canon",
+  "display_name": "Prompt Audit Canon",
+  "filename": "prompt_audit_canon.md",
+  "category": "07_prompt_authoring_and_audit",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "on_request",
+  "owner_box": "07_prompt_authoring_and_audit",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_audit_canon.md",
+  "aliases": [
+    "pyarchitect_prompt_audit_canon"
+  ],
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A066 audit reconciliation and adaptive one-primary-target audit method",
+  "description": "Canonical read-only protocol for exact-source prompt audits, overlap analysis, owner classification, dispositions, closure records, and adaptive sequential batches.",
+  "priority": 33,
+  "trigger_phrases": [
+    "audit this prompt",
+    "audit prompts sequentially",
+    "compare prompt ownership",
+    "find duplicate prompt logic",
+    "review prompt quality"
+  ],
+  "required_companion_prompts": [
+    "prompt_canon_reconciliation_protocol"
+  ]
 }

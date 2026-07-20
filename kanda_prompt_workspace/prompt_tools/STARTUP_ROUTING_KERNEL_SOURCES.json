@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "purpose": "Approved source map for the KANDA startup prompt request kernel upload pack.",
-  "rule": "The script may search to verify these files, but it must only package approved sources listed here.",
+  "purpose": "Approved minimal source map for the KANDA startup prompt request kernel upload pack.",
+  "rule": "Package only approved canonical sources listed here; retired, migrated, and on-request routing output is excluded.",
   "startup_sources": [
     {
       "load_order": 1,
@@ -9,7 +9,7 @@
       "generated_filename": "01_ai_prompt_request_canon.md",
       "prompt_id": "ai_prompt_request_canon",
       "load_mode": "always_startup",
-      "role": "Defines how AI must ask Kanda for missing prompt groups, folder cards, specialist prompts, and missing behavior gates."
+      "role": "Classifies Fast Path versus Routed Work Path, requests the smallest current context, and escalates runtime-only conclusions to scenario-specific evidence."
     },
     {
       "load_order": 2,
@@ -17,7 +17,7 @@
       "generated_filename": "02_prompt_navigation_index.md",
       "prompt_id": "prompt_navigation_index",
       "load_mode": "always_startup",
-      "role": "Provides the map from task types to prompt groups and specialist prompt candidates."
+      "role": "Provides the current human-readable prompt locator and owner matrix; machine route data remains separate."
     },
     {
       "load_order": 3,
@@ -41,7 +41,7 @@
       "generated_filename": "05_start_of_day_master_stack.md",
       "prompt_id": "start_of_day_master_stack",
       "load_mode": "always_startup",
-      "role": "Defines start-of-day/session startup flow, baseline session behavior, the Code Module Size, Box Logic, No-Leak, Governed Architecture Companion, Durable Documentation Artifact Routing, and Terminal Cleanup bridges."
+      "role": "Compact beginning-of-day Code Module Size Bridge with Box, No-Leak, architecture, terminal, durable-document, runtime-evidence escalation, and Project-readiness bridges."
     },
     {
       "load_order": 6,
@@ -49,7 +49,7 @@
       "generated_filename": "06_session_start_upload_checklist.md",
       "prompt_id": "session_start_upload_checklist",
       "load_mode": "always_startup",
-      "role": "Checklist for which context files should be present at session startup."
+      "role": "Canonical two-stage human upload checklist: startup pack first, selected Project handoff second, and no task before WAIT_FOR_TASK."
     },
     {
       "load_order": 7,
@@ -57,7 +57,7 @@
       "generated_filename": "07_daily_patch_delivery_guardrails.md",
       "prompt_id": "daily_patch_delivery_guardrails",
       "load_mode": "always_startup",
-      "role": "Defines daily patch delivery staging, root-cleanliness, terminal hygiene, and freeze-reminder guardrails."
+      "role": "Compact always-startup patch-delivery bridge that routes detailed release behavior and active regressions to Class 05."
     },
     {
       "load_order": 8,
@@ -65,55 +65,31 @@
       "generated_filename": "08_handoff_at_end_of_work.md",
       "prompt_id": "handoff_at_end_of_work",
       "load_mode": "always_startup",
-      "role": "Defines mandatory end-of-work handoff behavior so long governed sessions resume safely in a later AI chat."
+      "role": "Always-startup closure trigger and minimum factual continuity guardrail; detailed handoff structure remains routed."
     },
     {
       "load_order": 9,
-      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/patch_install_delivery_error_register.md",
-      "generated_filename": "09_patch_install_delivery_error_register.md",
-      "prompt_id": "patch_install_delivery_error_register",
-      "load_mode": "always_startup",
-      "role": "Append-only patch install delivery error register that blocks repeated ZIP staging and validation wrapper regressions."
-    },
-    {
-      "load_order": 10,
-      "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
-      "generated_filename": "10_prompt_router_reasoner_startup_check.md",
-      "prompt_id": "prompt_router_reasoner_startup_check",
-      "load_mode": "always_startup",
-      "role": "Defines the beginning-of-day Prompt Router Reasoner readiness checklist and fit-to-run status block."
-    },
-    {
-      "load_order": 11,
-      "canonical_source": "prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
-      "generated_filename": "11_chatgpt_kanda_routing_choice_output_protocol.md",
-      "prompt_id": "chatgpt_kanda_routing_choice_output_protocol",
-      "load_mode": "always_startup",
-      "role": "Teaches browser ChatGPT to emit safe advisory KANDA_ROUTING_CHOICE JSON blocks for manual Prompt Router Reasoner capture."
-    },
-    {
-      "load_order": 12,
       "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
       "generated_filename": "12_error_memory_ai_formulary_startup_canon.md",
       "prompt_id": "error_memory_ai_formulary_startup_canon",
       "load_mode": "always_startup",
-      "role": "Teaches AI to emit KANDA_ERROR_LESSON_JSON receive blocks for the Error Memory tab after errors, correction patches, install failures, and validation repairs."
+      "role": "Single Error Memory admission and workflow owner; exact schemas remain with the current Class 12 owners."
     },
     {
-      "load_order": 13,
+      "load_order": 10,
       "canonical_source": "prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
       "generated_filename": "13_durable_document_artifact_routing_canon.md",
       "prompt_id": "durable_document_artifact_routing_canon",
       "load_mode": "always_startup",
-      "role": "Defines durable ownership for generated project-specific documentation and validation evidence, keeping daily-work transient and routing durable artifacts to the selected project support root."
+      "role": "Routes documentary artifacts and validation evidence among canonical, specialized, durable, and transient owners."
     },
     {
-      "load_order": 14,
-      "canonical_source": "prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "load_order": 11,
+      "canonical_source": "prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
       "generated_filename": "14_project_tool_boundary_canon.md",
-      "prompt_id": "project_tool_boundary_canon",
+      "prompt_id": "project_tool_boundary_startup_bridge",
       "load_mode": "always_startup",
-      "role": "Mandatory Tool-versus-Project boundary canon that keeps project support outside source and forbids nested *_show_project_to_AI roots."
+      "role": "Compact Tool-versus-Project startup bridge that blocks wrong-root work and routes consequential tasks to KPR-12-001."
     }
   ]
 }
