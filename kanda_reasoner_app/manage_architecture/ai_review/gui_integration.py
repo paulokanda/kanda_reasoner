@@ -1,12 +1,29 @@
 # project-path: kanda_reasoner_app/manage_architecture/ai_review/gui_integration.py
-"""GUI integration for Tab 1 advisory AI review."""
+"""GUI integration for Audit Project heuristic, Local AI, and Web AI review."""
 
 from __future__ import annotations
 
+import uuid
 from importlib import import_module
 from typing import Any
 
+from kanda_reasoner_app.local_ai_configuration import (
+    LocalAIConfigurationController,
+    application_local_ai_configuration,
+)
+from kanda_reasoner_app.web_ai_configuration import (
+    WebAIConfigurationController,
+    application_web_ai_configuration,
+)
+
 from .adapter import Tab1AIReviewAdapter
+from .contracts import (
+    AuditReviewIdentity,
+    audit_snapshot_hash,
+    build_audit_review_identity,
+    current_project_identity,
+)
+from .models import HEURISTIC_MODE, LOCAL_AI_MODE, WEB_AI_MODE
 from .qt_worker import Tab1AIReviewWorker
 from .running_indicator import install_tab1_activity_indicator
 
@@ -15,300 +32,456 @@ __all__ = [
     "populate_ai_review_model_combo",
 ]
 
-AUTO_MODEL_LABEL = "Auto (first available Ollama model)"
-SETTINGS_ORGANIZATION = "Kanda"
-SETTINGS_APPLICATION = "ProjectReasonerV10"
-SETTINGS_KEY_SELECTED_MODEL = "tab1_ai_review_selected_model"
 
-
-def _load_qt_symbol(module_name: str, symbol_name: str) -> Any:
-    """Load one Qt symbol only when GUI controls are used."""
-    module = import_module(module_name)
-    return getattr(module, symbol_name)
-
-
-def _qsettings_class() -> Any:
-    """Return the Qt settings class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtCore", "QSettings")
+def _qt_symbol(module_name: str, symbol_name: str) -> Any:
+    return getattr(import_module(module_name), symbol_name)
 
 
 def _qthread_class() -> Any:
-    """Return the Qt thread class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtCore", "QThread")
+    return _qt_symbol("PySide6.QtCore", "QThread")
 
 
-def _combo_box_class() -> Any:
-    """Return the Qt combo-box class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtWidgets", "QComboBox")
+def _widgets() -> Any:
+    return import_module("PySide6.QtWidgets")
 
 
-def _label_class() -> Any:
-    """Return the Qt label class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtWidgets", "QLabel")
+def _controller(window: Any) -> WebAIConfigurationController:
+    controller = getattr(window, "_audit_web_ai_configuration", None)
+    if not isinstance(controller, WebAIConfigurationController):
+        controller = application_web_ai_configuration()
+        window._audit_web_ai_configuration = controller
+    return controller
 
 
-def _message_box_class() -> Any:
-    """Return the Qt message-box class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtWidgets", "QMessageBox")
+def _local_controller(window: Any) -> LocalAIConfigurationController:
+    controller = getattr(window, "_audit_local_ai_configuration", None)
+    if not isinstance(controller, LocalAIConfigurationController):
+        controller = application_local_ai_configuration()
+        window._audit_local_ai_configuration = controller
+    return controller
 
 
-def _push_button_class() -> Any:
-    """Return the Qt push-button class through a lazy import boundary."""
-    return _load_qt_symbol("PySide6.QtWidgets", "QPushButton")
-
-
-def _load_saved_ai_review_model_name() -> str:
-    """Load the last selected Tab 1 AI review model from user settings."""
+def _qt_object_is_alive(value: Any) -> bool:
+    if value is None:
+        return False
     try:
-        settings = _qsettings_class()(SETTINGS_ORGANIZATION, SETTINGS_APPLICATION)
-        value = settings.value(SETTINGS_KEY_SELECTED_MODEL, "")
-    except Exception:
-        return ""
-    return str(value or "").strip()
+        is_valid = getattr(import_module("shiboken6"), "isValid")
+        return bool(is_valid(value))
+    except (ImportError, AttributeError):
+        try:
+            value.objectName()
+        except RuntimeError:
+            return False
+        except Exception:
+            return True
+        return True
 
 
-def _save_ai_review_model_name(model_name: str) -> None:
-    """Persist the last selected Tab 1 AI review model in user settings."""
-    normalized = str(model_name or "").strip()
+def _radio_is_checked(window: Any, attribute: str) -> bool:
+    radio = getattr(window, attribute, None)
+    if not _qt_object_is_alive(radio):
+        return False
     try:
-        settings = _qsettings_class()(SETTINGS_ORGANIZATION, SETTINGS_APPLICATION)
-        settings.setValue(SETTINGS_KEY_SELECTED_MODEL, normalized)
-        sync = getattr(settings, "sync", None)
-        if callable(sync):
-            sync()
-    except Exception:
+        return bool(radio.isChecked())
+    except RuntimeError:
+        return False
+
+
+def _selected_mode(window: Any) -> str:
+    if _radio_is_checked(window, "_ai_review_web_radio"):
+        return WEB_AI_MODE
+    if _radio_is_checked(window, "_ai_review_local_radio"):
+        return LOCAL_AI_MODE
+    return HEURISTIC_MODE
+
+
+def _disconnect_configuration_sync(window: Any, generation: int | None = None) -> None:
+    if generation is not None and generation != int(
+        getattr(window, "_ai_review_controls_generation", -1)
+    ):
+        return
+    bindings = tuple(
+        getattr(window, "_ai_review_configuration_sync_bindings", ()) or ()
+    )
+    window._ai_review_configuration_sync_bindings = ()
+    for signal, callback in bindings:
+        try:
+            signal.disconnect(callback)
+        except (RuntimeError, TypeError):
+            pass
+
+
+def _connect_configuration_sync(window: Any, mode_host: Any) -> None:
+    _disconnect_configuration_sync(window)
+    generation = int(getattr(window, "_ai_review_controls_generation", 0)) + 1
+    window._ai_review_controls_generation = generation
+
+    def sync_callback(_value: object = None) -> None:
+        if generation != int(getattr(window, "_ai_review_controls_generation", -1)):
+            return
+        _sync_review_controls(window)
+
+    signals = (
+        _controller(window).configuration_changed,
+        _controller(window).catalog_changed,
+        _local_controller(window).configuration_changed,
+        _local_controller(window).catalog_changed,
+    )
+    bindings = tuple((signal, sync_callback) for signal in signals)
+    for signal, callback in bindings:
+        signal.connect(callback)
+    window._ai_review_configuration_sync_bindings = bindings
+    mode_host.destroyed.connect(
+        lambda *_args: _disconnect_configuration_sync(window, generation)
+    )
+
+
+def _mode_label(mode: str) -> str:
+    return {
+        HEURISTIC_MODE: "Heuristic",
+        LOCAL_AI_MODE: "Local AI",
+        WEB_AI_MODE: "Web AI",
+    }.get(mode, "Heuristic")
+
+
+def _sync_review_controls(window: Any) -> None:
+    button = getattr(window, "_ai_review_button", None)
+    if not _qt_object_is_alive(button):
+        return
+    running = getattr(window, "_ai_review_thread", None) is not None
+    mode = _selected_mode(window)
+    try:
+        button.setText("Review with " + _mode_label(mode))
+        button.setEnabled(not running)
+        if mode == WEB_AI_MODE:
+            button.setToolTip(
+                "Read-only advisory synthesis using Config Web AI. Current: "
+                + _controller(window).summary()
+            )
+        elif mode == LOCAL_AI_MODE:
+            button.setToolTip(
+                "Read-only advisory synthesis using Config AI > Config Local AI. Current: "
+                + _local_controller(window).summary()
+            )
+        else:
+            button.setToolTip(
+                "Build a deterministic advisory summary without sending a model request."
+            )
+    except RuntimeError:
         return
 
 
-def _model_name_from_combo_text(text: str) -> str:
-    """Normalize combo text to a stored model name."""
-    selected = str(text or "").strip()
-    if not selected or selected == AUTO_MODEL_LABEL:
-        return ""
-    return selected
-
-
-def _handle_ai_review_model_changed(window: Any, text: str) -> None:
-    """Persist a user-initiated Tab 1 AI model selection change."""
-    model_name = _model_name_from_combo_text(text)
-    window._ai_review_saved_model_name = model_name
-    _save_ai_review_model_name(model_name)
-
-
 def install_tab1_ai_review_controls(window: Any, buttons_layout: Any) -> None:
-    """Install read-only AI review controls into the Tab 1 GUI."""
-    model_label = _label_class()("AI model:")
-    model_combo = _combo_box_class()()
-    model_combo.setMinimumWidth(210)
-    model_combo.setToolTip(
-        "Select the local Ollama model used by Tab 1 AI Review."
-    )
-    model_combo.addItem(AUTO_MODEL_LABEL)
-    saved_model_name = _load_saved_ai_review_model_name()
-    window._ai_review_saved_model_name = saved_model_name
-    if saved_model_name:
-        model_combo.addItem(saved_model_name)
-        model_combo.setCurrentIndex(model_combo.findText(saved_model_name))
-    model_combo.currentTextChanged.connect(
-        lambda text: _handle_ai_review_model_changed(window, text)
-    )
+    """Install only workflow mode choices and one advisory review action."""
+    qt = _widgets()
+    mode_label = qt.QLabel("Review Engine:")
+    mode_host = qt.QWidget(window)
+    mode_layout = qt.QHBoxLayout(mode_host)
+    mode_layout.setContentsMargins(0, 0, 0, 0)
+    mode_layout.setSpacing(5)
+    group = qt.QButtonGroup(window)
+    heuristic = qt.QRadioButton("Heuristic", mode_host)
+    local = qt.QRadioButton("Local AI", mode_host)
+    web = qt.QRadioButton("Web AI", mode_host)
+    heuristic.setObjectName("audit_review_mode_heuristic")
+    local.setObjectName("audit_review_mode_local_ai")
+    web.setObjectName("audit_review_mode_web_ai")
+    for radio in (heuristic, local, web):
+        group.addButton(radio)
+        mode_layout.addWidget(radio)
+        radio.toggled.connect(lambda _checked=False, owner=window: _sync_review_controls(owner))
+    heuristic.setChecked(True)
 
-    refresh_button = _push_button_class()("Refresh AI Models")
-    refresh_button.setToolTip("Refresh Tab 1 Ollama model choices.")
-    refresh_button.clicked.connect(lambda: populate_ai_review_model_combo(window))
+    review_button = qt.QPushButton("Review with Heuristic")
+    review_button.setObjectName("audit_project_review_current_results_button")
+    review_button.clicked.connect(lambda: _run_review(window))
 
-    review_button = _push_button_class()("AI Review First Check")
-    review_button.setToolTip(
-        "Read-only AI review of the latest deterministic First Check output."
-    )
-    review_button.clicked.connect(lambda: _run_ai_review_first_check(window))
-
-    window._ai_review_model_label = model_label
-    window._ai_review_model_combo = model_combo
-    window._ai_review_refresh_models_button = refresh_button
+    window._audit_web_ai_configuration = application_web_ai_configuration()
+    window._audit_local_ai_configuration = application_local_ai_configuration()
+    window._ai_review_mode_group = group
+    window._ai_review_heuristic_radio = heuristic
+    window._ai_review_local_radio = local
+    window._ai_review_web_radio = web
+    window._ai_review_mode_host = mode_host
+    window._ai_review_model_label = mode_label
+    window._ai_review_model_combo = mode_host
+    window._ai_review_refresh_models_button = None
     window._ai_review_button = review_button
+    window._ai_review_generation = 0
+    window._ai_review_identity = None
+    window._ai_review_source_snapshot = ""
+    window._ai_review_terminal_result_seen = False
 
-    buttons_layout.addWidget(model_label)
-    buttons_layout.addWidget(model_combo)
-    buttons_layout.addWidget(refresh_button)
+    buttons_layout.addWidget(mode_label)
+    buttons_layout.addWidget(mode_host)
     buttons_layout.addWidget(review_button)
     install_tab1_activity_indicator(window, buttons_layout)
+
+    _connect_configuration_sync(window, mode_host)
+    _sync_review_controls(window)
 
 
 def populate_ai_review_model_combo(
     window: Any,
     adapter: Tab1AIReviewAdapter | None = None,
 ) -> list[str]:
-    """Refresh the Tab 1 AI model selector from the shared registry."""
-    combo = getattr(window, "_ai_review_model_combo", None)
-    if combo is None:
+    """Compatibility helper: return Local AI models without creating a selector."""
+    del window
+    try:
+        return (adapter or Tab1AIReviewAdapter()).list_models()
+    except Exception:
         return []
 
-    previous = _model_name_from_combo_text(str(combo.currentText() or ""))
-    saved_model_name = str(
-        getattr(window, "_ai_review_saved_model_name", "")
-        or _load_saved_ai_review_model_name()
-    ).strip()
-    desired_model_name = previous or saved_model_name
-    active_adapter = adapter or Tab1AIReviewAdapter()
-    try:
-        models = active_adapter.list_models()
-    except Exception as exc:
-        models = []
-        status_bar = getattr(window, "statusBar", None)
-        if callable(status_bar):
-            status_bar().showMessage("AI model refresh failed: " + str(exc))
 
-    combo.blockSignals(True)
-    try:
-        combo.clear()
-        combo.addItem(AUTO_MODEL_LABEL)
-        for model_name in models:
-            combo.addItem(model_name)
-        if desired_model_name:
-            index = combo.findText(desired_model_name)
-            if index >= 0:
-                combo.setCurrentIndex(index)
-                window._ai_review_saved_model_name = desired_model_name
-    finally:
-        combo.blockSignals(False)
-
-    status_bar = getattr(window, "statusBar", None)
-    if callable(status_bar):
-        status_bar().showMessage(
-            "Tab 1 AI model refresh found " + str(len(models)) + " model(s)."
-        )
-    return models
-
-
-def _selected_ai_review_model(window: Any) -> str:
-    """Return the selected Tab 1 AI model, or empty string for auto."""
-    combo = getattr(window, "_ai_review_model_combo", None)
-    if combo is None:
-        return ""
-    return _model_name_from_combo_text(str(combo.currentText() or ""))
-
-
-def _set_ai_review_controls_enabled(window: Any, enabled: bool) -> None:
-    """Enable or disable Tab 1 AI review controls safely."""
-    for attr_name in (
+def _set_controls_enabled(window: Any, enabled: bool) -> None:
+    for name in (
+        "_ai_review_heuristic_radio",
+        "_ai_review_local_radio",
+        "_ai_review_web_radio",
         "_ai_review_button",
-        "_ai_review_model_combo",
-        "_ai_review_refresh_models_button",
     ):
-        widget = getattr(window, attr_name, None)
-        if widget is not None and hasattr(widget, "setEnabled"):
+        widget = getattr(window, name, None)
+        if not _qt_object_is_alive(widget):
+            continue
+        try:
             widget.setEnabled(enabled)
+        except RuntimeError:
+            continue
 
 
-def _run_ai_review_first_check(window: Any) -> None:
-    """Run a read-only AI review over the current First Check output."""
-    if window._worker_thread is not None or window._ai_review_thread is not None:
-        _message_box_class().warning(
+def _request_web_approval(window: Any, audit_text: str) -> str:
+    qt = _widgets()
+    controller = _controller(window)
+    snapshot = controller.snapshot()
+    model = controller.selected_model()
+    if model is None or not controller.ready_for_chat():
+        qt.QMessageBox.warning(
             window,
-            "Work running",
-            "Wait for the current work to finish first.",
+            "Web AI not configured",
+            "Open Config Web AI, refresh models, and select a usable model first.",
         )
-        return
+        controller.request_open_configuration()
+        return ""
+    if not snapshot.structured_output_supported:
+        qt.QMessageBox.warning(
+            window,
+            "Web AI model unsupported",
+            "Audit Project Web AI requires a model that advertises strict response_format support.",
+        )
+        controller.request_open_configuration()
+        return ""
+    try:
+        project = current_project_identity(window)
+    except Exception as exc:
+        qt.QMessageBox.warning(window, "Project identity unavailable", str(exc))
+        return ""
+    details = (
+        "Approve one read-only Audit Project Web AI review?\n\n"
+        f"Project: {project.active_project_slug}\n"
+        f"Project root: {project.active_project_root}\n"
+        f"Project Support: {project.active_project_support_root}\n"
+        f"Gateway: {snapshot.gateway_id}\n"
+        f"Model: {snapshot.model_id}\n"
+        f"Payload bytes: {len(audit_text.encode('utf-8'))}\n"
+        f"Audit SHA-256: {audit_snapshot_hash(audit_text)}\n"
+        f"Privacy: {snapshot.privacy_summary}\n\n"
+        "The result is advisory and read-only. It cannot change audit pass/fail, write source, or Freeze."
+    )
+    decision = qt.QMessageBox.question(
+        window,
+        "Approve Audit Project Web AI Review",
+        details,
+        qt.QMessageBox.StandardButton.Yes | qt.QMessageBox.StandardButton.No,
+        qt.QMessageBox.StandardButton.No,
+    )
+    return uuid.uuid4().hex if decision == qt.QMessageBox.StandardButton.Yes else ""
 
+
+def _identity_is_current(window: Any, identity: AuditReviewIdentity) -> bool:
+    if bool(getattr(window, "_operation_cancel_requested", False)):
+        return False
+    if identity.generation != int(getattr(window, "_ai_review_generation", -1)):
+        return False
+    if _selected_mode(window) != identity.provider_mode:
+        return False
+    current_text = window._output.toPlainText().strip()
+    if audit_snapshot_hash(current_text) != identity.audit_snapshot_hash:
+        return False
+    try:
+        project = current_project_identity(window)
+    except Exception:
+        return False
+    if (
+        project.active_project_id != identity.active_project_id
+        or project.active_project_root_fingerprint
+        != identity.active_project_root_fingerprint
+        or str(project.active_project_support_root)
+        != identity.active_project_support_root
+    ):
+        return False
+    if identity.provider_mode == LOCAL_AI_MODE:
+        snapshot = _local_controller(window).snapshot()
+        return (
+            snapshot.revision == identity.configuration_revision
+            and snapshot.model_id == identity.model_id
+        )
+    if identity.provider_mode == WEB_AI_MODE:
+        snapshot = _controller(window).snapshot()
+        return (
+            bool(identity.privacy_approval_id)
+            and snapshot.revision == identity.configuration_revision
+            and snapshot.gateway_id == identity.gateway_id
+            and snapshot.model_id == identity.model_id
+        )
+    return True
+
+
+def _run_review(window: Any) -> None:
+    qt = _widgets()
+    if window._worker_thread is not None or window._ai_review_thread is not None:
+        qt.QMessageBox.warning(window, "Work running", "Wait for current work to finish first.")
+        return
     audit_text = window._output.toPlainText().strip()
     if not audit_text:
-        _message_box_class().information(
+        qt.QMessageBox.information(
             window,
-            "Run First Check first",
-            "Run Tab 1 First Check before asking for an AI review.",
+            "Run Project Audit first",
+            "Run deterministic Project Audit before requesting an advisory review.",
         )
         return
+    mode = _selected_mode(window)
+    approval_id = ""
+    if mode == LOCAL_AI_MODE:
+        local_controller = _local_controller(window)
+        if not local_controller.ready_for_chat():
+            qt.QMessageBox.warning(
+                window,
+                "Local AI not configured",
+                "Open Config AI > Config Local AI and select a model first.",
+            )
+            local_controller.request_open_configuration()
+            return
+    elif mode == WEB_AI_MODE:
+        approval_id = _request_web_approval(window, audit_text)
+        if not approval_id:
+            return
+    window._ai_review_generation = int(window._ai_review_generation) + 1
+    try:
+        identity, project = build_audit_review_identity(
+            window,
+            generation=window._ai_review_generation,
+            audit_text=audit_text,
+            provider_mode=mode,
+            approval_id=approval_id,
+        )
+    except Exception as exc:
+        qt.QMessageBox.warning(window, "Project identity unavailable", str(exc))
+        return
 
-    project_root = window._root_path_edit.text().strip()
-    model_name = _selected_ai_review_model(window)
-    window._ai_review_saved_model_name = model_name
-    _save_ai_review_model_name(model_name)
-    display_model = model_name or AUTO_MODEL_LABEL
-    window._append_text(
-        "\n> advisory AI review requested for latest Tab 1 output\n"
-    )
-    window._append_text(
-        "> selected advisory model: " + display_model + "\n"
-    )
-    _set_ai_review_controls_enabled(window, False)
+    controller = _controller(window)
+    model_name = ""
+    gateway_id = ""
+    api_key = ""
+    display = _mode_label(mode)
+    if mode == LOCAL_AI_MODE:
+        model_name = _local_controller(window).selected_model_id()
+        display += " | " + model_name
+    elif mode == WEB_AI_MODE:
+        model_name = controller.selected_model_id()
+        gateway_id = controller.gateway_id()
+        api_key = controller.api_key()
+        display += " | " + model_name
+
+    window._ai_review_identity = identity
+    window._ai_review_source_snapshot = audit_text
+    window._ai_review_terminal_result_seen = False
     window._operation_cancel_requested = False
+    _set_controls_enabled(window, False)
     if hasattr(window, "_set_operation_buttons_running"):
         window._set_operation_buttons_running(True)
     else:
         window._run_button.setEnabled(False)
     indicator = getattr(window, "_tab1_activity_indicator", None)
     if indicator is not None:
-        indicator.start_ai_review(display_model)
-    window.statusBar().showMessage("Running advisory AI review...")
+        indicator.start_ai_review(display)
+    window.statusBar().showMessage("Running read-only " + display + " audit review...")
 
-    window._ai_review_thread = _qthread_class()(window)
-    window._ai_review_worker = Tab1AIReviewWorker(
-        audit_text=audit_text,
-        project_root=project_root,
-        model_name=model_name,
+    thread = _qthread_class()(window)
+    worker = Tab1AIReviewWorker(
+        audit_text,
+        str(project.active_project_root),
+        model_name,
+        provider_mode=mode,
+        gateway_id=gateway_id,
+        api_key=api_key,
+        request_id=identity.request_id,
     )
-    window._ai_review_worker.moveToThread(window._ai_review_thread)
-
-    window._ai_review_thread.started.connect(window._ai_review_worker.run)
-    window._ai_review_worker.result_ready.connect(
-        lambda result: _handle_ai_review_result(window, result)
-    )
-    window._ai_review_worker.result_ready.connect(window._ai_review_thread.quit)
-    window._ai_review_thread.finished.connect(lambda: _cleanup_ai_review_worker(window))
-
-    window._ai_review_thread.start()
+    worker.moveToThread(thread)
+    window._ai_review_thread = thread
+    window._ai_review_worker = worker
+    thread.started.connect(worker.run)
+    worker.result_ready.connect(lambda result: _handle_result(window, result))
+    worker.result_ready.connect(thread.quit)
+    thread.finished.connect(lambda: _cleanup(window))
+    thread.start()
 
 
-def _handle_ai_review_result(window: Any, result: object) -> None:
-    """Append an advisory AI review result to the Tab 1 output panel."""
-    success = bool(getattr(result, "success", False))
-    text = str(getattr(result, "text", "") or "")
-    error_message = str(getattr(result, "error_message", "") or "")
-    model_name = str(getattr(result, "model_name", "") or "")
-    indicator = getattr(window, "_tab1_activity_indicator", None)
-
-    if getattr(window, "_operation_cancel_requested", False):
-        window._append_text("\n[canceled] advisory AI review late result ignored\n")
-        window.statusBar().showMessage("AI review canceled")
-        return
-
-    if success:
-        window._append_text("\n" + text + "\n")
-        if indicator is not None:
-            indicator.finish_success("AI review finished")
-        if model_name:
-            window.statusBar().showMessage("AI review finished with " + model_name)
-        else:
-            window.statusBar().showMessage("AI review finished")
-        return
-
-    window._append_text(
-        "\nADVISORY AI REVIEW UNAVAILABLE\n"
-        + (error_message or "Unknown AI review error.")
-        + "\n"
-        + "Deterministic First Check remains available and authoritative.\n"
-    )
-    if indicator is not None:
-        indicator.finish_error("AI review unavailable")
-    window.statusBar().showMessage("AI review unavailable")
-    _message_box_class().warning(
-        window,
-        "AI review unavailable",
-        error_message or "Unknown AI review error.",
-    )
-
-
-def _cleanup_ai_review_worker(window: Any) -> None:
-    """Release the advisory AI review worker after completion."""
-    if window._ai_review_worker is not None:
-        window._ai_review_worker.deleteLater()
-        window._ai_review_worker = None
-    if window._ai_review_thread is not None:
-        window._ai_review_thread.deleteLater()
-        window._ai_review_thread = None
+def _restore_terminal_controls(window: Any) -> None:
     if hasattr(window, "_set_operation_buttons_running"):
         window._set_operation_buttons_running(False)
     else:
         window._run_button.setEnabled(True)
-    _set_ai_review_controls_enabled(window, True)
+    _set_controls_enabled(window, True)
+    _sync_review_controls(window)
+
+
+def _handle_result(window: Any, result: object) -> None:
+    window._ai_review_terminal_result_seen = True
+    identity = getattr(window, "_ai_review_identity", None)
+    _restore_terminal_controls(window)
+    if not isinstance(identity, AuditReviewIdentity) or not _identity_is_current(window, identity):
+        _widgets().QMessageBox.warning(
+            window,
+            "Audit review discarded",
+            "The Project, audit text, review mode, or central AI configuration changed. "
+            "The stale advisory result was discarded.",
+        )
+        window.statusBar().showMessage("Stale audit review discarded")
+        return
+    if str(getattr(result, "request_id", "")) != identity.request_id:
+        window.statusBar().showMessage("Mismatched audit review discarded")
+        return
+    success = bool(getattr(result, "success", False))
+    indicator = getattr(window, "_tab1_activity_indicator", None)
+    if success:
+        window._append_text("\n" + str(getattr(result, "text", "") or "") + "\n")
+        if indicator is not None:
+            indicator.finish_success("advisory review finished")
+        window.statusBar().showMessage("Read-only audit review finished")
+        return
+    error = str(getattr(result, "error_message", "") or "Unknown review error.")
+    window._append_text(
+        "\nADVISORY AUDIT REVIEW UNAVAILABLE\n"
+        + error
+        + "\nDeterministic Project Audit remains available and authoritative.\n"
+    )
+    if indicator is not None:
+        indicator.finish_error("advisory review unavailable")
+    window.statusBar().showMessage("Audit review unavailable")
+    _widgets().QMessageBox.warning(window, "Audit review unavailable", error)
+
+
+def _cleanup(window: Any) -> None:
+    if not bool(getattr(window, "_ai_review_terminal_result_seen", False)):
+        _restore_terminal_controls(window)
+    worker = getattr(window, "_ai_review_worker", None)
+    thread = getattr(window, "_ai_review_thread", None)
+    if worker is not None:
+        worker.deleteLater()
+    if thread is not None:
+        thread.deleteLater()
+    window._ai_review_worker = None
+    window._ai_review_thread = None
+    window._ai_review_identity = None
+    window._ai_review_source_snapshot = ""
+    _sync_review_controls(window)

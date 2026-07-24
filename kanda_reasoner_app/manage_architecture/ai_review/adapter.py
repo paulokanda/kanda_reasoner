@@ -6,8 +6,12 @@ from __future__ import annotations
 import importlib
 from typing import Any, Callable
 
+from kanda_reasoner_app.reasoner_engine.local_ai_chat_service import (
+    resolve_local_ai_model,
+)
+
 from .formatter import format_advisory_review_text
-from .models import Tab1AIReviewRequest, Tab1AIReviewResult
+from .models import LOCAL_AI_MODE, Tab1AIReviewRequest, Tab1AIReviewResult
 from .review_message_builder import build_tab1_ai_review_messages
 
 __all__ = ["AUTO_MODEL_LABEL", "Tab1AIReviewAdapter"]
@@ -72,13 +76,7 @@ class Tab1AIReviewAdapter:
 
     def choose_model(self, requested_model: str = "") -> str:
         """Choose a model for advisory review from request or registry."""
-        models = self.list_models()
-        requested = str(requested_model or "").strip()
-        if requested and requested in models:
-            return requested
-        if models:
-            return models[0]
-        return requested
+        return resolve_local_ai_model(str(requested_model or "").strip())
 
     def chat_exact(
         self,
@@ -114,7 +112,9 @@ class Tab1AIReviewAdapter:
                 success=False,
                 text="",
                 model_name="",
-                error_message="No Tab 1 audit output is available.",
+                error_message="No Project Audit Results are available.",
+                provider_mode=LOCAL_AI_MODE,
+                request_id=request.request_id,
             )
 
         model_name = self.choose_model(request.model_name)
@@ -124,9 +124,10 @@ class Tab1AIReviewAdapter:
                 text="",
                 model_name="",
                 error_message=(
-                    "No local Ollama model is available. Run Tab 7 Refresh Models "
-                    "or install a local Ollama model."
+                    "No global Local AI model is configured. Open Config AI > Config Local AI."
                 ),
+                provider_mode=LOCAL_AI_MODE,
+                request_id=request.request_id,
             )
 
         messages = build_tab1_ai_review_messages(request)
@@ -145,6 +146,8 @@ class Tab1AIReviewAdapter:
                 text="",
                 model_name=model_name,
                 error_message="AI review failed: " + str(exc),
+                provider_mode=LOCAL_AI_MODE,
+                request_id=request.request_id,
             )
 
         return Tab1AIReviewResult(
@@ -152,4 +155,6 @@ class Tab1AIReviewAdapter:
             text=format_advisory_review_text(response_text, model_name),
             model_name=model_name,
             error_message="",
+            provider_mode=LOCAL_AI_MODE,
+            request_id=request.request_id,
         )

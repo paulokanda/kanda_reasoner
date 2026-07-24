@@ -3,14 +3,9 @@
 
 from __future__ import annotations
 
-import json
-import subprocess
-import urllib.error
 import urllib.parse
-import urllib.request
 from importlib import import_module
 from pathlib import Path
-from typing import Iterable
 
 __all__ = ["TAB3_AI_SETTINGS_RUNTIME_CONTRACT"]
 
@@ -32,34 +27,20 @@ def _runtime_ollama_tags_url(self: object, base_url: str) -> str:
 
 
 def _runtime_refresh_models(self: object) -> None:
-    """Refresh the Tab 3 model combo from supported local model sources."""
-    try:
-        base_url = _line_edit_text(getattr(self, "_base_url_edit", None)) or DEFAULT_BASE_URL
-        models = _discover_models(base_url)
-        current = _combo_text(getattr(self, "_model_combo", None)).strip()
-        _replace_combo_items(getattr(self, "_model_combo", None), models, current)
-        _show_status(self, "Loaded " + str(len(models)) + " installed model(s).")
-    except (urllib.error.URLError, TimeoutError, ValueError, json.JSONDecodeError, OSError) as exc:
-        _message_box_warning(
-            self,
-            "Model refresh failed",
-            "Could not load installed models from the local Ollama endpoint.\n"
-            + "Details: "
-            + str(exc),
-        )
+    """Delegate Local AI catalog refresh to the application-scoped owner."""
+    controller = _local_ai_configuration_controller()
+    if controller.refresh_models():
+        _show_status(self, "Refreshing models through Config AI > Config Local AI.")
+    else:
+        _show_status(self, "A Config Local AI model refresh is already running.")
 
 
 def _runtime_build_ai_config(self: object) -> object:
-    """Build an AIConfig object from Tab 3 controls."""
-    config_class = _ai_config_class()
-    return config_class(
-        base_url=_line_edit_text(getattr(self, "_base_url_edit", None)) or DEFAULT_BASE_URL,
-        model=_combo_text(getattr(self, "_model_combo", None)).strip() or DEFAULT_MODEL,
-        workers=max(1, int(_spin_value(getattr(self, "_workers_spin", None), 1))),
-        include_private=_is_checked(getattr(self, "_include_private_checkbox", None), True),
-        min_confidence=_combo_text(getattr(self, "_min_confidence_combo", None)).strip() or "low",
-        uncertain_annotation=not _is_checked(getattr(self, "_no_uncertain_checkbox", None), False),
+    """Build task settings from the central Local/Web AI configuration owners."""
+    runtime = import_module(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_web_controls_runtime"
     )
+    return runtime.build_ai_config(self)
 
 
 def _runtime_persist_runtime_config(self: object) -> Path:
@@ -82,8 +63,8 @@ def _runtime_load_config_from_file(self: object) -> None:
         return
     cfg = _ai_config_class().from_json(path)
     _set_line_edit_text(getattr(self, "_config_path_edit", None), path)
-    _set_line_edit_text(getattr(self, "_base_url_edit", None), cfg.base_url)
-    _set_combo_text(getattr(self, "_model_combo", None), cfg.model)
+    # Endpoint and model are application-scoped and remain owned by Config AI.
+    # A task config file may restore only non-global Docstring run options.
     _set_spin_value(getattr(self, "_workers_spin", None), max(1, cfg.workers))
     _set_checked(getattr(self, "_include_private_checkbox", None), cfg.include_private)
     _set_combo_text(getattr(self, "_min_confidence_combo", None), cfg.min_confidence)
@@ -108,108 +89,10 @@ def _runtime_save_config_to_file(self: object) -> None:
     _show_status(self, "Saved AI config to " + str(path))
 
 
-def _discover_models(base_url: str) -> list[str]:
-    """Return visible Ollama models from HTTP endpoints and the CLI."""
-    names: list[str] = []
-    endpoint_failures = 0
-    for fetcher in (_models_from_tags, _models_from_v1_models):
-        try:
-            names.extend(fetcher(base_url))
-        except (urllib.error.URLError, TimeoutError, ValueError, json.JSONDecodeError, OSError):
-            endpoint_failures += 1
-    names.extend(_models_from_cli())
-    models = _unique_sorted(names)
-    if not models and endpoint_failures >= 2:
-        raise OSError("No local models were discovered from Ollama endpoints or CLI.")
-    return models
-
-
-def _models_from_tags(base_url: str) -> list[str]:
-    """Return models from the configured tags endpoint."""
-    request = urllib.request.Request(_runtime_ollama_tags_url(None, base_url), method="GET")
-    with urllib.request.urlopen(request, timeout=5.0) as response:
-        payload = json.loads(response.read().decode("utf-8"))
-    items = payload.get("models", [])
-    return _names_from_items(items)
-
-
-def _models_from_v1_models(base_url: str) -> list[str]:
-    """Return models from an OpenAI-compatible local models endpoint."""
-    url = _v1_models_url(base_url)
-    request = urllib.request.Request(url, method="GET")
-    with urllib.request.urlopen(request, timeout=5.0) as response:
-        payload = json.loads(response.read().decode("utf-8"))
-    items = payload.get("data", [])
-    return _names_from_items(items)
-
-
-def _v1_models_url(base_url: str) -> str:
-    """Return the local OpenAI-compatible models endpoint URL."""
-    parsed = urllib.parse.urlparse(base_url.strip() or DEFAULT_BASE_URL)
-    scheme = parsed.scheme or "http"
-    netloc = parsed.netloc or "localhost:11434"
-    path = parsed.path.rstrip("/")
-    if not path.endswith("/v1"):
-        path += "/v1"
-    return urllib.parse.urlunparse((scheme, netloc, path + "/models", "", "", ""))
-
-
-def _models_from_cli() -> list[str]:
-    """Return models visible through the Ollama command-line tool."""
-    try:
-        result = subprocess.run(
-            ["ollama", "list"],
-            capture_output=True,
-            text=True,
-            timeout=5.0,
-            check=False,
-        )
-    except (OSError, subprocess.SubprocessError):
-        return []
-    if result.returncode != 0:
-        return []
-    names: list[str] = []
-    for line in result.stdout.splitlines()[1:]:
-        parts = line.split()
-        if parts:
-            names.append(parts[0])
-    return _unique_sorted(names)
-
-
-def _names_from_items(items: object) -> list[str]:
-    """Return model names from list entries."""
-    names: list[str] = []
-    if not isinstance(items, list):
-        return []
-    for item in items:
-        if not isinstance(item, dict):
-            continue
-        name = str(item.get("name") or item.get("model") or item.get("id") or "").strip()
-        if name:
-            names.append(name)
-    return _unique_sorted(names)
-
-
-def _replace_combo_items(combo: object, models: list[str], current: str) -> None:
-    """Replace combo items while preserving a valid current selection."""
-    clear = getattr(combo, "clear", None)
-    add_items = getattr(combo, "addItems", None)
-    add_item = getattr(combo, "addItem", None)
-    set_current = getattr(combo, "setCurrentText", None)
-    if callable(clear):
-        clear()
-    if models and callable(add_items):
-        add_items(models)
-    if current and current not in models and callable(add_item):
-        add_item(current)
-    selected = current or (models[0] if models else DEFAULT_MODEL)
-    if callable(set_current):
-        set_current(selected)
-
-
-def _unique_sorted(names: Iterable[str]) -> list[str]:
-    """Return stable unique model names."""
-    return sorted({str(name).strip() for name in names if str(name).strip()}, key=str.casefold)
+def _local_ai_configuration_controller() -> object:
+    """Return the one application-scoped Local AI configuration owner."""
+    module = import_module("kanda_reasoner_app.local_ai_configuration")
+    return module.application_local_ai_configuration()
 
 
 def _line_edit_text(widget: object) -> str:

@@ -1,357 +1,40 @@
 {
   "schema_version": "1.0",
-  "generated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "generated_for": "kanda-help-exact-layout-prompt-patch-v1",
   "generated_at": "2026-07-17",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use active current metadata and exact owners. Retired identities resolve through KPR-02-005 and never appear as active route entries.",
-  "prompt_count": 89,
+  "prompt_count": 102,
   "entries": [
     {
-      "prompt_id": "boundary_first_repair_protocol",
-      "prompt_code": "KPR-04-006",
-      "display_name": "Boundary-First Repair Protocol",
-      "filename": "boundary_first_repair_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 2,
-      "trigger_phrases": [
-        "symptom owner divergence",
-        "boundary first repair",
-        "repair the leak not the symptom",
-        "shared host state leak",
-        "stale async result owner",
-        "persistence owner mismatch"
-      ],
-      "user_intent_examples": [
-        "The symptom is in one GUI box but the state or lifecycle owner may be elsewhere; trace the real repair owner."
-      ],
-      "aliases": [
-        "KPR-04-006",
-        "boundary_first_repair_protocol",
-        "boundary first repair",
-        "symptom owner divergence",
-        "repair leak not symptom"
-      ],
-      "when_to_load": "When the visible symptom may not belong to the true repair owner.",
-      "when_not_to_load": "Do not load for a proven purely local defect with no ownership ambiguity.",
-      "required_companion_prompts": [
-        "box_architecture_canon",
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "04_box_architecture_and_boundaries"
-    },
-    {
-      "prompt_id": "routing_signal_scorer_v3_semantic_readiness_canon",
-      "display_name": "Routing Signal Scorer Semantic and ML Adoption Safety Boundary",
-      "filename": "routing_signal_scorer_v3_semantic_readiness_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_semantic_readiness_canon.md",
-      "category": "02_prompt_routing_and_indexing",
-      "priority": 2,
-      "trigger_phrases": [
-        "KANDA embeddings",
-        "KANDA semantic retrieval",
-        "KANDA vector index",
-        "semantic authority leakage",
-        "external ML provider for KANDA"
-      ],
-      "user_intent_examples": [
-        "Before implementing embeddings, canonize the semantic readiness plan.",
-        "Design routing_signal_scorer v3 with semantic evidence but no ML implementation yet.",
-        "Can we use sentence-transformers or FAISS in KANDA Reasoner?",
-        "Plan the Metadata Vector Manifest and retrieval evaluation before embeddings.",
-        "Add semantic retrieval to routing_signal_scorer."
-      ],
-      "aliases": [
-        "routing_signal_scorer_v3_semantic_readiness_canon",
-        "routing_signal_scorer_v3_semantic_readiness_canon.md",
-        "routing signal scorer semantic and ml adoption safety boundary"
-      ],
-      "when_to_load": "Requires a demonstrated current gap and existing-capability review before semantic, embedding, vector, provider, or ML expansion.",
-      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
-      "required_companion_prompts": [
-        "kanda_routing_system_canon",
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "prompt_code": "KPR-02-006",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "02_prompt_routing_and_indexing"
-    },
-    {
-      "prompt_id": "start_of_day_master_stack",
-      "prompt_code": "KPR-01-001",
-      "display_name": "Start-of-Day Governance Bridge",
-      "filename": "start_of_day_master_stack.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
+      "prompt_id": "ai_human_partnership_session_start",
+      "display_name": "AI-Human Partnership Session Overlay",
+      "filename": "ai_human_partnership_session_start.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md",
       "category": "01_session_start_and_navigation",
-      "priority": 2,
+      "priority": 20,
       "trigger_phrases": [
-        "start day",
-        "begin KANDA session",
-        "startup governance bridge"
+        "AI human partnership",
+        "session roles",
+        "human AI collaboration"
       ],
       "user_intent_examples": [
-        "Always at startup as the compact governance bridge."
+        "On request when collaboration roles should be explicit."
       ],
       "aliases": [
-        "KPR-01-001",
-        "start_of_day_master_stack",
-        "start-of-day governance bridge"
+        "KPR-01-004",
+        "ai_human_partnership_session_start"
       ],
-      "when_to_load": "Always at startup as the compact governance bridge.",
-      "when_not_to_load": "Do not use as a specialist implementation or validation owner.",
+      "when_to_load": "On request when collaboration roles should be explicit.",
+      "when_not_to_load": "Do not load as an operational governance prompt.",
       "required_companion_prompts": [
-        "session_start_upload_checklist",
         "ai_prompt_request_canon",
         "prompt_navigation_index"
       ],
+      "prompt_code": "KPR-01-004",
       "status": "active",
       "version": "2.0",
       "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "box_architecture_canon",
-      "prompt_code": "KPR-04-001",
-      "display_name": "Box Architecture Canon",
-      "filename": "box_architecture_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 3,
-      "trigger_phrases": [
-        "box architecture",
-        "box boundary audit",
-        "active box",
-        "public contract",
-        "private reach-in",
-        "authoritative state owner",
-        "cross-box touch",
-        "god box",
-        "leaking registry"
-      ],
-      "user_intent_examples": [
-        "Identify the primary box, public facade, supporting touches, and boundary validation before this governed change."
-      ],
-      "aliases": [
-        "KPR-04-001",
-        "box_architecture_canon",
-        "box architecture canon",
-        "box boundary audit",
-        "closed_box_delivery_canon",
-        "closed box delivery canon"
-      ],
-      "when_to_load": "When consequential work has ownership, public-contract, cross-box, authoritative-state, or lifecycle-boundary risk.",
-      "when_not_to_load": "Do not load for pure explanation or text editing with no architecture consequence.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "04_box_architecture_and_boundaries"
-    },
-    {
-      "prompt_id": "kanda_routing_system_canon",
-      "display_name": "KANDA Routing System Canon",
-      "filename": "kanda_routing_system_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
-      "category": "02_prompt_routing_and_indexing",
-      "priority": 3,
-      "trigger_phrases": [
-        "routing system canon",
-        "routing architecture",
-        "route data authority",
-        "prompt registration architecture"
-      ],
-      "user_intent_examples": [
-        "Canonize the routing system itself.",
-        "Update the way prompts are registered into the routing system.",
-        "Define the Context Package Manifest before routing automation.",
-        "Review whether this task needs Fast Path or Routed Work Path context."
-      ],
-      "aliases": [
-        "kanda_routing_system_canon",
-        "kanda_routing_system_canon.md",
-        "kanda routing system canon"
-      ],
-      "when_to_load": "Defines KANDA routing architecture, owner boundaries, route records, conflict rules, and advisory-system limits.",
-      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
-      "required_companion_prompts": [
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "prompt_code": "KPR-02-002",
-      "status": "active",
-      "version": "3.0",
-      "owner_box": "02_prompt_routing_and_indexing"
-    },
-    {
-      "prompt_id": "session_start_upload_checklist",
-      "display_name": "Session Start Upload Checklist",
-      "filename": "session_start_upload_checklist.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 3,
-      "trigger_phrases": [
-        "what files should I upload",
-        "startup upload checklist",
-        "second upload readiness"
-      ],
-      "user_intent_examples": [
-        "Always at startup and when two-stage readiness must be reviewed."
-      ],
-      "aliases": [
-        "KPR-01-002",
-        "session_start_upload_checklist",
-        "upload checklist"
-      ],
-      "when_to_load": "Always at startup and when two-stage readiness must be reviewed.",
-      "when_not_to_load": "Do not use as implementation or local validation authority.",
-      "required_companion_prompts": [
-        "start_of_day_master_stack",
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "prompt_code": "KPR-01-002",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "kanda_box_shielding_canon",
-      "prompt_code": "KPR-04-002",
-      "display_name": "KANDA Box Shielding Canon",
-      "filename": "kanda_box_shielding_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 4,
-      "trigger_phrases": [
-        "box shield",
-        "KBSC",
-        "architectural fitness function",
-        "shield applicability",
-        "authority regression protection",
-        "shield before stronger work"
-      ],
-      "user_intent_examples": [
-        "Decide whether this high-risk box needs a focused invariant shield before stronger work."
-      ],
-      "aliases": [
-        "KPR-04-002",
-        "KBSC",
-        "kanda_box_shielding_canon",
-        "box shield",
-        "architectural fitness function"
-      ],
-      "when_to_load": "When current evidence proves a meaningful invariant-protection gap for one bounded context.",
-      "when_not_to_load": "Do not create a shield automatically for every milestone or routine edit.",
-      "required_companion_prompts": [
-        "box_architecture_canon",
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "04_box_architecture_and_boundaries"
-    },
-    {
-      "prompt_id": "project_folder_organization_canon",
-      "prompt_code": "KPR-04-003",
-      "display_name": "Project Folder Organization Canon",
-      "filename": "project_folder_organization_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 4,
-      "trigger_phrases": [
-        "project folder structure",
-        "where should this file go",
-        "artifact placement",
-        "wrong root write",
-        "generated artifact placement",
-        "source tree contamination"
-      ],
-      "user_intent_examples": [
-        "Classify this generated artifact and select the current canonical owner or support location."
-      ],
-      "aliases": [
-        "KPR-04-003",
-        "project_folder_organization_canon",
-        "project folder organization canon",
-        "artifact placement assessment",
-        "where should this file go"
-      ],
-      "when_to_load": "When artifact classification, root ownership, folder migration, or source-tree cleanliness is materially involved.",
-      "when_not_to_load": "Do not load for code logic changes that do not affect artifact placement or roots.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon"
-      ],
-      "status": "active",
-      "version": "4.0",
-      "owner_box": "04_box_architecture_and_boundaries"
-    },
-    {
-      "prompt_id": "project_tool_boundary_startup_bridge",
-      "prompt_code": "KPR-12-006",
-      "display_name": "Project Tool Boundary Startup Bridge",
-      "filename": "project_tool_boundary_startup_bridge.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
-      "category": "12_generalized_project_canons",
-      "priority": 4,
-      "trigger_phrases": [
-        "tool project boundary startup bridge",
-        "wrong-root risk",
-        "self-hosting separation",
-        "project support outside source",
-        "non-authoritative transient workspace"
-      ],
-      "user_intent_examples": [
-        "Keep the selected Project separate from the KANDA Tool before any source work.",
-        "Stop when the source, support, or transient owner is unclear."
-      ],
-      "aliases": [
-        "project tool boundary bridge",
-        "project_tool_boundary_startup_bridge"
-      ],
-      "when_to_load": "Always at startup as a compact invariant; route consequential work to KPR-12-001.",
-      "when_not_to_load": "It remains startup context but never replaces the full routed canon.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon"
-      ],
-      "load_type": "always_startup"
-    },
-    {
-      "prompt_id": "stateful_control_regression_canon",
-      "prompt_code": "KPR-04-004",
-      "display_name": "Stateful Control Regression Canon",
-      "filename": "stateful_control_regression_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md",
-      "category": "04_box_architecture_and_boundaries",
-      "priority": 4,
-      "trigger_phrases": [
-        "dropdown selection persistence",
-        "control hydration",
-        "stable option ID",
-        "restored selection",
-        "GUI option state regression",
-        "control sizing regression"
-      ],
-      "user_intent_examples": [
-        "Protect stable option IDs, hydration, and persisted selection while modifying this GUI control."
-      ],
-      "aliases": [
-        "KPR-04-004",
-        "stateful_control_regression_canon",
-        "stateful control regression",
-        "selection persistence",
-        "control hydration"
-      ],
-      "when_to_load": "When GUI option identity, persisted selection, hydration, fallback, caption, or sizing behavior can regress.",
-      "when_not_to_load": "Do not load for generic backend state or non-interactive logic.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "04_box_architecture_and_boundaries"
     },
     {
       "prompt_id": "ai_prompt_request_canon",
@@ -421,36 +104,96 @@
       "owner_box": "01_session_start_and_navigation"
     },
     {
-      "prompt_id": "prompt_navigation_index",
-      "display_name": "Prompt Navigation Index",
-      "filename": "prompt_navigation_index.md",
-      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
-      "category": "02_prompt_routing_and_indexing",
-      "priority": 7,
+      "prompt_id": "daily_startup_loader_template",
+      "display_name": "Daily Startup Loader Authoring Template",
+      "filename": "daily_startup_loader_template.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/daily_startup_loader_template.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 20,
       "trigger_phrases": [
-        "what prompt should I use",
-        "route this request",
-        "prompt map",
-        "exact prompt path"
+        "create startup loader template",
+        "draft daily startup loader"
       ],
       "user_intent_examples": [
-        "I say \u201cmodule too big\u201d; which prompt should that trigger?"
+        "On request to draft a non-executing startup-loader specification."
       ],
       "aliases": [
-        "prompt_navigation_index",
-        "prompt_navigation_index.md",
-        "prompt navigation index"
+        "KPR-01-005",
+        "daily_startup_loader_template"
       ],
-      "when_to_load": "Authoritative human-readable locator for current prompt groups, exact prompts, and route owner relationships.",
-      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
+      "when_to_load": "On request to draft a non-executing startup-loader specification.",
+      "when_not_to_load": "Do not load for normal startup or implementation.",
       "required_companion_prompts": [
         "ai_prompt_request_canon",
-        "group_assimilation_index"
+        "prompt_navigation_index"
       ],
-      "prompt_code": "KPR-02-004",
+      "prompt_code": "KPR-01-005",
       "status": "active",
-      "version": "2.7",
-      "owner_box": "02_prompt_routing_and_indexing"
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
+    },
+    {
+      "prompt_id": "durable_document_artifact_routing_canon",
+      "prompt_code": "KPR-01-013",
+      "display_name": "Durable Documentation Artifact Routing Canon",
+      "filename": "durable_document_artifact_routing_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 13,
+      "trigger_phrases": [
+        "durable document",
+        "validation evidence path",
+        "project documentation",
+        "artifact provenance"
+      ],
+      "user_intent_examples": [
+        "Choose the correct owner and lifetime for generated documentary evidence."
+      ],
+      "aliases": [
+        "KPR-01-013",
+        "durable_document_artifact_routing_canon",
+        "durable artifact routing"
+      ],
+      "when_to_load": "Always at startup and whenever generated documentary artifacts may need durable ownership.",
+      "when_not_to_load": "Do not use as patch, freeze, Error Memory, or handoff schema authority.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
+    },
+    {
+      "prompt_id": "error_memory_ai_formulary_startup_canon",
+      "prompt_code": "KPR-01-012",
+      "display_name": "Error Memory AI Formulary Startup Canon",
+      "filename": "error_memory_ai_formulary_startup_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 12,
+      "trigger_phrases": [
+        "error memory",
+        "memorize error",
+        "repeat error prevention",
+        "active-ready lesson"
+      ],
+      "user_intent_examples": [
+        "Decide whether a corrected error should become or update Error Memory."
+      ],
+      "aliases": [
+        "KPR-01-012",
+        "error_memory_ai_formulary_startup_canon",
+        "Error Memory admission canon"
+      ],
+      "when_to_load": "Always at startup and whenever an error may have durable prevention value.",
+      "when_not_to_load": "Do not use as the complete lesson schema or direct Lessons writer.",
+      "required_companion_prompts": [
+        "error_memory_model_template",
+        "error_memory_active_ready_json_template"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
     },
     {
       "prompt_id": "handoff_at_end_of_work",
@@ -485,40 +228,129 @@
       "owner_box": "01_session_start_and_navigation"
     },
     {
-      "prompt_code": "KPR-05-004",
-      "prompt_id": "implementation_roadmap_builder",
-      "display_name": "Implementation Roadmap Builder - Draft Template",
-      "filename": "implementation_roadmap_builder.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 8,
+      "prompt_id": "project_startup_canon_template",
+      "display_name": "Project Startup Profile Authoring Template",
+      "filename": "project_startup_canon_template.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 20,
       "trigger_phrases": [
-        "draft an implementation roadmap",
-        "roadmap template",
-        "make a progress tracker",
-        "conceptual implementation plan"
+        "create project startup profile",
+        "project startup canon template"
       ],
       "user_intent_examples": [
-        "Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft."
+        "On request to draft a stable Project-specific startup profile."
       ],
       "aliases": [
-        "KPR-05-004",
-        "implementation_roadmap_builder",
-        "implementation roadmap draft",
-        "roadmap template",
-        "progress tracker template"
+        "KPR-01-006",
+        "project_startup_canon_template"
       ],
-      "when_to_load": "Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft.",
-      "when_not_to_load": "Do not auto-load for normal KANDA implementation or treat the tracker as execution evidence.",
-      "required_companion_prompts": [],
-      "optional_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
-        "cooperative_implementation_methodology",
-        "workflow_handoff_template"
+      "when_to_load": "On request to draft a stable Project-specific startup profile.",
+      "when_not_to_load": "Do not load to execute startup or write Project state.",
+      "required_companion_prompts": [
+        "project_overlay_selector",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "prompt_code": "KPR-01-006",
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
+    },
+    {
+      "prompt_id": "prompt_router_reasoner_startup_check",
+      "prompt_code": "KPR-01-003",
+      "display_name": "Prompt Router Reasoner Readiness Assessment",
+      "filename": "prompt_router_reasoner_startup_check.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 18,
+      "trigger_phrases": [
+        "Prompt Router Reasoner readiness",
+        "is prompt router fit to run",
+        "routing GUI readiness"
+      ],
+      "user_intent_examples": [
+        "On request when static and real local readiness evidence must be separated."
+      ],
+      "aliases": [
+        "KPR-01-003",
+        "prompt_router_reasoner_startup_check",
+        "readiness assessment"
+      ],
+      "when_to_load": "On request when static and real local readiness evidence must be separated.",
+      "when_not_to_load": "Do not load during normal startup and do not use to issue WAIT_FOR_TASK.",
+      "required_companion_prompts": [
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
       ],
       "status": "active",
-      "load_type": "on_request",
-      "owner_box": "05_patch_delivery_and_validation"
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
+    },
+    {
+      "prompt_id": "session_start_upload_checklist",
+      "display_name": "Session Start Upload Checklist",
+      "filename": "session_start_upload_checklist.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 3,
+      "trigger_phrases": [
+        "what files should I upload",
+        "startup upload checklist",
+        "second upload readiness"
+      ],
+      "user_intent_examples": [
+        "Always at startup and when two-stage readiness must be reviewed."
+      ],
+      "aliases": [
+        "KPR-01-002",
+        "session_start_upload_checklist",
+        "upload checklist"
+      ],
+      "when_to_load": "Always at startup and when two-stage readiness must be reviewed.",
+      "when_not_to_load": "Do not use as implementation or local validation authority.",
+      "required_companion_prompts": [
+        "start_of_day_master_stack",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "prompt_code": "KPR-01-002",
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
+    },
+    {
+      "prompt_id": "start_of_day_master_stack",
+      "prompt_code": "KPR-01-001",
+      "display_name": "Start-of-Day Governance Bridge",
+      "filename": "start_of_day_master_stack.md",
+      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
+      "category": "01_session_start_and_navigation",
+      "priority": 2,
+      "trigger_phrases": [
+        "start day",
+        "begin KANDA session",
+        "startup governance bridge"
+      ],
+      "user_intent_examples": [
+        "Always at startup as the compact governance bridge."
+      ],
+      "aliases": [
+        "KPR-01-001",
+        "start_of_day_master_stack",
+        "start-of-day governance bridge"
+      ],
+      "when_to_load": "Always at startup as the compact governance bridge.",
+      "when_not_to_load": "Do not use as a specialist implementation or validation owner.",
+      "required_companion_prompts": [
+        "session_start_upload_checklist",
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "01_session_start_and_navigation"
     },
     {
       "prompt_id": "chatgpt_kanda_routing_choice_output_protocol",
@@ -548,6 +380,41 @@
         "prompt_navigation_index",
         "prompt_identity_code_registry_canon"
       ],
+      "status": "active",
+      "version": "3.0",
+      "owner_box": "02_prompt_routing_and_indexing"
+    },
+    {
+      "prompt_id": "kanda_routing_system_canon",
+      "display_name": "KANDA Routing System Canon",
+      "filename": "kanda_routing_system_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+      "category": "02_prompt_routing_and_indexing",
+      "priority": 3,
+      "trigger_phrases": [
+        "routing system canon",
+        "routing architecture",
+        "route data authority",
+        "prompt registration architecture"
+      ],
+      "user_intent_examples": [
+        "Canonize the routing system itself.",
+        "Update the way prompts are registered into the routing system.",
+        "Define the Context Package Manifest before routing automation.",
+        "Review whether this task needs Fast Path or Routed Work Path context."
+      ],
+      "aliases": [
+        "kanda_routing_system_canon",
+        "kanda_routing_system_canon.md",
+        "kanda routing system canon"
+      ],
+      "when_to_load": "Defines KANDA routing architecture, owner boundaries, route records, conflict rules, and advisory-system limits.",
+      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
+      "required_companion_prompts": [
+        "ai_prompt_request_canon",
+        "prompt_navigation_index"
+      ],
+      "prompt_code": "KPR-02-002",
       "status": "active",
       "version": "3.0",
       "owner_box": "02_prompt_routing_and_indexing"
@@ -584,6 +451,38 @@
       "owner_box": "02_prompt_routing_and_indexing"
     },
     {
+      "prompt_id": "prompt_navigation_index",
+      "display_name": "Prompt Navigation Index",
+      "filename": "prompt_navigation_index.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+      "category": "02_prompt_routing_and_indexing",
+      "priority": 7,
+      "trigger_phrases": [
+        "what prompt should I use",
+        "route this request",
+        "prompt map",
+        "exact prompt path"
+      ],
+      "user_intent_examples": [
+        "I say \u201cmodule too big\u201d; which prompt should that trigger?"
+      ],
+      "aliases": [
+        "prompt_navigation_index",
+        "prompt_navigation_index.md",
+        "prompt navigation index"
+      ],
+      "when_to_load": "Authoritative human-readable locator for current prompt groups, exact prompts, and route owner relationships.",
+      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
+      "required_companion_prompts": [
+        "ai_prompt_request_canon",
+        "group_assimilation_index"
+      ],
+      "prompt_code": "KPR-02-004",
+      "status": "active",
+      "version": "2.7",
+      "owner_box": "02_prompt_routing_and_indexing"
+    },
+    {
       "prompt_id": "prompt_substitution_map",
       "display_name": "Prompt Substitution Map",
       "filename": "prompt_substitution_map.md",
@@ -613,506 +512,240 @@
       "owner_box": "02_prompt_routing_and_indexing"
     },
     {
-      "prompt_id": "patch_install_delivery_error_register",
-      "prompt_code": "KPR-05-001",
-      "display_name": "Patch Install Delivery Active Regression Index",
-      "filename": "patch_install_delivery_error_register.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 11,
+      "prompt_id": "routing_signal_scorer_v3_semantic_readiness_canon",
+      "display_name": "Routing Signal Scorer Semantic and ML Adoption Safety Boundary",
+      "filename": "routing_signal_scorer_v3_semantic_readiness_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_semantic_readiness_canon.md",
+      "category": "02_prompt_routing_and_indexing",
+      "priority": 2,
       "trigger_phrases": [
-        "patch install error",
-        "delivery regression",
-        "isolated ZIP",
-        "root-drive staging"
+        "KANDA embeddings",
+        "KANDA semantic retrieval",
+        "KANDA vector index",
+        "semantic authority leakage",
+        "external ML provider for KANDA"
       ],
       "user_intent_examples": [
-        "Check current delivery regression classes before releasing a patch."
+        "Before implementing embeddings, canonize the semantic readiness plan.",
+        "Design routing_signal_scorer v3 with semantic evidence but no ML implementation yet.",
+        "Can we use sentence-transformers or FAISS in KANDA Reasoner?",
+        "Plan the Metadata Vector Manifest and retrieval evaluation before embeddings.",
+        "Add semantic retrieval to routing_signal_scorer."
       ],
       "aliases": [
-        "KPR-05-001",
-        "patch_install_delivery_error_register",
-        "patch regression index"
+        "routing_signal_scorer_v3_semantic_readiness_canon",
+        "routing_signal_scorer_v3_semantic_readiness_canon.md",
+        "routing signal scorer semantic and ml adoption safety boundary"
       ],
-      "when_to_load": "Conditionally required before patch-related output and delivery-regression repair.",
-      "when_not_to_load": "Do not load at every startup and do not use as an append-only traceback log.",
+      "when_to_load": "Requires a demonstrated current gap and existing-capability review before semantic, embedding, vector, provider, or ML expansion.",
+      "when_not_to_load": "Do not load when its specific routing responsibility is not needed or as authority for implementation, validation, delivery, or freeze.",
       "required_companion_prompts": [
-        "daily_patch_delivery_guardrails",
-        "implementation_and_delivery_protocol",
-        "terminal_cleanup_contract"
+        "kanda_routing_system_canon",
+        "brick_wall_comprehensive_quality_gate"
       ],
+      "prompt_code": "KPR-02-006",
       "status": "active",
       "version": "2.0",
-      "owner_box": "05_patch_delivery_and_validation"
+      "owner_box": "02_prompt_routing_and_indexing"
     },
     {
-      "prompt_id": "error_memory_ai_formulary_startup_canon",
-      "prompt_code": "KPR-01-012",
-      "display_name": "Error Memory AI Formulary Startup Canon",
-      "filename": "error_memory_ai_formulary_startup_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 12,
+      "prompt_code": "KPR-03-001",
+      "prompt_id": "brick_wall_comprehensive_quality_gate",
+      "display_name": "Brick Wall - Comprehensive Quality Gate",
+      "filename": "brick_wall_comprehensive_quality_gate.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 40,
       "trigger_phrases": [
-        "error memory",
-        "memorize error",
-        "repeat error prevention",
-        "active-ready lesson"
+        "brick wall",
+        "show brick wall",
+        "brick wall check",
+        "update brick wall",
+        "where are we on brick wall",
+        "run the quality wall"
       ],
       "user_intent_examples": [
-        "Decide whether a corrected error should become or update Error Memory."
+        "Brick wall.",
+        "Show Brick Wall and tell me where this implementation stands.",
+        "Update the Brick Wall checklist after validation."
       ],
       "aliases": [
-        "KPR-01-012",
-        "error_memory_ai_formulary_startup_canon",
-        "Error Memory admission canon"
-      ],
-      "when_to_load": "Always at startup and whenever an error may have durable prevention value.",
-      "when_not_to_load": "Do not use as the complete lesson schema or direct Lessons writer.",
-      "required_companion_prompts": [
-        "error_memory_model_template",
-        "error_memory_active_ready_json_template"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "terminal_cleanup_contract",
-      "prompt_code": "KPR-05-007",
-      "display_name": "Terminal Cleanup Contract",
-      "filename": "terminal_cleanup_contract.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 12,
-      "trigger_phrases": [
-        "terminal cleanup",
-        "Clear-Host",
-        "install success footer",
-        "PowerShell block",
-        "Press Enter to clear terminal",
-        "PowerShell shows >>"
-      ],
-      "user_intent_examples": [
-        "Audit the cleanup footer for this PowerShell block."
-      ],
-      "aliases": [
-        "KPR-05-007",
-        "terminal_cleanup_contract",
-        "terminal cleanup contract",
-        "PowerShell cleanup",
-        "clean PowerShell prompt"
-      ],
-      "when_to_load": "Startup bridge is always visible; load the full prompt when emitting or auditing PowerShell terminal behavior.",
-      "when_not_to_load": "Do not load the full prompt for tasks with no terminal output.",
-      "required_companion_prompts": [],
-      "optional_companion_prompts": [
-        "pre_output_contract_gates",
-        "implementation_and_delivery_protocol",
-        "patch_install_delivery_error_register"
-      ],
-      "status": "active",
-      "load_type": "always_startup"
-    },
-    {
-      "prompt_id": "durable_document_artifact_routing_canon",
-      "prompt_code": "KPR-01-013",
-      "display_name": "Durable Documentation Artifact Routing Canon",
-      "filename": "durable_document_artifact_routing_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 13,
-      "trigger_phrases": [
-        "durable document",
-        "validation evidence path",
-        "project documentation",
-        "artifact provenance"
-      ],
-      "user_intent_examples": [
-        "Choose the correct owner and lifetime for generated documentary evidence."
-      ],
-      "aliases": [
-        "KPR-01-013",
-        "durable_document_artifact_routing_canon",
-        "durable artifact routing"
-      ],
-      "when_to_load": "Always at startup and whenever generated documentary artifacts may need durable ownership.",
-      "when_not_to_load": "Do not use as patch, freeze, Error Memory, or handoff schema authority.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_code": "KPR-05-002",
-      "prompt_id": "bundle_gated_development_workflow",
-      "display_name": "Bundle-Gated Development Workflow",
-      "filename": "bundle_gated_development_workflow.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 15,
-      "trigger_phrases": [
-        "installable release",
-        "bundle gated release",
-        "package this change",
-        "release lifecycle",
-        "build a patch bundle"
-      ],
-      "user_intent_examples": [
-        "When an authorized change requires an installable or distributable release unit."
-      ],
-      "aliases": [
-        "KPR-05-002",
-        "bundle_gated_development_workflow",
-        "bundle gated development workflow",
-        "installable release lifecycle",
-        "kanda_bundle_gated_development_workflow"
-      ],
-      "when_to_load": "When an authorized change requires an installable or distributable release unit.",
-      "when_not_to_load": "Do not load for read-only audit, explanation-only work, or an edit that will not be packaged.",
-      "required_companion_prompts": [
+        "KPR-03-001",
+        "brick wall",
+        "brick wall quality gate",
         "brick_wall_comprehensive_quality_gate",
-        "patch_install_delivery_error_register"
+        "brick_wall_comprehensive_quality_gate.md",
+        "comprehensive quality gate",
+        "Q01-Q40 checklist"
       ],
-      "optional_companion_prompts": [
+      "when_to_load": "Whenever the user says Brick Wall or requests the live Q01-Q40 governed implementation status for KANDA Reasoner work.",
+      "when_not_to_load": "Do not load for unrelated medical, writing, or general-information tasks, and do not use it as a substitute for exact source or specialist owner prompts.",
+      "required_companion_prompts": [
         "project_tool_boundary_canon",
         "box_architecture_canon",
-        "implementation_and_delivery_protocol",
-        "pre_output_contract_gates"
+        "kanda_box_shielding_canon"
       ],
-      "status": "active",
-      "load_type": "routed",
-      "owner_box": "05_patch_delivery_and_validation"
-    },
-    {
-      "prompt_code": "KPR-05-003",
-      "prompt_id": "implementation_and_delivery_protocol",
-      "display_name": "Implementation and Delivery Protocol",
-      "filename": "implementation_and_delivery_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 16,
-      "trigger_phrases": [
-        "construct patch payload",
-        "prepare installer",
-        "surgical delivery",
-        "baseline hash allowlist",
-        "rollback package"
-      ],
-      "user_intent_examples": [
-        "After implementation authorization when an installable release needs payload and installer construction."
-      ],
-      "aliases": [
-        "KPR-05-003",
-        "implementation_and_delivery_protocol",
-        "implementation and delivery protocol",
-        "surgical patch construction",
-        "installer preparation"
-      ],
-      "when_to_load": "After implementation authorization when an installable release needs payload and installer construction.",
-      "when_not_to_load": "Do not load for analysis-only work or before release admission.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
+      "recommended_companion_prompts": [
+        "architecture_review_project_card_machine_canon",
         "bundle_gated_development_workflow",
-        "patch_install_delivery_error_register"
-      ],
-      "optional_companion_prompts": [
-        "project_tool_boundary_canon",
         "pre_output_contract_gates",
-        "terminal_cleanup_contract"
+        "freeze_code_intake_and_form_protocol"
       ],
-      "status": "active",
-      "load_type": "routed",
-      "owner_box": "05_patch_delivery_and_validation"
+      "missing_behavior": "HARD_STOP before coding when mandatory Brick Wall pre-code gates are incomplete."
     },
     {
-      "prompt_id": "router_bridge_user_detected_correction",
-      "prompt_code": "KPR-05-006",
-      "display_name": "User-Detected Correction Incident Dispatcher",
-      "filename": "router_bridge_user_detected_correction.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 16,
+      "prompt_id": "cooperative_implementation_methodology",
+      "display_name": "Cooperative Implementation Methodology",
+      "filename": "cooperative_implementation_methodology.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 25,
       "trigger_phrases": [
-        "you made a mistake",
-        "validation failed",
-        "install failed",
-        "wrong path",
-        "wrong file",
-        "coded from memory",
-        "missing STATUS: IN_SYNC",
-        "freeze blocked",
-        "AI detected an implementation error"
+        "cooperative implementation",
+        "proposal before code",
+        "compare implementation options"
       ],
       "user_intent_examples": [
-        "Correct a demonstrated failure safely."
+        "Compare consequential implementation options before governed admission."
       ],
       "aliases": [
-        "KPR-05-006",
-        "router_bridge_user_detected_correction",
-        "user detected correction",
-        "correction incident",
-        "AI mistake correction"
+        "KPR-03-002",
+        "cooperative_implementation_methodology",
+        "cooperative_implementation_methodology.md",
+        "cooperative implementation methodology"
       ],
-      "when_to_load": "Only when a real prior-answer, source, path, install, validation, delivery, startup, freeze, or Error Memory defect is identified.",
-      "when_not_to_load": "Do not load for ordinary feature work, speculative planning, or explanation without a demonstrated incident.",
+      "when_to_load": "Compare consequential implementation options before governed admission.",
+      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
       "required_companion_prompts": [
-        "patch_install_delivery_error_register"
-      ],
-      "optional_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
-        "pre_output_contract_gates",
-        "terminal_cleanup_contract",
-        "freeze_code_intake_and_form_protocol",
-        "error_memory_ai_formulary_startup_canon",
-        "project_tool_boundary_canon"
-      ],
-      "status": "active",
-      "load_type": "routed"
-    },
-    {
-      "prompt_code": "KPR-05-005",
-      "prompt_id": "patch_validate_freeze_error_memory_routine_blueprint",
-      "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
-      "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
-      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
-      "category": "05_patch_delivery_and_validation",
-      "priority": 17,
-      "trigger_phrases": [
-        "Answer, Validate, Freeze, Memorize Error",
-        "Show Project to AI recovery routine",
-        "collector export failed",
-        "patch validation freeze recovery",
-        "copy recovery routine"
-      ],
-      "user_intent_examples": [
-        "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper."
-      ],
-      "aliases": [
-        "KPR-05-005",
-        "patch_validate_freeze_error_memory_routine_blueprint",
-        "Show Project to AI recovery blueprint",
-        "Answer Validate Freeze Memorize Error",
-        "recovery routine owner dispatch"
-      ],
-      "when_to_load": "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.",
-      "when_not_to_load": "Do not load for ordinary delivery when no reusable recovery handoff is requested.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon",
         "brick_wall_comprehensive_quality_gate"
       ],
-      "optional_companion_prompts": [
-        "bundle_gated_development_workflow",
-        "implementation_and_delivery_protocol",
-        "pre_output_contract_gates",
-        "patch_install_delivery_error_register",
-        "terminal_cleanup_contract",
-        "freeze_code_intake_and_form_protocol",
-        "error_memory_ai_formulary_startup_canon"
-      ],
+      "prompt_code": "KPR-03-002",
       "status": "active",
+      "version": "2.0",
+      "owner_box": "03_governance_freeze_and_handoff"
+    },
+    {
+      "prompt_id": "cooperative_implementation_methodology",
+      "display_name": "Cooperative Implementation Methodology",
+      "filename": "cooperative_implementation_methodology.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 25,
+      "trigger_phrases": [
+        "cooperative implementation",
+        "proposal before code",
+        "compare implementation options"
+      ],
+      "user_intent_examples": [
+        "Compare consequential implementation options before governed admission."
+      ],
+      "aliases": [
+        "KPR-03-002",
+        "cooperative_implementation_methodology",
+        "cooperative_implementation_methodology.md",
+        "cooperative implementation methodology"
+      ],
+      "when_to_load": "Compare consequential implementation options before governed admission.",
+      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "prompt_code": "KPR-03-002",
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "03_governance_freeze_and_handoff"
+    },
+    {
+      "prompt_id": "freeze_code_intake_and_form_protocol",
+      "display_name": "Freeze Hint and Form Intake Protocol",
+      "filename": "freeze_code_intake_and_form_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 25,
+      "trigger_phrases": [
+        "freeze hint intake",
+        "freeze form",
+        "new local freeze entry"
+      ],
+      "user_intent_examples": [
+        "Carry one validated feature identity into project-owned freeze intake."
+      ],
+      "aliases": [
+        "KPR-03-003",
+        "freeze_code_intake_and_form_protocol",
+        "freeze_code_intake_and_form_protocol.md",
+        "freeze hint and form intake protocol"
+      ],
+      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "pre_output_contract_gates"
+      ],
+      "prompt_code": "KPR-03-003",
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "03_governance_freeze_and_handoff"
+    },
+    {
+      "prompt_id": "freeze_code_intake_and_form_protocol",
+      "display_name": "Freeze Hint and Form Intake Protocol",
+      "filename": "freeze_code_intake_and_form_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 25,
+      "trigger_phrases": [
+        "freeze hint intake",
+        "freeze form",
+        "new local freeze entry"
+      ],
+      "user_intent_examples": [
+        "Carry one validated feature identity into project-owned freeze intake."
+      ],
+      "aliases": [
+        "KPR-03-003",
+        "freeze_code_intake_and_form_protocol",
+        "freeze_code_intake_and_form_protocol.md",
+        "freeze hint and form intake protocol"
+      ],
+      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "pre_output_contract_gates"
+      ],
+      "prompt_code": "KPR-03-003",
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "03_governance_freeze_and_handoff"
+    },
+    {
+      "prompt_id": "freeze_code_intake_and_form_protocol",
+      "display_name": "Freeze Hint and Form Intake Protocol",
+      "filename": "freeze_code_intake_and_form_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 30,
+      "trigger_phrases": [
+        "freeze hint intake",
+        "freeze form",
+        "new local freeze entry"
+      ],
+      "user_intent_examples": [
+        "Carry one validated feature identity into project-owned freeze intake."
+      ],
+      "required_companions": [
+        "freeze_code_intake_and_form_protocol",
+        "daily_patch_delivery_guardrails"
+      ],
+      "recommended_companions": [
+        "cooperative_implementation_methodology",
+        "box_architecture_canon",
+        "implementation_and_delivery_protocol"
+      ],
+      "missing_behavior": "HARD_STOP if validation evidence is missing, stale, or copied from another feature; correct stale heuristic freeze data before freeze approval.",
       "load_type": "on_request",
-      "owner_box": "05_patch_delivery_and_validation"
-    },
-    {
-      "prompt_id": "prompt_router_reasoner_startup_check",
-      "prompt_code": "KPR-01-003",
-      "display_name": "Prompt Router Reasoner Readiness Assessment",
-      "filename": "prompt_router_reasoner_startup_check.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 18,
-      "trigger_phrases": [
-        "Prompt Router Reasoner readiness",
-        "is prompt router fit to run",
-        "routing GUI readiness"
-      ],
-      "user_intent_examples": [
-        "On request when static and real local readiness evidence must be separated."
-      ],
-      "aliases": [
-        "KPR-01-003",
-        "prompt_router_reasoner_startup_check",
-        "readiness assessment"
-      ],
-      "when_to_load": "On request when static and real local readiness evidence must be separated.",
-      "when_not_to_load": "Do not load during normal startup and do not use to issue WAIT_FOR_TASK.",
-      "required_companion_prompts": [
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "ai_human_partnership_session_start",
-      "display_name": "AI-Human Partnership Session Overlay",
-      "filename": "ai_human_partnership_session_start.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 20,
-      "trigger_phrases": [
-        "AI human partnership",
-        "session roles",
-        "human AI collaboration"
-      ],
-      "user_intent_examples": [
-        "On request when collaboration roles should be explicit."
-      ],
-      "aliases": [
-        "KPR-01-004",
-        "ai_human_partnership_session_start"
-      ],
-      "when_to_load": "On request when collaboration roles should be explicit.",
-      "when_not_to_load": "Do not load as an operational governance prompt.",
-      "required_companion_prompts": [
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "prompt_code": "KPR-01-004",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "daily_startup_loader_template",
-      "display_name": "Daily Startup Loader Authoring Template",
-      "filename": "daily_startup_loader_template.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/daily_startup_loader_template.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 20,
-      "trigger_phrases": [
-        "create startup loader template",
-        "draft daily startup loader"
-      ],
-      "user_intent_examples": [
-        "On request to draft a non-executing startup-loader specification."
-      ],
-      "aliases": [
-        "KPR-01-005",
-        "daily_startup_loader_template"
-      ],
-      "when_to_load": "On request to draft a non-executing startup-loader specification.",
-      "when_not_to_load": "Do not load for normal startup or implementation.",
-      "required_companion_prompts": [
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "prompt_code": "KPR-01-005",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "project_startup_canon_template",
-      "display_name": "Project Startup Profile Authoring Template",
-      "filename": "project_startup_canon_template.md",
-      "relative_path": "ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md",
-      "category": "01_session_start_and_navigation",
-      "priority": 20,
-      "trigger_phrases": [
-        "create project startup profile",
-        "project startup canon template"
-      ],
-      "user_intent_examples": [
-        "On request to draft a stable Project-specific startup profile."
-      ],
-      "aliases": [
-        "KPR-01-006",
-        "project_startup_canon_template"
-      ],
-      "when_to_load": "On request to draft a stable Project-specific startup profile.",
-      "when_not_to_load": "Do not load to execute startup or write Project state.",
-      "required_companion_prompts": [
-        "project_overlay_selector",
-        "ai_prompt_request_canon",
-        "prompt_navigation_index"
-      ],
-      "prompt_code": "KPR-01-006",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "01_session_start_and_navigation"
-    },
-    {
-      "prompt_id": "cooperative_implementation_methodology",
-      "display_name": "Cooperative Implementation Methodology",
-      "filename": "cooperative_implementation_methodology.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 25,
-      "trigger_phrases": [
-        "cooperative implementation",
-        "proposal before code",
-        "compare implementation options"
-      ],
-      "user_intent_examples": [
-        "Compare consequential implementation options before governed admission."
-      ],
-      "aliases": [
-        "KPR-03-002",
-        "cooperative_implementation_methodology",
-        "cooperative_implementation_methodology.md",
-        "cooperative implementation methodology"
-      ],
-      "when_to_load": "Compare consequential implementation options before governed admission.",
-      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "prompt_code": "KPR-03-002",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "03_governance_freeze_and_handoff"
-    },
-    {
-      "prompt_id": "cooperative_implementation_methodology",
-      "display_name": "Cooperative Implementation Methodology",
-      "filename": "cooperative_implementation_methodology.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 25,
-      "trigger_phrases": [
-        "cooperative implementation",
-        "proposal before code",
-        "compare implementation options"
-      ],
-      "user_intent_examples": [
-        "Compare consequential implementation options before governed admission."
-      ],
-      "aliases": [
-        "KPR-03-002",
-        "cooperative_implementation_methodology",
-        "cooperative_implementation_methodology.md",
-        "cooperative implementation methodology"
-      ],
-      "when_to_load": "Compare consequential implementation options before governed admission.",
-      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "prompt_code": "KPR-03-002",
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "03_governance_freeze_and_handoff"
-    },
-    {
-      "prompt_id": "freeze_code_intake_and_form_protocol",
-      "display_name": "Freeze Hint and Form Intake Protocol",
-      "filename": "freeze_code_intake_and_form_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 25,
-      "trigger_phrases": [
-        "freeze hint intake",
-        "freeze form",
-        "new local freeze entry"
-      ],
-      "user_intent_examples": [
-        "Carry one validated feature identity into project-owned freeze intake."
-      ],
+      "prompt_code": "KPR-03-003",
       "aliases": [
         "KPR-03-003",
         "freeze_code_intake_and_form_protocol",
@@ -1125,39 +758,47 @@
         "brick_wall_comprehensive_quality_gate",
         "pre_output_contract_gates"
       ],
-      "prompt_code": "KPR-03-003",
       "status": "active",
       "version": "2.0",
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
-      "prompt_id": "freeze_code_intake_and_form_protocol",
-      "display_name": "Freeze Hint and Form Intake Protocol",
-      "filename": "freeze_code_intake_and_form_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+      "prompt_id": "pre_output_contract_gates",
+      "display_name": "Pre-Output Artifact Contract Gate",
+      "filename": "pre_output_contract_gates.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
       "category": "03_governance_freeze_and_handoff",
-      "priority": 25,
+      "priority": 35,
       "trigger_phrases": [
-        "freeze hint intake",
-        "freeze form",
-        "new local freeze entry"
+        "pre-output contract",
+        "before terminal code",
+        "before zip delivery"
       ],
       "user_intent_examples": [
-        "Carry one validated feature identity into project-owned freeze intake."
+        "Dispatch an outgoing operational artifact to its exact current owner before emission."
       ],
-      "aliases": [
-        "KPR-03-003",
+      "required_companions": [
+        "daily_patch_delivery_guardrails"
+      ],
+      "recommended_companions": [
         "freeze_code_intake_and_form_protocol",
-        "freeze_code_intake_and_form_protocol.md",
-        "freeze hint and form intake protocol"
+        "implementation_and_delivery_protocol",
+        "python_validation_serialisation_type_safety"
       ],
-      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "missing_behavior": "HARD_STOP if a high-risk artifact would violate terminal cleanup, patch staging, freeze JSON, validation evidence, sidecar, monotonic intake, or multi-project path canon.",
+      "load_type": "on_request",
+      "prompt_code": "KPR-03-004",
+      "aliases": [
+        "KPR-03-004",
+        "pre_output_contract_gates",
+        "pre_output_contract_gates.md",
+        "pre-output artifact contract gate"
+      ],
+      "when_to_load": "Dispatch an outgoing operational artifact to its exact current owner before emission.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
       "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
-        "pre_output_contract_gates"
+        "brick_wall_comprehensive_quality_gate"
       ],
-      "prompt_code": "KPR-03-003",
       "status": "active",
       "version": "2.0",
       "owner_box": "03_governance_freeze_and_handoff"
@@ -1249,82 +890,462 @@
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
-      "prompt_id": "freeze_code_intake_and_form_protocol",
-      "display_name": "Freeze Hint and Form Intake Protocol",
-      "filename": "freeze_code_intake_and_form_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 30,
+      "prompt_id": "boundary_first_repair_protocol",
+      "prompt_code": "KPR-04-006",
+      "display_name": "Boundary-First Repair Protocol",
+      "filename": "boundary_first_repair_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 2,
       "trigger_phrases": [
-        "freeze hint intake",
-        "freeze form",
-        "new local freeze entry"
+        "symptom owner divergence",
+        "boundary first repair",
+        "repair the leak not the symptom",
+        "shared host state leak",
+        "stale async result owner",
+        "persistence owner mismatch"
       ],
       "user_intent_examples": [
-        "Carry one validated feature identity into project-owned freeze intake."
+        "The symptom is in one GUI box but the state or lifecycle owner may be elsewhere; trace the real repair owner."
       ],
-      "required_companions": [
-        "freeze_code_intake_and_form_protocol",
-        "daily_patch_delivery_guardrails"
-      ],
-      "recommended_companions": [
-        "cooperative_implementation_methodology",
-        "box_architecture_canon",
-        "implementation_and_delivery_protocol"
-      ],
-      "missing_behavior": "HARD_STOP if validation evidence is missing, stale, or copied from another feature; correct stale heuristic freeze data before freeze approval.",
-      "load_type": "on_request",
-      "prompt_code": "KPR-03-003",
       "aliases": [
-        "KPR-03-003",
-        "freeze_code_intake_and_form_protocol",
-        "freeze_code_intake_and_form_protocol.md",
-        "freeze hint and form intake protocol"
+        "KPR-04-006",
+        "boundary_first_repair_protocol",
+        "boundary first repair",
+        "symptom owner divergence",
+        "repair leak not symptom"
       ],
-      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
-      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
+      "when_to_load": "When the visible symptom may not belong to the true repair owner.",
+      "when_not_to_load": "Do not load for a proven purely local defect with no ownership ambiguity.",
       "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
-        "pre_output_contract_gates"
+        "box_architecture_canon",
+        "brick_wall_comprehensive_quality_gate"
       ],
       "status": "active",
       "version": "2.0",
-      "owner_box": "03_governance_freeze_and_handoff"
+      "owner_box": "04_box_architecture_and_boundaries"
     },
     {
-      "prompt_id": "large_module_refactor_protocol",
-      "display_name": "Large Module Creation and Refactor Protocol",
-      "filename": "large_module_refactor_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 31,
+      "prompt_id": "box_architecture_canon",
+      "prompt_code": "KPR-04-001",
+      "display_name": "Box Architecture Canon",
+      "filename": "box_architecture_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 3,
       "trigger_phrases": [
-        "module above 500 lines",
-        "file too large",
-        "split module",
-        "refactor large file",
-        "mixed module responsibilities",
-        "large module protocol",
-        "behavior-preserving module split"
+        "box architecture",
+        "box boundary audit",
+        "active box",
+        "public contract",
+        "private reach-in",
+        "authoritative state owner",
+        "cross-box touch",
+        "god box",
+        "leaking registry"
       ],
       "user_intent_examples": [
-        "This file is too big; split it safely without breaking API."
+        "Identify the primary box, public facade, supporting touches, and boundary validation before this governed change."
       ],
       "aliases": [
-        "KPR-06-007",
-        "large module refactor protocol",
-        "large_module_refactor_protocol",
-        "module above 500 lines",
-        "behavior-preserving module split"
+        "KPR-04-001",
+        "box_architecture_canon",
+        "box architecture canon",
+        "box boundary audit",
+        "closed_box_delivery_canon",
+        "closed box delivery canon"
       ],
-      "when_to_load": "When a new or touched module exceeds or would exceed 500 physical lines, or current evidence proves a material cohesion or dependency problem.",
-      "when_not_to_load": "Do not load for a small local edit that remains within the size and cohesion contract.",
+      "when_to_load": "When consequential work has ownership, public-contract, cross-box, authoritative-state, or lifecycle-boundary risk.",
+      "when_not_to_load": "Do not load for pure explanation or text editing with no architecture consequence.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "04_box_architecture_and_boundaries"
+    },
+    {
+      "prompt_id": "kanda_box_shielding_canon",
+      "prompt_code": "KPR-04-002",
+      "display_name": "KANDA Box Shielding Canon",
+      "filename": "kanda_box_shielding_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 4,
+      "trigger_phrases": [
+        "box shield",
+        "KBSC",
+        "architectural fitness function",
+        "shield applicability",
+        "authority regression protection",
+        "shield before stronger work"
+      ],
+      "user_intent_examples": [
+        "Decide whether this high-risk box needs a focused invariant shield before stronger work."
+      ],
+      "aliases": [
+        "KPR-04-002",
+        "KBSC",
+        "kanda_box_shielding_canon",
+        "box shield",
+        "architectural fitness function"
+      ],
+      "when_to_load": "When current evidence proves a meaningful invariant-protection gap for one bounded context.",
+      "when_not_to_load": "Do not create a shield automatically for every milestone or routine edit.",
+      "required_companion_prompts": [
+        "box_architecture_canon",
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "04_box_architecture_and_boundaries"
+    },
+    {
+      "prompt_id": "project_folder_organization_canon",
+      "prompt_code": "KPR-04-003",
+      "display_name": "Project Folder Organization Canon",
+      "filename": "project_folder_organization_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 4,
+      "trigger_phrases": [
+        "project folder structure",
+        "where should this file go",
+        "artifact placement",
+        "wrong root write",
+        "generated artifact placement",
+        "source tree contamination"
+      ],
+      "user_intent_examples": [
+        "Classify this generated artifact and select the current canonical owner or support location."
+      ],
+      "aliases": [
+        "KPR-04-003",
+        "project_folder_organization_canon",
+        "project folder organization canon",
+        "artifact placement assessment",
+        "where should this file go"
+      ],
+      "when_to_load": "When artifact classification, root ownership, folder migration, or source-tree cleanliness is materially involved.",
+      "when_not_to_load": "Do not load for code logic changes that do not affect artifact placement or roots.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon"
+      ],
+      "status": "active",
+      "version": "4.0",
+      "owner_box": "04_box_architecture_and_boundaries"
+    },
+    {
+      "prompt_id": "stateful_control_regression_canon",
+      "prompt_code": "KPR-04-004",
+      "display_name": "Stateful Control Regression Canon",
+      "filename": "stateful_control_regression_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md",
+      "category": "04_box_architecture_and_boundaries",
+      "priority": 4,
+      "trigger_phrases": [
+        "dropdown selection persistence",
+        "control hydration",
+        "stable option ID",
+        "restored selection",
+        "GUI option state regression",
+        "control sizing regression"
+      ],
+      "user_intent_examples": [
+        "Protect stable option IDs, hydration, and persisted selection while modifying this GUI control."
+      ],
+      "aliases": [
+        "KPR-04-004",
+        "stateful_control_regression_canon",
+        "stateful control regression",
+        "selection persistence",
+        "control hydration"
+      ],
+      "when_to_load": "When GUI option identity, persisted selection, hydration, fallback, caption, or sizing behavior can regress.",
+      "when_not_to_load": "Do not load for generic backend state or non-interactive logic.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "04_box_architecture_and_boundaries"
+    },
+    {
+      "prompt_code": "KPR-05-002",
+      "prompt_id": "bundle_gated_development_workflow",
+      "display_name": "Bundle-Gated Development Workflow",
+      "filename": "bundle_gated_development_workflow.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 15,
+      "trigger_phrases": [
+        "installable release",
+        "bundle gated release",
+        "package this change",
+        "release lifecycle",
+        "build a patch bundle"
+      ],
+      "user_intent_examples": [
+        "When an authorized change requires an installable or distributable release unit."
+      ],
+      "aliases": [
+        "KPR-05-002",
+        "bundle_gated_development_workflow",
+        "bundle gated development workflow",
+        "installable release lifecycle",
+        "kanda_bundle_gated_development_workflow"
+      ],
+      "when_to_load": "When an authorized change requires an installable or distributable release unit.",
+      "when_not_to_load": "Do not load for read-only audit, explanation-only work, or an edit that will not be packaged.",
       "required_companion_prompts": [
         "brick_wall_comprehensive_quality_gate",
-        "box_architecture_canon",
-        "large_module_refactor_template"
+        "patch_install_delivery_error_register"
       ],
-      "prompt_code": "KPR-06-007"
+      "optional_companion_prompts": [
+        "project_tool_boundary_canon",
+        "box_architecture_canon",
+        "implementation_and_delivery_protocol",
+        "pre_output_contract_gates"
+      ],
+      "status": "active",
+      "load_type": "routed",
+      "owner_box": "05_patch_delivery_and_validation"
+    },
+    {
+      "prompt_code": "KPR-05-003",
+      "prompt_id": "implementation_and_delivery_protocol",
+      "display_name": "Implementation and Delivery Protocol",
+      "filename": "implementation_and_delivery_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 16,
+      "trigger_phrases": [
+        "construct patch payload",
+        "prepare installer",
+        "surgical delivery",
+        "baseline hash allowlist",
+        "rollback package"
+      ],
+      "user_intent_examples": [
+        "After implementation authorization when an installable release needs payload and installer construction."
+      ],
+      "aliases": [
+        "KPR-05-003",
+        "implementation_and_delivery_protocol",
+        "implementation and delivery protocol",
+        "surgical patch construction",
+        "installer preparation"
+      ],
+      "when_to_load": "After implementation authorization when an installable release needs payload and installer construction.",
+      "when_not_to_load": "Do not load for analysis-only work or before release admission.",
+      "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "bundle_gated_development_workflow",
+        "patch_install_delivery_error_register"
+      ],
+      "optional_companion_prompts": [
+        "project_tool_boundary_canon",
+        "pre_output_contract_gates",
+        "terminal_cleanup_contract"
+      ],
+      "status": "active",
+      "load_type": "routed",
+      "owner_box": "05_patch_delivery_and_validation"
+    },
+    {
+      "prompt_code": "KPR-05-004",
+      "prompt_id": "implementation_roadmap_builder",
+      "display_name": "Implementation Roadmap Builder - Draft Template",
+      "filename": "implementation_roadmap_builder.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 8,
+      "trigger_phrases": [
+        "draft an implementation roadmap",
+        "roadmap template",
+        "make a progress tracker",
+        "conceptual implementation plan"
+      ],
+      "user_intent_examples": [
+        "Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft."
+      ],
+      "aliases": [
+        "KPR-05-004",
+        "implementation_roadmap_builder",
+        "implementation roadmap draft",
+        "roadmap template",
+        "progress tracker template"
+      ],
+      "when_to_load": "Only when the user explicitly requests a roadmap, checklist, or progress-tracking draft.",
+      "when_not_to_load": "Do not auto-load for normal KANDA implementation or treat the tracker as execution evidence.",
+      "required_companion_prompts": [],
+      "optional_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "cooperative_implementation_methodology",
+        "workflow_handoff_template"
+      ],
+      "status": "active",
+      "load_type": "on_request",
+      "owner_box": "05_patch_delivery_and_validation"
+    },
+    {
+      "prompt_id": "patch_install_delivery_error_register",
+      "prompt_code": "KPR-05-001",
+      "display_name": "Patch Install Delivery Active Regression Index",
+      "filename": "patch_install_delivery_error_register.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 11,
+      "trigger_phrases": [
+        "patch install error",
+        "delivery regression",
+        "isolated ZIP",
+        "root-drive staging"
+      ],
+      "user_intent_examples": [
+        "Check current delivery regression classes before releasing a patch."
+      ],
+      "aliases": [
+        "KPR-05-001",
+        "patch_install_delivery_error_register",
+        "patch regression index"
+      ],
+      "when_to_load": "Conditionally required before patch-related output and delivery-regression repair.",
+      "when_not_to_load": "Do not load at every startup and do not use as an append-only traceback log.",
+      "required_companion_prompts": [
+        "daily_patch_delivery_guardrails",
+        "implementation_and_delivery_protocol",
+        "terminal_cleanup_contract"
+      ],
+      "status": "active",
+      "version": "2.0",
+      "owner_box": "05_patch_delivery_and_validation"
+    },
+    {
+      "prompt_code": "KPR-05-005",
+      "prompt_id": "patch_validate_freeze_error_memory_routine_blueprint",
+      "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
+      "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 17,
+      "trigger_phrases": [
+        "Answer, Validate, Freeze, Memorize Error",
+        "Show Project to AI recovery routine",
+        "collector export failed",
+        "patch validation freeze recovery",
+        "copy recovery routine"
+      ],
+      "user_intent_examples": [
+        "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper."
+      ],
+      "aliases": [
+        "KPR-05-005",
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "Show Project to AI recovery blueprint",
+        "Answer Validate Freeze Memorize Error",
+        "recovery routine owner dispatch"
+      ],
+      "when_to_load": "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.",
+      "when_not_to_load": "Do not load for ordinary delivery when no reusable recovery handoff is requested.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon",
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "optional_companion_prompts": [
+        "bundle_gated_development_workflow",
+        "implementation_and_delivery_protocol",
+        "pre_output_contract_gates",
+        "patch_install_delivery_error_register",
+        "terminal_cleanup_contract",
+        "freeze_code_intake_and_form_protocol",
+        "error_memory_ai_formulary_startup_canon"
+      ],
+      "status": "active",
+      "load_type": "on_request",
+      "owner_box": "05_patch_delivery_and_validation"
+    },
+    {
+      "prompt_id": "router_bridge_user_detected_correction",
+      "prompt_code": "KPR-05-006",
+      "display_name": "User-Detected Correction Incident Dispatcher",
+      "filename": "router_bridge_user_detected_correction.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 16,
+      "trigger_phrases": [
+        "you made a mistake",
+        "validation failed",
+        "install failed",
+        "wrong path",
+        "wrong file",
+        "coded from memory",
+        "missing STATUS: IN_SYNC",
+        "freeze blocked",
+        "AI detected an implementation error"
+      ],
+      "user_intent_examples": [
+        "Correct a demonstrated failure safely."
+      ],
+      "aliases": [
+        "KPR-05-006",
+        "router_bridge_user_detected_correction",
+        "user detected correction",
+        "correction incident",
+        "AI mistake correction"
+      ],
+      "when_to_load": "Only when a real prior-answer, source, path, install, validation, delivery, startup, freeze, or Error Memory defect is identified.",
+      "when_not_to_load": "Do not load for ordinary feature work, speculative planning, or explanation without a demonstrated incident.",
+      "required_companion_prompts": [
+        "patch_install_delivery_error_register"
+      ],
+      "optional_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "pre_output_contract_gates",
+        "terminal_cleanup_contract",
+        "freeze_code_intake_and_form_protocol",
+        "error_memory_ai_formulary_startup_canon",
+        "project_tool_boundary_canon"
+      ],
+      "status": "active",
+      "load_type": "routed"
+    },
+    {
+      "prompt_id": "terminal_cleanup_contract",
+      "prompt_code": "KPR-05-007",
+      "display_name": "Terminal Cleanup Contract",
+      "filename": "terminal_cleanup_contract.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 12,
+      "trigger_phrases": [
+        "terminal cleanup",
+        "Clear-Host",
+        "install success footer",
+        "PowerShell block",
+        "Press Enter to clear terminal",
+        "PowerShell shows >>"
+      ],
+      "user_intent_examples": [
+        "Audit the cleanup footer for this PowerShell block."
+      ],
+      "aliases": [
+        "KPR-05-007",
+        "terminal_cleanup_contract",
+        "terminal cleanup contract",
+        "PowerShell cleanup",
+        "clean PowerShell prompt"
+      ],
+      "when_to_load": "Startup bridge is always visible; load the full prompt when emitting or auditing PowerShell terminal behavior.",
+      "when_not_to_load": "Do not load the full prompt for tasks with no terminal output.",
+      "required_companion_prompts": [],
+      "optional_companion_prompts": [
+        "pre_output_contract_gates",
+        "implementation_and_delivery_protocol",
+        "patch_install_delivery_error_register"
+      ],
+      "status": "active",
+      "load_type": "always_startup"
     },
     {
       "prompt_id": "architecture_hardening_triage_protocol",
@@ -1362,74 +1383,187 @@
       "prompt_code": "KPR-06-005"
     },
     {
-      "prompt_id": "error_memory_active_ready_correction_blueprint",
-      "display_name": "Error Memory Active-Ready Correction Blueprint",
-      "filename": "error_memory_active_ready_correction_blueprint.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md",
-      "category": "12_generalized_project_canons",
-      "priority": 32,
-      "prompt_code": "KPR-12-002",
+      "prompt_id": "architecture_hardening_triage_template",
+      "display_name": "Architecture Hardening Triage Record Template",
+      "filename": "architecture_hardening_triage_template.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 52,
       "trigger_phrases": [
-        "correct Error Memory draft",
-        "active-ready Error Memory lesson",
-        "active_ready_missing_reasons"
+        "architecture hardening triage record",
+        "architecture triage template",
+        "architecture audit worksheet"
       ],
       "user_intent_examples": [
-        "When a real Error Memory draft must be corrected or evaluated for active readiness."
+        "Create a reusable checklist for architecture hardening."
       ],
       "aliases": [
-        "KPR-12-002",
-        "Error Memory correction blueprint",
-        "error_memory_active_ready_correction_blueprint"
+        "KPR-06-006",
+        "architecture triage record",
+        "architecture_hardening_triage_template"
       ],
-      "when_to_load": "When a real Error Memory draft must be corrected or evaluated for active readiness.",
-      "when_not_to_load": "Do not load for ordinary code changes or to invent validation evidence.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "load_type": "routed",
-      "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "when_to_load": "Only when a fillable architecture-hardening triage record is explicitly requested.",
+      "when_not_to_load": "Do not route it as the governing hardening protocol or use it to authorize mutation.",
+      "required_companion_prompts": [
+        "architecture_hardening_triage_protocol"
+      ],
+      "prompt_code": "KPR-06-006",
+      "status": "draft_template",
+      "load_type": "explicit_on_request"
     },
     {
-      "prompt_id": "pre_output_contract_gates",
-      "display_name": "Pre-Output Artifact Contract Gate",
-      "filename": "pre_output_contract_gates.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 35,
+      "prompt_id": "large_module_refactor_protocol",
+      "display_name": "Large Module Creation and Refactor Protocol",
+      "filename": "large_module_refactor_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 31,
       "trigger_phrases": [
-        "pre-output contract",
-        "before terminal code",
-        "before zip delivery"
+        "module above 500 lines",
+        "file too large",
+        "split module",
+        "refactor large file",
+        "mixed module responsibilities",
+        "large module protocol",
+        "behavior-preserving module split"
       ],
       "user_intent_examples": [
-        "Dispatch an outgoing operational artifact to its exact current owner before emission."
+        "This file is too big; split it safely without breaking API."
       ],
-      "required_companions": [
-        "daily_patch_delivery_guardrails"
-      ],
-      "recommended_companions": [
-        "freeze_code_intake_and_form_protocol",
-        "implementation_and_delivery_protocol",
-        "python_validation_serialisation_type_safety"
-      ],
-      "missing_behavior": "HARD_STOP if a high-risk artifact would violate terminal cleanup, patch staging, freeze JSON, validation evidence, sidecar, monotonic intake, or multi-project path canon.",
-      "load_type": "on_request",
-      "prompt_code": "KPR-03-004",
       "aliases": [
-        "KPR-03-004",
-        "pre_output_contract_gates",
-        "pre_output_contract_gates.md",
-        "pre-output artifact contract gate"
+        "KPR-06-007",
+        "large module refactor protocol",
+        "large_module_refactor_protocol",
+        "module above 500 lines",
+        "behavior-preserving module split"
       ],
-      "when_to_load": "Dispatch an outgoing operational artifact to its exact current owner before emission.",
-      "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
+      "when_to_load": "When a new or touched module exceeds or would exceed 500 physical lines, or current evidence proves a material cohesion or dependency problem.",
+      "when_not_to_load": "Do not load for a small local edit that remains within the size and cohesion contract.",
       "required_companion_prompts": [
+        "brick_wall_comprehensive_quality_gate",
+        "box_architecture_canon",
+        "large_module_refactor_template"
+      ],
+      "prompt_code": "KPR-06-007"
+    },
+    {
+      "prompt_id": "large_module_refactor_template",
+      "display_name": "Large Module Refactor Planning Record Template",
+      "filename": "large_module_refactor_template.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 53,
+      "trigger_phrases": [
+        "large module refactor record",
+        "large module planning template",
+        "module split worksheet"
+      ],
+      "user_intent_examples": [
+        "Create a template for large-module refactor tasks."
+      ],
+      "aliases": [
+        "KPR-06-008",
+        "large module refactor record",
+        "large_module_refactor_template"
+      ],
+      "when_to_load": "Only when a fillable large-module assessment or planning record is explicitly requested.",
+      "when_not_to_load": "Do not load instead of KPR-06-007 for actual refactoring or as mutation authority.",
+      "required_companion_prompts": [
+        "large_module_refactor_protocol"
+      ],
+      "prompt_code": "KPR-06-008",
+      "status": "draft_template",
+      "load_type": "explicit_on_request"
+    },
+    {
+      "prompt_id": "web_ai_ast_split_risk_repair_protocol",
+      "display_name": "Web AI AST Split Risk Repair Protocol",
+      "filename": "web_ai_ast_split_risk_repair_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 38,
+      "trigger_phrases": [
+        "RISK REFACTORING",
+        "SAFE REFACTORING oversized",
+        "Send Web AI to make SAFE",
+        "AST Split Audit risk repair"
+      ],
+      "user_intent_examples": [
+        "When exact target source and current AST evidence require external target-specific repair or a SAFE structural split."
+      ],
+      "aliases": [
+        "KPR-06-003",
+        "AST Split Audit repair",
+        "target-specific SAFE refactor"
+      ],
+      "when_to_load": "When exact target source and current AST evidence require external target-specific repair or a SAFE structural split.",
+      "when_not_to_load": "Do not use for generic Planner architecture review, universal module-size law, or final freeze writing.",
+      "required_companion_prompts": [
+        "large_module_refactor_protocol",
+        "python_refactoring",
+        "project_tool_boundary_canon"
+      ],
+      "prompt_code": "KPR-06-003"
+    },
+    {
+      "prompt_id": "web_ai_large_module_refactor_exchange_protocol",
+      "display_name": "Web AI Large Module Refactor Exchange Protocol",
+      "filename": "web_ai_large_module_refactor_exchange_protocol.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 36,
+      "trigger_phrases": [
+        "Copy Comprehensive Planning for Web AI",
+        "AI Refactor Version How To",
+        "Imported Web AI Version",
+        "Receive Planning from Web AI"
+      ],
+      "user_intent_examples": [
+        "When an exact Planner package needs bounded external architecture review without source implementation."
+      ],
+      "aliases": [
+        "KPR-06-001",
+        "external Web AI planning exchange",
+        "Imported Web AI Version"
+      ],
+      "when_to_load": "When an exact Planner package needs bounded external architecture review without source implementation.",
+      "when_not_to_load": "Do not use for target-specific AST repair, direct implementation, package mechanics, or freeze writing.",
+      "required_companion_prompts": [
+        "large_module_refactor_protocol",
+        "web_ai_planning_response_bundle_blueprint",
         "brick_wall_comprehensive_quality_gate"
       ],
-      "status": "active",
-      "version": "2.0",
-      "owner_box": "03_governance_freeze_and_handoff"
+      "prompt_code": "KPR-06-001"
+    },
+    {
+      "prompt_id": "web_ai_planning_response_bundle_blueprint",
+      "display_name": "Web AI Planning Response Bundle Blueprint",
+      "filename": "web_ai_planning_response_bundle_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md",
+      "category": "06_refactor_and_architecture_hardening",
+      "priority": 37,
+      "trigger_phrases": [
+        "Send Web Ai to split file",
+        "planning response ZIP blueprint",
+        "Web AI planning response bundle",
+        "Panel 4 planning response paste"
+      ],
+      "user_intent_examples": [
+        "When an already-reasoned KPR-06-001 payload must be packaged for Imported Web AI Version intake."
+      ],
+      "aliases": [
+        "KPR-06-002",
+        "Imported Web AI bundle",
+        "planning response payload profile"
+      ],
+      "when_to_load": "When an already-reasoned KPR-06-001 payload must be packaged for Imported Web AI Version intake.",
+      "when_not_to_load": "Do not use as architecture reasoning, direct source implementation, or final freeze authority.",
+      "required_companion_prompts": [
+        "large_module_refactor_protocol",
+        "web_ai_large_module_refactor_exchange_protocol",
+        "implementation_and_delivery_protocol"
+      ],
+      "prompt_code": "KPR-06-002"
     },
     {
       "prompt_id": "project_specific_prompt_generalization",
@@ -1466,51 +1600,6 @@
         "ai_prompt_request_canon",
         "prompt_substitution_map"
       ]
-    },
-    {
-      "prompt_id": "project_tool_boundary_canon",
-      "prompt_code": "KPR-12-001",
-      "display_name": "Project Tool Boundary Canon",
-      "filename": "project_tool_boundary_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 35,
-      "trigger_phrases": [
-        "active project identity",
-        "active project root",
-        "project id",
-        "project root fingerprint",
-        "same canonical resolved root",
-        "self-hosting logical ownership",
-        "project versus tool",
-        "project vs tool",
-        "support root collision",
-        "project move migration",
-        "forbidden nested support root",
-        "cross-project access mode",
-        "mixed governed operation",
-        "generated evidence authority",
-        "transient workspace cleanup",
-        "concurrent project sessions",
-        "wrong-root write",
-        "show_project_to_AI"
-      ],
-      "user_intent_examples": [
-        "Resolve Tool and selected Project ownership before this mixed patch.",
-        "Prove the support root and source-write owner without collapsing self-hosting.",
-        "Block cross-project mutation while permitting declared comparison reads."
-      ],
-      "aliases": [
-        "project tool boundary",
-        "project_tool_boundary_canon",
-        "tool target boundary",
-        "active project boundary",
-        "selected project boundary"
-      ],
-      "when_to_load": "Route for consequential coding, patching, validation, freeze, handoff, migration, mixed Tool/Project writes, cross-project access, or any unresolved owner or write target. A compact startup bridge routes here.",
-      "when_not_to_load": "The compact startup bridge is sufficient only for simple tasks with no consequential owner, path, write, or migration question.",
-      "required_companion_prompts": [],
-      "load_type": "routed"
     },
     {
       "prompt_id": "prompt_audit_canon",
@@ -1581,48 +1670,6 @@
       ]
     },
     {
-      "prompt_id": "architecture_review_project_card_machine_canon",
-      "prompt_code": "KPR-12-005",
-      "display_name": "Architecture Review Project Card Machine Canon",
-      "filename": "architecture_review_project_card_machine_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 36,
-      "trigger_phrases": [
-        "architecture review card machine",
-        "Architecture Review target lifecycle",
-        "insert source target",
-        "eject target after verification",
-        "AST Split Audit lifecycle",
-        "Planner Workbench lifecycle",
-        "project root switch during audit",
-        "target switch during refactor",
-        "stale async audit result",
-        "APPLIED_NOT_VERIFIED",
-        "cancellation incomplete",
-        "transaction recovery",
-        "concurrent card session",
-        "terminal eject"
-      ],
-      "user_intent_examples": [
-        "Bind this Architecture Review target to one current operation and lifecycle generation.",
-        "Block switching while a worker, cancellation, apply outcome, or transaction is unresolved.",
-        "Eject target-specific Tool state only after verified completion or rollback."
-      ],
-      "aliases": [
-        "architecture review card machine",
-        "project card machine canon",
-        "card lifecycle canon",
-        "architecture_review_project_card_machine_canon"
-      ],
-      "when_to_load": "When Architecture Review, AST Split Audit, Planner, Workbench, Completion, project-root switching, target switching, async results, transactions, apply/rollback, receipt, or post-completion state cleanup must preserve project ownership and card lifecycle.",
-      "when_not_to_load": "Do not load for payment-card discussion, generic UI styling, or Tool/Project boundary tasks with no Architecture Review lifecycle consequence.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon"
-      ],
-      "load_type": "routed"
-    },
-    {
       "prompt_id": "prompt_insertion_and_router_registration_protocol",
       "display_name": "Prompt Insertion and Router Registration Protocol",
       "filename": "prompt_insertion_and_router_registration_protocol.md",
@@ -1665,313 +1712,592 @@
       ]
     },
     {
-      "prompt_id": "web_ai_large_module_refactor_exchange_protocol",
-      "display_name": "Web AI Large Module Refactor Exchange Protocol",
-      "filename": "web_ai_large_module_refactor_exchange_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 36,
+      "prompt_id": "python_clean_architecture",
+      "display_name": "Python Clean Architecture",
+      "filename": "python_clean_architecture.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
       "trigger_phrases": [
-        "Copy Comprehensive Planning for Web AI",
-        "AI Refactor Version How To",
-        "Imported Web AI Version",
-        "Receive Planning from Web AI"
+        "dependency direction",
+        "framework isolation",
+        "ports and adapters",
+        "composition root",
+        "clean architecture python"
       ],
       "user_intent_examples": [
-        "When an exact Planner package needs bounded external architecture review without source implementation."
+        "Review whether this Python system needs ports, adapters, or a clearer composition boundary."
       ],
       "aliases": [
-        "KPR-06-001",
-        "external Web AI planning exchange",
-        "Imported Web AI Version"
+        "KPR-08-001",
+        "python clean architecture",
+        "python dependency direction",
+        "python_clean_architecture"
       ],
-      "when_to_load": "When an exact Planner package needs bounded external architecture review without source implementation.",
-      "when_not_to_load": "Do not use for target-specific AST repair, direct implementation, package mechanics, or freeze writing.",
-      "required_companion_prompts": [
-        "large_module_refactor_protocol",
-        "web_ai_planning_response_bundle_blueprint",
-        "brick_wall_comprehensive_quality_gate"
-      ],
-      "prompt_code": "KPR-06-001"
-    },
-    {
-      "prompt_id": "web_ai_planning_response_bundle_blueprint",
-      "display_name": "Web AI Planning Response Bundle Blueprint",
-      "filename": "web_ai_planning_response_bundle_blueprint.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 37,
-      "trigger_phrases": [
-        "Send Web Ai to split file",
-        "planning response ZIP blueprint",
-        "Web AI planning response bundle",
-        "Panel 4 planning response paste"
-      ],
-      "user_intent_examples": [
-        "When an already-reasoned KPR-06-001 payload must be packaged for Imported Web AI Version intake."
-      ],
-      "aliases": [
-        "KPR-06-002",
-        "Imported Web AI bundle",
-        "planning response payload profile"
-      ],
-      "when_to_load": "When an already-reasoned KPR-06-001 payload must be packaged for Imported Web AI Version intake.",
-      "when_not_to_load": "Do not use as architecture reasoning, direct source implementation, or final freeze authority.",
-      "required_companion_prompts": [
-        "large_module_refactor_protocol",
-        "web_ai_large_module_refactor_exchange_protocol",
-        "implementation_and_delivery_protocol"
-      ],
-      "prompt_code": "KPR-06-002"
-    },
-    {
-      "prompt_id": "web_ai_ast_split_risk_repair_protocol",
-      "display_name": "Web AI AST Split Risk Repair Protocol",
-      "filename": "web_ai_ast_split_risk_repair_protocol.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 38,
-      "trigger_phrases": [
-        "RISK REFACTORING",
-        "SAFE REFACTORING oversized",
-        "Send Web AI to make SAFE",
-        "AST Split Audit risk repair"
-      ],
-      "user_intent_examples": [
-        "When exact target source and current AST evidence require external target-specific repair or a SAFE structural split."
-      ],
-      "aliases": [
-        "KPR-06-003",
-        "AST Split Audit repair",
-        "target-specific SAFE refactor"
-      ],
-      "when_to_load": "When exact target source and current AST evidence require external target-specific repair or a SAFE structural split.",
-      "when_not_to_load": "Do not use for generic Planner architecture review, universal module-size law, or final freeze writing.",
-      "required_companion_prompts": [
-        "large_module_refactor_protocol",
-        "python_refactoring",
-        "project_tool_boundary_canon"
-      ],
-      "prompt_code": "KPR-06-003"
-    },
-    {
-      "prompt_code": "KPR-03-001",
-      "prompt_id": "brick_wall_comprehensive_quality_gate",
-      "display_name": "Brick Wall - Comprehensive Quality Gate",
-      "filename": "brick_wall_comprehensive_quality_gate.md",
-      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
-      "category": "03_governance_freeze_and_handoff",
-      "priority": 40,
-      "trigger_phrases": [
-        "brick wall",
-        "show brick wall",
-        "brick wall check",
-        "update brick wall",
-        "where are we on brick wall",
-        "run the quality wall"
-      ],
-      "user_intent_examples": [
-        "Brick wall.",
-        "Show Brick Wall and tell me where this implementation stands.",
-        "Update the Brick Wall checklist after validation."
-      ],
-      "aliases": [
-        "KPR-03-001",
-        "brick wall",
-        "brick wall quality gate",
-        "brick_wall_comprehensive_quality_gate",
-        "brick_wall_comprehensive_quality_gate.md",
-        "comprehensive quality gate",
-        "Q01-Q40 checklist"
-      ],
-      "when_to_load": "Whenever the user says Brick Wall or requests the live Q01-Q40 governed implementation status for KANDA Reasoner work.",
-      "when_not_to_load": "Do not load for unrelated medical, writing, or general-information tasks, and do not use it as a substitute for exact source or specialist owner prompts.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon",
+      "when_to_load": "When dependency direction, framework isolation, ports/adapters, or a composition boundary is materially involved.",
+      "when_not_to_load": "Do not load for local readability, simple scripts, KANDA box ownership, or generic architecture discussion without Python dependency evidence.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-001",
+      "supporting_owner_dispatch": [
         "box_architecture_canon",
-        "kanda_box_shielding_canon"
-      ],
-      "recommended_companion_prompts": [
-        "architecture_review_project_card_machine_canon",
-        "bundle_gated_development_workflow",
-        "pre_output_contract_gates",
-        "freeze_code_intake_and_form_protocol"
-      ],
-      "missing_behavior": "HARD_STOP before coding when mandatory Brick Wall pre-code gates are incomplete."
+        "python_domain_driven_design",
+        "python_enterprise_architecture",
+        "python_testing_pytest"
+      ]
     },
     {
-      "prompt_id": "data_transform_pipeline_invariants",
-      "display_name": "Data Transform Pipeline Invariants",
-      "filename": "data_transform_pipeline_invariants.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
+      "prompt_id": "python_clean_code",
+      "display_name": "Python Clean Code",
+      "filename": "python_clean_code.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
       "trigger_phrases": [
-        "data lineage canonical base",
-        "derived output rebuild",
-        "incremental streaming pipeline invariants"
+        "python readability",
+        "function clarity",
+        "naming review",
+        "local code cohesion",
+        "python documentation clarity"
       ],
       "user_intent_examples": [
-        "When source-to-derived lineage, transform provenance or rebuild correctness is central."
+        "Review this Python module for local readability and maintainability without changing its architecture."
       ],
       "aliases": [
-        "KPR-12-009",
-        "data transform pipeline invariants",
-        "data_transform_pipeline_invariants"
+        "KPR-08-002",
+        "python clean code",
+        "clean_code_python",
+        "python_clean_code"
       ],
-      "when_to_load": "When source-to-derived lineage, transform provenance or rebuild correctness is central.",
-      "when_not_to_load": "Do not load for transform selection resolution without pipeline lineage concerns.",
+      "when_to_load": "When local naming, readability, documentation, function clarity, or class cohesion is central.",
+      "when_not_to_load": "Do not load as architecture, refactoring, testing, typing, security, or resilience authority.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-12-009",
+      "prompt_code": "KPR-08-002",
+      "supporting_owner_dispatch": [
+        "python_clean_architecture",
+        "python_refactoring",
+        "python_testing_pytest",
+        "python_validation_serialisation_type_safety"
+      ],
+      "historical_aliases": [
+        "clean_code_python"
+      ]
+    },
+    {
+      "prompt_id": "python_design_patterns",
+      "display_name": "Python Design Patterns",
+      "filename": "python_design_patterns.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "pattern selection",
+        "strategy or function",
+        "adapter pattern python",
+        "observer lifecycle",
+        "factory tradeoff"
+      ],
+      "user_intent_examples": [
+        "Decide whether this recurring Python design problem needs a named pattern or a simpler language feature."
+      ],
+      "aliases": [
+        "KPR-08-003",
+        "python design patterns",
+        "python pattern selection",
+        "python_design_patterns"
+      ],
+      "when_to_load": "When a demonstrated structural or behavioral variation requires an explicit pattern-selection decision.",
+      "when_not_to_load": "Do not load for simple direct code, DDD, enterprise persistence patterns, GUI lifecycle, or async/distributed design owned elsewhere.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-003",
+      "supporting_owner_dispatch": [
+        "python_clean_architecture",
+        "python_domain_driven_design",
+        "python_enterprise_architecture",
+        "python_async_parallel_distributed"
+      ]
+    },
+    {
+      "prompt_id": "python_domain_driven_design",
+      "display_name": "Python Domain-Driven Design",
+      "filename": "python_domain_driven_design.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "ubiquitous language",
+        "bounded context",
+        "domain invariants",
+        "aggregate boundary",
+        "domain event semantics"
+      ],
+      "user_intent_examples": [
+        "Determine whether domain complexity justifies DDD and define the smallest evidence-grounded model."
+      ],
+      "aliases": [
+        "KPR-08-004",
+        "python domain driven design",
+        "python DDD",
+        "python_domain_driven_design"
+      ],
+      "when_to_load": "When domain language, invariants, subdomains, or bounded contexts materially drive the design.",
+      "when_not_to_load": "Do not load for simple CRUD, utility scripts, generic dependency direction, persistence implementation, or messaging delivery mechanics.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-004",
+      "supporting_owner_dispatch": [
+        "python_clean_architecture",
+        "box_architecture_canon",
+        "python_enterprise_architecture",
+        "python_async_parallel_distributed"
+      ],
+      "historical_aliases": [
+        "A023"
+      ]
+    },
+    {
+      "prompt_id": "python_enterprise_architecture",
+      "display_name": "Python Enterprise Application Patterns",
+      "filename": "python_enterprise_architecture.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "enterprise application patterns",
+        "repository pattern",
+        "unit of work",
+        "transaction boundary",
+        "service layer",
+        "identity map",
+        "optimistic locking"
+      ],
+      "user_intent_examples": [
+        "Choose the smallest persistence and transaction pattern for this use case."
+      ],
+      "aliases": [
+        "KPR-08-005",
+        "python enterprise application patterns",
+        "python enterprise architecture",
+        "python_enterprise_architecture"
+      ],
+      "when_to_load": "When enterprise persistence patterns, application services, transactions, object identity, or concurrency-control patterns are the central concern.",
+      "when_not_to_load": "Do not load for small scripts, simple CRUD, generic dependency architecture, DDD modeling, database tuning, or unmeasured performance work.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-005"
+    },
+    {
+      "prompt_id": "python_high_performance",
+      "display_name": "Python Performance Evidence and Optimization",
+      "filename": "python_high_performance.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "python performance evidence",
+        "performance baseline",
+        "slow python code",
+        "memory profiling",
+        "latency benchmark",
+        "throughput optimization",
+        "profile before optimize"
+      ],
+      "user_intent_examples": [
+        "Measure this slow Python path and compare one optimization safely."
+      ],
+      "aliases": [
+        "KPR-08-006",
+        "python performance evidence",
+        "python high performance",
+        "python_high_performance"
+      ],
+      "when_to_load": "When runtime, latency, throughput, memory, I/O, profiling, or benchmark evidence is a primary requirement.",
+      "when_not_to_load": "Do not load when no named performance objective or suspected material bottleneck exists.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-006"
+    },
+    {
+      "prompt_id": "python_legacy_code_workflow",
+      "display_name": "Python Legacy Code Stabilization Workflow",
+      "filename": "python_legacy_code_workflow.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "legacy code stabilization",
+        "characterization test",
+        "safe change legacy code",
+        "change point test point",
+        "dependency seam",
+        "poorly understood code"
+      ],
+      "user_intent_examples": [
+        "Stabilize this risky inherited module before changing behavior."
+      ],
+      "aliases": [
+        "KPR-08-007",
+        "A022",
+        "python legacy code stabilization",
+        "python legacy code workflow",
+        "python_legacy_code_workflow"
+      ],
+      "when_to_load": "When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.",
+      "when_not_to_load": "Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-007"
+    },
+    {
+      "prompt_id": "python_pragmatic_programmer",
+      "display_name": "Python Pragmatic Trade-off and Reversible Progress",
+      "filename": "python_pragmatic_programmer.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
+      "trigger_phrases": [
+        "pragmatic trade-off",
+        "reversible engineering decision",
+        "prototype versus tracer bullet"
+      ],
+      "user_intent_examples": [
+        "When pragmatic trade-off, reversibility, or proportional automation is the central concern."
+      ],
+      "aliases": [
+        "KPR-08-008",
+        "pragmatic trade-off",
+        "python_pragmatic_programmer"
+      ],
+      "when_to_load": "When pragmatic trade-off, reversibility, or proportional automation is the central concern.",
+      "when_not_to_load": "Do not load as a replacement for a technical specialist.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-08-008",
       "status": "active",
-      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "owner_box": "08_python_engineering_core"
     },
     {
-      "prompt_id": "desktop_help_document_layout_canon",
-      "display_name": "KANDA Desktop Help Document Layout Profile",
-      "filename": "desktop_help_document_layout_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
+      "prompt_id": "python_refactoring",
+      "display_name": "Python Behavior-Preserving Refactoring",
+      "filename": "python_refactoring.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
       "trigger_phrases": [
-        "KANDA desktop help profile",
-        "offline help layout",
-        "help artwork accessibility"
+        "python refactoring",
+        "behavior preserving refactor",
+        "code smell transformation"
       ],
       "user_intent_examples": [
-        "When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed."
+        "When bounded Python structure must improve without intended behavior change."
       ],
       "aliases": [
-        "KPR-12-010",
-        "KANDA desktop help layout",
-        "desktop_help_document_layout_canon"
+        "KPR-08-009",
+        "python refactoring",
+        "python_refactoring"
       ],
-      "when_to_load": "When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed.",
-      "when_not_to_load": "Do not load as a universal documentation or runtime visual-engine canon.",
+      "when_to_load": "When bounded Python structure must improve without intended behavior change.",
+      "when_not_to_load": "Do not load for legacy stabilization, large-module decomposition, or feature behavior changes.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-12-010",
-      "status": "active_project_overlay",
-      "load_type": "on_request",
-      "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
-    },
-    {
-      "prompt_id": "domain_decision_table_template",
-      "display_name": "Versioned Domain Decision Table Template",
-      "filename": "domain_decision_table_template.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
-      "trigger_phrases": [
-        "domain decision table",
-        "rule precedence matrix",
-        "deterministic classification table"
-      ],
-      "user_intent_examples": [
-        "When multiple discrete domain rules need a versioned, testable matrix."
-      ],
-      "aliases": [
-        "KPR-12-011",
-        "domain decision table",
-        "domain_decision_table_template"
-      ],
-      "when_to_load": "When multiple discrete domain rules need a versioned, testable matrix.",
-      "when_not_to_load": "Do not load for continuous/probabilistic decisions or undefined domain policy.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-12-011",
+      "prompt_code": "KPR-08-009",
       "status": "active",
-      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "owner_box": "08_python_engineering_core"
     },
     {
-      "prompt_id": "plugin_package_import_canon",
-      "display_name": "Plugin Package Import and Trust Canon",
-      "filename": "plugin_package_import_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
+      "prompt_id": "software_engineering_books_master",
+      "display_name": "Software Engineering Books Synthesis Map",
+      "filename": "software_engineering_books_master.md",
+      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md",
+      "category": "08_python_engineering_core",
+      "priority": 50,
       "trigger_phrases": [
-        "plugin package import",
-        "extension bundle trust",
-        "transactional plugin installation"
+        "software engineering books comparison",
+        "engineering principle conflict",
+        "book to specialist map"
       ],
       "user_intent_examples": [
-        "When user-importable package trust, permissions and lifecycle are central."
+        "When an explicit cross-book principle comparison or educational specialist map is needed."
       ],
       "aliases": [
-        "KPR-12-012",
-        "plugin package import",
-        "plugin_package_import_canon"
+        "KPR-08-010",
+        "software engineering books synthesis",
+        "software_engineering_books_master"
       ],
-      "when_to_load": "When user-importable package trust, permissions and lifecycle are central.",
-      "when_not_to_load": "Do not load for ordinary patch ZIPs or to invent a universal plugin engine.",
+      "when_to_load": "When an explicit cross-book principle comparison or educational specialist map is needed.",
+      "when_not_to_load": "Do not load as a master governance or implementation prompt.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-12-012",
+      "prompt_code": "KPR-08-010",
       "status": "active",
-      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "owner_box": "08_python_engineering_core"
     },
     {
-      "prompt_id": "shared_visual_render_engine_canon",
-      "display_name": "Shared Visual Semantic Contract",
-      "filename": "shared_visual_render_engine_canon.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
+      "prompt_id": "anti_hallucination_book_literature_audit_full",
+      "prompt_code": "KPR-09-005",
+      "display_name": "Verified Literature Architecture Audit - Full",
+      "filename": "anti_hallucination_book_literature_audit_full.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
       "trigger_phrases": [
-        "shared visual semantic contract",
-        "multiple rendering backends",
-        "visual object identity"
+        "verified literature audit",
+        "book architecture evidence",
+        "published literature comparison"
       ],
       "user_intent_examples": [
-        "When multiple consumers represent the same conceptual visual object or scene."
+        "When inspected literature can resolve a material architecture uncertainty."
       ],
       "aliases": [
-        "KPR-12-013",
-        "shared visual semantics",
-        "shared_visual_render_engine_canon"
+        "KPR-09-005",
+        "verified literature audit",
+        "anti_hallucination_book_literature_audit_full"
       ],
-      "when_to_load": "When multiple consumers represent the same conceptual visual object or scene.",
-      "when_not_to_load": "Do not load for static editorial artwork or generic UI styling.",
+      "when_to_load": "When inspected literature can resolve a material architecture uncertainty.",
+      "when_not_to_load": "Do not attribute claims to uninspected books or force a source count.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-12-013",
       "status": "active",
-      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "owner_box": "09_python_quality_security_observability"
     },
     {
-      "prompt_id": "transform_resolver_architecture_contract",
-      "display_name": "Transform Resolver Architecture Contract",
-      "filename": "transform_resolver_architecture_contract.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md",
-      "category": "12_generalized_project_canons",
-      "priority": 40,
+      "prompt_id": "anti_hallucination_book_literature_audit_short",
+      "prompt_code": "KPR-09-009",
+      "display_name": "Verified Literature Audit - Short",
+      "filename": "anti_hallucination_book_literature_audit_short.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_short.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
       "trigger_phrases": [
-        "transform resolver",
-        "ordered transform plan",
-        "capability policy resolution"
+        "compact literature audit",
+        "short book evidence check"
       ],
       "user_intent_examples": [
-        "When stable identities and selectable transforms must resolve into controlled operations."
+        "For a bounded verified literature check."
       ],
       "aliases": [
-        "KPR-12-014",
-        "transform resolver contract",
-        "transform_resolver_architecture_contract"
+        "KPR-09-009",
+        "anti_hallucination_book_literature_audit_short"
       ],
-      "when_to_load": "When stable identities and selectable transforms must resolve into controlled operations.",
-      "when_not_to_load": "Do not load for pipeline lineage/rebuild or direct operation execution.",
+      "when_to_load": "For a bounded verified literature check.",
+      "when_not_to_load": "Escalate to KPR-09-005 when comparison or provenance is complex.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-12-014",
       "status": "active",
-      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "12_generalized_project_canons"
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_full_group",
+      "prompt_code": "KPR-09-001",
+      "display_name": "Evidence Verification Train - Full",
+      "filename": "anti_hallucination_full_group.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_full_group.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "full evidence verification train",
+        "high risk AI audit",
+        "full anti hallucination group"
+      ],
+      "user_intent_examples": [
+        "When consequential work requires the full staged evidence-verification train."
+      ],
+      "aliases": [
+        "KPR-09-001",
+        "anti_hallucination_full_group",
+        "full evidence train"
+      ],
+      "when_to_load": "When consequential work requires the full staged evidence-verification train.",
+      "when_not_to_load": "Do not load for routine low-risk work or as implementation authority.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_independent_ai_audit_full",
+      "prompt_code": "KPR-09-003",
+      "display_name": "Independent Adversarial Engineering Audit - Full",
+      "filename": "anti_hallucination_independent_ai_audit_full.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "independent adversarial audit",
+        "challenge engineering plan",
+        "claim ledger"
+      ],
+      "user_intent_examples": [
+        "When a consequential plan needs adversarial review and claim/assumption separation."
+      ],
+      "aliases": [
+        "KPR-09-003",
+        "independent adversarial audit",
+        "anti_hallucination_independent_ai_audit_full"
+      ],
+      "when_to_load": "When a consequential plan needs adversarial review and claim/assumption separation.",
+      "when_not_to_load": "Do not label same-context self-review as independent.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_independent_ai_audit_short",
+      "prompt_code": "KPR-09-007",
+      "display_name": "Independent Adversarial Audit - Short",
+      "filename": "anti_hallucination_independent_ai_audit_short.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_short.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "compact adversarial audit",
+        "short independent audit"
+      ],
+      "user_intent_examples": [
+        "For bounded routine adversarial screening."
+      ],
+      "aliases": [
+        "KPR-09-007",
+        "anti_hallucination_independent_ai_audit_short"
+      ],
+      "when_to_load": "For bounded routine adversarial screening.",
+      "when_not_to_load": "Escalate to KPR-09-003 when material risk or uncertainty appears.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_master_protocol_full",
+      "prompt_code": "KPR-09-006",
+      "display_name": "Evidence Synthesis and Truthful Status Protocol - Full",
+      "filename": "anti_hallucination_master_protocol_full.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "evidence synthesis protocol",
+        "truthful verification status",
+        "final evidence record"
+      ],
+      "user_intent_examples": [
+        "As the final synthesis stage after evidence records exist."
+      ],
+      "aliases": [
+        "KPR-09-006",
+        "evidence synthesis",
+        "anti_hallucination_master_protocol_full"
+      ],
+      "when_to_load": "As the final synthesis stage after evidence records exist.",
+      "when_not_to_load": "Do not load as a mega-canon or implementation authority.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_protocol_short",
+      "prompt_code": "KPR-09-010",
+      "display_name": "Evidence Synthesis Protocol - Short",
+      "filename": "anti_hallucination_protocol_short.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_protocol_short.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "compact evidence synthesis",
+        "short truthful status"
+      ],
+      "user_intent_examples": [
+        "For routine synthesis of bounded evidence records."
+      ],
+      "aliases": [
+        "KPR-09-010",
+        "anti_hallucination_protocol_short"
+      ],
+      "when_to_load": "For routine synthesis of bounded evidence records.",
+      "when_not_to_load": "Escalate to KPR-09-006 when evidence conflicts or risk is material.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_short_group",
+      "prompt_code": "KPR-09-002",
+      "display_name": "Evidence Verification Train - Short",
+      "filename": "anti_hallucination_short_group.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_short_group.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "short evidence verification train",
+        "compact AI audit",
+        "short anti hallucination group"
+      ],
+      "user_intent_examples": [
+        "When routine governed work needs a compact staged evidence review."
+      ],
+      "aliases": [
+        "KPR-09-002",
+        "anti_hallucination_short_group",
+        "short evidence train"
+      ],
+      "when_to_load": "When routine governed work needs a compact staged evidence review.",
+      "when_not_to_load": "Escalate to KPR-09-001 for high-risk, conflicting, or uncertain work.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_web_evidence_audit_full",
+      "prompt_code": "KPR-09-004",
+      "display_name": "Current Web Evidence and Disconfirmation Audit - Full",
+      "filename": "anti_hallucination_web_evidence_audit_full.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "current web evidence audit",
+        "disconfirmation search",
+        "verify current external claims"
+      ],
+      "user_intent_examples": [
+        "When time-sensitive external claims require current primary-source verification."
+      ],
+      "aliases": [
+        "KPR-09-004",
+        "web evidence audit",
+        "anti_hallucination_web_evidence_audit_full"
+      ],
+      "when_to_load": "When time-sensitive external claims require current primary-source verification.",
+      "when_not_to_load": "Do not expose private project data or fabricate web access.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
+    },
+    {
+      "prompt_id": "anti_hallucination_web_evidence_audit_short",
+      "prompt_code": "KPR-09-008",
+      "display_name": "Current Web Evidence Audit - Short",
+      "filename": "anti_hallucination_web_evidence_audit_short.md",
+      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_short.md",
+      "category": "09_python_quality_security_observability",
+      "priority": 50,
+      "trigger_phrases": [
+        "compact web evidence audit",
+        "short disconfirmation search"
+      ],
+      "user_intent_examples": [
+        "For bounded current-source verification."
+      ],
+      "aliases": [
+        "KPR-09-008",
+        "anti_hallucination_web_evidence_audit_short"
+      ],
+      "when_to_load": "For bounded current-source verification.",
+      "when_not_to_load": "Escalate to KPR-09-004 when sources conflict or risk is material.",
+      "required_companion_prompts": [],
+      "status": "active",
+      "version": "2.0.0",
+      "owner_box": "09_python_quality_security_observability"
     },
     {
       "prompt_id": "python_documentation_developer_experience",
@@ -2221,77 +2547,6 @@
       "owner_box": "10_python_api_data_async_config"
     },
     {
-      "prompt_id": "python_clean_architecture",
-      "display_name": "Python Clean Architecture",
-      "filename": "python_clean_architecture.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "dependency direction",
-        "framework isolation",
-        "ports and adapters",
-        "composition root",
-        "clean architecture python"
-      ],
-      "user_intent_examples": [
-        "Review whether this Python system needs ports, adapters, or a clearer composition boundary."
-      ],
-      "aliases": [
-        "KPR-08-001",
-        "python clean architecture",
-        "python dependency direction",
-        "python_clean_architecture"
-      ],
-      "when_to_load": "When dependency direction, framework isolation, ports/adapters, or a composition boundary is materially involved.",
-      "when_not_to_load": "Do not load for local readability, simple scripts, KANDA box ownership, or generic architecture discussion without Python dependency evidence.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-001",
-      "supporting_owner_dispatch": [
-        "box_architecture_canon",
-        "python_domain_driven_design",
-        "python_enterprise_architecture",
-        "python_testing_pytest"
-      ]
-    },
-    {
-      "prompt_id": "python_clean_code",
-      "display_name": "Python Clean Code",
-      "filename": "python_clean_code.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "python readability",
-        "function clarity",
-        "naming review",
-        "local code cohesion",
-        "python documentation clarity"
-      ],
-      "user_intent_examples": [
-        "Review this Python module for local readability and maintainability without changing its architecture."
-      ],
-      "aliases": [
-        "KPR-08-002",
-        "python clean code",
-        "clean_code_python",
-        "python_clean_code"
-      ],
-      "when_to_load": "When local naming, readability, documentation, function clarity, or class cohesion is central.",
-      "when_not_to_load": "Do not load as architecture, refactoring, testing, typing, security, or resilience authority.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-002",
-      "supporting_owner_dispatch": [
-        "python_clean_architecture",
-        "python_refactoring",
-        "python_testing_pytest",
-        "python_validation_serialisation_type_safety"
-      ],
-      "historical_aliases": [
-        "clean_code_python"
-      ]
-    },
-    {
       "prompt_id": "python_configuration_feature_flags",
       "display_name": "Python Configuration and Feature-Flag Lifecycle",
       "filename": "python_configuration_feature_flags.md",
@@ -2346,309 +2601,6 @@
       "status": "active",
       "version": "2.0.0",
       "owner_box": "10_python_api_data_async_config"
-    },
-    {
-      "prompt_id": "python_design_patterns",
-      "display_name": "Python Design Patterns",
-      "filename": "python_design_patterns.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "pattern selection",
-        "strategy or function",
-        "adapter pattern python",
-        "observer lifecycle",
-        "factory tradeoff"
-      ],
-      "user_intent_examples": [
-        "Decide whether this recurring Python design problem needs a named pattern or a simpler language feature."
-      ],
-      "aliases": [
-        "KPR-08-003",
-        "python design patterns",
-        "python pattern selection",
-        "python_design_patterns"
-      ],
-      "when_to_load": "When a demonstrated structural or behavioral variation requires an explicit pattern-selection decision.",
-      "when_not_to_load": "Do not load for simple direct code, DDD, enterprise persistence patterns, GUI lifecycle, or async/distributed design owned elsewhere.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-003",
-      "supporting_owner_dispatch": [
-        "python_clean_architecture",
-        "python_domain_driven_design",
-        "python_enterprise_architecture",
-        "python_async_parallel_distributed"
-      ]
-    },
-    {
-      "prompt_id": "python_domain_driven_design",
-      "display_name": "Python Domain-Driven Design",
-      "filename": "python_domain_driven_design.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "ubiquitous language",
-        "bounded context",
-        "domain invariants",
-        "aggregate boundary",
-        "domain event semantics"
-      ],
-      "user_intent_examples": [
-        "Determine whether domain complexity justifies DDD and define the smallest evidence-grounded model."
-      ],
-      "aliases": [
-        "KPR-08-004",
-        "python domain driven design",
-        "python DDD",
-        "python_domain_driven_design"
-      ],
-      "when_to_load": "When domain language, invariants, subdomains, or bounded contexts materially drive the design.",
-      "when_not_to_load": "Do not load for simple CRUD, utility scripts, generic dependency direction, persistence implementation, or messaging delivery mechanics.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-004",
-      "supporting_owner_dispatch": [
-        "python_clean_architecture",
-        "box_architecture_canon",
-        "python_enterprise_architecture",
-        "python_async_parallel_distributed"
-      ],
-      "historical_aliases": [
-        "A023"
-      ]
-    },
-    {
-      "prompt_id": "python_enterprise_architecture",
-      "display_name": "Python Enterprise Application Patterns",
-      "filename": "python_enterprise_architecture.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "enterprise application patterns",
-        "repository pattern",
-        "unit of work",
-        "transaction boundary",
-        "service layer",
-        "identity map",
-        "optimistic locking"
-      ],
-      "user_intent_examples": [
-        "Choose the smallest persistence and transaction pattern for this use case."
-      ],
-      "aliases": [
-        "KPR-08-005",
-        "python enterprise application patterns",
-        "python enterprise architecture",
-        "python_enterprise_architecture"
-      ],
-      "when_to_load": "When enterprise persistence patterns, application services, transactions, object identity, or concurrency-control patterns are the central concern.",
-      "when_not_to_load": "Do not load for small scripts, simple CRUD, generic dependency architecture, DDD modeling, database tuning, or unmeasured performance work.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-005"
-    },
-    {
-      "prompt_id": "python_high_performance",
-      "display_name": "Python Performance Evidence and Optimization",
-      "filename": "python_high_performance.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "python performance evidence",
-        "performance baseline",
-        "slow python code",
-        "memory profiling",
-        "latency benchmark",
-        "throughput optimization",
-        "profile before optimize"
-      ],
-      "user_intent_examples": [
-        "Measure this slow Python path and compare one optimization safely."
-      ],
-      "aliases": [
-        "KPR-08-006",
-        "python performance evidence",
-        "python high performance",
-        "python_high_performance"
-      ],
-      "when_to_load": "When runtime, latency, throughput, memory, I/O, profiling, or benchmark evidence is a primary requirement.",
-      "when_not_to_load": "Do not load when no named performance objective or suspected material bottleneck exists.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-006"
-    },
-    {
-      "prompt_id": "python_legacy_code_workflow",
-      "display_name": "Python Legacy Code Stabilization Workflow",
-      "filename": "python_legacy_code_workflow.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "legacy code stabilization",
-        "characterization test",
-        "safe change legacy code",
-        "change point test point",
-        "dependency seam",
-        "poorly understood code"
-      ],
-      "user_intent_examples": [
-        "Stabilize this risky inherited module before changing behavior."
-      ],
-      "aliases": [
-        "KPR-08-007",
-        "A022",
-        "python legacy code stabilization",
-        "python legacy code workflow",
-        "python_legacy_code_workflow"
-      ],
-      "when_to_load": "When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.",
-      "when_not_to_load": "Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-007"
-    },
-    {
-      "prompt_id": "python_pragmatic_programmer",
-      "display_name": "Python Pragmatic Trade-off and Reversible Progress",
-      "filename": "python_pragmatic_programmer.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "pragmatic trade-off",
-        "reversible engineering decision",
-        "prototype versus tracer bullet"
-      ],
-      "user_intent_examples": [
-        "When pragmatic trade-off, reversibility, or proportional automation is the central concern."
-      ],
-      "aliases": [
-        "KPR-08-008",
-        "pragmatic trade-off",
-        "python_pragmatic_programmer"
-      ],
-      "when_to_load": "When pragmatic trade-off, reversibility, or proportional automation is the central concern.",
-      "when_not_to_load": "Do not load as a replacement for a technical specialist.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-008",
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "08_python_engineering_core"
-    },
-    {
-      "prompt_id": "python_refactoring",
-      "display_name": "Python Behavior-Preserving Refactoring",
-      "filename": "python_refactoring.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "python refactoring",
-        "behavior preserving refactor",
-        "code smell transformation"
-      ],
-      "user_intent_examples": [
-        "When bounded Python structure must improve without intended behavior change."
-      ],
-      "aliases": [
-        "KPR-08-009",
-        "python refactoring",
-        "python_refactoring"
-      ],
-      "when_to_load": "When bounded Python structure must improve without intended behavior change.",
-      "when_not_to_load": "Do not load for legacy stabilization, large-module decomposition, or feature behavior changes.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-009",
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "08_python_engineering_core"
-    },
-    {
-      "prompt_id": "software_engineering_books_master",
-      "display_name": "Software Engineering Books Synthesis Map",
-      "filename": "software_engineering_books_master.md",
-      "relative_path": "ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md",
-      "category": "08_python_engineering_core",
-      "priority": 50,
-      "trigger_phrases": [
-        "software engineering books comparison",
-        "engineering principle conflict",
-        "book to specialist map"
-      ],
-      "user_intent_examples": [
-        "When an explicit cross-book principle comparison or educational specialist map is needed."
-      ],
-      "aliases": [
-        "KPR-08-010",
-        "software engineering books synthesis",
-        "software_engineering_books_master"
-      ],
-      "when_to_load": "When an explicit cross-book principle comparison or educational specialist map is needed.",
-      "when_not_to_load": "Do not load as a master governance or implementation prompt.",
-      "required_companion_prompts": [],
-      "prompt_code": "KPR-08-010",
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "08_python_engineering_core"
-    },
-    {
-      "prompt_id": "architecture_hardening_triage_template",
-      "display_name": "Architecture Hardening Triage Record Template",
-      "filename": "architecture_hardening_triage_template.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 52,
-      "trigger_phrases": [
-        "architecture hardening triage record",
-        "architecture triage template",
-        "architecture audit worksheet"
-      ],
-      "user_intent_examples": [
-        "Create a reusable checklist for architecture hardening."
-      ],
-      "aliases": [
-        "KPR-06-006",
-        "architecture triage record",
-        "architecture_hardening_triage_template"
-      ],
-      "when_to_load": "Only when a fillable architecture-hardening triage record is explicitly requested.",
-      "when_not_to_load": "Do not route it as the governing hardening protocol or use it to authorize mutation.",
-      "required_companion_prompts": [
-        "architecture_hardening_triage_protocol"
-      ],
-      "prompt_code": "KPR-06-006",
-      "status": "draft_template",
-      "load_type": "explicit_on_request"
-    },
-    {
-      "prompt_id": "large_module_refactor_template",
-      "display_name": "Large Module Refactor Planning Record Template",
-      "filename": "large_module_refactor_template.md",
-      "relative_path": "ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
-      "category": "06_refactor_and_architecture_hardening",
-      "priority": 53,
-      "trigger_phrases": [
-        "large module refactor record",
-        "large module planning template",
-        "module split worksheet"
-      ],
-      "user_intent_examples": [
-        "Create a template for large-module refactor tasks."
-      ],
-      "aliases": [
-        "KPR-06-008",
-        "large module refactor record",
-        "large_module_refactor_template"
-      ],
-      "when_to_load": "Only when a fillable large-module assessment or planning record is explicitly requested.",
-      "when_not_to_load": "Do not load instead of KPR-06-007 for actual refactoring or as mutation authority.",
-      "required_companion_prompts": [
-        "large_module_refactor_protocol"
-      ],
-      "prompt_code": "KPR-06-008",
-      "status": "draft_template",
-      "load_type": "explicit_on_request"
     },
     {
       "prompt_id": "kubernetes_deployment_operations",
@@ -2811,340 +2763,164 @@
       "owner_box": "11_productization_and_release_readiness"
     },
     {
-      "prompt_id": "peopleware_team_boundary",
-      "display_name": "Peopleware Team Boundary",
-      "filename": "peopleware_team_boundary.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md",
+      "prompt_id": "architecture_review_project_card_machine_canon",
+      "prompt_code": "KPR-12-005",
+      "display_name": "Architecture Review Project Card Machine Canon",
+      "filename": "architecture_review_project_card_machine_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
       "category": "12_generalized_project_canons",
-      "priority": 67,
+      "priority": 36,
       "trigger_phrases": [
-        "peopleware",
-        "team workflow",
-        "meeting overload",
-        "developer coordination",
-        "psychological safety",
-        "burnout risk at work"
+        "architecture review card machine",
+        "Architecture Review target lifecycle",
+        "insert source target",
+        "eject target after verification",
+        "AST Split Audit lifecycle",
+        "Planner Workbench lifecycle",
+        "project root switch during audit",
+        "target switch during refactor",
+        "stale async audit result",
+        "APPLIED_NOT_VERIFIED",
+        "cancellation incomplete",
+        "transaction recovery",
+        "concurrent card session",
+        "terminal eject"
       ],
       "user_intent_examples": [
-        "Classify whether this software-delivery problem is technical or primarily a team-process problem."
+        "Bind this Architecture Review target to one current operation and lifecycle generation.",
+        "Block switching while a worker, cancellation, apply outcome, or transaction is unresolved.",
+        "Eject target-specific Tool state only after verified completion or rollback."
       ],
       "aliases": [
-        "KPR-12-007",
-        "peopleware",
-        "software team human factors",
-        "team process boundary",
-        "peopleware_team_boundary"
+        "architecture review card machine",
+        "project card machine canon",
+        "card lifecycle canon",
+        "architecture_review_project_card_machine_canon"
       ],
-      "when_to_load": "When a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.",
-      "when_not_to_load": "Do not load for solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.",
+      "when_to_load": "When Architecture Review, AST Split Audit, Planner, Workbench, Completion, project-root switching, target switching, async results, transactions, apply/rollback, receipt, or post-completion state cleanup must preserve project ownership and card lifecycle.",
+      "when_not_to_load": "Do not load for payment-card discussion, generic UI styling, or Tool/Project boundary tasks with no Architecture Review lifecycle consequence.",
       "required_companion_prompts": [
-        "prompt_navigation_index",
         "project_tool_boundary_canon"
       ],
-      "prompt_code": "KPR-12-007"
+      "load_type": "routed"
     },
     {
-      "prompt_id": "practical_field_handbook_template",
-      "display_name": "Practical Field Handbook Template",
-      "filename": "practical_field_handbook_template.md",
-      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/practical_field_handbook_template.md",
+      "prompt_id": "data_transform_pipeline_invariants",
+      "display_name": "Data Transform Pipeline Invariants",
+      "filename": "data_transform_pipeline_invariants.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md",
       "category": "12_generalized_project_canons",
-      "priority": 68,
+      "priority": 40,
       "trigger_phrases": [
-        "practical field handbook",
-        "source grounded handbook",
-        "book study guide",
-        "framework handbook",
-        "specification guide",
-        "operator handbook"
+        "data lineage canonical base",
+        "derived output rebuild",
+        "incremental streaming pipeline invariants"
       ],
       "user_intent_examples": [
-        "Turn this supplied or verified source into a practical handbook for the stated audience."
+        "When source-to-derived lineage, transform provenance or rebuild correctness is central."
       ],
       "aliases": [
-        "KPR-12-008",
-        "field handbook template",
-        "source grounded study guide",
-        "practical_field_handbook_template"
+        "KPR-12-009",
+        "data transform pipeline invariants",
+        "data_transform_pipeline_invariants"
       ],
-      "when_to_load": "When a supplied or reliably identified source must become a practical audience-specific handbook.",
-      "when_not_to_load": "Do not load when source-faithful detail is expected but the source cannot be identified, or for direct source implementation.",
+      "when_to_load": "When source-to-derived lineage, transform provenance or rebuild correctness is central.",
+      "when_not_to_load": "Do not load for transform selection resolution without pipeline lineage concerns.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-12-009",
+      "status": "active",
+      "load_type": "on_request",
+      "version": "2.0.0",
+      "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "desktop_help_document_layout_canon",
+      "display_name": "KANDA Desktop Help Document Layout Profile",
+      "filename": "desktop_help_document_layout_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 40,
+      "trigger_phrases": [
+        "KANDA desktop help profile",
+        "offline help layout",
+        "help artwork accessibility"
+      ],
+      "user_intent_examples": [
+        "When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed."
+      ],
+      "aliases": [
+        "KPR-12-010",
+        "KANDA desktop help layout",
+        "desktop_help_document_layout_canon"
+      ],
+      "when_to_load": "When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed.",
+      "when_not_to_load": "Do not load as a universal documentation or runtime visual-engine canon.",
       "required_companion_prompts": [
-        "prompt_navigation_index"
+        "kanda_desktop_help_exact_layout_blueprint"
       ],
-      "prompt_code": "KPR-12-008"
+      "prompt_code": "KPR-12-010",
+      "status": "active_project_overlay",
+      "load_type": "on_request",
+      "version": "2.1.0",
+      "owner_box": "12_generalized_project_canons"
     },
     {
-      "prompt_id": "anti_hallucination_independent_ai_audit_full",
-      "prompt_code": "KPR-09-003",
-      "display_name": "Independent Adversarial Engineering Audit - Full",
-      "filename": "anti_hallucination_independent_ai_audit_full.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
+      "prompt_id": "domain_decision_table_template",
+      "display_name": "Versioned Domain Decision Table Template",
+      "filename": "domain_decision_table_template.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md",
+      "category": "12_generalized_project_canons",
+      "priority": 40,
       "trigger_phrases": [
-        "independent adversarial audit",
-        "challenge engineering plan",
-        "claim ledger"
+        "domain decision table",
+        "rule precedence matrix",
+        "deterministic classification table"
       ],
       "user_intent_examples": [
-        "When a consequential plan needs adversarial review and claim/assumption separation."
+        "When multiple discrete domain rules need a versioned, testable matrix."
       ],
       "aliases": [
-        "KPR-09-003",
-        "independent adversarial audit",
-        "anti_hallucination_independent_ai_audit_full"
+        "KPR-12-011",
+        "domain decision table",
+        "domain_decision_table_template"
       ],
-      "when_to_load": "When a consequential plan needs adversarial review and claim/assumption separation.",
-      "when_not_to_load": "Do not label same-context self-review as independent.",
+      "when_to_load": "When multiple discrete domain rules need a versioned, testable matrix.",
+      "when_not_to_load": "Do not load for continuous/probabilistic decisions or undefined domain policy.",
       "required_companion_prompts": [],
+      "prompt_code": "KPR-12-011",
       "status": "active",
+      "load_type": "on_request",
       "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
+      "owner_box": "12_generalized_project_canons"
     },
     {
-      "prompt_id": "anti_hallucination_web_evidence_audit_full",
-      "prompt_code": "KPR-09-004",
-      "display_name": "Current Web Evidence and Disconfirmation Audit - Full",
-      "filename": "anti_hallucination_web_evidence_audit_full.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
+      "prompt_id": "error_memory_active_ready_correction_blueprint",
+      "display_name": "Error Memory Active-Ready Correction Blueprint",
+      "filename": "error_memory_active_ready_correction_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md",
+      "category": "12_generalized_project_canons",
+      "priority": 32,
+      "prompt_code": "KPR-12-002",
       "trigger_phrases": [
-        "current web evidence audit",
-        "disconfirmation search",
-        "verify current external claims"
+        "correct Error Memory draft",
+        "active-ready Error Memory lesson",
+        "active_ready_missing_reasons"
       ],
       "user_intent_examples": [
-        "When time-sensitive external claims require current primary-source verification."
+        "When a real Error Memory draft must be corrected or evaluated for active readiness."
       ],
       "aliases": [
-        "KPR-09-004",
-        "web evidence audit",
-        "anti_hallucination_web_evidence_audit_full"
+        "KPR-12-002",
+        "Error Memory correction blueprint",
+        "error_memory_active_ready_correction_blueprint"
       ],
-      "when_to_load": "When time-sensitive external claims require current primary-source verification.",
-      "when_not_to_load": "Do not expose private project data or fabricate web access.",
+      "when_to_load": "When a real Error Memory draft must be corrected or evaluated for active readiness.",
+      "when_not_to_load": "Do not load for ordinary code changes or to invent validation evidence.",
       "required_companion_prompts": [],
       "status": "active",
+      "load_type": "routed",
       "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_book_literature_audit_full",
-      "prompt_code": "KPR-09-005",
-      "display_name": "Verified Literature Architecture Audit - Full",
-      "filename": "anti_hallucination_book_literature_audit_full.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "verified literature audit",
-        "book architecture evidence",
-        "published literature comparison"
-      ],
-      "user_intent_examples": [
-        "When inspected literature can resolve a material architecture uncertainty."
-      ],
-      "aliases": [
-        "KPR-09-005",
-        "verified literature audit",
-        "anti_hallucination_book_literature_audit_full"
-      ],
-      "when_to_load": "When inspected literature can resolve a material architecture uncertainty.",
-      "when_not_to_load": "Do not attribute claims to uninspected books or force a source count.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_master_protocol_full",
-      "prompt_code": "KPR-09-006",
-      "display_name": "Evidence Synthesis and Truthful Status Protocol - Full",
-      "filename": "anti_hallucination_master_protocol_full.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "evidence synthesis protocol",
-        "truthful verification status",
-        "final evidence record"
-      ],
-      "user_intent_examples": [
-        "As the final synthesis stage after evidence records exist."
-      ],
-      "aliases": [
-        "KPR-09-006",
-        "evidence synthesis",
-        "anti_hallucination_master_protocol_full"
-      ],
-      "when_to_load": "As the final synthesis stage after evidence records exist.",
-      "when_not_to_load": "Do not load as a mega-canon or implementation authority.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_independent_ai_audit_short",
-      "prompt_code": "KPR-09-007",
-      "display_name": "Independent Adversarial Audit - Short",
-      "filename": "anti_hallucination_independent_ai_audit_short.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_short.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "compact adversarial audit",
-        "short independent audit"
-      ],
-      "user_intent_examples": [
-        "For bounded routine adversarial screening."
-      ],
-      "aliases": [
-        "KPR-09-007",
-        "anti_hallucination_independent_ai_audit_short"
-      ],
-      "when_to_load": "For bounded routine adversarial screening.",
-      "when_not_to_load": "Escalate to KPR-09-003 when material risk or uncertainty appears.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_web_evidence_audit_short",
-      "prompt_code": "KPR-09-008",
-      "display_name": "Current Web Evidence Audit - Short",
-      "filename": "anti_hallucination_web_evidence_audit_short.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_short.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "compact web evidence audit",
-        "short disconfirmation search"
-      ],
-      "user_intent_examples": [
-        "For bounded current-source verification."
-      ],
-      "aliases": [
-        "KPR-09-008",
-        "anti_hallucination_web_evidence_audit_short"
-      ],
-      "when_to_load": "For bounded current-source verification.",
-      "when_not_to_load": "Escalate to KPR-09-004 when sources conflict or risk is material.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_book_literature_audit_short",
-      "prompt_code": "KPR-09-009",
-      "display_name": "Verified Literature Audit - Short",
-      "filename": "anti_hallucination_book_literature_audit_short.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_short.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "compact literature audit",
-        "short book evidence check"
-      ],
-      "user_intent_examples": [
-        "For a bounded verified literature check."
-      ],
-      "aliases": [
-        "KPR-09-009",
-        "anti_hallucination_book_literature_audit_short"
-      ],
-      "when_to_load": "For a bounded verified literature check.",
-      "when_not_to_load": "Escalate to KPR-09-005 when comparison or provenance is complex.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_protocol_short",
-      "prompt_code": "KPR-09-010",
-      "display_name": "Evidence Synthesis Protocol - Short",
-      "filename": "anti_hallucination_protocol_short.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_protocol_short.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "compact evidence synthesis",
-        "short truthful status"
-      ],
-      "user_intent_examples": [
-        "For routine synthesis of bounded evidence records."
-      ],
-      "aliases": [
-        "KPR-09-010",
-        "anti_hallucination_protocol_short"
-      ],
-      "when_to_load": "For routine synthesis of bounded evidence records.",
-      "when_not_to_load": "Escalate to KPR-09-006 when evidence conflicts or risk is material.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_full_group",
-      "prompt_code": "KPR-09-001",
-      "display_name": "Evidence Verification Train - Full",
-      "filename": "anti_hallucination_full_group.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_full_group.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "full evidence verification train",
-        "high risk AI audit",
-        "full anti hallucination group"
-      ],
-      "user_intent_examples": [
-        "When consequential work requires the full staged evidence-verification train."
-      ],
-      "aliases": [
-        "KPR-09-001",
-        "anti_hallucination_full_group",
-        "full evidence train"
-      ],
-      "when_to_load": "When consequential work requires the full staged evidence-verification train.",
-      "when_not_to_load": "Do not load for routine low-risk work or as implementation authority.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
-    },
-    {
-      "prompt_id": "anti_hallucination_short_group",
-      "prompt_code": "KPR-09-002",
-      "display_name": "Evidence Verification Train - Short",
-      "filename": "anti_hallucination_short_group.md",
-      "relative_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_short_group.md",
-      "category": "09_python_quality_security_observability",
-      "priority": 50,
-      "trigger_phrases": [
-        "short evidence verification train",
-        "compact AI audit",
-        "short anti hallucination group"
-      ],
-      "user_intent_examples": [
-        "When routine governed work needs a compact staged evidence review."
-      ],
-      "aliases": [
-        "KPR-09-002",
-        "anti_hallucination_short_group",
-        "short evidence train"
-      ],
-      "when_to_load": "When routine governed work needs a compact staged evidence review.",
-      "when_not_to_load": "Escalate to KPR-09-001 for high-risk, conflicting, or uncertain work.",
-      "required_companion_prompts": [],
-      "status": "active",
-      "version": "2.0.0",
-      "owner_box": "09_python_quality_security_observability"
+      "owner_box": "12_generalized_project_canons"
     },
     {
       "prompt_id": "error_memory_active_ready_json_template",
@@ -3199,6 +2975,263 @@
       "required_companion_prompts": [],
       "status": "active",
       "load_type": "routed",
+      "version": "2.0.0",
+      "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "kanda_desktop_help_exact_layout_blueprint",
+      "display_name": "KANDA Desktop Help Exact Layout Blueprint",
+      "filename": "kanda_desktop_help_exact_layout_blueprint.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/kanda_desktop_help_exact_layout_blueprint.md",
+      "category": "12_generalized_project_canons",
+      "priority": 41,
+      "trigger_phrases": [
+        "exact KANDA help layout",
+        "Show Project to AI help design",
+        "book-style desktop help blueprint"
+      ],
+      "user_intent_examples": [
+        "Create a KANDA help file using the exact established Show Project to AI layout."
+      ],
+      "aliases": [
+        "KPR-12-015",
+        "KANDA help exact layout",
+        "kanda_desktop_help_exact_layout_blueprint"
+      ],
+      "when_to_load": "When a KANDA help page must reproduce the established book-style layout and design model exactly.",
+      "when_not_to_load": "Do not load for generic documentation or when the application has not adopted the KANDA desktop help profile.",
+      "required_companion_prompts": [
+        "desktop_help_document_layout_canon"
+      ],
+      "prompt_code": "KPR-12-015",
+      "status": "active_project_overlay",
+      "load_type": "companion_on_request",
+      "version": "1.0.0",
+      "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "peopleware_team_boundary",
+      "display_name": "Peopleware Team Boundary",
+      "filename": "peopleware_team_boundary.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md",
+      "category": "12_generalized_project_canons",
+      "priority": 67,
+      "trigger_phrases": [
+        "peopleware",
+        "team workflow",
+        "meeting overload",
+        "developer coordination",
+        "psychological safety",
+        "burnout risk at work"
+      ],
+      "user_intent_examples": [
+        "Classify whether this software-delivery problem is technical or primarily a team-process problem."
+      ],
+      "aliases": [
+        "KPR-12-007",
+        "peopleware",
+        "software team human factors",
+        "team process boundary",
+        "peopleware_team_boundary"
+      ],
+      "when_to_load": "When a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.",
+      "when_not_to_load": "Do not load for solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.",
+      "required_companion_prompts": [
+        "prompt_navigation_index",
+        "project_tool_boundary_canon"
+      ],
+      "prompt_code": "KPR-12-007"
+    },
+    {
+      "prompt_id": "plugin_package_import_canon",
+      "display_name": "Plugin Package Import and Trust Canon",
+      "filename": "plugin_package_import_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 40,
+      "trigger_phrases": [
+        "plugin package import",
+        "extension bundle trust",
+        "transactional plugin installation"
+      ],
+      "user_intent_examples": [
+        "When user-importable package trust, permissions and lifecycle are central."
+      ],
+      "aliases": [
+        "KPR-12-012",
+        "plugin package import",
+        "plugin_package_import_canon"
+      ],
+      "when_to_load": "When user-importable package trust, permissions and lifecycle are central.",
+      "when_not_to_load": "Do not load for ordinary patch ZIPs or to invent a universal plugin engine.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-12-012",
+      "status": "active",
+      "load_type": "on_request",
+      "version": "2.0.0",
+      "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "practical_field_handbook_template",
+      "display_name": "Practical Field Handbook Template",
+      "filename": "practical_field_handbook_template.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/practical_field_handbook_template.md",
+      "category": "12_generalized_project_canons",
+      "priority": 68,
+      "trigger_phrases": [
+        "practical field handbook",
+        "source grounded handbook",
+        "book study guide",
+        "framework handbook",
+        "specification guide",
+        "operator handbook"
+      ],
+      "user_intent_examples": [
+        "Turn this supplied or verified source into a practical handbook for the stated audience."
+      ],
+      "aliases": [
+        "KPR-12-008",
+        "field handbook template",
+        "source grounded study guide",
+        "practical_field_handbook_template"
+      ],
+      "when_to_load": "When a supplied or reliably identified source must become a practical audience-specific handbook.",
+      "when_not_to_load": "Do not load when source-faithful detail is expected but the source cannot be identified, or for direct source implementation.",
+      "required_companion_prompts": [
+        "prompt_navigation_index"
+      ],
+      "prompt_code": "KPR-12-008"
+    },
+    {
+      "prompt_id": "project_tool_boundary_canon",
+      "prompt_code": "KPR-12-001",
+      "display_name": "Project Tool Boundary Canon",
+      "filename": "project_tool_boundary_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 35,
+      "trigger_phrases": [
+        "active project identity",
+        "active project root",
+        "project id",
+        "project root fingerprint",
+        "same canonical resolved root",
+        "self-hosting logical ownership",
+        "project versus tool",
+        "project vs tool",
+        "support root collision",
+        "project move migration",
+        "forbidden nested support root",
+        "cross-project access mode",
+        "mixed governed operation",
+        "generated evidence authority",
+        "transient workspace cleanup",
+        "concurrent project sessions",
+        "wrong-root write",
+        "show_project_to_AI"
+      ],
+      "user_intent_examples": [
+        "Resolve Tool and selected Project ownership before this mixed patch.",
+        "Prove the support root and source-write owner without collapsing self-hosting.",
+        "Block cross-project mutation while permitting declared comparison reads."
+      ],
+      "aliases": [
+        "project tool boundary",
+        "project_tool_boundary_canon",
+        "tool target boundary",
+        "active project boundary",
+        "selected project boundary"
+      ],
+      "when_to_load": "Route for consequential coding, patching, validation, freeze, handoff, migration, mixed Tool/Project writes, cross-project access, or any unresolved owner or write target. A compact startup bridge routes here.",
+      "when_not_to_load": "The compact startup bridge is sufficient only for simple tasks with no consequential owner, path, write, or migration question.",
+      "required_companion_prompts": [],
+      "load_type": "routed"
+    },
+    {
+      "prompt_id": "project_tool_boundary_startup_bridge",
+      "prompt_code": "KPR-12-006",
+      "display_name": "Project Tool Boundary Startup Bridge",
+      "filename": "project_tool_boundary_startup_bridge.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
+      "category": "12_generalized_project_canons",
+      "priority": 4,
+      "trigger_phrases": [
+        "tool project boundary startup bridge",
+        "wrong-root risk",
+        "self-hosting separation",
+        "project support outside source",
+        "non-authoritative transient workspace"
+      ],
+      "user_intent_examples": [
+        "Keep the selected Project separate from the KANDA Tool before any source work.",
+        "Stop when the source, support, or transient owner is unclear."
+      ],
+      "aliases": [
+        "project tool boundary bridge",
+        "project_tool_boundary_startup_bridge"
+      ],
+      "when_to_load": "Always at startup as a compact invariant; route consequential work to KPR-12-001.",
+      "when_not_to_load": "It remains startup context but never replaces the full routed canon.",
+      "required_companion_prompts": [
+        "project_tool_boundary_canon"
+      ],
+      "load_type": "always_startup"
+    },
+    {
+      "prompt_id": "shared_visual_render_engine_canon",
+      "display_name": "Shared Visual Semantic Contract",
+      "filename": "shared_visual_render_engine_canon.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md",
+      "category": "12_generalized_project_canons",
+      "priority": 40,
+      "trigger_phrases": [
+        "shared visual semantic contract",
+        "multiple rendering backends",
+        "visual object identity"
+      ],
+      "user_intent_examples": [
+        "When multiple consumers represent the same conceptual visual object or scene."
+      ],
+      "aliases": [
+        "KPR-12-013",
+        "shared visual semantics",
+        "shared_visual_render_engine_canon"
+      ],
+      "when_to_load": "When multiple consumers represent the same conceptual visual object or scene.",
+      "when_not_to_load": "Do not load for static editorial artwork or generic UI styling.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-12-013",
+      "status": "active",
+      "load_type": "on_request",
+      "version": "2.0.0",
+      "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "transform_resolver_architecture_contract",
+      "display_name": "Transform Resolver Architecture Contract",
+      "filename": "transform_resolver_architecture_contract.md",
+      "relative_path": "ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md",
+      "category": "12_generalized_project_canons",
+      "priority": 40,
+      "trigger_phrases": [
+        "transform resolver",
+        "ordered transform plan",
+        "capability policy resolution"
+      ],
+      "user_intent_examples": [
+        "When stable identities and selectable transforms must resolve into controlled operations."
+      ],
+      "aliases": [
+        "KPR-12-014",
+        "transform resolver contract",
+        "transform_resolver_architecture_contract"
+      ],
+      "when_to_load": "When stable identities and selectable transforms must resolve into controlled operations.",
+      "when_not_to_load": "Do not load for pipeline lineage/rebuild or direct operation execution.",
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-12-014",
+      "status": "active",
+      "load_type": "on_request",
       "version": "2.0.0",
       "owner_box": "12_generalized_project_canons"
     }

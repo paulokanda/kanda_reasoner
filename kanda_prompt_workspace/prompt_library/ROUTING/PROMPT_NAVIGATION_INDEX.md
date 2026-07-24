@@ -981,3 +981,14 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When not to load:** Do not treat the template as stronger than current application schema/models.
 - **Aliases:** `KPR-12-004`; `Error Memory model`; `error_memory_model_template`
 - **Required companions:** none; dispatch supporting concerns to current owners.
+
+
+### `kanda_desktop_help_exact_layout_blueprint` - KANDA Desktop Help Exact Layout Blueprint
+
+- **Code:** `KPR-12-015`
+- **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/kanda_desktop_help_exact_layout_blueprint.md`
+- **Category:** `12_generalized_project_canons`
+- **Load type:** `companion_on_request`
+- **When to load:** When a KANDA help page must reproduce the established book-style layout and design model exactly.
+- **Required companion:** `desktop_help_document_layout_canon`
+- **Aliases:** `KPR-12-015`; `KANDA help exact layout`; `kanda_desktop_help_exact_layout_blueprint`

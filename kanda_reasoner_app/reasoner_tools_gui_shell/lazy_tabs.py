@@ -15,7 +15,6 @@ from .tool_specs import ToolSpec
 from ._lazy_tab_shell_chrome import (
     LazyTabShellChromeMixin,
     _CANONICAL_PACKAGE_NAME,
-    _CONTEXT_COLLECTOR_GUI_SOURCE,
     _DAILY_REFACTOR_GUI_SOURCE,
     _DOCSTRINGS_GUI_SOURCE,
     _ENGINEERING_SAFETY_GUI_SOURCE,
@@ -25,8 +24,18 @@ from ._lazy_tab_shell_chrome import (
     _WORKFLOWS_GUI_SOURCE,
 )
 from ._lazy_tab_layout_relocation import LazyTabLayoutRelocationMixin
+from ._docstring_ai_header_runtime import (
+    bind_embedded_docstring_widget,
+    install_docstring_header_surface,
+)
 
 __all__ = ["LazyToolTab"]
+
+
+_LEGACY_HEADER_AI_GROUP_SOURCES = {
+    _ENGINEERING_SAFETY_GUI_SOURCE,
+    _DAILY_REFACTOR_GUI_SOURCE,
+}
 
 
 class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget):
@@ -71,32 +80,20 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
 
         self.python_executable_label: QLabel | None = None
         self.help_button: QPushButton | None = self.tab_header_template.help_button
-        if spec.source_hint in {
-            _DOCSTRINGS_GUI_SOURCE,
-            _CONTEXT_COLLECTOR_GUI_SOURCE,
-            _ERROR_MEMORY_GUI_SOURCE,
-            _ENGINEERING_SAFETY_GUI_SOURCE,
-            _FREEZE_AFTER_UPDATE_GUI_SOURCE,
-            _DAILY_REFACTOR_GUI_SOURCE,
-        }:
-            refresh_handler = self._refresh_header_ai_models
+        if spec.source_hint in _LEGACY_HEADER_AI_GROUP_SOURCES:
             review_handler = None
-            if spec.source_hint == _DOCSTRINGS_GUI_SOURCE:
-                refresh_handler = self._refresh_docstring_header_ai_models
-            elif spec.source_hint == _CONTEXT_COLLECTOR_GUI_SOURCE:
-                review_handler = self._show_project_ai_review_first_check
-            elif spec.source_hint == _FREEZE_AFTER_UPDATE_GUI_SOURCE:
-                review_handler = self._freeze_feature_ai_review_first_check
-            elif spec.source_hint == _ERROR_MEMORY_GUI_SOURCE:
-                review_handler = None
-            elif spec.source_hint == _ENGINEERING_SAFETY_GUI_SOURCE:
+            if spec.source_hint == _ENGINEERING_SAFETY_GUI_SOURCE:
                 review_handler = self._engineering_safety_ai_review_first_check
             self.tab_header_template.install_ai_group_blueprint(
-                refresh_handler=refresh_handler,
+                refresh_handler=self._open_global_local_ai_configuration,
                 review_handler=review_handler,
             )
+            self._configure_global_local_ai_header()
 
-        outer.addLayout(self.header_row)
+        if spec.source_hint == _DOCSTRINGS_GUI_SOURCE:
+            install_docstring_header_surface(self, outer)
+        else:
+            outer.addLayout(self.header_row)
 
         line = QFrame()
         line.setFrameShape(QFrame.HLine)
@@ -220,6 +217,8 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
             self._move_tab1_ai_review_controls_to_header_row(widget)
             self._move_tab3_project_root_controls_to_header_row(widget)
             self._move_tab3_safe_mode_radio_to_header_row(widget)
+            if self.spec.source_hint == _DOCSTRINGS_GUI_SOURCE:
+                bind_embedded_docstring_widget(self, widget)
             self._bind_tab3_header_ai_model_controls(widget)
             self._move_show_project_project_root_controls_to_header_row(widget)
             self._move_error_memory_project_root_controls_to_header_row(widget)

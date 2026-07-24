@@ -3,9 +3,9 @@
   "box_name": "Brain Region Mapping",
   "box_type": "data",
   "box_size": "module",
-  "version": "0.1.0",
-  "contract_version": "0.1",
-  "health_state": "draft",
+  "version": "0.2.0",
+  "contract_version": "0.2",
+  "health_state": "active",
   "responsibility": "Map stable brain-region identifiers to stable tab identifiers, human labels, tooltip text, and Remember Box analogy text.",
   "owner_paths": [
     "kanda_reasoner_app/reasoner_tools_gui_shell/brain_region_mapping/"
@@ -44,10 +44,12 @@
   "disable_safe": true,
   "validation": {
     "focused_tests": [
-      "tests/test_brain_region_mapping_contract.py"
+      "tests/test_brain_region_mapping_contract.py",
+      "tools/validate_brain_navigator_tab_catalog_sync_v1.py"
     ],
     "boundary_tests": [
-      "tests/test_brain_region_mapping_contract.py"
+      "tests/test_brain_region_mapping_contract.py",
+      "tools/validate_brain_navigator_tab_catalog_sync_v1.py"
     ]
   }
 }

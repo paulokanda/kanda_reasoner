@@ -12,6 +12,10 @@ from kanda_reasoner_app.tab3_manual_review_runtime.review_persistence_fields imp
     apply_persisted_review_state,
     build_persisted_review_state,
 )
+from kanda_reasoner_app.tab3_manual_review_runtime.project_paths_runtime import (
+    legacy_manual_review_state_path,
+    manual_review_state_path,
+)
 
 
 _DOCSTRING_TEXT_KEYS = (
@@ -394,8 +398,11 @@ def _save_manual_review_state(owner: object, location: dict, draft_text: str) ->
 
 
 def _load_manual_review_state(owner: object) -> dict:
-    """Load persisted manual review state."""
+    """Load external state, with read-only legacy compatibility."""
     path = _manual_review_state_path(owner)
+    if not path.is_file():
+        legacy = legacy_manual_review_state_path(owner)
+        path = legacy if legacy.is_file() else path
     if not path.is_file():
         return {}
     try:
@@ -406,12 +413,8 @@ def _load_manual_review_state(owner: object) -> dict:
 
 
 def _manual_review_state_path(owner: object) -> Path:
-    """Return the manual review state sidecar path."""
-    return (
-        _project_root_for_owner(owner)
-        / "project_freeze_ledger"
-        / "manual_docstring_review_state.json"
-    )
+    """Return external selected-Project manual-review state path."""
+    return manual_review_state_path(owner)
 
 
 def _manual_review_location_key(location: dict) -> str:

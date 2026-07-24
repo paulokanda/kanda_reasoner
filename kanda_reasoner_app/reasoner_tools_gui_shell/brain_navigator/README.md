@@ -469,3 +469,17 @@ The final flow remains inside the Box Architecture boundary: no direct numeric
 tab switching, no MainWindow import, no tool_specs reach-in, and no WebView
 knowledge of tab indexes. The safe Qt fallback index remains available only if
 WebEngine or visual creation fails.
+
+## Floating window lifecycle and readability correction
+
+The floating brain-region information window is transient page state. It now
+closes automatically whenever the Brain Navigator page is hidden, including
+manual tab changes and successful Open module navigation. The close request is
+owned by the Brain Navigator preview wrapper and calls only the page-local
+`hideFloatingRememberWindow()` JavaScript helper. It does not connect to
+MainWindow, inspect tab indexes, or add an application-scoped signal owner.
+
+The floating window now uses a readable Windows-first system font stack and
+larger text sizes for the title, mapped module, explanation, status, route, and
+action label. Brain geometry, marker coordinates, catalog mappings, colors, and
+QWebChannel routing remain unchanged.

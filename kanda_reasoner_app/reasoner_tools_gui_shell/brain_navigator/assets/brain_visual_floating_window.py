@@ -62,9 +62,9 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "frontal_lobe",
         "Frontal lobe",
-        "Architecture Review",
+        "Audit Project",
         "Executive planning and architecture",
-        "Reviews high-level project structure, ownership boundaries, and architectural contamination risks.",
+        "Opens the governed workspace for architecture, workflow, and engineering-safety review.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
@@ -80,18 +80,18 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
     BrainFloatingRememberWindow(
         "parietal_lobe",
         "Parietal lobe",
-        "Workflow Review",
+        "Audit Project",
         "Integration and workflow coordination",
-        "Checks how project tasks connect, execute, and remain consistent across the implementation workflow.",
+        "Opens Audit Project, where Workflow Review checks how tasks connect, execute, and remain consistent.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
     BrainFloatingRememberWindow(
         "brainstem_midbrain",
         "Brainstem / Midbrain region",
-        "Engineering Safety",
+        "Audit Project",
         "Survival layer and safety control",
-        "Protects the app from unsafe architecture, direct reach-in, brittle shortcuts, and implementation mistakes.",
+        "Opens Audit Project, where Engineering Safety protects against unsafe architecture, private reach-in, and brittle shortcuts.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
@@ -114,21 +114,30 @@ _FLOATING_WINDOWS: tuple[BrainFloatingRememberWindow, ...] = (
         "Open module",
     ),
     BrainFloatingRememberWindow(
+        "visual_association_cortex",
+        "Visual association cortex",
+        "Project Structure 3D",
+        "Spatial integration and structural mapping",
+        "Opens a read-only 3D map for exploring Project packages, modules, "
+        "and relationships without changing source or architecture.",
+        "Ready to open through the injected Tab Navigation Controller callback.",
+        "Open module",
+    ),
+    BrainFloatingRememberWindow(
         "central_sulcus",
         "Central sulcus",
-        "Show Project to AI",
-        "Boundary between source and AI handoff",
-        "Owns the boundary between source files and external AI handoff packages.",
+        "Web AI",
+        "Boundary between project context and web reasoning",
+        "Uses the active Project handoff while preserving the governed boundary between local source authority and external Web AI advice.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
     BrainFloatingRememberWindow(
         "cerebellum",
         "Cerebellum",
-        "Architecture Review",
-        "Correction and refinement",
-        "Combines audit findings with integrated Refactor Report evidence "
-        "to identify structural improvements.",
+        "Config AI",
+        "Calibration and coordinated settings",
+        "Centralizes gateway, model, endpoint, and credential settings so the AI tabs use one coordinated configuration owner.",
         "Ready to open through the injected Tab Navigation Controller callback.",
         "Open module",
     ),
@@ -203,7 +212,7 @@ def get_neural_architecture_floating_window_summary() -> BrainFloatingRememberWi
     windows = list_neural_architecture_floating_windows()
     return BrainFloatingRememberWindowLayerSummary(
         box_id="neural_architecture_floating_remember_window_layer",
-        contract_version="0.1",
+        contract_version="0.2",
         responsibility=(
             "Define click-open floating Fancy Index payloads and visual behavior "
             "for Neural Architecture markers. The WebView emits intent only; "

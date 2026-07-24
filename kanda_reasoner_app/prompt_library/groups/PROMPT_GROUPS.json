@@ -1,135 +1,234 @@
 {
-  "schema_version": "1.0.0",
-  "status": "active",
-  "purpose": "Read-only prompt groups for Tab 9 Prompt Engineering Library dashboard cards.",
+  "schema_version": "2.0.0",
+  "status": "compatibility_fallback",
+  "purpose": "Package fallback mirror of the canonical Prompt Library group catalog.",
   "groups": [
     {
-      "group_id": "daily_start",
-      "display_name": "Daily Start Prompts",
+      "group_id": "01_session_start_and_navigation",
+      "display_name": "Session Start and Navigation",
+      "description": "Compact startup, two-stage readiness, continuity, handoff, Error Memory admission, durable-artifact routing, and startup authoring templates.",
+      "prompt_ids": [
+        "ai_human_partnership_session_start",
+        "ai_prompt_request_canon",
+        "daily_patch_delivery_guardrails",
+        "daily_startup_loader_template",
+        "durable_document_artifact_routing_canon",
+        "error_memory_ai_formulary_startup_canon",
+        "handoff_at_end_of_work",
+        "project_startup_canon_template",
+        "prompt_router_reasoner_startup_check",
+        "session_start_upload_checklist",
+        "start_of_day_master_stack"
+      ],
       "color_role": "blue",
-      "font_weight": "bold",
-      "description": "Prompts and router logic to open when a new engineering chat starts.",
-      "prompt_ids": [
-        "0000_0_1_general_prompt_stack_load_order",
-        "0000_1_0_project_startup_canon_template",
-        "0000_2_1_daily_startup_loader_template"
-      ],
+      "prompt_count": 11,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "end_of_day_handoff",
-      "display_name": "End of Day / Handoff",
+      "group_id": "02_prompt_routing_and_indexing",
+      "display_name": "Prompt Routing and Indexing",
+      "description": "Current routing owners, exact prompt addresses, Project overlays, historical identity substitutions, and semantic or ML adoption safety boundaries.",
+      "prompt_ids": [
+        "chatgpt_kanda_routing_choice_output_protocol",
+        "kanda_routing_system_canon",
+        "project_overlay_selector",
+        "prompt_navigation_index",
+        "prompt_substitution_map",
+        "routing_signal_scorer_v3_semantic_readiness_canon"
+      ],
       "color_role": "green",
-      "font_weight": "bold",
-      "description": "Release notes and current-state documents used beside the current Project handoff exporter.",
-      "prompt_ids": [
-        "text_library_freeze_handoff",
-        "prompt_library_current_state",
-        "prompt_library_roadmap"
-      ],
+      "prompt_count": 6,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "governance_freeze",
-      "display_name": "Governance Freeze",
+      "group_id": "03_governance_freeze_and_handoff",
+      "display_name": "Governance, Freeze, and Handoff",
+      "description": "Brick Wall governance, cooperative implementation decisions, freeze intake, pre-output artifact gates, and draft governance or handoff templates.",
+      "prompt_ids": [
+        "brick_wall_comprehensive_quality_gate",
+        "cooperative_implementation_methodology",
+        "freeze_code_intake_and_form_protocol",
+        "pre_output_contract_gates",
+        "professional_engineering_governance_template",
+        "workflow_handoff_template"
+      ],
       "color_role": "gold",
-      "font_weight": "bold",
-      "description": "Supporting notes only; current freeze intake and confirmation are owned by the workspace Prompt Library and application freeze flow.",
-      "prompt_ids": [
-        "governance_update_overlay_notes_template",
-        "prompt_pack_release_notes_template"
-      ],
+      "prompt_count": 6,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "high_risk_engineering",
-      "display_name": "High-Risk Engineering",
+      "group_id": "04_box_architecture_and_boundaries",
+      "display_name": "Box Architecture and Boundaries",
+      "description": "Bounded ownership, boundary-first repair, shielding, project folder placement, and stateful control regression protection.",
+      "prompt_ids": [
+        "boundary_first_repair_protocol",
+        "box_architecture_canon",
+        "kanda_box_shielding_canon",
+        "project_folder_organization_canon",
+        "stateful_control_regression_canon"
+      ],
       "color_role": "orange",
-      "font_weight": "bold",
-      "description": "Application-local supporting prompts; current governed authorization remains with workspace Brick Wall and specialist owners.",
-      "prompt_ids": [
-        "0000_1_0_project_startup_canon_template",
-        "architecture_hardening_overlay_template",
-        "python_clean_code_overlay"
-      ],
+      "prompt_count": 5,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "large_module_refactor",
-      "display_name": "Large Module Refactor",
+      "group_id": "05_patch_delivery_and_validation",
+      "display_name": "Patch Delivery and Validation",
+      "description": "Bundle-gated implementation, delivery, validation, active delivery regressions, user-detected corrections, terminal cleanup, and routine lifecycle blueprints.",
+      "prompt_ids": [
+        "bundle_gated_development_workflow",
+        "implementation_and_delivery_protocol",
+        "implementation_roadmap_builder",
+        "patch_install_delivery_error_register",
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "router_bridge_user_detected_correction",
+        "terminal_cleanup_contract"
+      ],
       "color_role": "purple",
-      "font_weight": "bold",
-      "description": "Application-local supporting overlays only; current governed large-module authority is workspace KPR-06-007.",
-      "prompt_ids": [
-        "large_module_overlay_profile_template",
-        "python_clean_code_overlay"
-      ],
+      "prompt_count": 7,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "architecture_hardening",
-      "display_name": "Architecture Hardening",
+      "group_id": "06_refactor_and_architecture_hardening",
+      "display_name": "Refactor and Architecture Hardening",
+      "description": "Architecture triage, safe refactoring, large-module planning, and governed Web AI planning or AST-split exchange protocols.",
+      "prompt_ids": [
+        "architecture_hardening_triage_protocol",
+        "architecture_hardening_triage_template",
+        "large_module_refactor_protocol",
+        "large_module_refactor_template",
+        "safe_refactor_how_to",
+        "web_ai_ast_split_risk_repair_protocol",
+        "web_ai_large_module_refactor_exchange_protocol",
+        "web_ai_planning_response_bundle_blueprint"
+      ],
       "color_role": "red",
-      "font_weight": "bold",
-      "description": "Application-local supporting overlays and checklists only; current governed triage authority is workspace KPR-06-005.",
-      "prompt_ids": [
-        "architecture_hardening_overlay_template",
-        "project_agnostic_prompt_review_checklist",
-        "prompt_metadata_consistency_checklist"
-      ],
+      "prompt_count": 8,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "domain_special_overlays",
-      "display_name": "Domain / Special Overlays",
+      "group_id": "07_prompt_authoring_and_audit",
+      "display_name": "Prompt Authoring and Audit",
+      "description": "Audit, generalize, reconcile, identify, and apply authorized Prompt Library lifecycle changes through distinct owners.",
+      "prompt_ids": [
+        "project_specific_prompt_generalization",
+        "prompt_audit_canon",
+        "prompt_canon_reconciliation_protocol",
+        "prompt_identity_code_registry_canon",
+        "prompt_insertion_and_router_registration_protocol"
+      ],
       "color_role": "teal",
-      "font_weight": "bold",
-      "description": "Reusable templates for project-specific frozen decision tables and do-not-regress overlays.",
-      "prompt_ids": [
-        "domain_decision_table_overlay_template",
-        "ui_component_do_not_regress_overlay_template",
-        "architecture_hardening_overlay_template",
-        "governance_update_overlay_notes_template"
-      ],
+      "prompt_count": 5,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "prompt_library_tools",
-      "display_name": "Prompt Library Tools",
+      "group_id": "08_python_engineering_core",
+      "display_name": "Python Engineering Core",
+      "description": "Python clean code, architecture, patterns, domain design, enterprise design, performance, legacy stabilization, pragmatic trade-offs, and refactoring.",
+      "prompt_ids": [
+        "python_clean_architecture",
+        "python_clean_code",
+        "python_design_patterns",
+        "python_domain_driven_design",
+        "python_enterprise_architecture",
+        "python_high_performance",
+        "python_legacy_code_workflow",
+        "python_pragmatic_programmer",
+        "python_refactoring",
+        "software_engineering_books_master"
+      ],
       "color_role": "gray",
-      "font_weight": "bold",
-      "description": "Templates and checklists for maintaining, validating, exporting, and documenting prompt packs.",
-      "prompt_ids": [
-        "prompt_template_blueprint",
-        "prompt_pack_manifest_template",
-        "prompt_pack_export_checklist",
-        "prompt_pack_import_checklist",
-        "prompt_validation_report_template",
-        "prompt_library_qa_checklist",
-        "prompt_library_release_checklist",
-        "prompt_library_master_index"
-      ],
+      "prompt_count": 10,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
     {
-      "group_id": "teach_ai_prompt_authoring",
-      "display_name": "Teach AI Prompt Authoring",
-      "color_role": "gold",
-      "font_weight": "bold",
-      "description": "Teach an AI how to create or update prompts so they fit Tab 9 Prompt Library logic.",
+      "group_id": "09_python_quality_security_observability",
+      "display_name": "Python Quality, Security, and Observability",
+      "description": "Evidence verification, adversarial audits, testing, security, observability, resilience, validation, documentation, and developer experience.",
       "prompt_ids": [
-        "teach_ai_tab9_prompt_authoring_guide",
-        "teach_ai_create_or_update_prompt_request",
-        "tab9_prompt_asset_placement_rules"
+        "anti_hallucination_book_literature_audit_full",
+        "anti_hallucination_book_literature_audit_short",
+        "anti_hallucination_full_group",
+        "anti_hallucination_independent_ai_audit_full",
+        "anti_hallucination_independent_ai_audit_short",
+        "anti_hallucination_master_protocol_full",
+        "anti_hallucination_protocol_short",
+        "anti_hallucination_short_group",
+        "anti_hallucination_web_evidence_audit_full",
+        "anti_hallucination_web_evidence_audit_short",
+        "python_documentation_developer_experience",
+        "python_observability_logging_metrics_tracing",
+        "python_resilience_error_handling",
+        "python_security_threat_prevention",
+        "python_testing_pytest",
+        "python_validation_serialisation_type_safety"
       ],
+      "color_role": "indigo",
+      "prompt_count": 16,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "10_python_api_data_async_config",
+      "display_name": "Python API, Data, Async, and Config",
+      "description": "APIs, database design and migrations, concurrency or distributed execution, configuration, and feature-flag lifecycle.",
+      "prompt_ids": [
+        "python_api_design",
+        "python_async_parallel_distributed",
+        "python_configuration_feature_flags",
+        "python_database_design_optimisation"
+      ],
+      "color_role": "cyan",
+      "prompt_count": 4,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "11_productization_and_release_readiness",
+      "display_name": "Productization and Release Readiness",
+      "description": "Current deployment, operations, lifecycle, reliability, and AI-assisted engineering operating-model specialists.",
+      "prompt_ids": [
+        "kubernetes_deployment_operations",
+        "professional_ai_assisted_engineering_framework",
+        "python_lifecycle_versioning_deprecation",
+        "python_site_reliability_engineering"
+      ],
+      "color_role": "pink",
+      "prompt_count": 4,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
+    },
+    {
+      "group_id": "12_generalized_project_canons",
+      "display_name": "Generalized Project Canons",
+      "description": "Reusable project canons and templates for Tool versus Project identity, MCard lifecycle, Error Memory, help documents, visual semantics, plugins, pipelines, and resolver boundaries.",
+      "prompt_ids": [
+        "architecture_review_project_card_machine_canon",
+        "data_transform_pipeline_invariants",
+        "desktop_help_document_layout_canon",
+        "kanda_desktop_help_exact_layout_blueprint",
+        "domain_decision_table_template",
+        "error_memory_active_ready_correction_blueprint",
+        "error_memory_active_ready_json_template",
+        "error_memory_model_template",
+        "peopleware_team_boundary",
+        "plugin_package_import_canon",
+        "practical_field_handbook_template",
+        "project_tool_boundary_canon",
+        "project_tool_boundary_startup_bridge",
+        "shared_visual_render_engine_canon",
+        "transform_resolver_architecture_contract"
+      ],
+      "color_role": "lime",
+      "prompt_count": 15,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     }

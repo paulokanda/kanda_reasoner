@@ -13,6 +13,8 @@ from pathlib import Path
 class AIConfig:
     """Settings that control how the AI docstring generator connects and behaves."""
 
+    provider_mode: str = "local"
+    gateway_id: str = "openrouter"
     base_url: str = "http://localhost:11434/v1"
     model: str = "codellama:13b"
     timeout_seconds: float = 30.0
@@ -21,6 +23,7 @@ class AIConfig:
     fallback_to_heuristic: bool = True
     require_ai_success: bool = False
     use_structured_outputs: bool = True
+    free_models_only: bool = True
     workers: int = 1
     cache_enabled: bool = True
     cache_path: str = ".docstring_cache.json"

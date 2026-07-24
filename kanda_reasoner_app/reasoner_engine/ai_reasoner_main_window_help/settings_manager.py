@@ -50,12 +50,6 @@ class WindowSettingsManager:
         _set_text("cache_dir_edit", "cache_dir")
         _set_text("governance_path_edit", "governance_path")
 
-        saved_model = settings.value("selected_model", "", type=str)
-        if saved_model:
-            idx = window.model_combo.findText(saved_model)
-            if idx >= 0:
-                window.model_combo.setCurrentIndex(idx)
-
         prefer_code = settings.value("prefer_code", True, type=bool)
         if prefer_code:
             window.prefer_code_radio.setChecked(True)
@@ -92,7 +86,6 @@ class WindowSettingsManager:
         settings.setValue("cache_dir", window.cache_dir_edit.text().strip())
         settings.setValue("governance_path", window.governance_path_edit.text().strip())
         settings.setValue("project_root", window.project_root_edit.text().strip())
-        settings.setValue("selected_model", window.model_combo.currentText().strip())
         settings.setValue("prefer_code", window.prefer_code_radio.isChecked())
         settings.setValue("verbosity", window.verbosity_combo.currentText().strip())
         settings.setValue("debug", window.debug_checkbox.isChecked())

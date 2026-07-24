@@ -10,7 +10,17 @@ __all__ = [
 from pathlib import Path
 
 from PySide6.QtCore import QSignalBlocker
-from PySide6.QtWidgets import QFileDialog, QLabel, QLineEdit, QListWidget, QPushButton, QWidget
+from PySide6.QtWidgets import (
+    QFileDialog,
+    QLabel,
+    QLineEdit,
+    QListWidget,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QTextEdit,
+    QWidget,
+)
 
 from .ignore_rules_tab_help.browse_state import IgnoreRulesBrowseStateMixin
 from .ignore_rules_tab_help.list_actions import IgnoreRulesListActionsMixin
@@ -73,12 +83,73 @@ class IgnoreRulesTab(
             "font-weight: bold; "
             "padding: 4px 8px;"
         )
+        self.exclusion_help_button = QPushButton("Help")
+        self.exclusion_help_button.setToolTip(
+            "Open the Exclusion Rules first-time user help."
+        )
+        self.exclusion_help_button.clicked.connect(
+            self._open_exclusion_rules_help
+        )
+        self._exclusion_help_dialog = None
         self.folder_list = QListWidget()
         self.file_list = QListWidget()
         self.ext_list = QListWidget()
 
         self._build_ui()
         self._load_rules()
+
+
+    def _open_exclusion_rules_help(self) -> None:
+        """Open the local Exclusion Rules help document."""
+        try:
+            from .help_docs.renderer import (
+                open_help_document_for_legacy_catalog,
+            )
+
+            rich_dialog = open_help_document_for_legacy_catalog(
+                self,
+                "exclusion_rules.json",
+                window_title="Help - Exclusion Rules",
+            )
+        except Exception:
+            rich_dialog = None
+
+        if rich_dialog is not None:
+            self._exclusion_help_dialog = rich_dialog
+            return
+
+        try:
+            from .gui_support import (
+                _format_help_catalog_text,
+                _help_catalog_path,
+            )
+
+            catalog_path = _help_catalog_path("exclusion_rules.json")
+            if not catalog_path.is_file():
+                QMessageBox.warning(
+                    self,
+                    "Help catalog not found",
+                    "Expected Exclusion Rules help was not found:\n"
+                    f"{catalog_path}",
+                )
+                return
+
+            dialog = QMainWindow(self)
+            dialog.setWindowTitle("Help - Exclusion Rules")
+            dialog.resize(1000, 750)
+
+            editor = QTextEdit(dialog)
+            editor.setReadOnly(True)
+            editor.setPlainText(_format_help_catalog_text(catalog_path))
+            dialog.setCentralWidget(editor)
+            dialog.show()
+            self._exclusion_help_dialog = dialog
+        except Exception as exc:
+            QMessageBox.warning(
+                self,
+                "Help could not be opened",
+                f"Failed to open Exclusion Rules help.\n\nDetails: {exc}",
+            )
 
     def set_project_root(self, project_root: Path | None) -> None:
         """Switch the active project and load its exclusion rules."""

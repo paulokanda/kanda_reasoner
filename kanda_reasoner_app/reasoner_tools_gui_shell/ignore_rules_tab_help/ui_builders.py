@@ -25,6 +25,7 @@ class IgnoreRulesUiMixin:
         project_scope_row.addWidget(self.project_root_search_button, 0)
         project_scope_row.addSpacing(16)
         project_scope_row.addWidget(self.project_scope_label, 1)
+        project_scope_row.addWidget(self.exclusion_help_button, 0)
         main_layout.addLayout(project_scope_row)
 
         folder_group = QGroupBox(

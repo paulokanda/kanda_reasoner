@@ -24,6 +24,12 @@ from kanda_reasoner_app.reasoner_engine.v10_models import (
     RetrievalBundle,
 )
 
+from ._live_source_query import (
+        extract_live_identifier_terms,
+        score_live_source_candidate,
+    )
+
+
 __all__ = [
     "augment_bundle_with_live_source_fallback",
     "extract_live_identifier_terms",
@@ -34,102 +40,66 @@ __all__ = [
 _EXCLUDED_DIRS = {
     "__pycache__",
     ".git",
+    ".history",
     ".idea",
-    ".pytest_cache",
     ".mypy_cache",
+    ".project_reference",
+    ".pytest_cache",
     ".ruff_cache",
     ".venv",
-    "venv",
-    "env",
+    "archive",
+    "archives",
+    "backup",
+    "backups",
     "build",
-    "dist",
-    "node_modules",
-    "htmlcov",
     "coverage",
+    "dist",
+    "env",
+    "htmlcov",
     "json_splitted",
+    "legacy_physical_package_archive",
+    "node_modules",
+    "oldies",
+    "venv",
+}
+
+_PRODUCTION_DIR_NAMES = {
+    "app",
+    "core",
+    "engine",
+    "lib",
+    "package",
+    "packages",
+    "retriever",
+    "runtime",
+    "service",
+    "services",
+    "src",
+}
+
+_LOW_PRIORITY_DIR_NAMES = {
+    "docs",
+    "documentation",
+    "examples",
+    "samples",
+    "scripts",
+    "test",
+    "tests",
+    "tools",
 }
 
 _SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".toml", ".json", ".yml", ".yaml"}
 
+_MAX_SOURCE_FILES = 3000
+_MAX_SOURCE_FILE_BYTES = 96 * 1024
+
+
 
 def _norm(value: str) -> str:
-    """Return a simple lowercase alphanumeric normalization."""
     return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
 
 
-def _camel_to_snake(value: str) -> str:
-    """Convert a CamelCase token to snake_case."""
-    text = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", str(value))
-    text = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", text)
-    return text.lower()
-
-
-def extract_live_identifier_terms(question: str) -> list[str]:
-    """Extract exact identifier-like terms from a user question."""
-    raw_terms = re.findall(
-        r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*|[A-Za-z0-9_\-]+\.py",
-        question,
-    )
-    out: list[str] = []
-    seen: set[str] = set()
-
-    stop_words = {
-        "what",
-        "where",
-        "which",
-        "when",
-        "why",
-        "how",
-        "does",
-        "about",
-        "responsibility",
-        "responsible",
-        "class",
-        "function",
-        "method",
-        "file",
-        "module",
-        "project",
-        "define",
-        "defines",
-        "defined",
-        "implementation",
-        "explain",
-        "show",
-    }
-
-    for term in raw_terms:
-        stripped = term.strip()
-        if not stripped:
-            continue
-
-        lower = stripped.lower()
-        is_python_file = lower.endswith(".py")
-        has_identifier_shape = (
-            "_" in stripped
-            or "." in stripped
-            or any(char.isupper() for char in stripped[1:])
-            or len(stripped) >= 10
-        )
-
-        if lower in stop_words and not is_python_file:
-            continue
-
-        if not is_python_file and not has_identifier_shape:
-            continue
-
-        key = stripped.lower()
-        if key in seen:
-            continue
-
-        seen.add(key)
-        out.append(stripped)
-
-    return out[:6]
-
-
 def _bundle_text(bundle: RetrievalBundle) -> str:
-    """Return normalized text for already retrieved evidence."""
     parts: list[str] = []
     for item in bundle.file_evidence:
         parts.extend([item.path, item.module_name, item.reason, item.detail])
@@ -147,52 +117,85 @@ def _bundle_text(bundle: RetrievalBundle) -> str:
 
 
 def _term_already_supported(term: str, bundle: RetrievalBundle) -> bool:
-    """Return True when existing evidence already mentions term."""
     if not term:
         return True
     return _norm(term) in _bundle_text(bundle)
 
-
-def _candidate_file_tokens(term: str) -> set[str]:
-    """Build normalized filename/path tokens for one identifier term."""
-    tokens = {_norm(term)}
-    snake = _camel_to_snake(term)
-    tokens.add(_norm(snake))
-    if not term.lower().endswith(".py"):
-        tokens.add(_norm(snake + ".py"))
-    return {token for token in tokens if token}
+def _is_reparse_point(path: Path) -> bool:
+    """Return whether one existing Windows path is a reparse point."""
+    if os.name != "nt":
+        return False
+    try:
+        attributes = path.stat().st_file_attributes
+    except (AttributeError, OSError):
+        return False
+    return bool(attributes & 0x400)
 
 
 def _is_excluded_path(path: Path) -> bool:
-    """Return True for directories/files that should not be scanned."""
+    """Return True for paths outside the bounded Local AI source surface."""
     lowered_parts = {part.lower() for part in path.parts}
-    return any(part in _EXCLUDED_DIRS for part in lowered_parts)
+    if any(part in _EXCLUDED_DIRS for part in lowered_parts):
+        return True
+    return any(part.endswith("_show_project_to_ai") for part in lowered_parts)
+
+
+def _directory_sort_key(name: str) -> tuple[int, str]:
+    """Prioritize current production packages before auxiliary folders."""
+    lowered = str(name or "").lower()
+    if lowered.endswith("_app") or lowered in _PRODUCTION_DIR_NAMES:
+        return (0, lowered)
+    if lowered in _LOW_PRIORITY_DIR_NAMES:
+        return (2, lowered)
+    return (1, lowered)
+
+
+def _source_name_sort_key(name: str) -> tuple[int, str]:
+    """Inspect Python implementation files before other source-like files."""
+    lowered = str(name or "").lower()
+    return (0 if lowered.endswith(".py") else 1, lowered)
 
 
 def _iter_candidate_source_files(project_root: Path) -> list[Path]:
     """Return bounded source-like files under project_root."""
     files: list[Path] = []
-    for root, dirs, names in os.walk(project_root):
+    for root, dirs, names in os.walk(
+        project_root, topdown=True, followlinks=False
+    ):
         root_path = Path(root)
-        dirs[:] = [
-            name for name in dirs if name.lower() not in _EXCLUDED_DIRS
-        ]
+        kept_dirs: list[str] = []
+        for name in dirs:
+            candidate = root_path / name
+            if _is_excluded_path(candidate):
+                continue
+            if candidate.is_symlink() or _is_reparse_point(candidate):
+                continue
+            kept_dirs.append(name)
+        kept_dirs.sort(key=_directory_sort_key)
+        dirs[:] = kept_dirs
         if _is_excluded_path(root_path):
             continue
 
-        for name in names:
+        for name in sorted(names, key=_source_name_sort_key):
             path = root_path / name
             if path.suffix.lower() not in _SOURCE_EXTENSIONS:
                 continue
             if _is_excluded_path(path):
                 continue
+            if path.is_symlink() or _is_reparse_point(path):
+                continue
             files.append(path)
+            if len(files) >= _MAX_SOURCE_FILES:
+                files.sort(key=lambda item: str(item).lower())
+                return files
 
     files.sort(key=lambda item: str(item).lower())
     return files
 
 
-def _read_small_text(path: Path, max_bytes: int = 2 * 1024 * 1024) -> str:
+def _read_small_text(
+    path: Path, max_bytes: int = _MAX_SOURCE_FILE_BYTES
+) -> str:
     """Read a small text file with replacement decoding."""
     try:
         if path.stat().st_size > max_bytes:
@@ -206,66 +209,42 @@ def find_live_source_candidates(
     project_root: str | Path,
     terms: list[str],
     *,
-    limit: int = 4,
+    limit: int = 6,
+    question: str = "",
 ) -> list[dict[str, Any]]:
-    """Find live source files that match identifier terms."""
+    """Find and rank live source files using multi-term query coverage."""
     root = Path(project_root).resolve()
     if not root.exists() or not root.is_dir():
         return []
 
-    term_tokens: dict[str, set[str]] = {
-        term: _candidate_file_tokens(term) for term in terms
-    }
     candidates: list[tuple[int, str, str, Path]] = []
-
     for path in _iter_candidate_source_files(root):
         try:
             relative = str(path.relative_to(root))
         except ValueError:
             continue
 
-        relative_norm = _norm(relative)
-        file_norm = _norm(path.name)
-        text = ""
+        path_result = verify_live_source_path(root, relative)
+        if path_result.status != "ok":
+            continue
 
-        for term, tokens in term_tokens.items():
-            score = 0
-            if any(token and token in file_norm for token in tokens):
-                score += 900
-            if any(token and token in relative_norm for token in tokens):
-                score += 300
-
-            if score < 900:
-                text = text or _read_small_text(path)
-                text_norm = _norm(text)
-                if _norm(term) in text_norm:
-                    score += 500
-
-            if score <= 0:
-                continue
-
-            # Prefer Python implementation files for symbol questions.
-            if path.suffix.lower() == ".py":
-                score += 120
-
-            candidates.append((score, relative.lower(), term, path))
+        text = _read_small_text(path)
+        score, anchor = score_live_source_candidate(
+            relative, text, terms, question
+        )
+        if score <= 0 or not anchor:
+            continue
+        candidates.append((score, relative.lower(), anchor, path))
 
     candidates.sort(key=lambda item: (-item[0], item[1], item[2].lower()))
-
     out: list[dict[str, Any]] = []
-    seen_paths: set[str] = set()
-
-    for score, _relative_key, term, path in candidates:
-        relative = str(path.relative_to(root))
-        if relative in seen_paths:
-            continue
-        seen_paths.add(relative)
-        out.append({"score": score, "term": term, "path": relative})
-        if len(out) >= limit:
-            break
-
+    for score, _relative_key, anchor, path in candidates[:limit]:
+        out.append({
+            "score": score,
+            "term": anchor,
+            "path": str(path.relative_to(root)),
+        })
     return out
-
 
 def _next_file_id(bundle: RetrievalBundle) -> str:
     """Return the next file evidence id."""
@@ -340,13 +319,18 @@ def augment_bundle_with_live_source_fallback(
     *,
     max_files: int,
     max_snippets: int,
+    project_root_override: str = "",
 ) -> RetrievalBundle:
     """Augment retrieval with verified live source when JSON evidence is weak.
 
     The fallback activates only for identifier-like terms that are missing from
     the current evidence bundle.
     """
-    project_root = str(getattr(retriever.idx, "project_root", "") or "").strip()
+    project_root = str(project_root_override or "").strip()
+    if not project_root:
+        project_root = str(
+            getattr(retriever.idx, "project_root", "") or ""
+        ).strip()
     if not project_root:
         return bundle
 
@@ -359,7 +343,9 @@ def augment_bundle_with_live_source_fallback(
     if not terms:
         return bundle
 
-    candidates = find_live_source_candidates(project_root, terms, limit=4)
+    candidates = find_live_source_candidates(
+        project_root, terms, limit=min(max_files, 6), question=question
+    )
     if not candidates:
         return bundle
 
@@ -395,7 +381,8 @@ def augment_bundle_with_live_source_fallback(
                 "Status: " + path_result.status,
                 "SHA-256: " + path_result.sha256,
                 "Size bytes: " + str(path_result.size_bytes),
-                "This evidence came from live source verification, not from stale JSON.",
+                "This evidence came from live source verification, "
+                "not from stale JSON.",
             ]
         )
         bundle.file_evidence.append(

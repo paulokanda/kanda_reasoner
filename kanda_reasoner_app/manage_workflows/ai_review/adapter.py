@@ -6,6 +6,10 @@ from __future__ import annotations
 import importlib
 from typing import Any, Callable
 
+from kanda_reasoner_app.reasoner_engine.local_ai_chat_service import (
+    resolve_local_ai_model,
+)
+
 from .formatter import format_tab2_advisory_review_text
 from .models import Tab2AIReviewRequest, Tab2AIReviewResult
 from .review_message_builder import build_tab2_ai_review_messages
@@ -71,13 +75,7 @@ class Tab2AIReviewAdapter:
 
     def choose_model(self, requested_model: str = "") -> str:
         """Choose a model for advisory review from request or registry."""
-        models = self.list_models()
-        requested = str(requested_model or "").strip()
-        if requested and requested in models:
-            return requested
-        if models:
-            return models[0]
-        return requested
+        return resolve_local_ai_model(str(requested_model or "").strip())
 
     def review(self, request: Tab2AIReviewRequest) -> Tab2AIReviewResult:
         """Run one advisory review and return a safe result object."""
@@ -96,8 +94,7 @@ class Tab2AIReviewAdapter:
                 text="",
                 model_name="",
                 error_message=(
-                    "No local Ollama model is available. Run Tab 7 Refresh Models "
-                    "or install a local Ollama model."
+                    "No global Local AI model is configured. Open Config AI > Config Local AI."
                 ),
             )
 

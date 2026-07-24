@@ -30,6 +30,8 @@ _FRONTMATTER_RE = re.compile(r"\A---\s*\n(?P<body>.*?)\n---\s*\n", re.DOTALL)
 _LIST_KEY_RE = re.compile(r"^(?P<key>[A-Za-z_][A-Za-z0-9_]*):\s*$")
 _SCALAR_RE = re.compile(r"^(?P<key>[A-Za-z_][A-Za-z0-9_]*):\s*(?P<value>.*)$")
 _LIST_ITEM_RE = re.compile(r"^\s*-\s*(?P<value>.*)$")
+_MARKDOWN_HEADING_RE = re.compile(r"^##\s+(?P<value>.+?)\s*$")
+_MARKDOWN_BULLET_RE = re.compile(r"^\s*-\s+(?P<value>.+?)\s*$")
 
 
 def _strip_quotes(value: str) -> str:
@@ -90,6 +92,92 @@ def parse_frontmatter(text: str) -> dict[str, Any]:
     return data
 
 
+def _metadata_list(meta: dict[str, Any], *keys: str) -> list[str]:
+    """Return deduplicated list values from compatible frontmatter keys."""
+    result: list[str] = []
+    seen: set[str] = set()
+    for key in keys:
+        value = meta.get(key)
+        if not isinstance(value, list):
+            continue
+        for item in value:
+            normalized = " ".join(str(item).split())
+            folded = normalized.casefold()
+            if normalized and folded not in seen:
+                seen.add(folded)
+                result.append(normalized)
+    return result
+
+
+def _markdown_bullets(text: str, *headings: str) -> list[str]:
+    """Return deduplicated bullets from compatible Markdown sections."""
+    wanted = {" ".join(value.split()).casefold() for value in headings}
+    collecting = False
+    result: list[str] = []
+    seen: set[str] = set()
+    for raw_line in text.splitlines():
+        heading_match = _MARKDOWN_HEADING_RE.match(raw_line.strip())
+        if heading_match:
+            heading = " ".join(heading_match.group("value").split()).casefold()
+            collecting = heading in wanted
+            continue
+        if not collecting:
+            continue
+        bullet_match = _MARKDOWN_BULLET_RE.match(raw_line)
+        if not bullet_match:
+            continue
+        value = " ".join(bullet_match.group("value").split())
+        folded = value.casefold()
+        if value and folded not in seen:
+            seen.add(folded)
+            result.append(value)
+    return result
+
+
+def _merge_unique(*groups: list[str]) -> list[str]:
+    """Merge string lists while preserving first-seen order."""
+    result: list[str] = []
+    seen: set[str] = set()
+    for group in groups:
+        for item in group:
+            normalized = " ".join(str(item).split())
+            folded = normalized.casefold()
+            if normalized and folded not in seen:
+                seen.add(folded)
+                result.append(normalized)
+    return result
+
+
+def _compatible_box(meta: dict[str, Any]) -> str:
+    """Return the canonical box from current or historical frontmatter."""
+    return str(meta.get("box") or meta.get("primary_box") or "")
+
+
+def _compatible_protected_paths(meta: dict[str, Any], text: str) -> list[str]:
+    """Return protected paths from frontmatter or historical body sections."""
+    return _merge_unique(
+        _metadata_list(meta, "protected_paths"),
+        _markdown_bullets(text, "Protected paths"),
+    )
+
+
+def _compatible_do_not_touch_summary(
+    meta: dict[str, Any],
+    text: str,
+) -> list[str]:
+    """Return current rules from current and historical freeze schemas."""
+    return _merge_unique(
+        _metadata_list(meta, "do_not_touch_summary", "do_not_regress_rules"),
+        _markdown_bullets(
+            text,
+            "do-not-regress rules",
+            "do not regress rules",
+            "Do not touch summary",
+            "do-not-touch summary",
+        ),
+    )
+
+
 def _legacy_entries_root(project_root: Path | str) -> Path:
     """Return legacy in-source freeze entries path."""
     paths = build_paths(project_root)
@@ -132,26 +220,22 @@ def build_freezes(project_root: Path | str) -> list[dict[str, Any]]:
     freezes: list[dict[str, Any]] = []
 
     for entry_path in entry_files(paths.project_root):
-        text = entry_path.read_text(encoding="utf-8")
+        text = entry_path.read_text(encoding="utf-8-sig")
         meta = parse_frontmatter(text)
         rel_entry = relative_to_project(entry_path, paths.project_root).as_posix()
         freeze_id = str(meta.get("freeze_id") or entry_path.stem)
-        protected_paths = meta.get("protected_paths")
-        if not isinstance(protected_paths, list):
-            protected_paths = []
-        do_not_touch_summary = meta.get("do_not_touch_summary")
-        if not isinstance(do_not_touch_summary, list):
-            do_not_touch_summary = []
+        protected_paths = _compatible_protected_paths(meta, text)
+        do_not_touch_summary = _compatible_do_not_touch_summary(meta, text)
 
         freezes.append(
             {
                 "freeze_id": freeze_id,
-                "box": str(meta.get("box") or ""),
+                "box": _compatible_box(meta),
                 "status": str(meta.get("status") or "frozen"),
                 "date": str(meta.get("date") or ""),
                 "entry": rel_entry,
-                "protected_paths": [str(item) for item in protected_paths],
-                "do_not_touch_summary": [str(item) for item in do_not_touch_summary],
+                "protected_paths": protected_paths,
+                "do_not_touch_summary": do_not_touch_summary,
                 "superseded_by": meta.get("superseded_by") or None,
             }
         )
@@ -189,7 +273,7 @@ def load_freeze_index(project_root: Path | str) -> dict[str, Any]:
     """
     paths = build_paths(project_root)
     index_path = paths.freeze_index if paths.freeze_index.is_file() else _legacy_freeze_index(project_root)
-    data = json.loads(index_path.read_text(encoding="utf-8"))
+    data = json.loads(index_path.read_text(encoding="utf-8-sig"))
     if data.get("schema_version") != SCHEMA_VERSION:
         raise ValueError("freeze_index.json schema_version must be 1.0")
     if not isinstance(data.get("freezes"), list):

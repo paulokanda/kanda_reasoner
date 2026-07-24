@@ -92,6 +92,26 @@ def _qt_web_engine_widgets_attr(name: str) -> Any:
     return getattr(import_module("PySide6.QtWebEngineWidgets"), name)
 
 
+_CLOSE_FLOATING_WINDOW_JS = (
+    "if (typeof hideFloatingRememberWindow === 'function') { "
+    "hideFloatingRememberWindow(); }"
+)
+
+
+def _request_floating_window_close(web_view: object | None) -> None:
+    """Request read-only cleanup of the floating brain-region window."""
+
+    if web_view is None:
+        return
+    try:
+        page = web_view.page()
+        page.runJavaScript(_CLOSE_FLOATING_WINDOW_JS)
+    except (AttributeError, RuntimeError):
+        # The page may already be unavailable during Qt teardown. Cleanup must
+        # never turn tab hiding or application shutdown into a GUI failure.
+        return
+
+
 def build_neural_architecture_preview_html(
     *,
     object_name: str = "bridge",
@@ -147,7 +167,16 @@ def create_neural_architecture_preview(
     QVBoxLayout = _qt_widgets_attr("QVBoxLayout")
     QWebEngineView = _qt_web_engine_widgets_attr("QWebEngineView")
 
-    widget = QWidget()
+    class _BrainNavigatorPreviewWidget(QWidget):
+        """Close transient brain-region details whenever this tab is hidden."""
+
+        def hideEvent(self, event: object) -> None:
+            _request_floating_window_close(
+                getattr(self, "_brain_navigator_web_view", None)
+            )
+            super().hideEvent(event)
+
+    widget = _BrainNavigatorPreviewWidget()
     widget.setObjectName("neuralArchitecturePreviewWidget")
     widget.setWindowTitle(preview_config.window_title)
 
@@ -156,6 +185,7 @@ def create_neural_architecture_preview(
 
     web_view = QWebEngineView()
     web_view.setObjectName("neuralArchitecturePreviewView")
+    setattr(widget, "_brain_navigator_web_view", web_view)
     layout.addWidget(web_view)
 
     bridge_bundle = create_brain_web_bridge(

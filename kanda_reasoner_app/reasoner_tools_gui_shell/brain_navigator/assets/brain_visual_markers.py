@@ -111,6 +111,15 @@ _PULSE_MARKERS: tuple[BrainPulseMarker, ...] = (
     ),
     # Occipital marker lowered on the posterior cerebrum, above the cerebellum.
     BrainPulseMarker("occipital_lobe", "Occipital lobe", 39.0, 49.0, 0.28, -0.02, -0.60),
+    BrainPulseMarker(
+        "visual_association_cortex",
+        "Visual association cortex",
+        43.0,
+        42.0,
+        0.42,
+        0.18,
+        -0.52,
+    ),
     BrainPulseMarker("central_sulcus", "Central sulcus", 56.0, 35.0, 0.34, 0.34, 0.12),
     # Cerebellum marker moved to the midline vermis area between the two hemispheric lobules.
     BrainPulseMarker(

@@ -4,21 +4,22 @@
   "display_name": "KANDA Desktop Help Document Layout Profile",
   "filename": "desktop_help_document_layout_canon.md",
   "category": "12_generalized_project_canons",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "status": "active_project_overlay",
   "load_type": "on_request",
   "owner_box": "12_generalized_project_canons",
   "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md",
   "classification": "project_specific_desktop_help_content_layout_overlay",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "kanda-help-exact-layout-renderer-contract-v1r1",
   "description": "Define the optional KANDA desktop-help content, layout, artwork, offline-rendering, accessibility, and source-to-rendered profile without presenting it as a universal documentation canon. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
   "box_logic_required": false,
   "priority": 40,
   "trigger_phrases": [
     "KANDA desktop help profile",
     "offline help layout",
-    "help artwork accessibility"
+    "help artwork accessibility",
+    "exact Show Project to AI help layout"
   ],
   "aliases": [
     "KPR-12-010",
@@ -30,11 +31,16 @@
   ],
   "when_to_load": "When the KANDA help system or an explicitly adopted equivalent profile is being authored or reviewed.",
   "when_not_to_load": "Do not load as a universal documentation or runtime visual-engine canon.",
-  "required_companion_prompts": [],
-  "related_prompt_ids": [],
+  "required_companion_prompts": [
+    "kanda_desktop_help_exact_layout_blueprint"
+  ],
+  "related_prompt_ids": [
+    "kanda_desktop_help_exact_layout_blueprint"
+  ],
   "do_not_regress": [
     "Preserve the narrow owner and its explicit non-authorization boundary.",
     "Do not force companions or direct startup loading.",
-    "Do not claim current source, execution or validation without evidence."
+    "Do not claim current source, execution or validation without evidence.",
+    "When exact-layout rendering is required, load KPR-12-015 and preserve its QWebEngine local-file primary-renderer contract."
   ]
 }

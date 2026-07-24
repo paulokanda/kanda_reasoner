@@ -13,11 +13,20 @@ __all__ = [
 import hashlib
 import json
 import re
-import urllib.error
-import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
+
+from kanda_reasoner_app.project_support_boundary import canonical_project_support_root
+from kanda_reasoner_app.tab3_manual_review_runtime.ai_openai_compatible_provider_runtime import (
+    local_openai_compatible_profile,
+)
+from kanda_reasoner_app.web_ai_provider_contracts import (
+    GatewayProfile,
+    ProviderError,
+    get_gateway_profile,
+)
+from kanda_reasoner_app.web_ai_provider_runtime import request_chat_completion
 
 from .ai_config import AIConfig
 from .context_builder import AttributeInfo, ParameterInfo, SymbolContext
@@ -64,12 +73,6 @@ _SOURCE_SKIPPED_PRIVATE = "skipped_private"
 _SOURCE_CACHE = "cache"
 
 
-@dataclass
-
-
-@dataclass
-
-
 class AIDocstringGenerator:
     """Represent aidocstring generator."""
     
@@ -103,7 +106,12 @@ class AIDocstringGenerator:
         self._policy = policy or DocstringPolicy.load_for_project(project_root)
         self._on_fallback = on_fallback
         self._on_low_confidence = on_low_confidence
-        self._cache_path = self._project_root / self._config.cache_path
+        cache_name = Path(self._config.cache_path).name or "docstring_cache.json"
+        self._cache_path = (
+            canonical_project_support_root(self._project_root)
+            / "docstring_assistant"
+            / cache_name
+        )
         self._cache: dict[str, dict] = self._load_cache() if self._config.cache_enabled else {}
         self.stats = GenerationStats()
 
@@ -129,6 +137,7 @@ class AIDocstringGenerator:
         
         if not self._config.cache_enabled:
             return
+        self._cache_path.parent.mkdir(parents=True, exist_ok=True)
         self._cache_path.write_text(
             json.dumps(self._cache, indent=2, ensure_ascii=False),
             encoding="utf-8",
@@ -155,6 +164,8 @@ class AIDocstringGenerator:
             "signature": ctx.signature,
             "source": ctx.source_lines,
             "module_summary_block": ctx.module_summary_block,
+            "provider_mode": self._config.provider_mode,
+            "gateway_id": self._config.gateway_id,
             "model": self._config.model,
             "style": self._config.docstring_style,
             "policy_style": self._policy.style,
@@ -181,31 +192,40 @@ class AIDocstringGenerator:
         )
 
     def _request_content(self, payload: dict[str, Any]) -> str:
-        """Support request content behavior.
-        
-        Parameters
-        ----------
-        payload : dict[str, Any]
-            The payload value.
-        
-        Returns
-        -------
-        str
-            The string result.
-        """
-        
-        url = self._config.base_url.rstrip("/") + "/chat/completions"
+        """Return one model response through KANDA's shared transport."""
+        messages = payload.get("messages")
+        if not isinstance(messages, list):
+            raise ValueError("AI payload messages must be a list.")
+        profile = self._provider_profile()
+        request_options: dict[str, object] = {}
+        if payload.get("response_format") is not None:
+            request_options["response_format"] = payload["response_format"]
         if self._config.seed is not None:
-            payload.setdefault("seed", self._config.seed)
-        request = urllib.request.Request(
-            url,
-            data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
-            method="POST",
+            request_options["seed"] = self._config.seed
+        if profile.gateway_id == "openrouter":
+            request_options["provider"] = {
+                "allow_fallbacks": False,
+                "data_collection": "deny",
+                "require_parameters": True,
+            }
+        result = request_chat_completion(
+            profile,
+            self._config.model,
+            messages,
+            self._config._api_key,
+            request_id="docstring-generator",
+            timeout_seconds=self._config.timeout_seconds,
+            max_tokens=self._config.max_tokens,
+            temperature=self._config.temperature,
+            request_options=request_options,
         )
-        with urllib.request.urlopen(request, timeout=self._config.timeout_seconds) as response:
-            data = json.loads(response.read().decode("utf-8"))
-        return data["choices"][0]["message"]["content"]
+        return result.content
+
+    def _provider_profile(self) -> GatewayProfile:
+        """Return the configured local or web provider profile."""
+        if str(self._config.provider_mode or "").strip().lower() == "web":
+            return get_gateway_profile(self._config.gateway_id)
+        return local_openai_compatible_profile(self._config.base_url)
 
     def _call_model(self, ctx: SymbolContext) -> tuple[str, str]:
         """Support call model behavior.
@@ -247,6 +267,7 @@ class AIDocstringGenerator:
                             "type": "json_schema",
                             "json_schema": {
                                 "name": "docstring_payload",
+                                "strict": True,
                                 "schema": schema,
                             },
                         },
@@ -264,6 +285,8 @@ class AIDocstringGenerator:
                     },
                 ),
             ]
+            if str(self._config.provider_mode).strip().lower() == "web":
+                attempts = attempts[:1]
 
             last_json_error: Exception | None = None
             for generation_source, payload in attempts:
@@ -393,7 +416,14 @@ class AIDocstringGenerator:
             if self._config.fallback_to_heuristic:
                 return self._fallback(ctx, str(exc), failure_reason=exc.failure_reason)
             raise RuntimeError(str(exc)) from exc
-        except (urllib.error.URLError, TimeoutError, OSError, KeyError, ValueError, json.JSONDecodeError) as exc:
+        except (
+            ProviderError,
+            TimeoutError,
+            OSError,
+            KeyError,
+            ValueError,
+            json.JSONDecodeError,
+        ) as exc:
             reason = f"AI call failed: {exc}"
             if self._config.fallback_to_heuristic:
                 return self._fallback(ctx, reason, failure_reason=_FAILURE_AI_CALL_FAILED)

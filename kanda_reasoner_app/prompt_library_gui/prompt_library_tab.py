@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/prompt_library_gui/prompt_library_tab.py
-"""Read-only Prompt Library tab with 3D cube dashboard launchers."""
+"""Read-only Prompt Library tab with canonical 3D group cubes."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from .group_catalog import PromptGroup, filter_items_for_group, load_prompt_grou
 from .group_dashboard import PromptGroupDashboard
 from .group_window import PromptGroupWindow
 from .library_catalog import PromptLibraryItem, load_prompt_library_items
-from .library_paths import prompt_library_root
+from .library_paths import canonical_prompt_library_root, prompt_library_root
 
 __all__ = [
     "PromptLibraryTab",
@@ -19,14 +19,10 @@ __all__ = [
 
 
 class PromptLibraryTab(QWidget):
-    """Read-only GUI tab that launches grouped Prompt Library windows."""
+    """Read-only GUI tab that launches current Prompt Library groups."""
 
     def __init__(self, library_root: Path | None = None) -> None:
-        """Create the Prompt Library group dashboard.
-
-        Args:
-            library_root: Optional prompt_library root override for tests.
-        """
+        """Create the Prompt Library group dashboard."""
         super().__init__()
         self.library_root = library_root or prompt_library_root()
         self.items: list[PromptLibraryItem] = []
@@ -37,20 +33,21 @@ class PromptLibraryTab(QWidget):
         layout.setContentsMargins(12, 12, 12, 12)
         layout.setSpacing(10)
 
-        title = QLabel("Prompt Engineering Library")
+        title = QLabel("Prompt Library")
         title.setStyleSheet("font-weight: bold; font-size: 16px;")
         layout.addWidget(title)
 
         subtitle = QLabel(
-            "Read-only visual dashboard for grouped, project-agnostic prompts. "
-            "Click a native 3D group cube to open a floating Engineering Library window. "
-            "This tab does not edit code, run prompts, or update governance."
+            "Read-only dashboard for the canonical KANDA Prompt Library. "
+            "Each cube represents one current ACTIVE_PROMPTS group. "
+            "Deprecated and retired prompts are hidden. This tab does not "
+            "edit prompts, run prompts, or change governance."
         )
         subtitle.setWordWrap(True)
         layout.addWidget(subtitle)
 
         button_row = QHBoxLayout()
-        self.reload_button = QPushButton("Reload Groups")
+        self.reload_button = QPushButton("Reload Canonical Library")
         self.reload_button.clicked.connect(self.reload_library)
         button_row.addWidget(self.reload_button)
         button_row.addStretch(1)
@@ -67,7 +64,7 @@ class PromptLibraryTab(QWidget):
         self.reload_library()
 
     def reload_library(self) -> None:
-        """Reload prompt groups and prompt-library items from disk."""
+        """Reload current groups and prompts from the canonical workspace."""
         self.items = load_prompt_library_items(self.library_root)
         self.groups = load_prompt_groups(self.library_root)
         counts: dict[str, int] = {}
@@ -76,18 +73,28 @@ class PromptLibraryTab(QWidget):
         self.dashboard.set_groups(self.groups, counts)
 
         if self.groups:
+            source_kind = "canonical workspace"
+            if self.library_root != canonical_prompt_library_root():
+                source_kind = "legacy compatibility fallback"
             self.status_label.setText(
                 "Loaded "
                 + str(len(self.groups))
-                + " prompt groups and "
+                + " current prompt groups and "
                 + str(len(self.items))
-                + " prompt-library text assets from "
+                + " current prompts from the "
+                + source_kind
+                + ": "
                 + str(self.library_root)
+                + ". Deprecated and retired entries are hidden."
             )
         else:
             self.status_label.setText(
-                "No prompt groups found. Expected catalog: "
-                + str(self.library_root / "groups" / "PROMPT_GROUPS.json")
+                "No prompt groups found. Expected canonical catalog: "
+                + str(
+                    self.library_root
+                    / "GROUPS"
+                    / "PROMPT_GROUPS_DRAFT.json"
+                )
             )
 
     def open_group_window(self, group: PromptGroup) -> None:

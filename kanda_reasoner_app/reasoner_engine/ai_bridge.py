@@ -17,6 +17,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from kanda_reasoner_app.reasoner_engine.v10_qwen_ai_models import V9QwenAIModels
+from kanda_reasoner_app.local_ai_configuration import application_local_ai_configuration
 from kanda_reasoner_app.reasoner_engine.ai_bridge_help.bridge_signals import (
     AIWorkerBridge,
 )
@@ -42,7 +43,6 @@ from kanda_reasoner_app.reasoner_engine.ai_bridge_help.prompt_modes import (
 )
 
 __all__ = ["AIWorkerBridge", "LocalAIReasoner"]
-
 
 class LocalAIReasoner:
     """Represent local aireasoner."""
@@ -116,6 +116,26 @@ class LocalAIReasoner:
         
         self.wrapper.set_governance_state_path(Path(state_path).expanduser().resolve())
 
+    @staticmethod
+    def _configuration_is_current(revision: str) -> bool:
+        """Reject streamed callbacks after global endpoint/model changes."""
+        try:
+            return application_local_ai_configuration().snapshot().revision == revision
+        except RuntimeError:
+            return False
+
+    def _emit_if_current(self, revision: str, emitter, value: str) -> None:
+        if self._configuration_is_current(revision):
+            emitter(value)
+
+    def _finish_if_current(self, revision: str, prompt: str, text: str) -> None:
+        if self._configuration_is_current(revision):
+            self._handle_done(prompt, text)
+        else:
+            self.bridge.status_ready.emit(
+                "Stale Local AI result rejected after Config Local AI changed."
+            )
+
     def ask(self, prompt: str, model_name: str) -> None:
         """Support ask behavior.
         
@@ -127,8 +147,17 @@ class LocalAIReasoner:
             The model name value.
         """
         
+        configuration = application_local_ai_configuration().snapshot()
+        model_name = configuration.model_id or str(model_name or "").strip()
+        if not model_name:
+            self.bridge.error_ready.emit(
+                "No global Local AI model is configured in Config AI."
+            )
+            return
+        self.wrapper.set_base_url(configuration.base_url)
+        configuration_revision = configuration.revision
         self.bridge.status_ready.emit(
-            "Submitting question to local AI using model: " + model_name
+            "Submitting question to local AI using global model: " + model_name
         )
 
         if is_one_line_prompt(prompt):
@@ -217,9 +246,15 @@ class LocalAIReasoner:
             max_tokens=2200,
             use_cache=False,
             cache_key_data=cache_key_data,
-            on_token=self.bridge.token_ready.emit,
-            on_done=lambda text: self._handle_done(prompt, text),
-            on_error=self.bridge.error_ready.emit,
+            on_token=lambda token: self._emit_if_current(
+                configuration_revision, self.bridge.token_ready.emit, token
+            ),
+            on_done=lambda text: self._finish_if_current(
+                configuration_revision, prompt, text
+            ),
+            on_error=lambda message: self._emit_if_current(
+                configuration_revision, self.bridge.error_ready.emit, message
+            ),
         )
 
 

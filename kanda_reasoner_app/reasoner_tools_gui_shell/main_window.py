@@ -63,6 +63,14 @@ from .tab_navigation_controller import create_tab_navigation_controller
 from kanda_reasoner_app.prompt_library_gui.prompt_library_tab import PromptLibraryTab
 from .tool_specs import TOOLS, ToolSpec
 from kanda_reasoner_app.project_root_resolver import resolve_active_project_root
+from kanda_reasoner_app.local_ai_configuration import (
+    LocalAIConfigurationController,
+    install_application_local_ai_configuration,
+)
+from kanda_reasoner_app.web_ai_configuration import (
+    WebAIConfigurationController,
+    install_application_web_ai_configuration,
+)
 
 __all__ = [
     "ReasonerToolsWindow",
@@ -94,10 +102,16 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         self.current_project_root: Path | None = resolve_active_project_root(
             persisted_root=saved_project_root
         )
+        self._web_ai_configuration = WebAIConfigurationController(self)
+        install_application_web_ai_configuration(self._web_ai_configuration)
+        self._local_ai_configuration = LocalAIConfigurationController(self)
+        install_application_local_ai_configuration(self._local_ai_configuration)
         self._collector_widget: QWidget | None = None
         self._daily_refactor_widget: QWidget | None = None
+        self._loaded_tools_by_tab_id: dict[str, QWidget] = {}
         self._help_dialog: QMainWindow | None = None
         self._is_propagating_project_root = False
+        self._project_switch_epoch = 0
         self._project_root_field_names = (
             "project_root_edit",
             "_project_root_edit",
@@ -168,6 +182,12 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         self._tab_navigation_controller = create_tab_navigation_controller(
             set_current_index=self.tabs.setCurrentIndex,
             get_current_index=self.tabs.currentIndex,
+        )
+        self._web_ai_configuration.open_configuration_requested.connect(
+            lambda: self._tab_navigation_controller.open_tab_by_id("config_web_ai")
+        )
+        self._local_ai_configuration.open_configuration_requested.connect(
+            lambda: self._tab_navigation_controller.open_tab_by_id("config_web_ai")
         )
         self.setUpdatesEnabled(False)
         try:

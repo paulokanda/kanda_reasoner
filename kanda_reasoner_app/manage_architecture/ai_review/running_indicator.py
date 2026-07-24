@@ -75,10 +75,10 @@ class Tab1ActivityIndicator(QObject):
         model = str(model_name or "auto model").strip()
         self._start(
             title="Architecture Review",
-            status="Advisory AI review running",
+            status="Advisory review running",
             details=(
                 "Reading the latest deterministic audit output",
-                "Model: " + model,
+                "Engine: " + model,
                 "Deterministic checks remain authoritative",
             ),
         )

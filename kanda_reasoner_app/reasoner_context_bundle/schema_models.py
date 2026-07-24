@@ -27,6 +27,8 @@ class ProjectContext:
     project_slug: str
     evidence_root: Path
     json_complete_dir: Path
+    active_project_id: str
+    active_project_root_fingerprint: str
 
     def as_dict(self) -> dict[str, str]:
         """Return a JSON-friendly representation of the project context."""
@@ -35,6 +37,8 @@ class ProjectContext:
             "project_slug": self.project_slug,
             "evidence_root": str(self.evidence_root),
             "json_complete_dir": str(self.json_complete_dir),
+            "active_project_id": self.active_project_id,
+            "active_project_root_fingerprint": self.active_project_root_fingerprint,
         }
 
 

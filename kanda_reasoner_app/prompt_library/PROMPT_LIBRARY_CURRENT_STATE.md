@@ -6,25 +6,31 @@ Scope: Kanda Reasoner Prompt Library
 
 ## Current Project Context
 
-Current project root:
+Current KANDA Tool root:
 
 ```text
 E:\kanda_reasoner
 ```
 
-Current physical prompt-library package path:
+Current canonical Prompt Library source:
+
+```text
+kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS
+```
+
+Current canonical group registry:
+
+```text
+kanda_prompt_workspace\prompt_library\GROUPS\PROMPT_GROUPS_DRAFT.json
+```
+
+Package compatibility fallback:
 
 ```text
 kanda_reasoner_app\prompt_library
 ```
 
-Current canonical package facade:
-
-```text
-kanda_reasoner_app
-```
-
-The physical package folder has not yet been renamed. Prompt-library assets remain under kanda_reasoner_app until a later controlled package migration changes that implementation path.
+The Prompt Library tab must prefer the canonical workspace, create one cube for each current active folder group, and hide deprecated or retired prompt identities. The package folder remains a read-only compatibility and teaching facade.
 
 ## Current Non-Source Reference Folder
 

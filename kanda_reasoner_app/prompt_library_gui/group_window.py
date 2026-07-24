@@ -45,14 +45,14 @@ class PromptGroupWindow(QWidget):
         self.group = group
         self.items = items
         self.library_root = library_root
-        self.setWindowTitle("Engineering Library - " + group.display_name)
+        self.setWindowTitle("Prompt Library - " + group.display_name)
         self.resize(1050, 700)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(12, 12, 12, 12)
         layout.setSpacing(10)
 
-        header = QLabel("Engineering Library - " + group.display_name)
+        header = QLabel("Prompt Library - " + group.display_name)
         header.setStyleSheet("font-weight: bold; font-size: 15px;")
         layout.addWidget(header)
 

@@ -4,7 +4,7 @@
   "pages": [
     {
       "id": "architecture_review",
-      "title": "Architecture Review Help",
+      "title": "Audit Project Help",
       "tab_id": "architecture_review",
       "legacy_help_catalog": "tab1_architecture.json",
       "source": "source/architecture_review.md",
@@ -110,6 +110,81 @@
         "assets/drawings/adviser_to_pilot_bridge_opener.png",
         "assets/drawings/adviser_to_pilot_shadow_observation_cafe.png",
         "assets/drawings/adviser_to_pilot_frozen_roadmap_station.png"
+      ]
+    },
+    {
+      "id": "local_ai",
+      "title": "Local AI Help",
+      "tab_id": "project_qa",
+      "legacy_help_catalog": "ai_reasoner_main_window_help.json",
+      "source": "source/local_ai.md",
+      "rendered": "rendered/local_ai.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/local_ai_opener_private_reference_desk.png",
+        "assets/drawings/local_ai_project_scope_selection.png",
+        "assets/drawings/local_ai_answer_evidence_review.png",
+        "assets/drawings/local_ai_safety_boundary.png"
+      ]
+    },
+    {
+      "id": "web_ai",
+      "title": "Web AI Help",
+      "tab_id": "project_web_ai",
+      "legacy_help_catalog": "web_ai.json",
+      "source": "source/web_ai.md",
+      "rendered": "rendered/web_ai.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/web_ai_opener_research_desk.png",
+        "assets/drawings/web_ai_answer_sources_project_map.png",
+        "assets/drawings/web_ai_project_scope_selection.png",
+        "assets/drawings/web_ai_safety_boundary.png"
+      ]
+    },
+    {
+      "id": "config_ai",
+      "title": "Config AI Help",
+      "tab_id": "config_web_ai",
+      "legacy_help_catalog": "config_ai.json",
+      "source": "source/config_ai.md",
+      "rendered": "rendered/config_ai.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/config_ai_opener_global_controls.png",
+        "assets/drawings/config_ai_web_configuration.png",
+        "assets/drawings/config_ai_local_configuration.png",
+        "assets/drawings/config_ai_tool_project_boundary.png"
+      ]
+    },
+    {
+      "id": "exclusion_rules",
+      "title": "Exclusion Rules Help",
+      "tab_id": "exclusion_rules",
+      "legacy_help_catalog": "exclusion_rules.json",
+      "source": "source/exclusion_rules.md",
+      "rendered": "rendered/exclusion_rules.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/exclusion_rules_opener_project_filter.png",
+        "assets/drawings/exclusion_rules_project_scope.png",
+        "assets/drawings/exclusion_rules_rule_categories.png",
+        "assets/drawings/exclusion_rules_safety_boundary.png"
+      ]
+    },
+    {
+      "id": "project_structure_3d",
+      "title": "Project Structure 3D Help",
+      "tab_id": "project_structure_3d",
+      "legacy_help_catalog": "project_structure_3d.json",
+      "source": "source/project_structure_3d.md",
+      "rendered": "rendered/project_structure_3d.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/project_structure_3d_opener_city_map.png",
+        "assets/drawings/project_structure_3d_evidence_layers.png",
+        "assets/drawings/project_structure_3d_navigation_filters.png",
+        "assets/drawings/project_structure_3d_read_only_boundary.png"
       ]
     }
   ]

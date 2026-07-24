@@ -6,8 +6,15 @@ from __future__ import annotations
 from importlib import import_module
 from typing import Any
 
-from PySide6.QtCore import QObject, QSettings, QThread, Slot
-from PySide6.QtWidgets import QComboBox, QHBoxLayout, QLabel, QMessageBox, QPushButton
+from PySide6.QtCore import QObject, QThread, Slot
+from PySide6.QtWidgets import QHBoxLayout, QMessageBox, QPushButton
+
+from kanda_reasoner_app.local_ai_configuration import (
+    application_local_ai_configuration,
+)
+from kanda_reasoner_app.local_ai_runtime_state import (
+    runtime_local_ai_configuration_snapshot,
+)
 
 from ._gui_row_adapter import _QWidgetLikeRow
 
@@ -18,10 +25,7 @@ __all__ = [
     "populate_tab2_ai_review_model_combo",
 ]
 
-AUTO_MODEL_LABEL = "Auto (first available Ollama model)"
-SETTINGS_ORGANIZATION = "Kanda"
-SETTINGS_APPLICATION = "ProjectReasonerV10"
-SETTINGS_KEY_SELECTED_MODEL = "tab2_ai_review_selected_model"
+AUTO_MODEL_LABEL = "Global Local AI model"
 
 
 def _ai_review_module(name: str) -> Any:
@@ -46,105 +50,30 @@ def _install_activity_indicator(window: Any, row_layout: Any) -> Any:
     )
 
 
-def _load_saved_ai_review_model_name() -> str:
-    """Load the last selected Tab 2 AI review model from user settings."""
-    try:
-        settings = QSettings(SETTINGS_ORGANIZATION, SETTINGS_APPLICATION)
-        value = settings.value(SETTINGS_KEY_SELECTED_MODEL, "")
-    except Exception:
-        return ""
-    return str(value or "").strip()
-
-
-def _save_ai_review_model_name(model_name: str) -> None:
-    """Persist the last selected Tab 2 AI review model in user settings."""
-    normalized = str(model_name or "").strip()
-    try:
-        settings = QSettings(SETTINGS_ORGANIZATION, SETTINGS_APPLICATION)
-        settings.setValue(SETTINGS_KEY_SELECTED_MODEL, normalized)
-        sync = getattr(settings, "sync", None)
-        if callable(sync):
-            sync()
-    except Exception:
-        return
-
-
-def _model_name_from_combo_text(text: str) -> str:
-    """Normalize combo text to a stored model name."""
-    selected = str(text or "").strip()
-    if not selected or selected == AUTO_MODEL_LABEL:
-        return ""
-    return selected
-
-
-def _handle_ai_review_model_changed(window: Any, text: str) -> None:
-    """Persist a user-initiated Tab 2 AI model selection change."""
-    model_name = _model_name_from_combo_text(text)
-    window._tab2_ai_review_saved_model_name = model_name
-    _save_ai_review_model_name(model_name)
+def _local_ai_controller() -> Any:
+    """Return the application-scoped Local AI configuration owner."""
+    return application_local_ai_configuration()
 
 
 def populate_tab2_ai_review_model_combo(
     window: Any,
     adapter: Any | None = None,
 ) -> list[str]:
-    """Refresh the Tab 2 AI model selector from the shared registry."""
-    combo = getattr(window, "_tab2_ai_review_model_combo", None)
-    if combo is None:
-        return []
-
-    previous = _model_name_from_combo_text(str(combo.currentText() or ""))
-    saved_model_name = str(
-        getattr(window, "_tab2_ai_review_saved_model_name", "")
-        or _load_saved_ai_review_model_name()
-    ).strip()
-    desired_model_name = previous or saved_model_name
-    active_adapter = adapter or _new_model_adapter()
-    try:
-        models = active_adapter.list_models()
-    except Exception as exc:
-        models = []
-        status_bar = getattr(window, "statusBar", None)
-        if callable(status_bar):
-            status_bar().showMessage("Tab 2 AI model refresh failed: " + str(exc))
-
-    combo.blockSignals(True)
-    try:
-        combo.clear()
-        combo.addItem(AUTO_MODEL_LABEL)
-        for model_name in models:
-            combo.addItem(model_name)
-        if desired_model_name:
-            index = combo.findText(desired_model_name)
-            if index >= 0:
-                combo.setCurrentIndex(index)
-                window._tab2_ai_review_saved_model_name = desired_model_name
-    finally:
-        combo.blockSignals(False)
-
+    """Return the global Local AI catalog without creating a local selector."""
+    del adapter
+    controller = _local_ai_controller()
+    snapshot = controller.snapshot()
     status_bar = getattr(window, "statusBar", None)
     if callable(status_bar):
-        status_bar().showMessage(
-            "Tab 2 AI model refresh found " + str(len(models)) + " model(s)."
-        )
-    return models
-
-
-def _selected_ai_review_model(window: Any) -> str:
-    """Return the selected Tab 2 AI model, or empty string for auto."""
-    combo = getattr(window, "_tab2_ai_review_model_combo", None)
-    if combo is None:
-        return ""
-    return _model_name_from_combo_text(str(combo.currentText() or ""))
+        status_bar().showMessage("Local AI configuration: " + controller.summary())
+    return list(snapshot.available_models)
 
 
 def _set_ai_review_controls_enabled(window: Any, enabled: bool) -> None:
-    """Enable or disable Tab 2 AI review controls safely."""
+    """Enable or disable the two advisory review actions safely."""
     for attr_name in (
         "_tab2_ai_review_check_button",
         "_tab2_ai_review_correction_button",
-        "_tab2_ai_review_model_combo",
-        "_tab2_ai_review_refresh_models_button",
     ):
         widget = getattr(window, attr_name, None)
         if widget is not None and hasattr(widget, "setEnabled"):
@@ -165,26 +94,6 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
     row_layout = QHBoxLayout()
     row_layout.setContentsMargins(0, 0, 0, 0)
 
-    model_label = QLabel("AI model:")
-    model_combo = QComboBox()
-    model_combo.setMinimumWidth(230)
-    model_combo.setToolTip(
-        "Select the local Ollama model used by Tab 2 AI Review."
-    )
-    model_combo.addItem(AUTO_MODEL_LABEL)
-    saved_model_name = _load_saved_ai_review_model_name()
-    window._tab2_ai_review_saved_model_name = saved_model_name
-    if saved_model_name:
-        model_combo.addItem(saved_model_name)
-        model_combo.setCurrentIndex(model_combo.findText(saved_model_name))
-    model_combo.currentTextChanged.connect(
-        lambda text: _handle_ai_review_model_changed(window, text)
-    )
-
-    refresh_button = QPushButton("Refresh AI Models")
-    refresh_button.setToolTip("Refresh Tab 2 Ollama model choices.")
-    refresh_button.clicked.connect(lambda: populate_tab2_ai_review_model_combo(window))
-
     review_check_button = QPushButton("AI Review First Check")
     review_check_button.setToolTip(
         "Read-only AI review of the latest deterministic Tab 2 Check output."
@@ -199,19 +108,15 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
         lambda: _run_tab2_ai_review(window, "correction_plan")
     )
 
-    window._tab2_ai_review_model_label = model_label
-    window._tab2_ai_review_model_combo = model_combo
-    window._tab2_ai_review_refresh_models_button = refresh_button
+    window._tab2_ai_review_model_label = None
+    window._tab2_ai_review_model_combo = None
+    window._tab2_ai_review_refresh_models_button = None
     window._tab2_ai_review_check_button = review_check_button
     window._tab2_ai_review_correction_button = review_correction_button
     window._tab2_ai_review_thread = None
     window._tab2_ai_review_worker = None
     window._tab2_ai_review_result_receiver = None
     window._tab2_ai_review_controls_moved_to_host = False
-
-    row_layout.addWidget(model_label)
-    row_layout.addWidget(model_combo)
-    row_layout.addWidget(refresh_button)
     row_layout.addWidget(review_check_button)
     row_layout.addWidget(review_correction_button)
     row_layout.addStretch()
@@ -233,10 +138,8 @@ def _install_tab2_ai_review_controls(window: Any) -> None:
         if getattr(window, "_tab2_ai_review_controls_moved_to_host", False):
             return
         widgets = [
-            model_label,
-            model_combo,
-            refresh_button,
             review_check_button,
+            review_correction_button,
         ]
         target_index = (
             destination_layout.count()
@@ -303,10 +206,19 @@ def _run_tab2_ai_review(window: Any, review_kind: str) -> None:
 
     project_root = window._root_combo.currentText().strip()
     mode_label = window._mode_combo.currentText().strip()
-    model_name = _selected_ai_review_model(window)
-    window._tab2_ai_review_saved_model_name = model_name
-    _save_ai_review_model_name(model_name)
-    display_model = model_name or AUTO_MODEL_LABEL
+    controller = _local_ai_controller()
+    snapshot = controller.snapshot()
+    model_name = snapshot.model_id
+    if not snapshot.ready_for_chat:
+        controller.request_open_configuration()
+        QMessageBox.information(
+            window,
+            "Configure Local AI",
+            "Open Config AI > Config Local AI and select a model first.",
+        )
+        return
+    window._tab2_ai_review_configuration_revision = snapshot.revision
+    display_model = model_name
     if review_kind == "correction_plan":
         request_label = "advisory AI correction plan requested"
         activity_label = "correction plan: " + display_model
@@ -365,6 +277,21 @@ def _handle_tab2_ai_review_result(window: Any, result: object) -> None:
         window.statusBar().showMessage("Tab 2 AI review canceled")
         return
 
+    runtime_snapshot = runtime_local_ai_configuration_snapshot()
+    expected_revision = str(
+        getattr(window, "_tab2_ai_review_configuration_revision", "") or ""
+    )
+    if (
+        runtime_snapshot is not None
+        and expected_revision
+        and runtime_snapshot.revision != expected_revision
+    ):
+        window._append_text(
+            "\n[stale] Local AI configuration changed; late review ignored.\n"
+        )
+        window.statusBar().showMessage("Tab 2 AI review became stale")
+        return
+
     if success:
         window._append_text("\n" + text + "\n")
         if indicator is not None:
@@ -404,6 +331,7 @@ def _cleanup_tab2_ai_review_worker(window: Any) -> None:
         window._tab2_ai_review_thread = None
 
     window._tab2_ai_review_worker = None
+    window._tab2_ai_review_configuration_revision = ""
     if hasattr(window, "_set_operation_buttons_running"):
         window._set_operation_buttons_running(False)
     else:

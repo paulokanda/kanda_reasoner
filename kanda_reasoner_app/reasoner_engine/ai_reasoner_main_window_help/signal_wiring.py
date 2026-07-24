@@ -39,7 +39,9 @@ def connect_main_window_signals(window: Any) -> None:
 
     window.pick_cache_dir_button.clicked.connect(window.pick_cache_dir)
     window.pick_governance_button.clicked.connect(window.pick_governance_path)
-    window.refresh_models_button.clicked.connect(window.refresh_models)
+    window.refresh_models_button.clicked.connect(
+        window._local_ai_configuration.request_open_configuration
+    )
     window.help_button.clicked.connect(window.show_help_dialog)
 
     window.quick_startup_button.clicked.connect(
@@ -74,7 +76,6 @@ def connect_main_window_signals(window: Any) -> None:
     window.ai.bridge.error_ready.connect(window._on_ai_error_ready)
     window.ai.bridge.status_ready.connect(window._append_log)
 
-    window.model_combo.currentTextChanged.connect(window._save_last_config)
     window.prefer_code_radio.toggled.connect(window._save_last_config)
     window.prefer_prose_radio.toggled.connect(window._save_last_config)
     window.verbosity_combo.currentTextChanged.connect(window._save_last_config)

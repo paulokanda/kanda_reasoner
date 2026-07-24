@@ -127,33 +127,28 @@ class RuntimeController:
         window._save_last_config()
 
     def refresh_models(self, window: Any) -> None:
-        """Refresh the model dropdown from the live Ollama registry."""
-        previous_selection = window.model_combo.currentText().strip()
-        saved_selection = ''
-        settings = getattr(window, 'settings', None)
-        if settings is not None:
-            saved_selection = str(settings.value('selected_model', '', type=str)).strip()
-        models = window.model_registry.list_models()
-        using_fallback = False
-        if not models:
-            models = ['qwen2.5-coder:7b', 'qwen2.5-coder:32b']
-            using_fallback = True
-        window.model_combo.clear()
-        for model_name in models:
-            window.model_combo.addItem(model_name)
-        preferred_candidates = (previous_selection, saved_selection, 'qwen3-coder:30b', 'qwen2.5-coder:7b')
-        for preferred in preferred_candidates:
-            if not preferred:
-                continue
-            index = window.model_combo.findText(preferred)
-            if index >= 0:
-                window.model_combo.setCurrentIndex(index)
-                break
-        if using_fallback:
-            window._append_log('Could not verify models from Ollama. Added fallback model names.')
-        else:
-            window._append_log('Ollama model refresh found ' + str(len(models)) + ' model(s): ' + ', '.join(models))
-        window._save_last_config()
+        """Project the global Local AI catalog into the read-only combo."""
+        from kanda_reasoner_app.local_ai_configuration import (
+            application_local_ai_configuration,
+        )
+
+        controller = application_local_ai_configuration()
+        snapshot = controller.snapshot()
+        window.model_combo.blockSignals(True)
+        try:
+            window.model_combo.clear()
+            if snapshot.model_id:
+                window.model_combo.addItem(snapshot.model_id)
+                for model_name in snapshot.available_models:
+                    if model_name != snapshot.model_id:
+                        window.model_combo.addItem(model_name)
+                window.model_combo.setCurrentIndex(0)
+            else:
+                window.model_combo.addItem("Global Local AI model not selected")
+        finally:
+            window.model_combo.blockSignals(False)
+        window.model_combo.setEnabled(False)
+        window._append_log("Local AI configuration: " + controller.summary())
 
     def pick_cache_dir(self, window: Any) -> None:
         """Support pick cache dir behavior.
@@ -307,25 +302,18 @@ class RuntimeController:
             ):
                 return True
 
-        available_json = []
-        if resolution.canonical_json.parent.is_dir():
-            available_json = sorted(
-                path.name for path in resolution.canonical_json.parent.glob("*.json")
-            )[:25]
-        available_text = ", ".join(available_json) if available_json else "none"
-        raise FileNotFoundError(
-            "Project Q&A JSON was not found. Run Project A&A -> Run Analysis first."
-            + "\nExpected local-AI JSON: "
-            + str(resolution.local_ai_json)
-            + "\nExpected canonical JSON: "
-            + str(resolution.canonical_json)
-            + "\nExpected filename pattern: "
-            + "<project>__complete_local_AI.json and <project>__complete.json"
-            + "\nEvidence folder: "
-            + str(resolution.canonical_json.parent)
-            + "\nJSON files currently found there: "
-            + available_text
+        if not project_root.is_dir():
+            raise FileNotFoundError(
+                "Selected Project root does not exist or is not a directory: "
+                + str(project_root)
+            )
+
+        window.project_index.initialize_live_project(str(project_root))
+        window._append_log(
+            "Local AI source mode: bounded read-only live Project source. "
+            "Complete Project Q&A JSON was not available."
         )
+        return True
 
     def refresh_workflow_controls(self, window: Any) -> None:
         """Support refresh workflow controls behavior.

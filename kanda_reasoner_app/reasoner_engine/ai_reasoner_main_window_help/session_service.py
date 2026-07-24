@@ -28,6 +28,9 @@ from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_session_capture i
     capture_session_prompt_router_reasoner_review,
     summarize_session_capture_result,
 )
+from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.project_json_path_resolver import (
+    current_project_root_from_window,
+)
 
 __all__ = ["SessionExecutionError", "SessionExecutionResult", "SessionService"]
 
@@ -165,11 +168,19 @@ class SessionService:
 
         window._rebuild_retriever_for_active_profile()
 
+        selected_project_root = current_project_root_from_window(window)
+        effective_project_root = (
+            str(selected_project_root)
+            if selected_project_root is not None
+            else str(window.project_index.project_root or "")
+        )
+
         bundle = window.retriever.retrieve(
             question,
             file_limit=10,
             symbol_limit=10,
             snippet_limit=6,
+            project_root_override=effective_project_root,
         )
 
         strict_requested = strict_evidence_requested(question)
@@ -207,6 +218,7 @@ class SessionService:
                 window.prefer_code_radio.isChecked(),
                 result,
                 log_messages,
+                effective_project_root,
             )
             return result
 
@@ -219,7 +231,7 @@ class SessionService:
         prompt = window.prompt_builder.build(
             question=question,
             bundle=bundle,
-            project_root=window.project_index.project_root,
+            project_root=effective_project_root,
             summary=summary,
             memory_turns=[],
             prefer_code=prefer_code,
@@ -258,7 +270,10 @@ class SessionService:
                 log_messages=log_messages,
                 prefer_code=prefer_code,
             )
-            self._capture_prompt_router_reasoner_review(window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages)
+            self._capture_prompt_router_reasoner_review(
+                window, question, selected_model, decision, bundle, prompt,
+                prefer_code, result, log_messages, effective_project_root
+            )
             return result
 
         if decision.route == "deterministic":
@@ -284,14 +299,20 @@ class SessionService:
             log_messages=log_messages,
             prefer_code=prefer_code,
         )
-        self._capture_prompt_router_reasoner_review(window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages)
+        self._capture_prompt_router_reasoner_review(
+            window, question, selected_model, decision, bundle, prompt,
+            prefer_code, result, log_messages, effective_project_root
+        )
         return result
 
-    def _capture_prompt_router_reasoner_review(self, window, question, selected_model, decision, bundle, prompt, prefer_code, result, log_messages) -> None:
+    def _capture_prompt_router_reasoner_review(
+        self, window, question, selected_model, decision, bundle, prompt,
+        prefer_code, result, log_messages, project_root
+    ) -> None:
         """Record Prompt Router Reasoner runtime evidence without changing the result."""
         try:
             capture_result = capture_session_prompt_router_reasoner_review(
-                project_root=window.project_index.project_root,
+                project_root=project_root,
                 question=question,
                 decision=decision,
                 bundle=bundle,

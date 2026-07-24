@@ -387,3 +387,4 @@ load only the exact specialist.
   `KPR-12-014`; do not merge the two owners.
 - Shared visual semantics route to `KPR-12-013`; one physical renderer is not
   mandatory when backends preserve the same semantic contract.
+- Exact reproduction of the adopted Show Project to AI visual layout also loads `KPR-12-015` `kanda_desktop_help_exact_layout_blueprint` as the auxiliary design model; it does not replace KPR-12-010.

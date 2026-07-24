@@ -151,9 +151,16 @@ def _provider_from_owner(owner: object) -> ProviderCallable | None:
     try:
         from kanda_reasoner_app.tab3_manual_review_runtime import (
             ai_openai_compatible_provider_runtime,
+            ai_web_controls_runtime,
+            ai_web_docstring_provider_runtime,
         )
 
-        return ai_openai_compatible_provider_runtime.local_openai_compatible_provider_from_owner(owner)
+        if ai_web_controls_runtime.provider_mode_from_owner(owner) == "web":
+            return ai_web_docstring_provider_runtime.web_provider_from_owner(owner)
+        return (
+            ai_openai_compatible_provider_runtime
+            .local_openai_compatible_provider_from_owner(owner)
+        )
     except Exception:
         return None
 

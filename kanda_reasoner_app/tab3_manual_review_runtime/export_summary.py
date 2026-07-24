@@ -15,14 +15,14 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .project_paths_runtime import manual_review_export_root
 from .review_support import _manual_review_state_summary_text
 
 
 
 def _export_manual_review_summary(owner: object, locations: list[dict]) -> Path:
     """Write a JSON summary of current manual review locations."""
-    root = _project_root_for_export(owner)
-    export_dir = root / "project_freeze_ledger" / "manual_docstring_review_exports"
+    export_dir = manual_review_export_root(owner)
     export_dir.mkdir(parents=True, exist_ok=True)
     path = export_dir / "manual_docstring_review_summary.json"
     payload = {
@@ -50,14 +50,3 @@ def _export_location(location: dict) -> dict:
         "target_name": str(location.get("target_name", "")),
     }
 
-
-def _project_root_for_export(owner: object) -> Path:
-    """Return project root for export output."""
-    edit = getattr(owner, "project_root_edit", None)
-    text = ""
-    if edit is not None:
-        try:
-            text = edit.text().strip()
-        except Exception:
-            text = ""
-    return Path(text).resolve() if text else Path.cwd()

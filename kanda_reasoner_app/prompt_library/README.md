@@ -1,36 +1,28 @@
-# Prompt Library
+# Prompt Library Compatibility Assets
 
-Status: Text-only library structure
-Scope: Developer tools prompt storage and retrieval
+Status: read-only compatibility and teaching assets
+Scope: package fallback for the Prompt Library tab
 
-This folder stores project-agnostic prompts that the user can inspect, copy,
-assemble, export, and present to an AI.
+The current canonical prompt source is:
 
-Tab 9 rule:
-- Tab 9 is an isolated text-library box.
-- Tab 9 does not change project source code.
-- Tab 9 does not edit Python files.
-- Tab 9 does not modify Tabs 1 through 8.
-- Tab 9 does not write active governance.
-- Tab 9 does not execute prompts automatically.
+```text
+kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS
+```
 
-Folder roles:
-- active: library-selected prompts ready for manual copy or stack assembly.
-- drafts: working prompt drafts; all edits start here.
-- metadata: prompt sidecar metadata files.
-- exports: generated prompt packs or copied prompt stacks.
-- archive: retired prompt versions kept for traceability.
-- usage: optional text or JSONL usage notes.
-- profiles: per-project prompt library profiles.
-- stacks: assembled prompt stacks for manual copy.
-- imports: staging area for imported prompt packs before review.
+The current canonical group registry is:
 
-Important distinction:
-active prompts in this library are reference-active only. They are not
-automatically loaded into runtime behavior. The user decides which prompt or
-prompt stack to copy and present to an AI.
+```text
+kanda_prompt_workspace/prompt_library/GROUPS/PROMPT_GROUPS_DRAFT.json
+```
 
-Project-agnostic rule:
-Reusable prompts should use placeholders such as <PROJECT_ROOT>,
-<PROJECT_NAME>, <PRODUCT_PACKAGE>, and <TASK_DESCRIPTION>. Project-specific
-examples must be clearly marked as examples.
+The Prompt Library tab reads those workspace owners when available. This package folder remains a compatibility fallback and stores teaching, profiles, overlays, checklists, release notes, and fallback group definitions.
+
+The tab is read-only. It may inspect, group, preview, copy, and open prompt files. It must not execute prompts, edit source code, mutate active governance, write Error Memory, or write Freeze memory.
+
+Current catalog policy:
+
+- one cube per current `ACTIVE_PROMPTS` folder group;
+- current prompt identity comes from metadata and canonical source;
+- deprecated, retired, inactive, archived, superseded, and `load_type=never` prompts are hidden;
+- package fallback groups mirror the canonical group registry;
+- prompts remain project-agnostic unless explicitly classified otherwise.

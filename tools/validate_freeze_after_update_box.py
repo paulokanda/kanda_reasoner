@@ -1,33 +1,41 @@
 #!/usr/bin/env python3
 # project-path: tools/validate_freeze_after_update_box.py
-"""Validate the Freeze Feature After Update backend box without opening the GUI."""
+"""Validate the current Freeze Feature After Update backend contract.
+
+The legacy project-local ``files_to_send_ai`` ZIP generator is intentionally
+retired. Freeze context is delivered through the external Show Project to AI
+startup/source-archive channels. Fixture Projects use unique slugs and clean
+their external support roots before and after every test so reruns cannot inherit
+valid state from a prior process.
+"""
 
 from __future__ import annotations
 
-
 __all__ = [
-    'validate_fresh_project',
-    'validate_invalid_inputs',
-    'validate_no_kanda_contamination',
+    "validate_fresh_project",
+    "validate_existing_entry_preservation",
+    "validate_invalid_inputs",
+    "validate_no_kanda_contamination",
 ]
+
 import json
+import shutil
 import sys
 import tempfile
-import zipfile
 from pathlib import Path
+from uuid import uuid4
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+_DEPRECATION_MARKER = "Deprecated project-local files_to_send_ai ZIP generation skipped"
 
 
 def _ensure_project_root_on_path() -> None:
-    """Add the project root only when this command is executed."""
     project_root_text = str(PROJECT_ROOT)
     if project_root_text not in sys.path:
         sys.path.insert(0, project_root_text)
 
 
 def _load_freeze_after_update_api() -> None:
-    """Load project imports at command time, not module import time."""
     global ensure_freeze_after_update_box
     global generate_freeze_after_update_ai_files
     global inspect_freeze_after_update_box
@@ -53,110 +61,111 @@ def _load_freeze_after_update_api() -> None:
 
 
 def assert_true(condition: bool, message: str) -> None:
-    """Support assert true behavior.
-    
-    Parameters
-    ----------
-    condition : bool
-        The condition value.
-    message : str
-        The message text.
-    """
-    
     if not condition:
         raise AssertionError(message)
 
 
 def assert_file(path: Path) -> None:
-    """Support assert file behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    """
-    
     assert_true(path.is_file(), f"Expected file: {path}")
 
 
 def assert_dir(path: Path) -> None:
-    """Support assert dir behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    """
-    
     assert_true(path.is_dir(), f"Expected directory: {path}")
 
 
+def _unique_project(temp_root: Path, prefix: str) -> Path:
+    project = temp_root / f"{prefix}_{uuid4().hex}"
+    project.mkdir()
+    return project
+
+
+def _external_support_root(project: Path) -> Path:
+    return build_paths(project).box_root.parent
+
+
+def _reset_fixture_support(project: Path) -> Path:
+    support_root = _external_support_root(project)
+    shutil.rmtree(support_root, ignore_errors=True)
+    return support_root
+
+
+def _assert_deprecated_generation_result(result: object) -> None:
+    assert_true(bool(getattr(result, "ok", False)), str(getattr(result, "message", "")))
+    assert_true(getattr(result, "output_zip", None) is None, "deprecated ZIP output was recreated")
+    assert_true(
+        getattr(result, "output_instruction", None) is None,
+        "deprecated instruction output was recreated",
+    )
+    assert_true(
+        _DEPRECATION_MARKER in str(getattr(result, "message", "")),
+        "deprecated-generation status message missing",
+    )
+
+
+def _make_stale_project_local_pack(project: Path) -> Path:
+    stale_root = project / "project_freeze_after_update" / "files_to_send_ai"
+    stale_root.mkdir(parents=True, exist_ok=True)
+    stale_zip = stale_root / "freeze_feature_ai_send_pack_stale.zip"
+    stale_zip.write_bytes(b"stale")
+    return stale_root
+
+
 def validate_fresh_project() -> None:
-    """Validate the fresh project.
-    """
-    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_") as tmp:
-        project = Path(tmp) / "sample_project"
-        project.mkdir()
-        paths = build_paths(project)
+        project = _unique_project(Path(tmp), "sample_project")
+        support_root = _reset_fixture_support(project)
+        try:
+            paths = build_paths(project)
+            before = inspect_freeze_after_update_box(project)
+            assert_true(before.status == FreezeAfterUpdateStatus.INCOMPLETE, before.message)
 
-        before = inspect_freeze_after_update_box(project)
-        assert_true(before.status == FreezeAfterUpdateStatus.INCOMPLETE, before.message)
+            created = ensure_freeze_after_update_box(project)
+            assert_true(created.ok, created.message)
 
-        created = ensure_freeze_after_update_box(project)
-        assert_true(created.ok, created.message)
+            assert_dir(paths.box_root)
+            assert_true(paths.box_root != project / "project_freeze_after_update", "freeze state written inside source")
+            assert_dir(paths.memory_root)
+            assert_dir(paths.entries_root)
+            assert_dir(paths.send_root)
+            assert_file(paths.root_readme)
+            assert_file(paths.freeze_index)
+            assert_file(paths.frozen_steps)
+            assert_file(paths.entries_readme)
+            assert_file(paths.send_readme)
 
-        assert_dir(paths.box_root)
-        assert_dir(paths.memory_root)
-        assert_dir(paths.entries_root)
-        assert_dir(paths.send_root)
-        assert_file(paths.root_readme)
-        assert_file(paths.freeze_index)
-        assert_file(paths.frozen_steps)
-        assert_file(paths.entries_readme)
-        assert_file(paths.send_readme)
+            data = json.loads(paths.freeze_index.read_text(encoding="utf-8"))
+            assert_true(data.get("schema_version") == "1.0", "schema_version mismatch")
+            assert_true(data.get("freezes") == [], "new project should start with empty freezes")
 
-        data = json.loads(paths.freeze_index.read_text(encoding="utf-8"))
-        assert_true(data.get("schema_version") == "1.0", "schema_version mismatch")
-        assert_true(data.get("freezes") == [], "new project should start with empty freezes")
+            stale_root = _make_stale_project_local_pack(project)
+            pack_result = generate_freeze_after_update_ai_files(project)
+            _assert_deprecated_generation_result(pack_result)
+            assert_true(not stale_root.exists(), "stale project-local AI-send folder was not removed")
+            assert_true(
+                not list(paths.send_root.glob("freeze_feature_ai_send_pack_*.zip")),
+                "deprecated external Freeze ZIP was generated",
+            )
 
-        pack_result = generate_freeze_after_update_ai_files(project)
-        assert_true(pack_result.ok, pack_result.message)
-        assert_true(pack_result.output_zip is not None, "ZIP path missing")
-        assert_true(pack_result.output_instruction is not None, "instruction path missing")
-        assert_file(pack_result.output_zip)
-        assert_file(pack_result.output_instruction)
-
-        with zipfile.ZipFile(pack_result.output_zip) as zip_file:
-            names = set(zip_file.namelist())
-        assert_true(
-            "project_freeze_after_update/frozen_features_memory/freeze_index.json" in names,
-            "ZIP missing freeze_index.json",
-        )
-        assert_true(
-            "project_freeze_after_update/files_to_send_ai/what_to_say_to_ai_freeze_feature.md" in names,
-            "ZIP missing instruction markdown",
-        )
-
-        after_second = generate_freeze_after_update_ai_files(project)
-        assert_true(after_second.ok, after_second.message)
-        zips = list(paths.send_root.glob("freeze_feature_ai_send_pack_*.zip"))
-        assert_true(len(zips) == 1, "output folder should keep one current ZIP")
-        assert_file(paths.what_to_say)
+            after_second = generate_freeze_after_update_ai_files(project)
+            _assert_deprecated_generation_result(after_second)
+            assert_true(paths.freeze_index.is_file(), "freeze memory was removed by cleanup")
+        finally:
+            shutil.rmtree(support_root, ignore_errors=True)
+        assert_true(not support_root.exists(), "fixture external support root survived cleanup")
 
 
-def validate_existing_freeze_entry() -> None:
-    """Validate the existing freeze entry.
-    """
-    
+def validate_existing_entry_preservation() -> None:
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_entry_") as tmp:
-        project = Path(tmp) / "project_with_entry"
-        project.mkdir()
-        paths = build_paths(project)
-        ensure_freeze_after_update_box(project)
-        entry = paths.entries_root / "freeze-sample-feature.md"
-        entry.write_text(
-            """---
+        project = _unique_project(Path(tmp), "project_with_entry")
+        support_root = _reset_fixture_support(project)
+        try:
+            paths = build_paths(project)
+            ensure_result = ensure_freeze_after_update_box(project)
+            assert_true(ensure_result.ok, ensure_result.message)
+
+            entry = paths.entries_root / "freeze-sample-feature.md"
+            entry.write_text(
+                """---
 freeze_id: "freeze-sample-feature"
 box: "sample/feature"
 status: "frozen"
@@ -173,27 +182,25 @@ superseded_by: null
 
 Sample freeze entry.
 """,
-            encoding="utf-8",
-        )
-        result = generate_freeze_after_update_ai_files(project)
-        assert_true(result.ok, result.message)
-        data = json.loads(paths.freeze_index.read_text(encoding="utf-8"))
-        assert_true(len(data.get("freezes", [])) == 1, "expected one freeze entry")
-        freeze = data["freezes"][0]
-        assert_true(freeze["freeze_id"] == "freeze-sample-feature", "wrong freeze_id")
-        assert_true(freeze["protected_paths"] == ["sample_module/"], "protected path missing")
-        with zipfile.ZipFile(result.output_zip) as zip_file:  # type: ignore[arg-type]
-            names = set(zip_file.namelist())
-        assert_true(
-            "project_freeze_after_update/frozen_features_memory/entries/freeze-sample-feature.md" in names,
-            "ZIP missing freeze entry",
-        )
+                encoding="utf-8",
+            )
+            before_text = entry.read_text(encoding="utf-8")
+            stale_root = _make_stale_project_local_pack(project)
+
+            result = generate_freeze_after_update_ai_files(project)
+            _assert_deprecated_generation_result(result)
+            assert_true(not stale_root.exists(), "stale project-local pack survived cleanup")
+            assert_true(entry.is_file(), "existing frozen entry was removed")
+            assert_true(entry.read_text(encoding="utf-8") == before_text, "existing frozen entry was mutated")
+
+            inspected = inspect_freeze_after_update_box(project)
+            assert_true(inspected.ok, inspected.message)
+        finally:
+            shutil.rmtree(support_root, ignore_errors=True)
+        assert_true(not support_root.exists(), "entry fixture support root survived cleanup")
 
 
 def validate_invalid_inputs() -> None:
-    """Validate the invalid inputs.
-    """
-    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_invalid_") as tmp:
         file_root = Path(tmp) / "not_a_dir.py"
         file_root.write_text("print('not a project')\n", encoding="utf-8")
@@ -203,54 +210,54 @@ def validate_invalid_inputs() -> None:
             "file project root should be invalid",
         )
 
-        project = Path(tmp) / "project"
-        project.mkdir()
-        box_file = project / "project_freeze_after_update"
-        box_file.write_text("not a folder\n", encoding="utf-8")
-        result = ensure_freeze_after_update_box(project)
-        assert_true(
-            result.status == FreezeAfterUpdateStatus.INVALID_BOX_PATH,
-            "box path file should be invalid",
-        )
+        project = _unique_project(Path(tmp), "invalid_project")
+        support_root = _reset_fixture_support(project)
+        try:
+            paths = build_paths(project)
+            paths.box_root.parent.mkdir(parents=True, exist_ok=True)
+            paths.box_root.write_text("not a folder\n", encoding="utf-8")
+            result = ensure_freeze_after_update_box(project)
+            assert_true(
+                result.status == FreezeAfterUpdateStatus.INVALID_BOX_PATH,
+                "external box path file should be invalid",
+            )
+        finally:
+            shutil.rmtree(support_root, ignore_errors=True)
+        assert_true(not support_root.exists(), "invalid fixture support root survived cleanup")
 
 
 def validate_no_kanda_contamination() -> None:
-    """Validate the no kanda contamination.
-    """
-    
     with tempfile.TemporaryDirectory(prefix="kanda_freeze_after_update_clean_") as tmp:
-        project = Path(tmp) / "clean_project"
-        project.mkdir()
-        result = generate_freeze_after_update_ai_files(project)
-        assert_true(result.ok, result.message)
-        paths = build_paths(project)
-        generated_text = "\n".join(
-            path.read_text(encoding="utf-8", errors="ignore")
-            for path in paths.box_root.rglob("*.md")
-            if path.is_file()
-        )
-        forbidden_markers = [
-            "freeze-20260612-project-freeze-ledger",
-            "E:\\kanda_reasoner",
-            "E:/kanda_reasoner",
-        ]
-        for marker in forbidden_markers:
-            assert_true(marker not in generated_text, f"KANDA-specific marker leaked: {marker}")
+        project = _unique_project(Path(tmp), "clean_project")
+        support_root = _reset_fixture_support(project)
+        try:
+            ensured = ensure_freeze_after_update_box(project)
+            assert_true(ensured.ok, ensured.message)
+            result = generate_freeze_after_update_ai_files(project)
+            _assert_deprecated_generation_result(result)
+            paths = build_paths(project)
+            generated_text = "\n".join(
+                path.read_text(encoding="utf-8", errors="ignore")
+                for path in paths.box_root.rglob("*.md")
+                if path.is_file()
+            )
+            forbidden_markers = [
+                "freeze-20260612-project-freeze-ledger",
+                "E:\\kanda_reasoner",
+                "E:/kanda_reasoner",
+            ]
+            for marker in forbidden_markers:
+                assert_true(marker not in generated_text, f"KANDA-specific marker leaked: {marker}")
+        finally:
+            shutil.rmtree(support_root, ignore_errors=True)
+        assert_true(not support_root.exists(), "clean fixture support root survived cleanup")
 
 
 def main() -> int:
-    """Support main behavior.
-    
-    Returns
-    -------
-    int
-        The integer status code.
-    """
-    
     _load_freeze_after_update_api()
     tests = [
         validate_fresh_project,
-        validate_existing_freeze_entry,
+        validate_existing_entry_preservation,
         validate_invalid_inputs,
         validate_no_kanda_contamination,
     ]
@@ -258,6 +265,10 @@ def main() -> int:
         print(f"RUN {test.__name__}")
         test()
         print(f"PASS {test.__name__}")
+    print("UNIQUE_EXTERNAL_SUPPORT_FIXTURES: PASS")
+    print("FIXTURE_EXTERNAL_SUPPORT_CLEANUP: PASS")
+    print("DEPRECATED_PROJECT_LOCAL_FREEZE_PACK_BLOCKED: PASS")
+    print("EXTERNAL_FREEZE_MEMORY_PRESERVED: PASS")
     print("VALIDATION OK - Freeze Feature After Update backend passed.")
     return 0
 

@@ -47,6 +47,7 @@ class DocstringRunWorker(QObject):
         insert_file_address_at_top: bool = False,
         ai_enabled: bool = False,
         ai_config_path: str = "default",
+        ai_api_key: str = "",
         include_private: bool = True,
         min_confidence: str = "low",
         no_uncertain: bool = False,
@@ -101,6 +102,7 @@ class DocstringRunWorker(QObject):
         self._insert_file_address_at_top = insert_file_address_at_top
         self._ai_enabled = ai_enabled
         self._ai_config_path = ai_config_path
+        self._ai_api_key = str(ai_api_key or "")
         self._include_private = include_private
         self._min_confidence = min_confidence
         self._no_uncertain = no_uncertain
@@ -129,6 +131,8 @@ class DocstringRunWorker(QObject):
             run_kwargs["stop_requested"] = self.stop_requested
         if signature is not None and "progress_callback" in signature.parameters:
             run_kwargs["progress_callback"] = self._emit_progress
+        if signature is not None and "ai_api_key" in signature.parameters:
+            run_kwargs["ai_api_key"] = self._ai_api_key
         return run_func(self._project_root.resolve(), self._mode, **run_kwargs)
 
 

@@ -236,6 +236,8 @@ def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[
         "generated_at_utc": datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
         "project": {
             "project_slug": context.project_slug,
+            "active_project_id": context.active_project_id,
+            "active_project_root_fingerprint": context.active_project_root_fingerprint,
             "project_root_marker": "<PROJECT_ROOT>",
             "evidence_root_relative": "show_project_to_AI",
             "json_complete_relative": "show_project_to_AI/second_prompt_files",

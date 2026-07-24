@@ -17,7 +17,13 @@ def apply_correction_engine_status(owner: object) -> None:
     if not callable(setter):
         return
     if local_ai_enabled_from_owner(owner):
-        setter("CORRECTION WITH AI")
+        try:
+            from . import ai_web_controls_runtime
+
+            mode = ai_web_controls_runtime.provider_mode_from_owner(owner)
+        except Exception:
+            mode = "local"
+        setter("CORRECTION WITH WEB AI" if mode == "web" else "CORRECTION WITH LOCAL AI")
     else:
         setter("HEURISTIC CORRECTION")
 

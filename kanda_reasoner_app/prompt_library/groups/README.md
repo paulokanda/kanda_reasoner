@@ -1,15 +1,24 @@
 # Prompt Groups
 
-This folder stores read-only group definitions for the Prompt Engineering Library dashboard.
+This folder stores the package compatibility fallback for Prompt Library group definitions.
 
-The main catalog is `PROMPT_GROUPS.json`.
+The current canonical group source is:
 
-A group is a friendly navigation box in Tab 9. It does not run prompts, edit prompts, change source code, or update governance. It only defines which existing prompt-library text files should be shown together in a filtered floating library window.
+```text
+kanda_prompt_workspace/prompt_library/GROUPS/PROMPT_GROUPS_DRAFT.json
+```
+
+The Prompt Library tab reads the canonical workspace when it is available and falls back to `PROMPT_GROUPS.json` only when the workspace is missing.
+
+A group is a read-only navigation cube. It does not run prompts, edit prompts, change source code, or update governance.
 
 Group catalog rules:
 
-- Use stable `group_id` values.
-- Use metadata `prompt_id` values in `prompt_ids` whenever possible.
-- Keep groups project-agnostic.
-- Do not include absolute project paths.
-- Missing prompt IDs should be treated as non-fatal warnings by GUI code.
+- Keep one cube for every current `ACTIVE_PROMPTS` folder group.
+- Use stable `group_id` values matching the canonical folder name.
+- Use metadata `prompt_id` values in `prompt_ids`.
+- Exclude prompts whose metadata status is deprecated, retired, inactive, archived, or superseded.
+- Exclude prompts whose metadata `load_type` is `never`.
+- Keep the package fallback catalog synchronized with the canonical group catalog.
+- Missing current prompt IDs are discovered from the canonical folder and appended by the GUI loader.
+- Stale group IDs are pruned when no current prompt resolves to them.

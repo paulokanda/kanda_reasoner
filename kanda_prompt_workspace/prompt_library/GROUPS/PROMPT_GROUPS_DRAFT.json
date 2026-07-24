@@ -1,9 +1,12 @@
 {
+  "schema_version": "2.0.0",
+  "status": "active",
+  "purpose": "Canonical current Prompt Library groups for dashboard discovery and manual copy. Deprecated and retired identities are excluded.",
   "groups": [
     {
       "group_id": "01_session_start_and_navigation",
       "display_name": "Session Start and Navigation",
-      "description": "Minimal startup, two-stage readiness, compact delivery and lifecycle bridges, Error Memory admission, and durable-artifact routing.",
+      "description": "Compact startup, two-stage readiness, continuity, handoff, Error Memory admission, durable-artifact routing, and startup authoring templates.",
       "prompt_ids": [
         "ai_human_partnership_session_start",
         "ai_prompt_request_canon",
@@ -17,12 +20,15 @@
         "session_start_upload_checklist",
         "start_of_day_master_stack"
       ],
-      "prompt_count": 11
+      "color_role": "blue",
+      "prompt_count": 11,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "02_prompt_routing_and_indexing",
       "display_name": "Prompt Routing and Indexing",
-      "description": "Select current routing owners, exact prompt addresses, Project overlays, historical identity substitutions, and semantic-adoption safety boundaries.",
+      "description": "Current routing owners, exact prompt addresses, Project overlays, historical identity substitutions, and semantic or ML adoption safety boundaries.",
       "prompt_ids": [
         "chatgpt_kanda_routing_choice_output_protocol",
         "kanda_routing_system_canon",
@@ -31,17 +37,15 @@
         "prompt_substitution_map",
         "routing_signal_scorer_v3_semantic_readiness_canon"
       ],
+      "color_role": "green",
       "prompt_count": 6,
-      "retired_prompt_ids": [
-        "prompt_router",
-        "routing_signal_scorer_v3_lab_phase_entry_router_canon",
-        "routing_signal_scorer_v3_pilot_copilot_phase0_router_canon"
-      ]
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "03_governance_freeze_and_handoff",
       "display_name": "Governance, Freeze, and Handoff",
-      "description": "Own Brick Wall status, collaboration decisions, freeze intake, final artifact dispatch, and draft-only governance or handoff profile templates.",
+      "description": "Brick Wall governance, cooperative implementation decisions, freeze intake, pre-output artifact gates, and draft governance or handoff templates.",
       "prompt_ids": [
         "brick_wall_comprehensive_quality_gate",
         "cooperative_implementation_methodology",
@@ -50,46 +54,63 @@
         "professional_engineering_governance_template",
         "workflow_handoff_template"
       ],
-      "prompt_count": 6
+      "color_role": "gold",
+      "prompt_count": 6,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "04_box_architecture_and_boundaries",
       "display_name": "Box Architecture and Boundaries",
-      "description": "Route bounded ownership, boundary repair, risk-based shielding, artifact placement, and GUI option-state regression specialists.",
+      "description": "Bounded ownership, boundary-first repair, shielding, project folder placement, and stateful control regression protection.",
       "prompt_ids": [
-        "box_architecture_canon",
         "boundary_first_repair_protocol",
+        "box_architecture_canon",
         "kanda_box_shielding_canon",
         "project_folder_organization_canon",
         "stateful_control_regression_canon"
-      ]
+      ],
+      "color_role": "orange",
+      "prompt_count": 5,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "05_patch_delivery_and_validation",
       "display_name": "Patch Delivery and Validation",
-      "description": "Coordinate release lifecycle, surgical delivery, active delivery regressions, correction incidents, terminal behavior, and recovery dispatch.",
+      "description": "Bundle-gated implementation, delivery, validation, active delivery regressions, user-detected corrections, terminal cleanup, and routine lifecycle blueprints.",
       "prompt_ids": [
-        "patch_install_delivery_error_register",
         "bundle_gated_development_workflow",
         "implementation_and_delivery_protocol",
         "implementation_roadmap_builder",
+        "patch_install_delivery_error_register",
         "patch_validate_freeze_error_memory_routine_blueprint",
         "router_bridge_user_detected_correction",
         "terminal_cleanup_contract"
       ],
-      "prompt_count": 7
+      "color_role": "purple",
+      "prompt_count": 7,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "06_refactor_and_architecture_hardening",
       "display_name": "Refactor and Architecture Hardening",
-      "description": "Current architecture triage and large-module owners; historical roadmap, fragmentation-runner, and Tab taxonomy prompts are retired.",
+      "description": "Architecture triage, safe refactoring, large-module planning, and governed Web AI planning or AST-split exchange protocols.",
       "prompt_ids": [
         "architecture_hardening_triage_protocol",
         "architecture_hardening_triage_template",
         "large_module_refactor_protocol",
-        "large_module_refactor_template"
+        "large_module_refactor_template",
+        "safe_refactor_how_to",
+        "web_ai_ast_split_risk_repair_protocol",
+        "web_ai_large_module_refactor_exchange_protocol",
+        "web_ai_planning_response_bundle_blueprint"
       ],
-      "prompt_count": 4
+      "color_role": "red",
+      "prompt_count": 8,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "07_prompt_authoring_and_audit",
@@ -101,12 +122,16 @@
         "prompt_canon_reconciliation_protocol",
         "prompt_identity_code_registry_canon",
         "prompt_insertion_and_router_registration_protocol"
-      ]
+      ],
+      "color_role": "teal",
+      "prompt_count": 5,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "08_python_engineering_core",
       "display_name": "Python Engineering Core",
-      "description": "Python-specific design, architecture, refactoring, patterns, performance, legacy-code, and maintainability specialists.",
+      "description": "Python clean code, architecture, patterns, domain design, enterprise design, performance, legacy stabilization, pragmatic trade-offs, and refactoring.",
       "prompt_ids": [
         "python_clean_architecture",
         "python_clean_code",
@@ -119,54 +144,77 @@
         "python_refactoring",
         "software_engineering_books_master"
       ],
-      "prompt_count": 10
+      "color_role": "gray",
+      "prompt_count": 10,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "09_python_quality_security_observability",
       "display_name": "Python Quality, Security, and Observability",
-      "description": "Testing, security, observability, resilience, validation, documentation, and quality gates.",
+      "description": "Evidence verification, adversarial audits, testing, security, observability, resilience, validation, documentation, and developer experience.",
       "prompt_ids": [
-        "tab4_docstring_quality_roadmap",
+        "anti_hallucination_book_literature_audit_full",
+        "anti_hallucination_book_literature_audit_short",
+        "anti_hallucination_full_group",
+        "anti_hallucination_independent_ai_audit_full",
+        "anti_hallucination_independent_ai_audit_short",
+        "anti_hallucination_master_protocol_full",
+        "anti_hallucination_protocol_short",
+        "anti_hallucination_short_group",
+        "anti_hallucination_web_evidence_audit_full",
+        "anti_hallucination_web_evidence_audit_short",
         "python_documentation_developer_experience",
         "python_observability_logging_metrics_tracing",
         "python_resilience_error_handling",
         "python_security_threat_prevention",
         "python_testing_pytest",
         "python_validation_serialisation_type_safety"
-      ]
+      ],
+      "color_role": "indigo",
+      "prompt_count": 16,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "10_python_api_data_async_config",
       "display_name": "Python API, Data, Async, and Config",
-      "description": "APIs, databases, async/distributed design, configuration, and feature flags.",
+      "description": "APIs, database design and migrations, concurrency or distributed execution, configuration, and feature-flag lifecycle.",
       "prompt_ids": [
         "python_api_design",
         "python_async_parallel_distributed",
         "python_configuration_feature_flags",
         "python_database_design_optimisation"
-      ]
+      ],
+      "color_role": "cyan",
+      "prompt_count": 4,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "11_productization_and_release_readiness",
       "display_name": "Productization and Release Readiness",
-      "description": "Productization, infrastructure, lifecycle, deployment, operations, and SRE.",
+      "description": "Current deployment, operations, lifecycle, reliability, and AI-assisted engineering operating-model specialists.",
       "prompt_ids": [
-        "professional_ai_assisted_engineering_framework",
-        "professional_infrastructure_roadmap",
-        "productization_readiness_roadmap",
         "kubernetes_deployment_operations",
+        "professional_ai_assisted_engineering_framework",
         "python_lifecycle_versioning_deprecation",
         "python_site_reliability_engineering"
-      ]
+      ],
+      "color_role": "pink",
+      "prompt_count": 4,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     },
     {
       "group_id": "12_generalized_project_canons",
       "display_name": "Generalized Project Canons",
-      "description": "Reusable generalized canons and templates, including Tool/Project identity, MCard lifecycle, Error Memory models, human-process guidance, and source-grounded handbook generation.",
+      "description": "Reusable project canons and templates for Tool versus Project identity, MCard lifecycle, Error Memory, help documents, visual semantics, plugins, pipelines, and resolver boundaries.",
       "prompt_ids": [
         "architecture_review_project_card_machine_canon",
         "data_transform_pipeline_invariants",
         "desktop_help_document_layout_canon",
+        "kanda_desktop_help_exact_layout_blueprint",
         "domain_decision_table_template",
         "error_memory_active_ready_correction_blueprint",
         "error_memory_active_ready_json_template",
@@ -179,7 +227,10 @@
         "shared_visual_render_engine_canon",
         "transform_resolver_architecture_contract"
       ],
-      "prompt_count": 14
+      "color_role": "lime",
+      "prompt_count": 15,
+      "copy_stack_enabled": true,
+      "open_as_floating_window": true
     }
   ]
 }

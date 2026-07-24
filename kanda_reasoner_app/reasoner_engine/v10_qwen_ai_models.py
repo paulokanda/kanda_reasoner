@@ -19,7 +19,7 @@ from .v10_qwen_ai_models_helpers_private import (
 )
 
 
-OLLAMA_URL = "http://127.0.0.1:11434/v1/chat/completions"
+DEFAULT_OLLAMA_BASE_URL = "http://127.0.0.1:11434/v1"
 
 FAST_MODEL = "qwen2.5-coder:7b"
 SMART_MODEL = "qwen2.5-coder:32b"
@@ -41,15 +41,22 @@ class V9QwenAIModels:
     - async execution through a local single-worker queue
     """
 
-    def __init__(self) -> None:
+    def __init__(self, *, base_url: str = "") -> None:
         """Support init behavior.
         """
         
+        self._base_url = _runtime_base_url(base_url)
+        self._chat_url = self._base_url.rstrip("/") + "/chat/completions"
         self._governance_state_path = (
             Path(__file__).resolve().parent / "governance_state.json"
         )
         self._cache = _LocalDiskCache()
         self._request_queue = _LocalAIRequestQueue()
+
+    def set_base_url(self, base_url: str) -> None:
+        """Update the OpenAI-compatible endpoint for future requests."""
+        self._base_url = _normalize_base_url(base_url)
+        self._chat_url = self._base_url.rstrip("/") + "/chat/completions"
 
     def set_cache_dir(self, cache_dir: Path) -> None:
         """Set the cache dir.
@@ -107,7 +114,7 @@ class V9QwenAIModels:
             The mapped values.
         """
         
-        response = requests.post(OLLAMA_URL, json=payload, timeout=TIMEOUT)
+        response = requests.post(self._chat_url, json=payload, timeout=TIMEOUT)
         response.raise_for_status()
         return response.json()
 
@@ -308,7 +315,7 @@ class V9QwenAIModels:
                 full = ""
 
                 with requests.post(
-                    OLLAMA_URL,
+                    self._chat_url,
                     json=payload,
                     stream=True,
                     timeout=TIMEOUT,
@@ -361,3 +368,23 @@ class V9QwenAIModels:
                     on_error(str(exc))
 
         self._request_queue.submit(task)
+
+
+def _normalize_base_url(value: str) -> str:
+    clean = str(value or DEFAULT_OLLAMA_BASE_URL).strip().rstrip("/")
+    if clean.endswith("/chat/completions"):
+        clean = clean[: -len("/chat/completions")]
+    if not clean.endswith("/v1"):
+        clean += "/v1"
+    return clean
+
+
+def _runtime_base_url(explicit: str) -> str:
+    if str(explicit or "").strip():
+        return _normalize_base_url(explicit)
+    from kanda_reasoner_app.local_ai_runtime_state import (
+        runtime_local_ai_configuration_snapshot,
+    )
+
+    snapshot = runtime_local_ai_configuration_snapshot()
+    return DEFAULT_OLLAMA_BASE_URL if snapshot is None else snapshot.base_url

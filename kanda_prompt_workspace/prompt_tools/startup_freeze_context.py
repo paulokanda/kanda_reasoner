@@ -31,6 +31,17 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
+try:
+    from kanda_prompt_workspace.prompt_tools.startup_freeze_entry_summary import (
+        render_latest_freeze_entries_summary,
+        render_latest_freeze_rules_summary,
+    )
+except ModuleNotFoundError:
+    from startup_freeze_entry_summary import (
+        render_latest_freeze_entries_summary,
+        render_latest_freeze_rules_summary,
+    )
+
 ACTIVE_FREEZE_CONTEXT_FILENAME = "09_active_project_freeze_context.md"
 SHOW_PROJECT_TO_AI_SUFFIX = "_show_project_to_AI"
 FREEZE_BOX_NAME = "project_freeze_after_update"
@@ -112,92 +123,6 @@ def _read_bytes_if_file(path: Path) -> bytes:
     except OSError as exc:
         return f"READ_ERROR:{path}:{exc}".encode("utf-8", errors="replace")
     return b""
-
-
-def _parse_freeze_entry_frontmatter(text: str) -> dict[str, str]:
-    """Return a small frontmatter mapping from one freeze-entry Markdown file.
-
-    This parser is intentionally local and conservative. Startup freeze context
-    generation must not depend on the external freeze writer just to expose the
-    latest entries in the correct order.
-    """
-    if not text.startswith("---"):
-        return {}
-    parts = text.split("---", 2)
-    if len(parts) < 3:
-        return {}
-    result: dict[str, str] = {}
-    for raw_line in parts[1].splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#") or ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        clean_key = key.strip()
-        clean_value = value.strip().strip('"').strip("'")
-        if clean_key:
-            result[clean_key] = clean_value
-    return result
-
-
-def _freeze_entry_recency_key(entry_path: Path) -> tuple[str, int, str]:
-    """Return a newest-sortable key for a freeze entry file."""
-    meta: dict[str, str] = {}
-    try:
-        meta = _parse_freeze_entry_frontmatter(entry_path.read_text(encoding="utf-8"))
-    except OSError:
-        meta = {}
-    date_text = str(meta.get("date") or "")
-    try:
-        mtime_ns = entry_path.stat().st_mtime_ns
-    except OSError:
-        mtime_ns = 0
-    return (date_text, mtime_ns, entry_path.name)
-
-
-def _latest_freeze_entry_files(project_root: Path, *, limit: int = 12) -> list[Path]:
-    """Return newest freeze entries first from the canonical external memory root."""
-    entries_root = freeze_memory_root(project_root) / "entries"
-    if not entries_root.is_dir():
-        return []
-    candidates = [path for path in entries_root.glob("freeze-*.md") if path.is_file()]
-    return sorted(candidates, key=_freeze_entry_recency_key, reverse=True)[: max(1, int(limit))]
-
-
-def render_latest_freeze_entries_summary(project_root: Path, *, limit: int = 12) -> str:
-    """Render direct newest-first freeze-entry evidence for startup context.
-
-    The compact freeze exposure report may truncate after ``max_items``. This
-    direct recency section prevents newer freezes from being hidden behind older
-    entries when the project has a long freeze history.
-    """
-    entries = _latest_freeze_entry_files(project_root, limit=limit)
-    if not entries:
-        return "No freeze entry files found in the canonical external freeze memory root."
-
-    lines = [
-        "LATEST_FREEZE_ENTRIES_ORDER: newest first from canonical external freeze memory.",
-        "LATEST_FREEZE_ENTRIES_RULE: if this section conflicts with an older compact report item, treat the newest entry here as the fresher fact and request the full entry before patching protected behavior.",
-    ]
-    for index, entry_path in enumerate(entries, start=1):
-        try:
-            text = entry_path.read_text(encoding="utf-8")
-            meta = _parse_freeze_entry_frontmatter(text)
-        except OSError as exc:
-            lines.append(f"{index}. unreadable entry={entry_path.as_posix()} error={exc}")
-            continue
-        freeze_id = meta.get("freeze_id") or entry_path.stem
-        title = meta.get("feature_title") or "untitled"
-        status = meta.get("status") or "unknown"
-        date_text = meta.get("date") or "unknown-date"
-        box = meta.get("box") or "unknown-box"
-        try:
-            relative = entry_path.relative_to(freeze_memory_root(project_root)).as_posix()
-        except ValueError:
-            relative = entry_path.as_posix()
-        lines.append(
-            f"{index}. freeze_id={freeze_id} | title={title} | status={status} | date={date_text} | box={box} | entry={relative}"
-        )
-    return "\n".join(lines)
 
 
 def _iter_freeze_source_files(project_root: Path) -> list[Path]:
@@ -415,9 +340,15 @@ Runtime source is completely correct: new freeze writes and startup awareness us
 the external support root, while the in-source project_freeze_after_update path is
 legacy-only migration and compatibility state.
 
-## Compact freeze report
+## Historical compact freeze inventory
+
+The legacy exposure report below is inventory evidence. It may include older
+non-superseded rules in index order. When a line conflicts with the directly
+scanned current sections below, the newest direct entry and rule evidence wins.
 
 ```text
+HISTORICAL_COMPACT_REPORT_AUTHORITY: inventory-only when conflicts exist
+HISTORICAL_COMPACT_REPORT_PRECEDENCE: current direct entry and rule summaries below override conflicting lines
 {report.rstrip()}
 ```
 
@@ -428,7 +359,16 @@ It protects startup context from stale conclusions when the compact freeze repor
 truncates older/newer entries.
 
 ```text
-{render_latest_freeze_entries_summary(project_root, limit=12)}
+{render_latest_freeze_entries_summary(freeze_memory_root(project_root), limit=12)}
+```
+
+## Current freeze rules - newest first
+
+This section reads the newest canonical entries directly instead of inheriting
+the historical compact report ordering. It changes no frozen entry or index.
+
+```text
+{render_latest_freeze_rules_summary(freeze_memory_root(project_root), limit=12)}
 ```
 
 ## Post-validation freeze awareness rule
@@ -466,7 +406,16 @@ Do not treat project_freeze_ledger as active project memory.
             + "This section is generated by directly scanning the canonical external freeze memory root.\n"
             + "It remains available even when the compact freeze exposure tool fails.\n\n"
             + "```text\n"
-            + render_latest_freeze_entries_summary(project_root, limit=12)
+            + render_latest_freeze_entries_summary(
+                freeze_memory_root(project_root),
+                limit=12,
+            )
+            + "\n```\n\n## Current freeze rules - newest first\n\n"
+            + "```text\n"
+            + render_latest_freeze_rules_summary(
+                freeze_memory_root(project_root),
+                limit=12,
+            )
             + "\n```\n"
         )
 

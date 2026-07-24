@@ -23,6 +23,7 @@ __all__ = [
     "AI_OPENAI_COMPATIBLE_PROVIDER_CONTRACT",
     "build_local_openai_compatible_provider",
     "local_openai_compatible_provider_from_owner",
+    "local_openai_compatible_profile",
 ]
 
 AI_OPENAI_COMPATIBLE_PROVIDER_CONTRACT = "tab3_local_openai_compatible_provider_v1"
@@ -35,14 +36,23 @@ def local_openai_compatible_provider_from_owner(
     owner: object,
 ) -> Callable[[AIProviderRequest], AIProviderResult] | None:
     """Return a local OpenAI-compatible provider from Tab 3 controls."""
-    base_url = _owner_text(
-        owner,
-        ("_base_url_edit", "ai_base_url_edit", "base_url_edit", "base_url_combo"),
-    )
-    model = _owner_text(
-        owner,
-        ("_model_combo", "ai_model_combo", "model_combo", "model_edit"),
-    )
+    try:
+        from kanda_reasoner_app.local_ai_configuration import (
+            application_local_ai_configuration,
+        )
+
+        snapshot = application_local_ai_configuration().snapshot()
+        base_url = snapshot.base_url
+        model = snapshot.model_id
+    except RuntimeError:
+        base_url = _owner_text(
+            owner,
+            ("_base_url_edit", "ai_base_url_edit", "base_url_edit", "base_url_combo"),
+        )
+        model = _owner_text(
+            owner,
+            ("_model_combo", "ai_model_combo", "model_combo", "model_edit"),
+        )
     if not base_url or not model:
         return None
     return build_local_openai_compatible_provider(
@@ -68,7 +78,7 @@ def local_openai_compatible_provider_from_owner(
     )
 
 
-def _local_profile(base_url: str) -> GatewayProfile:
+def local_openai_compatible_profile(base_url: str) -> GatewayProfile:
     """Return a no-auth profile for one configured local endpoint."""
     clean_url = str(base_url or "").strip().rstrip("/")
     suffix = "/chat/completions"
@@ -83,7 +93,7 @@ def _local_profile(base_url: str) -> GatewayProfile:
         api_key_env="",
         api_key_required=False,
         anonymous_free_allowed=True,
-        privacy_summary="Local endpoint configured by Tab 3.",
+        privacy_summary="Local endpoint configured globally in Config AI.",
     )
 
 
@@ -106,7 +116,7 @@ def build_local_openai_compatible_provider(
             return _failed_result("Local AI model is empty.")
         try:
             result = request_chat_completion(
-                _local_profile(clean_base_url),
+                local_openai_compatible_profile(clean_base_url),
                 clean_model,
                 build_openai_compatible_messages(request),
                 request_id="tab3-docstring",

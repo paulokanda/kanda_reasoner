@@ -3,7 +3,7 @@
   "box_name": "Brain Navigator",
   "box_type": "gui_view",
   "box_size": "domain",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "contract_version": "0.1",
   "health_state": "active",
   "responsibility": "Own the first-tab interactive brain homepage and emit user intent when a brain region is hovered or clicked.",
@@ -82,7 +82,9 @@
     "fancy_index_open_module_action_via_injected_stable_tab_callback",
     "open_module_button_delivery_hardening_without_navigation_reach_in",
     "webchannel_bridge_lifetime_hardening_for_open_module_button",
-    "final_freeze_snapshot_data_only"
+    "final_freeze_snapshot_data_only",
+    "floating_window_tab_hide_cleanup_owned_by_preview_wrapper",
+    "floating_window_readable_system_font_presentation"
   ],
   "forbidden_dependencies": [
     "main_window",
@@ -93,7 +95,7 @@
     "architecture_review",
     "other_tab_internals"
   ],
-  "communication_route": "neural_architecture_asset_extraction_not_visible_yet; isolated_neural_architecture_preview_manual_only; visible_neural_architecture_tab_loads_project_owned_brain_asset_and_web_bridge; fallback_index_widget_is_used_only_when_webengine_or_brain_visual_creation_fails; pulse_marker_layer_emits_region_id_to_web_bridge; tab_navigation_remains_outside_the_webview; floating_remember_window_layer_opens_explanation_without_navigation; visual_fit_patch_shrinks_brain_and_repositions_markers_without_navigation; mesh_anchored_markers_restore_original_colors_without_navigation; mesh_anchor_marker_refinement_repositions_selected_anatomical_targets_without_navigation; floating_fancy_index_open_module_action_via_region_mapping_and_injected_tab_callback; open_module_button_hardens_click_delivery_without_tab_index_reach_in; open_module_button_keeps_qwebchannel_bridge_alive_without_direct_tab_switching; final_brain_navigator_freeze_snapshot_documents_validated_flow_without_runtime_change",
+  "communication_route": "neural_architecture_asset_extraction_not_visible_yet; isolated_neural_architecture_preview_manual_only; visible_neural_architecture_tab_loads_project_owned_brain_asset_and_web_bridge; fallback_index_widget_is_used_only_when_webengine_or_brain_visual_creation_fails; pulse_marker_layer_emits_region_id_to_web_bridge; tab_navigation_remains_outside_the_webview; floating_remember_window_layer_opens_explanation_without_navigation; visual_fit_patch_shrinks_brain_and_repositions_markers_without_navigation; mesh_anchored_markers_restore_original_colors_without_navigation; mesh_anchor_marker_refinement_repositions_selected_anatomical_targets_without_navigation; floating_fancy_index_open_module_action_via_region_mapping_and_injected_tab_callback; open_module_button_hardens_click_delivery_without_tab_index_reach_in; open_module_button_keeps_qwebchannel_bridge_alive_without_direct_tab_switching; final_brain_navigator_freeze_snapshot_documents_validated_flow_without_runtime_change; floating_window_closes_on_brain_navigator_tab_hide_without_main_window_reach_in; floating_window_uses_readable_system_font_stack_and_larger_text",
   "fallback_behavior": "The Neural Architecture brain WebView is the default visible Brain Navigator tab. The safe fallback index is created only if WebEngine or brain visual creation fails.",
   "removal_policy": "optional_with_visible_fallback_or_registry_disable",
   "disable_safe": true,
@@ -119,7 +121,8 @@
       "tests/test_brain_navigator_fancy_index_open_module_action.py",
       "tests/test_brain_navigator_open_module_button_delivery.py",
       "tests/test_brain_navigator_open_module_bridge_lifetime.py",
-      "tests/test_brain_navigator_final_freeze_snapshot.py"
+      "tests/test_brain_navigator_final_freeze_snapshot.py",
+      "tools/validate_brain_navigator_floating_window_lifecycle_readability_v1.py"
     ],
     "boundary_tests": [
       "tests/test_brain_navigator_first_tab_fallback.py",
@@ -141,7 +144,8 @@
       "tests/test_brain_navigator_fancy_index_open_module_action.py",
       "tests/test_brain_navigator_open_module_button_delivery.py",
       "tests/test_brain_navigator_open_module_bridge_lifetime.py",
-      "tests/test_brain_navigator_final_freeze_snapshot.py"
+      "tests/test_brain_navigator_final_freeze_snapshot.py",
+      "tools/validate_brain_navigator_floating_window_lifecycle_readability_v1.py"
     ],
     "contamination_tests": [
       "tests/test_brain_navigator_box_scaffold.py",
@@ -161,7 +165,8 @@
       "tests/test_brain_navigator_fancy_index_open_module_action.py",
       "tests/test_brain_navigator_open_module_button_delivery.py",
       "tests/test_brain_navigator_open_module_bridge_lifetime.py",
-      "tests/test_brain_navigator_final_freeze_snapshot.py"
+      "tests/test_brain_navigator_final_freeze_snapshot.py",
+      "tools/validate_brain_navigator_floating_window_lifecycle_readability_v1.py"
     ]
   },
   "notes": [
@@ -198,6 +203,8 @@
     "Patch 18 keeps strong references to the Neural Architecture preview bundle and QWebChannel bridge so the Open module button can reach the Python navigation adapter at runtime.",
     "Patch 18 fixes Open module runtime delivery by keeping the QWebChannel bridge and preview bundle alive on Qt widgets.",
     "Patch 19 records the final Brain Navigator interaction chain as a freeze snapshot without changing runtime behavior.",
-    "Final frozen flow: marker click opens the floating Fancy Index; Open module routes through QWebChannel, public region mapping, and injected stable-tab callback."
+    "Final frozen flow: marker click opens the floating Fancy Index; Open module routes through QWebChannel, public region mapping, and injected stable-tab callback.",
+    "The floating region window closes when the Brain Navigator page receives a Qt hide event, so returning to the tab never restores stale transient details.",
+    "The floating region window uses a Segoe UI and Arial system font stack with larger high-contrast text while preserving brain geometry and navigation boundaries."
   ]
 }

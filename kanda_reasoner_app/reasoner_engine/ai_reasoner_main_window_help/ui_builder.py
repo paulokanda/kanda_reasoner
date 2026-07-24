@@ -122,6 +122,8 @@ def _configure_controls(window: Any) -> None:
     window.clear_button.setObjectName("localAINewSessionButton")
     window.clear_memory_button.setText("Clear memory")
 
+    window.local_ai_model_label.hide()
+    window.model_combo.hide()
     for combo in (
         window.model_combo,
         window.profile_override_combo,
@@ -186,8 +188,6 @@ def _runtime_section(window: Any) -> QFrame:
     layout.addWidget(_muted_label("Governance state"))
     layout.addWidget(window.governance_path_edit)
     layout.addWidget(window.pick_governance_button)
-    layout.addWidget(window.local_ai_model_label)
-    layout.addWidget(window.model_combo)
     layout.addWidget(window.refresh_models_button)
 
     style_form = QFormLayout()
@@ -205,7 +205,6 @@ def _runtime_section(window: Any) -> QFrame:
 def _quick_section(window: Any) -> QFrame:
     """Build quick project-question shortcuts."""
     frame, layout = _section("Quick questions")
-    layout.addWidget(window.help_button)
     for button in (
         window.quick_startup_button,
         window.quick_topomap_button,

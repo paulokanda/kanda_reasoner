@@ -13,6 +13,10 @@ from kanda_reasoner_app.templates.floating_windows import show_auto_close_action
 from .constants import DEFAULT_MODEL
 from kanda_reasoner_app.templates.green_sonar_monitor import GreenSonarActivityMonitor
 from .worker_thread import DocstringRunWorker
+from kanda_reasoner_app.project_support_boundary import resolve_project_tool_boundary_identity
+from kanda_reasoner_app.tab3_manual_review_runtime.project_paths_runtime import (
+    run_report_path,
+)
 __all__ = [
     'run_selected_mode',
     'stop_running_selected_mode',
@@ -89,8 +93,7 @@ def effective_report_path(self) -> str:
     explicit = self._report_path_edit.text().strip()
     if explicit:
         return explicit
-    root = Path(self._root_path_edit.text().strip() or Path.cwd())
-    return str(root / '.docstring_run_report.jsonl')
+    return str(run_report_path(self))
 
 def _set_stop_button_enabled(self, enabled: bool) -> None:
     """Enable or disable the optional Tab 3 stop button."""
@@ -178,6 +181,49 @@ def run_mode(self, mode: str) -> None:
     if self._worker_thread is not None:
         QMessageBox.warning(self, 'Work running', 'Wait for the current work to finish first, or click Stop Running Selected Mode.')
         return
+    ai_api_key = ''
+    self._docstring_run_project_identity = None
+    if self._ai_enabled_checkbox.isChecked():
+        controls = _qtcore_import_module(
+            'kanda_reasoner_app.tab3_manual_review_runtime.ai_web_controls_runtime'
+        )
+        self._docstring_run_project_identity = resolve_project_tool_boundary_identity(
+            root_path
+        )
+        if controls.provider_mode_from_owner(self) == 'web':
+            descriptor = controls.selected_model_descriptor(self)
+            if (
+                descriptor is None
+                or 'response_format' not in set(descriptor.supported_parameters)
+            ):
+                QMessageBox.warning(
+                    self,
+                    'Structured model required',
+                    'Refresh models and select one that advertises '
+                    'response_format support.',
+                )
+                return
+            fingerprint = (
+                str(root_path.resolve())
+                + '|'
+                + str(mode)
+                + '|'
+                + self._scope_combo.currentText()
+                + '|'
+                + controls.gateway_id_from_owner(self)
+                + '|'
+                + controls.selected_model_id(self)
+            )
+            approval = controls.request_cloud_approval(
+                self,
+                operation='Docstring Assistant ' + str(mode) + ' run',
+                item_count=1,
+                payload_bytes=0,
+                input_fingerprint=fingerprint,
+            )
+            if not approval:
+                return
+            ai_api_key = controls.api_key_from_owner(self)
     self._output.clear()
     self._tab3_live_progress_active = False
     self._tab3_run_final_output_started = False
@@ -206,7 +252,7 @@ def run_mode(self, mode: str) -> None:
     _set_stop_button_enabled(self, True)
     self.statusBar().showMessage(f'Running {mode}...')
     self._worker_thread = _qt_core_attr('QThread')(self)
-    self._worker = DocstringRunWorker(worker_script_path=str(worker_path), project_root=str(root_path), mode=mode, include_module=self._module_checkbox.isChecked(), include_classes=self._class_checkbox.isChecked(), include_functions=self._function_checkbox.isChecked(), insert_file_address_at_top=self._file_address_checkbox.isChecked(), ai_enabled=self._ai_enabled_checkbox.isChecked(), ai_config_path=config_path, include_private=self._include_private_checkbox.isChecked(), min_confidence=self._min_confidence_combo.currentText(), no_uncertain=self._no_uncertain_checkbox.isChecked(), workers=self._workers_spin.value(), report_path=report_path, target_module=target_module, target_package=target_package)
+    self._worker = DocstringRunWorker(worker_script_path=str(worker_path), project_root=str(root_path), mode=mode, include_module=self._module_checkbox.isChecked(), include_classes=self._class_checkbox.isChecked(), include_functions=self._function_checkbox.isChecked(), insert_file_address_at_top=self._file_address_checkbox.isChecked(), ai_enabled=self._ai_enabled_checkbox.isChecked(), ai_config_path=config_path, ai_api_key=ai_api_key, include_private=self._include_private_checkbox.isChecked(), min_confidence=self._min_confidence_combo.currentText(), no_uncertain=self._no_uncertain_checkbox.isChecked(), workers=self._workers_spin.value(), report_path=report_path, target_module=target_module, target_package=target_package)
     self._worker.moveToThread(self._worker_thread)
     self._tab3_progress_receiver = _create_progress_receiver(self)
     self._worker_thread.started.connect(self._worker.run)
@@ -273,6 +319,12 @@ def handle_worker_success(self, mode: str) -> None:
     """
     self._run_button.setEnabled(True)
     _set_stop_button_enabled(self, False)
+    if not _run_result_is_current(self):
+        self._output.appendPlainText(
+            '\n[stale result rejected] active Project changed during the run.\n'
+        )
+        self.statusBar().showMessage('Stale Docstring run result rejected')
+        return
     self.statusBar().showMessage(f'Finished {mode}')
     if getattr(self, '_tab3_live_progress_active', False):
         self._output.clear()
@@ -297,6 +349,12 @@ def handle_worker_error(self, mode: str, details: str) -> None:
     """
     self._run_button.setEnabled(True)
     _set_stop_button_enabled(self, False)
+    if not _run_result_is_current(self):
+        self._output.appendPlainText(
+            '\n[stale result rejected] active Project changed during the run.\n'
+        )
+        self.statusBar().showMessage('Stale Docstring run result rejected')
+        return
     was_stopped = 'stopped by user' in (details or '').lower()
     if was_stopped:
         self.statusBar().showMessage(f'Stopped {mode}')
@@ -322,6 +380,24 @@ def handle_worker_error(self, mode: str, details: str) -> None:
     _finish_tab3_sonar_error(self, mode)
     QMessageBox.warning(self, 'Work finished with issues', f'{mode.capitalize()} finished with issues.\nCheck the output panel for details.')
 
+
+def _run_result_is_current(self) -> bool:
+    """Return whether the completed run still belongs to the selected Project."""
+    expected = getattr(self, '_docstring_run_project_identity', None)
+    if expected is None:
+        return True
+    try:
+        current = resolve_project_tool_boundary_identity(
+            Path(self._root_path_edit.text().strip())
+        )
+    except Exception:
+        return False
+    return (
+        current.active_project_id == expected.active_project_id
+        and current.active_project_root_fingerprint
+        == expected.active_project_root_fingerprint
+    )
+
 def cleanup_worker(self) -> None:
     """Handle cleanup worker.
     """
@@ -335,6 +411,7 @@ def cleanup_worker(self) -> None:
     if self._worker_thread is not None:
         self._worker_thread.deleteLater()
         self._worker_thread = None
+    self._docstring_run_project_identity = None
 
 def _run_tab1_audit_write_route_from_run_controls(self, mode: str) -> bool:
     """Run Write using Tab 1 audit targets from the existing controls boundary."""

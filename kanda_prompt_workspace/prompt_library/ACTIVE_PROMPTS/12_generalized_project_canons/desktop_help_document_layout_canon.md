@@ -2,7 +2,7 @@
 prompt_id: desktop_help_document_layout_canon
 prompt_code: KPR-12-010
 title: KANDA Desktop Help Document Layout Profile
-version: 2.0.0
+version: 2.2.0
 status: active
 load_type: on_request
 owner_box: 12_generalized_project_canons
@@ -15,7 +15,7 @@ updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closur
 
 ## Purpose
 
-Define the optional KANDA desktop-help content, layout, artwork, offline-rendering, accessibility, and source-to-rendered profile without presenting it as a universal documentation canon.
+Define the optional KANDA desktop-help content, layout, artwork, offline-rendering, accessibility, and source-to-rendered profile for teaching a first-time, non-programmer user how to use the features of one selected application tab. The help must use plain English and guide the user step by step, clearly explaining each relevant button, label, field, path, status, option, output, and result without assuming programming knowledge, while preserving the adopted KANDA visual profile and without presenting it as a universal documentation canon.
 
 This prompt is a bounded technical contract. It is not a persona, a source-write
 authority, a release gate, or proof that implementation or validation occurred.
@@ -31,6 +31,10 @@ authority, a release gate, or proof that implementation or validation occurred.
 - Generic Python documentation architecture is the task; use KPR-09-011.
 - A runtime visual scene shared across tools is central; use KPR-12-013.
 - The application has not adopted the KANDA help profile.
+
+## Exact-layout companion bridge
+
+When the task requires reproducing the established Show Project to AI book-style layout, load `kanda_desktop_help_exact_layout_blueprint` as the auxiliary design model. KPR-12-010 remains the profile and authority boundary; KPR-12-015 supplies exact dimensions, typography, spacing, image placement, semantic HTML skeleton, browser-grade local-file rendering requirements, responsive behavior, and visual validation checklist.
 
 ## Authority boundaries
 
@@ -104,4 +108,6 @@ Return a `DESKTOP HELP PROFILE RECORD` containing:
 
 ## Version history
 
+- 2.2.0: strengthened the KPR-12-015 bridge so exact-layout help requires QWebEngine local-file rendering and renderer-first visual diagnosis.
+- 2.1.0: added the KPR-12-015 exact-layout companion bridge without changing profile ownership.
 - 2.0.0: reclassified the KANDA-specific design system as an optional project overlay and added accessibility, provenance, offline, and truthful visual-review boundaries.

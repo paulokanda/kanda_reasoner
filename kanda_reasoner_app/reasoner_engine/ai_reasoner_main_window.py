@@ -77,6 +77,7 @@ from kanda_reasoner_app.reasoner_engine.ai_bridge import LocalAIReasoner
 from kanda_reasoner_app.reasoner_engine.v10_conversation_memory import ConversationMemory
 from kanda_reasoner_app.reasoner_engine.index_loader import JsonProjectIndex
 from kanda_reasoner_app.reasoner_engine.v10_model_registry import LocalModelRegistry
+from kanda_reasoner_app.local_ai_configuration import application_local_ai_configuration
 from kanda_reasoner_app.reasoner_engine.prompt_builder import PromptBuilder
 from kanda_reasoner_app.reasoner_engine.reasoner_retriever import ProjectRetriever
 
@@ -98,6 +99,7 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
         self.prompt_builder = PromptBuilder()
         self.ai = LocalAIReasoner()
         self.memory = ConversationMemory()
+        self._local_ai_configuration = application_local_ai_configuration()
         self.model_registry = LocalModelRegistry()
         self.settings = _qt_core_attr("QSettings")("Kanda", "ProjectReasonerV10")
 
@@ -122,7 +124,8 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
         self.governance_path_edit = QLineEdit()
 
         self.model_combo = QComboBox()
-        self.refresh_models_button = QPushButton("Refresh Models")
+        self.model_combo.setEnabled(False)
+        self.refresh_models_button = QPushButton("Open Config AI")
         self.help_button = QPushButton("Help (?)")
         self.help_button.setFixedWidth(80)
         self.static_context_button = QPushButton("Static Context")
@@ -187,8 +190,10 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
 
         self._build_ui()
         self._connect_signals()
-        self.refresh_models()
         self.settings_manager.restore(self)
+        self._wire_global_local_ai_configuration()
+        self._sync_global_local_ai_controls()
+        self._local_ai_configuration.refresh_models()
         self.runtime_controller.refresh_project_json_path_from_project_root(
             self,
             force=False,
@@ -233,6 +238,34 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
         self.answer_box.setTextCursor(cursor)
         self.answer_box.ensureCursorVisible()
 
+    def _wire_global_local_ai_configuration(self) -> None:
+        """Keep Project Q&A controls as read-only projections of Config Local AI."""
+        self._local_ai_configuration.configuration_changed.connect(
+            lambda _snapshot: self._sync_global_local_ai_controls()
+        )
+        self._local_ai_configuration.catalog_changed.connect(
+            lambda _models: self._sync_global_local_ai_controls()
+        )
+
+    def _sync_global_local_ai_controls(self) -> None:
+        """Keep the hidden compatibility projection aligned with Config Local AI."""
+        snapshot = self._local_ai_configuration.snapshot()
+        self.model_combo.blockSignals(True)
+        self.model_combo.clear()
+        for model in snapshot.available_models:
+            self.model_combo.addItem(model)
+        if snapshot.model_id and self.model_combo.findText(snapshot.model_id) < 0:
+            self.model_combo.addItem(snapshot.model_id)
+        self.model_combo.setCurrentText(snapshot.model_id)
+        self.model_combo.blockSignals(False)
+        self.model_combo.setToolTip(
+            "Hidden compatibility projection; Config AI owns model selection."
+        )
+
+    def selected_local_ai_model(self) -> str:
+        """Return the single application-scoped Local AI model selection."""
+        return str(self._local_ai_configuration.snapshot().model_id or "").strip()
+
     def _build_ui(self) -> None:
         """Support build ui behavior.
         """
@@ -268,15 +301,11 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
         destination_layout,
         insert_index: int | None = None,
     ) -> None:
-        """Move Project Q&A local-AI model controls into a host layout."""
+        """Move only the canonical Config AI shortcut into the host layout."""
         if self._ai_runtime_controls_moved_to_host:
             return
 
-        widgets = [
-            getattr(self, "local_ai_model_label", None),
-            self.model_combo,
-            self.refresh_models_button,
-        ]
+        widgets = [self.refresh_models_button]
         self._move_widgets_to_host_layout(widgets, destination_layout, insert_index)
         self._ai_runtime_controls_moved_to_host = True
 
@@ -359,7 +388,15 @@ class JsonProjectReasonerV10(_WindowControllerBridgeMixin, QMainWindow):
             return
 
         question = self.question_edit.text().strip()
-        selected_model = self.model_combo.currentText().strip()
+        selected_model = self._local_ai_configuration.selected_model_id().strip()
+        if not selected_model:
+            QMessageBox.warning(
+                self,
+                "Local AI not configured",
+                "Open Config AI > Config Local AI and select a model first.",
+            )
+            self._local_ai_configuration.request_open_configuration()
+            return
 
         try:
             self.runtime_controller.ensure_project_json_loaded_for_question(self)

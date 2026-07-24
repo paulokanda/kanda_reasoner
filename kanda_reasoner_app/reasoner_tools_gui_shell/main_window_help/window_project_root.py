@@ -5,9 +5,15 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtWidgets import QComboBox, QLineEdit, QWidget
+from PySide6.QtWidgets import QComboBox, QLineEdit, QMessageBox, QWidget
 
 from kanda_reasoner_app.project_root_resolver import normalize_project_root_text
+from ..project_scope_sync import (
+    PROJECT_SCOPED_TAB_IDS,
+    apply_project_root_to_widget,
+    project_switch_block,
+    reset_project_scoped_widget,
+)
 
 _OUTPUT_ROOT_SUFFIXES = ("_show_project_to_AI", "_delete_after_daily_work")
 _SHOW_PROJECT_CHILD_NAMES = {
@@ -44,13 +50,72 @@ class _WindowProjectRootMixin:
         self._save_prefs()
 
     def _iter_loaded_tool_widgets(self) -> list[QWidget]:
-        """Return embedded widgets that are already loaded in lazy tabs."""
+        """Return every loaded tool widget exactly once."""
         widgets: list[QWidget] = []
-        for page in self._pages:
-            widget = getattr(page, "_embedded_widget", None)
-            if isinstance(widget, QWidget):
+        seen: set[int] = set()
+        for widget in self._loaded_tools_by_tab_id.values():
+            if isinstance(widget, QWidget) and id(widget) not in seen:
                 widgets.append(widget)
+                seen.add(id(widget))
+        ignore_rules = getattr(self, "ignore_rules_tab", None)
+        if isinstance(ignore_rules, QWidget) and id(ignore_rules) not in seen:
+            widgets.append(ignore_rules)
         return widgets
+
+    def _iter_loaded_project_widgets(self) -> list[tuple[str, QWidget]]:
+        """Return loaded project-scoped tabs with their stable tab IDs."""
+        items: list[tuple[str, QWidget]] = []
+        for tab_id, widget in self._loaded_tools_by_tab_id.items():
+            if tab_id in PROJECT_SCOPED_TAB_IDS and isinstance(widget, QWidget):
+                items.append((tab_id, widget))
+        ignore_rules = getattr(self, "ignore_rules_tab", None)
+        if isinstance(ignore_rules, QWidget):
+            items.append(("exclusion_rules", ignore_rules))
+        return items
+
+    def _project_switch_block_reason(self) -> str:
+        """Return the first loaded-tab reason that blocks a Project switch."""
+        for tab_id, widget in self._iter_loaded_project_widgets():
+            block = project_switch_block(tab_id, widget)
+            if block is not None:
+                return block.tab_id + ": " + block.reason
+        return ""
+
+    def _reset_loaded_project_scopes(self) -> None:
+        """Clear transient old-Project UI state in every loaded project tab."""
+        for tab_id, widget in self._iter_loaded_project_widgets():
+            reset_project_scoped_widget(tab_id, widget)
+
+    def _apply_root_to_loaded_widget(
+        self,
+        widget: QWidget,
+        project_root: Path,
+    ) -> None:
+        """Synchronize one loaded widget field and public root facade."""
+        for field in self._iter_project_root_fields(widget):
+            self._set_project_root_field_text(field, project_root)
+        apply_project_root_to_widget(widget, project_root)
+
+    def _restore_canonical_project_root_fields(self) -> None:
+        """Restore all root editors after a fail-closed switch rejection."""
+        project_root = self.current_project_root
+        if project_root is None:
+            return
+        self._is_propagating_project_root = True
+        try:
+            for widget in self._iter_loaded_tool_widgets():
+                self._apply_root_to_loaded_widget(widget, project_root)
+        finally:
+            self._is_propagating_project_root = False
+
+    def _show_project_switch_block(self, reason: str) -> None:
+        """Explain why the canonical active Project did not change."""
+        QMessageBox.warning(
+            self,
+            "Project switch blocked",
+            "The active Project was not changed because project-scoped work "
+            "is still active or unresolved.\n\n" + reason,
+        )
 
     def _iter_project_root_fields(self, widget: QWidget) -> list[QWidget]:
         """Return known project-root editors owned by a loaded tab."""
@@ -111,24 +176,19 @@ class _WindowProjectRootMixin:
             field.setCurrentText(root_text)
 
     def _patch_common_project_root_fields(self, widget: QWidget) -> None:
-        """Bind and synchronize common project-root fields for any tab."""
+        """Bind all root editors and apply the current canonical Project."""
         for field in self._iter_project_root_fields(widget):
             self._bind_project_root_field(field)
-            if self.current_project_root is not None:
-                self._set_project_root_field_text(
-                    field,
-                    self.current_project_root,
-                )
+        if self.current_project_root is not None:
+            self._apply_root_to_loaded_widget(widget, self.current_project_root)
 
     def _on_any_project_root_text_changed(self, text: str) -> None:
-        """Remember and propagate project-root changes from any loaded tab."""
+        """Commit any valid field or Browse result as the active Project."""
         if self._is_propagating_project_root:
             return
-
         project_root = self._normalize_project_root(text)
         if project_root is None:
             return
-
         self._propagate_project_root(project_root)
 
     @staticmethod

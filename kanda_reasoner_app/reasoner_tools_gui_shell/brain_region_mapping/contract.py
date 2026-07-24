@@ -26,7 +26,7 @@ __all__ = [
 ]
 
 BRAIN_REGION_MAPPING_BOX_ID: Final[str] = "brain_region_mapping"
-BRAIN_REGION_MAPPING_CONTRACT_VERSION: Final[str] = "0.1"
+BRAIN_REGION_MAPPING_CONTRACT_VERSION: Final[str] = "0.2"
 
 
 @dataclass(frozen=True)

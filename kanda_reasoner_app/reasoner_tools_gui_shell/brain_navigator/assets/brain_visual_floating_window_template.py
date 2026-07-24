@@ -24,35 +24,35 @@ def build_floating_remember_window_css() -> str:
     color: #10244d;
     box-shadow: 0 16px 40px rgba(20, 35, 60, 0.24);
     backdrop-filter: blur(7px);
-    font-family: 'Courier New', monospace;
+    font-family: 'Segoe UI', Arial, sans-serif;
     pointer-events: auto;
 }
 .floating-remember-window-kicker {
     color: rgba(0, 92, 255, 0.98);
-    font-size: 9px;
-    letter-spacing: 3px;
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 800;
 }
 .floating-remember-window-title {
     margin-top: 6px;
     color: #0a1d45;
-    font-size: 15px;
-    line-height: 1.25;
+    font-size: 20px;
+    line-height: 1.3;
     font-weight: 800;
 }
 .floating-remember-window-module {
     margin-top: 8px;
     color: #0f3478;
-    font-size: 11px;
-    line-height: 1.35;
+    font-size: 14px;
+    line-height: 1.45;
     font-weight: 700;
 }
 .floating-remember-window-purpose {
     margin-top: 10px;
     color: #182c55;
-    font-size: 11px;
-    line-height: 1.45;
+    font-size: 14px;
+    line-height: 1.55;
 }
 .floating-remember-window-status {
     margin-top: 12px;
@@ -62,8 +62,8 @@ def build_floating_remember_window_css() -> str:
     border-radius: 999px;
     color: rgba(0, 92, 255, 0.85);
     background: rgba(0, 132, 255, 0.08);
-    font-size: 9px;
-    letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 0.7px;
     text-transform: uppercase;
 }
 
@@ -86,8 +86,8 @@ def build_floating_remember_window_css() -> str:
     padding: 7px 12px;
     color: #ffffff;
     background: linear-gradient(135deg, rgba(255, 132, 0, 0.96), rgba(0, 92, 255, 0.92));
-    font-family: 'Courier New', monospace;
-    font-size: 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -103,8 +103,8 @@ def build_floating_remember_window_css() -> str:
 }
 .floating-remember-window-route {
     color: rgba(15, 52, 120, 0.78);
-    font-size: 9px;
-    line-height: 1.35;
+    font-size: 11px;
+    line-height: 1.45;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -176,6 +176,9 @@ function showFloatingRememberWindow(markerData, clientX, clientY) {
             event.stopPropagation();
             const delivered = callBrainBridgeOpenModule(windowData.region_id);
             actionButton.dataset.lastDeliveryState = delivered ? "delivered" : "bridge_pending";
+            if (delivered) {
+                hideFloatingRememberWindow();
+            }
         });
     }
     positionFloatingRememberWindow(floatingWindow, clientX, clientY);

@@ -20,8 +20,8 @@ def _build_ui(window: object) -> None:
     left_column = QWidget()
     _relieve_horizontal_size_pressure(left_column, QSizePolicy)
     left_layout = QVBoxLayout(left_column)
-    left_layout.addWidget(_build_options_group(window))
     left_layout.addWidget(_build_ai_group(window))
+    left_layout.addWidget(_build_options_group(window))
     left_layout.addWidget(window._progress)
     left_layout.addWidget(_build_output_panel(window), 1)
     left_layout.addWidget(_build_report_group(window))
@@ -75,6 +75,7 @@ def _wire_events(window: object) -> None:
     _connect(window._save_config_button, "clicked", window.save_config_to_file)
     _connect(window._ai_enabled_checkbox, "toggled", window._set_ai_controls_enabled)
     _connect(window._scope_combo, "currentTextChanged", window._update_scope_controls)
+    _ai_controls_runtime().wire_events(window)
     _connect(window._review_filter_combo, "currentTextChanged", window._populate_review_list)
     _connect(window._review_list, "currentItemChanged", window._show_review_item_details)
     _connect(window._review_list, "itemDoubleClicked", _open_review_window_slot(window))
@@ -84,22 +85,9 @@ def _wire_events(window: object) -> None:
     _inline_corrector_runtime().wire_inline_corrector_events(window)
 
 def _set_ai_controls_enabled(window: object, enabled: bool) -> None:
-    """Enable or disable local-AI configuration controls."""
-    for widget in (
-        window._base_url_edit,
-        window._model_combo,
-        window._refresh_models_button,
-        window._config_path_edit,
-        window._load_config_button,
-        window._save_config_button,
-        window._include_private_checkbox,
-        window._min_confidence_combo,
-        window._no_uncertain_checkbox,
-        getattr(window, "_ai_docstring_verbosity_combo", None),
-    ):
-        setter = getattr(widget, "setEnabled", None)
-        if callable(setter):
-            setter(bool(enabled))
+    """Enable or disable provider-specific AI controls."""
+    _ai_controls_runtime().apply_control_state(window, enabled)
+
 
 def _build_project_group(window: object) -> Any:
     """Return a hidden compatibility placeholder for the retired body Project group."""
@@ -157,48 +145,9 @@ def _build_options_group(window: object) -> Any:
     return group
 
 def _build_ai_group(window: object) -> Any:
-    """Return the local-AI configuration group."""
-    QComboBox, QFormLayout, QGroupBox, QHBoxLayout, QLabel = _qt_widgets(
-        "QComboBox", "QFormLayout", "QGroupBox", "QHBoxLayout", "QLabel"
-    )
+    """Return the shared AI Assistant configuration group."""
+    return _ai_controls_runtime().build_ai_group(window)
 
-    group = QGroupBox("Local AI")
-    layout = QFormLayout(group)
-    _ensure_ai_docstring_verbosity_combo(window, QComboBox)
-
-    ai_runtime_row = QHBoxLayout()
-    ai_runtime_row.addWidget(window._ai_enabled_checkbox)
-    ai_runtime_row.addSpacing(16)
-    ai_runtime_row.addWidget(QLabel("Base URL"))
-    ai_runtime_row.addWidget(window._base_url_edit, 1)
-    ai_runtime_row.addSpacing(16)
-    ai_runtime_row.addWidget(QLabel("Model"))
-    ai_runtime_row.addWidget(window._model_combo, 1)
-    ai_runtime_row.addSpacing(16)
-    ai_runtime_row.addWidget(QLabel("Refresh"))
-    ai_runtime_row.addWidget(window._refresh_models_button)
-    layout.addRow(ai_runtime_row)
-
-    config_row = QHBoxLayout()
-    config_row.addWidget(window._config_path_edit, 1)
-    config_row.addSpacing(16)
-    config_row.addWidget(QLabel("Config"))
-    config_row.addWidget(window._load_config_button)
-    config_row.addWidget(window._save_config_button)
-    layout.addRow("Config path", config_row)
-
-    policy_row = QHBoxLayout()
-    policy_row.addWidget(window._include_private_checkbox)
-    policy_row.addWidget(QLabel("Minimum confidence"))
-    policy_row.addWidget(window._min_confidence_combo)
-    policy_row.addWidget(window._no_uncertain_checkbox)
-    policy_row.addSpacing(16)
-    policy_row.addWidget(QLabel("AI draft style"))
-    policy_row.addWidget(window._ai_docstring_verbosity_combo)
-    policy_row.addStretch(1)
-    layout.addRow("Policy", policy_row)
-
-    return group
 
 def _ensure_ai_docstring_verbosity_combo(window: object, combo_cls: Any) -> None:
     """Ensure the Local AI group has a docstring verbosity combo."""
@@ -316,6 +265,8 @@ def _build_review_panel(window: object) -> Any:
     window._review_generate_draft_button = QPushButton("Generate Draft")
     window._review_generate_visible_drafts_button = QPushButton("Generate Visible Drafts")
     window._review_generate_all_drafts_button = QPushButton("Generate All Drafts")
+    window._review_stop_ai_drafts_button = QPushButton("Stop AI Drafts")
+    window._review_stop_ai_drafts_button.setEnabled(False)
     window._review_undo_bulk_drafts_button = QPushButton("Undo Last Bulk Drafts")
     window._review_save_change_button = QPushButton("Save Review Decision")
     window._review_approve_row_button = QPushButton("Approve Row")
@@ -339,6 +290,7 @@ def _build_review_panel(window: object) -> Any:
     draft_action_row.addWidget(window._review_generate_draft_button)
     draft_action_row.addWidget(window._review_generate_visible_drafts_button)
     draft_action_row.addWidget(window._review_generate_all_drafts_button)
+    draft_action_row.addWidget(window._review_stop_ai_drafts_button)
     draft_action_row.addWidget(window._review_undo_bulk_drafts_button)
     draft_action_row.addStretch(1)
     after_layout.addLayout(draft_action_row)
@@ -468,6 +420,13 @@ def _connect(widget: object, signal_name: str, slot: Any) -> None:
         connect(slot)
 
 
+
+
+def _ai_controls_runtime() -> Any:
+    """Return the shared Docstring Assistant AI controls owner."""
+    return import_module(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_web_controls_runtime"
+    )
 
 def _qt_widgets(*names: str) -> tuple[Any, ...]:
     """Return Qt widget classes lazily."""

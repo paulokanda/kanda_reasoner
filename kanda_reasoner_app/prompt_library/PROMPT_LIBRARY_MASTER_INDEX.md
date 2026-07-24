@@ -14,19 +14,21 @@ Tab 9 is not a code editor, runtime controller, governance editor, or automatic 
 
 ## Current Physical Locations
 
-Prompt-library assets currently live under:
+Canonical prompt sources and group ownership live under:
+
+```text
+kanda_prompt_workspace\prompt_library\ACTIVE_PROMPTS
+kanda_prompt_workspace\prompt_library\GROUPS\PROMPT_GROUPS_DRAFT.json
+kanda_prompt_workspace\prompt_library\METADATA
+```
+
+Package compatibility, teaching, profile, overlay, QA, and fallback assets live under:
 
 ```text
 kanda_reasoner_app\prompt_library\
 ```
 
-The canonical package facade is:
-
-```text
-kanda_reasoner_app
-```
-
-The physical implementation package has not yet been renamed from kanda_reasoner_app.
+The Prompt Library tab prefers the canonical workspace and uses the package catalog only as a compatibility fallback.
 
 ## Main Prompt Library Folders
 

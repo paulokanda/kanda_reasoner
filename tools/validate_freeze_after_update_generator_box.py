@@ -1,143 +1,137 @@
 #!/usr/bin/env python3
 # project-path: tools/validate_freeze_after_update_generator_box.py
-"""Validate the Freeze Feature After Update blueprint generator box."""
+"""Validate the retired Freeze AI-send generator bridge.
+
+The public generator entry point is intentionally a cleanup-only compatibility
+bridge. Fixture Projects use unique slugs and deterministic external-support
+cleanup so repeated real-Windows validation cannot inherit prior fixture state.
+"""
 
 from __future__ import annotations
 
+__all__ = [
+    "validate_fresh_external_project",
+    "validate_existing_freeze_entry",
+    "validate_current_project_regeneration",
+]
 
-__all__ = ['validate_current_project_regeneration', 'validate_fresh_external_project']
-import json
 import shutil
 import tempfile
 from pathlib import Path
+from uuid import uuid4
 
 from kanda_reasoner_app.freeze_after_update.contract import (
     ensure_freeze_after_update_box,
     generate_freeze_after_update_ai_files,
     inspect_freeze_after_update_box,
 )
+from kanda_reasoner_app.freeze_after_update.paths import build_paths
 
-
-WORKFLOW_MARKERS = [
-    "Required AI delivery workflow for freeze patches",
-    "ZIP placement and root-to-staging rule",
-    "<project_name>_delete_after_daily_work",
-    "$ROOT_PATCH_ZIP",
-    "$WORK_PATCH_ZIP",
-    "Move-Item -Path $ROOT_PATCH_ZIP -Destination $WORK_PATCH_ZIP -Force",
-    "zip is not in root of drive:\\ where project is",
-    "The install block must be adapted to the exact files in the patch ZIP",
-    "not depend on an installer script inside the ZIP",
-    "$env:PYTHONPATH = $PROJECT_ROOT",
-    "Do not use Bash heredoc syntax",
-    "temporary .py file under the delete-after-daily-work folder",
-    "Mandatory sandbox pre-delivery validation rule",
-    "Before giving the user any ZIP, install block, or validation block, AI must test the deliverable in its own sandbox first",
-    "Do not validate by reading guessed or private result attributes",
-    "The process is not complete when AI gives the ZIP",
-    "The patch is freezeable only after clean validation evidence",
-]
-
-FORBIDDEN_WORKFLOW_MARKERS = [
-    "_PATCH_NAME",
-    "install_patch.ps1",
-    "validate_patch.ps1",
-    "Join-Path $PROJECT_DRIVE (\"_\" + $PATCH_NAME)",
-    "powershell -ExecutionPolicy Bypass -File (Join-Path $PATCH_DIR",
-]
+_DEPRECATION_MARKER = "Deprecated project-local files_to_send_ai ZIP generation skipped"
 
 
 def assert_true(condition: bool, message: str) -> None:
-    """Support assert true behavior.
-    
-    Parameters
-    ----------
-    condition : bool
-        The condition value.
-    message : str
-        The message text.
-    """
-    
     if not condition:
         raise AssertionError(message)
 
 
-def read_text(path: Path) -> str:
-    """Return the text.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    
-    Returns
-    -------
-    str
-        The string result.
-    """
-    
-    return path.read_text(encoding="utf-8")
+def _unique_project(temp_root: Path, prefix: str) -> Path:
+    project_root = temp_root / f"{prefix}_{uuid4().hex}"
+    project_root.mkdir()
+    return project_root
+
+
+def _external_support_root(project_root: Path) -> Path:
+    return build_paths(project_root).box_root.parent
+
+
+def _reset_fixture_support(project_root: Path) -> Path:
+    support_root = _external_support_root(project_root)
+    shutil.rmtree(support_root, ignore_errors=True)
+    return support_root
+
+
+def _assert_deprecated_generation_result(result: object) -> None:
+    assert_true(bool(getattr(result, "ok", False)), str(getattr(result, "message", "")))
+    assert_true(getattr(result, "output_zip", None) is None, "deprecated ZIP output was recreated")
+    assert_true(
+        getattr(result, "output_instruction", None) is None,
+        "deprecated instruction output was recreated",
+    )
+    assert_true(
+        _DEPRECATION_MARKER in str(getattr(result, "message", "")),
+        "deprecated-generation status message missing",
+    )
+
+
+def _seed_stale_project_local_output(project_root: Path) -> Path:
+    stale_root = project_root / "project_freeze_after_update" / "files_to_send_ai"
+    stale_root.mkdir(parents=True, exist_ok=True)
+    (stale_root / "freeze_feature_ai_send_pack_stale.zip").write_bytes(b"stale")
+    (stale_root / "what_to_say_to_ai_freeze_feature.md").write_text(
+        "stale instruction\n",
+        encoding="utf-8",
+    )
+    return stale_root
+
+
+def _assert_no_generated_pack(project_root: Path) -> None:
+    paths = build_paths(project_root)
+    assert_true(
+        not list(paths.send_root.glob("freeze_feature_ai_send_pack_*.zip")),
+        "deprecated external Freeze ZIP was generated",
+    )
+    assert_true(
+        not (project_root / "project_freeze_after_update" / "files_to_send_ai").exists(),
+        "deprecated project-local files_to_send_ai folder exists",
+    )
 
 
 def validate_fresh_external_project() -> None:
-    """Validate the fresh external project.
-    """
-    
     temp_root = Path(tempfile.mkdtemp(prefix="freeze_after_update_generator_"))
+    project_root = _unique_project(temp_root, "external_project")
+    support_root = _reset_fixture_support(project_root)
     try:
-        project_root = temp_root / "external_project"
-        project_root.mkdir()
         (project_root / "README.md").write_text("# External Project\n", encoding="utf-8")
+        paths = build_paths(project_root)
+
+        before = inspect_freeze_after_update_box(project_root)
+        assert_true(not before.ok, "unique fresh fixture unexpectedly inherited valid support state")
 
         ensure_result = ensure_freeze_after_update_box(project_root)
         assert_true(ensure_result.ok, ensure_result.message)
-        assert_true((project_root / "project_freeze_after_update").is_dir(), "box was not created")
+        assert_true(paths.box_root.is_dir(), "external support box was not created")
+        assert_true(
+            not (project_root / "project_freeze_after_update").exists(),
+            "freeze state must not be created in Project source",
+        )
         assert_true(not (project_root / "project_freeze_ledger").exists(), "external project must not receive project_freeze_ledger")
 
         inspect_result = inspect_freeze_after_update_box(project_root)
         assert_true(inspect_result.ok, inspect_result.message)
 
+        _seed_stale_project_local_output(project_root)
         generate_result = generate_freeze_after_update_ai_files(project_root)
-        assert_true(generate_result.ok, generate_result.message)
-        assert_true(generate_result.freeze_count == 0, "fresh external project should have zero freezes")
-        assert_true(generate_result.output_zip is not None and generate_result.output_zip.exists(), "ZIP missing")
-        assert_true(
-            generate_result.output_instruction is not None and generate_result.output_instruction.exists(),
-            "instruction file missing",
-        )
-
-        text = read_text(generate_result.output_instruction)
-        for marker in WORKFLOW_MARKERS:
-            assert_true(marker in text, "missing workflow marker: " + marker)
-        for marker in FORBIDDEN_WORKFLOW_MARKERS:
-            assert_true(marker not in text, "forbidden stale workflow marker still present: " + marker)
-
-        index_path = project_root / "project_freeze_after_update" / "frozen_features_memory" / "freeze_index.json"
-        data = json.loads(read_text(index_path))
-        assert_true(data.get("schema_version") == "1.0", "schema version mismatch")
-        assert_true(data.get("freezes") == [], "fresh freeze index should be empty")
+        _assert_deprecated_generation_result(generate_result)
+        assert_true(generate_result.freeze_count == 0, "cleanup bridge must not synthesize freeze count")
+        _assert_no_generated_pack(project_root)
+        assert_true(paths.freeze_index.is_file(), "external freeze index missing")
     finally:
+        shutil.rmtree(support_root, ignore_errors=True)
         shutil.rmtree(temp_root, ignore_errors=True)
+    assert_true(not support_root.exists(), "fresh generator fixture support root survived cleanup")
 
 
 def validate_existing_freeze_entry() -> None:
-    """Validate the existing freeze entry.
-    """
-    
     temp_root = Path(tempfile.mkdtemp(prefix="freeze_after_update_generator_existing_"))
+    project_root = _unique_project(temp_root, "project_with_freeze")
+    support_root = _reset_fixture_support(project_root)
     try:
-        project_root = temp_root / "project_with_freeze"
-        project_root.mkdir()
+        paths = build_paths(project_root)
         ensure_result = ensure_freeze_after_update_box(project_root)
         assert_true(ensure_result.ok, ensure_result.message)
 
-        entry_path = (
-            project_root
-            / "project_freeze_after_update"
-            / "frozen_features_memory"
-            / "entries"
-            / "freeze-test-generator-box.md"
-        )
+        entry_path = paths.entries_root / "freeze-test-generator-box.md"
         entry_path.write_text(
             """---
 freeze_id: "freeze-test-generator-box"
@@ -155,57 +149,46 @@ superseded_by: null
 """,
             encoding="utf-8",
         )
+        original = entry_path.read_text(encoding="utf-8")
+        _seed_stale_project_local_output(project_root)
 
         generate_result = generate_freeze_after_update_ai_files(project_root)
-        assert_true(generate_result.ok, generate_result.message)
-        assert_true(generate_result.freeze_count == 1, "expected one freeze entry")
-        assert_true(generate_result.output_instruction is not None, "instruction missing from result")
-        text = read_text(generate_result.output_instruction)
-        assert_true("This project currently has 1 frozen feature entry file(s)." in text, "freeze count not reported")
-        assert_true("freeze-test-generator-box.md" in text, "freeze entry not listed")
+        _assert_deprecated_generation_result(generate_result)
+        _assert_no_generated_pack(project_root)
+        assert_true(entry_path.is_file(), "existing freeze entry was removed")
+        assert_true(entry_path.read_text(encoding="utf-8") == original, "existing freeze entry changed")
     finally:
+        shutil.rmtree(support_root, ignore_errors=True)
         shutil.rmtree(temp_root, ignore_errors=True)
+    assert_true(not support_root.exists(), "entry generator fixture support root survived cleanup")
 
 
 def validate_current_project_regeneration(project_root: Path) -> None:
-    """Validate the current project regeneration.
-    
-    Parameters
-    ----------
-    project_root : Path
-        The project root path.
-    """
-    
-    generator_path = project_root / "project_freeze_ledger" / "freeze_tools" / "freeze_after_update_generator.py"
-    assert_true(generator_path.exists(), "blueprint generator missing")
+    paths = build_paths(project_root)
+    before_entries = {
+        path.resolve(): path.read_bytes()
+        for path in paths.entries_root.glob("freeze-*.md")
+        if path.is_file()
+    }
+    stale_root = _seed_stale_project_local_output(project_root)
 
     result = generate_freeze_after_update_ai_files(project_root)
-    assert_true(result.ok, result.message)
-    assert_true(result.output_zip is not None and result.output_zip.exists(), "current project ZIP missing")
-    assert_true(result.output_instruction is not None and result.output_instruction.exists(), "current project instruction missing")
+    _assert_deprecated_generation_result(result)
+    assert_true(not stale_root.exists(), "current Project stale local pack was not cleaned")
+    _assert_no_generated_pack(project_root)
 
-    text = read_text(result.output_instruction)
-    for marker in WORKFLOW_MARKERS:
-        assert_true(marker in text, "current project instruction missing marker: " + marker)
-    for marker in FORBIDDEN_WORKFLOW_MARKERS:
-        assert_true(marker not in text, "current project instruction still contains stale marker: " + marker)
-
-    expected_entries = len(list((project_root / "project_freeze_after_update" / "frozen_features_memory" / "entries").glob("freeze-*.md")))
-    assert_true(result.freeze_count == expected_entries, "result freeze_count does not match entry files")
-    print("current_project_freeze_count=", result.freeze_count)
+    after_entries = {
+        path.resolve(): path.read_bytes()
+        for path in paths.entries_root.glob("freeze-*.md")
+        if path.is_file()
+    }
+    assert_true(after_entries == before_entries, "cleanup bridge mutated frozen feature entries")
+    print("current_project_freeze_entries_preserved=", len(after_entries))
 
 
 def main() -> int:
-    """Support main behavior.
-    
-    Returns
-    -------
-    int
-        The integer status code.
-    """
-    
     project_root = Path.cwd().resolve()
-    print("Validating Freeze Feature After Update generator box...")
+    print("Validating retired Freeze Feature After Update AI-send bridge...")
     print("Project root:", project_root)
     validate_fresh_external_project()
     print("PASS fresh external project")
@@ -213,7 +196,11 @@ def main() -> int:
     print("PASS existing freeze entry")
     validate_current_project_regeneration(project_root)
     print("PASS current project regeneration")
-    print("VALIDATION OK - generator logic lives in the blueprint box and regenerates instructions correctly.")
+    print("UNIQUE_GENERATOR_SUPPORT_FIXTURES: PASS")
+    print("GENERATOR_FIXTURE_SUPPORT_CLEANUP: PASS")
+    print("DEPRECATED_FREEZE_AI_SEND_GENERATION_BLOCKED: PASS")
+    print("EXISTING_FREEZE_MEMORY_PRESERVED: PASS")
+    print("VALIDATION OK - deprecated Freeze AI-send generation remains disabled.")
     return 0
 
 

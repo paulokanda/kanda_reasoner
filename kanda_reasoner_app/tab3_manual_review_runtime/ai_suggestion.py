@@ -12,62 +12,21 @@
 
 from __future__ import annotations
 
-import json
-import urllib.error
-import urllib.request
+from kanda_reasoner_app.tab3_manual_review_runtime.ai_docstring_row_bridge_runtime import (
+    generate_ai_review_draft_for_row,
+)
 
 
 __all__ = ["generate_manual_review_docstring"]
 
 
-def generate_manual_review_docstring(window: object, location: dict, module_text: str) -> str:
-    """Return one docstring suggestion for the selected review location."""
-    return _suggest_manual_review_docstring(window, location, module_text)
-
-
-def _suggest_manual_review_docstring(window: object, location: dict, module_text: str) -> str:
-    """Return one docstring suggestion for the selected review location."""
-    fallback = _fallback_docstring(location)
-    base_url = _window_text(window, ("_base_url_edit", "ai_base_url_edit", "base_url_edit", "base_url_combo"))
-    model = _window_text(window, ("_model_combo", "ai_model_combo", "model_combo", "model_edit"))
-    if not base_url or not model:
-        return fallback
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "Return only one Python triple-quoted docstring."},
-            {"role": "user", "content": _build_prompt(location, module_text)},
-        ],
-        "temperature": 0.0,
-        "max_tokens": 180,
-    }
-    try:
-        text = _post_chat_completion(base_url, payload)
-    except (OSError, urllib.error.URLError, TimeoutError, ValueError):
-        return fallback
-    return _clean_docstring(text) or fallback
-
-
-def _post_chat_completion(base_url: str, payload: dict) -> str:
-    """Post to an OpenAI-compatible local chat-completions endpoint."""
-    url = base_url.rstrip("/")
-    if not url.endswith("/chat/completions"):
-        url += "/chat/completions"
-    data = json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(
-        url,
-        data=data,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(request, timeout=45) as response:
-        raw = response.read().decode("utf-8", errors="replace")
-    body = json.loads(raw)
-    choices = body.get("choices") or []
-    if not choices:
-        return ""
-    message = choices[0].get("message") or {}
-    return str(message.get("content", "")).strip()
+def generate_manual_review_docstring(
+    window: object,
+    location: dict,
+    module_text: str,
+) -> str:
+    """Return one provider-selected draft through the canonical row bridge."""
+    return generate_ai_review_draft_for_row(window, location, module_text)
 
 
 def _build_prompt(location: dict, module_text: str) -> str:

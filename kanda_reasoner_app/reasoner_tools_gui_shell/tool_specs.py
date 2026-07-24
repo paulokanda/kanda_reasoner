@@ -71,7 +71,10 @@ TOOLS: tuple[ToolSpec, ...] = (
             _module_path("insert_missing_docstrings_gui", "insert_missing_docstrings_gui"),
         ),
         class_candidates=("MissingDocstringsWindow",),
-        source_hint=_source_path("insert_missing_docstrings_gui", "insert_missing_docstrings_gui.py"),
+        source_hint=_source_path(
+            "insert_missing_docstrings_gui",
+            "insert_missing_docstrings_gui.py",
+        ),
         help_catalog="docstring_assistant.json",
         tab_id="docstring_assistant",
     ),
@@ -86,12 +89,39 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="project_structure_map",
     ),
     ToolSpec(
-        step_title="Project Web AI",
+        step_title="Project Structure 3D",
+        module_candidates=(
+            _module_path(
+                "project_structure_visualizer",
+                "project_structure_3d_tab",
+            ),
+        ),
+        class_candidates=("ProjectStructure3DWidget",),
+        source_hint=_source_path(
+            "project_structure_visualizer",
+            "project_structure_3d_tab.py",
+        ),
+        help_catalog="project_structure_3d.json",
+        tab_id="project_structure_3d",
+    ),
+    ToolSpec(
+        step_title="Config AI",
+        module_candidates=(
+            _module_path("reasoner_engine", "config_ai_tab"),
+        ),
+        class_candidates=("ConfigAITab",),
+        source_hint=_source_path("reasoner_engine", "config_ai_tab.py"),
+        help_catalog="config_ai.json",
+        tab_id="config_web_ai",
+    ),
+    ToolSpec(
+        step_title="Web AI",
         module_candidates=(
             _module_path("reasoner_engine", "project_web_ai_tab"),
         ),
         class_candidates=("ProjectWebAITab",),
         source_hint=_source_path("reasoner_engine", "project_web_ai_tab.py"),
+        help_catalog="web_ai.json",
         tab_id="project_web_ai",
     ),
     ToolSpec(
@@ -121,6 +151,7 @@ TOOLS: tuple[ToolSpec, ...] = (
         ),
         class_candidates=("JsonProjectReasonerV10",),
         source_hint=_source_path("reasoner_engine", "ai_reasoner_main_window.py"),
+        help_catalog="ai_reasoner_main_window_help.json",
         tab_id="project_qa",
     ),
     ToolSpec(
@@ -135,6 +166,7 @@ TOOLS: tuple[ToolSpec, ...] = (
     ToolSpec(
         step_title="Exclusion Rules",
         source_hint=_source_path("reasoner_tools_gui_shell", "ignore_rules_tab.py"),
+        help_catalog="exclusion_rules.json",
         tab_id="exclusion_rules",
         tab_kind="builtin_ignore_rules",
     ),

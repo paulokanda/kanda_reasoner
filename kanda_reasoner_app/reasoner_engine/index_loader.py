@@ -100,6 +100,33 @@ class JsonProjectIndex:
         
         self.load_json(file_path)
 
+    def initialize_live_project(self, project_root: str) -> None:
+        """Initialize an in-memory index for bounded live-source retrieval.
+
+        This mode is used only when the selected Project has no complete
+        Project Q&A JSON. It does not create, overwrite, or persist evidence
+        files.
+        """
+        root_text = str(project_root or "").strip()
+        if not root_text:
+            raise ValueError("A project root is required for live-source mode.")
+
+        initialize_index_state(self)
+        self.index_data = {
+            "artifact_type": "local_ai_live_project_source",
+            "project_summary": {
+                "project_root": root_text,
+                "entry_files": [],
+            },
+        }
+        self.top_level_sections = dict(self.index_data)
+        self.section_names = sorted(self.top_level_sections.keys())
+        self.project_summary = self._safe_dict(
+            self.index_data.get("project_summary")
+        )
+        self.project_root = root_text
+        self.semantic_roles = {}
+
     def _load_full_sections(self) -> None:
         """Support load full sections behavior.
         """

@@ -14,16 +14,9 @@ class _WindowToolPatchesMixin:
     """Private implementation mixin for ReasonerToolsWindow."""
 
     def _on_tool_loaded(self, spec: ToolSpec, widget: QWidget) -> None:
-        """Support on tool loaded behavior.
-        
-        Parameters
-        ----------
-        spec : ToolSpec
-            The spec value.
-        widget : QWidget
-            The widget value.
-        """
-        
+        """Register one loaded tool and bind it to the canonical Project."""
+        if spec.tab_id:
+            self._loaded_tools_by_tab_id[spec.tab_id] = widget
         self._patch_common_project_root_fields(widget)
         if 'reasoner_context_collector' in spec.source_hint:
             self._collector_widget = widget
@@ -90,7 +83,13 @@ class _WindowToolPatchesMixin:
             widget.runtime_trace_json_edit.setReadOnly(True)
         if hasattr(widget, 'project_root_edit'):
             _safe_disconnect(widget.project_root_edit.textChanged)
-            widget.project_root_edit.textChanged.connect(self._on_collector_project_root_changed)
+            widget.project_root_edit.setProperty(
+                "pyarchitect_project_root_bound",
+                False,
+            )
+            widget.project_root_edit.textChanged.connect(
+                self._on_collector_project_root_changed
+            )
             if self.current_project_root is not None:
                 widget.project_root_edit.setText(str(self.current_project_root))
         if hasattr(widget, 'run_button') and hasattr(widget, '_run_collector'):
@@ -175,22 +174,40 @@ class _WindowToolPatchesMixin:
         if self.current_project_root is not None:
             self._apply_project_root_to_daily_refactor(self.current_project_root)
 
-    def _propagate_project_root(self, project_root: Path) -> None:
-        """Apply the selected project root to every loaded workflow tab."""
-        self._remember_project_root(project_root)
+    def _propagate_project_root(self, project_root: Path) -> bool:
+        """Atomically switch and synchronize the canonical active Project."""
         if self._is_propagating_project_root:
-            return
+            return False
+
+        old_root = self.current_project_root
+        changed = old_root is None or old_root != project_root
+        if changed:
+            block_reason = self._project_switch_block_reason()
+            if block_reason:
+                self._restore_canonical_project_root_fields()
+                self._show_project_switch_block(block_reason)
+                return False
+
         self._is_propagating_project_root = True
         try:
+            if changed:
+                self._reset_loaded_project_scopes()
+                self._project_switch_epoch += 1
+                self._remember_project_root(project_root)
+
             for widget in self._iter_loaded_tool_widgets():
-                for line_edit in self._iter_project_root_fields(widget):
-                    self._set_project_root_field_text(line_edit, project_root)
+                self._apply_root_to_loaded_widget(widget, project_root)
+
             if self._collector_widget is not None:
-                self._apply_project_root_to_collector(self._collector_widget, project_root)
+                self._apply_project_root_to_collector(
+                    self._collector_widget,
+                    project_root,
+                )
             if self._daily_refactor_widget is not None:
                 self._apply_project_root_to_daily_refactor(project_root)
         finally:
             self._is_propagating_project_root = False
+        return True
 
     def _apply_project_root_to_collector(self, widget: QWidget, project_root: Path) -> None:
         """Apply the shared project root to the collector tab fields."""

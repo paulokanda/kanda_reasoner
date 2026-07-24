@@ -65,6 +65,9 @@ def generate_bulk_drafts(owner: object, scope: str) -> BulkDraftSummary:
     """Generate review drafts for selected, visible, or all reviewable rows."""
     normalized_scope = _normalize_scope(scope)
     mode = review_engine_status_runtime.correction_mode_from_owner(owner)
+    if mode == "ai":
+        _ai_async_runtime().start_ai_draft_job(owner, normalized_scope)
+        return BulkDraftSummary(scope=normalized_scope)
     rows = _rows_for_scope(owner, normalized_scope)
     summary = BulkDraftSummary(scope=normalized_scope)
 
@@ -317,6 +320,13 @@ def _append_output(owner: object, text: str) -> None:
     if callable(append_text):
         append_text(text)
 
+
+
+def _ai_async_runtime() -> Any:
+    """Return the asynchronous Docstring AI task owner."""
+    return import_module(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_docstring_async_runtime"
+    )
 
 def _qt_widget(name: str) -> Any:
     """Return a PySide6.QtWidgets object lazily."""

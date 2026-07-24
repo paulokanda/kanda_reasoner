@@ -33,7 +33,6 @@ __all__ = [
     "wire_inline_corrector_events",
 ]
 
-
 def wire_inline_corrector_events(window: object) -> None:
     """Connect optional inline-corrector widgets when they exist."""
     _connect(
@@ -86,27 +85,24 @@ def wire_inline_corrector_events(window: object) -> None:
         "toggled",
         lambda checked: _handle_ai_enabled_changed(window, checked),
     )
+    _ai_async_runtime().wire_ai_draft_events(window)
     refresh_correction_engine_status(window)
     refresh_review_draft_status(window, _current_review_row(window))
-
 
 def refresh_correction_engine_status(owner: object) -> None:
     """Refresh the read-only correction engine status label."""
     review_engine_status_runtime.apply_correction_engine_status(owner)
-
 
 def refresh_review_draft_status(owner: object, row: dict | None = None) -> None:
     """Refresh the visible draft-generation status label."""
     current_row = row if row is not None else _current_review_row(owner)
     review_status_visibility.apply_review_draft_status(owner, current_row)
 
-
 def _handle_ai_enabled_changed(owner: object, checked: bool) -> None:
     """Update engine status and refresh snippets after Local AI changes."""
     del checked
     refresh_correction_engine_status(owner)
     refresh_inline_corrector_for_selection(owner, _current_review_row(owner))
-
 
 def refresh_inline_corrector_for_selection(owner: object, row: dict | None) -> None:
     """Refresh original and corrected snippets for the selected report row."""
@@ -126,7 +122,6 @@ def refresh_inline_corrector_for_selection(owner: object, row: dict | None) -> N
     )
     refresh_review_draft_status(owner, row)
 
-
 def select_next_filtered_review_item(owner: object, direction: int) -> None:
     """Move to previous or next visible review item in the filtered list."""
     review_list = getattr(owner, "_review_list", None)
@@ -143,7 +138,6 @@ def select_next_filtered_review_item(owner: object, direction: int) -> None:
         setter(next_row)
         _refresh_current_review_selection(owner)
 
-
 def reset_filtered_review_selection(owner: object) -> None:
     """Reset the filtered review list navigation to the first visible row."""
     review_list = getattr(owner, "_review_list", None)
@@ -159,25 +153,25 @@ def reset_filtered_review_selection(owner: object) -> None:
 
 
 def generate_current_draft(owner: object) -> None:
-    """Generate a draft for the selected row without saving approval state."""
+    """Generate a selected-row draft without saving approval state."""
+    if _selected_correction_mode(owner) == "ai":
+        _ai_async_runtime().start_ai_draft_job(owner, "selected")
+        return
     row = _current_review_row(owner)
-    if not row:
-        _append_output(owner, "[review] no selected row to generate a draft.\n")
+    if not row or not inline_preview_runtime.is_reviewable_docstring_row(row):
+        _append_output(owner, "[review] no reviewable selected row.\n")
         return
-    if not inline_preview_runtime.is_reviewable_docstring_row(row):
-        _append_output(owner, "[review] selected row is not a missing-docstring row.\n")
-        return
-    mode = _selected_correction_mode(owner)
-    draft = _suggest_docstring_for_row(owner, row, mode).strip()
+    draft = _suggest_docstring_for_row(owner, row, "heuristics").strip()
     if not draft:
-        _append_output(owner, "[review] no correction draft was generated.\n")
+        _append_output(owner, "[review] no heuristic draft was generated.\n")
         return
     row["draft_docstring"] = draft
-    if mode == "heuristics":
-        row["selected_draft_source"] = "heuristic"
-        row.setdefault("ai_status", "")
-    review_status_visibility.append_draft_generation_output(owner, row, mode)
-    _save_manual_review_state(owner, row, str(row.get("draft_docstring") or ""))
+    row["selected_draft_source"] = "heuristic"
+    row.setdefault("ai_status", "")
+    review_status_visibility.append_draft_generation_output(
+        owner, row, "heuristics"
+    )
+    _save_manual_review_state(owner, row, draft)
     _refresh_after_row_change(owner, row)
 
 
@@ -486,6 +480,13 @@ def _connect(widget: object | None, signal_name: str, slot: Any) -> None:
     if callable(connect):
         connect(slot)
 
+
+
+def _ai_async_runtime() -> Any:
+    """Return the asynchronous Docstring AI task owner."""
+    return import_module(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_docstring_async_runtime"
+    )
 
 def _qt_core(name: str) -> Any:
     """Return a PySide6.QtCore object lazily."""

@@ -15,14 +15,14 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "region_id": "frontal_lobe",
         "region_name": "Frontal lobe",
         "target_tab_id": "architecture_review",
-        "target_tab_label": "Architecture Review",
+        "target_tab_label": "Audit Project",
         "analogy_title": "Executive planning and architecture",
         "analogy_text": (
             "The frontal lobe is associated with planning and executive "
-            "control, like Architecture Review organizes the project at the "
-            "highest structural level."
+            "control, like Audit Project organizes architecture, workflow, "
+            "and engineering-safety review in one governed workspace."
         ),
-        "tooltip_text": "Frontal lobe -> Architecture Review",
+        "tooltip_text": "Frontal lobe -> Audit Project",
         "category": "Core Review",
     },
     {
@@ -95,32 +95,47 @@ RAW_BRAIN_REGION_TARGETS: Final[tuple[dict[str, str], ...]] = (
         "category": "Project Tools",
     },
     {
+        "region_id": "visual_association_cortex",
+        "region_name": "Visual association cortex",
+        "target_tab_id": "project_structure_3d",
+        "target_tab_label": "Project Structure 3D",
+        "analogy_title": "Spatial integration and structural mapping",
+        "analogy_text": (
+            "Visual association cortex integrates visual patterns into a "
+            "coherent spatial model, like Project Structure 3D helps the "
+            "user understand packages, modules, and relationships as one "
+            "interactive read-only map."
+        ),
+        "tooltip_text": "Visual association cortex -> Project Structure 3D",
+        "category": "Project Tools",
+    },
+    {
         "region_id": "central_sulcus",
         "region_name": "Central sulcus",
-        "target_tab_id": "project_structure_map",
-        "target_tab_label": "Show Project to AI",
-        "analogy_title": "Boundary between source and AI handoff",
+        "target_tab_id": "project_web_ai",
+        "target_tab_label": "Web AI",
+        "analogy_title": "Boundary between project context and web reasoning",
         "analogy_text": (
             "The central sulcus separates major functional cortical areas, "
-            "like Show Project to AI now owns the boundary between source files "
-            "and external AI handoff packages."
+            "like Web AI preserves a controlled boundary between the "
+            "active Project context and external Web AI advice."
         ),
-        "tooltip_text": "Central sulcus -> Show Project to AI",
+        "tooltip_text": "Central sulcus -> Web AI",
         "category": "Project Tools",
     },
     {
         "region_id": "cerebellum",
         "region_name": "Cerebellum",
-        "target_tab_id": "architecture_review",
-        "target_tab_label": "Architecture Review",
-        "analogy_title": "Correction and refinement",
+        "target_tab_id": "config_web_ai",
+        "target_tab_label": "Config AI",
+        "analogy_title": "Calibration and coordinated settings",
         "analogy_text": (
-            "The cerebellum fine-tunes movement and correction, like "
-            "Architecture Review combines audit findings with integrated "
-            "Refactor Report evidence to identify what should be improved."
+            "The cerebellum calibrates and fine-tunes movement, like Config AI "
+            "centralizes the gateway, model, endpoint, and credential settings "
+            "used by the AI tabs."
         ),
-        "tooltip_text": "Cerebellum -> Architecture Review",
-        "category": "Project Tools",
+        "tooltip_text": "Cerebellum -> Config AI",
+        "category": "Configuration",
     },
     {
         "region_id": "temporal_lobe",

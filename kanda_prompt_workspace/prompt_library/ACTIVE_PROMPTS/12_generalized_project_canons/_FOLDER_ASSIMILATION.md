@@ -2,7 +2,7 @@
 folder_id: 12_generalized_project_canons
 folder_name: Generalized Project Canons
 artifact_type: folder_assimilation_card
-version: 4.0
+version: 4.1
 status: active
 scope: routing_metadata_only
 load_mode: selected_when_needed
@@ -36,6 +36,7 @@ its behavior or authorizing source work.
 | `KPR-12-012` | `plugin_package_import_canon` | plugin/package trust and lifecycle |
 | `KPR-12-013` | `shared_visual_render_engine_canon` | canonical visual semantics across backends |
 | `KPR-12-014` | `transform_resolver_architecture_contract` | pure transform resolution and trace |
+| `KPR-12-015` | `kanda_desktop_help_exact_layout_blueprint` | exact KANDA desktop-help layout design model |
 
 ## Boundaries
 
@@ -43,6 +44,7 @@ its behavior or authorizing source work.
 - Error Memory application schema/models remain machine authority.
 - KPR-12-010 is a project-specific help profile, not a universal documentation
   or rendering canon.
+- KPR-12-015 is its exact-layout companion and must not become a competing help canon.
 - KPR-12-009 owns lineage; KPR-12-014 owns resolution; neither executes runtime
   operations.
 - No Class 12 prompt authorizes implementation, patch delivery, validation or

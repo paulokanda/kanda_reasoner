@@ -64,6 +64,11 @@ def initialize_window(self) -> None:
     self.resize(1360, 860)
     self._worker_thread: QThread | None = None
     self._worker: DocstringRunWorker | None = None
+    self._docstring_ai_thread: QThread | None = None
+    self._docstring_ai_worker = None
+    self._docstring_ai_receiver = None
+    self._docstring_ai_active_identity = None
+    self._docstring_ai_session_id = ""
     self._runtime_dir = Path(tempfile.mkdtemp(prefix="docstring_gui_"))
     self._current_report_path: Path | None = None
     self._report_rows: list[dict] = []
@@ -120,20 +125,11 @@ def initialize_window(self) -> None:
     self._confirm_write_checkbox.setChecked(
         safe_bool(self._prefs.get("confirm_write"), True)
     )
-    self._ai_enabled_checkbox = QCheckBox("Enable local AI")
-    self._ai_enabled_checkbox.setChecked(False)
-    self._ai_enabled_checkbox.setToolTip(
-        "Local AI starts off for safety. Enable it explicitly for this session."
+    ai_controls = __import__(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_web_controls_runtime",
+        fromlist=["initialize_controls"],
     )
-    self._base_url_edit = QLineEdit(
-        safe_text(self._prefs.get("base_url"), DEFAULT_BASE_URL)
-    )
-    self._model_combo = QComboBox()
-    self._model_combo.setEditable(True)
-    self._model_combo.addItem(
-        safe_text(self._prefs.get("model"), DEFAULT_MODEL)
-    )
-    self._refresh_models_button = QPushButton("Refresh installed models")
+    ai_controls.initialize_controls(self, self._prefs)
     self._config_path_edit = QLineEdit(
         safe_text(self._prefs.get("config_path"), "")
     )
@@ -203,7 +199,7 @@ def initialize_window(self) -> None:
 
 def current_prefs_payload(self) -> dict[str, object]:
     """Build the current standalone GUI preferences payload."""
-    return {
+    payload = {
         "project_root": self._root_path_edit.text().strip(),
         "mode": self._mode_combo.currentText(),
         "include_module": self._module_checkbox.isChecked(),
@@ -224,3 +220,9 @@ def current_prefs_payload(self) -> dict[str, object]:
         "report_path": self._report_path_edit.text().strip(),
         "use_tab1_audit_docstring_source": self._tab1_audit_docstring_radio.isChecked(),
     }
+    ai_controls = __import__(
+        "kanda_reasoner_app.tab3_manual_review_runtime.ai_web_controls_runtime",
+        fromlist=["preferences_payload"],
+    )
+    payload.update(ai_controls.preferences_payload(self))
+    return payload

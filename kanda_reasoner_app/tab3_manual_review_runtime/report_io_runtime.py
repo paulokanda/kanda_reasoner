@@ -12,6 +12,9 @@ from typing import Any
 from kanda_reasoner_app.tab3_manual_review_runtime.review_persistence_fields import (
     review_rows_jsonl,
 )
+from kanda_reasoner_app.tab3_manual_review_runtime.project_paths_runtime import (
+    scan_report_folder,
+)
 
 REPORT_IO_PREFS_NAME = ".kanda_tab3_report_io_prefs.json"
 
@@ -218,11 +221,8 @@ def _default_external_folder(owner: object) -> Path:
         root_text = str(text_method() or "").strip()
     if root_text:
         try:
-            root = Path(root_text).expanduser().resolve()
-            parent = root.parent
-            if parent.exists():
-                return parent
-        except OSError:
+            return scan_report_folder(owner)
+        except (OSError, ValueError):
             pass
     return Path.home()
 
