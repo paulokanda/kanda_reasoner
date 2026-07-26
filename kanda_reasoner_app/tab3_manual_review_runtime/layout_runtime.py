@@ -35,9 +35,9 @@ def _build_ui(window: object) -> None:
     _relieve_horizontal_size_pressure(column_splitter, QSizePolicy)
     column_splitter.addWidget(left_column)
     column_splitter.addWidget(right_column)
-    column_splitter.setStretchFactor(0, 1)
-    column_splitter.setStretchFactor(1, 1)
-    column_splitter.setSizes([1, 1])
+    column_splitter.setStretchFactor(0, 42)
+    column_splitter.setStretchFactor(1, 58)
+    column_splitter.setSizes([42, 58])
     column_splitter.setChildrenCollapsible(False)
     root_layout.addWidget(column_splitter, 1)
 
@@ -98,41 +98,44 @@ def _build_project_group(window: object) -> Any:
     return group
 
 def _build_options_group(window: object) -> Any:
-    """Return the scan scope and run options group."""
-    QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout = _qt_widgets(
-        "QGroupBox", "QHBoxLayout", "QLabel", "QPushButton", "QVBoxLayout"
+    """Return compact scan scope and run options controls."""
+    QGroupBox, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout = _qt_widgets(
+        "QGroupBox", "QHBoxLayout", "QLabel", "QPushButton", "QSizePolicy", "QVBoxLayout"
     )
-
     _scan_only_runtime().configure_scan_diff_write_controls(window)
-
     group = QGroupBox("Run Options")
     layout = QVBoxLayout(group)
+    layout.setSpacing(4)
 
     mode_row = QHBoxLayout()
     mode_row.addWidget(QLabel("Mode"))
     mode_row.addWidget(window._mode_combo)
     mode_row.addWidget(window._tab1_audit_docstring_radio)
-    mode_row.addSpacing(16)
-    mode_row.addWidget(QLabel("Scope"))
-    mode_row.addWidget(window._scope_combo)
-    mode_row.addWidget(window._target_path_edit, 1)
-    mode_row.addWidget(window._browse_target_button)
-    mode_row.addWidget(window._clear_target_button)
+    mode_row.addStretch(1)
     layout.addLayout(mode_row)
+
+    scope_row = QHBoxLayout()
+    scope_row.addWidget(QLabel("Scope"))
+    scope_row.addWidget(window._scope_combo)
+    scope_row.addWidget(window._target_path_edit, 1)
+    _compact_fixed_button(window._browse_target_button, QSizePolicy)
+    _compact_fixed_button(window._clear_target_button, QSizePolicy)
+    scope_row.addWidget(window._browse_target_button)
+    scope_row.addWidget(window._clear_target_button)
+    layout.addLayout(scope_row)
 
     include_row = QHBoxLayout()
     include_row.addWidget(window._module_checkbox)
     include_row.addWidget(window._class_checkbox)
     include_row.addWidget(window._function_checkbox)
     include_row.addWidget(window._file_address_checkbox)
-    include_row.addWidget(window._confirm_write_checkbox)
     include_row.addStretch(1)
+    include_row.addWidget(window._confirm_write_checkbox)
     layout.addLayout(include_row)
 
     workers_row = QHBoxLayout()
     workers_row.addWidget(QLabel("Workers"))
     workers_row.addWidget(window._workers_spin)
-    workers_row.addSpacing(16)
     window._run_button = QPushButton("Run selected mode")
     window._stop_button = QPushButton("Stop Running Selected Mode")
     window._stop_button.setEnabled(False)
@@ -141,13 +144,14 @@ def _build_options_group(window: object) -> Any:
     workers_row.addStretch(1)
     layout.addLayout(workers_row)
     _scan_only_runtime().refresh_selected_mode_controls(window)
-
     return group
 
 def _build_ai_group(window: object) -> Any:
-    """Return the shared AI Assistant configuration group."""
-    return _ai_controls_runtime().build_ai_group(window)
-
+    """Return the AI group with a content-sized right action button."""
+    QSizePolicy = _qt_widgets("QSizePolicy")[0]
+    group = _ai_controls_runtime().build_ai_group(window)
+    _compact_fixed_button(window._open_web_ai_config_button, QSizePolicy)
+    return group
 
 def _ensure_ai_docstring_verbosity_combo(window: object, combo_cls: Any) -> None:
     """Ensure the Local AI group has a docstring verbosity combo."""
@@ -164,23 +168,30 @@ def _ensure_ai_docstring_verbosity_combo(window: object, combo_cls: Any) -> None
     window._ai_docstring_verbosity_combo = combo
 
 def _build_report_group(window: object) -> Any:
-    """Return the report import, export, copy, and path controls group."""
-    QGroupBox, QHBoxLayout, QLabel, QPushButton = _qt_widgets(
-        "QGroupBox", "QHBoxLayout", "QLabel", "QPushButton"
+    """Return compact report path and action rows."""
+    QGroupBox, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout = _qt_widgets(
+        "QGroupBox", "QHBoxLayout", "QLabel", "QPushButton", "QSizePolicy", "QVBoxLayout"
     )
-
     group = QGroupBox("Report")
-    layout = QHBoxLayout(group)
-    layout.addWidget(QLabel("Report path"))
-    layout.addWidget(window._report_path_edit, 1)
-    layout.addWidget(window._browse_report_button)
+    layout = QVBoxLayout(group)
+    layout.setSpacing(4)
+    path_row = QHBoxLayout()
+    path_row.addWidget(QLabel("Report path"))
+    path_row.addWidget(window._report_path_edit, 1)
+    _compact_fixed_button(window._browse_report_button, QSizePolicy)
+    path_row.addWidget(window._browse_report_button)
+    layout.addLayout(path_row)
 
     window._save_report_button = QPushButton("Save report")
     window._load_report_button = QPushButton("Load report")
     window._copy_report_button = QPushButton("Copy report")
-    layout.addWidget(window._save_report_button)
-    layout.addWidget(window._load_report_button)
-    layout.addWidget(window._copy_report_button)
+    action_row = QHBoxLayout()
+    action_row.addWidget(window._save_report_button)
+    action_row.addWidget(window._load_report_button)
+    action_row.addStretch(1)
+    _compact_fixed_button(window._copy_report_button, QSizePolicy)
+    action_row.addWidget(window._copy_report_button)
+    layout.addLayout(action_row)
     return group
 
 def _build_output_panel(window: object) -> Any:
@@ -284,24 +295,37 @@ def _build_review_panel(window: object) -> Any:
     after_group = QGroupBox("After Correction")
     _relieve_horizontal_size_pressure(after_group, QSizePolicy)
     after_layout = QVBoxLayout(after_group)
-    draft_action_row = QHBoxLayout()
-    draft_action_row.addWidget(window._review_engine_status_label)
-    draft_action_row.addSpacing(16)
-    draft_action_row.addWidget(window._review_generate_draft_button)
-    draft_action_row.addWidget(window._review_generate_visible_drafts_button)
-    draft_action_row.addWidget(window._review_generate_all_drafts_button)
-    draft_action_row.addWidget(window._review_stop_ai_drafts_button)
-    draft_action_row.addWidget(window._review_undo_bulk_drafts_button)
-    draft_action_row.addStretch(1)
-    after_layout.addLayout(draft_action_row)
-    review_decision_row = QHBoxLayout()
-    review_decision_row.addWidget(window._review_save_change_button)
-    review_decision_row.addWidget(window._review_approve_row_button)
-    review_decision_row.addWidget(window._review_reject_row_button)
-    review_decision_row.addWidget(window._review_undo_button)
-    review_decision_row.addWidget(window._review_save_all_button)
-    review_decision_row.addStretch(1)
-    after_layout.addLayout(review_decision_row)
+    after_layout.setSpacing(6)
+    after_layout.addWidget(window._review_engine_status_label)
+
+    draft_action_rows = _build_compact_action_rows(
+        QHBoxLayout,
+        QVBoxLayout,
+        QSizePolicy,
+        (
+            (
+                window._review_generate_draft_button,
+                window._review_stop_ai_drafts_button,
+                window._review_generate_visible_drafts_button,
+            ),
+            (
+                window._review_undo_bulk_drafts_button,
+                window._review_generate_all_drafts_button,
+            ),
+        ),
+    )
+    after_layout.addLayout(draft_action_rows)
+
+    review_decision_rows = _build_compact_action_rows(
+        QHBoxLayout,
+        QVBoxLayout,
+        QSizePolicy,
+        (
+            (window._review_approve_row_button, window._review_reject_row_button, window._review_undo_button),
+            (window._review_save_change_button, window._review_save_all_button),
+        ),
+    )
+    after_layout.addLayout(review_decision_rows)
     after_layout.addWidget(window._review_draft_status_label)
     after_layout.addWidget(window._review_corrected_snippet, 1)
 
@@ -316,6 +340,41 @@ def _build_review_panel(window: object) -> Any:
 
     tabs.addTab(review_tab, "Review and Correct Missing Docstrings")
     return tabs
+
+
+def _build_compact_action_rows(
+    row_cls: Any,
+    column_cls: Any,
+    size_policy_cls: Any,
+    rows: tuple[tuple[object, ...], ...],
+) -> object:
+    """Pack content-sized action buttons into the smallest stable rows."""
+    column = column_cls()
+    column.setSpacing(3)
+    for buttons in rows:
+        row = row_cls()
+        row.setSpacing(4)
+        for button in buttons:
+            _compact_fixed_button(button, size_policy_cls, smaller_font=True)
+            row.addWidget(button)
+        row.addStretch(1)
+        column.addLayout(row)
+    return column
+
+
+def _compact_fixed_button(
+    button: object, size_policy_cls: Any, *, smaller_font: bool = False
+) -> None:
+    """Keep one button at its label-driven size without forcing column width."""
+    button.setMinimumWidth(0)
+    button.setSizePolicy(size_policy_cls.Fixed, size_policy_cls.Fixed)
+    if smaller_font:
+        font = button.font()
+        point_size = font.pointSize()
+        if point_size > 0:
+            font.setPointSize(max(8, point_size - 1))
+            button.setFont(font)
+    button.adjustSize()
 
 def _bulk_draft_slot(window: object, scope: str) -> Any:
     """Return a slot that generates drafts for one bulk review scope."""
@@ -418,8 +477,6 @@ def _connect(widget: object, signal_name: str, slot: Any) -> None:
     connect = getattr(signal, "connect", None)
     if callable(connect):
         connect(slot)
-
-
 
 
 def _ai_controls_runtime() -> Any:

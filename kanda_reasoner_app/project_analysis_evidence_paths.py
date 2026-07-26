@@ -3,9 +3,9 @@
 
 Generated evidence resolves outside the selected project source tree.
 The active output root is the external ``show project to AI`` folder for the
-selected/analyzed project. Complete Project Structure Map files are generated
-inside its ``second_prompt_files`` child folder:
-``<project_drive>:/<project_name>_show_project_to_AI/second_prompt_files``.
+selected/analyzed project. Project Structure 3D owns its persistent complete
+JSON ZIP family in ``project_structure_3d_json``. Show Project prompt delivery
+continues to use ``second_prompt_files`` independently.
 During a Run Collector rebuild, child processes may temporarily write to
 ``second_prompt_files_building`` via a guarded environment override before the
 finished files are published to ``second_prompt_files``.
@@ -171,12 +171,15 @@ def _default_show_project_lifecycle_manifest() -> dict[str, Any]:
             PROJECT_ERROR_MEMORY_DIR,
             PROJECT_FREEZE_AFTER_UPDATE_DIR,
             PROJECT_STRUCTURE_3D_STATE_DIR,
+            "project_structure_3d_json",
         ],
         "disposable": [
             FIRST_PROMPT_FILES_DIR,
             SECOND_PROMPT_FILES_DIR,
             SECOND_PROMPT_FILES_BUILDING_DIR,
             "install_and_patch",
+            "project_structure_3d_json_building",
+            "project_structure_3d_json_previous",
             JSON_PARTS_DIR,
         ],
     }

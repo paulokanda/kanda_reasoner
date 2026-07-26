@@ -146,10 +146,10 @@ def generate_ai_context_bundle(
     """Generate lightweight AI handoff map artifacts for one project.
 
     Hybrid Source Archive export makes ZIP source archive parts the exact
-    reconstruction authority.  Second Prompt Files must not generate the old
-    heavy ``<project_slug>__complete.json`` or ``<project_slug>__active_snapshot.json``
-    payloads during the normal path.  This function writes only small map,
-    routing, manifest, validation, and exclusion artifacts.
+    reconstruction authority. Second Prompt Files intentionally skips the
+    separately owned canonical complete JSON artifact. This function writes
+    the lightweight companion map, routing, manifest, validation, and exclusion
+    artifacts used by the prompt-file delivery.
     """
     context = _context(project)
     paths = bundle_artifact_paths(context)

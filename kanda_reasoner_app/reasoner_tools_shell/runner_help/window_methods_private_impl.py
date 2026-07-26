@@ -39,6 +39,8 @@ def _build_ui(self) -> None:
         "padding: 2px 6px;"
     )
     project_root_row.addWidget(self.create_first_and_second_prompt_files_button)
+    from kanda_reasoner_app.reasoner_tools_shell.runner_help import png_reuse_cancel_controls_private_impl as _png_controls
+    _png_controls.install_controls(self, project_root_row)
     self.project_root_label = QLabel("Project Root:")
     self.project_root_label.setStyleSheet("color: #0B3D91; font-weight: bold; padding-left: 4px;")
     project_root_row.addWidget(self.project_root_label)
@@ -51,8 +53,6 @@ def _build_ui(self) -> None:
     self.browse_project_button = QPushButton("Browse...")
     project_root_row.addWidget(self.browse_project_button)
     project_root_row.addStretch(1)
-    self.ai_answer_routine_label = QLabel("AI answer Routine Blueprint:")
-    project_root_row.addWidget(self.ai_answer_routine_label)
     self.copy_patch_validate_freeze_routine_button = QPushButton(
         "Answer, Validate, Freeze, Memorize Error"
     )
@@ -141,7 +141,7 @@ def _build_ui(self) -> None:
     machine_card_label_palette.setColor(QPalette.WindowText, QColor("#000000"))
     self.machine_card_label.setPalette(machine_card_label_palette)
     project_root_row.addWidget(self.machine_card_label)
-    self.copy_machine_card_logic_button = QPushButton("MCard Logic")
+    self.copy_machine_card_logic_button = QPushButton("Logic")
     machine_card_button_palette = self.copy_machine_card_logic_button.palette()
     machine_card_button_palette.setColor(QPalette.ButtonText, QColor("#ff4d00"))
     self.copy_machine_card_logic_button.setPalette(machine_card_button_palette)

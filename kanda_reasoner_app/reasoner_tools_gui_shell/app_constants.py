@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from kanda_reasoner_app import LEGACY_PACKAGE_NAME
 from kanda_reasoner_app.project_root_resolver import resolve_app_runtime_root
 
 __all__ = [
@@ -15,12 +14,12 @@ __all__ = [
 ]
 
 _PROJECT_ROOT = resolve_app_runtime_root()
+_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 
 APP_DISPLAY_NAME = "KANDA Reasoner"
 APP_TITLE_DETAIL = "Knowledge and Architecture Navigator for Developer Assistance"
 APP_ICON_PATH = (
-    _PROJECT_ROOT
-    / LEGACY_PACKAGE_NAME
+    _PACKAGE_ROOT
     / "reasoner_tools_gui_help"
     / "kanda_reasoner_color_icon.ico"
 )

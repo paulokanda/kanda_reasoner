@@ -102,6 +102,37 @@ _install_deleted_legacy_runtime_collector_aliases()
 
 load_payload(__name__, globals(), 'zp')
 
+
+def _install_show_project_complete_json_process_patch() -> None:
+    """Install the source-owned complete JSON Show Project workflow."""
+    try:
+        from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
+            window_process_private_impl as _process_impl,
+        )
+    except Exception:
+        return
+
+    try:
+        CollectorRunnerWindow._run_collector = _process_impl._run_collector
+        CollectorRunnerWindow._start_collector_process = (
+            _process_impl._start_collector_process
+        )
+        CollectorRunnerWindow._start_complete_json_enrichment_process = (
+            _process_impl._start_complete_json_enrichment_process
+        )
+        CollectorRunnerWindow._start_ai_context_bundle_process = (
+            _process_impl._start_ai_context_bundle_process
+        )
+        CollectorRunnerWindow._on_process_finished = (
+            _process_impl._on_process_finished
+        )
+        CollectorRunnerWindow._on_process_error = _process_impl._on_process_error
+    except NameError:
+        return
+
+
+_install_show_project_complete_json_process_patch()
+
 # Green sonar process monitor override. Keep the legacy payload class intact, but
 # replace the old text-spinner busy animation with a floating status panel.
 def _kanda_show_project_sonar(self):

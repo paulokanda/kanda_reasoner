@@ -15,6 +15,9 @@ from kanda_reasoner_app.freeze_after_update_gui._box_actions import FreezeBoxAct
 from kanda_reasoner_app.freeze_after_update_gui._freeze_memory_exports import (
     FreezeMemoryExportMixin,
 )
+from kanda_reasoner_app.freeze_after_update_gui._frozen_list_dialog import (
+    FreezeFrozenListMixin,
+)
 from kanda_reasoner_app.freeze_after_update_gui._local_freeze_dialog_runtime import (
     FreezeLocalEntryRuntimeMixin,
 )
@@ -34,6 +37,7 @@ class FreezeAfterUpdateTab(
     FreezePathControlsMixin,
     FreezeBoxActionsMixin,
     FreezeMemoryExportMixin,
+    FreezeFrozenListMixin,
     FreezeLocalFreezeDialogSupportMixin,
     FreezeLocalEntryRuntimeMixin,
     QWidget,
@@ -49,6 +53,7 @@ class FreezeAfterUpdateTab(
         self._local_freeze_dialog: QDialog | None = None
         self._what_to_say_dialog: QDialog | None = None
         self._what_to_say_text_edit: QTextEdit | None = None
+        self._frozen_list_dialog: QDialog | None = None
         self._project_root_controls_moved = False
         self._local_freeze_ai_thread: threading.Thread | None = None
         self._local_freeze_ai_result_queue: queue.Queue | None = None

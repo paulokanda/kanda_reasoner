@@ -186,6 +186,21 @@
         "assets/drawings/project_structure_3d_navigation_filters.png",
         "assets/drawings/project_structure_3d_read_only_boundary.png"
       ]
+    },
+    {
+      "id": "prompt_library",
+      "title": "Prompt Library Help",
+      "tab_id": "prompt_library",
+      "legacy_help_catalog": "prompt_library.json",
+      "source": "source/prompt_library.md",
+      "rendered": "rendered/prompt_library.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/prompt_library_opener_canonical_vault.png",
+        "assets/drawings/prompt_library_active_group_cubes.png",
+        "assets/drawings/prompt_library_group_browser.png",
+        "assets/drawings/prompt_library_read_only_boundary.png"
+      ]
     }
   ]
 }

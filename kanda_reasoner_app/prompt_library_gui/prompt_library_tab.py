@@ -5,7 +5,16 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget,
+)
 
 from .group_catalog import PromptGroup, filter_items_for_group, load_prompt_groups
 from .group_dashboard import PromptGroupDashboard
@@ -50,6 +59,16 @@ class PromptLibraryTab(QWidget):
         self.reload_button = QPushButton("Reload Canonical Library")
         self.reload_button.clicked.connect(self.reload_library)
         button_row.addWidget(self.reload_button)
+
+        self.prompt_library_help_button = QPushButton("Help")
+        self.prompt_library_help_button.setToolTip(
+            "Open the Prompt Library first-time user help."
+        )
+        self.prompt_library_help_button.clicked.connect(
+            self._open_prompt_library_help
+        )
+        button_row.addWidget(self.prompt_library_help_button)
+        self._prompt_library_help_dialog = None
         button_row.addStretch(1)
         layout.addLayout(button_row)
 
@@ -62,6 +81,60 @@ class PromptLibraryTab(QWidget):
         layout.addWidget(self.status_label)
 
         self.reload_library()
+
+
+    def _open_prompt_library_help(self) -> None:
+        """Open the local Prompt Library help document."""
+        try:
+            from ..reasoner_tools_gui_shell.help_docs.renderer import (
+                open_help_document_for_legacy_catalog,
+            )
+
+            rich_dialog = open_help_document_for_legacy_catalog(
+                self,
+                "prompt_library.json",
+                window_title="Help - Prompt Library",
+            )
+        except Exception:
+            rich_dialog = None
+
+        if rich_dialog is not None:
+            self._prompt_library_help_dialog = rich_dialog
+            return
+
+        try:
+            from ..reasoner_tools_gui_shell.gui_support import (
+                _format_help_catalog_text,
+                _help_catalog_path,
+            )
+
+            catalog_path = _help_catalog_path("prompt_library.json")
+            if not catalog_path.is_file():
+                QMessageBox.warning(
+                    self,
+                    "Help catalog not found",
+                    "Expected Prompt Library help was not found:\n"
+                    f"{catalog_path}",
+                )
+                return
+
+            dialog = QMainWindow(self)
+            dialog.setWindowTitle("Help - Prompt Library")
+            dialog.resize(1080, 800)
+
+            editor = QTextEdit(dialog)
+            editor.setReadOnly(True)
+            editor.setPlainText(_format_help_catalog_text(catalog_path))
+            dialog.setCentralWidget(editor)
+            dialog.show()
+            self._prompt_library_help_dialog = dialog
+        except Exception as exc:
+            QMessageBox.warning(
+                self,
+                "Help could not be opened",
+                "Failed to open Prompt Library help.\n\n"
+                f"Details: {exc}",
+            )
 
     def reload_library(self) -> None:
         """Reload current groups and prompts from the canonical workspace."""

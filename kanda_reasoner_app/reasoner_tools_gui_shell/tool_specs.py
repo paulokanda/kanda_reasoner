@@ -173,6 +173,7 @@ TOOLS: tuple[ToolSpec, ...] = (
     ToolSpec(
         step_title="Prompt Library",
         source_hint=_source_path("prompt_library_gui", "prompt_library_tab.py"),
+        help_catalog="prompt_library.json",
         tab_id="prompt_library",
         tab_kind="builtin_prompt_library",
     ),

@@ -6,6 +6,7 @@ from PySide6.QtCore import QProcess, QProcessEnvironment
 from kanda_reasoner_app.project_analysis_evidence_paths import SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, analysis_json_building_dir, analysis_json_complete_dir, primary_evidence_json_path, secondary_evidence_json_path
 import json
 import os
+import sys
 from pathlib import Path
 __all__ = ()
 CANONICAL_PACKAGE_NAME = 'kanda_reasoner_app'
@@ -46,6 +47,18 @@ def _installed_package_dir(root: Path) -> Path:
 def _bind_globals(namespace):
     """Bind runner.py globals for moved method bodies."""
     globals().update(namespace)
+
+def _safe_save_prefs(*args) -> None:
+    """Call the optional preference hook only when it is available."""
+    callback = globals().get("_save_prefs")
+    if callable(callback):
+        callback(*args)
+
+def _safe_emit_runtime_event(**kwargs) -> None:
+    """Call optional runtime telemetry only when available."""
+    callback = globals().get("_safe_log_runtime_event")
+    if callable(callback):
+        callback(**kwargs)
 
 def _tab4_tool_root() -> Path:
     """Return the installed tool root without assuming a fixed drive path."""
@@ -267,6 +280,9 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
         The exit status value.
     """
     
+    from kanda_reasoner_app.reasoner_tools_shell.runner_help import png_reuse_cancel_controls_private_impl as _png_controls
+    if _png_controls.consume_cancel_on_finish(self, self._stop_busy_animation):
+        return
     stdout_text = ''
     stderr_text = ''
     if self._process is not None:
@@ -293,7 +309,7 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
         self._append_log('  changed: ' + str(changed))
         if target:
             self._append_log('  complete_json: ' + target)
-        _safe_log_runtime_event(event_type='complete_json_enriched', source_symbol='CollectorRunnerWindow._on_process_finished', message='Complete JSON deterministic AI-readable sections verified', tags=['collector', 'complete_json', 'enrichment'], payload={'target': target, 'changed': changed, 'missing_after': missing_after})
+        _safe_emit_runtime_event(event_type='complete_json_enriched', source_symbol='CollectorRunnerWindow._on_process_finished', message='Complete JSON deterministic AI-readable sections verified', tags=['collector', 'complete_json', 'enrichment'], payload={'target': target, 'changed': changed, 'missing_after': missing_after})
         self._process = None
         _start_ai_context_bundle_process(self)
         return
@@ -305,7 +321,7 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
         if project_slug:
             self._append_log('  project_slug: ' + project_slug)
         self._append_log('  companion_artifacts: ' + str(artifact_count))
-        _safe_log_runtime_event(event_type='ai_context_bundle_generated', source_symbol='CollectorRunnerWindow._on_process_finished', message='AI context bundle companion files generated successfully', tags=['collector', 'ai_context_bundle', 'finish'], payload={'project_slug': project_slug, 'artifact_count': artifact_count})
+        _safe_emit_runtime_event(event_type='ai_context_bundle_generated', source_symbol='CollectorRunnerWindow._on_process_finished', message='AI context bundle companion files generated successfully', tags=['collector', 'ai_context_bundle', 'finish'], payload={'project_slug': project_slug, 'artifact_count': artifact_count})
         self._process = None
         from kanda_reasoner_app.reasoner_tools_shell.runner_help import zip_json_files_private_impl as _zip_json_impl
         try:
@@ -334,8 +350,8 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
             self.runtime_trace_json_edit.setText(runtime_trace_path)
         self._append_log(f'[OK] Runtime trace generated - overwrote_existing={overwrote_existing}, size={trace_size}')
         self._append_log(f'  runtime_trace: {self._pending_runtime_trace_json}')
-        _save_prefs(self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json)
-        _safe_log_runtime_event(event_type='runtime_trace_generated', source_symbol='CollectorRunnerWindow._on_process_finished', message='Runtime trace generated successfully', tags=['runtime', 'trace', 'collector'], payload={'runtime_trace_json': self._pending_runtime_trace_json, 'overwrote_existing': overwrote_existing, 'size': trace_size})
+        _safe_save_prefs(self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json)
+        _safe_emit_runtime_event(event_type='runtime_trace_generated', source_symbol='CollectorRunnerWindow._on_process_finished', message='Runtime trace generated successfully', tags=['runtime', 'trace', 'collector'], payload={'runtime_trace_json': self._pending_runtime_trace_json, 'overwrote_existing': overwrote_existing, 'size': trace_size})
         self._process = None
         self._start_collector_process()
         return
@@ -343,7 +359,7 @@ def _on_process_finished_without_web_ai_enrichment(self, exit_code: int, _exit_s
     error_count = int(result.get('error_count', 0))
     self._append_log(f'[OK] Done - {file_count} files indexed, {error_count} errors.')
     self._append_log(f'  Saved to: {self._current_output_json}')
-    _safe_log_runtime_event(event_type='collector_run_finished', source_symbol='CollectorRunnerWindow._on_process_finished', message='Collector child process finished successfully', tags=['collector', 'finish'], payload={'file_count': file_count, 'error_count': error_count, 'output_json': self._current_output_json})
+    _safe_emit_runtime_event(event_type='collector_run_finished', source_symbol='CollectorRunnerWindow._on_process_finished', message='Collector child process finished successfully', tags=['collector', 'finish'], payload={'file_count': file_count, 'error_count': error_count, 'output_json': self._current_output_json})
     self._process = None
     _start_complete_json_enrichment_process(self)
 
@@ -387,7 +403,8 @@ def _start_collector_process(self) -> None:
     env['PROJECT_REASONER_RUNTIME_TRACE_OVERWRITE'] = '1'
     tool_root = _tab4_tool_root()
     _tab4_apply_qprocess_env(self._process, env, project_root)
-    process_args = [str(tool_root / CANONICAL_PACKAGE_NAME / 'reasoner_tools_shell' / 'runner.py'), _CHILD_MODE_ARG, self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json]
+    child_mode_arg = str(globals().get('_CHILD_MODE_ARG') or '--collector-child')
+    process_args = [str(tool_root / CANONICAL_PACKAGE_NAME / 'reasoner_tools_shell' / 'runner.py'), child_mode_arg, self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json]
     self._start_busy_animation('Running collector')
     self._process.start(sys.executable, process_args)
 
@@ -472,10 +489,10 @@ def _run_collector(self) -> None:
     self._pending_project_root = project_root
     self._pending_output_json = str(output_json)
     self._pending_runtime_trace_json = str(runtime_trace_path)
-    _save_prefs(self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json)
+    _safe_save_prefs(self._pending_project_root, self._pending_output_json, self._pending_runtime_trace_json)
     self._append_log('Starting lightweight map generation for hybrid source archive export...')
     self._append_log(f'  root : {self._pending_project_root}')
     self._append_log(f'  source_archive_manifest: {self._pending_output_json}')
     self._append_log('  skipped: old complete.json and active_snapshot.json generation')
-    _safe_log_runtime_event(event_type='collector_run_started', source_symbol='CollectorRunnerWindow._run_collector', message='Collector run requested from GUI', tags=['collector', 'start', 'gui'], payload={'project_root': self._pending_project_root, 'output_json': self._pending_output_json, 'runtime_trace_json': self._pending_runtime_trace_json})
+    _safe_emit_runtime_event(event_type='collector_run_started', source_symbol='CollectorRunnerWindow._run_collector', message='Collector run requested from GUI', tags=['collector', 'start', 'gui'], payload={'project_root': self._pending_project_root, 'output_json': self._pending_output_json, 'runtime_trace_json': self._pending_runtime_trace_json})
     _start_ai_context_bundle_process(self)

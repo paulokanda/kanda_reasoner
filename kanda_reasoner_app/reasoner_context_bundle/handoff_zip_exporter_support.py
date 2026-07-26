@@ -195,6 +195,7 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "Project slug: " + slug,
             "Project root marker: <PROJECT_ROOT>",
             "Target standalone ZIP part size: " + str(part_size_mb) + " MB",
+            "Complete JSON is intentionally excluded from this workflow and is owned by a separate generator.",
             "The AI-readable JSON handoff is delivered as ZIP package(s) that respect the selected Show Project to AI size cap.",
             "Loose web-AI JSON files are packaged into the JSON handoff ZIP and are normally removed from second_prompt_files after successful ZIP export; the Project A&A local-AI working JSON may be retained for local questions.",
             "",

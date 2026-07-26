@@ -81,7 +81,7 @@ def export_json_handoff_zip_parts(
 ) -> dict[str, Any]:
     """Export lightweight JSON map artifacts plus source archive ZIP parts.
 
-    Normal hybrid export must not upload or require the old heavy
+    Normal hybrid export never creates, uploads, or requires the heavy
     complete/active-snapshot JSON artifacts. Exact reconstruction is provided
     by standalone source_archive_part ZIPs and source_archive_manifest.json.
     """
@@ -241,6 +241,10 @@ def export_json_handoff_zip_parts(
             "zip_count": len(zip_records),
             "artifact_count": len(artifacts),
             "package_count": len(packages),
+            "png_assets_reused": bool(source_archive.get("png_assets_reused", False)),
+            "png_assets_reuse_method": str(
+                source_archive.get("png_assets_reuse_method", "")
+            ),
             "packages": retargeted_packages,
             "zip_parts": retargeted_zip_records,
             "readme_file": retargeted_readme,
