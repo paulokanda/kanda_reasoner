@@ -1,0 +1,63 @@
+{
+  "prompt_code": "KPR-06-004",
+  "prompt_id": "safe_refactor_how_to",
+  "display_name": "Safe Refactor How To",
+  "filename": "safe_refactor_how_to.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "routed",
+  "source_stage": "prompt-audit-wave6b-class06-consolidation-retirements-v1",
+  "description": "User-facing KANDA safe-refactor refresher and bounded specialist dispatcher; it interprets current evidence and support artifacts without owning implementation, delivery, validation, or freeze.",
+  "box_logic_required": true,
+  "routing_coverage": "wave6b_safe_refactor_dispatcher_v2",
+  "priority": 39,
+  "trigger_phrases": [
+    "Safe Refactor How To",
+    "KANDA safe refactor process",
+    "safe large module refactor guidance",
+    "AST safe refactor refresher",
+    "behavior-preserving refactor workflow"
+  ],
+  "required_companion_prompts": [
+    "large_module_refactor_protocol",
+    "web_ai_ast_split_risk_repair_protocol",
+    "brick_wall_comprehensive_quality_gate",
+    "box_architecture_canon"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md",
+  "support_artifacts": [
+    "kanda_reasoner_app/manage_architecture/AST_SAFE_REFACTOR_ROUTINE.md",
+    "kanda_reasoner_app/manage_architecture/kanda_ast_safe_refactor_routine.py",
+    "kanda_reasoner_app/manage_architecture/runtime_activation_refactor_routine_report_example.json"
+  ],
+  "support_artifact_roles": {
+    "AST_SAFE_REFACTOR_ROUTINE.md": "current canonical process support",
+    "kanda_ast_safe_refactor_routine.py": "current canonical read-only helper implementation support",
+    "runtime_activation_refactor_routine_report_example.json": "non-authoritative historical worked evidence example"
+  },
+  "human_ai_boundary": [
+    "Human sets strategic direction and feature priority.",
+    "Human discusses implementation options before build.",
+    "Human confirms proposals before code is written or installed.",
+    "Human runs delivered install and validation commands and tests real behavior.",
+    "Human approves or rejects frozen-behavior changes.",
+    "AI proposes architecture, writes code, validators, and governed delivery artifacts.",
+    "AI does not ask the human to manually patch source as the normal implementation path."
+  ],
+  "do_not_regress": [
+    "Keep this prompt a bounded user-facing refresher and specialist dispatcher, not a second governing refactor protocol.",
+    "Keep the Safe Refactor How To button bundle at three support artifacts with the worked report explicitly non-authoritative.",
+    "Require exact current target evidence and never substitute historical examples for current source or audit truth.",
+    "Keep the 400-line ideal and 500-line hard maximum after normal readable formatting; do not restore a universal 101-line minimum.",
+    "Delegate implementation admission to Brick Wall, generic decomposition to KPR-06-007, target-specific AST work to KPR-06-003, and delivery/freeze mechanics to current owners.",
+    "Do not mutate Planner, Workbench, AQR, Freeze, or target queues from the refresher button."
+  ],
+  "version": "2.0.0",
+  "dependency_freshness": {
+    "target_source": "required_current",
+    "frozen_memory": "current_applicable_only",
+    "ast_evidence": "current_when_target_specific",
+    "support_artifacts": "current_canonical_bundle",
+    "historical_example": "non_authoritative"
+  }
+}

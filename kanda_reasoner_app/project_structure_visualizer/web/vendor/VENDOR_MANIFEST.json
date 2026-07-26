@@ -1,0 +1,17 @@
+{
+  "asset_path": "web/vendor/3d-force-graph-1.80.0.min.js",
+  "asset_sha256": "d96e738edcca580edd524730c1c6b05ed2efce028c23ca95db1bf43033a72e42",
+  "asset_size_bytes": 1313897,
+  "delivery": "bundled_local_tool_asset",
+  "license": "MIT",
+  "network_fallback": false,
+  "npm_integrity_algorithm": "sha512",
+  "npm_integrity_base64": "tzI353gW1nXPpnC7VTa3JjMg+3cp77qOLUFO0vucPTfF+q5R6sQsNsIqVTbRIb7RSypn14nBa4yfkOe9ThxASw==",
+  "npm_tarball_sha256": "1b146925a2b994e339fbdf383f50196a64e56dfd8a2a1ed3d89da0079e56893f",
+  "package_name": "3d-force-graph",
+  "package_version": "1.80.0",
+  "runtime_authority": "local_only_no_remote_fallback",
+  "schema_version": "1.0",
+  "source_package_spec": "3d-force-graph@1.80.0",
+  "source_registry": "npm"
+}

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Exclusion Rules</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Exclusion Rules</h1>
+        <p class="subtitle">Choose what KANDA treats as outside the active project during collection, validation, mapping, and other workflows—without deleting the excluded files.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/exclusion_rules_opener_project_filter.png" alt="Three colleagues review a project tree where source and documentation remain included while build folders, cache folders, and temporary files are marked as excluded">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Exclusion Rules Means</h2>
+      <p>An exclusion rule tells KANDA to ignore a named folder, file, file pattern, or extension when a supported workflow examines the project.</p>
+      <p><strong>In plain English:</strong> The item may exist on the computer, but KANDA should not treat it as part of the active project being analyzed.</p>
+      <p>Excluded items remain on disk. This tab does not move, rename, edit, or delete them.</p>
+    </section>
+
+    <section>
+      <h2>Why Exclusion Rules Matters</h2>
+      <p>Exclusions reduce generated output, duplicate copies, backups, caches, logs, dependency folders, and archived material in project analysis.</p>
+      <p>Careful rules can make collection faster, reports cleaner, exports smaller, maps more accurate, and AI context more relevant.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <ol>
+        <li>Choose the project root.</li>
+        <li>Show project-specific or fallback scope.</li>
+        <li>Manage folder rules.</li>
+        <li>Manage file rules.</li>
+        <li>Manage extension rules.</li>
+        <li>Add, edit, remove, or clear entries.</li>
+        <li>Save manually when desired.</li>
+        <li>Reset the active scope to defaults.</li>
+        <li>Keep separate rules for separate roots.</li>
+      </ol>
+      <p>Every list change is auto-saved. The Save Rules button is optional.</p>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>Select the exact project root, review existing defaults, add one clearly unnecessary item, and verify the result in a real project workflow.</strong></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Important Safety Boundary</h2>
+      <p>Exclusion Rules changes project analysis scope, not the file system.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Excluding an important source folder can make KANDA behave as though that code does not belong to the project.</strong> Verify every meaningful change.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Safest First-Time Workflow</h2>
+      <h3>Step 1 - Select Project Root</h3>
+      <p>Use the field or Search button to choose the actual project root.</p>
+      <h3>Step 2 - Read the Scope message</h3>
+      <p>Confirm fallback-only versus project-specific rules and whether Reasoner defaults are active.</p>
+      <h3>Step 3 - Review defaults</h3>
+      <p>Do not begin by clearing all lists.</p>
+      <h3>Step 4 - Add one rule</h3>
+      <p>Add one clearly unnecessary folder, file, or extension.</p>
+      <h3>Step 5 - Confirm auto-save</h3>
+      <p>Adding, editing, removing, clearing, and resetting save immediately.</p>
+      <h3>Step 6 - Rerun a workflow</h3>
+      <p>Confirm that only the intended material is removed from analysis.</p>
+    </section>
+
+    <section>
+      <h2>Project Root</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/exclusion_rules_project_scope.png" alt="A team compares one correctly bounded project root with a whole drive and a parent folder containing several unrelated projects">
+        <figcaption>Manage exclusions inside one bounded project root.</figcaption>
+      </figure>
+      <p>The Project Root field identifies the active rule set. Search opens a folder chooser.</p>
+      <p>Avoid an entire drive, a user-profile folder, or a parent folder containing several projects.</p>
+    </section>
+
+    <section>
+      <h2>Project-Specific and Fallback Rules</h2>
+      <p>Each selected project root owns an independent rule set.</p>
+      <p>With no project root selected, the tab uses fallback rules only.</p>
+      <p>When the selected root is recognized as KANDA Reasoner, additional Reasoner-specific defaults become active.</p>
+    </section>
+
+    <section>
+      <h2>The Three Rule Categories</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/exclusion_rules_rule_categories.png" alt="Three colleagues review separate panels for excluded folders, excluded file names or patterns, and excluded file extensions">
+        <figcaption>Keep folder rules, file rules, and extension rules in the correct category.</figcaption>
+      </figure>
+      <h3>Folders</h3>
+      <p>Exact folder names and supported patterns such as <code>build</code>, <code>dist</code>, <code>archive</code>, or <code>*backup*</code>.</p>
+      <h3>Files</h3>
+      <p>Exact file names or patterns such as <code>debug.log</code>, <code>*.log</code>, or <code>*.tmp</code>.</p>
+      <h3>Extensions</h3>
+      <p>File suffixes such as <code>.pyc</code>, <code>.bak</code>, or <code>.swp</code>.</p>
+    </section>
+
+    <section>
+      <h2>Built-In Defaults</h2>
+      <p>Defaults include common caches, virtual environments, build output, dependency folders, project-reference folders, log patterns, temporary patterns, and generated-file extensions.</p>
+      <p>Saved rules are merged with current defaults. Empty values and case-insensitive duplicates are removed.</p>
+    </section>
+
+    <section>
+      <h2>Folder Controls</h2>
+      <p><strong>Add Folder (browse)</strong> stores the selected folder's name, not its absolute path.</p>
+      <p><strong>Edit Folder</strong> changes the selected rule and blocks duplicates.</p>
+      <p><strong>Remove Folder</strong> removes the selected entry.</p>
+      <p><strong>Clear All Folders</strong> asks for confirmation before clearing the list.</p>
+    </section>
+
+    <section>
+      <h2>File Controls</h2>
+      <p><strong>Add File (browse)</strong> stores the selected file's name.</p>
+      <p><strong>Edit File</strong> accepts a file name or pattern.</p>
+      <p><strong>Remove File</strong> removes the selected rule.</p>
+      <p><strong>Clear All Files</strong> asks for confirmation.</p>
+    </section>
+
+    <section>
+      <h2>Extension Controls</h2>
+      <p><strong>Add Extension (text)</strong> accepts an extension such as <code>.pyc</code>.</p>
+      <p><strong>Edit Extension</strong> changes the selected suffix.</p>
+      <p><strong>Remove Extension</strong> removes the selected suffix.</p>
+      <p><strong>Clear All Extensions</strong> asks for confirmation.</p>
+    </section>
+
+    <section>
+      <h2>Duplicate Protection</h2>
+      <p>Exact duplicates are blocked within each category. Edit the existing rule rather than adding the same text again.</p>
+    </section>
+
+    <section>
+      <h2>Auto-Save, Save Rules, and Reset</h2>
+      <p>Auto-save runs after adding, editing, removing, clearing, or resetting.</p>
+      <p><strong>Save Rules (auto-save is on - optional)</strong> deliberately re-saves the visible lists.</p>
+      <p><strong>Reset to Defaults (auto-saved)</strong> replaces the active visible lists with built-in defaults.</p>
+    </section>
+
+    <section>
+      <h2>How Exclusions Are Used</h2>
+      <p>The shared exclusion policy is used by project collection, source-tree export, project JSON filtering, context bundles, reconstruction payloads, bundle checking, architecture validation, docstring discovery, and other adopting workflows.</p>
+    </section>
+
+    <section>
+      <h2>Exclusion Does Not Mean Deletion</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/exclusion_rules_safety_boundary.png" alt="A project tree shows included source and documentation being analyzed while excluded build, distribution, log, and cache items remain safely stored in a separate cabinet">
+        <figcaption>Exclusion removes an item from KANDA analysis. It does not remove the item from the computer.</figcaption>
+      </figure>
+      <p>Excluded items remain in their original location and can be restored to analysis by removing the matching rule.</p>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ol>
+        <li>Exact project root selected.</li>
+        <li>Project-specific scope visible.</li>
+        <li>Common defaults preserved.</li>
+        <li>Generated material excluded.</li>
+        <li>Active source remains included.</li>
+        <li>Collection becomes cleaner.</li>
+        <li>Other projects remain unaffected.</li>
+        <li>Excluded files still exist on disk.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <ul>
+        <li>Selecting the wrong project root</li>
+        <li>Editing fallback rules instead of project rules</li>
+        <li>Excluding an active source folder</li>
+        <li>Using an absolute path where a folder name is expected</li>
+        <li>Forgetting the leading period in an extension</li>
+        <li>Using broad wildcard rules</li>
+        <li>Assuming exclusion encrypts or deletes a file</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <p>Check the project root, scope message, category, spelling, extension format, wildcard, workflow support, and whether the workflow was rerun.</p>
+      <p>Remove or edit a rule when important content disappears. Built-in defaults may return after reload because defaults are merged into saved rules.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <ul>
+        <li>Correct project root selected</li>
+        <li>Scope message read</li>
+        <li>Defaults reviewed</li>
+        <li>Rule placed in the correct category</li>
+        <li>Pattern is not too broad</li>
+        <li>Auto-save completed without error</li>
+        <li>Project workflow rerun</li>
+        <li>Important items remain visible</li>
+        <li>Excluded item remains on disk</li>
+        <li>Other projects remain unaffected</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Select the exact project root, keep active source in scope, exclude only clearly unwanted material, and verify the result after every meaningful rule change.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Exclusion Rules</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

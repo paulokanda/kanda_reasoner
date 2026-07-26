@@ -1,0 +1,40 @@
+{
+  "prompt_code": "KPR-05-007",
+  "prompt_id": "terminal_cleanup_contract",
+  "display_name": "Terminal Cleanup Contract",
+  "filename": "terminal_cleanup_contract.md",
+  "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "always_startup",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md",
+  "aliases": [
+    "KPR-05-007",
+    "terminal_cleanup_contract",
+    "terminal cleanup contract",
+    "PowerShell cleanup",
+    "clean PowerShell prompt"
+  ],
+  "source_stage": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "updated_for": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "description": "Canonical user-facing PowerShell clean-prompt, operation-classification, error-provenance, and terminal-cleanup contract.",
+  "priority": 12,
+  "trigger_phrases": [
+    "terminal cleanup",
+    "Clear-Host",
+    "install success footer",
+    "PowerShell block",
+    "Press Enter to clear terminal",
+    "PowerShell shows >>"
+  ],
+  "required_companion_prompts": [],
+  "optional_companion_prompts": [
+    "pre_output_contract_gates",
+    "implementation_and_delivery_protocol",
+    "patch_install_delivery_error_register"
+  ],
+  "when_to_load": "Startup bridge is always visible; load the full prompt when emitting or auditing PowerShell terminal behavior.",
+  "when_not_to_load": "Do not load the full prompt for tasks with no terminal output.",
+  "source_write_authorization": "NO"
+}

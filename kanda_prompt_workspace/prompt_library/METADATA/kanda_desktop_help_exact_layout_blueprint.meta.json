@@ -1,0 +1,49 @@
+{
+  "prompt_code": "KPR-12-015",
+  "prompt_id": "kanda_desktop_help_exact_layout_blueprint",
+  "display_name": "KANDA Desktop Help Exact Layout Blueprint",
+  "filename": "kanda_desktop_help_exact_layout_blueprint.md",
+  "category": "12_generalized_project_canons",
+  "version": "1.1.0",
+  "status": "active_project_overlay",
+  "load_type": "companion_on_request",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/kanda_desktop_help_exact_layout_blueprint.md",
+  "classification": "project_specific_desktop_help_exact_layout_design_model",
+  "source_stage": "kanda-help-exact-layout-renderer-contract-v1r1",
+  "updated_for": "kanda-help-exact-layout-renderer-contract-v1r1",
+  "description": "Exact reusable KANDA desktop-help HTML/CSS layout and browser-grade local-file rendering blueprint, loaded as a companion to the broader desktop help profile.",
+  "box_logic_required": false,
+  "priority": 41,
+  "trigger_phrases": [
+    "exact KANDA help layout",
+    "Show Project to AI help design",
+    "book-style desktop help blueprint",
+    "QWebEngine help renderer",
+    "help layout missing blue banner",
+    "help setHtml CSS failure"
+  ],
+  "aliases": [
+    "KPR-12-015",
+    "KANDA help exact layout",
+    "kanda_desktop_help_exact_layout_blueprint"
+  ],
+  "user_intent_examples": [
+    "Create a KANDA help file using the exact established Show Project to AI layout."
+  ],
+  "when_to_load": "When a KANDA help page must reproduce the established book-style layout and design model exactly.",
+  "when_not_to_load": "Do not load for generic documentation or when the application has not adopted the KANDA desktop help profile.",
+  "required_companion_prompts": [
+    "desktop_help_document_layout_canon"
+  ],
+  "related_prompt_ids": [
+    "desktop_help_document_layout_canon"
+  ],
+  "do_not_regress": [
+    "Keep this prompt auxiliary to KPR-12-010 rather than a competing help canon.",
+    "Inspect current Markdown, HTML, CSS, manifest, renderer, local-file loading path, and rendered output before authoring.",
+    "Use QWebEngineView with a real local-file URL as the primary renderer for the exact profile.",
+    "Do not use QTextEdit.setHtml or QTextBrowser.setHtml as the primary exact-layout renderer.",
+    "Preserve local assets, accessibility, responsive behavior, provenance, and truthful visual validation."
+  ]
+}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Engineering Safety</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <h1>Audit Project &gt; Engineering Safety</h1>
+        <p class="subtitle">A local, evidence-backed safety desk for source hygiene, risk reports, governance drafts, symbol ownership, and safe command execution.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/engineering_safety_opener_workshop.png" alt="Hand-made workshop cartoon where a safety reviewer checks tools, parts, and evidence cards before code work starts">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Problem This Solves</h2>
+      <p><strong>Mode:</strong> Creation Pipeline. No Engineering Safety Markdown source, rendered HTML page, or manifest entry existed for this tab.</p>
+      <p><strong>Technical:</strong> Engineering Safety is a child tab of the stable <code>architecture_review</code> Audit Project shell tab. Full Audit iterates the immutable catalog in order and marks interactive Ruff Corrections for manual review. Pontual Audit preserves the original command groups and output window. The authority boundary remains advisory.</p>
+      <p><strong>In plain English:</strong> Think of it as a workshop safety desk. Before anyone drills, rewires, or ships a machine, the desk checks the tool list, labels the parts, looks at the risk cards, and hands back a written receipt. If the desk points at the wrong drawer or starts doing the repair itself, the rest of the workshop can damage the wrong part.</p>
+      <p class="further-reading"><strong>Further reading:</strong> Local code: <code>reasoner_tools_gui_engineering_safety_panel.py</code>, <code>_reasoner_tools_gui_engineering_safety_panel_commands.py</code>, and <code>kanda_reasoner_app/safety_suite_cli/commands.py</code>. External source categories: official Python docs for <code>argparse</code>, <code>dataclasses</code>, <code>subprocess</code>, <code>concurrent.futures</code>, and <code>ast</code>; Qt for Python docs for <code>QTimer</code>.</p>
+    </section>
+
+    <section>
+      <h2>Layout Research Note</h2>
+      <p>This page keeps the existing book-help CSS and uses sectioned tables plus short reading cards for the long command inventory. The adopted idea is table legibility and chunked reference flow from technical-book and documentation-design guidance, kept inside local CSS and the established KANDA help palette.</p>
+    </section>
+
+    <section>
+      <h2>Full Audit And Pontual Audit</h2>
+      <p><strong>Full Audit</strong> is the left child tab. <code>Complete Enginneering Review</code> runs every safe catalog item in order and writes a discriminated text log. <code>Cancel Review</code> requests cooperative cancellation between catalog items, stops and hides sonar immediately, keeps the current command running until safe settlement, and records a cancelled summary. KANDA's canonical floating green sonar activity monitor keeps the same <code>greenSonarActivityPanel</code> object name and gradient background used elsewhere; Engineering Safety does not own a separate radar painter. Individual failures are preserved without stopping later checks. Interactive Ruff Corrections is reported as manual review and is never auto-applied.</p>
+      <p><strong>Pontual Audit</strong> is the right child tab and preserves the original Engineering Safety tool groups and punctual result window. Both child tabs use the single Project Root selector in the shared Audit Project header; Engineering Safety does not duplicate the Project Root field or Browse button inside its body.</p>
+      <h2>GUI Command Path</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_command_cafe.png" alt="Hand-made cafe cartoon where one order ticket at a time is sent from a counter to a careful back-room command runner">
+        <figcaption>Figure ES-1. One button, one ticket, one receipt.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> <code>ENGINEERING_SAFETY_PANEL_CATALOG</code> defines the panel actions as data: section, label, command name, and tooltip. <code>create_engineering_safety_panel()</code> imports PySide6 lazily, receives the shared Audit Project root through an explicit provider, groups buttons by section, and connects each button to <code>run_command()</code>. The command runner uses a single <code>ThreadPoolExecutor(max_workers=1)</code> plus <code>QTimer.singleShot(150, ...)</code> polling so the GUI event loop stays responsive. Full Audit stops and hides sonar immediately on cancellation while keeping cancellation requested distinct from worker settlement; controls re-enable only after the future completes.</p>
+      <p><strong>In plain English:</strong> The panel is like a cafe counter. Every button writes one order ticket, the kitchen handles one order at a time, and the counter shows one receipt when the order is done. If two tickets are cooked in the same pan, or the server keeps the counter frozen while waiting, the customer cannot tell which receipt belongs to which order.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>reasoner_tools_gui_engineering_safety_panel.py</code>; Qt for Python <code>QTimer</code>; Python <code>concurrent.futures.ThreadPoolExecutor</code>.</p>
+    </section>
+
+    <section>
+      <h2>Source Hygiene</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_source_hygiene_tailor.png" alt="Hand-made tailor shop cartoon where a careful tailor checks labels, fabric edges, and repair plans before touching garments">
+        <figcaption>Figure ES-2. Source Hygiene checks the labels before anyone alters the garment.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Source Hygiene commands inspect text encoding and public symbol ownership before source edits happen. <code>bom-scan</code> checks for UTF-8 BOM and decoding trouble. <code>shadow-audit</code> parses Python source with AST-based public-symbol checks. <code>shadow-plan</code> converts audit findings into a read-only correction plan. <code>facade-fix-plan</code> builds a safe facade cleanup plan without applying edits from the GUI. The invariant is source ownership clarity before a patch moves or exports code.</p>
+      <p><strong>In plain English:</strong> Source Hygiene is a tailor checking clothes before alteration. The label says how to wash it, the seam shows where pieces join, and the repair card says what can be changed. If the tailor ignores the label or alters the wrong seam, the garment may still look familiar but no longer fits the person who needs it.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>bom_scanner.py</code>, <code>shadow_audit.py</code>, <code>shadow_planner.py</code>, <code>shadow_fixer.py</code>; Python <code>ast</code> and text encoding docs.</p>
+    </section>
+
+    <section>
+      <h2>Engineering Safety Reports</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_triage_clinic.png" alt="Hand-made clinic cartoon where a patient chart, risk meter, and staged treatment board explain engineering safety reports">
+        <figcaption>Figure ES-3. Reports diagnose the change before treatment starts.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> The Engineering Safety report family produces advisory reports. <code>risk-radar</code> estimates blast radius from changed files, validation output, and bundle manifest evidence. <code>crash-triage</code> extracts traceback frames and implicated files from crash evidence. <code>refactor-playbook</code> builds staged inspect/scope/extract/validate/rollback guidance. <code>EngineeringSafetyReport</code> and the report writer keep report type, risk, confidence, evidence, and output formatting consistent.</p>
+      <p><strong>In plain English:</strong> This section works like a clinic. The radar is the quick checkup, crash triage reads the symptom chart, and the refactor playbook is the treatment plan. If the clinic writes the wrong patient name or skips the diagnosis, the next person may treat the wrong problem.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>risk_radar.py</code>, <code>crash_triage.py</code>, <code>refactor_playbook.py</code>, <code>schemas.py</code>, <code>report_writer.py</code>; Python <code>dataclasses</code> docs and traceback text parsing references.</p>
+    </section>
+
+    <section>
+      <h2>Governance, Stack, And Reliability Drafts</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_preflight_governance.png" alt="Hand-made airport preflight cartoon where a pilot checks manifests, parts, and safety stamps before a small plane leaves">
+        <figcaption>Figure ES-4. Governance checks the flight plan before takeoff.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Governance, Stack, and Draft Reliability commands prepare evidence-backed drafts: <code>release-notes</code> from explicit bundle evidence, <code>push-plan</code> from default validation checks, <code>stack-brief</code> from dependency/runtime compatibility notes, <code>api-contract</code> from input/output guard needs, and <code>property-test</code> from invariant examples. Their invariant is traceability: every recommendation must point back to supplied evidence or an explicit code contract.</p>
+      <p><strong>In plain English:</strong> This group is an airport preflight desk. Release notes are the manifest, push plan is the checklist, stack brief checks that the parts fit the plane, and reliability drafts mark which doors and gauges must be tested. If the preflight clerk stamps a plane without checking the parts, the flight may leave with a missing piece.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>governance_automation/</code>, <code>stack_compatibility/</code>, <code>reliability_guidance/</code>; Python <code>argparse</code> docs and testing-reference categories.</p>
+    </section>
+
+    <section>
+      <h2>Project Symbol Atlas</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_symbol_atlas_city_map.png" alt="Hand-made city map office cartoon where a guide traces buildings, owners, gates, and related routes before sending a visitor onward">
+        <figcaption>Figure ES-5. The atlas finds the right address before a patch starts walking.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Project Symbol Atlas commands help find code ownership before edits. <code>atlas-report</code> builds a project report, <code>evidence-freshness</code> checks whether evidence still matches live source, <code>find-symbol</code> and <code>find-owner</code> locate known symbols and likely owner files, <code>facade-owner</code> distinguishes facade from owner, <code>main-helpers</code> maps public API ownership, <code>related-files</code> locates tests and support files, and <code>pre-patch-gate</code> checks ownership before patching.</p>
+      <p><strong>In plain English:</strong> The Atlas is a city map office. Before you visit a building, the guide checks the address, the gate, the nearby files, and whether the printed map is still current. If the map is stale or the guide sends you to a storefront instead of the workshop behind it, your repair happens at the wrong place.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>project_symbol_atlas_commands.py</code> and Project Analysis Evidence helpers; Python path handling and AST/source-scanning docs.</p>
+    </section>
+
+    <section>
+      <h2>Operating Checklist</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/engineering_safety_operating_library.png" alt="Hand-made library desk cartoon where a librarian stamps checked evidence, returns receipts, and keeps advisory reports in order">
+        <figcaption>Figure ES-6. Keep the receipt, then repair only the shelf that owns the problem.</figcaption>
+      </figure>
+      <ol>
+        <li>Run <code>list-tools</code> when you need to confirm the available CLI surface.</li>
+        <li>Run Source Hygiene before moving public symbols, facades, or generated text files.</li>
+        <li>Run Risk Change Radar before broad edits and Crash Triage after a failure.</li>
+        <li>Run Refactor Playbook before extracting or reshaping a module.</li>
+        <li>Run Project Symbol Atlas before creating, moving, or patching symbols.</li>
+        <li>Run Governance, Stack, and Reliability drafts only when you have concrete evidence to feed them.</li>
+        <li>Treat every output as advisory evidence. Repair in the owning box, rerun the relevant check, then freeze only after independent validation is clean.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Authority Boundary</h2>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div>
+          <p><strong>Authority boundary.</strong> Engineering Safety is advisory. It can run local safety commands, display command text, capture stdout/stderr, and help a human choose the next inspection. It must not patch source from the Help page, mutate prompt canons, approve AI routes, rewrite manifest data without an explicit edit request, or freeze project state.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Command Family Catalog</h2>
+      <table>
+        <caption>Table ES-1. Engineering Safety tab buttons, their technical meaning, daily-life explanation, and research grounding.</caption>
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Command</th>
+            <th>Technical</th>
+            <th>In Plain English</th>
+            <th>Grounding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Source Hygiene</td><td><code>bom-scan</code></td><td>Scans project text files for UTF-8 BOM and decoding issues before source edits.</td><td>The tailor checks the wash label before altering the garment.</td><td>Local <code>bom_scanner.py</code>; Python text encoding docs.</td></tr>
+          <tr><td>Source Hygiene</td><td><code>shadow-audit</code></td><td>Audits public-symbol and facade conflicts using source parsing.</td><td>The tailor checks whether two garments share the same tag.</td><td>Local <code>shadow_audit.py</code>; Python <code>ast</code> docs.</td></tr>
+          <tr><td>Source Hygiene</td><td><code>shadow-plan</code></td><td>Turns shadow findings into a read-only correction plan.</td><td>The tailor writes the repair card before picking up scissors.</td><td>Local <code>shadow_planner.py</code>; Python data-structure docs.</td></tr>
+          <tr><td>Source Hygiene</td><td><code>facade-fix-plan</code></td><td>Builds a safe facade cleanup plan without applying GUI edits.</td><td>The tailor marks a seam plan without cutting cloth yet.</td><td>Local <code>shadow_fixer.py</code>; import/facade source behavior.</td></tr>
+          <tr><td>Engineering Safety</td><td><code>risk-radar</code></td><td>Scores changed files, validation output, and bundle evidence to estimate blast radius.</td><td>The clinic checks the vital signs before treatment.</td><td>Local <code>risk_radar.py</code>; Python <code>dataclasses</code> docs.</td></tr>
+          <tr><td>Engineering Safety</td><td><code>crash-triage</code></td><td>Extracts traceback/log clues and first files to inspect.</td><td>The clinic reads the chart before sending the patient to a specialist.</td><td>Local <code>crash_triage.py</code>; traceback parsing docs.</td></tr>
+          <tr><td>Engineering Safety</td><td><code>refactor-playbook</code></td><td>Produces staged inspect, scope, extract, validate, and rollback guidance.</td><td>The clinic writes a treatment plan before surgery.</td><td>Local <code>refactor_playbook.py</code>; testing and rollback design guidance.</td></tr>
+          <tr><td>Governance Automation</td><td><code>release-notes</code></td><td>Drafts release notes from explicit bundle evidence.</td><td>The airport manifest lists only cargo that is actually on the plane.</td><td>Local release notes generator; Python <code>argparse</code> docs.</td></tr>
+          <tr><td>Governance Automation</td><td><code>push-plan</code></td><td>Shows the default validation plan for a push.</td><td>The preflight clerk follows the checklist before takeoff.</td><td>Local push validator; command-parser docs.</td></tr>
+          <tr><td>Stack Compatibility</td><td><code>stack-brief</code></td><td>Drafts dependency and runtime compatibility notes.</td><td>The mechanic checks that every part fits the aircraft.</td><td>Local stack compatibility module; package/runtime docs.</td></tr>
+          <tr><td>Draft Reliability</td><td><code>api-contract</code></td><td>Drafts input/output guard recommendations for a function.</td><td>The counter marks what forms are accepted before the line opens.</td><td>Local API contract guidance; function/signature docs.</td></tr>
+          <tr><td>Draft Reliability</td><td><code>property-test</code></td><td>Drafts invariant-based test guidance.</td><td>The inspector tests that every package keeps its promised weight and seal.</td><td>Local property-test guidance; testing-reference categories.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>atlas-report</code></td><td>Builds a project symbol and ownership report.</td><td>The map office draws the city before giving directions.</td><td>Local Atlas commands; source-scanning docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>evidence-freshness</code></td><td>Checks whether saved analysis evidence still matches live source.</td><td>The guide checks whether the printed map still matches the streets.</td><td>Local evidence freshness command; file timestamp/path docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>find-symbol</code></td><td>Finds an existing symbol before new code is created.</td><td>The map office checks if the building already exists.</td><td>Local symbol lookup; Python AST/source docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>find-owner</code></td><td>Locates the likely owner file for a symbol.</td><td>The guide finds who owns the building before sending workers there.</td><td>Local owner lookup; path/source docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>facade-owner</code></td><td>Resolves whether a target file is a facade and identifies the owner.</td><td>The storefront may not be the workshop; the guide checks the back address.</td><td>Local facade owner logic; import/source docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>main-helpers</code></td><td>Maps main file, helper files, and public API owner.</td><td>The map links the front desk, storage room, and service door.</td><td>Local main/helper mapping; project structure docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>related-files</code></td><td>Finds tests, helpers, manifests, diagnostics, and support files.</td><td>The guide points to nearby shelves that must be checked with the main address.</td><td>Local related-file logic; path handling docs.</td></tr>
+          <tr><td>Project Symbol Atlas</td><td><code>pre-patch-gate</code></td><td>Runs ownership checks before editing source files.</td><td>The city gate checks the permit before work begins.</td><td>Local pre-patch gate; source ownership rules.</td></tr>
+          <tr><td>Utilities</td><td><code>list-tools</code></td><td>Lists available Safety Suite CLI commands.</td><td>The library clerk shows the catalog before checkout.</td><td>Local CLI facade; Python <code>argparse</code> docs.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Further Reading Map</h2>
+      <div class="reading-map">
+        <p><strong>GUI registration:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py</code>.</p>
+        <p><strong>GUI panel and catalog:</strong> <code>reasoner_tools_gui_engineering_safety_panel.py</code>.</p>
+        <p><strong>Private command runner:</strong> <code>_reasoner_tools_gui_engineering_safety_panel_commands.py</code>.</p>
+        <p><strong>Safety Suite CLI facade:</strong> <code>kanda_reasoner_app/safety_suite_cli/commands.py</code>.</p>
+        <p><strong>Backend boxes:</strong> <code>source_hygiene/</code>, <code>engineering_safety/</code>, <code>governance_automation/</code>, <code>stack_compatibility/</code>, <code>reliability_guidance/</code>, and Project Symbol Atlas integration.</p>
+        <p><strong>Rich help system:</strong> <code>help_docs/path_resolver.py</code>, <code>help_docs/renderer.py</code>, and the desktop help document layout canon.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Validation Rule</h2>
+      <p>The help document must remain local-only: Markdown source, deterministic HTML/CSS, original local PNG drawings, no remote resources in rendered files, and a desktop Qt renderer with safe fallbacks. Source and rendered files preserve the same section coverage, command families, artwork, authority boundary, and further-reading map.</p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Engineering Safety</span>
+      <span>Local Help</span>
+    </footer>
+  </article>
+</body>
+</html>

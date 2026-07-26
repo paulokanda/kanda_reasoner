@@ -1,0 +1,40 @@
+{
+  "prompt_code": "KPR-06-003",
+  "prompt_id": "web_ai_ast_split_risk_repair_protocol",
+  "display_name": "Web AI AST Split Risk Repair Protocol",
+  "filename": "web_ai_ast_split_risk_repair_protocol.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "routed",
+  "source_stage": "prompt-audit-wave6c-web-ai-exchange-boundaries-v1",
+  "description": "Exact target-specific external Web AI source-repair protocol for current AST Split Audit evidence, including truthful RISK-to-SAFE repair or SAFE structural split under the current supplied size policy.",
+  "box_logic_required": true,
+  "routing_coverage": "wave6c_target_specific_ast_repair_v2",
+  "priority": 38,
+  "trigger_phrases": [
+    "RISK REFACTORING",
+    "SAFE REFACTORING oversized",
+    "Send Web AI to make SAFE",
+    "AST Split Audit risk repair",
+    "preserve SAFE during split",
+    "single AST Split Audit text window"
+  ],
+  "required_companion_prompts": [
+    "large_module_refactor_protocol",
+    "python_refactoring",
+    "architecture_review_project_card_machine_canon",
+    "project_tool_boundary_canon",
+    "pre_output_contract_gates",
+    "freeze_code_intake_and_form_protocol"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md",
+  "do_not_regress": [
+    "Keep exact target path, bytes, SHA-256, byte length, newline state, safety label, and complete current audit evidence.",
+    "Do not weaken or evade the AST classifier to obtain SAFE REFACTORING.",
+    "Require a fresh rerun on every touched source-family module before claiming success.",
+    "Apply the current supplied workflow-specific size policy; absent one, use the KPR-06-007 400-line ideal and 500-line maximum with no universal minimum.",
+    "Keep one AST Split Audit text window and clear stale target-specific text when the target changes.",
+    "Delegate package, terminal, validation evidence, and final freeze mechanics to current owners."
+  ],
+  "version": "2.0.0"
+}

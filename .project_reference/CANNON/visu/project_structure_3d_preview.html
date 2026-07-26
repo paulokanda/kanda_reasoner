@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KANDA Project Structure 3D</title>
+<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=FYcfR_PL10gWtMBJNeQL4L0MYSeDcS3GDF4UDHLK9KXEzs4ty8JKJfxZx-aL3v2SpweU32Upz_ddgz_Fq0gN2ddBu_WvPwQHnp15aPJfZzP_zM4jyZNJsrng7FLTVW1d5LS67SQBvkvYAoXhQNnBr7UFb08tkTUFmeMfhEAKN_Ai3S2zX8MLiQRS_PwjFOzyKhoYJ1-lXgOIAU13m9DIx-xbT3ty67LSybT3leOrnswzBkxwNXiU0cbFOrxjmrqWuvPr4btdF9sQzJHZGAVn2xkBtCI8QRTw3cIAxBbvHwMyPAj1o_SIQbhXJTKl656KSXqqyVzPloQr3m04FbtpFw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://ff.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMDUxZjQ4MjBlYjFkNjJmNjk2MTMyNmU3MCZmbj1wcm9qZWN0X3N0cnVjdHVyZV8zZF9wcmV2aWV3Lmh0bWwmY2Q9YXR0YWNobWVudCZ0cz00OTU3ODQmcD1mcyZjaWQ9MSZzaWc9NzMyMDRhMDMwN2QzMWE1MzUxM2E4NDNhN2Y4NzA5NGE5MDY2NWI3MWM1Yjg1ODRkZDE0ZDk0YWE5YzUzMzI0MiZ2PTA"/><style>
+:root {
+  color-scheme: dark;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: #07101c;
+  color: #eef4ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 45% 42%, rgba(38, 94, 150, 0.22), transparent 42%),
+    linear-gradient(145deg, #050a12, #091728 55%, #06101c);
+}
+
+.visualizer-root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  width: 100%;
+  height: 100%;
+}
+
+.visualizer-root.embedded {
+  display: block;
+}
+
+.visualizer-root.embedded .browser-details {
+  display: none;
+}
+
+.scene-shell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#graphCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+#graphCanvas.dragging {
+  cursor: grabbing;
+}
+
+.scene-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 13px;
+  border: 1px solid rgba(133, 183, 230, 0.28);
+  border-radius: 10px;
+  background: rgba(5, 13, 24, 0.72);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.scene-badge strong {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.scene-badge span,
+.scene-help {
+  color: #91a9c3;
+  font-size: 11px;
+}
+
+.scene-help {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(5, 13, 24, 0.62);
+  pointer-events: none;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 8;
+  max-width: 280px;
+  padding: 8px 10px;
+  border: 1px solid rgba(167, 207, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(6, 14, 26, 0.94);
+  color: #f5f8ff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.browser-details {
+  overflow: auto;
+  padding: 28px 24px;
+  border-left: 1px solid rgba(133, 183, 230, 0.2);
+  background: rgba(6, 13, 24, 0.9);
+}
+
+.browser-details h1 {
+  margin: 4px 0 8px;
+  font-size: 24px;
+}
+
+.eyebrow {
+  color: #56d6ff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.muted {
+  color: #91a9c3;
+  line-height: 1.55;
+}
+
+.details-card,
+.legend-card {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid rgba(133, 183, 230, 0.2);
+  border-radius: 12px;
+  background: rgba(13, 30, 50, 0.55);
+}
+
+.details-card h2,
+.legend-card h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.details-card dl {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 8px 10px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.details-card dt {
+  color: #7e98b4;
+}
+
+.details-card dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.legend-card > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 8px 0;
+  color: #b8c9dc;
+  font-size: 12px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 11px currentColor;
+}
+
+.legend-dot.gui { color: #ff9a45; background: currentColor; }
+.legend-dot.ai { color: #b98cff; background: currentColor; }
+.legend-dot.validation { color: #5fe09b; background: currentColor; }
+.legend-dot.evidence { color: #ffd65a; background: currentColor; }
+.legend-dot.external { color: #8d9bad; background: currentColor; }
+
+</style>
+</head>
+<body>
+<div id="visualizerRoot" class="visualizer-root">
+  <main class="scene-shell">
+    <canvas id="graphCanvas" aria-label="Read-only 3D project graph"></canvas>
+    <div id="tooltip" class="tooltip" hidden></div>
+    <div class="scene-badge">
+      <strong>Project Structure 3D</strong>
+      <span id="sceneStatus">Loading fixture...</span>
+    </div>
+    <div class="scene-help">Drag to orbit | Shift-drag to pan | Wheel to zoom | Double-click to focus</div>
+  </main>
+  <aside id="browserDetails" class="browser-details">
+    <div class="eyebrow">READ-ONLY PROTOTYPE</div>
+    <h1>Project Structure 3D</h1>
+    <p class="muted">Select a node to inspect its role and relationships.</p>
+    <div id="browserDetailsBody" class="details-card">No node selected.</div>
+    <div class="legend-card">
+      <h2>Visual language</h2>
+      <div><span class="legend-dot gui"></span>GUI shell</div>
+      <div><span class="legend-dot ai"></span>AI and reasoner</div>
+      <div><span class="legend-dot validation"></span>Validation</div>
+      <div><span class="legend-dot evidence"></span>Evidence and retrieval</div>
+      <div><span class="legend-dot external"></span>External dependency</div>
+    </div>
+  </aside>
+</div>
+<script>
+window.__KANDA_GRAPH_SNAPSHOT__ = {"clusters":["gui","ai","validation","evidence","external"],"edges":[{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:project:gui","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"project:kanda_reasoner","target":"package:gui","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:project:reasoner","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"project:kanda_reasoner","target":"package:reasoner","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:project:validation","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"project:kanda_reasoner","target":"package:validation","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:project:evidence","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"project:kanda_reasoner","target":"package:evidence","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:gui:specs","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:gui","target":"module:tool_specs","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:gui:window","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:gui","target":"module:main_window","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:window:class","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"module:main_window","target":"class:reasoner_tools_window","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"imports:window:specs","label":"imports","metadata":{"fixture":true},"relationship":"imports","source":"module:main_window","target":"module:tool_specs","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:reasoner:web","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:reasoner","target":"module:project_web_ai","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:reasoner:local","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:reasoner","target":"module:local_ai","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:web:class","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"module:project_web_ai","target":"class:project_web_ai_tab","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:evidence:collector","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:evidence","target":"module:collector_runner","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:evidence:live","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:evidence","target":"module:live_source","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:validation:architecture","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:validation","target":"validator:architecture","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":false,"evidence":"v1A deterministic fixture","id":"contains:validation:lifecycle","label":"contains","metadata":{"fixture":true},"relationship":"contains","source":"package:validation","target":"validator:qt_lifecycle","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"validates:architecture:window","label":"validates","metadata":{"fixture":true},"relationship":"validates","source":"validator:architecture","target":"module:main_window","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"validates:lifecycle:web","label":"validates","metadata":{"fixture":true},"relationship":"validates","source":"validator:qt_lifecycle","target":"class:project_web_ai_tab","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"invokes:window:web","label":"invokes","metadata":{"fixture":true},"relationship":"invokes","source":"class:reasoner_tools_window","target":"class:project_web_ai_tab","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"depends:web:qt","label":"depends on","metadata":{"fixture":true},"relationship":"depends_on","source":"class:project_web_ai_tab","target":"external:qt_webengine","validation_status":"fixture_only","weight":1},{"confidence":"confirmed","directed":true,"evidence":"v1A deterministic fixture","id":"protects:project:web","label":"protects","metadata":{"fixture":true},"relationship":"protects","source":"project:kanda_reasoner","target":"module:project_web_ai","validation_status":"fixture_only","weight":1}],"generated_at":"fixture-v1a","layout":{"coordinates_are_authoritative":false,"engine":"deterministic_canvas_3d_v1a","stable":true},"legend":{"categories":["core","gui","ai","validation","evidence","external"],"relationships":["contains","imports","invokes","validates","protects","depends_on"]},"nodes":[{"category":"core","complexity_metric":0,"external":false,"frozen":false,"id":"project:kanda_reasoner","incoming_count":0,"kind":"project","label":"KANDA Reasoner","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":5,"package":"","parent_id":"","position":[0,0,0],"protected":false,"qualified_name":"KANDA Reasoner","relative_path":"","risk_level":"none","size_metric":1,"summary":"Selected Project boundary and visualization center."},{"category":"gui","complexity_metric":0,"external":false,"frozen":false,"id":"package:gui","incoming_count":1,"kind":"package","label":"GUI Shell","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":2,"package":"kanda_reasoner_app","parent_id":"","position":[-230,-150,40],"protected":false,"qualified_name":"GUI Shell","relative_path":"kanda_reasoner_app/reasoner_tools_gui_shell","risk_level":"none","size_metric":1,"summary":"Owns the visible PySide6 tool tabs and navigation shell."},{"category":"ai","complexity_metric":0,"external":false,"frozen":false,"id":"package:reasoner","incoming_count":1,"kind":"package","label":"Reasoner Engine","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":2,"package":"kanda_reasoner_app","parent_id":"","position":[230,-140,20],"protected":false,"qualified_name":"Reasoner Engine","relative_path":"kanda_reasoner_app/reasoner_engine","risk_level":"none","size_metric":1,"summary":"Owns Local AI and Project Web AI reasoning flows."},{"category":"validation","complexity_metric":0,"external":false,"frozen":false,"id":"package:validation","incoming_count":1,"kind":"package","label":"Validation","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":2,"package":"","parent_id":"","position":[220,180,-20],"protected":false,"qualified_name":"Validation","relative_path":"tools","risk_level":"none","size_metric":1,"summary":"Focused validators and regression protection."},{"category":"evidence","complexity_metric":0,"external":false,"frozen":false,"id":"package:evidence","incoming_count":1,"kind":"package","label":"Evidence and Handoff","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":2,"package":"kanda_reasoner_app","parent_id":"","position":[-220,170,-30],"protected":false,"qualified_name":"Evidence and Handoff","relative_path":"kanda_reasoner_app/reasoner_context_collector","risk_level":"none","size_metric":1,"summary":"Builds read-only project evidence and AI handoff artifacts."},{"category":"gui","complexity_metric":0,"external":false,"frozen":false,"id":"module:tool_specs","incoming_count":2,"kind":"module","label":"tool_specs.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":0,"package":"kanda_reasoner_app/reasoner_tools_gui_shell","parent_id":"","position":[-330,-210,80],"protected":true,"qualified_name":"tool_specs.py","relative_path":"kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py","risk_level":"none","size_metric":1,"summary":"Canonical visible-tool registry."},{"category":"gui","complexity_metric":0,"external":false,"frozen":false,"id":"module:main_window","incoming_count":2,"kind":"module","label":"main_window.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":2,"package":"kanda_reasoner_app/reasoner_tools_gui_shell","parent_id":"","position":[-205,-250,-30],"protected":false,"qualified_name":"main_window.py","relative_path":"kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py","risk_level":"none","size_metric":1,"summary":"Hosts lazy tabs and active Project synchronization."},{"category":"gui","complexity_metric":0,"external":false,"frozen":false,"id":"class:reasoner_tools_window","incoming_count":1,"kind":"class","label":"ReasonerToolsWindow","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":1,"package":"kanda_reasoner_app/reasoner_tools_gui_shell","parent_id":"","position":[-110,-185,95],"protected":false,"qualified_name":"ReasonerToolsWindow","relative_path":"kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py","risk_level":"none","size_metric":1,"summary":"Main application window and tab container."},{"category":"ai","complexity_metric":0,"external":false,"frozen":true,"id":"module:project_web_ai","incoming_count":2,"kind":"module","label":"project_web_ai_tab.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":1,"package":"kanda_reasoner_app/reasoner_engine","parent_id":"","position":[315,-205,80],"protected":false,"qualified_name":"project_web_ai_tab.py","relative_path":"kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py","risk_level":"none","size_metric":1,"summary":"Read-only and governed Web AI interface for the selected Project."},{"category":"ai","complexity_metric":0,"external":false,"frozen":false,"id":"module:local_ai","incoming_count":1,"kind":"module","label":"ai_reasoner_main_window.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":0,"package":"kanda_reasoner_app/reasoner_engine","parent_id":"","position":[190,-250,-55],"protected":false,"qualified_name":"ai_reasoner_main_window.py","relative_path":"kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window.py","risk_level":"none","size_metric":1,"summary":"Local project question and evidence interface."},{"category":"ai","complexity_metric":0,"external":false,"frozen":true,"id":"class:project_web_ai_tab","incoming_count":3,"kind":"class","label":"ProjectWebAITab","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":1,"package":"kanda_reasoner_app/reasoner_engine","parent_id":"","position":[105,-145,105],"protected":false,"qualified_name":"ProjectWebAITab","relative_path":"kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py","risk_level":"none","size_metric":1,"summary":"Public Qt facade for Project Web AI."},{"category":"evidence","complexity_metric":0,"external":false,"frozen":false,"id":"module:collector_runner","incoming_count":1,"kind":"module","label":"runner.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":0,"package":"kanda_reasoner_app/reasoner_context_collector","parent_id":"","position":[-310,220,55],"protected":false,"qualified_name":"runner.py","relative_path":"kanda_reasoner_app/reasoner_context_collector/runner.py","risk_level":"none","size_metric":1,"summary":"Creates the external Show Project to AI handoff."},{"category":"evidence","complexity_metric":0,"external":false,"frozen":true,"id":"module:live_source","incoming_count":1,"kind":"module","label":"live_source_fallback.py","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":0,"package":"kanda_reasoner_app/reasoner_engine/reasoner_retriever_help","parent_id":"","position":[-145,245,-65],"protected":false,"qualified_name":"live_source_fallback.py","relative_path":"kanda_reasoner_app/reasoner_engine/reasoner_retriever_help/live_source_fallback.py","risk_level":"none","size_metric":1,"summary":"Bounded live-source evidence fallback."},{"category":"validation","complexity_metric":0,"external":false,"frozen":false,"id":"validator:architecture","incoming_count":1,"kind":"validator","label":"Architecture validator","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":1,"package":"tools","parent_id":"","position":[300,230,70],"protected":false,"qualified_name":"Architecture validator","relative_path":"tools/validate_box_architecture.py","risk_level":"none","size_metric":1,"summary":"Checks box ownership and dependency boundaries."},{"category":"validation","complexity_metric":0,"external":false,"frozen":false,"id":"validator:qt_lifecycle","incoming_count":1,"kind":"validator","label":"Qt lifecycle validator","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":1,"package":"tools","parent_id":"","position":[145,255,-70],"protected":false,"qualified_name":"Qt lifecycle validator","relative_path":"tools/validate_architecture_review_ai_signal_lifecycle_recovery_v1.py","risk_level":"none","size_metric":1,"summary":"Protects page-scoped widgets from late global callbacks."},{"category":"external","complexity_metric":0,"external":true,"frozen":false,"id":"external:qt_webengine","incoming_count":1,"kind":"external","label":"Qt WebEngine","metadata":{"fixture":true,"source_confidence":"confirmed"},"outgoing_count":0,"package":"","parent_id":"","position":[0,-20,330],"protected":false,"qualified_name":"Qt WebEngine","relative_path":"","risk_level":"none","size_metric":1,"summary":"External embedded browser and WebChannel runtime."}],"project_identity":{"display_name":"Kanda Reasoner","fixture":true,"slug":"kanda_reasoner"},"schema_version":"1.0","source_provenance":{"authoritative":false,"kind":"deterministic_fixture","notice":"Prototype data only. Existing KANDA analysis remains canonical."},"statistics":{"edge_count":20,"fixture":true,"node_count":16}};
+window.__KANDA_GRAPH_GENERATION__ = "preview-generation";
+window.__KANDA_EMBEDDED__ = false;
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const canvas = document.getElementById("graphCanvas");
+  const context = canvas.getContext("2d", { alpha: true });
+  const root = document.getElementById("visualizerRoot");
+  const tooltip = document.getElementById("tooltip");
+  const status = document.getElementById("sceneStatus");
+  const browserDetails = document.getElementById("browserDetailsBody");
+
+  const palette = {
+    core: "#48c7ff",
+    gui: "#ff9a45",
+    ai: "#b98cff",
+    validation: "#5fe09b",
+    evidence: "#ffd65a",
+    external: "#8d9bad"
+  };
+
+  const relationshipPalette = {
+    contains: "rgba(140, 174, 207, 0.28)",
+    imports: "rgba(111, 184, 255, 0.55)",
+    calls: "rgba(185, 140, 255, 0.55)",
+    inherits: "rgba(235, 244, 255, 0.7)",
+    validates: "rgba(95, 224, 155, 0.72)",
+    invokes: "rgba(255, 154, 69, 0.7)",
+    protects: "rgba(255, 204, 87, 0.78)",
+    depends_on: "rgba(141, 155, 173, 0.56)"
+  };
+
+  const state = {
+    graph: window.__KANDA_GRAPH_SNAPSHOT__,
+    generationId: String(window.__KANDA_GRAPH_GENERATION__ || ""),
+    embedded: Boolean(window.__KANDA_EMBEDDED__),
+    nodesById: new Map(),
+    projected: [],
+    selectedId: "",
+    hoveredId: "",
+    rotationX: -0.24,
+    rotationY: 0.44,
+    zoom: 1,
+    panX: 0,
+    panY: 0,
+    dragging: false,
+    dragMode: "orbit",
+    moved: false,
+    startX: 0,
+    startY: 0,
+    lastX: 0,
+    lastY: 0,
+    bridge: null,
+    animationFrame: 0
+  };
+
+  if (state.embedded) {
+    root.classList.add("embedded");
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function notifyBridge(methodName, args) {
+    const bridge = state.bridge;
+    if (bridge && typeof bridge[methodName] === "function") {
+      bridge[methodName].apply(bridge, args);
+    }
+  }
+
+  function connectQtBridge() {
+    if (!window.qt || !window.qt.webChannelTransport) {
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "qrc:///qtwebchannel/qwebchannel.js";
+    script.onload = function () {
+      new QWebChannel(window.qt.webChannelTransport, function (channel) {
+        state.bridge = channel.objects.projectGraphBridge || null;
+        notifyBridge("onRendererReady", [state.generationId]);
+      });
+    };
+    script.onerror = function () {
+      notifyBridge("onRendererError", [
+        state.generationId,
+        "QWebChannel bootstrap could not be loaded."
+      ]);
+    };
+    document.head.appendChild(script);
+  }
+
+  function resizeCanvas() {
+    const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(1, Math.floor(rect.width * ratio));
+    const height = Math.max(1, Math.floor(rect.height * ratio));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function requestRender() {
+    if (state.animationFrame) {
+      return;
+    }
+    state.animationFrame = window.requestAnimationFrame(function () {
+      state.animationFrame = 0;
+      render();
+    });
+  }
+
+  function rotatePoint(position) {
+    const x = Number(position[0]) || 0;
+    const y = Number(position[1]) || 0;
+    const z = Number(position[2]) || 0;
+    const cosY = Math.cos(state.rotationY);
+    const sinY = Math.sin(state.rotationY);
+    const x1 = x * cosY - z * sinY;
+    const z1 = x * sinY + z * cosY;
+    const cosX = Math.cos(state.rotationX);
+    const sinX = Math.sin(state.rotationX);
+    const y2 = y * cosX - z1 * sinX;
+    const z2 = y * sinX + z1 * cosX;
+    return { x: x1, y: y2, z: z2 };
+  }
+
+  function projectNode(node, width, height) {
+    const rotated = rotatePoint(node.position || [0, 0, 0]);
+    const depth = Math.max(0.52, 1 + rotated.z / 1100);
+    const scale = 0.86 * state.zoom / depth;
+    const x = width / 2 + state.panX + rotated.x * scale;
+    const y = height / 2 + state.panY + rotated.y * scale;
+    const baseRadius = {
+      project: 17,
+      package: 13,
+      module: 9,
+      class: 8,
+      function: 6,
+      validator: 8,
+      external: 8
+    }[node.kind] || 7;
+    return {
+      id: node.id,
+      node: node,
+      x: x,
+      y: y,
+      z: rotated.z,
+      radius: Math.max(4, baseRadius * scale)
+    };
+  }
+
+  function drawBackground(width, height) {
+    context.clearRect(0, 0, width, height);
+    const gradient = context.createRadialGradient(
+      width * 0.5,
+      height * 0.48,
+      30,
+      width * 0.5,
+      height * 0.5,
+      Math.max(width, height) * 0.7
+    );
+    gradient.addColorStop(0, "rgba(28, 72, 112, 0.12)");
+    gradient.addColorStop(1, "rgba(1, 6, 13, 0.0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, width, height);
+  }
+
+  function drawEdge(edge, source, target) {
+    const isActive = state.selectedId && (
+      source.id === state.selectedId || target.id === state.selectedId
+    );
+    context.save();
+    context.beginPath();
+    context.moveTo(source.x, source.y);
+    context.lineTo(target.x, target.y);
+    context.strokeStyle = relationshipPalette[edge.relationship] ||
+      "rgba(145, 170, 197, 0.35)";
+    context.globalAlpha = isActive ? 1 : 0.62;
+    context.lineWidth = isActive ? 1.8 : 0.75;
+    if (edge.relationship === "validates") {
+      context.setLineDash([5, 5]);
+    }
+    context.stroke();
+    context.restore();
+  }
+
+  function pathShape(projected) {
+    const kind = projected.node.kind;
+    const radius = projected.radius;
+    context.beginPath();
+    if (kind === "module") {
+      const side = radius * 1.55;
+      if (typeof context.roundRect === "function") {
+        context.roundRect(
+          projected.x - side / 2,
+          projected.y - side / 2,
+          side,
+          side,
+          Math.max(2, radius * 0.28)
+        );
+      } else {
+        context.rect(
+          projected.x - side / 2,
+          projected.y - side / 2,
+          side,
+          side
+        );
+      }
+      return;
+    }
+    if (kind === "class" || kind === "validator") {
+      context.moveTo(projected.x, projected.y - radius);
+      context.lineTo(projected.x + radius, projected.y);
+      context.lineTo(projected.x, projected.y + radius);
+      context.lineTo(projected.x - radius, projected.y);
+      context.closePath();
+      return;
+    }
+    context.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+  }
+
+  function drawNode(projected) {
+    const node = projected.node;
+    const color = palette[node.category] || palette.core;
+    const selected = node.id === state.selectedId;
+    const hovered = node.id === state.hoveredId;
+    context.save();
+    if (selected || hovered) {
+      context.shadowColor = color;
+      context.shadowBlur = selected ? 24 : 14;
+    }
+    pathShape(projected);
+    context.fillStyle = color;
+    context.globalAlpha = node.external ? 0.58 : 0.88;
+    context.fill();
+    context.globalAlpha = 1;
+    context.lineWidth = selected ? 2.6 : 1;
+    context.strokeStyle = selected ? "#ffffff" : "rgba(229, 242, 255, 0.58)";
+    context.stroke();
+
+    if (node.frozen || node.protected) {
+      context.beginPath();
+      context.arc(
+        projected.x,
+        projected.y,
+        projected.radius + 5,
+        0,
+        Math.PI * 2
+      );
+      context.strokeStyle = node.frozen ? "#ffd05d" : "#ffae65";
+      context.lineWidth = 1.4;
+      context.globalAlpha = 0.85;
+      context.stroke();
+    }
+    context.restore();
+
+    const alwaysLabel = node.kind === "package" || node.kind === "project";
+    if (alwaysLabel || selected || hovered) {
+      context.save();
+      context.font = selected ? "600 12px Segoe UI" : "500 11px Segoe UI";
+      context.textAlign = "center";
+      context.textBaseline = "top";
+      context.fillStyle = selected ? "#ffffff" : "rgba(222, 235, 248, 0.92)";
+      context.shadowColor = "rgba(0, 0, 0, 0.9)";
+      context.shadowBlur = 5;
+      context.fillText(node.label, projected.x, projected.y + projected.radius + 7);
+      context.restore();
+    }
+  }
+
+  function render() {
+    resizeCanvas();
+    const rect = canvas.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    drawBackground(width, height);
+    const nodes = Array.isArray(state.graph.nodes) ? state.graph.nodes : [];
+    const edges = Array.isArray(state.graph.edges) ? state.graph.edges : [];
+    state.projected = nodes
+      .map(function (node) { return projectNode(node, width, height); })
+      .sort(function (left, right) { return right.z - left.z; });
+    const byId = new Map(state.projected.map(function (item) {
+      return [item.id, item];
+    }));
+    edges.forEach(function (edge) {
+      const source = byId.get(edge.source);
+      const target = byId.get(edge.target);
+      if (source && target) {
+        drawEdge(edge, source, target);
+      }
+    });
+    state.projected.slice().reverse().forEach(drawNode);
+  }
+
+  function nearestNode(x, y) {
+    let best = null;
+    let bestDistance = Infinity;
+    state.projected.forEach(function (item) {
+      const distance = Math.hypot(item.x - x, item.y - y);
+      if (distance <= item.radius + 8 && distance < bestDistance) {
+        best = item;
+        bestDistance = distance;
+      }
+    });
+    return best;
+  }
+
+  function updateBrowserDetails(node) {
+    if (state.embedded || !browserDetails) {
+      return;
+    }
+    if (!node) {
+      browserDetails.textContent = "No node selected.";
+      return;
+    }
+    const statusText = [
+      node.frozen ? "Frozen" : "",
+      node.protected ? "Protected" : "",
+      node.external ? "External" : ""
+    ].filter(Boolean).join(", ") || "Normal";
+    browserDetails.innerHTML =
+      "<h2>" + escapeHtml(node.label) + "</h2>" +
+      "<dl>" +
+      "<dt>Type</dt><dd>" + escapeHtml(node.kind) + "</dd>" +
+      "<dt>Category</dt><dd>" + escapeHtml(node.category) + "</dd>" +
+      "<dt>Path</dt><dd>" + escapeHtml(node.relative_path || "Not applicable") + "</dd>" +
+      "<dt>Incoming</dt><dd>" + escapeHtml(node.incoming_count) + "</dd>" +
+      "<dt>Outgoing</dt><dd>" + escapeHtml(node.outgoing_count) + "</dd>" +
+      "<dt>Status</dt><dd>" + escapeHtml(statusText) + "</dd>" +
+      "</dl>" +
+      "<p class=\"muted\">" + escapeHtml(node.summary || "") + "</p>";
+  }
+
+  function selectNode(projected) {
+    state.selectedId = projected ? projected.id : "";
+    const node = projected ? projected.node : null;
+    updateBrowserDetails(node);
+    if (node) {
+      notifyBridge("onNodeSelected", [state.generationId, node.id]);
+    } else {
+      notifyBridge("onBackgroundSelected", [state.generationId]);
+    }
+    requestRender();
+  }
+
+  function focusProjected(projected) {
+    if (!projected) {
+      return false;
+    }
+    const rect = canvas.getBoundingClientRect();
+    state.panX += rect.width / 2 - projected.x;
+    state.panY += rect.height / 2 - projected.y;
+    state.zoom = Math.min(2.4, Math.max(1.15, state.zoom * 1.18));
+    selectNode(projected);
+    requestRender();
+    return true;
+  }
+
+  function pointerPosition(event) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  }
+
+  canvas.addEventListener("pointerdown", function (event) {
+    const point = pointerPosition(event);
+    state.dragging = true;
+    state.moved = false;
+    state.dragMode = event.shiftKey || event.button === 2 ? "pan" : "orbit";
+    state.startX = point.x;
+    state.startY = point.y;
+    state.lastX = point.x;
+    state.lastY = point.y;
+    canvas.classList.add("dragging");
+    canvas.setPointerCapture(event.pointerId);
+    requestRender();
+  });
+
+  canvas.addEventListener("pointermove", function (event) {
+    const point = pointerPosition(event);
+    const hovered = nearestNode(point.x, point.y);
+    state.hoveredId = hovered ? hovered.id : "";
+    if (hovered) {
+      tooltip.hidden = false;
+      tooltip.textContent = hovered.node.label + " - " + hovered.node.kind;
+      tooltip.style.left = Math.min(point.x + 14, canvas.clientWidth - 250) + "px";
+      tooltip.style.top = Math.max(8, point.y - 34) + "px";
+    } else {
+      tooltip.hidden = true;
+    }
+    if (!state.dragging) {
+      return;
+    }
+    const dx = point.x - state.lastX;
+    const dy = point.y - state.lastY;
+    if (Math.hypot(point.x - state.startX, point.y - state.startY) > 3) {
+      state.moved = true;
+    }
+    if (state.dragMode === "pan") {
+      state.panX += dx;
+      state.panY += dy;
+    } else {
+      state.rotationY += dx * 0.006;
+      state.rotationX += dy * 0.006;
+      state.rotationX = Math.max(-1.35, Math.min(1.35, state.rotationX));
+    }
+    state.lastX = point.x;
+    state.lastY = point.y;
+    requestRender();
+  });
+
+  function endPointer(event) {
+    if (!state.dragging) {
+      return;
+    }
+    const point = pointerPosition(event);
+    state.dragging = false;
+    canvas.classList.remove("dragging");
+    if (!state.moved) {
+      selectNode(nearestNode(point.x, point.y));
+    }
+    requestRender();
+  }
+
+  canvas.addEventListener("pointerup", endPointer);
+  canvas.addEventListener("pointercancel", endPointer);
+  canvas.addEventListener("contextmenu", function (event) { event.preventDefault(); });
+  canvas.addEventListener("dblclick", function (event) {
+    const point = pointerPosition(event);
+    focusProjected(nearestNode(point.x, point.y));
+  });
+  canvas.addEventListener("wheel", function (event) {
+    event.preventDefault();
+    const factor = event.deltaY < 0 ? 1.1 : 0.9;
+    state.zoom = Math.max(0.42, Math.min(3.2, state.zoom * factor));
+    requestRender();
+  }, { passive: false });
+
+  function fitGraph() {
+    state.rotationX = -0.24;
+    state.rotationY = 0.44;
+    state.zoom = 1;
+    state.panX = 0;
+    state.panY = 0;
+    requestRender();
+  }
+
+  function resetCamera() {
+    fitGraph();
+    state.selectedId = "";
+    updateBrowserDetails(null);
+    requestRender();
+  }
+
+  function focusByQuery(query) {
+    const normalized = String(query || "").trim().toLowerCase();
+    if (!normalized) {
+      return false;
+    }
+    const node = state.graph.nodes.find(function (candidate) {
+      return [candidate.label, candidate.id, candidate.relative_path]
+        .join(" ")
+        .toLowerCase()
+        .includes(normalized);
+    });
+    if (!node) {
+      return false;
+    }
+    const projected = state.projected.find(function (item) {
+      return item.id === node.id;
+    });
+    return focusProjected(projected || null);
+  }
+
+  function setGraph(graph, generationId) {
+    if (!graph || !Array.isArray(graph.nodes) || !Array.isArray(graph.edges)) {
+      notifyBridge("onRendererError", [
+        String(generationId || ""),
+        "Renderer received an invalid graph snapshot."
+      ]);
+      return false;
+    }
+    state.graph = graph;
+    state.generationId = String(generationId || "");
+    state.nodesById = new Map(graph.nodes.map(function (node) {
+      return [node.id, node];
+    }));
+    state.selectedId = "";
+    state.hoveredId = "";
+    fitGraph();
+    status.textContent = graph.statistics.node_count + " nodes | " +
+      graph.statistics.edge_count + " edges | fixture v1A";
+    updateBrowserDetails(null);
+    notifyBridge("onRendererReady", [state.generationId]);
+    requestRender();
+    return true;
+  }
+
+  window.kandaProjectGraph = {
+    fitGraph: fitGraph,
+    resetCamera: resetCamera,
+    focusByQuery: focusByQuery,
+    setGraph: setGraph
+  };
+
+  window.addEventListener("resize", requestRender);
+  window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      resetCamera();
+      notifyBridge("onBackgroundSelected", [state.generationId]);
+    }
+  });
+
+  try {
+    setGraph(state.graph, state.generationId);
+    connectQtBridge();
+    requestRender();
+  } catch (error) {
+    status.textContent = "Renderer error";
+    notifyBridge("onRendererError", [
+      state.generationId,
+      error instanceof Error ? error.message : String(error)
+    ]);
+  }
+}());
+
+</script>
+</body>
+</html>

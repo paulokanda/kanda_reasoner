@@ -1,0 +1,32 @@
+{
+  "prompt_id": "prompt_router_reasoner_startup_check",
+  "display_name": "Prompt Router Reasoner Startup Check",
+  "filename": "prompt_router_reasoner_startup_check.md",
+  "category": "01_session_start_and_navigation",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "Beginning-of-day startup checklist for Prompt Router Reasoner readiness while preserving the second-upload gate before WAIT_FOR_TASK.",
+  "priority": 10,
+  "required_companion_prompts": [
+    "start_of_day_master_stack",
+    "session_start_upload_checklist",
+    "ai_prompt_request_canon",
+    "prompt_navigation_index"
+  ],
+  "trigger_phrases": [
+    "prompt router reasoner check",
+    "prompt router reasoner is fit to run",
+    "beginning of day prompt router reasoner",
+    "startup prompt router reasoner readiness",
+    "second upload gate",
+    "startup ready check before task"
+  ],
+  "version": "1.1",
+  "do_not_use_as_source_authority": true,
+  "replacement_prompt_ids": [
+    "prompt_router_reasoner_startup_check"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1"
+}

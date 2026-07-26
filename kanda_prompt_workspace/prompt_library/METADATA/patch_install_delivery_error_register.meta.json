@@ -1,0 +1,33 @@
+{
+  "prompt_id": "patch_install_delivery_error_register",
+  "prompt_code": "KPR-05-001",
+  "display_name": "Patch Install Delivery Active Regression Index",
+  "filename": "patch_install_delivery_error_register.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "conditional_required",
+  "version": "2.0",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
+  "source_stage": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "updated_for": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "description": "Compact structured index of active patch-install and delivery regression classes, owners, validators, and Error Memory links.",
+  "priority": 11,
+  "trigger_phrases": [
+    "patch install error",
+    "delivery regression",
+    "root-drive staging",
+    "isolated ZIP",
+    "validation evidence failure"
+  ],
+  "required_companion_prompts": [
+    "daily_patch_delivery_guardrails",
+    "implementation_and_delivery_protocol",
+    "terminal_cleanup_contract"
+  ],
+  "recommended_companion_prompts": [
+    "pre_output_contract_gates",
+    "pre_output_contract_gates",
+    "error_memory_ai_formulary_startup_canon"
+  ]
+}

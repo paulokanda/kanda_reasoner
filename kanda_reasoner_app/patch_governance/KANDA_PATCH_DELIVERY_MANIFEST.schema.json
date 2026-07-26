@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KANDA Patch Delivery Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "feature_id",
+    "zip_name",
+    "zip_purpose",
+    "zip_placement_path",
+    "what_zip_is",
+    "what_zip_is_not",
+    "install_commands",
+    "validation_commands",
+    "expected_validation_markers",
+    "files_changed",
+    "allowed_write_paths",
+    "forbidden_write_paths",
+    "target_box",
+    "forbidden_boxes",
+    "generated_vs_canonical_status",
+    "freeze_intake",
+    "error_memory_intake",
+    "post_validation_steps",
+    "beginner_do_not_do"
+  ],
+  "properties": {
+    "feature_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "zip_name": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+\\.zip$"
+    },
+    "zip_purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "zip_placement_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "what_zip_is": {
+      "type": "string",
+      "minLength": 1
+    },
+    "what_zip_is_not": {
+      "type": "string",
+      "minLength": 1
+    },
+    "install_commands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "validation_commands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "expected_validation_markers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "allowed_write_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "forbidden_write_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "target_box": {
+      "type": "string",
+      "minLength": 1
+    },
+    "forbidden_boxes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "generated_vs_canonical_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freeze_intake": {
+      "type": [
+        "object",
+        "string"
+      ]
+    },
+    "error_memory_intake": {
+      "type": [
+        "object",
+        "string"
+      ]
+    },
+    "post_validation_steps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "beginner_do_not_do": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    }
+  }
+}

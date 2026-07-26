@@ -1,0 +1,37 @@
+{
+  "prompt_code": "KPR-06-002",
+  "prompt_id": "web_ai_planning_response_bundle_blueprint",
+  "display_name": "Web AI Planning Response Bundle Blueprint",
+  "filename": "web_ai_planning_response_bundle_blueprint.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "routed",
+  "source_stage": "prompt-audit-wave6c-web-ai-exchange-boundaries-v1",
+  "description": "Reusable Imported Web AI planning-response payload and bundle profile; preserves exact payload identity while delegating architecture reasoning and package/freeze mechanics.",
+  "box_logic_required": true,
+  "routing_coverage": "wave6c_imported_planning_bundle_profile_v2",
+  "priority": 37,
+  "trigger_phrases": [
+    "Send Web Ai to split file",
+    "planning response ZIP blueprint",
+    "Web AI planning response bundle",
+    "Panel 4 planning response paste",
+    "create Imported Web AI Version bundle"
+  ],
+  "required_companion_prompts": [
+    "large_module_refactor_protocol",
+    "web_ai_large_module_refactor_exchange_protocol",
+    "implementation_and_delivery_protocol",
+    "pre_output_contract_gates",
+    "freeze_code_intake_and_form_protocol"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md",
+  "do_not_regress": [
+    "Keep ZIP as the canonical imported-plan path and Panel 4 paste as an exact-payload fallback.",
+    "Keep packaged and chat marker-wrapped payloads byte-identical.",
+    "Keep installer scope limited to the external pending imported-plan artifact.",
+    "Keep exact source_content_hash and base_plan_hash validation.",
+    "Keep KPR-06-001 as reasoning owner and current Class 05/freeze owners authoritative for mechanics and final writes."
+  ],
+  "version": "2.0.0"
+}

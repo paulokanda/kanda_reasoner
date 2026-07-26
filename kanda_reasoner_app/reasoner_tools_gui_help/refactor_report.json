@@ -1,0 +1,60 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "Refactor Report",
+  "purpose": "Explain the Refactor Report tab, project-folder scanning, pasted or loaded state-vector JSON, daily refactor report output, AI bundle generation, and re-extraction controls.",
+  "created_for": "Refactor Report Help button",
+  "display_lines": [
+    "Refactor Report builds a structured state vector that describes project structure, complexity, governance, churn, dependency shape, and refactor pressure.",
+    "Use Mode A when you want the tab to scan a project folder and generate the state vector from Python source files.",
+    "Use Mode B when you already have state-vector JSON or pasted chat output that should be loaded, edited, or compiled.",
+    "Step 2 controls the report name and output folder; the tab creates its daily_refactor output tree under that location.",
+    "Step 2b optionally writes the final AI bundle to an exact file path instead of the default bundle folder.",
+    "Compile State Vector runs the normal pipeline, Force Re-extract bypasses cached extraction, and Save Bundle Now writes a bundle from the last compiled state.",
+    "The generated bundle is the compact AI handoff artifact; it is evidence and context, not a source-code edit."
+  ],
+  "errors": [
+    {
+      "number": 1,
+      "error": "Mode A project folder",
+      "plain_explanation": "Select a real project folder when you want the report to scan source files directly.",
+      "if_not_corrected": "The compiler cannot build a state vector from project files and may ask for pasted or loaded JSON instead.",
+      "easy_example": "Use Select Project Folder on the repository root before compiling a fresh project scan."
+    },
+    {
+      "number": 2,
+      "error": "Mode B JSON source",
+      "plain_explanation": "Paste or load a valid state-vector JSON document when you are not scanning a project folder.",
+      "if_not_corrected": "The compiler has no canonical state vector to merge, validate, or save.",
+      "easy_example": "Use Load Existing JSON to open a previous current_state, state_history, or bundle JSON."
+    },
+    {
+      "number": 3,
+      "error": "Report name and output folder",
+      "plain_explanation": "Set a clear report name and output folder before compiling so generated files have a stable location.",
+      "if_not_corrected": "Outputs may be missing, written to an unexpected folder, or hard to match to the reviewed project.",
+      "easy_example": "Name the report auth_module and choose a workbench or project-analysis output folder."
+    },
+    {
+      "number": 4,
+      "error": "AI bundle path",
+      "plain_explanation": "Use the optional bundle path only when you need the final AI handoff JSON written to a specific file.",
+      "if_not_corrected": "The bundle still uses the default location, which may be fine but may not match a planned handoff path.",
+      "easy_example": "Set Bundle Path when another workflow expects refactor_report_bundle.json in a fixed folder."
+    },
+    {
+      "number": 5,
+      "error": "Force re-extract",
+      "plain_explanation": "Use Force Re-extract when cached analysis may be stale after file moves, generated source changes, or a failed prior run.",
+      "if_not_corrected": "The report may reuse older extraction data and understate current refactor pressure.",
+      "easy_example": "Run Force Re-extract after a large refactor or after changing many Python modules."
+    },
+    {
+      "number": 6,
+      "error": "Save Bundle Now",
+      "plain_explanation": "Use Save Bundle Now only after a successful compile when the bundle file is missing or needs to be regenerated.",
+      "if_not_corrected": "You may hand off stale or incomplete evidence to an AI reviewer.",
+      "easy_example": "Compile first, then Save Bundle Now if the report exists but the bundle file was not created."
+    }
+  ]
+}

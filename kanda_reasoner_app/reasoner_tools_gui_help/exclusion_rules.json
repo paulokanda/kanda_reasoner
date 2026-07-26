@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Exclusion Rules",
+  "purpose": "Explain project-root scope, fallback rules, folders, files, extensions, auto-save, defaults, duplicate protection, reset behavior, and the non-destructive analysis boundary.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Exclusion Rules controls what supported KANDA workflows treat as outside the project.",
+    "Select the exact Project Root before editing project-specific rules.",
+    "Folder, file, and extension lists are separate and auto-save immediately.",
+    "Built-in defaults are merged with saved project-specific rules.",
+    "Excluded items remain on disk and are not deleted."
+  ]
+}

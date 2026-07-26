@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Refactor Report</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <h1>Refactor Report</h1>
+        <p class="subtitle">A local state-vector workbench for scanning a project folder, compiling existing report JSON, writing daily refactor outputs, and saving an AI handoff bundle.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/refactor_report_opener_workshop.png" alt="Hand-made workshop cartoon where engineers study project folders, dependency strings, a report ledger, and an AI bundle box">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Problem This Solves</h2>
+      <p><strong>Mode:</strong> Creation Pipeline. The previous Refactor Report help was only a basic fallback catalog; this page provides rich Markdown source, rendered HTML, manifest routing, and local raster artwork.</p>
+      <p><strong>Technical:</strong> Refactor Report is registered as the <code>refactor_report</code> lazy tool. The shell loads <code>StateVectorCompiler</code> from the daily refactor report facade. The window builds a canonical state-vector report from either a selected project folder or existing JSON/text input. It can read project files, derive or merge state-vector data, write JSON reports and AI bundles, and refresh extraction; it must not patch source code.</p>
+      <p><strong>In plain English:</strong> Think of a workshop ledger. Mode A brings in the project folders and measures them. Mode B brings in an already-written ledger page. The output folder stores the finished book, and the AI bundle is the boxed copy sent to the next reviewer.</p>
+      <p class="further-reading"><strong>Further reading:</strong> Local code: <code>tool_specs.py</code>, <code>daily_refactor_report.py</code>, <code>source_loader_private_impl.py</code>, and the preserved source parts under <code>daily_refactor_report_help</code>. External source categories: Qt for Python widgets, Python <code>json</code>, <code>pathlib</code>, file-dialog behavior, and deterministic artifact writing.</p>
+    </section>
+
+    <section>
+      <h2>Layout Research Note</h2>
+      <p>This page follows the established KANDA book-help layout: chapter opener, section drawings, technical explanation, plain-English explanation, a dense control table, checklist, authority boundary, and validation rule. No remote CSS, fonts, icons, screenshots, or marketing patterns were added.</p>
+    </section>
+
+    <section>
+      <h2>Mode A Project Folder Scan</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/refactor_report_mode_a_scan_workbench.png" alt="Hand-made workbench cartoon where an engineer surveys project folders and a scanner turns source pages into a report packet">
+        <figcaption>Figure RR-1. Mode A scans the selected project folder into structured report evidence.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Mode A is the project-file path. Use <code>Select Project Folder...</code> in the <code>Mode A: from project files</code> area before compiling a fresh report. The tab uses the selected folder as the evidence root and derives a state vector that describes project structure, complexity, dependency shape, governance signals, churn, and refactor pressure. <code>Force Re-extract</code> rebuilds evidence when cached extraction may be stale.</p>
+      <p><strong>In plain English:</strong> Put the right project box on the bench before measuring it. If you scan yesterday's box, a parent folder, or a half-generated workspace, the ledger may look clean while describing the wrong job.</p>
+      <p class="further-reading"><strong>Further reading:</strong> Local code: <code>daily_refactor_report.py</code> through the loader source parts. External grounding: Qt folder selection, <code>pathlib.Path</code>, JSON serialization, and read-only source traversal.</p>
+    </section>
+
+    <section>
+      <h2>Mode B Existing State Vector</h2>
+      <p><strong>Technical:</strong> Mode B is the existing-data path. Use it when you already have pasted chat output, a current state JSON, a state history JSON, or a prior bundle that should be loaded, inspected, or compiled again. <code>Load Existing JSON</code> supplies a canonical input file. This mode is for controlled reuse; it should not silently mix unrelated project evidence.</p>
+      <p><strong>In plain English:</strong> Instead of bringing the whole project box back to the bench, you bring a ledger page that was already prepared. That saves time only if the page belongs to this project and this date of review.</p>
+    </section>
+
+    <section>
+      <h2>Output JSON And AI Bundle Path</h2>
+      <p><strong>Technical:</strong> <code>Output JSON</code> is the report identity and storage target. The <code>Choose Folder</code> control selects where the daily refactor output tree should be written. <code>AI Bundle Path</code> is optional: if unset, the tool uses its default <code>daily_refactor/bundles</code> location; if set with <code>Set Bundle Path...</code>, the final AI handoff JSON is written to that exact file path. <code>Clear</code> removes that override.</p>
+      <p><strong>In plain English:</strong> The report name and folder are the shelf label for the finished ledger. The bundle path is a special shipping address. Use the special address only when another workflow expects the box in that exact place.</p>
+    </section>
+
+    <section>
+      <h2>Compile, Refresh, And Save Bundle</h2>
+      <p><strong>Technical:</strong> <code>Compile State Vector</code> runs the normal report pipeline for the selected mode. <code>Force Re-extract</code> bypasses reusable extraction state so the compiler rebuilds evidence from current inputs. <code>Save Bundle Now</code> writes the AI bundle from the last successful compiled state.</p>
+      <p><strong>In plain English:</strong> Compile makes the ledger. Force Re-extract remeasures the source before writing. Save Bundle Now makes a fresh boxed copy from the ledger already on the desk.</p>
+    </section>
+
+    <section>
+      <h2>Control Reference</h2>
+      <table>
+        <caption>Table RR-1. Refactor Report controls, technical meaning, and daily-life explanation.</caption>
+        <thead>
+          <tr><th>Area</th><th>Control or Artifact</th><th>Technical Meaning</th><th>In Plain English</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Shell</td><td>Help</td><td>Opens this local rich help page through the lazy-tab shell.</td><td>Opens the guide for the report workbench.</td></tr>
+          <tr><td>Mode A</td><td>Mode A: from project files</td><td>Selects project-folder scanning as the input path.</td><td>Bring the project box to the bench.</td></tr>
+          <tr><td>Mode A</td><td>Select Project Folder...</td><td>Opens a folder picker for the project root to scan.</td><td>Choose the exact project box.</td></tr>
+          <tr><td>Step 2</td><td>Output JSON</td><td>Report name and output identity used for generated files.</td><td>The ledger label.</td></tr>
+          <tr><td>Step 2</td><td>Choose Folder</td><td>Selects the output folder for the daily refactor output tree.</td><td>Choose the shelf for finished ledgers.</td></tr>
+          <tr><td>Step 2</td><td>Load Existing JSON</td><td>Loads an existing state-vector, history, or bundle JSON.</td><td>Bring in a ledger page that already exists.</td></tr>
+          <tr><td>Step 2b</td><td>AI Bundle Path</td><td>Optional exact output file for the AI handoff bundle.</td><td>The special shipping address.</td></tr>
+          <tr><td>Step 2b</td><td>Set Bundle Path...</td><td>Opens a file/path chooser for the bundle override.</td><td>Put the boxed copy in a fixed place.</td></tr>
+          <tr><td>Step 2b</td><td>Clear</td><td>Removes the bundle path override.</td><td>Use the normal shipping shelf again.</td></tr>
+          <tr><td>Mode B</td><td>Mode B: from pasted text / existing JSON</td><td>Uses pasted text or loaded JSON instead of scanning files.</td><td>Work from an existing ledger page.</td></tr>
+          <tr><td>Command</td><td>Compile State Vector</td><td>Runs the normal report compile pipeline.</td><td>Write the finished ledger.</td></tr>
+          <tr><td>Command</td><td>Force Re-extract</td><td>Rebuilds extracted evidence instead of trusting cached state.</td><td>Remeasure the project box.</td></tr>
+          <tr><td>Command</td><td>Save Bundle Now</td><td>Writes a bundle from the last successful compiled state.</td><td>Box the current ledger for handoff.</td></tr>
+          <tr><td>Artifact</td><td>Daily refactor report JSON</td><td>Structured report output used for follow-up review.</td><td>The finished ledger.</td></tr>
+          <tr><td>Artifact</td><td>AI bundle JSON</td><td>Compact handoff artifact for AI review.</td><td>The boxed copy for the next reviewer.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Operating Checklist</h2>
+      <ol>
+        <li>Decide whether this is a fresh project scan or an existing state-vector compile.</li>
+        <li>For Mode A, use <code>Select Project Folder...</code> on the real repository root.</li>
+        <li>For Mode B, paste or load JSON that belongs to the same project and review date.</li>
+        <li>Set a clear <code>Output JSON</code> name and choose the intended output folder.</li>
+        <li>Set <code>AI Bundle Path</code> only when a downstream workflow needs an exact file path.</li>
+        <li>Use <code>Compile State Vector</code> for the normal run.</li>
+        <li>Use <code>Force Re-extract</code> after large refactors, generated-source changes, file moves, or suspected stale cache.</li>
+        <li>Use <code>Save Bundle Now</code> only after a successful compile.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Authority Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/refactor_report_bundle_shipping_desk.png" alt="Hand-made shipping-counter cartoon where an engineer hands over a tray with a JSON ledger, review notes, and a boxed AI bundle">
+        <figcaption>Figure RR-2. The bundle is a handoff package, not a source-code patch.</figcaption>
+      </figure>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div>
+          <p><strong>Authority boundary.</strong> Refactor Report is a report compiler and handoff packer. It can scan selected project files, parse existing JSON/text, write daily refactor JSON outputs, refresh extraction, and save an AI bundle. It must not edit Python source, approve a refactor plan, delete prior evidence, or imply that a source change happened merely because a report was generated.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Further Reading Map</h2>
+      <div class="reading-map">
+        <p><strong>Shell registration:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py</code>.</p>
+        <p><strong>Public facade:</strong> <code>kanda_reasoner_app/daily_rfctr_report/daily_refactor_report.py</code>.</p>
+        <p><strong>Implementation loader:</strong> <code>kanda_reasoner_app/daily_rfctr_report/daily_refactor_report_help/source_loader_private_impl.py</code>.</p>
+        <p><strong>Preserved implementation source:</strong> <code>daily_refactor_report_source_part_*_private_impl.py</code>.</p>
+        <p><strong>Fallback help catalog:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_help/refactor_report.json</code>.</p>
+        <p><strong>External grounding:</strong> Qt for Python widgets and dialogs, Python <code>pathlib</code>, <code>json</code>, deterministic artifact writing, and file-system path containment.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Validation Rule</h2>
+      <p>The Refactor Report help document must remain local-only: Markdown source, rendered HTML, book-help CSS, local PNG artwork, manifest mapping from <code>refactor_report.json</code>, shell-level Help button ownership, stable <code>Refactor Report</code> title, real Mode A/Mode B control coverage, and no remote resources.</p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Refactor Report</span>
+      <span>Local Help</span>
+    </footer>
+  </article>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Web AI",
+  "purpose": "Explain Web AI, project selection, current web research, source inspection, project mapping, conversation memory, Shadow Preview, export behavior, and source-change authority boundaries.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Web AI combines current web information with selected project context.",
+    "Select the correct project and confirm the web model before asking.",
+    "Read important answers together with their sources and project mapping.",
+    "Treat Shadow Preview as read-only review, not source installation.",
+    "Use a separate governed implementation and validation workflow for changes."
+  ]
+}

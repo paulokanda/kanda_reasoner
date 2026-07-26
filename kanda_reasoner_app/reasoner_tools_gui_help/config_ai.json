@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Config AI",
+  "purpose": "Explain Config Web AI, Config Local AI, gateways, session credentials, environment keys, model catalogs, capabilities, privacy, local base URLs, model refresh, and the Tool-versus-Project boundary.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Config AI stores global AI connection and model settings.",
+    "Config Web AI controls gateway, credential, catalog, model, capabilities, and privacy.",
+    "Config Local AI controls the OpenAI-compatible base URL and global local model.",
+    "The active Project and exact payload remain owned by each workflow.",
+    "Config AI never grants source-writing authority."
+  ]
+}

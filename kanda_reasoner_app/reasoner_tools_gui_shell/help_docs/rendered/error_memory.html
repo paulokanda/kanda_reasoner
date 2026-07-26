@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Error Memory</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+<article class="book-page">
+  <header class="chapter-opener">
+    <div>
+      <p class="part-label">KANDA Reasoner Help</p>
+      <h1>Error Memory</h1>
+      <p class="subtitle">Keep practical lessons from real project failures so the same mistake is less likely to happen again.</p>
+    </div>
+    <figure class="chapter-drawing">
+      <img src="../assets/drawings/architecture_review_issue_catalog_library.png" alt="Two people inspect and organize a library of carefully indexed project lessons.">
+    </figure>
+  </header>
+
+  <section>
+    <h2>What This Tab Does</h2>
+    <p><strong>In plain English:</strong> Error Memory is a project-specific library of lessons learned from errors that actually happened. Each lesson records what went wrong, why it happened, how it was corrected, what must not be repeated, and how the correction should be checked in the future.</p>
+    <p>The tab does not automatically decide that every error deserves a permanent lesson. You review the evidence and choose whether to save, activate, deprecate, supersede, or delete a lesson.</p>
+  </section>
+
+  <section>
+    <h2>Before You Start</h2>
+    <figure class="section-drawing">
+      <img src="../assets/drawings/architecture_review_issue_catalog_library.png" alt="Two people carefully review and organize a lesson library.">
+      <figcaption>Error Memory is a reviewed lesson library, not an automatic log of every error.</figcaption>
+    </figure>
+    <ol>
+      <li>Confirm the correct <strong>Project Root</strong> at the top of the tab.</li>
+      <li>Make sure the error belongs to that project.</li>
+      <li>Gather the exact error message, useful context, correction, and validation evidence.</li>
+      <li>Remove passwords, API keys, private credentials, and unnecessary personal information.</li>
+      <li>Use one lesson for one repeatable failure pattern.</li>
+    </ol>
+    <div class="callout callout-warning"><div class="callout-icon">!</div><div><strong>Important:</strong> Error Memory is prevention guidance. It does not replace inspection of the current source files.</div></div>
+  </section>
+
+  <section>
+    <h2>The Safest First-Time Workflow</h2>
+    <ol>
+      <li>Put the raw error and useful context in <strong>AI-assisted error lesson intake</strong>.</li>
+      <li>Click <strong>Check Against Lessons</strong> to look for an existing lesson.</li>
+      <li>Use <strong>Copy error/draft</strong> when you need AI help creating or correcting the lesson.</li>
+      <li>Paste the formatted result back, or import an approved Error Lesson ZIP.</li>
+      <li>Review the complete lesson in <strong>Error Editor</strong>.</li>
+      <li>Use <strong>Correct with AI</strong> only for a preview correction.</li>
+      <li>Use <strong>Memorize Error</strong> only after the lesson is complete and active-ready.</li>
+      <li>Confirm the saved lesson appears correctly in the <strong>Lessons</strong> table.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Project and Folder Controls</h2>
+    <h3>Project Root</h3><p>This is the project whose Error Memory you are viewing. A wrong root can put a lesson in the wrong project library.</p>
+    <h3>Open EM Folder</h3><p>Opens the current project's durable Error Memory folder.</p>
+    <h3>Open Second Prompt Files</h3><p>Opens the handoff-output folder used for AI uploads. This is separate from the canonical Error Memory store.</p>
+    <h3>Get path buttons</h3><p>These buttons copy folder paths. They do not copy lesson content.</p>
+    <h3>Get correct way to send me errors</h3><p>Copies the canonical instructions for sending an error to AI.</p>
+  </section>
+
+  <section>
+    <h2>AI-Assisted Error Lesson Intake</h2>
+    <p>This left-side area is a temporary preparation area.</p>
+    <h3>Paste error formatted from AI</h3><p>Loads a formatted Error Memory JSON block. It does not memorize the lesson automatically.</p>
+    <h3>Copy error/draft</h3><p>Copies the current intake text together with the required Error Memory instructions.</p>
+    <h3>Clean</h3><p>Clears the current intake and editor view. It does not automatically delete every disk-backed draft.</p>
+    <h3>Del Draft</h3><p>Deletes the current matching draft and related pending intake records.</p>
+    <h3>Memorize Error</h3><p>Saves an active-ready lesson into the canonical Error Memory store. Use it only when the lesson is supported, complete, validated, and free of secrets.</p>
+    <h3>Import Error Lesson ZIP</h3><p>Loads an AI-created lesson package. Importing is not the same as memorizing.</p>
+    <h3>Check Against Lessons</h3><p>Searches for possible overlap and helps prevent duplicates.</p>
+    <h3>Copy Error Lesson Intake blueprint</h3><p>Copies the active-ready template and AI formatting instructions.</p>
+  </section>
+
+  <section>
+    <h2>Error Editor</h2>
+    <p>The Error Editor is the review area. A selected, imported, or formatted lesson appears here as JSON.</p>
+    <h3>Save</h3><p>Saves the JSON currently shown in the editor to the canonical lesson store.</p>
+    <h3>Copy error/draft</h3><p>Copies the current editor content with the required AI instructions.</p>
+    <h3>Clean</h3><p>Clears the editor and intake views without approving a lesson.</p>
+    <h3>Undo</h3><p>Restores the most recently deleted lesson when possible, or reloads the selected lesson.</p>
+    <h3>Delete</h3><p>Deletes the selected canonical lesson. Use Undo immediately if deletion was accidental.</p>
+  </section>
+
+  <section>
+    <h2>Transfer Buttons</h2>
+    <h3>Export Errors</h3><p>Creates a portable folder containing valid lessons, including inactive lessons.</p>
+    <h3>Import Errors</h3><p>Merges unique validated lessons from a KANDA Error Memory export.</p>
+    <h3>Lessons to Clipboard</h3>
+    <p>Copies the complete Error Memory lesson library as JSON to the clipboard for manual AI transfer.</p>
+    <ol><li>The complete JSON is copied.</li><li>A backup JSON file is written.</li><li>The same JSON appears in Error Editor as a fallback copy source.</li></ol>
+    <div class="callout callout-note"><div class="callout-icon">i</div><div>This button copies lessons. It does not copy the path to <code>second_prompt_files</code>.</div></div>
+  </section>
+
+  <section>
+    <h2>Lesson Status Controls</h2>
+    <h3>Mark Draft</h3><p>Keeps an incomplete lesson without presenting it as active guidance.</p>
+    <h3>Mark Active</h3><p>Promotes a complete lesson when required fields and validation evidence are present.</p>
+    <h3>Deprecate</h3><p>Keeps the lesson for history but excludes it from active guidance.</p>
+    <h3>Supersede</h3><p>Marks the lesson as replaced by a newer lesson.</p>
+    <h3>Correct with AI</h3><p>Loads an AI correction as preview only. It does not save, activate, delete, supersede, or memorize anything by itself.</p>
+  </section>
+
+  <section>
+    <h2>The Lessons Table</h2>
+    <p>The table shows saved lessons and pending intake rows.</p>
+    <table><thead><tr><th>Column</th><th>Meaning</th></tr></thead><tbody>
+      <tr><td>Status</td><td>Draft, active, deprecated, or superseded.</td></tr>
+      <tr><td>Symptom</td><td>What the user observed.</td></tr>
+      <tr><td>Do-not-repeat rule</td><td>The prevention rule.</td></tr>
+      <tr><td>Updated</td><td>When the lesson changed.</td></tr>
+      <tr><td>Lesson ID</td><td>The stable machine-readable identifier.</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Common Mistakes</h2>
+    <h3>Memorizing too early</h3><p>Keep the lesson as a draft while root cause, correction, or evidence remains uncertain.</p>
+    <h3>Creating duplicates</h3><p>Check existing lessons first. Update or supersede the current owner when appropriate.</p>
+    <h3>Treating Error Memory as source truth</h3><p>Current source files and current validation remain authoritative.</p>
+    <h3>Copying secrets</h3><p>Remove credentials and private information before clipboard or AI-transfer actions.</p>
+    <h3>Confusing export with approval</h3><p>Copying, exporting, importing, or AI-correcting does not approve a lesson.</p>
+  </section>
+
+  <section>
+    <h2>A Complete First-Time Example</h2>
+    <p>Suppose a validation command used the wrong Python interpreter.</p>
+    <ol><li>Paste the exact error and interpreter evidence.</li><li>Check for an existing interpreter-resolution lesson.</li><li>Avoid creating a duplicate when an active lesson already owns the failure.</li><li>Prepare one supported lesson if the failure is genuinely new.</li><li>Review the JSON.</li><li>Keep it as draft until validation passes.</li><li>Memorize or mark active only after evidence is correct.</li></ol>
+  </section>
+
+  <section>
+    <h2>Final Safety Reminder</h2>
+    <p>Error Memory is valuable because it is selective, reviewed, project-specific, and evidence-based. Clear ownership and accurate prevention rules matter more than lesson volume.</p>
+  </section>
+</article>
+</body>
+</html>

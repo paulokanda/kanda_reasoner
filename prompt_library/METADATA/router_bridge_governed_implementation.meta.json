@@ -1,0 +1,64 @@
+{
+  "prompt_id": "router_bridge_governed_implementation",
+  "display_name": "Router Bridge Governed Implementation Gate",
+  "filename": "router_bridge_governed_implementation.md",
+  "category": "05_patch_delivery_and_validation",
+  "status": "active",
+  "load_type": "routed",
+  "source_stage": "kanda-router-bridge-module-size-law-v1",
+  "description": "Forces a visible Implementation Gate before governed edits, enforces ideal <=400 / maximum <=500 Python code module-size routing to Large Module Protocol v7.2, avoids needless micro-file refactors, requires normal .py source logic, and routes sequential double-refactor delivery trains. Also requires the second-upload PROJECT READY gate before any governed implementation can proceed.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v1",
+  "priority": 15,
+  "trigger_phrases": [
+    "implement code",
+    "repair code",
+    "refactor code",
+    "modify source files",
+    "create validation script",
+    "edit prompt library files",
+    "update router bridge",
+    "update startup delivery logic",
+    "modify GUI behavior",
+    "change Error Memory workflow",
+    "change freeze workflow",
+    "module above 500 lines",
+    "code file above 500 lines",
+    "new code module expected to exceed 500 lines",
+    "MODULE_TOO_LARGE",
+    "large module protocol v7",
+    "large module protocol v7.2",
+    "double refactor train",
+    "sequential refactor train",
+    "second upload required before implementation",
+    "second_prompt_files before project task"
+  ],
+  "required_companion_prompts": [
+    "implementation_and_delivery_protocol",
+    "box_architecture_canon",
+    "project_tool_boundary_canon",
+    "pre_output_contract_gates",
+    "large_module_refactor_protocol",
+    "large_module_refactor_template",
+    "session_start_upload_checklist"
+  ],
+  "version": "1.3",
+  "module_size_law": {
+    "ideal_lines": 400,
+    "maximum_lines": 500,
+    "route_to_prompt": "large_module_refactor_protocol_v7.2",
+    "route_when": [
+      "new Python code module expected to exceed 500 lines",
+      "existing Python module already over 500 lines",
+      "planned change would push Python module over 500 lines"
+    ],
+    "sequential_train_rule": {
+      "maximum_patch_zips_per_response": 4,
+      "default_maximum_related_slices_per_zip": 2,
+      "execution": "install_validate_freeze_each_zip_before_next"
+    }
+  },
+  "tags": [
+    "large module protocol v7.2"
+  ]
+}

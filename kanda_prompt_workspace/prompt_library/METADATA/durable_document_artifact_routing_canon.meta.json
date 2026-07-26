@@ -1,0 +1,31 @@
+{
+  "prompt_id": "durable_document_artifact_routing_canon",
+  "prompt_code": "KPR-01-013",
+  "display_name": "Durable Documentation Artifact Routing Canon",
+  "filename": "durable_document_artifact_routing_canon.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "always_startup",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
+  "source_stage": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "updated_for": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "description": "Routes generated documentary artifacts and validation evidence to canonical, specialized, durable, or transient owners.",
+  "priority": 13,
+  "trigger_phrases": [
+    "durable document",
+    "validation evidence path",
+    "project documentation",
+    "daily-work cleanup",
+    "artifact provenance"
+  ],
+  "required_companion_prompts": [
+    "project_tool_boundary_canon"
+  ],
+  "recommended_companion_prompts": [
+    "daily_patch_delivery_guardrails",
+    "error_memory_ai_formulary_startup_canon",
+    "handoff_at_end_of_work"
+  ]
+}

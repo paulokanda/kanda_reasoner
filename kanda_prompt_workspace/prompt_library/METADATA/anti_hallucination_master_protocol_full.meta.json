@@ -1,0 +1,40 @@
+{
+  "prompt_code": "KPR-09-006",
+  "prompt_id": "anti_hallucination_master_protocol_full",
+  "display_name": "Evidence Synthesis and Truthful Status Protocol - Full",
+  "filename": "anti_hallucination_master_protocol_full.md",
+  "category": "09_python_quality_security_observability",
+  "version": "2.0.0",
+  "status": "active",
+  "load_type": "on_request",
+  "owner_box": "09_python_quality_security_observability",
+  "canonical_path": "ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md",
+  "classification": "final_evidence_synthesis_truthful_status_protocol",
+  "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
+  "description": "Synthesize already-produced project, adversarial, current-source, literature, validation, and limitation records into one truthful decision state.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "box_logic_required": false,
+  "priority": 50,
+  "trigger_phrases": [
+    "evidence synthesis protocol",
+    "truthful verification status",
+    "final evidence record"
+  ],
+  "aliases": [
+    "KPR-09-006",
+    "evidence synthesis",
+    "anti_hallucination_master_protocol_full"
+  ],
+  "user_intent_examples": [
+    "As the final synthesis stage after evidence records exist."
+  ],
+  "when_to_load": "As the final synthesis stage after evidence records exist.",
+  "when_not_to_load": "Do not load as a mega-canon or implementation authority.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve narrow ownership and truthful evidence states.",
+    "Do not force companion prompts or direct startup loading.",
+    "Do not claim execution or validation without current observed evidence."
+  ]
+}

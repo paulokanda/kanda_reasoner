@@ -83,3 +83,52 @@ kanda_reasoner_app/reasoner_tools_shell/runner_help/.zip_json_export_prefs.json
 ~$*.doc
 ~$*.xlsx
 ~$*.pptx
+
+
+# Local AI and editor workspaces
+.ai/
+.kilo/
+.vscode/
+
+# Temporary KANDA work folders
+_delete_after_daily_work/
+*_delete_after_daily_work/
+
+# Python packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Coverage and test output
+.coverage
+coverage.xml
+htmlcov/
+
+# Generated startup delivery outputs
+first_prompt_files/
+
+# Project-local runtime and transient state
+error_memory_receive_blocks/
+project_freeze_after_update/
+
+# Generated handoff and archive artifacts
+bundle_manifest.json
+*.zip
+
+# Historical chats, generated comments, and legacy archives
+.project_reference/chats/
+.project_reference/comments/
+.project_reference/legacy_physical_package_archive/
+
+# Empty generated marker files
+/d2511c576e38424fe70967780f3d84f61d0c28e5c59b2607c0129564fd58c09e
+/kanda_prompt_audit_wave3a_session_startup_kernel_v1
+/prompt-audit-wave3a-session-startup-kernel-v1
+
+# Historical in-project backups
+kanda_reasoner_app/reasoner_tools_gui_shell/help_docs/backups/
+*.bak_*
+
+# Local prompt-router review state
+prompt_router_reasoner_reviews/
+

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Local AI</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Local AI</h1>
+        <p class="subtitle">Select the correct project evidence, ask focused questions, and verify every important answer against files, symbols, and runtime evidence.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/local_ai_opener_private_reference_desk.png" alt="An engineer and a private AI assistant review organized project folders, diagrams, and question-and-answer evidence at a quiet reference desk">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Local AI Means</h2>
+      <p>Local AI is an AI model connected through the KANDA local-model configuration. It answers questions using project information that KANDA has loaded or generated.</p>
+      <p><strong>In plain English:</strong> Local AI is like a private assistant sitting beside your project files. It can explain what it sees, but it does not automatically know the entire project until you give it the correct context.</p>
+      <p>Local AI answers are guidance. They are not automatic approval to change source code.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <ol>
+        <li>Select a project.</li>
+        <li>Run or load project analysis.</li>
+        <li>Load project JSON evidence.</li>
+        <li>Ask questions about that evidence.</li>
+        <li>Show related files and symbols.</li>
+        <li>Keep conversation history in memory.</li>
+        <li>Show the exact prompt and diagnostic log when needed.</li>
+      </ol>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>The safest order is Select Project, Run Analysis, confirm the JSON, and then ask a focused question.</strong></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Before You Start</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/local_ai_project_scope_selection.png" alt="A planning team compares incorrect folder scopes with one correctly bounded project area">
+        <figcaption>Choose the project itself, not the whole drive or an unrelated parent folder.</figcaption>
+      </figure>
+      <ol>
+        <li>Confirm the <strong>Project root</strong>.</li>
+        <li>Open <strong>Config AI</strong> and confirm a local model is available.</li>
+        <li>Run project analysis or load a current project JSON.</li>
+        <li>Confirm the <strong>JSON track</strong>.</li>
+        <li>Ask one clear question.</li>
+        <li>Read the evidence and uncertainty, not only the final wording.</li>
+      </ol>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>A correct-looking answer can still be based on the wrong project or old JSON.</strong> Check the project path and loaded evidence before trusting the answer.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Safest First-Time Workflow</h2>
+      <h3>Step 1 - Select the project</h3>
+      <p>Click <strong>Select Project</strong> and choose the project root.</p>
+      <h3>Step 2 - Run analysis</h3>
+      <p>Click <strong>Run Analysis</strong>. KANDA prepares structured project information for Local AI.</p>
+      <h3>Step 3 - Confirm analysis status</h3>
+      <p>Check Analysis, Generated, JSON track, and the detected and active project profiles.</p>
+      <h3>Step 4 - Confirm the local model</h3>
+      <p>Click <strong>Open Config AI</strong>.</p>
+      <h3>Step 5 - Ask one focused question</h3>
+      <p>Type a question in the message field and click the arrow button.</p>
+      <h3>Step 6 - Read the answer and evidence</h3>
+      <p>Inspect File evidence, Symbol evidence, Selected detail, Prompt preview, and Log.</p>
+      <h3>Step 7 - Continue or start a new session</h3>
+      <p>Keep the conversation for related questions. Use <strong>New session</strong> for a different topic.</p>
+    </section>
+
+    <section>
+      <h2>Project Context Controls</h2>
+      <h3>Project root and Select Project</h3>
+      <p>Show and choose the main project folder.</p>
+      <h3>Run Analysis</h3>
+      <p>Runs project analysis for the selected project.</p>
+      <h3>Project JSON and Load JSON</h3>
+      <p>Project JSON is the structured project description used as evidence.</p>
+      <h3>Static Context</h3>
+      <p>Shows prepared project context available to Local AI.</p>
+      <h3>Analysis, Generated, and JSON track</h3>
+      <p>Show analysis state, output location, and the loaded JSON type.</p>
+      <h3>Create and Refresh Local-AI Copy</h3>
+      <p>Create or rebuild the Local-AI-specific JSON copy from current project data.</p>
+      <h3>Detected, Active, Override, and Reset Profile</h3>
+      <p>Show and manage the project profile used by KANDA.</p>
+      <h3>Auto-load JSON after analysis</h3>
+      <p>Automatically loads successful analysis output.</p>
+    </section>
+
+    <section>
+      <h2>Local Runtime Controls</h2>
+      <p><strong>Cache directory</strong> stores Local AI runtime cache.</p>
+      <p><strong>Governance state</strong> selects optional governance information for the current workflow.</p>
+      <p><strong>Open Config AI</strong> opens the global Local AI configuration.</p>
+      <p><strong>Verbosity</strong> changes answer length.</p>
+      <p><strong>Prefer code</strong> and <strong>Prefer prose</strong> change answer emphasis.</p>
+      <p><strong>Debug Mode</strong> shows additional diagnostics.</p>
+    </section>
+
+    <section>
+      <h2>Quick Questions</h2>
+      <p>The quick-question buttons ask about startup, topomap, timeline, responsibility ownership, and uncertainty.</p>
+      <div class="callout callout-note">
+        <div class="callout-icon">i</div>
+        <div><strong>Quick questions are starting points.</strong> Follow them with narrower questions about specific files, symbols, or evidence.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Asking Questions</h2>
+      <p>Good questions are specific and ask for evidence.</p>
+      <ul>
+        <li>Which file owns this button?</li>
+        <li>Where is the project JSON loaded?</li>
+        <li>Which validator protects this workflow?</li>
+        <li>What is uncertain about this answer?</li>
+        <li>Show the path from the GUI button to the final service call.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Conversations and Memory</h2>
+      <p><strong>New session</strong> starts a separate conversation.</p>
+      <p><strong>Conversations</strong> shows previous turns.</p>
+      <p><strong>Clear memory</strong> removes stored Local AI conversation memory.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Conversation memory can influence later answers.</strong> Clear it when changing projects.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Reading the Answer</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/local_ai_answer_evidence_review.png" alt="An analyst reviews answer panels while another person retrieves matching folders and evidence cards from an organized archive">
+        <figcaption>Read the answer together with the files, symbols, prompt, and log that support it.</figcaption>
+      </figure>
+      <p><strong>Main answer area</strong> shows the Local AI response.</p>
+      <p><strong>File evidence</strong> lists relevant files.</p>
+      <p><strong>Symbol evidence</strong> lists relevant symbols.</p>
+      <p><strong>Selected detail</strong> shows more information.</p>
+      <p><strong>Prompt preview</strong> shows what was sent to Local AI.</p>
+      <p><strong>Log</strong> shows runtime events and errors.</p>
+    </section>
+
+    <section>
+      <h2>What Local AI Can and Cannot Prove</h2>
+      <p>Local AI can summarize and reason about the evidence it receives.</p>
+      <p>It cannot guarantee that every source file was included, that JSON is current, that runtime behavior matches static source, or that a proposed code change is safe.</p>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <p>Common mistakes include asking before loading evidence, selecting an entire drive, using stale JSON, trusting fluent answers without checking evidence, and keeping old memory after changing projects.</p>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <p>Check the project root, current JSON, local model service, active request state, profile, conversation memory, and Log.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <ul>
+        <li>Correct project root</li>
+        <li>Current JSON loaded</li>
+        <li>Local AI configured</li>
+        <li>One focused question</li>
+        <li>File and symbol evidence checked</li>
+        <li>Prompt and Log inspected when needed</li>
+        <li>Uncertainty separated from confirmed evidence</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Important Safety Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/local_ai_safety_boundary.png" alt="Two people consult project records with a Local AI assistant while locked source cabinets and a separate governed work area remain protected">
+        <figcaption>Local AI can read and explain available evidence. Source changes require a separate governed implementation workflow.</figcaption>
+      </figure>
+      <p>The Local AI tab does not automatically install patches, edit project files, validate releases, or freeze behavior.</p>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Select the correct project, load current evidence, ask one focused question, and verify the answer before acting on it.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Local AI</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

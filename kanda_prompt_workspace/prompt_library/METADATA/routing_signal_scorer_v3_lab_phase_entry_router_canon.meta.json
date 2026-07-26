@@ -1,0 +1,79 @@
+{
+  "prompt_id": "routing_signal_scorer_v3_lab_phase_entry_router_canon",
+  "display_name": "RG-LAB-000 Historical Phase-Entry Record",
+  "filename": "routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
+  "category": "02_prompt_routing_and_indexing",
+  "status": "retired",
+  "load_type": "historical_reference",
+  "source_stage": "prompt-audit-wave2b-legacy-routing-retirement-v1",
+  "description": "Historical LAB phase-entry record retained for provenance after LAB-0 through LAB-13 closure; it has no active routing authority.",
+  "priority": 0,
+  "trigger_phrases": [
+    "RG-LAB-000 historical explanation",
+    "LAB-0 through LAB-13 history"
+  ],
+  "user_intent_examples": [
+    "Canonize the LAB phase entry before implementing lab tests.",
+    "After P12, what is the next safe step?",
+    "Start LAB-0 for the ML router prompt logic test lab.",
+    "Continue ML logic after the lab fulfills its mission.",
+    "Test prompt choosing reliability before continuing ML implementation."
+  ],
+  "aliases": [
+    "RG-LAB-000",
+    "LAB-0 router canon",
+    "ML LAB router canon"
+  ],
+  "when_to_load": "When KANDA work involves post-P12 LAB/test phase entry, LAB-0, ML router prompt logic reliability testing, lab/test implementation planning, or any request to continue ML implementation after P12.",
+  "when_not_to_load": "Do not load for ordinary Fast Path explanations, simple non-KANDA ML discussion, or as a substitute for current project files and freeze evidence during implementation.",
+  "required_companion_prompts": [
+    "prompt_substitution_map"
+  ],
+  "on_request_not_startup_always_loaded": true,
+  "post_p12_lab_entry_role": "non_runtime_lab_phase_entry_router_canon_only",
+  "requires_lab_before_ml_implementation_continuation": true,
+  "requires_lab_self_validation_before_ml_router_prompt_logic_reliability_claim": true,
+  "forbidden_authority": [
+    "final_route",
+    "required_prompts",
+    "automatic_prompt_loading",
+    "router_override",
+    "runtime_integration",
+    "persistence",
+    "provider_calls",
+    "embeddings",
+    "training_data_use",
+    "batch_mode",
+    "activation_key",
+    "field_test_mode",
+    "candidate_promotion",
+    "copilot_activation"
+  ],
+  "forbidden_in_lab0": [
+    "Python modules",
+    "schema code",
+    "fixtures",
+    "corpus files",
+    "runner code",
+    "harness code",
+    "metrics code",
+    "provider adapters",
+    "embedding code",
+    "prompt loaders",
+    "persistent decision storage",
+    "activation keys",
+    "field-test flags",
+    "Copilot behavior"
+  ],
+  "version": "2.0",
+  "replacement_prompt_ids": [
+    "routing_signal_scorer_v3_semantic_readiness_canon",
+    "kanda_routing_system_canon",
+    "prompt_substitution_map"
+  ],
+  "title": "RG-LAB-000 Historical Phase-Entry Record",
+  "owner_box": "02_prompt_routing_and_indexing",
+  "updated_for": "prompt-audit-wave2b-legacy-routing-retirement-v1",
+  "active_route": false,
+  "may_be_selected_for_new_work": false
+}

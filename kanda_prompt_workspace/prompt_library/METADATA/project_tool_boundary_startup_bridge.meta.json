@@ -1,0 +1,44 @@
+{
+  "prompt_code": "KPR-12-006",
+  "prompt_id": "project_tool_boundary_startup_bridge",
+  "display_name": "Project Tool Boundary Startup Bridge",
+  "filename": "project_tool_boundary_startup_bridge.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "always_startup",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
+  "source_stage": "prompt-audit-wave1-tool-project-mcard-boundary-v1",
+  "updated_for": "prompt-audit-wave1-tool-project-mcard-boundary-v1",
+  "description": "Compact startup bridge that preserves Tool, selected Project, durable Project Support, and non-authoritative transient workspace separation and routes consequential work to KPR-12-001.",
+  "box_logic_required": true,
+  "routing_coverage": "startup_bridge_v1",
+  "priority": 4,
+  "trigger_phrases": [
+    "tool project boundary startup bridge",
+    "wrong-root risk",
+    "self-hosting separation",
+    "project support outside source",
+    "non-authoritative transient workspace"
+  ],
+  "user_intent_examples": [
+    "Keep the selected Project separate from the KANDA Tool before any source work.",
+    "Stop when the source, support, or transient owner is unclear."
+  ],
+  "aliases": [
+    "project tool boundary bridge",
+    "project_tool_boundary_startup_bridge"
+  ],
+  "when_to_load": "Always at startup as a compact invariant; route consequential work to KPR-12-001.",
+  "when_not_to_load": "It remains startup context but never replaces the full routed canon.",
+  "required_companion_prompts": [
+    "project_tool_boundary_canon"
+  ],
+  "do_not_regress": [
+    "The bridge must remain compact and non-authoritative.",
+    "The bridge must route consequential work to KPR-12-001.",
+    "The bridge must keep self-hosting logical identities separate.",
+    "The bridge must never authorize mutation."
+  ],
+  "version": "1.0"
+}

@@ -1,0 +1,190 @@
+"""Validate Copy Last Error/Draft prioritizes the real prompt marker payload.
+
+The old AI formulary prompt includes a sample KANDA_ERROR_LESSON_JSON block in
+its instructions before the real Current error/draft JSON section. The copy
+button must not copy that sample block. It must extract the latest real
+error/draft payload from Error Editor.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import importlib.util
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+GUI_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "error_memory_gui" / "error_memory_tab.py"
+HELPER_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "error_memory" / "editor_clipboard.py"
+
+spec = importlib.util.spec_from_file_location("kanda_editor_clipboard_for_validation", HELPER_PATH)
+if spec is None or spec.loader is None:
+    raise RuntimeError("Could not load editor_clipboard helper for validation.")
+helper = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(helper)
+ERROR_DRAFT_MARKER = helper.ERROR_DRAFT_MARKER
+ERROR_LESSON_JSON_BEGIN = helper.ERROR_LESSON_JSON_BEGIN
+ERROR_LESSON_JSON_END = helper.ERROR_LESSON_JSON_END
+extract_error_editor_text_for_ai = helper.extract_error_editor_text_for_ai
+
+
+def _method_block(source: str, name: str) -> str:
+    marker = "    def " + name + "("
+    start = source.index(marker)
+    next_start = source.find("\n    def ", start + 1)
+    if next_start == -1:
+        return source[start:]
+    return source[start:next_start]
+
+
+def _old_ai_formulary_prompt_with_sample_block(inner_error: str) -> str:
+    sample_answer_shape = (
+        "Copy/paste-ready answer shape:\n"
+        + ERROR_LESSON_JSON_BEGIN
+        + "\n"
+        + json.dumps(
+            {
+                "status": "active",
+                "raw_error_text": "short scrubbed error/context snapshot",
+                "operation_phase": "validation",
+                "symptom": "what failed",
+                "root_cause": "why it failed",
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+        + ERROR_LESSON_JSON_END
+    )
+    current_draft = json.dumps(
+        {
+            "status": "active",
+            "raw_error_text": inner_error,
+            "operation_phase": "validation",
+            "symptom": "",
+            "root_cause": "",
+            "wrong_assumption": "",
+        },
+        indent=2,
+        sort_keys=True,
+    )
+    return (
+        "You are a specialist in KANDA Reasoner, repeat-error prevention, validation engines.\n\n"
+        "Context:\nI have an error, validation failure, patch-install failure, or AI implementation mistake.\n\n"
+        "Task:\nReview the error/context or current draft below and fill one Error Memory lesson JSON object.\n\n"
+        "Critical rules:\n- Return only the receive-ready block.\n\n"
+        "Return format - strict copy/paste contract for KANDA Reasoner Error Memory tab:\n"
+        + sample_answer_shape
+        + "\n\nActive project root: E:\\kanda_reasoner\n\n"
+        + ERROR_DRAFT_MARKER
+        + "\n"
+        + current_draft
+    )
+
+
+def test_prompt_marker_payload_beats_sample_receive_ready_block() -> None:
+    inner_error = json.dumps(
+        {
+            "correct_fix": "Use --patch-zip.",
+            "root_cause": "latest_freeze_hint.json was stale.",
+            "status": "active",
+        },
+        indent=2,
+        sort_keys=True,
+    )
+    old_prompt = _old_ai_formulary_prompt_with_sample_block(inner_error)
+    copied = extract_error_editor_text_for_ai(old_prompt)
+    if copied != inner_error:
+        raise AssertionError("The last Current error/draft raw_error_text must beat the sample KANDA block in the prompt.")
+    forbidden = [
+        "You are a specialist",
+        "Task:",
+        "Critical rules",
+        "Return format",
+        ERROR_DRAFT_MARKER,
+        "short scrubbed error/context snapshot",
+    ]
+    for fragment in forbidden:
+        if fragment in copied:
+            raise AssertionError("Prompt/sample wrapper leaked into copied payload: " + fragment)
+
+
+def test_latest_prompt_payload_wins() -> None:
+    first = ERROR_DRAFT_MARKER + "\n" + json.dumps({"raw_error_text": "FIRST_ERROR"})
+    second = ERROR_DRAFT_MARKER + "\n" + json.dumps({"raw_error_text": "SECOND_ERROR"})
+    copied = extract_error_editor_text_for_ai(first + "\n\n" + second)
+    if copied != "SECOND_ERROR":
+        raise AssertionError("The latest embedded error/draft payload must win.")
+
+
+def test_receive_ready_block_is_preserved_when_no_prompt_marker() -> None:
+    block1 = ERROR_LESSON_JSON_BEGIN + "\n{\"status\": \"draft\", \"raw_error_text\": \"ONE\"}\n" + ERROR_LESSON_JSON_END
+    block2 = ERROR_LESSON_JSON_BEGIN + "\n{\"status\": \"draft\", \"raw_error_text\": \"TWO\"}\n" + ERROR_LESSON_JSON_END
+    copied = extract_error_editor_text_for_ai(block1 + "\nnoise\n" + block2)
+    if '"TWO"' not in copied or '"ONE"' in copied:
+        raise AssertionError("The last receive-ready block must be copied when no Current error/draft marker exists.")
+
+
+def test_plain_editor_text_is_preserved() -> None:
+    plain = "Traceback line 1\nAttributeError: QTextCursor has no attribute Start"
+    if extract_error_editor_text_for_ai("\n" + plain + "\n") != plain:
+        raise AssertionError("Plain Error Editor text must be copied unchanged except outer whitespace.")
+
+
+def test_gui_wiring() -> None:
+    source = GUI_PATH.read_text(encoding="utf-8")
+    if "build_error_lesson_ai_form_prompt" in source:
+        raise AssertionError("Copy error/draft to AI must not import or call the prompt builder.")
+    if "_copy_formulary_prompt_to_ai" in source:
+        raise AssertionError("Old prompt-copy handler name remains wired or defined.")
+    if "copy_formulary_button.clicked.connect(self._copy_error_editor_text_to_ai)" not in source:
+        raise AssertionError("Copy button must be wired to _copy_error_editor_text_to_ai.")
+    if "Copy Last Error/Draft to AI" not in source:
+        raise AssertionError("Button label must reflect latest error/draft payload contract.")
+    if "Old prompt wrappers are stripped before copying" not in source:
+        raise AssertionError("Tooltip must state old prompt wrapper stripping behavior.")
+
+    block = _method_block(source, "_copy_error_editor_text_to_ai")
+    required = [
+        "editor_text = self.received_preview_edit.toPlainText()",
+        "payload_text = extract_error_editor_text_for_ai(editor_text)",
+        "QApplication.clipboard().setText(payload_text)",
+        "Prompt wrappers were not copied.",
+    ]
+    missing = [fragment for fragment in required if fragment not in block]
+    if missing:
+        raise AssertionError("Handler missing required payload-only fragments: " + "; ".join(missing))
+    forbidden = [
+        "build_error_lesson_ai_form_prompt",
+        "selected_project_root",
+        "raw_error_text=editor",
+        "operation_phase=",
+        "ERROR_LESSON_JSON_BEGIN",
+        "ERROR_LESSON_JSON_END",
+        "QApplication.clipboard().setText(editor_text)",
+    ]
+    for fragment in forbidden:
+        if fragment in block:
+            raise AssertionError("Handler still contains old prompt/raw-copy behavior: " + fragment)
+
+    export_block = _method_block(source, "_export_for_ai")
+    if "textCursor().Start" in export_block:
+        raise AssertionError("QTextCursor Start regression returned in _export_for_ai.")
+    if "write_error_memory_ai_send_files" in export_block or "resolve_second_prompt_files_root" in export_block:
+        raise AssertionError("Complete Error Memory export must not regress to second_prompt_files.")
+
+
+def main() -> None:
+    test_prompt_marker_payload_beats_sample_receive_ready_block()
+    test_latest_prompt_payload_wins()
+    test_receive_ready_block_is_preserved_when_no_prompt_marker()
+    test_plain_editor_text_is_preserved()
+    test_gui_wiring()
+    print("VALIDATION OK: error-memory-copy-error-draft-prompt-marker-priority-v10")
+    print("ERROR_MEMORY_COPY_DRAFT: current error draft marker payload wins")
+    print("ERROR_MEMORY_COPY_DRAFT_NO_SAMPLE_BLOCK: enforced")
+    print("ERROR_MEMORY_COPY_DRAFT_NO_PROMPT_WRAPPER: enforced")
+    print("ERROR_MEMORY_EXPORT_PREVIOUS_GUARDS: preserved")
+
+
+if __name__ == "__main__":
+    main()

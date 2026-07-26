@@ -1,0 +1,39 @@
+{
+  "prompt_code": "KPR-12-004",
+  "prompt_id": "error_memory_model_template",
+  "display_name": "Error Memory Human-Readable Lesson Model",
+  "filename": "error_memory_model_template.md",
+  "category": "12_generalized_project_canons",
+  "version": "2.0.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md",
+  "classification": "human_readable_error_memory_model_verified_against_application_schema",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Error Memory Human-Readable Lesson Model",
+  "box_logic_required": false,
+  "priority": 34,
+  "trigger_phrases": [
+    "Error Memory lesson model",
+    "Error Memory field model"
+  ],
+  "aliases": [
+    "KPR-12-004",
+    "Error Memory model",
+    "error_memory_model_template"
+  ],
+  "user_intent_examples": [
+    "When a human-readable Error Memory lesson model verified against current application schema is needed."
+  ],
+  "when_to_load": "When a human-readable Error Memory lesson model verified against current application schema is needed.",
+  "when_not_to_load": "Do not treat the template as stronger than current application schema/models.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
+  ]
+}

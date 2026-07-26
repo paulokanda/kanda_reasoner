@@ -1,0 +1,62 @@
+{
+  "prompt_code": "KPR-12-001",
+  "prompt_id": "project_tool_boundary_canon",
+  "display_name": "Project Tool Boundary Canon",
+  "filename": "project_tool_boundary_canon.md",
+  "category": "12_generalized_project_canons",
+  "status": "active",
+  "load_type": "routed",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+  "source_stage": "prompt-audit-wave1-tool-project-mcard-boundary-v1",
+  "description": "Canonical KANDA Tool-versus-selected-Project identity and root-ownership owner. Defines stable Project identity, current selection evidence, source/support/transient classes, mixed write sets, collision and migration blocking, security, concurrency, and wrong-root hard stops without duplicating MCard, Workbench, delivery, or final authorization owners.",
+  "box_logic_required": true,
+  "routing_coverage": "complete_v1",
+  "priority": 35,
+  "trigger_phrases": [
+    "active project identity",
+    "active project root",
+    "project id",
+    "project root fingerprint",
+    "same canonical resolved root",
+    "self-hosting logical ownership",
+    "project versus tool",
+    "project vs tool",
+    "support root collision",
+    "project move migration",
+    "forbidden nested support root",
+    "cross-project access mode",
+    "mixed governed operation",
+    "generated evidence authority",
+    "transient workspace cleanup",
+    "concurrent project sessions",
+    "wrong-root write",
+    "show_project_to_AI"
+  ],
+  "user_intent_examples": [
+    "Resolve Tool and selected Project ownership before this mixed patch.",
+    "Prove the support root and source-write owner without collapsing self-hosting.",
+    "Block cross-project mutation while permitting declared comparison reads."
+  ],
+  "aliases": [
+    "project tool boundary",
+    "project_tool_boundary_canon",
+    "tool target boundary",
+    "active project boundary",
+    "selected project boundary"
+  ],
+  "when_to_load": "Route for consequential coding, patching, validation, freeze, handoff, migration, mixed Tool/Project writes, cross-project access, or any unresolved owner or write target. A compact startup bridge routes here.",
+  "when_not_to_load": "The compact startup bridge is sufficient only for simple tasks with no consequential owner, path, write, or migration question.",
+  "required_companion_prompts": [],
+  "do_not_regress": [
+    "Do not collapse Tool and selected Project ownership, including self-hosting.",
+    "Do not treat slug or path-string equality as complete identity proof.",
+    "Do not place KANDA-managed Project Support inside Project source.",
+    "Do not let the transient workspace own durable truth.",
+    "Do not authorize coding from Q06 alone.",
+    "Do not duplicate MCard, Workbench, delivery, or durable-document contracts.",
+    "Do not silently merge support state after rename, move, or collision.",
+    "Do not allow undeclared or unauthorized cross-project mutation."
+  ],
+  "version": "2.0",
+  "updated_for": "prompt-audit-wave1-tool-project-mcard-boundary-v1"
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Error Memory",
+  "purpose": "Explain the Error Memory tab, lesson intake, review, status controls, safe AI transfer, import/export, and human confirmation boundaries for a first-time non-programmer user.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Error Memory stores lessons learned from real project failures so the same mistake is less likely to happen again.",
+    "Use the intake area to prepare one lesson, the Error Editor to review it, and the Lessons table to manage saved records.",
+    "Lessons to Clipboard copies the complete lesson library as JSON for manual AI transfer.",
+    "Memorize Error is an explicit human action and should be used only after the lesson is complete and evidence is correct."
+  ]
+}

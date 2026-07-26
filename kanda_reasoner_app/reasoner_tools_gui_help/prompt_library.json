@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Prompt Library",
+  "purpose": "Explain the canonical workspace, legacy fallback, current-only filtering, group cubes, group windows, metadata, preview, copy actions, source location, reconciliation, and strict read-only governance boundary.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Prompt Library is a read-only browser for current governed prompts.",
+    "The canonical workspace is preferred over the legacy compatibility fallback.",
+    "Deprecated, retired, inactive, archived, superseded, and never-load entries are hidden.",
+    "You may preview and copy one prompt or an ordered group stack.",
+    "The tab does not edit, execute, route, or govern prompts."
+  ]
+}

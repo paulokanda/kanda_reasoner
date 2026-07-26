@@ -1,0 +1,43 @@
+{
+  "prompt_id": "start_of_day_master_stack",
+  "display_name": "Start-of-Day Master Stack",
+  "filename": "start_of_day_master_stack.md",
+  "category": "01_session_start_and_navigation",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "Small daily bootstrap stack defining Tier 0 session kernel, Tier 1 group routing, and Tier 2 specialist prompt payload without loading the whole prompt library. Includes startup hook to route patch/validate/freeze/Error Memory recovery work to patch_validate_freeze_error_memory_routine_blueprint on request. Includes startup-visible CODE_MODULE_HARD_MAX_500_LINES bridge for the <=500-line hard gate on every new or touched code/source module. Includes startup-visible BOX_LOGIC_STARTUP_SHIELD bridge for mandatory beginning-of-chat box-boundary enforcement.",
+  "priority": 5,
+  "required_companion_prompts": [
+    "session_start_upload_checklist",
+    "ai_prompt_request_canon",
+    "prompt_navigation_index",
+    "patch_validate_freeze_error_memory_routine_blueprint"
+  ],
+  "trigger_phrases": [
+    "start day",
+    "start of day",
+    "continue KANDA context routing",
+    "daily kernel",
+    "patch validation freeze recovery",
+    "freeze evidence merge recovery",
+    "show project to ai recovery"
+  ],
+  "notes": [
+    "Startup Code Module Size Hard Gate Bridge v1 is explicit beginning-of-chat context: every new or touched code/source module must be <=500 physical lines after changes; route to large_module_refactor_protocol when over-limit code work is needed.",
+    "Startup Code Module Size Hard Gate Bridge v1 is mandatory beginning-of-chat context: every new or touched code/source module must be <=500 physical lines after creation, update, modification, refactor, or split; route over-limit code work to large_module_refactor_protocol before delivery.",
+    "Box Logic Startup Shield v1 is mandatory beginning-of-chat context: identify the active box, owner paths, allowed files, out-of-scope files, cross-box touches, public contracts, validation scope, and boundary risks before implementation, repair, refactor, prompt update, governance update, bundle, GUI, validation, freeze, patch, or artifact delivery."
+  ],
+  "startup_markers": [
+    "BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_START",
+    "CODE_MODULE_HARD_MAX_500_LINES",
+    "BEGINNING_OF_DAY_BOX_LOGIC_SHIELD_V1_START",
+    "BOX_LOGIC_STARTUP_SHIELD"
+  ],
+  "do_not_use_as_source_authority": true,
+  "replacement_prompt_ids": [
+    "start_of_day_master_stack"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1"
+}

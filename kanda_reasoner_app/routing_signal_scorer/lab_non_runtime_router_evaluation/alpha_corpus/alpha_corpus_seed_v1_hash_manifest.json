@@ -1,0 +1,49 @@
+{
+  "aggregate_manifest_hash": "a427755035bfcb39adc6f45a2924b1d96883631a9f5afa3ead5eecdff04c8d12",
+  "allowed_corpus_roots": [
+    "kanda_reasoner_app/routing_signal_scorer/lab_non_runtime_router_evaluation/alpha_corpus"
+  ],
+  "corpus_entries": [
+    {
+      "case_count": 12,
+      "corpus_id": "alpha_corpus_seed_v1",
+      "corpus_version": "1.0.0",
+      "project_relative_path": "kanda_reasoner_app/routing_signal_scorer/lab_non_runtime_router_evaluation/alpha_corpus/alpha_corpus_seed_v1.json",
+      "relative_path": "routing_signal_scorer/lab_non_runtime_router_evaluation/alpha_corpus/alpha_corpus_seed_v1.json",
+      "review_status": "seed_review_required_before_reliability_claim",
+      "sha256": "fedd9f076ac17bfb0f750a66ebd3bd1edda2ec6e1157205b52d1b9b89051d0eb",
+      "static_seed_status": "not_executed_not_scored_not_reliability_evidence"
+    }
+  ],
+  "created_at_utc": "2026-06-19T21:35:00Z",
+  "feature_id": "routing_signal_scorer_v3_ml_lab_alpha_corpus_seed_v1",
+  "feature_title": "Routing Signal Scorer v3 ML LAB Alpha Corpus Seed v1",
+  "fixture_entries": [],
+  "forbidden_live_roots": [
+    "kanda_prompt_workspace/prompt_library",
+    "project_freeze_after_update/frozen_features_memory",
+    "kanda_reasoner_app/routing_signal_scorer/adviser_offline",
+    "project_freeze_ledger"
+  ],
+  "hash_algorithm": "SHA-256",
+  "hash_input_canonicalization": "UTF-8 JSON, sorted keys, 2-space indentation, trailing newline",
+  "manifest_id": "alpha_corpus_seed_v1_hash_manifest",
+  "manifest_schema_version": "lab-8-alpha-corpus-seed-hash-manifest",
+  "manifest_version": "1.0.0",
+  "non_authority_declarations": {
+    "activation_performed": false,
+    "candidate_evaluation_executed": false,
+    "copilot_behavior_performed": false,
+    "embedding_call_performed": false,
+    "field_test_performed": false,
+    "persistence_performed": false,
+    "prompt_loading_performed": false,
+    "provider_call_performed": false,
+    "route_authority_granted": false,
+    "route_comparison_executed": false,
+    "runtime_pilot_behavior_performed": false
+  },
+  "source_freeze_ids": [
+    "freeze-20260619-routing-signal-scorer-v3-ml-lab-self-validation-gate-v1"
+  ]
+}

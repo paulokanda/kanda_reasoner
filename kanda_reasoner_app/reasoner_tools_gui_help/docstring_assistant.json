@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "Docstring Assistant",
+  "purpose": "Explain the Docstring Assistant tab, missing-docstring scanning, heuristic and Local AI draft generation, review decisions, report persistence, and source-write authority boundaries.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Docstring Assistant scans selected Python source areas for missing docstrings.",
+    "The tab creates review rows and drafts candidate docstrings with either heuristic generation or an OpenAI-compatible local model.",
+    "Use one selected-row draft before running visible or all-row bulk drafts.",
+    "Treat confidence and no-uncertain settings as acceptance policy, not draft verbosity.",
+    "Reports record scan findings, drafts, and human decisions; they are not direct source-file writes."
+  ]
+}

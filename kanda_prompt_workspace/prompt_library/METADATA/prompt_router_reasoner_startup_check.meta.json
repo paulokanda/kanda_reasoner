@@ -1,0 +1,34 @@
+{
+  "prompt_id": "prompt_router_reasoner_startup_check",
+  "display_name": "Prompt Router Reasoner Readiness Assessment",
+  "filename": "prompt_router_reasoner_startup_check.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "On-request readiness assessment separating static source, generated evidence, and real local runtime validation.",
+  "priority": 18,
+  "required_companion_prompts": [
+    "ai_prompt_request_canon",
+    "prompt_navigation_index"
+  ],
+  "trigger_phrases": [
+    "Prompt Router Reasoner readiness",
+    "is prompt router fit to run",
+    "routing GUI readiness"
+  ],
+  "prompt_code": "KPR-01-003",
+  "title": "Prompt Router Reasoner Readiness Assessment",
+  "folder": "ACTIVE_PROMPTS/01_session_start_and_navigation",
+  "path": "ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "active_route": true,
+  "may_be_selected_for_new_work": true,
+  "aliases": [
+    "prompt_router_reasoner_startup_check",
+    "Prompt Router Reasoner Readiness Assessment"
+  ]
+}

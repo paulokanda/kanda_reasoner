@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "Show Project to AI",
+  "purpose": "Explain the Show Project to AI tab, project-root scope safety, collector subprocess stages, complete JSON evidence generation, AI context bundle creation, and JSON ZIP handoff export.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Project Structure Map builds local evidence about the selected project folder.",
+    "Run Collector creates a runtime trace, runs the static collector, enriches the complete JSON, and generates the AI context bundle.",
+    "Project root must be a real project folder; broad drive-root scans are blocked.",
+    "Output JSON is evidence for review and AI context, not a source-code edit.",
+    "Create Second Prompt Files runs JSON ZIP export automatically into the external Show Project to AI delivery folder."
+  ]
+}

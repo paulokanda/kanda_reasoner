@@ -1,0 +1,17 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "Project Reasoner / developer_tools",
+  "tab": "Audit Project > Engineering Safety",
+  "purpose": "Explain the nested Engineering Safety Full Audit and Pontual Audit tabs, shared project-root ownership, immediate visual sonar cancellation with safe worker settlement, canonical KANDA green sonar background ownership, existing command launcher, and advisory authority boundary.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Engineering Safety remains inside Audit Project beside Architecture Review.",
+    "Full Audit provides Complete Enginneering Review, cooperative Cancel Review, and KANDA's canonical floating green sonar activity monitor while the worker is active.",
+    "Cancel Review stops and hides the sonar immediately; the active command still settles before controls return to idle.",
+    "The sonar preserves the canonical greenSonarActivityPanel object name and gradient background used by other KANDA workflows.",
+    "Engineering Safety reuses the public GreenSonarActivityMonitor template and does not maintain a duplicate radar painter.",
+    "Pontual Audit preserves the original Engineering Safety tool groups and output window.",
+    "Engineering Safety uses the single Project Root selector in the shared Audit Project header and does not duplicate Browse controls.",
+    "Interactive Ruff Corrections remains manual and Engineering Safety does not authorize patching or freezing."
+  ]
+}

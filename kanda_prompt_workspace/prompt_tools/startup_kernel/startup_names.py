@@ -1,0 +1,66 @@
+"""Core filename and delivery-name constants for startup kernel generation."""
+
+from __future__ import annotations
+
+
+__all__ = [
+    "SCRIPT_NAME",
+    "SOURCE_MAP_FILENAME",
+    "DEFAULT_ZIP_NAME",
+    "PROMPT_LIBRARY_ZIP_NAME",
+    "PROMPT_LIBRARY_MANIFEST_FILENAME",
+    "PROMPT_LIBRARY_ROOT_DIR_NAME",
+    "MANIFEST_FILENAME",
+    "README_FILENAME",
+    "STABLE_BOOT_FILENAME",
+    "LEGACY_DELIVER_DIR_NAME",
+    "FIRST_PROMPT_FILES_DIR_NAME",
+    "TOOLS_DIR_NAME",
+    "PASTE_AFTER_UPLOAD_FILENAME",
+    "OLD_PASTE_AFTER_UPLOAD_FILENAME",
+    "LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME",
+    "MODIFY_STARTUP_DELIVERY_FILENAME",
+    "LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME",
+    "FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION",
+    "SECOND_UPLOAD_READY_ACTION",
+    "PROJECT_READY_CHECK_TITLE",
+    "PROJECT_READY_CHECK_REQUIRED_FIELDS",
+    "READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME",
+    "STARTUP_ARTIFACT_READ_ORDER_MARKER",
+]
+
+SCRIPT_NAME = "sync_startup_routing_kernel_pack.py"
+SOURCE_MAP_FILENAME = "STARTUP_ROUTING_KERNEL_SOURCES.json"
+DEFAULT_ZIP_NAME = "first_prompts_to_ai.zip"
+PROMPT_LIBRARY_ZIP_NAME = "prompt_library.zip"
+PROMPT_LIBRARY_MANIFEST_FILENAME = "PROMPT_LIBRARY_ZIP_MANIFEST.json"
+PROMPT_LIBRARY_ROOT_DIR_NAME = "prompt_library"
+MANIFEST_FILENAME = "STARTUP_PROMPT_REQUEST_KERNEL_MANIFEST.json"
+README_FILENAME = "README_STARTUP_PROMPT_REQUEST_KERNEL.md"
+STABLE_BOOT_FILENAME = "00_START_HERE_FOR_AI.md"
+
+LEGACY_DELIVER_DIR_NAME = "first" + "_AI_deliver"
+FIRST_PROMPT_FILES_DIR_NAME = "first_prompt_files"
+TOOLS_DIR_NAME = "prompt_tools"
+
+PASTE_AFTER_UPLOAD_FILENAME = "tell_AI_read_before_all.md"
+OLD_PASTE_AFTER_UPLOAD_FILENAME = "paste_after_uploading_" + "startup_zip.md"
+LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME = "paste_after_" + "first_prompts_to_ai.md"
+MODIFY_STARTUP_DELIVERY_FILENAME = "zz_read_only_if_modifying_startup_delivery.md"
+LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME = "paste_if_modify" + "_startup_delivery.md"
+FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION = "Waiting for all files (Project Files) from second_prompt_files folder"
+SECOND_UPLOAD_READY_ACTION = "WAIT_FOR_TASK"
+PROJECT_READY_CHECK_TITLE = "PROJECT READY CHECK"
+PROJECT_READY_CHECK_REQUIRED_FIELDS = (
+    "Project slug:",
+    "Active project root:",
+    "KANDA tool root:",
+    "Same physical root: YES / NO",
+    "Compact Error Memory loaded:",
+    "Second-upload handoff loaded:",
+    "Tier-1 gates active:",
+    "Next action:",
+)
+
+READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME = "000_READ_TELL_AI_READ_BEFORE_ALL_FIRST.md"
+STARTUP_ARTIFACT_READ_ORDER_MARKER = "STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST"

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Docstring Assistant</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Docstring Assistant</h1>
+        <p class="subtitle">Find missing Python explanations, review safe drafts, preview exact changes, and write only when you deliberately approve the result.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/docstring_assistant_opener_library.png" alt="A librarian and an engineer identify books with blank spines, prepare labels, and place them in a review tray before filing them">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Is a Docstring?</h2>
+      <p>A docstring is a short explanation stored inside Python code. It tells a person, an editor, or another tool what a module, class, function, or method is supposed to do.</p>
+      <p><strong>In plain English:</strong> A docstring is like the label on a medicine box or the title on a folder. The contents may already be correct, but the label helps you understand what is inside before opening it.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <p>Docstring Assistant can perform three separate jobs:</p>
+      <ol>
+        <li><strong>Scan</strong> - find code that is missing docstrings.</li>
+        <li><strong>Diff</strong> - show the exact text changes that would be made.</li>
+        <li><strong>Write</strong> - insert validated docstrings into selected source files.</li>
+      </ol>
+      <p>Scanning does not write to your code. Previewing a diff does not write to your code. Writing happens only when you choose Write mode and complete the required confirmation.</p>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>The safest order is Scan, then Diff, then Write.</strong> Do not begin with Write mode when you are learning the tab.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Before You Start</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/docstring_assistant_scan_post_room.png" alt="Workers in a sorting room identify parcels with blank labels while the conveyor remains paused">
+        <figcaption>Inspect a small area first. Writing can wait until the review list is correct.</figcaption>
+      </figure>
+      <ol>
+        <li>Make sure <strong>Project Root</strong> points to the project you actually want to inspect.</li>
+        <li>Start with a small scope, such as one file or one folder.</li>
+        <li>Choose <strong>Scan</strong> mode.</li>
+        <li>Leave the writing confirmation disabled.</li>
+        <li>Use the default worker count unless you have a reason to change it.</li>
+        <li>Save the report after the scan so you can review the findings.</li>
+      </ol>
+      <p><strong>Project Root</strong> means the main folder of the project.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>A wrong Project Root means the wrong project may be scanned.</strong> Stop and correct the path before running anything.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Safest First-Time Workflow</h2>
+      <h3>Step 1 - Choose Scan mode</h3>
+      <p>Select <strong>Scan</strong> in the Mode field. Scan mode searches and reports. It does not modify Python files.</p>
+      <p><strong>You should see:</strong> messages in the Output area and new rows in the review/report area.</p>
+
+      <h3>Step 2 - Choose a small scope</h3>
+      <p>Select one file, one module, or one folder rather than the full project. Use <strong>Browse</strong> to select the target.</p>
+
+      <h3>Step 3 - Choose what should be checked</h3>
+      <p>Use the checkboxes for modules, classes, functions or methods, and file-address information when available.</p>
+
+      <h3>Step 4 - Run the scan</h3>
+      <p>Click <strong>Run selected mode</strong>. The Stop button becomes available while the operation is active.</p>
+
+      <h3>Step 5 - Review the findings</h3>
+      <p>Select one row at a time and check the file, symbol, original source, draft state, and review status.</p>
+
+      <h3>Step 6 - Generate one draft</h3>
+      <p>Click <strong>Generate Draft</strong> for one selected row. Do not start with Generate All Drafts.</p>
+
+      <h3>Step 7 - Compare before and after</h3>
+      <p>Read <strong>Before Correction</strong> and <strong>After Correction</strong>. The suggestion must describe the code accurately and must not invent behavior.</p>
+
+      <h3>Step 8 - Save your decision</h3>
+      <p>Use <strong>Save Review Decision</strong>, <strong>Approve Row</strong>, or <strong>Reject Row</strong>.</p>
+
+      <h3>Step 9 - Preview the exact diff</h3>
+      <p>Select <strong>Diff</strong> mode and run it for the same small scope.</p>
+
+      <h3>Step 10 - Write only after approval</h3>
+      <p>Use <strong>Write</strong> only after the scan, draft, target path, and exact diff are correct.</p>
+    </section>
+
+    <section>
+      <h2>Run Options</h2>
+      <h3>Mode</h3>
+      <table>
+        <thead>
+          <tr><th>Mode</th><th>What it does</th><th>Changes source files?</th><th>Recommendation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Scan</td><td>Finds missing docstrings and creates review findings.</td><td>No</td><td>Start here</td></tr>
+          <tr><td>Diff</td><td>Shows the exact changes that would be made.</td><td>No</td><td>Use after reviewing</td></tr>
+          <tr><td>Write</td><td>Inserts validated docstrings into source files.</td><td>Yes</td><td>Use last</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Scope and Target Path</h3>
+      <p>Scope controls how much of the project is included. Use the narrowest scope that can answer your current question. Target Path identifies the selected file or folder inside the project.</p>
+      <p><strong>In plain English:</strong> Do not inspect the whole hospital when you only need to check one room.</p>
+
+      <h3>Modules, Classes, Functions, and Methods</h3>
+      <p>These checkboxes decide which types of Python objects should be checked. You do not need deep Python knowledge to use them.</p>
+
+      <h3>Workers</h3>
+      <p>Workers control how many scanning tasks may run at the same time. More workers can make a large scan faster, but they do not make the result more accurate. Use the default value for normal work.</p>
+
+      <h3>Run and Stop</h3>
+      <p><strong>Run selected mode</strong> starts the selected operation. <strong>Stop Running Selected Mode</strong> requests the active operation to stop safely.</p>
+    </section>
+
+    <section>
+      <h2>AI Assistance</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/docstring_assistant_ai_copy_shop.png" alt="A copy shop prepares short, balanced, and detailed labels while a manual typewriter remains available as a fallback">
+        <figcaption>AI prepares a draft. You remain responsible for deciding whether it is correct.</figcaption>
+      </figure>
+      <p><strong>Enable AI assistance</strong> turns AI-based draft generation on or off. When it is off, the tab can use its deterministic heuristic method.</p>
+      <p><strong>Open Config AI</strong> opens the shared provider configuration.</p>
+      <p><strong>Provider, gateway, and model</strong> select the configured service used to draft text.</p>
+      <p><strong>Refresh models</strong> updates the available model list.</p>
+      <p><strong>Load Environment Key</strong> loads a required API key from the current environment.</p>
+      <p><strong>Free models only</strong> filters supported web-provider models.</p>
+      <p><strong>Concise, Balanced, and Detailed</strong> control length, not truthfulness.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Never approve a draft only because it sounds professional.</strong> Compare it with the actual code and reject anything that invents behavior.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Report Area</h2>
+      <p><strong>Report path</strong> shows where the report will be saved or loaded.</p>
+      <p><strong>Save report</strong> saves findings, drafts, and review decisions.</p>
+      <p><strong>Load report</strong> loads a previous report. Use only a report that belongs to the same project and source state.</p>
+      <p><strong>Copy report</strong> copies the report to the clipboard.</p>
+      <p>A report is workflow evidence. It is not proof that source files were changed.</p>
+    </section>
+
+    <section>
+      <h2>Review and Correct Missing Docstrings</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/docstring_assistant_review_tailor.png" alt="A tailor compares an item before and after a label is added while a reviewer chooses approve, reject, or undo">
+        <figcaption>Compare the original and suggested version before approving the label.</figcaption>
+      </figure>
+      <h3>Navigation and Filter</h3>
+      <p><strong>Previous</strong> and <strong>Next</strong> move through rows. <strong>Reset</strong> restores the current review view. <strong>Filter</strong> limits which rows are visible.</p>
+
+      <h3>Before and After</h3>
+      <p><strong>Before Correction</strong> shows the original source context. <strong>After Correction</strong> shows the suggested result.</p>
+
+      <h3>Draft Buttons</h3>
+      <p><strong>Generate Draft</strong> creates a draft for one row.</p>
+      <p><strong>Generate Visible Drafts</strong> creates drafts for rows currently visible under the active filter.</p>
+      <p><strong>Generate All Drafts</strong> creates drafts for all eligible rows.</p>
+      <p><strong>Stop AI Drafts</strong> requests the active draft job to stop.</p>
+      <p><strong>Undo Last Bulk Drafts</strong> reverts the most recent visible or all-row draft run when undo information is available.</p>
+
+      <h3>Decision Buttons</h3>
+      <p><strong>Save Review Decision</strong> saves the selected row's edited draft and decision.</p>
+      <p><strong>Approve Row</strong> marks the selected suggestion as approved in the report.</p>
+      <p><strong>Reject Row</strong> marks it as rejected.</p>
+      <p><strong>Undo Row Change</strong> reverts the latest review change for the selected row when possible.</p>
+      <p><strong>Approve Visible Rows</strong> approves all currently visible rows.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Bulk approval is not a substitute for review.</strong> Check the active filter and visible rows before clicking Approve Visible Rows.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Scan, Diff, and Write Explained</h2>
+      <h3>Scan is observation</h3>
+      <p>Scan mode looks and reports. It should be your default starting point.</p>
+      <h3>Diff is preview</h3>
+      <p>Diff mode shows exactly what would change before source writing.</p>
+      <h3>Write is modification</h3>
+      <p>Write mode changes source files. The tool validates the resulting Python and rejects changes that alter non-docstring code structure.</p>
+      <p><strong>In plain English:</strong> The safety check confirms that the engine did not quietly change the machinery while adding the label. You still need to confirm that the label itself is accurate.</p>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ol>
+        <li>The correct project path is visible.</li>
+        <li>A small file or folder is selected.</li>
+        <li>Scan mode completes without an error.</li>
+        <li>The review list contains understandable findings.</li>
+        <li>One selected draft accurately describes the code.</li>
+        <li>The report is saved.</li>
+        <li>Diff mode shows only the intended docstring addition.</li>
+        <li>Write mode is used only after confirmation.</li>
+        <li>The source remains valid Python.</li>
+        <li>The docstring appears in the intended location.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <h3>Starting with the full project</h3>
+      <p>Start with one file or folder so the first review remains understandable.</p>
+      <h3>Starting with Write mode</h3>
+      <p>Scan first and preview the diff.</p>
+      <h3>Selecting the wrong target path</h3>
+      <p>Read the path before every run.</p>
+      <h3>Generating all drafts immediately</h3>
+      <p>Generate one selected-row draft first.</p>
+      <h3>Confusing a saved report with saved source files</h3>
+      <p>Report saving and source writing are separate actions.</p>
+      <h3>Approving fluent but inaccurate text</h3>
+      <p>Compare every important claim with the original code.</p>
+      <h3>Loading an old report after the code changed</h3>
+      <p>Run a fresh scan when the project has changed significantly.</p>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <h3>The run does not start</h3>
+      <p>Check Project Root, Mode, Scope, Target Path, and whether another run is already active.</p>
+      <h3>No rows are found</h3>
+      <p>The code may already have docstrings, the target may be too narrow, the object checkboxes may be disabled, or the wrong location may be selected.</p>
+      <h3>AI draft generation fails</h3>
+      <p>Check provider configuration, model availability, environment key, local service, or network access. You can disable AI and use the heuristic method.</p>
+      <h3>The draft is poor</h3>
+      <p>Reject it, change style or model, and generate another draft.</p>
+      <h3>Diff shows unrelated code changes</h3>
+      <p><strong>Stop. Do not use Write mode.</strong> Save the report and investigate the unexpected changes.</p>
+      <h3>Write mode reports an error</h3>
+      <p>Read the Output panel. A rejected unsafe write is safer than an uncertain write.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <h3>Before scanning</h3>
+      <ul>
+        <li>Correct Project Root</li>
+        <li>Correct Mode</li>
+        <li>Small Scope</li>
+        <li>Correct Target Path</li>
+        <li>Correct object-type checkboxes</li>
+      </ul>
+      <h3>Before generating drafts</h3>
+      <ul>
+        <li>Review list belongs to the current scan</li>
+        <li>One row selected</li>
+        <li>Provider and model checked</li>
+        <li>Generate one draft first</li>
+      </ul>
+      <h3>Before approving</h3>
+      <ul>
+        <li>Original source read</li>
+        <li>Suggested docstring read</li>
+        <li>No invented behavior</li>
+        <li>Correct row and file</li>
+      </ul>
+      <h3>Before writing</h3>
+      <ul>
+        <li>Scan completed</li>
+        <li>Report saved</li>
+        <li>Diff reviewed</li>
+        <li>Only intended docstring changes shown</li>
+        <li>Write confirmation deliberate</li>
+        <li>Project backup or version control available</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Important Safety Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/docstring_assistant_report_clerk.png" alt="A clerk records review decisions in a ledger while source files remain in a separate locked cabinet">
+        <figcaption>Reports record decisions. Writing source files remains a separate deliberate action.</figcaption>
+      </figure>
+      <p>Docstring Assistant separates finding, drafting, reviewing, reporting, previewing, and writing. This separation protects the project.</p>
+      <p>Do not remove or bypass confirmation and validation steps merely to make the workflow faster.</p>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Scan first, review one draft, save the report, inspect the diff, and write only when the result is clearly correct.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Docstring Assistant</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

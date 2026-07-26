@@ -1,0 +1,48 @@
+{
+  "prompt_code": "KPR-05-006",
+  "prompt_id": "router_bridge_user_detected_correction",
+  "display_name": "User-Detected Correction Incident Dispatcher",
+  "filename": "router_bridge_user_detected_correction.md",
+  "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md",
+  "aliases": [
+    "KPR-05-006",
+    "router_bridge_user_detected_correction",
+    "user detected correction",
+    "correction incident",
+    "AI mistake correction"
+  ],
+  "source_stage": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "updated_for": "prompt-audit-wave5b-router-terminal-compatibility-v1",
+  "description": "Admits a demonstrated correction incident, preserves exact failure evidence, and dispatches the smallest current owner set without granting write or delivery authority.",
+  "priority": 16,
+  "trigger_phrases": [
+    "you made a mistake",
+    "validation failed",
+    "install failed",
+    "wrong path",
+    "wrong file",
+    "coded from memory",
+    "missing STATUS: IN_SYNC",
+    "freeze blocked",
+    "AI detected an implementation error"
+  ],
+  "required_companion_prompts": [
+    "patch_install_delivery_error_register"
+  ],
+  "optional_companion_prompts": [
+    "brick_wall_comprehensive_quality_gate",
+    "pre_output_contract_gates",
+    "terminal_cleanup_contract",
+    "freeze_code_intake_and_form_protocol",
+    "error_memory_ai_formulary_startup_canon",
+    "project_tool_boundary_canon"
+  ],
+  "when_to_load": "Only when a real prior-answer, source, path, install, validation, delivery, startup, freeze, or Error Memory defect is identified.",
+  "when_not_to_load": "Do not load for ordinary feature work, speculative planning, or explanation without a demonstrated incident.",
+  "source_write_authorization": "NO"
+}

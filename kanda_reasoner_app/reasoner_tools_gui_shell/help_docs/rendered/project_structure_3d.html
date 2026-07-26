@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Project Structure 3D</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Project Structure 3D</h1>
+        <p class="subtitle">Create source-safe visualization JSON and explore it in a read-only three-dimensional graph.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/project_structure_3d_opener_city_map.png" alt="Three colleagues inspect a miniature project city made of connected buildings, folders, and file cards in a warm study">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Project Structure 3D Means</h2>
+      <p>Project Structure 3D displays a graph built from existing KANDA evidence.</p>
+      <p><strong>In plain English:</strong> It is a visual map. Project items become nodes and relationships become connections.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <ul>
+        <li>Show fixture or live project evidence</li>
+        <li>Create a fresh Project JSON ZIP family</li>
+        <li>Update Project JSON incrementally</li>
+        <li>Switch between Architecture and Structure</li>
+        <li>Filter Imports, External, Symbols, and Semantic content</li>
+        <li>Refresh evidence</li>
+        <li>Search visible nodes</li>
+        <li>Fit or reset the graph camera</li>
+        <li>Open a local browser preview</li>
+        <li>Navigate, isolate, expand, collapse, and trace paths</li>
+        <li>Inspect selected-node details</li>
+      </ul>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>Start with Overview.</strong> Confirm the project and source badge before filtering the graph.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What This Tab Does Not Do</h2>
+      <p>It does not edit source files, write inside the selected project tree, replace architecture owners, validate code changes, or treat generated JSON as source authority.</p>
+    </section>
+
+    <section>
+      <h2>Fixture Versus Live Project Evidence</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_3d_evidence_layers.png" alt="Three colleagues compare layered miniature project districts and evidence diagrams in a warm planning room">
+        <figcaption>The fixture demonstrates the viewer. Live project evidence represents the selected project.</figcaption>
+      </figure>
+      <h3>Read-only fixture</h3>
+      <p>Before project selection, the badge says <code>READ-ONLY FIXTURE</code> and the project label says <code>Project: not selected</code>.</p>
+      <h3>Live evidence</h3>
+      <p>After project selection, the tab resolves canonical evidence and rebuilds the graph. Use Refresh evidence when that evidence changes.</p>
+    </section>
+
+    <section>
+      <h2>Project JSON Controls</h2>
+      <p><strong>JSON is necessary for visualization.</strong> The Create button is green when a valid Project JSON ZIP family exists and red when it is missing.</p>
+      <h3>Create Project JSON</h3>
+      <p>Deletes the previous Project Structure 3D JSON family only after confirmation, builds a fresh disk-backed index, and streams JSON bytes directly into ZIP members. Artifacts are published in <code>&lt;project&gt;_show_project_to_AI/project_structure_3d_json</code>, outside <code>second_prompt_files</code>. Each ZIP part is limited to 450 MB.</p>
+      <h3>Update JSON Incrementally</h3>
+      <p>Adds new information, updates changed files, removes deleted files, and preserves unchanged indexed records. A successful full creation is required first.</p>
+      <p>The sonar animation remains active while the separate process works. The previous published ZIP family remains available until the replacement validates and publishes.</p>
+      <div class="callout callout-note">
+        <div class="callout-icon">2</div>
+        <div><strong>Source-safe boundary.</strong> These controls write generated visualization artifacts outside the selected project and never modify project source files.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Architecture and Structure Modes</h2>
+      <p><strong>Architecture</strong> emphasizes packages, modules, grouping, and dependency relationships.</p>
+      <p><strong>Structure</strong> emphasizes paths, files, symbols, classes, functions, and detailed containment.</p>
+    </section>
+
+    <section>
+      <h2>Filters, Search, and Navigation</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_3d_navigation_filters.png" alt="Three colleagues use filter cards, a magnifying glass, and illuminated paths to explore a miniature project city">
+        <figcaption>Filters change what is visible. They do not alter the project evidence.</figcaption>
+      </figure>
+      <h3>Imports</h3>
+      <p>Shows or hides import and dependency relationships.</p>
+      <h3>External</h3>
+      <p>Shows or hides external dependency nodes.</p>
+      <h3>Symbols</h3>
+      <p>Shows or hides symbol-level nodes.</p>
+      <h3>Semantic</h3>
+      <p>Shows or hides semantic relationships.</p>
+      <h3>Search</h3>
+      <p>Search for a package, module, class, function, dependency, or path.</p>
+      <h3>Fit graph and Reset camera</h3>
+      <p>Fit graph restores the visible graph to the viewport. Reset camera restores the default camera.</p>
+    </section>
+
+    <section>
+      <h2>Open in Browser</h2>
+      <p>Opens a local read-only browser preview. It does not publish the graph or permit arbitrary external navigation.</p>
+    </section>
+
+    <section>
+      <h2>Navigation Bar</h2>
+      <p>Back and Forward move through viewer history. Overview restores the graph overview. Isolate, Expand, Collapse, and Trace path refine the current exploration.</p>
+    </section>
+
+    <section>
+      <h2>Selecting Nodes and Reading Details</h2>
+      <p>Click a node to update the read-only details panel. Click the background to clear selection and return to overview details.</p>
+    </section>
+
+    <section>
+      <h2>Renderer Status and Fallback</h2>
+      <p>The status line reports evidence loading, renderer loading, bridge connection, selections, searches, blocked navigation, and diagnostics.</p>
+      <p>The primary viewer uses Qt WebEngine. When unavailable, the tab shows a contained fallback and may still provide a local browser preview.</p>
+    </section>
+
+    <section>
+      <h2>Read-Only Safety Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_3d_read_only_boundary.png" alt="Three colleagues inspect a miniature project while protected source records remain behind a visible safety boundary">
+        <figcaption>The 3D view reads evidence. It does not become the owner of source files or write authority.</figcaption>
+      </figure>
+      <p><strong>In plain English:</strong> The tab may create its own visualization ZIPs, but the map does not become the project and never edits source.</p>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ol>
+        <li>Correct project label</li>
+        <li>Clear fixture or evidence badge</li>
+        <li>Graph loaded without unresolved renderer errors</li>
+        <li>Modes and filters working</li>
+        <li>Search finding a known node</li>
+        <li>Fit graph restoring the view</li>
+        <li>Selection updating details</li>
+        <li>Source remaining unchanged</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <ul>
+        <li>Treating the fixture as live evidence</li>
+        <li>Searching for nodes hidden by filters</li>
+        <li>Confusing Architecture and Structure</li>
+        <li>Assuming Refresh is a new independent scanner</li>
+        <li>Assuming Open in browser publishes the graph</li>
+        <li>Treating the viewer as validation authority</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <p>Check the active project, source badge, status line, filters, evidence freshness, and renderer diagnostics. Use Fit graph or Reset camera when the camera is lost.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <ul>
+        <li>Correct project selected</li>
+        <li>Project label and source badge checked</li>
+        <li>Renderer status checked</li>
+        <li>Architecture and Structure compared</li>
+        <li>Filters changed deliberately</li>
+        <li>Search tested</li>
+        <li>Node details inspected</li>
+        <li>Important conclusions verified in the owning evidence or source</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Use Project Structure 3D to create source-safe visualization evidence and explore it, but verify important conclusions in the owning source or workflow. Generated Project JSON is never source authority.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Project Structure 3D</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

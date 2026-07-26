@@ -1,0 +1,33 @@
+{
+  "prompt_id": "daily_patch_delivery_guardrails",
+  "prompt_code": "KPR-01-007",
+  "display_name": "Daily Patch Delivery Guardrails",
+  "filename": "daily_patch_delivery_guardrails.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "always_startup",
+  "version": "3.0",
+  "owner_box": "01_session_start_and_navigation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+  "source_stage": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "updated_for": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "description": "Compact startup bridge for governed patch delivery invariants and routing to Class 05 owners.",
+  "priority": 7,
+  "trigger_phrases": [
+    "patch ZIP",
+    "install code",
+    "validation code",
+    "deliver patch",
+    "freeze-ready patch"
+  ],
+  "required_companion_prompts": [
+    "pre_output_contract_gates",
+    "terminal_cleanup_contract",
+    "patch_install_delivery_error_register"
+  ],
+  "recommended_companion_prompts": [
+    "implementation_and_delivery_protocol",
+    "pre_output_contract_gates",
+    "durable_document_artifact_routing_canon"
+  ]
+}

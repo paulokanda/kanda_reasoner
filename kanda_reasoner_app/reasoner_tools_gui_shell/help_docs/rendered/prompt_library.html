@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Prompt Library</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Prompt Library</h1>
+        <p class="subtitle">Find, review, and copy current governed prompts without turning the library into an editor, runtime, or governance owner.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/prompt_library_opener_canonical_vault.png" alt="Three colleagues browse organized prompt cards around a glowing reference book in a warm KANDA study">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Prompt Library Means</h2>
+      <p>Prompt Library presents the current active prompt collection in a visual, read-only dashboard.</p>
+      <p><strong>In plain English:</strong> It is a governed bookshelf. You may browse, read, and copy prompts, but you do not edit or run them here.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <ul>
+        <li>Loads the canonical workspace or legacy compatibility fallback</li>
+        <li>Shows one cube for each current prompt group</li>
+        <li>Opens read-only group windows</li>
+        <li>Displays metadata and full prompt text</li>
+        <li>Copies one prompt or a full ordered group stack</li>
+        <li>Opens the selected file location</li>
+        <li>Reloads the current library</li>
+      </ul>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>Use Prompt Library to find, learn, preview, and copy.</strong> Authoring and governance remain elsewhere.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Canonical Workspace and Legacy Fallback</h2>
+      <p>The tab prefers <code>kanda_prompt_workspace/prompt_library</code>. When unavailable, it may use the package-owned compatibility library.</p>
+      <p>The status line reports <strong>canonical workspace</strong> or <strong>legacy compatibility fallback</strong>.</p>
+    </section>
+
+    <section>
+      <h2>Current Prompts Only</h2>
+      <p>The canonical scan is limited to <code>ACTIVE_PROMPTS</code>.</p>
+      <p>Archived, deprecated, inactive, retired, superseded, and <code>load_type=never</code> entries are hidden.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Hidden does not mean deleted.</strong> Non-current files may still exist in governed storage.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Reload Canonical Library</h2>
+      <p>Reload current groups, prompt files, metadata, and source status. Reload does not edit files.</p>
+    </section>
+
+    <section>
+      <h2>The Group Cube Dashboard</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/prompt_library_active_group_cubes.png" alt="Three colleagues inspect colorful active prompt-group cubes while retired, archived, and deprecated collections remain stored separately">
+        <figcaption>Each dashboard cube represents one current Prompt Library group.</figcaption>
+      </figure>
+      <p>Groups define display name, description, color, prompt IDs, copy-stack behavior, and prompt order.</p>
+      <p>Activate a cube to open its floating read-only group window.</p>
+    </section>
+
+    <section>
+      <h2>The Group Window</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/prompt_library_group_browser.png" alt="Three colleagues review a read-only prompt binder, metadata card, selected prompt, and full group stack in a warm library">
+        <figcaption>Select a prompt to read its metadata and full text before copying it.</figcaption>
+      </figure>
+      <p>The group window contains the prompt list, metadata panel, full preview, Copy Selected Prompt, Copy Full Group Stack, Open File Location, Close, and status messages.</p>
+    </section>
+
+    <section>
+      <h2>Metadata and Preview</h2>
+      <p>Metadata may include title, category, relative path, prompt ID, version, status, load type, project-agnostic state, explainer, and how-it-works information.</p>
+      <p>The full text preview is read-only. Review purpose, assumptions, output expectations, order, and safety boundaries before copying.</p>
+    </section>
+
+    <section>
+      <h2>Copy Selected Prompt</h2>
+      <p>Copies the currently selected prompt's complete text to the system clipboard. It does not run or send the prompt.</p>
+    </section>
+
+    <section>
+      <h2>Copy Full Group Stack</h2>
+      <p>Copies every current prompt in the group in group-defined order. Use it only when the target workflow expects the full stack.</p>
+    </section>
+
+    <section>
+      <h2>Open File Location</h2>
+      <p>Opens the selected prompt's parent folder in the operating-system file browser. It does not grant edit authority.</p>
+    </section>
+
+    <section>
+      <h2>Status Messages and Reconciliation</h2>
+      <p>Status reports group count, prompt count, source type, source path, opened windows, copies, missing groups, and missing matches.</p>
+      <p>Canonical group reconciliation removes stale IDs, preserves current catalog order, prevents duplicates, appends current prompts missing from the registry, and adds current folder groups.</p>
+    </section>
+
+    <section>
+      <h2>Read-Only Governance Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/prompt_library_read_only_boundary.png" alt="Three colleagues browse prompt cards while canonical prompts, governance, ownership, and audit records remain behind a glowing read-only safety boundary">
+        <figcaption>Prompt Library can browse, preview, and copy. It cannot rewrite governance or canonical prompt records.</figcaption>
+      </figure>
+      <p><strong>In plain English:</strong> The library helps you choose a book. It does not rewrite the master copy or decide how it is governed.</p>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <ol>
+        <li>Current groups visible</li>
+        <li>Correct source status</li>
+        <li>Group window opened</li>
+        <li>Metadata and preview visible</li>
+        <li>Selected prompt copied</li>
+        <li>Full group stack copied in expected order</li>
+        <li>Source location opened when needed</li>
+        <li>No prompt files modified</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <ul>
+        <li>Assuming every stored prompt is current</li>
+        <li>Mistaking fallback for canonical source</li>
+        <li>Copying a full group when one prompt is enough</li>
+        <li>Copying without reviewing metadata</li>
+        <li>Treating file location as edit permission</li>
+        <li>Expecting the tab to run prompts</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <p>Check the source status, canonical workspace, group catalog, metadata status, load type, group IDs, selected prompt, source path, and Reload Canonical Library.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <ul>
+        <li>Source status read</li>
+        <li>Canonical workspace preferred</li>
+        <li>Current-only behavior understood</li>
+        <li>Correct group and prompt selected</li>
+        <li>Metadata and full text reviewed</li>
+        <li>Smallest correct prompt set copied</li>
+        <li>Clipboard status confirmed</li>
+        <li>No execution or edit authority assumed</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Use Prompt Library to find, understand, and copy current governed prompts, but keep authoring, lifecycle changes, routing, validation, and execution in their existing owning workflows.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Prompt Library</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

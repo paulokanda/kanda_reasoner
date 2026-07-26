@@ -1,0 +1,41 @@
+{
+  "prompt_code": "KPR-04-006",
+  "prompt_id": "boundary_first_repair_protocol",
+  "display_name": "Boundary-First Repair Protocol",
+  "filename": "boundary_first_repair_protocol.md",
+  "category": "04_box_architecture_and_boundaries",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
+  "aliases": [
+    "KPR-04-006",
+    "boundary_first_repair_protocol",
+    "boundary first repair",
+    "symptom owner divergence",
+    "repair leak not symptom"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "Diagnoses symptom-owner divergence and identifies the earliest causally sufficient proven ownership violation without authorizing source writes.",
+  "priority": 2,
+  "trigger_phrases": [
+    "symptom owner divergence",
+    "boundary first repair",
+    "repair the leak not the symptom",
+    "shared host state leak",
+    "stale async result owner",
+    "persistence owner mismatch"
+  ],
+  "required_companion_prompts": [
+    "box_architecture_canon",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "optional_companion_prompts": [
+    "kanda_box_shielding_canon",
+    "project_tool_boundary_canon",
+    "stateful_control_regression_canon"
+  ],
+  "source_write_authorization": "NO"
+}

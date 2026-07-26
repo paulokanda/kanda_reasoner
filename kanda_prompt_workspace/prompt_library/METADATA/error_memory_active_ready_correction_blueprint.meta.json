@@ -1,0 +1,40 @@
+{
+  "prompt_code": "KPR-12-002",
+  "prompt_id": "error_memory_active_ready_correction_blueprint",
+  "display_name": "Error Memory Active-Ready Correction Blueprint",
+  "filename": "error_memory_active_ready_correction_blueprint.md",
+  "category": "12_generalized_project_canons",
+  "version": "2.0.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "12_generalized_project_canons",
+  "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md",
+  "classification": "error_memory_draft_readiness_promotion_workflow",
+  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "description": "Route a real Error Memory draft or rejected lesson through evidence recovery, current-schema validation, correction, and explicit human memorization readiness.",
+  "box_logic_required": false,
+  "priority": 32,
+  "trigger_phrases": [
+    "correct Error Memory draft",
+    "active-ready Error Memory lesson",
+    "active_ready_missing_reasons"
+  ],
+  "aliases": [
+    "KPR-12-002",
+    "Error Memory correction blueprint",
+    "error_memory_active_ready_correction_blueprint"
+  ],
+  "user_intent_examples": [
+    "When a real Error Memory draft must be corrected or evaluated for active readiness."
+  ],
+  "when_to_load": "When a real Error Memory draft must be corrected or evaluated for active readiness.",
+  "when_not_to_load": "Do not load for ordinary code changes or to invent validation evidence.",
+  "required_companion_prompts": [],
+  "related_prompt_ids": [],
+  "do_not_regress": [
+    "Preserve the narrow owner and its explicit non-authorization boundary.",
+    "Do not force companions or direct startup loading.",
+    "Do not claim current source, execution or validation without evidence."
+  ]
+}

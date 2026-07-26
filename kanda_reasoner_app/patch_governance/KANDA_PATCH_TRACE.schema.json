@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KANDA Patch Trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "feature_id",
+    "router_bridge_used",
+    "prompt_paths_loaded",
+    "source_files_inspected",
+    "target_box",
+    "forbidden_boxes",
+    "allowed_write_paths",
+    "forbidden_write_paths",
+    "files_changed",
+    "validation_commands",
+    "validation_markers"
+  ],
+  "properties": {
+    "feature_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "router_bridge_used": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prompt_paths_loaded": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_files_inspected": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "target_box": {
+      "type": "string",
+      "minLength": 1
+    },
+    "forbidden_boxes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowed_write_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "forbidden_write_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validation_commands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validation_markers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "error_memory_lesson_id": {
+      "type": "string"
+    },
+    "freeze_hint_path": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,366 @@
+"""Apply extended warning classification policies to architecture source."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+
+
+ReplaceOnce = Callable[[str, str, str], str]
+
+
+def _apply_boundary_error_contract_marker_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Avoid treating successful feature IDs containing error as failures."""
+    old = (
+        'def _stmt_prints_failure(stmt: ast.stmt) -> int | None:\n'
+        '    """Return the line number when a statement prints failure/error text."""\n'
+        '    if not isinstance(stmt, ast.Expr) or not isinstance(stmt.value, ast.Call):\n'
+        '        return None\n'
+        '    if _call_full_name(stmt.value.func) != "print":\n'
+        '        return None\n'
+        '    printable = " ".join(_string_literals_in_node(stmt.value)).upper()\n'
+        '    if "FAIL" in printable or "ERROR" in printable:\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    return None\n'
+    )
+    new = (
+        'def _stmt_prints_failure(stmt: ast.stmt) -> int | None:\n'
+        '    """Return the line number when a statement prints actual failure text."""\n'
+        '    if not isinstance(stmt, ast.Expr) or not isinstance(stmt.value, ast.Call):\n'
+        '        return None\n'
+        '    if _call_full_name(stmt.value.func) != "print":\n'
+        '        return None\n'
+        '    printable = " ".join(_string_literals_in_node(stmt.value)).upper()\n'
+        '    failure_markers = (\n'
+        '        "VALIDATION ERROR",\n'
+        '        "VALIDATION FAIL",\n'
+        '        "VALIDATION FAILED",\n'
+        '        "ZIP CONTRACT: FAIL",\n'
+        '        "FREEZE_HINT_EVIDENCE_MERGE: FAIL",\n'
+        '        "FAIL -",\n'
+        '        "FAIL:",\n'
+        '        "FAILED",\n'
+        '    )\n'
+        '    if any(marker in printable for marker in failure_markers):\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    if printable.startswith("ERROR:") or printable.startswith("ERROR "):\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    return None\n'
+    )
+    return replace_once(source, old, new)
+
+
+def _apply_stale_variant_active_domain_terms_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Do not flag active domain phrases that contain broad stale tokens."""
+    old = (
+        'def _filename_has_stale_marker(filename: str) -> bool:\n'
+        '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
+        '    stem = Path(filename).stem.lower()\n'
+        '    tokens = _tokenize_variant_text(stem)\n'
+        '    if tokens.intersection(STALE_VARIANT_TOKEN_MARKERS):\n'
+        '        return True\n'
+        '    if any(marker in stem for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
+        '        return True\n'
+        '    if any(stem.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
+        '        return True\n'
+        '    return False\n'
+    )
+    new = (
+        'ACTIVE_DOMAIN_STALE_TOKEN_PHRASES = (\n'
+        '    "preflight_backup",\n'
+        '    "copy_error",\n'
+        '    "chat_service",\n'
+        ')\n\n\n'
+        'def _filename_has_stale_marker(filename: str) -> bool:\n'
+        '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
+        '    stem = Path(filename).stem.lower()\n'
+        '    if any(phrase in stem for phrase in ACTIVE_DOMAIN_STALE_TOKEN_PHRASES):\n'
+        '        return False\n'
+        '    tokens = _tokenize_variant_text(stem)\n'
+        '    if tokens.intersection(STALE_VARIANT_TOKEN_MARKERS):\n'
+        '        return True\n'
+        '    if any(marker in stem for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
+        '        return True\n'
+        '    if any(stem.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
+        '        return True\n'
+        '    return False\n'
+    )
+    return replace_once(source, old, new)
+
+
+def _apply_generated_prompt_delivery_duplicate_owner_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Exclude generated prompt delivery folders from public API ownership."""
+    old = (
+        'def is_excluded_from_duplicate_checks(module: ModuleInfo) -> bool:\n'
+        '    normalized_path = module.path.replace("\\\\", "/")\n'
+        '    if is_validator_script(module):\n'
+        '        return True\n'
+        '    if is_generated_bundle_artifact(module):\n'
+        '        return True\n'
+        '    if is_test_path(normalized_path):\n'
+        '        return True\n'
+        '    if is_transitional_copy_filename(module.filename):\n'
+        '        return True\n'
+        '    if is_transitional_path(normalized_path):\n'
+        '        return True\n'
+        '    if not module.has_explicit_all:\n'
+        '        return True\n'
+        '    for prefix in EXCLUDED_DUPLICATE_DIR_PREFIXES:\n'
+        '        if normalized_path.startswith(prefix):\n'
+        '            return True\n'
+        '    return False\n'
+    )
+    new = (
+        'GENERATED_PROMPT_DELIVERY_DUPLICATE_PREFIXES = (\n'
+        '    "first_prompt_files/",\n'
+        '    "second_prompt_files/",\n'
+        ')\n\n\n'
+        'def _is_generated_prompt_delivery_artifact(module: ModuleInfo) -> bool:\n'
+        '    """Return True for generated prompt handoff files, not API owners."""\n'
+        '    normalized_path = module.path.replace("\\\\", "/")\n'
+        '    return normalized_path.startswith(\n'
+        '        GENERATED_PROMPT_DELIVERY_DUPLICATE_PREFIXES\n'
+        '    )\n\n\n'
+        'def is_excluded_from_duplicate_checks(module: ModuleInfo) -> bool:\n'
+        '    normalized_path = module.path.replace("\\\\", "/")\n'
+        '    if is_validator_script(module):\n'
+        '        return True\n'
+        '    if is_generated_bundle_artifact(module):\n'
+        '        return True\n'
+        '    if _is_generated_prompt_delivery_artifact(module):\n'
+        '        return True\n'
+        '    if is_test_path(normalized_path):\n'
+        '        return True\n'
+        '    if is_transitional_copy_filename(module.filename):\n'
+        '        return True\n'
+        '    if is_transitional_path(normalized_path):\n'
+        '        return True\n'
+        '    if not module.has_explicit_all:\n'
+        '        return True\n'
+        '    for prefix in EXCLUDED_DUPLICATE_DIR_PREFIXES:\n'
+        '        if normalized_path.startswith(prefix):\n'
+        '            return True\n'
+        '    return False\n'
+    )
+    return replace_once(source, old, new)
+
+
+def _apply_mixed_responsibility_boundary_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Accept documented UI/domain adapters and governed validators."""
+    source = replace_once(
+        source,
+        'def _format_mixed_responsibility_message(\n',
+        (
+            'MIXED_RESPONSIBILITY_GOVERNED_ARTIFACT_ROOTS = {"scripts", "tools"}\n'
+            'MIXED_RESPONSIBILITY_GOVERNED_ARTIFACT_PREFIXES = ("validate_", "repair_")\n'
+            'MIXED_RESPONSIBILITY_ALLOWED_BOUNDARY_DOMAINS: tuple[\n'
+            '    tuple[str, frozenset[str]], ...\n'
+            '] = (\n'
+            '    (\n'
+            '        "kanda_reasoner_app/error_memory_gui/",\n'
+            '        frozenset({"gui_ui", "ai_bridge", "prompt_building"}),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/freeze_after_update_gui/",\n'
+            '        frozenset({"gui_ui", "ai_bridge"}),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/insert_missing_docstrings_gui/",\n'
+            '        frozenset({"gui_ui", "docstring_tool", "ai_bridge"}),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/manage_architecture/",\n'
+            '        frozenset({\n'
+            '            "gui_ui",\n'
+            '            "architecture_governance",\n'
+            '            "ai_bridge",\n'
+            '            "daily_refactor_report",\n'
+            '        }),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/manage_workflows/",\n'
+            '        frozenset({\n'
+            '            "gui_ui",\n'
+            '            "workflow_governance",\n'
+            '            "daily_refactor_report",\n'
+            '            "architecture_governance",\n'
+            '        }),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/reasoner_engine/",\n'
+            '        frozenset({\n'
+            '            "gui_ui",\n'
+            '            "ai_bridge",\n'
+            '            "prompt_building",\n'
+            '            "retrieval",\n'
+            '            "static_collection",\n'
+            '            "runtime_collection",\n'
+            '        }),\n'
+            '    ),\n'
+            ')\n\n\n'
+            'def _is_mixed_responsibility_governed_artifact(module: ModuleInfo) -> bool:\n'
+            '    """Return True for validator/repair artifacts, not app owners."""\n'
+            '    normalized_path = module.path.replace("\\\\", "/")\n'
+            '    root_name = normalized_path.split("/", 1)[0].lower()\n'
+            '    if root_name not in MIXED_RESPONSIBILITY_GOVERNED_ARTIFACT_ROOTS:\n'
+            '        return False\n'
+            '    stem = Path(module.filename).stem.lower().replace("-", "_")\n'
+            '    return stem.startswith(MIXED_RESPONSIBILITY_GOVERNED_ARTIFACT_PREFIXES)\n\n\n'
+            'def _is_documented_mixed_responsibility_boundary(\n'
+            '    module: ModuleInfo,\n'
+            '    domains: dict[str, list[str]],\n'
+            ') -> bool:\n'
+            '    """Return True when mixed terms belong to an explicit adapter boundary."""\n'
+            '    if _is_mixed_responsibility_governed_artifact(module):\n'
+            '        return True\n'
+            '    normalized_path = module.path.replace("\\\\", "/")\n'
+            '    domain_names = set(domains)\n'
+            '    for path_prefix, allowed_domains in MIXED_RESPONSIBILITY_ALLOWED_BOUNDARY_DOMAINS:\n'
+            '        if normalized_path.startswith(path_prefix) and domain_names <= allowed_domains:\n'
+            '            return True\n'
+            '    return False\n\n\n'
+            'def _format_mixed_responsibility_message(\n'
+        ),
+    )
+    return replace_once(
+        source,
+        (
+            '        domains = _mixed_responsibility_hits(module)\n'
+            '        if len(domains) < 2:\n'
+            '            continue\n\n'
+            '        # Governance detector modules intentionally mention many boxes while\n'
+        ),
+        (
+            '        domains = _mixed_responsibility_hits(module)\n'
+            '        if len(domains) < 2:\n'
+            '            continue\n'
+            '        if _is_documented_mixed_responsibility_boundary(module, domains):\n'
+            '            continue\n\n'
+            '        # Governance detector modules intentionally mention many boxes while\n'
+        ),
+    )
+
+
+def _apply_import_heaviness_gui_boundary_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Accept intentional Qt imports in GUI adapters and GUI validators."""
+    old = (
+        'def _is_intentional_gui_import_surface(module: ModuleInfo) -> bool:\n'
+        '    """Return True for explicit GUI/profiling surfaces that own Qt imports."""\n'
+        '    normalized = module.path.lower().replace(chr(92), "/")\n'
+        '    return any(\n'
+        '        normalized.endswith(suffix)\n'
+        '        for suffix in INTENTIONAL_GUI_IMPORT_SURFACE_SUFFIXES\n'
+        '    )\n'
+    )
+    new = (
+        'GUI_VALIDATION_ARTIFACT_ROOTS = ("tools/validate_", "scripts/validate_")\n'
+        'INTENTIONAL_KANDA_GUI_IMPORT_PREFIXES = (\n'
+        '    "kanda_reasoner_app/manage_architecture/ai_review/",\n'
+        '    "kanda_reasoner_app/manage_architecture/large_file_refactor_planner/",\n'
+        '    "kanda_reasoner_app/reasoner_tools_shell/runner_help/",\n'
+        '    "kanda_reasoner_app/tab3_manual_review_runtime/",\n'
+        ')\n'
+        'INTENTIONAL_KANDA_GUI_IMPORT_PATHS = {\n'
+        '    "kanda_reasoner_app/reasoner_runtime_collector/runtime_runner_help/_runtime_runner_part_2_scenarios.py",\n'
+        '}\n\n\n'
+        'def _is_intentional_gui_import_surface(module: ModuleInfo) -> bool:\n'
+        '    """Return True for explicit GUI/profiling surfaces that own Qt imports."""\n'
+        '    normalized = module.path.lower().replace(chr(92), "/")\n'
+        '    if normalized.startswith(GUI_VALIDATION_ARTIFACT_ROOTS):\n'
+        '        return True\n'
+        '    if normalized in INTENTIONAL_KANDA_GUI_IMPORT_PATHS:\n'
+        '        return True\n'
+        '    if normalized.startswith(INTENTIONAL_KANDA_GUI_IMPORT_PREFIXES):\n'
+        '        return True\n'
+        '    return any(\n'
+        '        normalized.endswith(suffix)\n'
+        '        for suffix in INTENTIONAL_GUI_IMPORT_SURFACE_SUFFIXES\n'
+        '    )\n'
+    )
+    return replace_once(source, old, new)
+
+
+def _apply_side_effect_governed_validation_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Exclude governed validation scripts from import-time side-effect warnings."""
+    old = (
+        'def detect_side_effect_on_import_issues(\n'
+        '    root: Path,\n'
+        '    modules: dict[str, ModuleInfo],\n'
+        ') -> list[ValidationIssue]:\n'
+        '    """Detect risky top-level calls that execute during module import."""\n'
+        '    issues: list[ValidationIssue] = []\n'
+        '    for module in sorted(modules.values(), key=lambda item: item.path):\n'
+        '        if module.is_init or is_test_path(module.path) or stale_variant_reasons(module):\n'
+        '            continue\n'
+        '        path = root / module.path\n'
+        '        try:\n'
+        '            text = read_text(path)\n'
+    )
+    new = (
+        'def detect_side_effect_on_import_issues(\n'
+        '    root: Path,\n'
+        '    modules: dict[str, ModuleInfo],\n'
+        ') -> list[ValidationIssue]:\n'
+        '    """Detect risky top-level calls that execute during module import."""\n'
+        '    issues: list[ValidationIssue] = []\n'
+        '    for module in sorted(modules.values(), key=lambda item: item.path):\n'
+        '        if module.is_init or is_test_path(module.path) or stale_variant_reasons(module):\n'
+        '            continue\n'
+        '        if _is_governed_validation_or_repair_artifact(module):\n'
+        '            continue\n'
+        '        path = root / module.path\n'
+        '        try:\n'
+        '            text = read_text(path)\n'
+    )
+    return replace_once(source, old, new)
+
+
+def apply_manage_architecture_extended_warning_policies(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Apply the extended warning-policy chain in its governed order."""
+    source = _apply_boundary_error_contract_marker_policy(
+        source,
+        replace_once,
+    )
+    source = _apply_stale_variant_active_domain_terms_policy(
+        source,
+        replace_once,
+    )
+    source = _apply_generated_prompt_delivery_duplicate_owner_policy(
+        source,
+        replace_once,
+    )
+    source = _apply_mixed_responsibility_boundary_policy(
+        source,
+        replace_once,
+    )
+    source = _apply_import_heaviness_gui_boundary_policy(
+        source,
+        replace_once,
+    )
+    return _apply_side_effect_governed_validation_policy(
+        source,
+        replace_once,
+    )
+
+
+__all__ = ["apply_manage_architecture_extended_warning_policies"]

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Workflow Review</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <h1>Workflow Review</h1><p>Workflow Review is the rightmost child tab inside <code>Audit Project</code>, immediately to the right of <code>Engineering Safety</code>. Its existing workflow controls and ownership remain unchanged.</p>
+        <p class="subtitle">A local, evidence-backed safety lens for checking workflow targets, step order, generated artifacts, AI handoffs, and rerun safety.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/workflow_review_opener_station.png" alt="Hand-made train-station cartoon where a reviewer stops confused workflow parcels before they board the wrong platform">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Problem This Solves</h2>
+      <p><strong>Technical:</strong> Workflow Review validates workflow target integrity, step order, input/output contracts, route manifests, generated artifacts, AI evidence handoff, rerun safety, rollback behavior, documentation drift, environment assumptions, and path-root consistency.</p>
+      <p><strong>In plain English:</strong> The tool is a station manager for project work. It catches stale tickets, wrong platforms, missing luggage tags, and uninspected output before the next step depends on them.</p>
+      <p class="further-reading"><strong>Further reading:</strong> Local evidence: <code>kanda_reasoner_app/reasoner_tools_gui_help/tab2_workflow.json</code>; Workflow tab shell registration: <code>kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py</code>; Workflow manager facade: <code>kanda_reasoner_app/manage_workflows/manage_workflows.py</code>.</p>
+    </section>
+
+    <section>
+      <h2>Workflow</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/workflow_review_sequence_bakery.png" alt="Hand-made bakery cartoon where recipe cards, trays, stale pastries, and stamps explain workflow sequence validation">
+        <figcaption>Figure WF-1. Good outputs need the right ingredients, the right order, and a final stamp.</figcaption>
+      </figure>
+      <ol>
+        <li>Open <strong>Workflow Review</strong> from the KANDA Reasoner desktop GUI.</li>
+        <li>Confirm the active project root and worker script.</li>
+        <li>Run the workflow review and inspect the issue families.</li>
+        <li>Use the evidence paths and issue descriptions to find the owning workflow contract.</li>
+        <li>Repair narrowly, rerun, and confirm the output is current, non-empty, and validated.</li>
+      </ol>
+    </section>
+
+    <div class="callout callout-warning">
+      <div class="callout-icon">!</div>
+      <div>
+        <p><strong>Authority boundary.</strong> Workflow Review reports workflow risks. It does not rewrite workflows, approve generated output, choose AI routes, mutate canonical JSON, or freeze milestones.</p>
+      </div>
+    </div>
+
+    <section>
+      <h2>Fast Reading Table</h2>
+      <table>
+        <caption>Table WF-1. The issue families are workflow contract signals. They are not automatic permission to rewrite code.</caption>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Workflow Issue</th>
+            <th>Technical</th>
+            <th>In Plain English</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Workflow step points to missing file</td><td>A command, button, or workflow document references a path that is absent.</td><td>The step points to a door that is no longer there.</td></tr>
+          <tr><td>2</td><td>Workflow step points to deprecated file</td><td>The path exists but is no longer the active owner.</td><td>The sign still points to an old counter.</td></tr>
+          <tr><td>3</td><td>Button-to-action mismatch</td><td>A visible UI label and the connected function disagree.</td><td>The button promises one job and does another.</td></tr>
+          <tr><td>4</td><td>Step order dependency errors</td><td>A later step runs before the earlier step creates its input.</td><td>The recipe bakes before the ingredients arrive.</td></tr>
+          <tr><td>5</td><td>Input/output contract mismatch</td><td>One step writes a name or shape the next step does not expect.</td><td>The package has the wrong label for the next counter.</td></tr>
+          <tr><td>6</td><td>Output folder naming mismatch</td><td>Different workflow parts use different names for the same output folder.</td><td>One worker drops the parcel in a different room.</td></tr>
+          <tr><td>7</td><td>Stale generated artifacts</td><td>Generated files are older than their inputs or source files.</td><td>The workflow is serving yesterday's tray.</td></tr>
+          <tr><td>8</td><td>Missing validation step in workflow</td><td>Output is produced without a check that it is valid.</td><td>The order leaves the kitchen without inspection.</td></tr>
+          <tr><td>9</td><td>Placeholder command misuse</td><td>Documentation shows placeholders that a user may run literally.</td><td>Someone copies <code>&lt;PATH&gt;</code> instead of replacing it.</td></tr>
+          <tr><td>10</td><td>GUI state label mismatch</td><td>The UI does not clearly show the loaded file, mode, or track.</td><td>The counter does not say which ticket is active.</td></tr>
+          <tr><td>11</td><td>Dual JSON track workflow mistakes</td><td>Canonical web-AI JSON and local-AI working JSON are confused.</td><td>A practice copy can overwrite the official form.</td></tr>
+          <tr><td>12</td><td>Route manifest ignored by upload workflow</td><td>The splitter creates a route guide that upload instructions omit.</td><td>The map is made, then left on the desk.</td></tr>
+          <tr><td>13</td><td>web_ai_readme ignored by workflow</td><td>The JSON includes a reading guide but the workflow does not tell AI to use it.</td><td>The guidebook is packed but nobody opens it.</td></tr>
+          <tr><td>14</td><td>Missing deterministic route for AI question types</td><td>Common question types do not have a clear file or section route.</td><td>The helper wanders the station looking for the right platform.</td></tr>
+          <tr><td>15</td><td>Broken local-AI Ask flow</td><td>Evidence selection, deterministic path, streaming, or final answer handling breaks.</td><td>The question is asked, but the answer path stalls.</td></tr>
+          <tr><td>16</td><td>Workflow step does not expose enough logs</td><td>A step succeeds or fails without enough evidence to verify what happened.</td><td>The receipt says done but shows no details.</td></tr>
+          <tr><td>17</td><td>Workflow step cannot be rerun idempotently</td><td>Running the same step twice changes state unsafely or mixes outputs.</td><td>Old and new laundry end up in one basket.</td></tr>
+          <tr><td>18</td><td>Workflow references old validation logic</td><td>The workflow calls a validator that does not know the current contract.</td><td>A retired inspector stamps the new package.</td></tr>
+          <tr><td>19</td><td>Missing rollback or fail-safe workflow</td><td>Failure damages or replaces the last known good output.</td><td>A bad wash ruins the clean backup.</td></tr>
+          <tr><td>20</td><td>Workflow documentation drift</td><td>Documentation and current code disagree.</td><td>The written recipe no longer matches the kitchen.</td></tr>
+          <tr><td>21</td><td>Missing cross-project generalization</td><td>The workflow only works for one hardcoded project.</td><td>The route works only from one address.</td></tr>
+          <tr><td>22</td><td>Workflow assumes wrong encoding or line endings</td><td>The workflow reads text with an unsafe encoding or line-ending assumption.</td><td>The ticket is read in the wrong language.</td></tr>
+          <tr><td>23</td><td>Workflow silently succeeds with empty output</td><td>A step reports success while output is empty, tiny, or missing required sections.</td><td>The box is delivered empty.</td></tr>
+          <tr><td>24</td><td>Declared dependency vs installed dependency version skew</td><td>Project metadata and the runtime environment disagree.</td><td>The machine has a different tool than the checklist expects.</td></tr>
+          <tr><td>25</td><td>Path root drift</td><td>The workflow runs from one folder but reads or writes as if it were elsewhere.</td><td>The parcel is delivered to the wrong neighborhood.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Contracts, Routes, And Evidence</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/workflow_review_contract_post_office.png" alt="Hand-made post-office cartoon where parcels, route guides, and shelves explain workflow contracts and path roots">
+        <figcaption>Figure WF-2. Every workflow parcel needs the expected name, shape, destination, and proof.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Workflow contracts are the names, locations, formats, manifests, and evidence records that let one step safely feed the next. Route artifacts such as split manifests and web-AI reading guides are not decoration; they are part of the handoff contract.</p>
+      <p><strong>In plain English:</strong> A workflow output is like a parcel. It needs the right address, shape, label, and receipt. If any of those are missing, the next person may open the wrong box or search the wrong shelf.</p>
+      <p class="further-reading"><strong>Further reading:</strong> <code>workflow_artifact_route_detectors.py</code>; <code>workflow_reader_ai_contract_detectors.py</code>; <code>workflow_evidence_output_route_guard_detectors.py</code>.</p>
+    </section>
+
+    <section>
+      <h2>AI Handoff And Local Tracks</h2>
+      <p><strong>Technical:</strong> Workflow Review flags confusion between canonical web-AI export data, local-AI working copies, route manifests, <code>web_ai_readme</code>, deterministic question routing, and local Ask flow health.</p>
+      <p><strong>In plain English:</strong> AI should not be handed a pile of papers and told to guess. The workflow must say which file answers which kind of question, which copy is official, and which copy is safe for local experiments.</p>
+      <div class="issue-list">
+        <section class="issue-card">
+          <h3><span class="issue-number">Route evidence</span></h3>
+          <p class="technical-line"><strong>Technical:</strong> Route manifests and reading guides must travel with split outputs and upload instructions.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The map must ride with the packages, not stay on the desk.</p>
+        </section>
+        <section class="issue-card">
+          <h3><span class="issue-number">Track separation</span></h3>
+          <p class="technical-line"><strong>Technical:</strong> Canonical JSON and local-AI working JSON need clear labels and safe handoff rules.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The official form and the practice copy cannot share the same counter.</p>
+        </section>
+        <section class="issue-card">
+          <h3><span class="issue-number">Ask flow health</span></h3>
+          <p class="technical-line"><strong>Technical:</strong> Evidence selection, deterministic routing, streaming, and final answer handling must all complete coherently.</p>
+          <p class="plain-line"><strong>In plain English:</strong> The question needs a full path from evidence to answer, not a loading sign forever.</p>
+        </section>
+      </div>
+    </section>
+
+    <section>
+      <h2>Operational Safety</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/workflow_review_validation_laundromat.png" alt="Hand-made laundromat cartoon where workflow outputs are inspected before release and rollback keeps the last good result">
+        <figcaption>Figure WF-3. Clean outputs leave only after logs, validation, rerun safety, and rollback are checked.</figcaption>
+      </figure>
+      <p><strong>Technical:</strong> Safe workflow execution must validate expected files, validate expected JSON shape when applicable, expose logs, support idempotent reruns, preserve last-good outputs, and fail loudly when output is empty or stale.</p>
+      <p><strong>In plain English:</strong> A workflow should behave like a careful service counter. It does not hand you wet laundry, mix old and new clothes, hide the receipt, or throw away the clean backup when a new run fails.</p>
+    </section>
+
+    <section>
+      <h2>Further Reading Map</h2>
+      <div class="reading-map">
+        <p><strong>Legacy catalog:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_help/tab2_workflow.json</code>, used as the local source for the 25 workflow issue families.</p>
+        <p><strong>Tab registration:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py</code>, where Workflow Review maps to <code>tab2_workflow.json</code>.</p>
+        <p><strong>Rich help resolver:</strong> <code>kanda_reasoner_app/reasoner_tools_gui_shell/help_docs/path_resolver.py</code>, which maps legacy catalogs to local HTML pages.</p>
+        <p><strong>Workflow facade:</strong> <code>kanda_reasoner_app/manage_workflows/manage_workflows.py</code>, the stable public entry point for workflow validation governance.</p>
+        <p><strong>Workflow helpers:</strong> <code>kanda_reasoner_app/manage_workflows/manage_workflows_help/</code>, the detector and validation helper box for workflow review behavior.</p>
+        <p><strong>Artwork canon:</strong> <code>kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md</code>, the source of the local raster artwork gate.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Operational Checklist</h2>
+      <ul>
+        <li>Confirm the active project root before running the review.</li>
+        <li>Confirm the worker script shown for Workflow Review.</li>
+        <li>Treat each issue as a workflow contract warning, not as permission for broad edits.</li>
+        <li>Repair only the owning path, command, manifest, validation, or documentation contract.</li>
+        <li>Rerun the workflow after repair.</li>
+        <li>Confirm output freshness, non-empty content, route manifest use, logs, and rollback safety.</li>
+        <li>Freeze only after validation evidence is clean and current.</li>
+      </ul>
+    </section>
+
+    <footer class="running-footer">
+      <span>Workflow Review</span>
+      <span>Local Help</span>
+    </footer>
+  </article>
+</body>
+</html>

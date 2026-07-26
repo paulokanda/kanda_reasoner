@@ -1,0 +1,86 @@
+{
+  "prompt_id": "kanda_routing_system_canon",
+  "display_name": "KANDA Routing System Canon",
+  "filename": "kanda_routing_system_canon.md",
+  "category": "02_prompt_routing_and_indexing",
+  "status": "deprecated",
+  "load_type": "compatibility_redirect",
+  "source_stage": "prompt-audit-wave2a-routing-owner-foundation-v1",
+  "description": "Defines the KANDA routing system as a context-selection operating system: Prompt-Call Accuracy, Context Package Manifest, Prompt Registration v2, advisory similarity boundaries, freeze-aware routing, startup boot discipline, and no global prompt injection. Includes the hard distinction between first startup load readiness and second-upload PROJECT READY CHECK task readiness.",
+  "routing_coverage": "canon_v1",
+  "priority": 3,
+  "trigger_phrases": [
+    "routing system canon",
+    "KANDA Routing System Canon",
+    "canonize routing system",
+    "routing logic canon",
+    "context selection operating system",
+    "Prompt-Call Accuracy",
+    "Context Package Manifest",
+    "Prompt Registration v2",
+    "register prompt as routable context asset",
+    "prompt-call accuracy",
+    "routing-system update",
+    "startup routing behavior",
+    "prompt insertion rule",
+    "similarity advisory routing",
+    "freeze-aware routing",
+    "routing canon registration",
+    "second upload gate",
+    "PROJECT READY CHECK",
+    "WAIT_FOR_TASK gate"
+  ],
+  "user_intent_examples": [
+    "Canonize the routing system itself.",
+    "Update the way prompts are registered into the routing system.",
+    "Define the Context Package Manifest before routing automation.",
+    "Review whether this task needs Fast Path or Routed Work Path context."
+  ],
+  "aliases": [
+    "kanda_routing_system_canon",
+    "kanda_routing_system_canon.md",
+    "routing canon",
+    "routing system canon",
+    "prompt-call canon",
+    "context package manifest canon"
+  ],
+  "when_to_load": "When routing-system behavior, prompt-call accuracy, context package manifests, prompt registration, startup routing, or routing indexes are being audited, changed, canonized, or frozen.",
+  "when_not_to_load": "Do not load for simple Fast Path explanations, small rewrites, ordinary code patches with an already-clear route, or as a substitute for specialist prompts after routing is decided.",
+  "required_companion_prompts": [
+    "ai_prompt_request_canon",
+    "prompt_navigation_index",
+    "GROUP_ASSIMILATION_INDEX"
+  ],
+  "optional_companion_prompts": [
+    "kanda_box_shielding_canon",
+    "cooperative_implementation_methodology",
+    "prompt_canon_reconciliation_protocol",
+    "prompt_audit_canon"
+  ],
+  "authority_boundary": {
+    "may_define": [
+      "routing-system architecture",
+      "prompt-call accuracy rules",
+      "context package manifest standard",
+      "prompt registration rules"
+    ],
+    "must_not_decide": [
+      "final code implementation",
+      "freeze write without human confirmation",
+      "automatic prompt loading",
+      "router override from similarity scorer"
+    ]
+  },
+  "on_request_not_startup_always_loaded": true,
+  "requires_context_package_manifest_for_routed_work": true,
+  "forbidden_authority": [
+    "automatic_prompt_loading",
+    "router_override",
+    "may_proceed_now_from_similarity",
+    "freeze_write_without_confirmation",
+    "global_prompt_injection"
+  ],
+  "canonical_prompt_id": "kanda_routing_system_canon",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+  "do_not_use_as_source_authority": true
+}

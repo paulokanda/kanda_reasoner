@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Show Project to AI</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <h1>Show Project to AI</h1>
+        <p class="subtitle">A first-time user guide for preparing the rules and project files an AI needs before programming work begins.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/project_structure_map_opener_city_planning.png" alt="Hand-drawn city-planning cartoon where people organize a project map, instruction books, and upload packages for an AI">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <p><strong>In plain English:</strong> This tab prepares the files an AI needs before it can safely help with your project. It does not change your application code. It creates copies, summaries, indexes, archives, instructions, and status files for the AI to read.</p>
+      <p>The AI needs two different kinds of context:</p>
+      <ol>
+        <li><strong>First Prompt Files</strong> - the rule book that tells the AI how to work, which safeguards to follow, and how to request more context.</li>
+        <li><strong>Second Prompt Files</strong> - the current project map, source archives, images, Error Memory, validation state, and handoff information.</li>
+      </ol>
+      <div class="callout note"><div class="callout-icon">1</div><div><strong>The order matters.</strong> The AI must learn the rules before receiving the project.</div></div>
+    </section>
+
+    <section>
+      <h2>Before You Start</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_map_scope_survey.png" alt="Hand-drawn survey crew selecting one project district while a broad drive route is blocked">
+        <figcaption>Choose the project itself, not the whole drive.</figcaption>
+      </figure>
+      <ol>
+        <li>Open the <strong>Show Project to AI</strong> tab.</li>
+        <li>Check <strong>Project Root</strong>. It must be the main folder of the project you want the AI to work on.</li>
+        <li>Use <strong>Browse...</strong> when the displayed folder is wrong.</li>
+        <li>Finish any large copy, update, or build operation that is still changing the project.</li>
+        <li>Leave the ZIP limit at <strong>500 MB</strong> unless the AI service requires smaller files.</li>
+      </ol>
+      <p><strong>Example Project Root:</strong> <code>E:\kanda_reasoner</code></p>
+      <div class="callout warning"><div class="callout-icon">!</div><div>A wrong Project Root creates a handoff for the wrong project.</div></div>
+    </section>
+
+    <section>
+      <h2>Recommended First-Time Workflow</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_map_run_stations.png" alt="Hand-drawn station workflow showing instructions first, project files second, and an AI-ready destination">
+        <figcaption>Follow the stations in order; do not send the task before the ready checkpoint.</figcaption>
+      </figure>
+      <ol>
+        <li>Confirm <strong>Project Root</strong>.</li>
+        <li>Select the ZIP size.</li>
+        <li>Click the green <strong>Create First and Second Prompt Files</strong> button.</li>
+        <li>Wait until First Prompt Files finish successfully.</li>
+        <li>Wait until Second Prompt Files and ZIP export finish successfully.</li>
+        <li>Click <strong>Path to First Prompt Files</strong> and open that folder.</li>
+        <li>Start a new AI conversation and upload the First Prompt Files.</li>
+        <li>Wait for <code>STARTUP PACK LOAD CHECK</code> with status <code>COMPLETE</code>.</li>
+        <li>Click <strong>Path to Second Prompt Files</strong> and open that folder.</li>
+        <li>Upload the Second Prompt Files.</li>
+        <li>Wait for <code>PROJECT READY CHECK</code> ending with <code>WAIT_FOR_TASK</code>.</li>
+        <li>Only then describe the real programming task.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Why First Prompt Files Must Be Uploaded First</h2>
+      <p>Think of a new employee:</p>
+      <ul>
+        <li><strong>First Prompt Files</strong> are the employee handbook, safety training, and working rules.</li>
+        <li><strong>Second Prompt Files</strong> are the building map, current records, source material, and job folder.</li>
+      </ul>
+      <p>Uploading the project before the rules can give the AI a large amount of information without the project's required boundaries, validation process, or freeze safeguards.</p>
+    </section>
+
+    <section>
+      <h2>Main Buttons and Fields</h2>
+      <h3>Create First and Second Prompt Files</h3>
+      <p>This is the green button and the recommended choice for a new AI session. It creates the two groups in the correct order. It does not send anything to an AI automatically.</p>
+      <h3>Project Root and Browse...</h3>
+      <p><strong>Project Root</strong> identifies the project being prepared. <strong>Browse...</strong> opens a folder chooser so you do not need to type the path.</p>
+      <h3>Create First Prompt Files</h3>
+      <p>Creates only the startup instructions and prompt-library delivery. Use it when startup rules must be refreshed but the project handoff remains current.</p>
+      <h3>Path to First Prompt Files</h3>
+      <p>Opens the first upload folder, normally <code>E:\kanda_reasoner_show_project_to_AI\first_prompt_files</code>.</p>
+      <h3>Create Second Prompt Files</h3>
+      <p>Creates the current project handoff, runs collection, prepares Error Memory exports, and creates upload ZIP packages. Use it after meaningful project changes.</p>
+      <h3>Path to Second Prompt Files</h3>
+      <p>Opens the second upload folder, normally <code>E:\kanda_reasoner_show_project_to_AI\second_prompt_files</code>.</p>
+      <h3>ZIP size limit</h3>
+      <p>The selected value controls the maximum target size of each standalone ZIP part. It does not reduce project quality or remove source.</p>
+      <ul>
+        <li><strong>500 MB:</strong> fewer files when large uploads are accepted.</li>
+        <li><strong>400, 300, or 200 MB:</strong> middle choices for less reliable upload limits.</li>
+        <li><strong>100 MB:</strong> more numbered parts for strict upload limits.</li>
+      </ul>
+      <p>If a file says <code>part01_of_03</code>, upload all three parts in numerical order.</p>
+    </section>
+
+    <section>
+      <h2>Where Files Are Created and Why</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_map_records_workshop.png" alt="Hand-drawn records workshop separating original project materials from generated AI handoff folders">
+        <figcaption>Keep original project files and generated handoff files in separate rooms.</figcaption>
+      </figure>
+      <p><strong>Project source:</strong> <code>E:\kanda_reasoner</code></p>
+      <p><strong>Generated AI support area:</strong> <code>E:\kanda_reasoner_show_project_to_AI</code></p>
+      <p>The support files stay outside the project so generated ZIPs and evidence are not mistaken for source code, scanned again, added to version control, or mixed with files developers edit directly.</p>
+    </section>
+
+    <section>
+      <h2>What the Second Prompt Files Contain</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_map_evidence_archive.png" alt="Hand-drawn archive where project structure, source indexes, validation records, and Error Memory are organized for an AI">
+        <figcaption>The handoff is an organized library, not one unexplained pile of files.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>_RUN_COLLECTOR_STATUS.txt:</strong> confirms whether collection and ZIP export completed.</li>
+        <li><strong>ai_handoff_upload ZIP:</strong> preferred compact AI-readable project briefing.</li>
+        <li><strong>Compact Error Memory:</strong> current lessons about mistakes that should not be repeated.</li>
+        <li><strong>source_archive_partXX_of_YY ZIP:</strong> exact project source, split when needed.</li>
+        <li><strong>png_assets_partXX_of_YY ZIP:</strong> image assets for visual inspection or exact reconstruction.</li>
+        <li><strong>error_memory_full ZIP:</strong> complete Error Memory; use only when the compact lessons are insufficient or an audit is requested.</li>
+        <li><strong>ai_handoff_all_in_one ZIP:</strong> convenience or fallback archive.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Orange-Label Reminder Buttons</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/project_structure_map_zip_shipping.png" alt="Hand-drawn shipping desk where a user selects one orange reminder card for an AI conversation">
+        <figcaption>Paste the smallest reminder that matches what the AI forgot.</figcaption>
+      </figure>
+      <p>The orange-label buttons copy focused instructions to the clipboard. They do not recreate First or Second Prompt Files. Use them during a long conversation when the AI starts forgetting a specific rule.</p>
+      <div class="callout tip"><div class="callout-icon">i</div><div>Do not paste every orange reminder by default.</div></div>
+      <h3>Answer, Validate, Freeze, Memorize Error</h3>
+      <p>Use when the AI forgets the complete work cycle. It restores the separation between answering, validation, freeze, and Error Memory.</p>
+      <h3>Clean 2sec 2xEnter</h3>
+      <p>Use when terminal instructions end incorrectly. Successful installation waits about two seconds and clears; validation, freeze, diagnostics, and errors wait for two Enter presses and then clear. The terminal stays open.</p>
+      <h3>Bridges: Startup</h3>
+      <p>Use when the AI forgets permanent beginning-of-session rules such as module size, project boundaries, no-leak behavior, durable-document routing, terminal cleanup, or runtime evidence.</p>
+      <h3>Bridges: On Demand</h3>
+      <p>Use when specialist guidance is needed but the AI has forgotten which routed prompt or owner to load.</p>
+      <h3>Anti-hallucination: short</h3>
+      <p>Use for a compact reminder when the AI starts guessing paths, files, symbols, source behavior, or validation results.</p>
+      <h3>Anti-hallucination: full</h3>
+      <p>Use for difficult, repeated, high-risk, or evidence-heavy work that needs stronger source and uncertainty discipline.</p>
+      <h3>Machine-Card: MCard Logic</h3>
+      <p>Use only for Architecture Review Machine-Card work. It restores card ownership, synchronization, lifecycle, and stale-state safeguards.</p>
+    </section>
+
+    <section>
+      <h2>Status, Success Checkpoints, and Common Mistakes</h2>
+      <p>Status labels show whether a process is idle, running, finished, or failed. The log records stages, paths, warnings, counts, and errors. Files appearing in a folder do not by themselves prove that the complete operation succeeded.</p>
+      <h3>After First Prompt Files</h3>
+      <ul><li><code>STARTUP PACK LOAD CHECK</code></li><li>startup status <code>COMPLETE</code></li><li>next action waiting for project files</li></ul>
+      <h3>After Second Prompt Files</h3>
+      <ul><li><code>PROJECT READY CHECK</code></li><li>correct project slug and root</li><li>compact Error Memory loaded</li><li>next action <code>WAIT_FOR_TASK</code></li></ul>
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Sending the task before <code>PROJECT READY CHECK</code>.</li>
+        <li>Uploading Second Prompt Files first.</li>
+        <li>Selecting the wrong Project Root.</li>
+        <li>Uploading only one numbered ZIP part.</li>
+        <li>Opening full Error Memory for every task.</li>
+        <li>Pasting every orange reminder instead of the relevant one.</li>
+        <li>Assuming successful file creation means application code was validated.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Complete Example</h2>
+      <p>You want an AI to add a button to <code>E:\kanda_reasoner</code>.</p>
+      <ol>
+        <li>Select <code>E:\kanda_reasoner</code> as Project Root.</li>
+        <li>Leave ZIP size at 500 MB.</li>
+        <li>Click <strong>Create First and Second Prompt Files</strong>.</li>
+        <li>Upload the First Prompt Files and wait for <code>STARTUP PACK LOAD CHECK</code>.</li>
+        <li>Upload the Second Prompt Files and wait for <code>PROJECT READY CHECK</code>.</li>
+        <li>Describe the new button and where it should appear.</li>
+        <li>If the AI later skips validation, use <strong>Answer, Validate, Freeze, Memorize Error</strong>.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Quick Reference</h2>
+      <table>
+        <caption>Show Project to AI controls for normal and recovery use.</caption>
+        <thead><tr><th>Need</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Start a new AI work session</td><td>Create First and Second Prompt Files</td></tr>
+          <tr><td>Refresh only startup rules</td><td>Create First Prompt Files</td></tr>
+          <tr><td>Refresh only project context</td><td>Create Second Prompt Files</td></tr>
+          <tr><td>Find upload group one</td><td>Path to First Prompt Files</td></tr>
+          <tr><td>Find upload group two</td><td>Path to Second Prompt Files</td></tr>
+          <tr><td>Restore the full work cycle</td><td>Answer, Validate, Freeze, Memorize Error</td></tr>
+          <tr><td>Fix terminal ending behavior</td><td>Clean 2sec 2xEnter</td></tr>
+          <tr><td>Restore daily rules</td><td>Bridges: Startup</td></tr>
+          <tr><td>Request specialist routing</td><td>Bridges: On Demand</td></tr>
+          <tr><td>Stop AI guessing</td><td>Anti-hallucination short or full</td></tr>
+          <tr><td>Restore Machine-Card rules</td><td>MCard Logic</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Authority Boundary</h2>
+      <p>Show Project to AI creates context and handoff files. It does not automatically upload them, change project source, prove a patch is correct, validate application behavior, or freeze a feature.</p>
+    </section>
+
+    <footer class="running-footer">KANDA Reasoner - Show Project to AI - First-time user tutorial</footer>
+  </article>
+</body>
+</html>

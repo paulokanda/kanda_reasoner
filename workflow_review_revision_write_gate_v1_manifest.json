@@ -1,0 +1,8 @@
+{
+    "feature_id":  "workflow-review-revision-write-gate-v1",
+    "installed_sha256":  {
+                             "kanda_reasoner_app/manage_workflows/manage_workflows_gui_help/workflow_revision_controller.py":  "213bd153c85287c5863806fb7c4ec35c1717d6d8bd31f8d4723347467bdf34d9",
+                             "kanda_reasoner_app/manage_workflows/manage_workflows_gui.py":  "3beac26d4756a9264eb2be51a28bf3d30f176f0b0d51462a94f098a9f4ffc6bf",
+                             "tools/validate_workflow_review_revision_write_gate_v1.py":  "0c7abb81bb3373e6c448b56bc100c8155520ef44272ad29eebd5e814fc05cb7a"
+                         }
+}

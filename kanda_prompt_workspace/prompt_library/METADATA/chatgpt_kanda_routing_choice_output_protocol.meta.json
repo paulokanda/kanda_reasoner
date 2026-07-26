@@ -1,0 +1,40 @@
+{
+  "prompt_code": "KPR-02-001",
+  "prompt_id": "chatgpt_kanda_routing_choice_output_protocol",
+  "display_name": "ChatGPT KANDA Routing Choice Output Protocol",
+  "title": "ChatGPT KANDA Routing Choice Output Protocol",
+  "filename": "chatgpt_kanda_routing_choice_output_protocol.md",
+  "category": "02_prompt_routing_and_indexing",
+  "folder": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing",
+  "path": "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
+  "status": "active",
+  "load_type": "on_request",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "Defines the optional advisory KANDA_ROUTING_CHOICE exchange and a compact exact-path retrieval rule.",
+  "priority": 15,
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_identity_code_registry_canon"
+  ],
+  "trigger_phrases": [
+    "KANDA_ROUTING_CHOICE",
+    "machine-readable route choice",
+    "manual router capture",
+    "prompt_library.zip"
+  ],
+  "version": "3.1",
+  "keywords": [
+    "tell_AI_read_before_all.md",
+    "read_before_all",
+    "first_prompts_to_ai.zip"
+  ],
+  "owner_box": "02_prompt_routing_and_indexing",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "authority_boundary": {
+    "may_route_or_select_context": true,
+    "may_mutate_source": false,
+    "may_authorize_coding": false,
+    "may_authorize_freeze": false
+  }
+}

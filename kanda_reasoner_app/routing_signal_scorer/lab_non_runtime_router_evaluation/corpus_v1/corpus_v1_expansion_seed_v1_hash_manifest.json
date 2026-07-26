@@ -1,0 +1,48 @@
+{
+  "aggregate_manifest_hash": "aeb8f5f93129dab10007631bd10914b9fec39bc3f6956b2cc225fa4caf1d26ea",
+  "allowed_corpus_roots": [
+    "kanda_reasoner_app/routing_signal_scorer/lab_non_runtime_router_evaluation/corpus_v1"
+  ],
+  "allowed_fixture_roots": [],
+  "corpus_entries": [
+    {
+      "case_count": 48,
+      "combined_static_case_count_after_lab11": 60,
+      "path": "kanda_reasoner_app/routing_signal_scorer/lab_non_runtime_router_evaluation/corpus_v1/corpus_v1_expansion_seed_v1.json",
+      "sha256": "a2b187788776daf53a7e94bdc3c3df402d61cc270768ec6b42128ed7efa79e40",
+      "static_seed_status": "not_executed_not_scored_not_reliability_evidence"
+    }
+  ],
+  "feature_id": "routing_signal_scorer_v3_ml_lab_corpus_v1_expansion_v1",
+  "feature_title": "Routing Signal Scorer v3 ML LAB Corpus V1 Expansion v1",
+  "fixture_entries": [],
+  "hash_algorithm": "SHA-256",
+  "non_authority_declarations": {
+    "activation_key_created": false,
+    "actual_fixture_snapshots_created": false,
+    "batch_mode_performed": false,
+    "candidate_evaluation_executed": false,
+    "cases_executed": false,
+    "cases_scored": false,
+    "copilot_behavior_performed": false,
+    "embedding_call_performed": false,
+    "field_test_mode_created": false,
+    "live_freeze_memory_reads": false,
+    "live_prompt_library_reads": false,
+    "live_router_canon_reads": false,
+    "metrics_engine_created": false,
+    "network_call_performed": false,
+    "persistent_ml_decision_performed": false,
+    "prompt_loading_performed": false,
+    "provider_call_performed": false,
+    "report_generation_performed": false,
+    "report_persistence_performed": false,
+    "route_authority_granted": false,
+    "route_comparison_performed": false,
+    "runtime_pilot_behavior_performed": false,
+    "runtime_router_imports": false,
+    "scoring_engine_created": false,
+    "subprocess_call_performed": false
+  },
+  "schema_version": "lab-11-corpus-v1-expansion"
+}

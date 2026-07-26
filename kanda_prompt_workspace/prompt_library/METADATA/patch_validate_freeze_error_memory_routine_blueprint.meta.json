@@ -1,0 +1,53 @@
+{
+  "prompt_code": "KPR-05-005",
+  "prompt_id": "patch_validate_freeze_error_memory_routine_blueprint",
+  "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
+  "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
+  "category": "05_patch_delivery_and_validation",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "on_request",
+  "owner_box": "05_patch_delivery_and_validation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
+  "aliases": [
+    "KPR-05-005",
+    "patch_validate_freeze_error_memory_routine_blueprint",
+    "Show Project to AI recovery blueprint",
+    "Answer Validate Freeze Memorize Error",
+    "recovery routine owner dispatch"
+  ],
+  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "description": "Thin Show Project to AI incident classifier and recovery-owner dispatcher; exact commands and schemas remain with current specialist owners.",
+  "priority": 17,
+  "trigger_phrases": [
+    "Answer, Validate, Freeze, Memorize Error",
+    "Show Project to AI recovery routine",
+    "collector export failed",
+    "patch validation freeze recovery",
+    "copy recovery routine"
+  ],
+  "required_companion_prompts": [
+    "project_tool_boundary_canon",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "optional_companion_prompts": [
+    "bundle_gated_development_workflow",
+    "implementation_and_delivery_protocol",
+    "pre_output_contract_gates",
+    "pre_output_contract_gates",
+    "patch_install_delivery_error_register",
+    "terminal_cleanup_contract",
+    "freeze_code_intake_and_form_protocol",
+    "error_memory_ai_formulary_startup_canon"
+  ],
+  "when_to_load": "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.",
+  "when_not_to_load": "Do not load for ordinary delivery when no reusable recovery handoff is requested.",
+  "source_write_authorization": "NO",
+  "do_not_regress": [
+    "Keep the GUI button reading this canonical project-root prompt.",
+    "Keep incident classification separate from exact downstream command and schema ownership.",
+    "Keep project-linked transient staging derived from the selected project.",
+    "Keep freeze and Error Memory actions conditional and explicitly human governed."
+  ]
+}

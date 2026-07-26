@@ -1,0 +1,28 @@
+{
+  "prompt_code": "KPR-07-002",
+  "prompt_id": "prompt_identity_code_registry_canon",
+  "display_name": "Prompt Identity Code Registry Canon",
+  "filename": "prompt_identity_code_registry_canon.md",
+  "category": "07_prompt_authoring_and_audit",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "07_prompt_authoring_and_audit",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_identity_code_registry_canon.md",
+  "aliases": [],
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A068 partial-migration identity model and KPR-07-001 reconciliation",
+  "description": "Canonical owner for prompt codes, prompt IDs, aliases, canonical paths, code allocation, rename, move, split, merge, replacement, and retirement identity behavior.",
+  "priority": 37,
+  "trigger_phrases": [
+    "assign prompt code",
+    "resolve prompt identity",
+    "rename or move a prompt",
+    "split or merge prompt identities",
+    "make a prompt copy paste addressable"
+  ],
+  "required_companion_prompts": [
+    "prompt_canon_reconciliation_protocol",
+    "prompt_insertion_and_router_registration_protocol"
+  ]
+}

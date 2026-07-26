@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Project Structure 3D",
+  "purpose": "Explain fixture versus live evidence, Architecture and Structure modes, filters, refresh, search, camera controls, local browser preview, navigation, node details, renderer status, fallback behavior, and the strict read-only ownership boundary.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Project Structure 3D is a read-only visual map of canonical project evidence.",
+    "Check the project label and source badge before relying on the graph.",
+    "Architecture and Structure modes show different views of the same source snapshot.",
+    "Filters change visible content and do not modify evidence.",
+    "The viewer does not edit source files or become validation authority."
+  ]
+}

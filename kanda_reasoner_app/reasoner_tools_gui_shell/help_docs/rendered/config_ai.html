@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KANDA Help - Config AI</title>
+  <link rel="stylesheet" href="../css/book_help.css">
+</head>
+<body>
+  <article class="book-page">
+    <header class="chapter-opener">
+      <div>
+        <p class="part-label">KANDA Reasoner Help</p>
+        <span class="chapter-number">First-Time User Tutorial</span>
+        <h1>Config AI</h1>
+        <p class="subtitle">Configure the global Web AI gateway and model or the global Local AI endpoint and model, while keeping active project identity and source authority inside each workflow.</p>
+      </div>
+      <figure class="chapter-drawing">
+        <img src="../assets/drawings/config_ai_opener_global_controls.png" alt="Three colleagues review a central configuration board with separate Web AI and Local AI areas, model choices, privacy symbols, and shared global controls">
+      </figure>
+    </header>
+
+    <section>
+      <h2>What Config AI Means</h2>
+      <p>Config AI is the global settings area for AI connections and model selection. It does not hold the active project itself.</p>
+      <p><strong>In plain English:</strong> Config AI chooses which AI service KANDA may call and which model it should use. The workflow still decides which project is active and what exact information is sent.</p>
+      <p>The two sub-tabs are <strong>Config Web AI</strong> and <strong>Config Local AI</strong>.</p>
+    </section>
+
+    <section>
+      <h2>What This Tab Does</h2>
+      <ul>
+        <li>Choose the Web AI gateway and session credential.</li>
+        <li>Refresh and filter the Web AI model catalog.</li>
+        <li>Select the global Web AI model.</li>
+        <li>Inspect capabilities and privacy information.</li>
+        <li>Set the Local AI base URL.</li>
+        <li>Refresh locally available models.</li>
+        <li>Select the global Local AI model.</li>
+        <li>Read connection and catalog status.</li>
+      </ul>
+      <p>Config AI does not store the active Project Root, approve a project payload, or grant source-writing authority.</p>
+      <div class="callout callout-note">
+        <div class="callout-icon">1</div>
+        <div><strong>Configure one side at a time.</strong> Complete Config Web AI only when you need a web provider. Complete Config Local AI only when a local model service is running.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Before You Start</h2>
+      <p>Use Config Web AI for a web-connected provider, current external information, provider catalogs, and API-key-based access.</p>
+      <p>Use Config Local AI for an already running OpenAI-compatible local model service.</p>
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>Do not enter random addresses, keys, or model names.</strong> Config AI is shared global Tool state and can affect every workflow using that AI type.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Safest First-Time Workflow</h2>
+      <h3>Step 1 - Open the correct sub-tab</h3>
+      <p>Choose Config Web AI or Config Local AI.</p>
+      <h3>Step 2 - Enter only required connection information</h3>
+      <p>Choose the Web gateway and credential, or enter the real local base URL.</p>
+      <h3>Step 3 - Refresh the model list</h3>
+      <p>Click the appropriate refresh button and wait for status.</p>
+      <h3>Step 4 - Select one model</h3>
+      <p>Choose a model from the available list.</p>
+      <h3>Step 5 - Read status and capability information</h3>
+      <p>Confirm the catalog, credential, model, capabilities, privacy, and active configuration.</p>
+      <h3>Step 6 - Return to the workflow tab</h3>
+      <p>The workflow will use the global setting but still resolve its own active project and task context.</p>
+    </section>
+
+    <section>
+      <h2>Config Web AI</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/config_ai_web_configuration.png" alt="A team reviews a Config Web AI board showing provider choice, a protected session key, model selection, web search, official sources, and project context">
+        <figcaption>Choose the gateway, load a session credential, refresh the catalog, and inspect the model before using Web AI.</figcaption>
+      </figure>
+
+      <h3>Gateway</h3>
+      <p>Selects the supported web AI service KANDA will contact.</p>
+
+      <h3>API key</h3>
+      <p>Accepts the selected gateway's credential. The field hides typed characters and is described as session-only.</p>
+
+      <h3>Load Environment Key</h3>
+      <p>Looks for the expected key in the process or Windows User environment.</p>
+
+      <h3>Credential</h3>
+      <p>Shows the credential source or availability.</p>
+
+      <h3>Model</h3>
+      <p>Shows the visible Web AI models and makes the selected entry the global Web AI model.</p>
+
+      <h3>Refresh Models</h3>
+      <p>Requests the current model catalog from the selected gateway.</p>
+
+      <h3>Free models only</h3>
+      <p>Filters the visible catalog. Free does not mean private, better, safer, or suitable for every task.</p>
+
+      <h3>Catalog status</h3>
+      <p>Reports loading, availability, or errors.</p>
+
+      <h3>Capabilities</h3>
+      <p>Summarizes structured-output support, context window, and cost label.</p>
+
+      <h3>Privacy</h3>
+      <p>Shows the gateway profile's privacy summary.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">!</div>
+        <div><strong>API keys remain in memory only. Free does not mean private. Every workflow still requires approval for its exact Project payload.</strong></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Web AI First-Time Setup</h2>
+      <ol>
+        <li>Select the Gateway.</li>
+        <li>Enter the session-only key or load the environment key.</li>
+        <li>Confirm Credential status.</li>
+        <li>Set the Free models only filter deliberately.</li>
+        <li>Click Refresh Models.</li>
+        <li>Wait for Catalog status.</li>
+        <li>Select one model.</li>
+        <li>Read Capabilities.</li>
+        <li>Read Privacy.</li>
+        <li>Return to the Web AI workflow.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Config Local AI</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/config_ai_local_configuration.png" alt="A team reviews a Local AI configuration board with a loopback base URL, local server, local model list, refresh control, and privacy checks">
+        <figcaption>Point KANDA to the real local model service, refresh the catalog, and select one global Local AI model.</figcaption>
+      </figure>
+
+      <h3>OpenAI-compatible base URL</h3>
+      <p>The address KANDA uses to contact the local model service. The visible placeholder is <code>http://127.0.0.1:11434/v1</code>, but your actual service may use another address.</p>
+
+      <h3>Global Local AI model</h3>
+      <p>Shows the current model and models returned by the local service.</p>
+
+      <h3>Refresh Local AI Models</h3>
+      <p>Requests the available model list from the configured local service.</p>
+
+      <h3>Status</h3>
+      <p>Shows the catalog state and active Local AI configuration summary.</p>
+
+      <h3>Global Tool ownership</h3>
+      <p>This setting is shared across KANDA workflows and stores no active Project identity, Project Root, Project Support path, source snapshot, or write authority.</p>
+    </section>
+
+    <section>
+      <h2>Local AI First-Time Setup</h2>
+      <ol>
+        <li>Start the local model service outside KANDA.</li>
+        <li>Confirm its OpenAI-compatible base URL.</li>
+        <li>Enter the base URL.</li>
+        <li>Click Refresh Local AI Models.</li>
+        <li>Read Status.</li>
+        <li>Select the global Local AI model.</li>
+        <li>Return to the Local AI workflow.</li>
+        <li>Confirm the workflow's active project before asking.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Tool-versus-Project Boundary</h2>
+      <figure class="section-drawing">
+        <img src="../assets/drawings/config_ai_tool_project_boundary.png" alt="A central Config AI board receives preferences and safety rules, then supplies separate Web AI and Local AI workspaces while protected project decisions remain outside the global settings">
+        <figcaption>Config AI stores global connection and model rules. Each workflow still owns its active project and exact request.</figcaption>
+      </figure>
+      <p><strong>Tool state</strong> includes gateway, session credential, Web AI model, free-only filter, local base URL, Local AI model, and catalog state.</p>
+      <p><strong>Project state</strong> includes the active Project Root, files, source snapshot, task request, exact payload, write authority, and validation responsibility.</p>
+      <p><strong>In plain English:</strong> Config AI chooses the telephone service and the person answering the call. The workflow decides which project is being discussed and what information is allowed into that call.</p>
+    </section>
+
+    <section>
+      <h2>What Is Shared Globally</h2>
+      <p>Changing Config AI may affect Local AI chat, Web AI chat, architecture assistance, code or docstring assistance, Error Memory assistance, Freeze assistance, and other tabs using Config AI.</p>
+      <p>Do not change the global model during important work without understanding that other tabs may use the new selection.</p>
+    </section>
+
+    <section>
+      <h2>Session Keys and Environment Keys</h2>
+      <p>A session-only key is retained for the running application session.</p>
+      <p>An environment key is stored outside the project and loaded by the expected variable name.</p>
+      <p>Never place a key in source code, Git, patch ZIPs, validation evidence, screenshots, reports, or unrelated provider requests.</p>
+    </section>
+
+    <section>
+      <h2>Choosing a Model</h2>
+      <p>Consider web access, structured output, context window, cost, speed, privacy, availability, code reasoning, and response quality.</p>
+      <p>The most expensive model is not automatically best. A free model is not automatically safest. A large context window does not guarantee correct use of all context.</p>
+    </section>
+
+    <section>
+      <h2>What Success Looks Like</h2>
+      <h3>Web AI</h3>
+      <ul>
+        <li>Correct gateway selected</li>
+        <li>Credential recognized</li>
+        <li>Catalog loaded</li>
+        <li>Model selected</li>
+        <li>Capabilities visible</li>
+        <li>Privacy summary read</li>
+      </ul>
+      <h3>Local AI</h3>
+      <ul>
+        <li>Local service running</li>
+        <li>Correct base URL entered</li>
+        <li>Catalog refreshed</li>
+        <li>Model selected</li>
+        <li>Status shows active configuration</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Common Mistakes</h2>
+      <ul>
+        <li>Entering a project path in Config AI</li>
+        <li>Assuming the Local AI placeholder URL is always correct</li>
+        <li>Refreshing Web AI models without a credential</li>
+        <li>Assuming free means private</li>
+        <li>Selecting a model without reading capabilities</li>
+        <li>Changing the global model during another workflow</li>
+        <li>Treating model configuration as source-write authority</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>If Something Goes Wrong</h2>
+      <h3>Environment key not found</h3>
+      <p>Confirm the expected variable name and restart KANDA after environment changes when necessary.</p>
+      <h3>Web catalog does not load</h3>
+      <p>Check gateway, credential, internet connection, provider availability, and status.</p>
+      <h3>No Web AI model is visible</h3>
+      <p>Adjust Free models only and refresh again.</p>
+      <h3>Local model refresh fails</h3>
+      <p>Confirm the service is running, the base URL is correct, and the service exposes an OpenAI-compatible catalog.</p>
+      <h3>A workflow reports no model configured</h3>
+      <p>Confirm the global selection, then reopen or refresh the workflow.</p>
+    </section>
+
+    <section>
+      <h2>First-Time Checklist</h2>
+      <h3>Config Web AI</h3>
+      <ul>
+        <li>Correct gateway</li>
+        <li>Correct credential</li>
+        <li>Credential status checked</li>
+        <li>Catalog refreshed</li>
+        <li>Filter understood</li>
+        <li>Model selected</li>
+        <li>Capabilities and Privacy read</li>
+      </ul>
+      <h3>Config Local AI</h3>
+      <ul>
+        <li>Local service installed and running</li>
+        <li>Correct OpenAI-compatible base URL</li>
+        <li>Local models refreshed</li>
+        <li>Model selected</li>
+        <li>Status checked</li>
+      </ul>
+      <h3>Before returning to a workflow</h3>
+      <ul>
+        <li>Correct AI type chosen</li>
+        <li>Global model confirmed</li>
+        <li>Active project will be selected in the workflow</li>
+        <li>Exact payload will be reviewed there</li>
+        <li>No source-writing authority assumed</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Important Safety Boundary</h2>
+      <p>Config AI chooses global connection and model settings. It does not choose the active project, approve the exact payload, authorize source modification, validate a patch, or freeze behavior.</p>
+      <p>Each workflow must still resolve the active project, build its own request identity, decide appropriate context, preserve human confirmation, and validate resulting changes separately.</p>
+    </section>
+
+    <section>
+      <h2>Final Rule</h2>
+      <p><strong>Configure the connection and model globally, but select the project, review the payload, and authorize any source change only inside the specific governed workflow that needs it.</strong></p>
+    </section>
+
+    <footer class="running-footer">
+      <span>Config AI</span>
+      <span>First-Time User Help</span>
+    </footer>
+  </article>
+</body>
+</html>

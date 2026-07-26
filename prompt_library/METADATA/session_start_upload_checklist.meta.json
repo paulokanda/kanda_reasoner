@@ -1,0 +1,35 @@
+{
+  "prompt_id": "session_start_upload_checklist",
+  "display_name": "Session Start Upload Checklist",
+  "filename": "session_start_upload_checklist.md",
+  "category": "01_session_start_and_navigation",
+  "status": "deprecated",
+  "load_type": "compatibility_only",
+  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "description": "Human-facing checklist for what to upload at the beginning of a session, including the mandatory second_prompt_files project handoff gate before project work.",
+  "box_logic_required": true,
+  "renamed_in_clean_reconciliation_v2": true,
+  "routing_coverage": "complete_v3",
+  "priority": 20,
+  "trigger_phrases": [
+    "what files should I upload",
+    "upload checklist",
+    "session files",
+    "start checklist",
+    "what to send first",
+    "second_prompt_files",
+    "second upload files",
+    "project files from second prompt files"
+  ],
+  "required_companion_prompts": [
+    "prompt_navigation_index",
+    "prompt_router"
+  ],
+  "version": "1.2",
+  "do_not_use_as_source_authority": true,
+  "replacement_prompt_ids": [
+    "session_start_upload_checklist"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
+  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1"
+}

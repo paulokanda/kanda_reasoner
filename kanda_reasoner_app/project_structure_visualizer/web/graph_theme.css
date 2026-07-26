@@ -1,0 +1,254 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: #07101c;
+  color: #eef4ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 45% 42%, rgba(38, 94, 150, 0.22), transparent 42%),
+    linear-gradient(145deg, #050a12, #091728 55%, #06101c);
+}
+
+.visualizer-root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  width: 100%;
+  height: 100%;
+}
+
+.visualizer-root.embedded {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.visualizer-root.embedded .scene-shell {
+  width: 100%;
+  height: 100%;
+}
+
+.visualizer-root.embedded .browser-details {
+  display: none;
+}
+
+.scene-shell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.graph-3d-host {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.graph-3d-host > div,
+.graph-3d-host canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.graph-3d-host canvas {
+  cursor: grab;
+  touch-action: none;
+}
+
+.graph-3d-host canvas:active {
+  cursor: grabbing;
+}
+
+.scene-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 13px;
+  border: 1px solid rgba(133, 183, 230, 0.28);
+  border-radius: 10px;
+  background: rgba(5, 13, 24, 0.72);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.scene-badge strong {
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.scene-badge span,
+.scene-help {
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.scene-help {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(5, 13, 24, 0.62);
+  pointer-events: none;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 8;
+  max-width: 280px;
+  padding: 8px 10px;
+  border: 1px solid rgba(167, 207, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(6, 14, 26, 0.94);
+  color: #f5f8ff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.browser-details {
+  overflow: auto;
+  padding: 28px 24px;
+  border-left: 1px solid rgba(133, 183, 230, 0.2);
+  background: rgba(6, 13, 24, 0.9);
+}
+
+.browser-details h1 {
+  margin: 4px 0 8px;
+  font-size: 24px;
+}
+
+.eyebrow {
+  color: #56d6ff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.muted {
+  color: #91a9c3;
+  line-height: 1.55;
+}
+
+.details-card,
+.legend-card {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid rgba(133, 183, 230, 0.2);
+  border-radius: 12px;
+  background: rgba(13, 30, 50, 0.55);
+}
+
+.details-card h2,
+.legend-card h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.details-card dl {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 8px 10px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.details-card dt {
+  color: #7e98b4;
+}
+
+.details-card dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.legend-card > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 8px 0;
+  color: #b8c9dc;
+  font-size: 12px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 11px currentColor;
+}
+
+.legend-dot.gui { color: #ff9a45; background: currentColor; }
+.legend-dot.ai { color: #b98cff; background: currentColor; }
+.legend-dot.validation { color: #5fe09b; background: currentColor; }
+.legend-dot.evidence { color: #ffd65a; background: currentColor; }
+.legend-dot.external { color: #8d9bad; background: currentColor; }
+
+.browser-navigation {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 36px);
+  padding: 8px;
+  border: 1px solid rgba(133, 183, 230, 0.28);
+  border-radius: 10px;
+  background: rgba(5, 13, 24, 0.82);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.visualizer-root.embedded .browser-navigation {
+  display: none;
+}
+
+.browser-navigation button,
+.browser-navigation input {
+  min-height: 30px;
+  border: 1px solid rgba(143, 190, 234, 0.32);
+  border-radius: 7px;
+  background: rgba(13, 37, 63, 0.9);
+  color: #ffffff;
+  font: 600 11px "Segoe UI", Arial, sans-serif;
+}
+
+.browser-navigation button {
+  padding: 5px 9px;
+  cursor: pointer;
+}
+
+.browser-navigation button:hover {
+  border-color: rgba(101, 204, 255, 0.82);
+  background: rgba(25, 67, 104, 0.94);
+}
+
+.browser-navigation input {
+  width: 150px;
+  padding: 5px 8px;
+  outline: none;
+}
+
+.browser-navigation input::placeholder {
+  color: rgba(255, 255, 255, 0.72);
+}

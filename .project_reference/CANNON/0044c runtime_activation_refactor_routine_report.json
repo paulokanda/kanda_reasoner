@@ -1,0 +1,122 @@
+{
+  "audit_text_sha256": "33e86606dc8dd0d7cf8a76c419551dc32629711d0d22c3f6f79afea3b9108b50",
+  "baseline_dynamic_calls": [
+    {
+      "line": 143,
+      "name": "getattr"
+    },
+    {
+      "line": 146,
+      "name": "getattr"
+    },
+    {
+      "line": 214,
+      "name": "getattr"
+    },
+    {
+      "line": 217,
+      "name": "getattr"
+    }
+  ],
+  "baseline_public_all": [
+    "build_phase9_read_only_advisory_panel_runtime_activation_contract",
+    "build_phase9_read_only_panel_runtime_activation_contract_probe",
+    "evaluate_phase9_read_only_advisory_panel_runtime_activation_request",
+    "ReadOnlyAdvisoryPanelRuntimeActivationDecision",
+    "ReadOnlyPanelRuntimeActivationMode",
+    "ReadOnlyPanelRuntimeActivationStatus"
+  ],
+  "candidate_family": [
+    {
+      "ascii_only": true,
+      "dynamic_calls": [],
+      "line_count": 347,
+      "path": "/mnt/data/runtime_activation_install_sim/kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/read_only_advisory_panel_runtime_activation_contract.py",
+      "public_all": [
+        "build_phase9_read_only_advisory_panel_runtime_activation_contract",
+        "build_phase9_read_only_panel_runtime_activation_contract_probe",
+        "evaluate_phase9_read_only_advisory_panel_runtime_activation_request",
+        "ReadOnlyAdvisoryPanelRuntimeActivationDecision",
+        "ReadOnlyPanelRuntimeActivationMode",
+        "ReadOnlyPanelRuntimeActivationStatus"
+      ],
+      "sha256": "96d21fd75dcba7e0b19995c184bc14ea606a588ad140b847dbfab2ed6b6bda2d",
+      "top_level_symbols": [
+        "ReadOnlyPanelRuntimeActivationMode",
+        "ReadOnlyPanelRuntimeActivationStatus",
+        "ReadOnlyAdvisoryPanelRuntimeActivationPolicy",
+        "ReadOnlyAdvisoryPanelRuntimeActivationDecision",
+        "build_phase9_read_only_advisory_panel_runtime_activation_contract",
+        "evaluate_phase9_read_only_advisory_panel_runtime_activation_request",
+        "build_phase9_read_only_panel_runtime_activation_contract_probe",
+        "_decision"
+      ],
+      "utf8_bom": false
+    },
+    {
+      "ascii_only": true,
+      "dynamic_calls": [],
+      "line_count": 102,
+      "path": "/mnt/data/runtime_activation_install_sim/kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/_read_only_advisory_panel_runtime_activation_contract_evaluation.py",
+      "public_all": [],
+      "sha256": "77e0b9e8bddda908b1458ee0bb409b36d9a9733b376875576236c11c6a830fd1",
+      "top_level_symbols": [
+        "_status_for_requested_capabilities",
+        "_view_model_is_safe"
+      ],
+      "utf8_bom": false
+    },
+    {
+      "ascii_only": true,
+      "dynamic_calls": [],
+      "line_count": 151,
+      "path": "/mnt/data/runtime_activation_install_sim/kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/_read_only_advisory_panel_runtime_activation_contract_invariants.py",
+      "public_all": [],
+      "sha256": "7fe99e6a4acb0b4bc0e5ec6f393be0e0c2af77e4bc0d5a41437f92775006dd31",
+      "top_level_symbols": [
+        "_validate_policy_invariants",
+        "_validate_decision_invariants",
+        "_require_tuple_of_text"
+      ],
+      "utf8_bom": false
+    }
+  ],
+  "fresh_audits": [
+    {
+      "hard_blockers": [],
+      "label": "SAFE REFACTORING",
+      "relative_path": "kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/read_only_advisory_panel_runtime_activation_contract.py",
+      "score": 2,
+      "warnings": [
+        "Decorated functions or classes require decorator preservation checks.",
+        "Type annotations may require import preservation in helper modules."
+      ]
+    },
+    {
+      "hard_blockers": [],
+      "label": "SAFE REFACTORING",
+      "relative_path": "kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/_read_only_advisory_panel_runtime_activation_contract_evaluation.py",
+      "score": 5,
+      "warnings": [
+        "No independent responsibility-island pair was detected.",
+        "Only one responsibility island was detected.",
+        "Type annotations may require import preservation in helper modules."
+      ]
+    },
+    {
+      "hard_blockers": [],
+      "label": "SAFE REFACTORING",
+      "relative_path": "kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/_read_only_advisory_panel_runtime_activation_contract_invariants.py",
+      "score": 1,
+      "warnings": [
+        "Type annotations may require import preservation in helper modules."
+      ]
+    }
+  ],
+  "initial_label": "RISK REFACTORING",
+  "source_identity_match": true,
+  "source_sha256_expected": "f7b88aad8438561ddeea1e6b29a60177ce40bd545da72ea7fd5cabf14206df22",
+  "source_sha256_extracted": "85e7b6bdd7980f6af951a8421029b6ff8aef742096f6592dbbdbf48827cd6ad0",
+  "source_sha256_extracted_with_final_newline": "f7b88aad8438561ddeea1e6b29a60177ce40bd545da72ea7fd5cabf14206df22",
+  "target_relative_path": "kanda_reasoner_app/routing_signal_scorer/ml_advisory_signal/read_only_advisory_panel_runtime_activation_contract.py"
+}

@@ -1,0 +1,37 @@
+{
+  "prompt_code": "KPR-06-001",
+  "prompt_id": "web_ai_large_module_refactor_exchange_protocol",
+  "display_name": "Web AI Large Module Refactor Exchange Protocol",
+  "filename": "web_ai_large_module_refactor_exchange_protocol.md",
+  "category": "06_refactor_and_architecture_hardening",
+  "status": "active",
+  "load_type": "routed",
+  "source_stage": "prompt-audit-wave6c-web-ai-exchange-boundaries-v1",
+  "description": "Bounded external Web AI architecture-review protocol for an existing Large File Refactor Planner plan; owns planning reasoning only and delegates bundle and delivery mechanics.",
+  "box_logic_required": true,
+  "routing_coverage": "wave6c_external_planner_architecture_exchange_v2",
+  "priority": 36,
+  "trigger_phrases": [
+    "Copy Comprehensive Planning for Web AI",
+    "AI Refactor Version How To",
+    "Imported Web AI Version",
+    "Receive Planning from Web AI",
+    "external Web AI improve split plan"
+  ],
+  "required_companion_prompts": [
+    "large_module_refactor_protocol",
+    "web_ai_planning_response_bundle_blueprint",
+    "brick_wall_comprehensive_quality_gate",
+    "pre_output_contract_gates",
+    "freeze_code_intake_and_form_protocol"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md",
+  "do_not_regress": [
+    "Keep KPR-06-001 limited to external planning reasoning and bounded action selection.",
+    "Keep exact source_content_hash and base_plan_hash identity.",
+    "Keep actions bounded to supplied known modules, symbols, renames, and docstring targets.",
+    "Delegate bundle formatting to KPR-06-002 and package, terminal, evidence, and freeze mechanics to current owners.",
+    "Do not edit selected-project source or write canonical freeze memory from the planning exchange."
+  ],
+  "version": "2.0.0"
+}

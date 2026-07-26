@@ -1,0 +1,32 @@
+{
+  "prompt_code": "KPR-07-001",
+  "prompt_id": "prompt_insertion_and_router_registration_protocol",
+  "display_name": "Prompt Insertion and Router Registration Protocol",
+  "filename": "prompt_insertion_and_router_registration_protocol.md",
+  "category": "07_prompt_authoring_and_audit",
+  "version": "2.0",
+  "status": "active",
+  "load_type": "routed",
+  "owner_box": "07_prompt_authoring_and_audit",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md",
+  "aliases": [],
+  "source_stage": "prompt-library-class07-foundation-correction-v1",
+  "updated_for": "A069 implementation-only lifecycle mutation and registration scope",
+  "description": "Applies an authorized Prompt Library lifecycle decision through atomic, idempotent source, metadata, folder, routing, generator, and mutation-specific validation steps.",
+  "priority": 36,
+  "trigger_phrases": [
+    "insert an approved prompt",
+    "register an approved prompt",
+    "apply prompt library correction",
+    "move or deprecate a prompt",
+    "update prompt metadata and routes"
+  ],
+  "required_companion_prompts": [
+    "prompt_audit_canon",
+    "prompt_canon_reconciliation_protocol",
+    "prompt_identity_code_registry_canon",
+    "project_specific_prompt_generalization",
+    "brick_wall_comprehensive_quality_gate"
+  ],
+  "load_mode_rule": "routed only after current audit, reconciliation, identity, exact-source, and Brick Wall authorization evidence"
+}

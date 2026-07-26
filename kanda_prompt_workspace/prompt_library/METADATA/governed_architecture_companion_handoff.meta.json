@@ -1,0 +1,29 @@
+{
+  "prompt_code": "KPR-04-007",
+  "prompt_id": "governed_architecture_companion_handoff",
+  "display_name": "Governed Architecture Companion Handoff - Deprecated Redirect",
+  "filename": "governed_architecture_companion_handoff.md",
+  "category": "04_box_architecture_and_boundaries",
+  "version": "3.0",
+  "status": "deprecated",
+  "load_type": "never",
+  "owner_box": "04_box_architecture_and_boundaries",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md",
+  "aliases": [
+    "KPR-04-007",
+    "governed_architecture_companion_handoff",
+    "governed architecture companion"
+  ],
+  "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
+  "description": "Compact historical redirect preserving the retired companion identity while dispatching to current canonical owners.",
+  "replacement_prompt_ids": [
+    "brick_wall_comprehensive_quality_gate",
+    "box_architecture_canon",
+    "project_tool_boundary_canon",
+    "boundary_first_repair_protocol",
+    "kanda_box_shielding_canon"
+  ],
+  "active_route": false,
+  "source_write_authorization": "NO"
+}

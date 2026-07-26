@@ -1,0 +1,32 @@
+{
+  "prompt_id": "handoff_at_end_of_work",
+  "prompt_code": "KPR-01-008",
+  "display_name": "End-of-Work Handoff Guardrail",
+  "filename": "handoff_at_end_of_work.md",
+  "category": "01_session_start_and_navigation",
+  "status": "active",
+  "load_type": "always_startup",
+  "version": "2.0",
+  "owner_box": "01_session_start_and_navigation",
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/handoff_at_end_of_work.md",
+  "source_stage": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "updated_for": "prompt-audit-wave3b-specialist-startup-bridges-v1",
+  "description": "Always-startup session-closure trigger and minimum factual continuity contract.",
+  "priority": 8,
+  "trigger_phrases": [
+    "take a break",
+    "stop for today",
+    "continue later",
+    "create handoff",
+    "new chat"
+  ],
+  "required_companion_prompts": [
+    "workflow_handoff_template",
+    "durable_document_artifact_routing_canon"
+  ],
+  "recommended_companion_prompts": [
+    "project_tool_boundary_canon",
+    "freeze_code_intake_and_form_protocol",
+    "architecture_review_project_card_machine_canon"
+  ]
+}

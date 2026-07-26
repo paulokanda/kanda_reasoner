@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KANDA Project Structure 3D</title>
+<style>
+{{KANDA_STYLE}}
+</style>
+{{KANDA_QWEBCHANNEL_SCRIPT}}
+</head>
+<body>
+<div id="visualizerRoot" class="visualizer-root">
+  <main class="scene-shell">
+    <div id="graph3dHost" class="graph-3d-host" aria-label="Read-only 3D project graph"></div>
+    <div class="scene-badge">
+      <strong>Project Structure 3D</strong>
+      <span id="sceneStatus">Loading local WebGL graph...</span>
+    </div>
+    <div class="scene-help">Drag to orbit | Right-drag to pan | Wheel to zoom | Click to focus</div>
+    <div id="browserNavigation" class="browser-navigation">
+      <button type="button" data-command="back">Back</button>
+      <button type="button" data-command="forward">Forward</button>
+      <button type="button" data-command="overview">Overview</button>
+      <button type="button" data-command="isolate">Isolate</button>
+      <button type="button" data-command="expand">Expand / collapse</button>
+      <input id="browserPathQuery" type="search" placeholder="Path target">
+      <button type="button" data-command="path">Trace path</button>
+    </div>
+  </main>
+  <aside id="browserDetails" class="browser-details">
+    <div class="eyebrow">READ-ONLY EVIDENCE VIEW</div>
+    <h1>Project Structure 3D</h1>
+    <p class="muted">Select a node to inspect its role and relationships.</p>
+    <div id="browserDetailsBody" class="details-card">No node selected.</div>
+    <div class="legend-card">
+      <h2>Visual language</h2>
+      <div><span class="legend-dot gui"></span>GUI shell</div>
+      <div><span class="legend-dot ai"></span>AI and reasoner</div>
+      <div><span class="legend-dot validation"></span>Validation</div>
+      <div><span class="legend-dot evidence"></span>Evidence and retrieval</div>
+      <div><span class="legend-dot external"></span>External dependency</div>
+    </div>
+  </aside>
+</div>
+<script>
+window.__KANDA_GRAPH_SNAPSHOT__ = {{KANDA_GRAPH_JSON}};
+window.__KANDA_GRAPH_GENERATION__ = "{{KANDA_GENERATION_ID}}";
+window.__KANDA_EMBEDDED__ = {{KANDA_EMBEDDED}};
+window.__KANDA_VENDOR_MANIFEST__ = {{KANDA_VENDOR_MANIFEST_JSON}};
+</script>
+<script>
+{{KANDA_VENDOR_SCRIPT}}
+</script>
+<script>
+{{KANDA_QT_BRIDGE_SCRIPT}}
+</script>
+<script>
+{{KANDA_BROWSER_DETAILS_SCRIPT}}
+</script>
+<script>
+{{KANDA_NAVIGATION_SCRIPT}}
+</script>
+<script>
+{{KANDA_PAINTER_SCRIPT}}
+</script>
+<script>
+{{KANDA_SCRIPT}}
+</script>
+</body>
+</html>
