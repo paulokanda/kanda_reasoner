@@ -1,4 +1,5 @@
-# project-path: kanda_reasoner_app/project_structure_visualizer/graph_protection_status.py
+# project-path:
+# kanda_reasoner_app/project_structure_visualizer/graph_protection_status.py
 """Apply read-only test and Freeze protection evidence to graph nodes."""
 
 from __future__ import annotations
@@ -125,13 +126,9 @@ def _normalize_protected_path(value: object) -> str:
     return text.rstrip("/")
 
 
-def _path_is_protected(relative_path: str, protected_path: str) -> bool:
-    """Return whether one node path is owned by a protected file/folder."""
-    node = PurePosixPath(relative_path)
-    protected = PurePosixPath(protected_path)
-    if node == protected:
-        return True
-    return len(node.parts) > len(protected.parts) and node.parts[: len(protected.parts)] == protected.parts
+def _path_parts(value: str) -> tuple[str, ...]:
+    """Return normalized path components for indexed prefix matching."""
+    return tuple(PurePosixPath(value).parts)
 
 
 def _apply_freeze_protection(
@@ -153,6 +150,13 @@ def _apply_freeze_protection(
             protected_path = _normalize_protected_path(raw_path)
             if freeze_id and protected_path:
                 active.append((freeze_id, protected_path))
+
+    active_by_path: dict[tuple[str, ...], set[str]] = {}
+    for freeze_id, protected_path in active:
+        protected_parts = _path_parts(protected_path)
+        if protected_parts:
+            active_by_path.setdefault(protected_parts, set()).add(freeze_id)
+
     project_id = next(
         (str(node["id"]) for node in nodes if node.get("kind") == "project"),
         "",
@@ -163,13 +167,13 @@ def _apply_freeze_protection(
         relative_path = str(node.get("relative_path") or "")
         if not relative_path:
             continue
-        matching = sorted(
-            {
-                freeze_id
-                for freeze_id, protected_path in active
-                if _path_is_protected(relative_path, protected_path)
-            }
-        )
+        node_parts = _path_parts(relative_path)
+        matching_ids: set[str] = set()
+        for part_count in range(1, len(node_parts) + 1):
+            matching_ids.update(
+                active_by_path.get(node_parts[:part_count], ())
+            )
+        matching = sorted(matching_ids)
         if not matching:
             continue
         node["frozen"] = True
