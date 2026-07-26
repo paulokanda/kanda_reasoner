@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass
-from typing import Iterable
 
 from PySide6.QtCore import QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication
@@ -73,7 +72,6 @@ class WebAIConfigurationController(QObject):
         self._operation_id = ""
         self._catalog_thread: QThread | None = None
         self._catalog_worker: ProjectWebAIModelCatalogWorker | None = None
-        self._load_environment_key(silent=True)
 
     def profile(self) -> GatewayProfile:
         """Return the selected immutable gateway profile."""
@@ -94,7 +92,6 @@ class WebAIConfigurationController(QObject):
         self._all_models = []
         self._selected_model_id = ""
         self._catalog_status = "Not loaded"
-        self._load_environment_key(silent=True)
         self._touch()
         self.catalog_changed.emit(tuple())
 
@@ -240,7 +237,11 @@ class WebAIConfigurationController(QObject):
         visible_ids = {model.model_id for model in visible}
         if self._selected_model_id not in visible_ids:
             self._selected_model_id = visible[0].model_id if visible else ""
-        timestamp = self._all_models[0].catalog_timestamp if self._all_models else "unknown"
+        timestamp = (
+            self._all_models[0].catalog_timestamp
+            if self._all_models
+            else "unknown"
+        )
         self._catalog_status = f"{len(self._all_models)} models; updated {timestamp}"
         self._touch()
         self.catalog_changed.emit(tuple(visible))
