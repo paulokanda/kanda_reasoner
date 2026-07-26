@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import os
 from pathlib import Path
+
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_transient_garbage_root,
+)
 import py_compile
 import shutil
 import subprocess
@@ -60,7 +64,7 @@ class SandboxValidationReport:
 
 def _sandbox_parent(project_root: Path) -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    daily_work = project_root.parent / f"{project_root.name}_delete_after_daily_work"
+    daily_work = canonical_transient_garbage_root(project_root)
     return daily_work / "warning_local_ai_resolver" / "test_generation" / timestamp
 
 

@@ -7,6 +7,10 @@ from datetime import datetime, timezone
 import hashlib
 import os
 from pathlib import Path
+
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_transient_garbage_root,
+)
 import re
 from collections.abc import Callable, Iterable
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import (
@@ -399,7 +403,7 @@ def render_test_protection_link_text(test_text: str, module_name: str) -> str:
     return _render_linked_test_text(test_text, module_name)
 def _backup_root(project_root: Path) -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    daily_work = project_root.parent / f"{project_root.name}_delete_after_daily_work"
+    daily_work = canonical_transient_garbage_root(project_root)
     return daily_work / "warning_heuristic_resolver" / "test_protection_gap" / timestamp
 def apply_test_protection_gap_plan(
     plan: TestProtectionGapPlan,

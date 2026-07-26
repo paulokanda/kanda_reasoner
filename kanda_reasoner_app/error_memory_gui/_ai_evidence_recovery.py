@@ -7,6 +7,11 @@ import json
 from pathlib import Path
 from typing import Any, Iterable
 
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_project_support_root,
+    canonical_transient_garbage_root,
+)
+
 __all__ = [
     "recover_validation_evidence",
 ]
@@ -59,12 +64,12 @@ def _safe_path(value: Any) -> Path | None:
 
 def _show_project_root(project_root: Path) -> Path:
     """Return the external show_project_to_AI root for a project."""
-    return project_root.with_name(project_root.name + "_show_project_to_AI")
+    return canonical_project_support_root(project_root)
 
 
 def _work_root(project_root: Path) -> Path:
     """Return the delete-after-daily-work root for a project."""
-    return project_root.with_name(project_root.name + "_delete_after_daily_work")
+    return canonical_transient_garbage_root(project_root)
 
 
 def _candidate_roots(project_root: Any) -> list[Path]:

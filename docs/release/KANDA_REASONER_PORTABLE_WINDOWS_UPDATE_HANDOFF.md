@@ -2,14 +2,14 @@
 
 ## Repeatable recipe for rebuilding, validating, packaging, and publishing the portable Windows version
 
-Document status: Known-good build procedure  
+Document status: Updated known-good build and Windows-compatible ZIP procedure  
 Baseline release: KANDA Reasoner Windows Portable v0.1.0  
 Baseline date: July 2026  
 Project repository: `E:\kanda_reasoner`  
 Canonical launcher: `reasoner_tools_gui.py`  
 Canonical PyInstaller specification: `KandaReasonerWindows.spec`  
 Packaging format: PyInstaller one-folder build  
-Final executable: `dist\KandaReasoner\KandaReasoner.exe`  
+Final executable: `dist\kanda_reasoner\kanda_reasoner.exe`  
 Final distributable: `KandaReasoner-Windows-Portable.zip`
 
 ---
@@ -45,8 +45,8 @@ The released application must work as follows:
 ```text
 Download KandaReasoner-Windows-Portable.zip
 → Extract All
-→ open the extracted KandaReasoner folder
-→ double-click KandaReasoner.exe
+→ open the extracted kanda_reasoner folder
+→ double-click kanda_reasoner.exe
 ```
 
 The target computer must not require:
@@ -64,12 +64,12 @@ This is a portable one-folder application, not an installer and not a single-fil
 The extracted folder must remain intact:
 
 ```text
-KandaReasoner\
-├── KandaReasoner.exe
+kanda_reasoner\
+├── kanda_reasoner.exe
 └── _internal\
 ```
 
-`KandaReasoner.exe` depends on the contents of `_internal`. Never distribute the executable by itself.
+`kanda_reasoner.exe` depends on the contents of `_internal`. Never distribute the executable by itself.
 
 ---
 
@@ -127,7 +127,7 @@ A successful PyInstaller message does not prove that KANDA Reasoner works.
 The real acceptance test is:
 
 ```text
-dist\KandaReasoner\KandaReasoner.exe
+dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 Open the packaged executable and test the important tabs.
@@ -358,7 +358,61 @@ A Python installation path can legitimately appear in PyInstaller’s live build
 
 ---
 
-### 5.7 Ruff IDE popup was misleading
+### 5.7 Windows Explorer rejected an otherwise readable ZIP
+
+#### Problem
+
+The original archive could be read by Python, PowerShell, and `tar.exe`, but Windows Explorer reported that the compressed folder was invalid.
+
+The decisive issue was the presence of packaged non-runtime planning documents whose internal archive paths reached 260 bytes or more. The longest observed path was over 300 characters.
+
+#### Correct behavior
+
+The final release ZIP must be created from a staged copy of `dist\kanda_reasoner`.
+
+The staging procedure removes the known non-runtime long-path planning directory:
+
+```text
+_internal\kanda_reasoner_app\routing_signal_scorer\mlrt_non_runtime_candidate_reliability
+```
+
+The procedure then rejects the release when any remaining archive path is 260 UTF-8 bytes or longer and validates the completed ZIP through Windows Explorer's `Shell.Application` parser.
+
+#### Regression check
+
+Before publication:
+
+- double-click the ZIP in Windows Explorer;
+- confirm that it opens without an invalid-folder message;
+- confirm exactly one top-level `kanda_reasoner` folder;
+- extract it to a clean folder;
+- run `kanda_reasoner.exe` from the extracted folder.
+
+Do not replace the staged .NET ZIP procedure with `Compress-Archive`.
+
+---
+
+### 5.8 Release executable opened an unwanted terminal window
+
+#### Problem
+
+The PyInstaller specification used `console=True`, causing a terminal window to open beside the GUI and display repeated nonfatal Qt `connectSlotsByName` warnings.
+
+#### Correct behavior
+
+The release specification uses:
+
+```python
+console=False,
+```
+
+This produces a normal GUI application without an accompanying terminal window.
+
+A temporary diagnostic build may use `console=True`, but that setting must not be committed as the normal release baseline.
+
+---
+
+### 5.9 Ruff IDE popup was misleading
 
 #### Problem
 
@@ -385,7 +439,7 @@ Do not block a release solely because of that PyCharm popup.
 
 ---
 
-### 5.8 Known nonfatal PyInstaller warning
+### 5.10 Known nonfatal PyInstaller warning
 
 The build may show:
 
@@ -567,7 +621,7 @@ Do not casually upgrade PySide6 or PyInstaller immediately before creating a rou
 The committed `KandaReasonerWindows.spec` is expected to:
 
 - use `reasoner_tools_gui.py` as the launcher;
-- produce a one-folder application named `KandaReasoner`;
+- produce a one-folder application named `kanda_reasoner`;
 - collect data files for `kanda_reasoner_app`;
 - collect submodules for `kanda_reasoner_app`;
 - include Qt WebEngine and Qt WebChannel;
@@ -575,8 +629,8 @@ The committed `KandaReasonerWindows.spec` is expected to:
 - add the physical `collector_main_help` directory;
 - use relative or specification-derived paths;
 - avoid machine-specific paths;
-- produce `KandaReasoner.exe`;
-- use `console=True` in the current debugging-friendly baseline.
+- produce `kanda_reasoner.exe`;
+- use `console=False` in the release baseline so the GUI opens without a terminal window.
 
 Do not regenerate the file with `pyi-makespec` unless the existing specification is irreparably obsolete.
 
@@ -612,19 +666,19 @@ Why these options matter:
 Expected final output folder:
 
 ```text
-E:\kanda_reasoner\dist\KandaReasoner
+E:\kanda_reasoner\dist\kanda_reasoner
 ```
 
 Expected executable:
 
 ```text
-E:\kanda_reasoner\dist\KandaReasoner\KandaReasoner.exe
+E:\kanda_reasoner\dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 Confirm:
 
 ```powershell
-Test-Path .\dist\KandaReasoner\KandaReasoner.exe
+Test-Path .\dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 Expected:
@@ -646,7 +700,7 @@ Do not confuse these items:
 PyInstaller created:
 
 ```text
-dist\KandaReasoner\KandaReasoner.exe
+dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 ### Runtime success
@@ -672,7 +726,7 @@ Investigate warnings that correspond to actual application modules, dynamic tabs
 Launch:
 
 ```powershell
-Start-Process .\dist\KandaReasoner\KandaReasoner.exe
+Start-Process .\dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 Then perform the following manually.
@@ -737,7 +791,7 @@ Confirm core Qt content exists:
 
 ```powershell
 Get-ChildItem `
-    .\dist\KandaReasoner\_internal `
+    .\dist\kanda_reasoner\_internal `
     -Recurse `
     -Filter QtWebEngineProcess.exe
 ```
@@ -746,7 +800,7 @@ Confirm Qt platform plugins exist:
 
 ```powershell
 Get-ChildItem `
-    .\dist\KandaReasoner\_internal `
+    .\dist\kanda_reasoner\_internal `
     -Recurse `
     -Filter qwindows.dll
 ```
@@ -755,7 +809,7 @@ Confirm the application package is not unexpectedly tiny:
 
 ```powershell
 $portableSize = (
-    Get-ChildItem .\dist\KandaReasoner -Recurse -File |
+    Get-ChildItem .\dist\kanda_reasoner -Recurse -File |
     Measure-Object Length -Sum
 ).Sum
 
@@ -784,7 +838,7 @@ Copy the complete packaged folder:
 
 ```powershell
 Copy-Item `
-    .\dist\KandaReasoner `
+    .\dist\kanda_reasoner `
     E:\KandaReasonerPortableTest `
     -Recurse
 ```
@@ -793,7 +847,7 @@ Launch the relocated executable:
 
 ```powershell
 Start-Process `
-    E:\KandaReasonerPortableTest\KandaReasoner.exe
+    E:\KandaReasonerPortableTest\kanda_reasoner.exe
 ```
 
 Repeat the important smoke tests:
@@ -818,7 +872,7 @@ Close the relocated application before continuing.
 
 ---
 
-## 15. Create the final ZIP
+## 15. Create the final Windows-compatible ZIP
 
 Return to the source repository:
 
@@ -826,51 +880,193 @@ Return to the source repository:
 Set-Location E:\kanda_reasoner
 ```
 
-Remove an older ZIP:
+### Why the release ZIP uses a staging folder
+
+Do not create the release archive directly with `Compress-Archive`.
+
+The earlier archive was structurally readable by Python and PowerShell but Windows Explorer reported:
+
+```text
+Windows cannot open the folder.
+The Compressed (zipped) Folder is invalid.
+```
+
+The packaged data also contained non-runtime planning documents with internal archive paths longer than 260 characters. Windows Explorer can reject the entire ZIP when such entries are present.
+
+The release procedure therefore:
+
+1. copies the built application to a temporary staging folder;
+2. removes the known non-runtime long-path planning directory from the staged copy only;
+3. verifies that every remaining archive path is shorter than 260 UTF-8 bytes;
+4. creates the ZIP with .NET `System.IO.Compression.ZipFile`;
+5. includes one top-level `kanda_reasoner` folder;
+6. asks the Windows Explorer ZIP parser to open the archive before release.
+
+This does not modify the source tree or the original `dist` output.
+
+### Canonical ZIP command
+
+Close KANDA Reasoner before packaging, then run:
 
 ```powershell
+Set-Location E:\kanda_reasoner
+
+$SOURCE = "E:\kanda_reasoner\dist\kanda_reasoner"
+$STAGE_PARENT = "E:\kanda_reasoner_release_stage"
+$STAGE_APP = "$STAGE_PARENT\kanda_reasoner"
+$ZIP = "E:\kanda_reasoner\KandaReasoner-Windows-Portable.zip"
+$DESKTOP_ZIP = "$env:USERPROFILE\Desktop\KandaReasoner-Windows-Portable.zip"
+
 Remove-Item `
-    .\KandaReasoner-Windows-Portable.zip `
+    -LiteralPath $STAGE_PARENT `
+    -Recurse `
     -Force `
     -ErrorAction SilentlyContinue
-```
 
-Create the ZIP from the contents of the built folder:
+Remove-Item `
+    -LiteralPath $ZIP `
+    -Force `
+    -ErrorAction SilentlyContinue
 
-```powershell
-Compress-Archive `
-    -Path .\dist\KandaReasoner\* `
-    -DestinationPath .\KandaReasoner-Windows-Portable.zip `
-    -CompressionLevel Optimal
-```
+Remove-Item `
+    -LiteralPath $DESKTOP_ZIP `
+    -Force `
+    -ErrorAction SilentlyContinue
 
-Confirm:
+New-Item `
+    -ItemType Directory `
+    -Path $STAGE_PARENT `
+    -Force |
+    Out-Null
 
-```powershell
-Get-Item .\KandaReasoner-Windows-Portable.zip |
+Copy-Item `
+    -LiteralPath $SOURCE `
+    -Destination $STAGE_PARENT `
+    -Recurse `
+    -Force
+
+$NON_RUNTIME_LONG_PATH_DOCS = Join-Path `
+    $STAGE_APP `
+    "_internal\kanda_reasoner_app\routing_signal_scorer\mlrt_non_runtime_candidate_reliability"
+
+if (Test-Path $NON_RUNTIME_LONG_PATH_DOCS) {
+    Remove-Item `
+        -LiteralPath $NON_RUNTIME_LONG_PATH_DOCS `
+        -Recurse `
+        -Force
+}
+
+Write-Host "`nLongest paths remaining in release:"
+
+$PATH_RESULTS = Get-ChildItem `
+    -LiteralPath $STAGE_APP `
+    -Recurse `
+    -Force |
+    ForEach-Object {
+        $relative = $_.FullName.Substring(
+            $STAGE_PARENT.Length + 1
+        ).Replace("\", "/")
+
+        [PSCustomObject]@{
+            Bytes = [System.Text.Encoding]::UTF8.GetByteCount($relative)
+            Path  = $relative
+        }
+    }
+
+$PATH_RESULTS |
+    Sort-Object Bytes -Descending |
+    Select-Object -First 5 |
+    Format-Table -AutoSize
+
+$MAX_PATH_BYTES = (
+    $PATH_RESULTS |
+    Measure-Object Bytes -Maximum
+).Maximum
+
+if ($MAX_PATH_BYTES -ge 260) {
+    throw "Release still contains an archive path of 260 bytes or more."
+}
+
+Add-Type `
+    -AssemblyName System.IO.Compression.FileSystem
+
+[System.IO.Compression.ZipFile]::CreateFromDirectory(
+    $STAGE_APP,
+    $ZIP,
+    [System.IO.Compression.CompressionLevel]::Optimal,
+    $true
+)
+
+Copy-Item `
+    -LiteralPath $ZIP `
+    -Destination $DESKTOP_ZIP `
+    -Force
+
+Write-Host "`nNew ZIP:"
+
+Get-Item `
+    -LiteralPath $DESKTOP_ZIP |
     Select-Object FullName, Length, LastWriteTime
+
+Write-Host "`nSHA-256:"
+
+Get-FileHash `
+    -LiteralPath $DESKTOP_ZIP `
+    -Algorithm SHA256
+
+Write-Host "`nTesting Windows Explorer ZIP parser:"
+
+$SHELL = New-Object `
+    -ComObject Shell.Application
+
+$ZIP_NAMESPACE = $SHELL.NameSpace($DESKTOP_ZIP)
+
+if ($null -eq $ZIP_NAMESPACE) {
+    throw "WINDOWS EXPLORER ZIP CHECK: FAIL"
+}
+
+Write-Host "WINDOWS EXPLORER ZIP CHECK: PASS"
+Write-Host "Top-level entries:" $ZIP_NAMESPACE.Items().Count
 ```
 
-Important: the ZIP should open directly to:
+Required result:
 
 ```text
-KandaReasoner.exe
-_internal\
+WINDOWS EXPLORER ZIP CHECK: PASS
+Top-level entries: 1
 ```
 
-It should not contain unnecessary nesting such as:
+The ZIP must contain:
 
 ```text
-dist\KandaReasoner\KandaReasoner.exe
+kanda_reasoner\
+├── kanda_reasoner.exe
+└── _internal\
 ```
 
-The command above archives the contents of `dist\KandaReasoner`, which produces the intended layout.
+Do not archive the contents with a wildcard. The top-level `kanda_reasoner` folder is intentional and prevents the executable and `_internal` directory from being scattered directly into the user's extraction destination.
 
----
+Do not publish the ZIP when:
 
-## 16. Clean ZIP extraction test
+- the Windows Explorer parser returns `FAIL`;
+- there is more than one top-level entry;
+- any staged archive path is 260 bytes or longer;
+- `kanda_reasoner.exe` or `_internal` is absent;
+- project-support folders are embedded in the application package.
 
-Delete any previous extraction test folder:
+## 16. Windows Explorer and clean extraction test
+
+The exact Desktop ZIP must first open by double-clicking in Windows Explorer.
+
+Expected view:
+
+```text
+kanda_reasoner
+```
+
+If Windows Explorer reports that the compressed folder is invalid, the release fails even if Python, `tar.exe`, or `Expand-Archive` can read it.
+
+After the double-click check passes, remove any previous extraction test folder:
 
 ```powershell
 Remove-Item `
@@ -878,15 +1074,6 @@ Remove-Item `
     -Recurse `
     -Force `
     -ErrorAction SilentlyContinue
-```
-
-Create it:
-
-```powershell
-New-Item `
-    -ItemType Directory `
-    -Path E:\KandaReasonerZipValidation |
-    Out-Null
 ```
 
 Extract the exact final ZIP:
@@ -898,27 +1085,40 @@ Expand-Archive `
     -Force
 ```
 
-Confirm the executable:
+Confirm the layout:
 
 ```powershell
 Test-Path `
-    E:\KandaReasonerZipValidation\KandaReasoner.exe
+    E:\KandaReasonerZipValidation\kanda_reasoner\kanda_reasoner.exe
+
+Test-Path `
+    E:\KandaReasonerZipValidation\kanda_reasoner\_internal
 ```
 
-Launch:
+Expected:
+
+```text
+True
+True
+```
+
+Launch the extracted application:
 
 ```powershell
 Start-Process `
-    E:\KandaReasonerZipValidation\KandaReasoner.exe
+    -FilePath E:\KandaReasonerZipValidation\kanda_reasoner\kanda_reasoner.exe `
+    -WorkingDirectory E:\KandaReasonerZipValidation\kanda_reasoner
 ```
 
-This is the most important distribution test because it validates the exact archive that users will download.
+Confirm:
 
-Repeat the essential smoke checks.
+- the GUI opens without a terminal window;
+- startup creates no `*_show_project_to_AI` or `*_delete_after_daily_work` folder;
+- the important tabs load;
+- the application closes normally;
+- a selected nested project creates its support folders at the selected project's drive root.
 
-Do not publish a ZIP that was never extracted and executed.
-
----
+Do not publish a ZIP that was never opened by Windows Explorer, extracted to a clean folder, and executed.
 
 ## 17. Calculate and record SHA-256
 
@@ -937,20 +1137,9 @@ Record:
 - creation date;
 - SHA-256.
 
-For the original v0.1.0 baseline only:
+The original July 2026 ZIP hashes are obsolete and must not be copied into a new release.
 
-```text
-Filename:
-KandaReasoner-Windows-Portable.zip
-
-Size:
-469499467 bytes
-
-SHA-256:
-DD2EF4D3000FB993B4D6BE2F7130C11B6AFEE534A87DE7B5C322A88CA96BFD95
-```
-
-Never reuse the old hash for a new ZIP. Every rebuilt archive requires a new hash.
+The executable name, console mode, packaged data, staging cleanup, and ZIP format have changed. Every rebuilt archive requires a fresh size and SHA-256 calculated from the exact release asset.
 
 ---
 
@@ -1125,7 +1314,7 @@ Do not publish until every applicable item is complete.
 
 ```text
 [ ] Build used --noconfirm --clean
-[ ] dist\KandaReasoner\KandaReasoner.exe exists
+[ ] dist\kanda_reasoner\kanda_reasoner.exe exists
 [ ] Build completion was reported
 [ ] Known developer-tools warning was assessed, not blindly treated as fatal
 ```
@@ -1149,11 +1338,14 @@ Do not publish until every applicable item is complete.
 
 ```text
 [ ] Complete folder copied to another path
-[ ] Relocated KandaReasoner.exe opens
+[ ] Relocated kanda_reasoner.exe opens
 [ ] Relocated critical tabs pass
-[ ] Final ZIP created
+[ ] Final ZIP created from the staged release copy with .NET ZipFile
+[ ] Windows Explorer opens the final ZIP without an invalid-folder error
+[ ] Windows Explorer parser reports exactly one top-level entry
+[ ] No staged archive path is 260 bytes or longer
 [ ] Final ZIP extracted to a clean folder
-[ ] Executable from the extracted ZIP opens
+[ ] Extracted kanda_reasoner\kanda_reasoner.exe opens without a terminal window
 [ ] Critical tabs pass from the extracted ZIP
 ```
 
@@ -1199,11 +1391,11 @@ Do not run a global PyInstaller accidentally.
 Run it from PowerShell so console output remains visible:
 
 ```powershell
-Set-Location .\dist\KandaReasoner
-.\KandaReasoner.exe
+Set-Location .\dist\kanda_reasoner
+.\kanda_reasoner.exe
 ```
 
-The current baseline uses `console=True`, which is useful for diagnosing startup failures.
+The release baseline uses `console=False`, so no terminal window opens. Diagnose packaged startup failures through persistent application logs or a temporary local debug build using `console=True`.
 
 Look for:
 
@@ -1214,7 +1406,7 @@ Look for:
 - incorrect resource path;
 - import-time exception.
 
-Do not change `console=False` until the release is stable and an equivalent persistent logging path exists.
+Do not publish a console-enabled executable merely to expose nonfatal Qt warnings. Use `console=True` only in a temporary diagnostic build when necessary.
 
 ---
 
@@ -1326,15 +1518,31 @@ A packaged app must resolve its own read-only resources independently of the act
 
 ---
 
-### The ZIP works locally but users report missing files
+### Windows Explorer says the ZIP is invalid
 
-Confirm the ZIP was built from:
+Do not assume the archive is acceptable merely because Python, `tar.exe`, or `Expand-Archive` can read it.
+
+Check:
+
+1. the archive was created through the canonical staged .NET ZIP procedure;
+2. the Windows Explorer `Shell.Application` parser returns a namespace;
+3. the ZIP contains one top-level `kanda_reasoner` folder;
+4. no archive path is 260 bytes or longer;
+5. the known non-runtime long-path planning directory was removed from the staged release copy.
+
+Recreate the ZIP rather than reusing an older archive.
+
+### The ZIP opens but users report missing files
+
+Confirm the ZIP contains the complete staged folder:
 
 ```text
-dist\KandaReasoner\*
+kanda_reasoner\
+├── kanda_reasoner.exe
+└── _internal\
 ```
 
-not from the executable alone.
+Do not distribute the executable alone.
 
 Extract the actual uploaded/downloaded ZIP into a new folder and test that exact copy.
 
@@ -1440,7 +1648,7 @@ After source validation and closing the source application:
 Launch and manually validate:
 
 ```powershell
-Start-Process .\dist\KandaReasoner\KandaReasoner.exe
+Start-Process .\dist\kanda_reasoner\kanda_reasoner.exe
 ```
 
 Then relocate:
@@ -1453,39 +1661,106 @@ Remove-Item `
     -ErrorAction SilentlyContinue
 
 Copy-Item `
-    .\dist\KandaReasoner `
+    .\dist\kanda_reasoner `
     E:\KandaReasonerPortableTest `
     -Recurse
 
 Start-Process `
-    E:\KandaReasonerPortableTest\KandaReasoner.exe
+    E:\KandaReasonerPortableTest\kanda_reasoner.exe
 ```
 
-Then create and extract the ZIP:
+Then create and extract the Windows-compatible ZIP:
 
 ```powershell
 Set-Location E:\kanda_reasoner
 
+$SOURCE = "E:\kanda_reasoner\dist\kanda_reasoner"
+$STAGE_PARENT = "E:\kanda_reasoner_release_stage"
+$STAGE_APP = "$STAGE_PARENT\kanda_reasoner"
+$ZIP = "E:\kanda_reasoner\KandaReasoner-Windows-Portable.zip"
+
 Remove-Item `
-    .\KandaReasoner-Windows-Portable.zip `
+    -LiteralPath $STAGE_PARENT `
+    -Recurse `
     -Force `
     -ErrorAction SilentlyContinue
 
-Compress-Archive `
-    -Path .\dist\KandaReasoner\* `
-    -DestinationPath .\KandaReasoner-Windows-Portable.zip `
-    -CompressionLevel Optimal
-
 Remove-Item `
-    E:\KandaReasonerZipValidation `
-    -Recurse `
+    -LiteralPath $ZIP `
     -Force `
     -ErrorAction SilentlyContinue
 
 New-Item `
     -ItemType Directory `
-    -Path E:\KandaReasonerZipValidation |
+    -Path $STAGE_PARENT `
+    -Force |
     Out-Null
+
+Copy-Item `
+    -LiteralPath $SOURCE `
+    -Destination $STAGE_PARENT `
+    -Recurse `
+    -Force
+
+$NON_RUNTIME_LONG_PATH_DOCS = Join-Path `
+    $STAGE_APP `
+    "_internal\kanda_reasoner_app\routing_signal_scorer\mlrt_non_runtime_candidate_reliability"
+
+if (Test-Path $NON_RUNTIME_LONG_PATH_DOCS) {
+    Remove-Item `
+        -LiteralPath $NON_RUNTIME_LONG_PATH_DOCS `
+        -Recurse `
+        -Force
+}
+
+$PATH_RESULTS = Get-ChildItem `
+    -LiteralPath $STAGE_APP `
+    -Recurse `
+    -Force |
+    ForEach-Object {
+        $relative = $_.FullName.Substring(
+            $STAGE_PARENT.Length + 1
+        ).Replace("\", "/")
+
+        [PSCustomObject]@{
+            Bytes = [System.Text.Encoding]::UTF8.GetByteCount($relative)
+            Path  = $relative
+        }
+    }
+
+if ((($PATH_RESULTS | Measure-Object Bytes -Maximum).Maximum) -ge 260) {
+    throw "Release still contains an archive path of 260 bytes or more."
+}
+
+Add-Type `
+    -AssemblyName System.IO.Compression.FileSystem
+
+[System.IO.Compression.ZipFile]::CreateFromDirectory(
+    $STAGE_APP,
+    $ZIP,
+    [System.IO.Compression.CompressionLevel]::Optimal,
+    $true
+)
+
+$SHELL = New-Object -ComObject Shell.Application
+$ZIP_NAMESPACE = $SHELL.NameSpace($ZIP)
+
+if ($null -eq $ZIP_NAMESPACE) {
+    throw "WINDOWS EXPLORER ZIP CHECK: FAIL"
+}
+
+Write-Host "WINDOWS EXPLORER ZIP CHECK: PASS"
+Write-Host "Top-level entries:" $ZIP_NAMESPACE.Items().Count
+```
+
+Then double-click the ZIP in Windows Explorer. After it opens successfully:
+
+```powershell
+Remove-Item `
+    E:\KandaReasonerZipValidation `
+    -Recurse `
+    -Force `
+    -ErrorAction SilentlyContinue
 
 Expand-Archive `
     -Path .\KandaReasoner-Windows-Portable.zip `
@@ -1493,7 +1768,8 @@ Expand-Archive `
     -Force
 
 Start-Process `
-    E:\KandaReasonerZipValidation\KandaReasoner.exe
+    -FilePath E:\KandaReasonerZipValidation\kanda_reasoner\kanda_reasoner.exe `
+    -WorkingDirectory E:\KandaReasonerZipValidation\kanda_reasoner
 ```
 
 After the extracted application passes:

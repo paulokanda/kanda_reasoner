@@ -8,6 +8,10 @@ import hashlib
 import json
 import os
 from pathlib import Path
+
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_transient_garbage_root,
+)
 import shutil
 import subprocess
 import sys
@@ -268,7 +272,7 @@ def _resolve_exact_ruff(
     path_ruff = shutil.which("ruff")
     if path_ruff:
         candidates.append(((path_ruff,), "path"))
-    daily_root = project_root.parent / (project_root.name + "_delete_after_daily_work")
+    daily_root = canonical_transient_garbage_root(project_root)
     candidates.extend(
         [
             (

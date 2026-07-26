@@ -9,6 +9,10 @@ import hashlib
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_transient_garbage_root,
+)
+
 from kanda_reasoner_app.manage_architecture.warning_model_test_generation_contract import (
     ACTION_CREATE_FOCUSED_TEST,
     ModelTestMutationProposal,
@@ -49,7 +53,7 @@ def _sha256_text(text: str) -> str:
 
 def _backup_root(project_root: Path) -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    daily_work = project_root.parent / f"{project_root.name}_delete_after_daily_work"
+    daily_work = canonical_transient_garbage_root(project_root)
     return daily_work / "warning_local_ai_resolver" / "validated_test_changes" / timestamp
 
 
