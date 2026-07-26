@@ -733,7 +733,7 @@ The current focus is stability, boundary correctness, reliable workflows, and ev
 
 ## License
 
-Unless a separate `LICENSE` file states otherwise, no general open-source license is granted and all rights are reserved by the project owner.
+License: KANDA Reasoner is free to use but proprietary. Modification, redistribution, reverse engineering, and reuse of its source code or assets are prohibited. See LICENSE.md.
 
 ---
 
