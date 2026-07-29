@@ -83,7 +83,7 @@ Route every user-facing terminal block through `KPR-05-007 terminal_cleanup_cont
 Install success may wait about 2 seconds and then use one final `Clear-Host`.
 All non-install-success terminal flows ask for Enter, ask for Enter again, then use one final `Clear-Host`.
 Never close the terminal. Noninteractive automation uses exit codes and captured output instead of Read-Host or Clear-Host.
-User-facing and packaged PowerShell must not use `else` or `elseif`.
+Every user-facing PowerShell code fence must be one independent paste unit. Prefer direct packaged-script invocation; do not use user-facing `else`, `elseif`, or `finally`, do not detach `catch`, and keep APIs compatible with the declared PowerShell runtime.
 
 BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_END
 

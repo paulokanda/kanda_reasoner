@@ -15,7 +15,7 @@ __all__ = [
 ]
 
 TITLE_LINES = (
-    "Neural Architecture",
+    "Neural Anatomy",
     "of",
     "Knowledge and Architecture Navigator for Developer Assistance (KANDA)",
 )

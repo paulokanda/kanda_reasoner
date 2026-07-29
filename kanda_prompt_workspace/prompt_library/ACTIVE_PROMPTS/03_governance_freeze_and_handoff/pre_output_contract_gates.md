@@ -2,11 +2,11 @@
 prompt_id: pre_output_contract_gates
 prompt_code: KPR-03-004
 title: Pre-Output Artifact Contract Gate
-version: 2.0
+version: 2.1
 status: active
 load_type: on_request
 owner_box: 03_governance_freeze_and_handoff
-source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
+source_stage: powershell-paste-safe-operational-output-v1
 ---
 
 # Pre-Output Artifact Contract Gate
@@ -69,6 +69,31 @@ Route to the smallest current owner:
 
 Do not emit an artifact merely because its text looks plausible. Require the
 current contract and the evidence that contract demands.
+
+## PowerShell paste-safety gate
+
+Before emitting PowerShell, classify each visible code fence as exactly one of:
+
+```text
+DIRECT_PACKAGED_SCRIPT_INVOCATION
+SELF_CONTAINED_SINGLE_SUBMISSION
+PACKAGED_SCRIPT_BODY
+```
+
+Interactive user-facing output must be either a direct packaged-script
+invocation or one self-contained submission. Reject and repair output when:
+
+- any visible line begins with `elseif`, `else`, `catch`, or `finally`;
+- a later code fence depends on an earlier `if`, `try`, or opening brace;
+- the user must paste a control-flow chain in multiple console submissions;
+- the code uses a .NET or PowerShell API unavailable in the declared runtime;
+- the command assumes a destination path that was not returned by the current
+  workflow or verified with `Test-Path`.
+
+For KANDA operational delivery, prefer a short direct call to packaged
+`INSTALL.ps1`, `VALIDATE.ps1`, `CONFIRM_*.ps1`, or `FREEZE.ps1`. The packaged
+script may own guarded logic; the user-facing entry block must remain a safe
+independent paste unit.
 
 ## Universal checks
 

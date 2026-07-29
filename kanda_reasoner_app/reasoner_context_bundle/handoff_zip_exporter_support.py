@@ -16,7 +16,7 @@ from .schema_models import ProjectContext
 
 _EXPORT_KIND = "json_handoff_zip_parts"
 _EXPORT_GENERATOR = "reasoner_context_bundle.handoff_zip_exporter"
-_EXPORT_GENERATOR_VERSION = "2.2.0"
+_EXPORT_GENERATOR_VERSION = "2.3.0"
 _DEFAULT_PART_SIZE_MB = 500
 _BYTES_PER_MB = 1024 * 1024
 _RECONSTRUCTION_SUFFIX = "__reconstruction_payload.json"
@@ -204,11 +204,10 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "2. " + slug + "__ai_handoff_upload_readme.txt, this file.",
             "3. Read compact Error Memory files when present: " + slug + "__error_memory_ai_prompt.md, " + slug + "__error_lessons_compact.json, and " + slug + "__error_memory_manifest.json.",
             "4. " + slug + "__ai_handoff_upload*.zip, in numeric order if split. This is the zipped JSON handoff package and includes compact Error Memory files.",
-            "5. Inside the JSON handoff ZIP, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files.",
+            "5. Inside the JSON handoff ZIP, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, exclusion_rules when routed, source_archive_manifest, validation_state, and compact Error Memory files.",
             "6. " + slug + "__error_memory_full.zip is always generated separately; open it only when compact Error Memory says full context is needed, repeated-error debugging is the task, or the user asks for Error Memory audit.",
             "7. " + slug + "__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed. Use source_archive_manifest to choose needed parts.",
             "8. " + slug + "__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets. These are ZIP_STORED asset parts listed in source_archive_manifest.",
-            "9. " + slug + "__ai_handoff_all_in_one*.zip only as convenience/archive fallback if the upload ZIP package is missing.",
             "",
             "Created package families:",
             "1. " + slug + "__ai_handoff_upload*.zip",
@@ -219,11 +218,12 @@ def external_readme_text(context: ProjectContext, part_size_mb: int) -> str:
             "   Upload with source_archive parts when exact source-tree reconstruction needs PNG assets; parts use ZIP_STORED and split by the selected size cap.",
             "4. " + slug + "__error_memory_full.zip",
             "   Full project Error Memory archive. Always generated; open only when needed.",
-            "5. " + slug + "__ai_handoff_all_in_one*.zip",
-            "   Archive/convenience package containing AI-readable handoff artifacts, not nested source ZIPs.",
             "",
             "Each part is a normal standalone ZIP file. Source archive and PNG asset parts are independent ZIPs with disjoint file subsets.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
+            "Show Project to AI never creates <project>-Windows-Portable.zip or any portable distribution.",
+            "Show Project to AI and Portable Distribution are different Boxes with no shared trigger, output owner, output folder, lifecycle, or implicit call.",
+            "Portable distributions are separate productization/release artifacts created only by an independent workflow after an explicit user request and outside the _show_project_to_AI support root.",
             "No internet or AI service is contacted during ZIP creation.",
             "",
         ]
@@ -251,10 +251,13 @@ def package_readme_text(
             "",
             "Each part is a normal standalone ZIP file.",
             "If this package is split, read/upload parts in numeric order.",
-            "For ai_handoff_upload packages, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files when present.",
+            "For ai_handoff_upload packages, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, exclusion_rules when routed, source_archive_manifest, validation_state, and compact Error Memory files when present.",
             "The separate full Error Memory ZIP should be opened only when compact lessons are insufficient or the task is repeated-error debugging.",
             "Source archive and PNG asset part ZIPs should be opened only when exact source inspection or reconstruction is needed.",
             "Excluded folders are intentionally omitted according to Tab 8 project exclusion rules.",
+            "Show Project to AI never creates <project>-Windows-Portable.zip or any portable distribution.",
+            "Show Project to AI and Portable Distribution are different Boxes with no shared trigger, output owner, output folder, lifecycle, or implicit call.",
+            "Portable distributions are separate productization/release artifacts created only by an independent workflow after an explicit user request and outside the _show_project_to_AI support root.",
             "No internet or AI service is contacted during ZIP creation.",
             "",
         ]
@@ -284,12 +287,5 @@ def package_specs(context: ProjectContext, artifacts: list[Path]) -> list[dict[s
             "purpose": "AI-readable project context plus source-archive manifest for first ChatGPT upload.",
             "artifacts": artifacts,
             "readme_name": "UPLOAD_README.txt",
-        },
-        {
-            "name": "all_in_one",
-            "stem": context.project_slug + "__ai_handoff_all_in_one",
-            "purpose": "Archive convenience package containing AI-readable handoff artifacts and source-archive manifest.",
-            "artifacts": artifacts,
-            "readme_name": "UPLOAD_README.txt",
-        },
+        }
     ]

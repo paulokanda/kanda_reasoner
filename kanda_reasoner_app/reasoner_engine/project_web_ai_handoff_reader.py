@@ -43,6 +43,7 @@ REQUIRED_SUFFIXES = (
 )
 OPTIONAL_SUFFIXES = (
     "__file_manifest.json",
+    "__exclusion_rules.json",
     "__source_archive_manifest.json",
 )
 ALLOWED_SUFFIXES = REQUIRED_SUFFIXES + OPTIONAL_SUFFIXES + ("UPLOAD_README.txt",)

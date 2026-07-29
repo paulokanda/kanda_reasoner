@@ -13,7 +13,7 @@ FEATURE_ID = "prompt-audit-wave5b-router-terminal-compatibility-v1"
 CLASS_ID = "05_patch_delivery_and_validation"
 ACTIVE = {
     "router_bridge_user_detected_correction": ("KPR-05-006", "2.0", "routed"),
-    "terminal_cleanup_contract": ("KPR-05-007", "2.0", "always_startup"),
+    "terminal_cleanup_contract": ("KPR-05-007", "2.1", "always_startup"),
 }
 TOMBSTONES = {
     "router_bridge_governed_implementation": "brick_wall_comprehensive_quality_gate",
@@ -62,7 +62,17 @@ def validate_prompts(root: Path) -> None:
         gate("WAVE5B_ACTIVE_VERSION", f"version: {version}" in text and meta.get("version") == version, prompt_id)
         gate("WAVE5B_ACTIVE_STATUS", "status: active" in text and meta.get("status") == "active", prompt_id)
         gate("WAVE5B_ACTIVE_LOAD", f"load_type: {load_type}" in text and meta.get("load_type") == load_type, prompt_id)
-        gate("WAVE5B_ACTIVE_STAGE", meta.get("source_stage") == FEATURE_ID and meta.get("updated_for") == FEATURE_ID, prompt_id)
+        expected_stage = (
+            "powershell-paste-safe-operational-output-v1"
+            if prompt_id == "terminal_cleanup_contract"
+            else FEATURE_ID
+        )
+        gate(
+            "WAVE5B_ACTIVE_STAGE",
+            meta.get("source_stage") == expected_stage
+            and meta.get("updated_for") == expected_stage,
+            prompt_id,
+        )
         gate("WAVE5B_ACTIVE_SIZE", len(text.splitlines()) <= 300, prompt_id)
     for marker in (
         "CORRECTION INCIDENT RECORD",
@@ -84,6 +94,8 @@ def validate_prompts(root: Path) -> None:
         "Read-Host \"Press Enter to clear terminal\"",
         "Start-Sleep -Seconds 2",
         "must not use `else` or `elseif`",
+        "Paste-unit contract",
+        "Windows PowerShell 5.1-compatible APIs",
     ):
         gate("WAVE5B_TERMINAL_CONTRACT", marker in terminal, marker)
 

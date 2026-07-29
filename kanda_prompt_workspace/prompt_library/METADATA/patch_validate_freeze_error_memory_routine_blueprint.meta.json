@@ -4,7 +4,7 @@
   "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
   "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "2.0",
+  "version": "3.1",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,38 +16,48 @@
     "Answer Validate Freeze Memorize Error",
     "recovery routine owner dispatch"
   ],
-  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
-  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
-  "description": "Thin Show Project to AI incident classifier and recovery-owner dispatcher; exact commands and schemas remain with current specialist owners.",
+  "source_stage": "powershell-paste-safe-operational-output-v1",
+  "updated_for": "powershell-paste-safe-operational-output-v1",
+  "description": "Cross-project continuation wrapper that resumes the governed ZIP, install, validation, synchronization, Freeze, Error Memory, and final-answer lifecycle without retraining, while enforcing independently pasteable Windows PowerShell output.",
   "priority": 17,
   "trigger_phrases": [
     "Answer, Validate, Freeze, Memorize Error",
-    "Show Project to AI recovery routine",
-    "collector export failed",
-    "patch validation freeze recovery",
+    "finish zip install validate freeze error memory",
+    "continue after patch creation",
+    "AI stopped after coding",
+    "cross-project release recovery",
     "copy recovery routine"
   ],
   "required_companion_prompts": [
     "project_tool_boundary_canon",
-    "brick_wall_comprehensive_quality_gate"
-  ],
-  "optional_companion_prompts": [
+    "brick_wall_comprehensive_quality_gate",
     "bundle_gated_development_workflow",
     "implementation_and_delivery_protocol",
     "pre_output_contract_gates",
-    "pre_output_contract_gates",
     "patch_install_delivery_error_register",
-    "terminal_cleanup_contract",
-    "freeze_code_intake_and_form_protocol",
-    "error_memory_ai_formulary_startup_canon"
+    "terminal_cleanup_contract"
   ],
-  "when_to_load": "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.",
-  "when_not_to_load": "Do not load for ordinary delivery when no reusable recovery handoff is requested.",
+  "optional_companion_prompts": [
+    "freeze_code_intake_and_form_protocol",
+    "error_memory_ai_formulary_startup_canon",
+    "error_memory_active_ready_correction_blueprint",
+    "error_memory_active_ready_json_template",
+    "error_memory_model_template"
+  ],
+  "when_to_load": "When the user presses the Show Project to AI routine button, asks to finish the release lifecycle, or an AI stopped or failed between answer, ZIP, install, validation, synchronization, Freeze, Error Memory, and final reporting.",
+  "when_not_to_load": "Do not load for explanation-only work that does not require lifecycle continuation or recovery.",
   "source_write_authorization": "NO",
   "do_not_regress": [
-    "Keep the GUI button reading this canonical project-root prompt.",
-    "Keep incident classification separate from exact downstream command and schema ownership.",
-    "Keep project-linked transient staging derived from the selected project.",
-    "Keep freeze and Error Memory actions conditional and explicitly human governed."
+    "Embed the current selected Project and KANDA Reasoner Tool identities in the copied button text.",
+    "Keep all selected-Project source, staging, validation, Freeze, and Error Memory paths derived from the selected Project.",
+    "Keep canonical prompt source owned by the KANDA Reasoner Tool root.",
+    "Never deliver an isolated ZIP or claim installation as validation.",
+    "Continue from the last reliable marker without requiring the user to retrain the AI.",
+    "Keep Preview read-only and Confirm and Write and Memorize Error explicitly human governed.",
+    "Never reintroduce deprecated router_bridge_patch_delivery_contract.",
+    "Every user-facing PowerShell code fence must be one independently pasteable unit.",
+    "Prefer direct packaged script invocation and never emit user-facing else, elseif, or finally clauses.",
+    "Require Windows PowerShell 5.1-compatible APIs unless a newer runtime is explicitly verified.",
+    "Use the exact current artifact path rather than an assumed destination or placeholder path."
   ]
 }

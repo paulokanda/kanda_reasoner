@@ -215,6 +215,7 @@ def _kanda_start_busy_animation(self, stage_text: str) -> None:
     for attr_name in (
         "run_button",
         "browse_project_button",
+        "backup_show_project_button",
         "browse_output_button",
         "create_first_and_second_prompt_files_button",
         "create_first_prompt_files_button",
@@ -245,6 +246,7 @@ def _kanda_stop_busy_animation(self, status_text: str) -> None:
     for attr_name in (
         "run_button",
         "browse_project_button",
+        "backup_show_project_button",
         "browse_output_button",
         "create_first_and_second_prompt_files_button",
         "create_first_prompt_files_button",

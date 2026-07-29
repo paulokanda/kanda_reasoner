@@ -9,13 +9,14 @@ from pathlib import Path
 from typing import Any
 
 from .exclusion_engine import decide_path_exclusion
+from .generated_archive_policy import classify_generated_project_archive
 from .path_normalization import relative_posix_path, safe_resolve
 from .project_context import resolve_project_context
 from .schema_models import ExclusionRules, ProjectContext
 
 SOURCE_ARCHIVE_MANIFEST_SUFFIX = "__source_archive_manifest.json"
 GENERATOR_NAME = "reasoner_context_bundle.source_tree_exporter"
-GENERATOR_VERSION = "1.4.0"
+GENERATOR_VERSION = "1.5.0"
 SCHEMA_VERSION = "1.0"
 PLANNING_TARGET_RATIO = 0.90
 _BYTES_PER_MB = 1024 * 1024
@@ -142,17 +143,8 @@ def _is_generated_output_path(path: Path, context: ProjectContext, output_dir: P
     return first in _GENERATED_OUTPUT_NAMES
 
 def _is_generated_project_archive(path: Path, context: ProjectContext) -> bool:
-    if not path.is_file() or path.suffix.lower() != ".zip":
-        return False
-    name = path.name.lower()
-    slug = context.project_slug.lower()
-    return (
-        name == slug + ".zip"
-        or name.startswith(slug + "__ai_handoff_")
-        or name.startswith(slug + "__source_archive_")
-        or name.startswith(slug + "__png_assets_")
-        or name.startswith("rss_")
-    )
+    """Return True when the canonical archive policy excludes this ZIP."""
+    return classify_generated_project_archive(path, context) is not None
 
 def _excluded_by_project_rules(
     entry: Path,

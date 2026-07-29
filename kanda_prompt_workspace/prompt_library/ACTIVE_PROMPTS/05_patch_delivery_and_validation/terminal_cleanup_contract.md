@@ -2,11 +2,11 @@
 prompt_id: terminal_cleanup_contract
 prompt_code: KPR-05-007
 title: Terminal Cleanup Contract
-version: 2.0
+version: 2.1
 status: active
 load_type: always_startup
 owner_box: 05_patch_delivery_and_validation
-source_stage: prompt-audit-wave5b-router-terminal-compatibility-v1
+source_stage: powershell-paste-safe-operational-output-v1
 ---
 
 # Terminal Cleanup Contract
@@ -23,6 +23,26 @@ Before every long interactive block, tell the user to begin at a clean primary
 PowerShell prompt such as `PS E:\\project>`. If `>>` is visible, require
 `Ctrl+C` before pasting anything else. Do not wrap a long block in an unnecessary
 outer `& { ... }` script block.
+
+## Paste-unit contract
+
+Each user-visible PowerShell code fence is one complete paste unit. Prefer a
+direct invocation of a packaged script. Do not split a control-flow statement
+across messages, code fences, or console submissions.
+
+For `INTERACTIVE_USER_TERMINAL` entry blocks:
+
+- do not use `else`, `elseif`, or `finally`;
+- do not emit standalone `catch`;
+- keep `try/catch` logic inside packaged scripts rather than the entry command;
+- use independent complete `if` checks only when a direct script call cannot own
+  the preflight;
+- target Windows PowerShell 5.1-compatible APIs unless another runtime is
+  explicitly verified;
+- verify human-selected or generated paths before use.
+
+If a previous paste left the console at `>>`, require `Ctrl+C`, return to the
+primary prompt, and restart with the complete paste unit.
 
 ## Execution environment classification
 

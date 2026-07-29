@@ -12,6 +12,7 @@ from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
+from .source_tree_exporter_shared import SOURCE_ARCHIVE_MANIFEST_SUFFIX
 
 __all__ = [
     "build_routing_manifest_payload",
@@ -21,7 +22,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "routing_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.routing_manifest_builder"
-GENERATOR_VERSION = "1.1.0"
+GENERATOR_VERSION = "1.2.0"
 
 
 def _utc_now() -> str:
@@ -61,6 +62,7 @@ def _route(
     source_archive_hints: list[str],
     source_search: list[str],
     validation_hint: list[str],
+    additional_route_read_artifacts: list[str] | None = None,
 ) -> dict[str, Any]:
     """Support route behavior.
     
@@ -83,6 +85,15 @@ def _route(
         The mapped values.
     """
     
+    route_read_artifacts = [
+        "bundle_manifest_json",
+        "file_manifest_json",
+        "patch_safety_routes_json",
+    ]
+    for artifact_name in additional_route_read_artifacts or []:
+        if artifact_name not in route_read_artifacts:
+            route_read_artifacts.append(artifact_name)
+
     return {
         "task_type": task_type,
         "description": description,
@@ -90,11 +101,7 @@ def _route(
             "ai_briefing_json",
             "routing_manifest_json",
         ],
-        "route_read_artifacts": [
-            "bundle_manifest_json",
-            "file_manifest_json",
-            "patch_safety_routes_json",
-        ],
+        "route_read_artifacts": route_read_artifacts,
         "source_archive_hints": source_archive_hints,
         "source_search_hints": source_search,
         "must_inspect_exact_source_before_editing": True,
@@ -114,6 +121,9 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
     """Build routing rules that tell AI what to load for common tasks."""
     context = _context(project)
     paths = bundle_artifact_paths(context)
+    source_archive_manifest = context.json_complete_dir / (
+        context.project_slug + SOURCE_ARCHIVE_MANIFEST_SUFFIX
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "bundle_kind": BUNDLE_KIND,
@@ -134,11 +144,27 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
             "bundle_manifest_json": artifact_logical_posix_path(paths.bundle_manifest_json, context),
             "file_manifest_json": artifact_logical_posix_path(paths.file_manifest_json, context),
             "patch_safety_routes_json": artifact_logical_posix_path(paths.patch_safety_routes_json, context),
+            "exclusion_rules_json": artifact_logical_posix_path(paths.exclusion_rules_json, context),
+            "validation_state_json": artifact_logical_posix_path(paths.validation_state_json, context),
+            "source_archive_manifest_json": artifact_logical_posix_path(
+                source_archive_manifest,
+                context,
+            ),
         },
         "loading_policy": {
             "always_read": ["ai_briefing_json", "routing_manifest_json"],
             "read_for_routing": ["bundle_manifest_json", "file_manifest_json"],
             "read_for_subsystem_edit": ["patch_safety_routes_json", "file_manifest_json", "source_archive_manifest_json"],
+            "read_for_exclusion_audit": [
+                "exclusion_rules_json",
+                "file_manifest_json",
+                "source_archive_manifest_json",
+            ],
+            "read_for_handoff_validation": [
+                "validation_state_json",
+                "bundle_manifest_json",
+                "source_archive_manifest_json",
+            ],
             "read_for_debugging": ["runtime_trace_summary", "warning_index"],
             "read_only_on_request": ["runtime_trace_raw", "large full indexes"],
         },
@@ -163,6 +189,37 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
                 ["entry_points_detail", "call_edges", "persistence_io_index", "change_impact_index", "web_ai_file_responsibility_index"],
                 ["CollectorRunnerWindow", "Run Collector", "run_collector", "bundle_orchestrator", "output_paths"],
                 ["py_compile changed files", "run context bundle CLI", "verify dynamic output path"],
+                [
+                    "exclusion_rules_json",
+                    "source_archive_manifest_json",
+                    "validation_state_json",
+                ],
+            ),
+            "exclusion_policy_audit": _route(
+                "exclusion_policy_audit",
+                "Audit project exclusion rules, omitted paths, and archive completeness.",
+                [
+                    "collector_scope",
+                    "persistence_io_index",
+                    "web_ai_file_responsibility_index",
+                    "limitations",
+                ],
+                [
+                    "exclusion rules",
+                    "excluded paths",
+                    "missing file",
+                    "source archive manifest",
+                ],
+                [
+                    "verify exclusion rule normalization",
+                    "verify source archive manifest coverage",
+                    "confirm excluded paths are intentional",
+                ],
+                [
+                    "exclusion_rules_json",
+                    "source_archive_manifest_json",
+                    "validation_state_json",
+                ],
             ),
             "runtime_bug_debugging": _route(
                 "runtime_bug_debugging",
@@ -187,7 +244,12 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
             ),
         },
         "fallback_route": {
-            "read": ["ai_briefing_json", "routing_manifest_json", "file_manifest_json"],
+            "read": [
+                "ai_briefing_json",
+                "routing_manifest_json",
+                "file_manifest_json",
+                "source_archive_manifest_json",
+            ],
             "then": "Search exact source files by symbol or task term before editing.",
         },
     }

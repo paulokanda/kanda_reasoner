@@ -108,6 +108,23 @@ def _publish_stage_outputs(stage: Path, destination: Path) -> list[Path]:
     return published
 
 
+def _remove_obsolete_all_in_one_outputs(
+    destination: Path,
+    project_slug: str,
+) -> list[Path]:
+    """Remove deprecated all-in-one handoff ZIPs from one destination."""
+    removed: list[Path] = []
+    pattern = project_slug + "__ai_handoff_all_in_one*.zip"
+    if not destination.exists():
+        return removed
+    for candidate in sorted(destination.glob(pattern), key=lambda item: item.name.lower()):
+        if not candidate.is_file():
+            continue
+        candidate.unlink()
+        removed.append(candidate)
+    return removed
+
+
 def _assert_no_forbidden_outputs(output_dir: Path) -> None:
     """Support assert no forbidden outputs behavior.
     

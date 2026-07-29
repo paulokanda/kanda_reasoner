@@ -199,7 +199,7 @@ The exact final ZIP must pass the canonical validator. Do not search Downloads o
 
 ## Show Project to AI patch/freeze recovery blueprint
 
-Route to `patch_validate_freeze_error_memory_routine_blueprint`, `error_memory_active_ready_correction_blueprint`, `error_memory_active_ready_json_template`, and `error_memory_model_template` when a patch, validation, freeze, and Error Memory recovery workflow is requested.
+Route to `patch_validate_freeze_error_memory_routine_blueprint` when the Show Project routine button is used or an AI must continue an external Project from answer or patch through ZIP delivery, install, live validation, synchronization, Freeze, Error Memory disposition, and final reporting without retraining. Load the Error Memory correction/template/model owners only when a durable lesson candidate is justified.
 
 ## Error Memory routes
 

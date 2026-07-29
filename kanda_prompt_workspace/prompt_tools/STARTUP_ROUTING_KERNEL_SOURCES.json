@@ -89,7 +89,7 @@
       "generated_filename": "14_project_tool_boundary_canon.md",
       "prompt_id": "project_tool_boundary_startup_bridge",
       "load_mode": "always_startup",
-      "role": "Compact Tool-versus-Project startup bridge that blocks wrong-root work and routes consequential tasks to KPR-12-001."
+      "role": "Cross-project Tool-versus-Project startup bridge that binds ZIP, install, live validation, Freeze, and Error Memory to the selected Project and routes consequential work to KPR-12-001."
     }
   ]
 }

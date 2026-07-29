@@ -75,6 +75,9 @@ def _assert_prompt_contract(project_root: Path) -> None:
         "Do not mix the timed success footer and Enter, Enter footer.",
         "Do not use `exit`, `Stop-Process`, `Restart-Computer`",
         "Do not use inline `python -c`",
+        "Paste-unit contract",
+        "one complete paste unit",
+        "Windows PowerShell 5.1-compatible APIs",
     ]:
         _assert_contains(contract, needle, contract_rel)
     if "wait 5 seconds" in contract or "5 second" in contract:
@@ -91,6 +94,8 @@ def _assert_startup_bridge(project_root: Path) -> None:
         "wait about 2 seconds",
         "ask for Enter, ask for Enter again",
         "Never close the terminal",
+        "one independent paste unit",
+        "do not use user-facing `else`, `elseif`, or `finally`",
     ]:
         _assert_contains(text, needle, rel)
     if "wait 5 seconds" in text or "5 second pause" in text:

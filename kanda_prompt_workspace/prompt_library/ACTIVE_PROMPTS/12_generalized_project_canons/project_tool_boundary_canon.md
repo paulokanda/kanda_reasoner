@@ -1,6 +1,6 @@
 # Project Tool Boundary Canon
 
-Version: 2.0
+Version: 2.2
 Status: Active prompt-library canon
 Prompt ID: project_tool_boundary_canon
 Prompt code: KPR-12-001
@@ -148,6 +148,31 @@ External dependencies, comparison repositories, controlled fixtures, and migrati
 
 The hard prohibition is undeclared or unauthorized cross-project mutation, not every non-empty cross-project path list.
 
+
+## Portable-distribution ownership
+
+A portable distribution such as:
+
+```text
+<project>-Windows-Portable.zip
+```
+
+is not a Show Project to AI artifact and is never created by Show Project to
+AI. Show Project and Portable Distribution are different Box owners and must
+never share an output owner, trigger, output folder, lifecycle, or implicit
+cross-box call. Portable creation is allowed only through an independently
+routed productization/release workflow after an explicit user request. It must
+be published outside the selected Project Support root and must not be silently
+regenerated during handoff, source-archive, backup, Freeze, or Error Memory
+operations.
+
+Portable identity is semantic and filename-owned, not location-owned. When such
+an archive already exists or is misplaced anywhere inside Project source, Show
+Project may only classify and exclude it from AI source packaging and record
+exclusion provenance. It may also fail closed for an unclassified suspicious
+large root archive. Exclusion is not authorization to create, refresh, publish,
+move, or delete the portable distribution.
+
 ## Generated evidence authority
 
 Generated handoffs, archives, summaries, and reports are non-authoritative by default. Authority may be granted only through a current canonical owner and must be recorded as a structured enum with that owner reference.
@@ -208,8 +233,15 @@ May begin coding: NO
 - Never duplicate MCard, Workbench, delivery, or durable-document owner contracts in this canon.
 - Never silently merge support state after project rename, move, or collision.
 - Never allow undeclared or unauthorized cross-project mutation.
+- Never create or refresh `<project>-Windows-Portable.zip` from Show Project to AI; require a separate explicit user request and productization/release workflow.
 
 ## Version history
 
+- 2.2: made Show Project and Portable Distribution separate Box owners with no
+  shared trigger, output owner, folder, lifecycle, or implicit call; portable
+  identity is excluded wherever misplaced under Project source.
+- 2.1: canonized portable-distribution separation: Show Project to AI never
+  creates `<project>-Windows-Portable.zip`; portable builds require a separate
+  explicit user request and productization/release workflow outside Project Support.
 - 2.0: split compact startup bridge from the full routed owner; added stable Project identity, collision and migration decisions, typed selection and generated-evidence authority, mixed-operation write sets, transient lifecycle, security, concurrent-session, multi-root, and current-resolved-path requirements.
 - 1.5: enforced Q06 identity and external Project Support behavior.

@@ -17,7 +17,7 @@ ACTIVE = {
     "implementation_roadmap_builder": ("KPR-05-004", "2.0", "on_request"),
     "patch_validate_freeze_error_memory_routine_blueprint": (
         "KPR-05-005",
-        "2.0",
+        "3.1",
         "on_request",
     ),
 }
@@ -87,13 +87,16 @@ def validate_active_prompts(root: Path) -> None:
             "cannot authorize source writes",
         ),
         "patch_validate_freeze_error_memory_routine_blueprint": (
-            "This prompt is a thin wrapper",
-            "STARTUP_DELIVERY_FAILURE",
-            "PROJECT_HANDOFF_FAILURE",
-            "PATCH_BUILD_OR_DELIVERY_FAILURE",
-            "FREEZE_INTAKE_FAILURE",
-            "RECOVERY ROUTINE BLOCKED",
-            "does not authorize implementation",
+            "canonical continuation wrapper",
+            "KANDA_ANSWER_VALIDATE_FREEZE_MEMORIZE_CONTEXT",
+            "ROUTINE_POST_IMPLEMENTATION_COMPLETION",
+            "INSTALLATION_FAILURE",
+            "No ZIP link may be emitted alone",
+            "Need new training prompt: NO",
+            "ANSWER VALIDATE FREEZE MEMORIZE ROUTINE BLOCKED",
+            "does not itself authorize implementation",
+            "Paste-safe PowerShell hard gate",
+            "Windows PowerShell 5.1-compatible APIs",
         ),
     }
     forbidden = {
@@ -115,10 +118,9 @@ def validate_active_prompts(root: Path) -> None:
             "minimum 5 items",
         ),
         "patch_validate_freeze_error_memory_routine_blueprint": (
-            "KANDA_ERROR_LESSON_JSON_BEGIN",
             "Windows 11 Install code contract",
             "pending_ai_assisted_error_lesson_intake",
-            "FREEZE_HINT_EVIDENCE_MERGE_OK: <feature_id>",
+            "router_bridge_patch_delivery_contract,",
         ),
     }
     for prompt_id, (code, version, load_type) in ACTIVE.items():
@@ -140,8 +142,12 @@ def validate_active_prompts(root: Path) -> None:
             and meta.get("status") == "active"
             and meta.get("load_type") == load_type
             and meta.get("owner_box") == CLASS_ID
-            and meta.get("source_stage") == FEATURE_ID
-            and meta.get("updated_for") == FEATURE_ID
+            and meta.get("source_stage") == (
+                "powershell-paste-safe-operational-output-v1"
+                if prompt_id == "patch_validate_freeze_error_memory_routine_blueprint"
+                else FEATURE_ID
+            )
+            and meta.get("updated_for") == meta.get("source_stage")
             and meta.get("source_write_authorization") == "NO",
             "WAVE5A_METADATA_" + prompt_id.upper(),
         )

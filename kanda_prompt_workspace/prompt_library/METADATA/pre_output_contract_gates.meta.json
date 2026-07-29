@@ -4,7 +4,7 @@
   "display_name": "Pre-Output Artifact Contract Gate",
   "filename": "pre_output_contract_gates.md",
   "category": "03_governance_freeze_and_handoff",
-  "version": "2.0",
+  "version": "2.1",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "03_governance_freeze_and_handoff",
@@ -15,9 +15,9 @@
     "pre_output_contract_gates.md",
     "pre-output artifact contract gate"
   ],
-  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "description": "Dispatches each operational or machine-consumed output to its exact current owner and blocks emission when contract or evidence is unresolved.",
+  "source_stage": "powershell-paste-safe-operational-output-v1",
+  "updated_for": "powershell-paste-safe-operational-output-v1",
+  "description": "Dispatches operational artifacts to their exact owners and blocks malformed, unsupported, or non-paste-safe PowerShell output before emission.",
   "trigger_phrases": [
     "pre-output contract",
     "before terminal code",

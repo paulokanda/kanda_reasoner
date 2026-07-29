@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter.py
-"""Standalone multi-profile ZIP export for JSON handoff artifacts.
+"""Standalone ZIP export for JSON handoff artifacts.
 
 The exporter writes ChatGPT-friendly standalone ZIP files from the generated
 JSON bundle. Destination folders inside the active project root are rejected so
@@ -22,6 +22,7 @@ from .handoff_zip_exporter_paths_private import (
     _finalize_ai_context_artifacts_for_handoff,
     _previous_second_prompt_files_for_reuse,
     _publish_stage_outputs,
+    _remove_obsolete_all_in_one_outputs,
     _retarget_record_paths,
 )
 from .handoff_zip_exporter_validation_private import (
@@ -225,6 +226,10 @@ def export_json_handoff_zip_parts(
 
         readme_file = write_external_readme(output_stage, context, part_size_mb)
         _assert_no_forbidden_outputs(output_stage)
+        removed_obsolete_outputs = _remove_obsolete_all_in_one_outputs(
+            destination,
+            context.project_slug,
+        )
         published_paths = _publish_stage_outputs(output_stage, destination)
         retargeted_packages = _retarget_record_paths(packages, output_stage, destination)
         retargeted_zip_records = _retarget_record_paths(zip_records, output_stage, destination)
@@ -249,6 +254,9 @@ def export_json_handoff_zip_parts(
             "zip_parts": retargeted_zip_records,
             "readme_file": retargeted_readme,
             "published_paths": [str(path) for path in published_paths],
+            "removed_obsolete_outputs": [
+                str(path) for path in removed_obsolete_outputs
+            ],
             "error_memory_export": _retarget_record_paths(error_memory_export_result, output_stage, destination),
             "warnings": warnings,
             "failures": [],

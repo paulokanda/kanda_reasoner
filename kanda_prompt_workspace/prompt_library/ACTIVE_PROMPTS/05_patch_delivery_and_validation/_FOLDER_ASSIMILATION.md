@@ -1,6 +1,6 @@
 ---
 folder_id: 05_patch_delivery_and_validation
-version: 3.0
+version: 3.1
 status: current
 source_stage: prompt-audit-wave5b-router-terminal-compatibility-v1
 ---
@@ -23,8 +23,9 @@ Pre-Output, validation specialists, or human confirmation.
 - `KPR-05-003 implementation_and_delivery_protocol`: surgical payload,
   baseline, installer transaction, backup, and rollback.
 - `KPR-05-004 implementation_roadmap_builder`: draft-only roadmap template.
-- `KPR-05-005 patch_validate_freeze_error_memory_routine_blueprint`: Show
-  Project recovery wrapper.
+- `KPR-05-005 patch_validate_freeze_error_memory_routine_blueprint`: cross-
+  project lifecycle continuation and recovery wrapper for answer, ZIP, install,
+  live validation, synchronization, Freeze, and Error Memory.
 - `KPR-05-006 router_bridge_user_detected_correction`: correction-incident
   admission and current-owner dispatch.
 - `KPR-05-007 terminal_cleanup_contract`: interactive PowerShell entry,
@@ -32,11 +33,14 @@ Pre-Output, validation specialists, or human confirmation.
 
 ## Historical compatibility tombstones
 
-- `brick_wall_comprehensive_quality_gate`: inactive redirect to Brick Wall.
-- `pre_output_contract_gates`: inactive redirect to Pre-Output.
-- `implementation_and_delivery_protocol`: inactive redirect; generic residue is draft-only.
+- `router_bridge_patch_delivery_contract`: deprecated, `load_type: never`, and
+  replaced by `KPR-03-004 pre_output_contract_gates`.
+- Application-local legacy bundle and generic delivery artifacts remain inactive
+  redirects or draft-only compatibility material.
 
-Tombstones have no route, no prompt code, and no authorization power.
+Tombstones have no route, prompt code, or authorization power. Active
+`pre_output_contract_gates` and `implementation_and_delivery_protocol` must not
+be classified as tombstones.
 
 ## Minimum viable context
 

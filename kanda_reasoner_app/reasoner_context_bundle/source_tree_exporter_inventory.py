@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .exclusion_provider import load_bundle_exclusion_rules
+from .generated_archive_policy import (
+    classify_generated_project_archive,
+    enforce_large_root_archive_preflight,
+)
 from .hashing import sha256_file
 from .path_normalization import safe_resolve
 from .schema_models import ProjectContext
@@ -81,14 +85,15 @@ def _excluded_by_builtin_policy(
             path_type="file",
             matched_rule=entry.suffix.lower(),
         )
-    if _is_generated_project_archive(entry, context):
+    archive_classification = classify_generated_project_archive(entry, context)
+    if archive_classification is not None:
         return _exclusion_record(
             entry,
             context,
-            reason_code="generated_or_stray_archive",
-            reason="Generated patch/handoff/full-project archive excluded to avoid recursive ZIP bloat.",
+            reason_code=archive_classification.reason_code,
+            reason=archive_classification.reason,
             path_type="file",
-            matched_rule="generated_archive_guard",
+            matched_rule=archive_classification.matched_rule,
         )
     return None
 
@@ -341,6 +346,7 @@ def gather_source_archive_inventory(
             if project_exclusion is not None:
                 excluded.append(project_exclusion)
                 continue
+            enforce_large_root_archive_preflight(entry, context)
             if entry.is_dir():
                 walk(entry)
             elif entry.is_file():

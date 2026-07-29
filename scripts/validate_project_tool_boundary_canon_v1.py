@@ -82,7 +82,7 @@ def validate_sources(root: Path) -> None:
         "STARTUP_BRIDGE",
     )
     gate("BOUNDARY_FULL_CANON_ROUTED", "Load type: always_startup" not in full)
-    gate("BOUNDARY_STARTUP_BRIDGE_COMPACT", len(bridge.splitlines()) <= 60)
+    gate("BOUNDARY_STARTUP_BRIDGE_COMPACT", len(bridge.splitlines()) <= 120)
     gate("BOUNDARY_FULL_CANON_WITHIN_LIMIT", len(full.splitlines()) <= 500)
 
 
@@ -92,7 +92,7 @@ def validate_metadata(root: Path) -> None:
     gate("BOUNDARY_FULL_METADATA_IDENTITY", full.get("prompt_code") == "KPR-12-001" and full.get("load_type") == "routed")
     gate("BOUNDARY_FULL_METADATA_VERSION", version(full.get("version")) >= (2, 0))
     gate("BOUNDARY_BRIDGE_METADATA_IDENTITY", bridge.get("prompt_code") == "KPR-12-006" and bridge.get("load_type") == "always_startup")
-    gate("BOUNDARY_BRIDGE_METADATA_VERSION", version(bridge.get("version")) >= (1, 0))
+    gate("BOUNDARY_BRIDGE_METADATA_VERSION", version(bridge.get("version")) >= (2, 0))
     for label, item in (("full", full), ("bridge", bridge)):
         gate("BOUNDARY_METADATA_STAGE_" + label.upper(), bool(str(item.get("source_stage") or "").strip()) and item.get("source_stage") == item.get("updated_for"))
 

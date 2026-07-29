@@ -10,6 +10,10 @@ from typing import Any, Iterator
 from .exclusion_engine import decide_path_exclusion
 from .exclusion_provider import load_bundle_exclusion_rules
 from .file_manifest_records_private import safe_file_record as _safe_file_record
+from .generated_archive_policy import (
+    classify_generated_project_archive,
+    enforce_large_root_archive_preflight,
+)
 from .hashing import sha256_file
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
@@ -29,7 +33,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "file_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.file_manifest_builder"
-GENERATOR_VERSION = "1.0.4"
+GENERATOR_VERSION = "1.0.5"
 
 GENERATED_EVIDENCE_PREFIXES = (
     "show_project_to_AI/",
@@ -60,23 +64,8 @@ TEXT_FILE_EXTENSIONS = (
 
 
 def is_ignored_project_archive(path: Path, context: ProjectContext) -> bool:
-    """Return True for stray full-project/handoff ZIP archives to omit from AI handoff.
-
-    The Show Project to AI handoff must not recursively package an uploaded or
-    copied full-project archive such as ``<project_slug>.zip``. Such archives can
-    make the reconstruction payload huge and cause downstream ZIP parts to exceed
-    the selected size. This is deliberately narrow: ordinary project ZIP assets
-    are preserved unless their name is the selected project slug or a generated
-    AI handoff package name.
-    """
-    if not path.is_file() or path.suffix.lower() != ".zip":
-        return False
-    name = path.name.lower()
-    slug = context.project_slug.lower()
-    return (
-        name == slug + ".zip"
-        or (name.startswith(slug + "__ai_handoff_") and name.endswith(".zip"))
-    )
+    """Return True when the canonical generated-archive policy excludes path."""
+    return classify_generated_project_archive(path, context) is not None
 
 
 
@@ -113,30 +102,23 @@ def _ignored_legacy_delivery_noise_decision(path: Path, context: ProjectContext)
         "reason": "Legacy/temp prompt-delivery artifacts are excluded from Show Project to AI handoff files.",
     }
 
-def _ignored_project_archive_decision(path: Path, context: ProjectContext) -> dict[str, Any]:
-    """Support ignored project archive decision behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    context : ProjectContext
-        The context value.
-    
-    Returns
-    -------
-    dict[str, Any]
-        The mapped values.
-    """
-    
+def _ignored_project_archive_decision(
+    path: Path,
+    context: ProjectContext,
+) -> dict[str, Any]:
+    """Return the canonical exclusion decision for one generated archive."""
     relative = relative_posix_path(path, context.root)
+    classification = classify_generated_project_archive(path, context)
+    if classification is None:
+        raise ValueError("Generated archive decision requested for included path.")
     return {
         "path": relative,
         "included": False,
         "excluded": True,
-        "matched_rule": "show_project_to_ai_recursive_archive_guard",
-        "rule_type": "file",
-        "reason": "Stray full-project or generated handoff ZIP archives are ignored while building Show Project to AI ZIP handoff files.",
+        "reason_code": classification.reason_code,
+        "matched_rule": classification.matched_rule,
+        "rule_type": "generated_archive",
+        "reason": classification.reason,
     }
 
 
@@ -252,6 +234,7 @@ def iter_active_project_files(
             decision = decide_path_exclusion(entry, context, active_rules)
             if decision.excluded:
                 continue
+            enforce_large_root_archive_preflight(entry, context)
             if entry.is_dir():
                 yield from walk(entry)
             elif entry.is_file():
@@ -305,6 +288,7 @@ def _iter_manifest_rows(
                 if len(excluded_samples) < 50:
                     excluded_samples.append(decision.as_dict())
                 continue
+            enforce_large_root_archive_preflight(entry, context)
             if entry.is_dir():
                 walk(entry)
             elif entry.is_file():

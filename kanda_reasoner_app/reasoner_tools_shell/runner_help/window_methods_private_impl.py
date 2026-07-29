@@ -52,6 +52,11 @@ def _build_ui(self) -> None:
     project_root_row.addWidget(self.project_root_edit)
     self.browse_project_button = QPushButton("Browse...")
     project_root_row.addWidget(self.browse_project_button)
+    self.backup_show_project_button = QPushButton("Backup Show Project")
+    self.backup_show_project_button.setToolTip(
+        "Create a verified ZIP backup of the selected Project Support folder."
+    )
+    project_root_row.addWidget(self.backup_show_project_button)
     project_root_row.addStretch(1)
     self.copy_patch_validate_freeze_routine_button = QPushButton(
         "Answer, Validate, Freeze, Memorize Error"
@@ -69,6 +74,10 @@ def _build_ui(self) -> None:
     answer_routine_button_font = self.copy_patch_validate_freeze_routine_button.font()
     answer_routine_button_font.setBold(True)
     self.copy_patch_validate_freeze_routine_button.setFont(answer_routine_button_font)
+    self.copy_patch_validate_freeze_routine_button.setToolTip(
+        "Copies the canonical routine with the resolved selected Project, "
+        "KANDA Reasoner Tool, Project Support, and transient roots."
+    )
     project_root_row.addWidget(self.copy_patch_validate_freeze_routine_button)
     self.copy_terminal_cleanup_contract_button = QPushButton("Clean 2sec 2xEnter")
     terminal_cleanup_button_palette = (
@@ -159,6 +168,7 @@ def _build_ui(self) -> None:
             self.project_root_label,
             self.project_root_edit,
             self.browse_project_button,
+            self.backup_show_project_button,
         )
         for widget in widgets:
             parent = widget.parentWidget()
@@ -171,53 +181,30 @@ def _build_ui(self) -> None:
             destination_layout.addWidget(self.project_root_label, 0)
             destination_layout.addWidget(self.project_root_edit, 0)
             destination_layout.addWidget(self.browse_project_button, 0)
+            destination_layout.addWidget(self.backup_show_project_button, 0)
         else:
             destination_layout.insertSpacing(insert_index, 12)
             destination_layout.insertWidget(insert_index + 1, self.project_root_label, 0)
             destination_layout.insertWidget(insert_index + 2, self.project_root_edit, 0)
             destination_layout.insertWidget(insert_index + 3, self.browse_project_button, 0)
+            destination_layout.insertWidget(
+                insert_index + 4, self.backup_show_project_button, 0
+            )
         self._project_root_controls_moved_to_host = True
 
     self.move_project_root_controls_to_layout = _move_project_root_controls_to_layout
 
-    def _copy_patch_validate_freeze_recovery_routine() -> None:
-        try:
-            from pathlib import Path
-            from PySide6.QtWidgets import QApplication
+    from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
+        show_project_backup_private_impl as _show_project_backup,
+    )
+    _show_project_backup.install_show_project_backup_button(self)
 
-            raw_root = self.project_root_edit.text().strip()
-            project_root = Path(raw_root).expanduser().resolve()
-            prompt_rel = Path(
-                "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
-                "05_patch_delivery_and_validation/"
-                "patch_validate_freeze_error_memory_routine_blueprint.md"
-            )
-            prompt_path = project_root / prompt_rel
-            if not prompt_path.is_file():
-                app_root = Path(__file__).resolve().parents[3]
-                prompt_path = app_root / prompt_rel
-            if not prompt_path.is_file():
-                raise FileNotFoundError("Prompt not found: " + str(prompt_rel))
-            QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
-            message = "Copied Answer, Validate, Freeze, Memorize Error routine"
-            try:
-                self.first_prompt_status_label.setText(message)
-            except Exception:
-                pass
-            try:
-                self._append_log(message)
-            except Exception:
-                pass
-        except Exception as exc:
-            message = "[ERROR] Could not copy Answer, Validate, Freeze, Memorize Error routine: " + str(exc)
-            try:
-                self.first_prompt_status_label.setText(message)
-            except Exception:
-                pass
-            try:
-                self._append_log(message)
-            except Exception:
-                pass
+    from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
+        answer_validate_freeze_memorize_button_private_impl as _answer_routine,
+    )
+
+    def _copy_patch_validate_freeze_recovery_routine() -> None:
+        _answer_routine.copy_answer_validate_freeze_memorize_to_clipboard(self)
 
     self.copy_patch_validate_freeze_routine_button.clicked.connect(
         _copy_patch_validate_freeze_recovery_routine

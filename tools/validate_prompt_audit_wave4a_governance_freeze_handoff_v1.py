@@ -81,7 +81,14 @@ def main() -> int:
             data = load_json(meta)
             require(len(text.splitlines()) <= 500, "WAVE4A_LINE_LIMIT_" + prompt_id.upper())
             require(data.get("prompt_code") == CODES[prompt_id], "WAVE4A_CODE_" + prompt_id.upper())
-            require(data.get("source_stage") == FEATURE_ID, "WAVE4A_METADATA_STAGE_" + prompt_id.upper())
+            source_stage = str(data.get("source_stage") or "").strip()
+            updated_for = str(data.get("updated_for") or "").strip()
+            require(
+                bool(source_stage)
+                and updated_for == source_stage
+                and ("source_stage: " + source_stage) in text,
+                "WAVE4A_METADATA_STAGE_" + prompt_id.upper(),
+            )
 
     for prompt_id in RETIRED_IDS:
         require(not (active / (prompt_id + ".md")).exists(), "WAVE4A_RETIRED_SOURCE_" + prompt_id.upper())

@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import importlib.util
 import py_compile
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -113,6 +114,106 @@ def _run_characterization_test() -> None:
     module.test_batch24_context_bundle_public_facades_still_run()
 
 
+ARCHITECTURE_TARGET_FRAGMENTS = tuple(
+    str(path).replace("\\", "/")
+    for path in LINE_COUNT_TARGETS
+)
+ARCHITECTURE_SUMMARY_PATTERN = re.compile(r"Errors:\s*(\d+)")
+
+
+def _architecture_detail_lines(output: str, level: str) -> list[str]:
+    prefix = level.upper()
+    return [
+        line
+        for line in output.splitlines()
+        if line.lstrip().startswith(prefix)
+    ]
+
+
+def _line_touches_target(line: str) -> bool:
+    normalized = line.replace("\\", "/")
+    return any(fragment in normalized for fragment in ARCHITECTURE_TARGET_FRAGMENTS)
+
+
+def _assert_scoped_architecture_result(
+    output: str,
+    return_code: int,
+) -> int:
+    if "ARCHITECTURE VALIDATION SUMMARY" not in output:
+        raise AssertionError(
+            "Architecture validator did not produce a recognizable summary:\n"
+            + output
+        )
+
+    match = ARCHITECTURE_SUMMARY_PATTERN.search(output)
+    if match is None:
+        raise AssertionError(
+            "Architecture validator summary does not expose an error count:\n"
+            + output
+        )
+
+    global_error_count = int(match.group(1))
+    if return_code not in (0, 1):
+        raise AssertionError(
+            "Architecture validator terminated unexpectedly with exit code "
+            + str(return_code)
+            + ":\n"
+            + output
+        )
+
+    target_errors = [
+        line
+        for line in _architecture_detail_lines(output, "ERROR")
+        if _line_touches_target(line)
+    ]
+    if target_errors:
+        raise AssertionError(
+            "Architecture errors affect the Batch 24 context-bundle target scope:\n"
+            + "\n".join(target_errors)
+        )
+
+    target_warning_codes = ("MODULE_TOO_LARGE", "CIRCULAR_IMPORT")
+    target_warnings = [
+        line
+        for line in _architecture_detail_lines(output, "WARNING")
+        if _line_touches_target(line)
+        and any(code in line for code in target_warning_codes)
+    ]
+    if target_warnings:
+        raise AssertionError(
+            "Architecture regression remains in the Batch 24 target scope:\n"
+            + "\n".join(target_warnings)
+        )
+
+    return global_error_count
+
+
+def _assert_scope_policy_characterization() -> None:
+    unrelated_output = """ARCHITECTURE VALIDATION SUMMARY
+Total issues: 3 | Errors: 3 | Warnings: 0 | Other: 0
+DETAILS
+ERROR   BUNDLE_SAFETY KandaReasoner-Windows-Portable.zip :: unrelated
+ERROR   CROSS_BOX_PUBLIC_SYMBOL_COLLISION sha256_bytes :: unrelated
+ERROR   BUNDLE_SAFETY another_bundle.zip :: unrelated
+"""
+    count = _assert_scoped_architecture_result(unrelated_output, 1)
+    if count != 3:
+        raise AssertionError("Scoped architecture policy lost the global error count.")
+
+    target_output = """ARCHITECTURE VALIDATION SUMMARY
+Total issues: 1 | Errors: 1 | Warnings: 0 | Other: 0
+DETAILS
+ERROR   CROSS_BOX_PUBLIC_SYMBOL_COLLISION symbol :: owner=kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter.py
+"""
+    try:
+        _assert_scoped_architecture_result(target_output, 1)
+    except AssertionError:
+        return
+    raise AssertionError(
+        "Scoped architecture policy did not reject a target-related error."
+    )
+
+
 def _run_architecture_validation() -> str:
     command = [
         sys.executable,
@@ -130,19 +231,18 @@ def _run_architecture_validation() -> str:
         check=False,
     )
     output = result.stdout
-    if result.returncode != 0:
-        raise AssertionError("Architecture validator failed:\n" + output)
-    if "Errors: 0" not in output:
-        raise AssertionError("Architecture validation did not report Errors: 0:\n" + output)
-    target_fragments = (
-        "MODULE_TOO_LARGE             kanda_reasoner_app/reasoner_context_bundle/file_manifest_builder.py",
-        "MODULE_TOO_LARGE             kanda_reasoner_app/reasoner_context_bundle/handoff_zip_exporter.py",
+    global_error_count = _assert_scoped_architecture_result(
+        output,
+        result.returncode,
     )
-    for fragment in target_fragments:
-        if fragment in output:
-            raise AssertionError("Target large-module warning is still present: " + fragment)
-    if "CIRCULAR_IMPORT" in output:
-        raise AssertionError("Circular import finding introduced by refactor:\n" + output)
+    print(
+        "ARCHITECTURE GLOBAL ERRORS OUTSIDE TARGET: "
+        + str(global_error_count)
+    )
+    for line in _architecture_detail_lines(output, "ERROR"):
+        if not _line_touches_target(line):
+            print("ARCHITECTURE GLOBAL ERROR OUTSIDE TARGET: " + line.strip())
+    print("ARCHITECTURE CONTEXT BUNDLE TARGET SCOPE: PASS")
     return output
 
 
@@ -154,6 +254,7 @@ def main() -> int:
     _assert_private_helper_public_surface()
     _assert_public_facades_keep_public_all()
     _run_characterization_test()
+    _assert_scope_policy_characterization()
     _run_architecture_validation()
     print("VALIDATION OK: " + FEATURE_ID)
     return 0

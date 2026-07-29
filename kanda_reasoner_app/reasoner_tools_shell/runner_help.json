@@ -130,6 +130,28 @@
       "depends_on": [],
       "consumed_by": []
     },
+    "show_project_backup_private_impl.py": {
+      "purpose": "Qt background controller for the selected Project Support backup button.",
+      "exports": [
+        "ShowProjectBackupWorker",
+        "choose_and_start_show_project_backup",
+        "install_show_project_backup_button",
+        "start_show_project_backup"
+      ],
+      "depends_on": [
+        "show_project_backup_service.py"
+      ]
+    },
+    "show_project_backup_service.py": {
+      "purpose": "Framework-neutral atomic ZIP backup service for the selected Project Support folder.",
+      "exports": [
+        "create_show_project_backup",
+        "validate_backup_destination"
+      ],
+      "depends_on": [
+        "project_analysis_evidence_paths.py"
+      ]
+    },
     "machine_card_prompt_button_private_impl.py": {
       "purpose": "Helper module owned by this helper folder.",
       "reason": "Helper module owned by this helper folder.",

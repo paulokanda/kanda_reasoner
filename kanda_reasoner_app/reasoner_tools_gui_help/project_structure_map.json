@@ -9,6 +9,7 @@
     "Run Collector creates a runtime trace, runs the static collector, enriches the complete JSON, and generates the AI context bundle.",
     "Project root must be a real project folder; broad drive-root scans are blocked.",
     "Output JSON is evidence for review and AI context, not a source-code edit.",
-    "Create Second Prompt Files runs JSON ZIP export automatically into the external Show Project to AI delivery folder."
+    "Create Second Prompt Files runs JSON ZIP export automatically into the external Show Project to AI delivery folder.",
+    "Backup Show Project asks for a destination folder and creates a verified <project_name>_show_project_to_AI_backup_<date-time>.zip outside Project source and support roots."
   ]
 }

@@ -4,7 +4,7 @@
   "display_name": "Terminal Cleanup Contract",
   "filename": "terminal_cleanup_contract.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "2.0",
+  "version": "2.1",
   "status": "active",
   "load_type": "always_startup",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,9 +16,9 @@
     "PowerShell cleanup",
     "clean PowerShell prompt"
   ],
-  "source_stage": "prompt-audit-wave5b-router-terminal-compatibility-v1",
-  "updated_for": "prompt-audit-wave5b-router-terminal-compatibility-v1",
-  "description": "Canonical user-facing PowerShell clean-prompt, operation-classification, error-provenance, and terminal-cleanup contract.",
+  "source_stage": "powershell-paste-safe-operational-output-v1",
+  "updated_for": "powershell-paste-safe-operational-output-v1",
+  "description": "Canonical clean-prompt, paste-unit, runtime-compatibility, error-provenance, and terminal-cleanup contract for user-facing PowerShell.",
   "priority": 12,
   "trigger_phrases": [
     "terminal cleanup",
