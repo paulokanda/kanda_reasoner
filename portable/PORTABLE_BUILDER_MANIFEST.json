@@ -1,0 +1,31 @@
+{
+  "artifact_type": "kanda_reasoner_portable_builder_manifest",
+  "box": "portable",
+  "build_outputs_outside_project": true,
+  "feature_id": "kanda-reasoner-portable-builder-install-v1r3",
+  "files": {
+    "README.md": "293b1285a4976abe34739551a047211a2620b263a942cd2a5dab4e1d0b3ad46f",
+    "__init__.py": "064b79009644d2047be5c87ab8e64a7cb567effffb2424d2bddac66db8445a46",
+    "archive.py": "378f4c8f919fab95d464c2fd69c01f388f4914b88b038f87dab5d74b51bfe38b",
+    "build.py": "6532e3516b6f0b4dff299eaa99e0c0b5d7cfecde6c37e24e3a153505a7dd6ee1",
+    "cli.py": "22fb08180d5ba4d659061a5329d6ec03941ba9e8fce39d307d2d35edd1a0f519",
+    "constants.py": "f9834a2c0dfef120595591e3292b97480a30f536502ebcde9d7173362fb6db79",
+    "create_kanda_reasoner_portable.py": "75d0f901e3fd302aaa4cdf23c3cd9ba09b4eb4b9a6cef7896a0346c1bbf1dace",
+    "create_windows_zip.ps1": "f88bad61e994a41a2e8b4646b4974b274c585fa32bdb36adefc7fa82bc5ea5a2",
+    "destination.py": "d034e554e4142363e1947bdaab3bbcbb0115a55324012fa7ee70e2c4688761d2",
+    "environment.py": "22c82f2eff599c52ed54694464f6f223c0371d975fbbf2eb47377892d4273fb0",
+    "errors.py": "febe2f4b0698060eff26f6606e1bfed66172f5dcdb36fad5879e5e5fd7edce2b",
+    "models.py": "87f00d002ca04e655d7e7de16c7d8724e1c563ce3318586ffdd5941e773dc21a",
+    "paths.py": "01b286d48abd9163e633df0f057ff47f7fa05f24f0d5531928a33fe22b6c1d8a",
+    "publish.py": "ce80be4428c75cf08eb61998717556c04c29247d9f048f9453cb7963eab481a7",
+    "snapshots.py": "fbe16ea61f2022120ea9d7cc159bd02e73883175dd33a7ce1aadc510a2e712b1",
+    "validate_installed.py": "6e10fbfa414c37064a86c55860c252cc76faac0f8e0d38ebd9977d853a958dd5",
+    "workflow.py": "a643b300c94d53cf4be1e75ffb95bf64106f48ebd3f712df554bcee09582bc9b"
+  },
+  "final_output": "<user_selected_folder>/KandaReasoner-Windows-Portable.zip",
+  "governed_python": "<LOCALAPPDATA>/Programs/Python/Python312/python.exe",
+  "native_destination_picker": true,
+  "public_facade": "portable/create_kanda_reasoner_portable.py",
+  "schema_version": "1.0",
+  "show_project_owner_separation": true
+}
