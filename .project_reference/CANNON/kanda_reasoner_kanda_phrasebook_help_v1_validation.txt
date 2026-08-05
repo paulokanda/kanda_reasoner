@@ -1,0 +1,44 @@
+KANDA PHRASEBOOK HELP V1 - VALIDATION REPORT
+
+Feature ID:
+kanda-phrasebook-help-and-prompt-library-button-v1
+
+Patch ZIP:
+kanda_reasoner_kanda_phrasebook_help_v1_patch.zip
+
+ZIP SHA-256:
+cd4546a9cc024eb23c2df7c4fe6e8c182c2526f171e0613476d9b9c728b13200
+
+Patch contract:
+ZIP CONTRACT: PASS
+Declared payload members: 13
+Root KANDA_FREEZE_HINT.json: PASS
+Patch provenance contract: PASS
+
+Focused validation:
+KANDA_PHRASEBOOK_FAR_RIGHT_BUTTON: PASS
+KANDA_PHRASEBOOK_CANONICAL_HELP_ROUTE: PASS
+KANDA_PHRASEBOOK_HELP_MANIFEST: PASS
+KANDA_PHRASEBOOK_LOCAL_IMAGE_INVENTORY: PASS
+KANDA_PHRASEBOOK_310_EXPLAINED_MINI_PROMPTS: PASS
+KANDA_PHRASEBOOK_BOOK_LAYOUT: PASS
+KANDA_PHRASEBOOK_LOCAL_ONLY: PASS
+KANDA_PHRASEBOOK_TEXT_FALLBACK: PASS
+KANDA_PHRASEBOOK_RUNTIME_MANIFEST_RESOLUTION: PASS
+
+Existing Prompt Library regression validation:
+VALIDATION OK: prompt-library-first-time-help-v1
+STATUS: IN_SYNC
+
+Clean baseline application:
+CLEAN_BASELINE_PATCH_APPLICATION: PASS
+CLEAN_INSTALLED_HASHES: PASS
+VALIDATION OK: kanda-phrasebook-help-and-prompt-library-button-v1
+STATUS: IN_SYNC
+
+Sandbox limitation:
+PySide6 was not installed in the sandbox, so the offscreen Qt button smoke was NOT_RUN locally.
+The delivered VALIDATE.ps1 invokes the focused validator with --require-qt-smoke, so target validation fails unless the real KANDA environment successfully constructs the Prompt Library tab and proves that Kanda Phrasebook is to the right of Help.
+
+Human validation still required:
+Open Prompt Library in the real application, confirm that Kanda Phrasebook appears at the extreme right of the top button container, open it, and inspect the real QWebEngine-rendered help page before Freeze.

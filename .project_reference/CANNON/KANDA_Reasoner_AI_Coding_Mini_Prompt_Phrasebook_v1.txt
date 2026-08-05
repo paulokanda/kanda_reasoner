@@ -1,0 +1,722 @@
+KANDA REASONER AI CODING MINI-PROMPT PHRASEBOOK v1
+
+Purpose
+Use these phrases while programming with AI and KANDA Reasoner. They are generalized for any Active Project selected in the reusable KANDA Reasoner Tool.
+
+Core identity
+- KANDA Reasoner Tool = reusable engineering tool.
+- Active Project = selected source and durable-result owner.
+- Tool and Project remain logically separate even when both point to the same physical root during self-hosting.
+- Brick Wall is the final coding and release authority coordinator.
+- Specialist prompts remain authoritative for their own domains.
+
+Placeholders
+<active_project> = currently selected Project
+<active_project_root> = current Project source root
+<active_project_support_root> = current sibling support root
+<target> = module, feature, workflow, prompt, or artifact being changed
+<primary_box> = Box that owns the main responsibility
+<public_facade> = supported public contract of the owning Box
+<feature_id> = current immutable feature or repair identity
+<operation_id> = current operation identity
+<validation_marker> = exact expected validation marker
+
+======================================================================
+A. UNIVERSAL PREFIXES
+======================================================================
+
+A1. Full universal implementation prefix
+Treat KANDA Reasoner as the reusable Tool and <active_project> as the Active Project. Preserve Tool-versus-Project separation even during self-hosting. Route this task through the current prompt indexes, load only the smallest applicable specialist prompt set, apply Box Architecture and NO_LEAK logic, and use Brick Wall as the final coding authority. Inspect exact current source before proposing code. Prefer the smallest verified intervention, preserve public contracts and single-state ownership, validate from current source, and do not claim installation, validation, Freeze, or Error Memory completion without observed evidence.
+
+A2. Short universal guard
+Respect Tool/Project boundaries, Box ownership, public-contract-only communication, NO_LEAK logic, current exact source, and Brick Wall authorization. Make the smallest bounded change and preserve all unrelated behavior.
+
+A3. Surgical repair prefix
+This is a surgical repair of <target>. Identify the verified defect, its canonical owner, public contract, consumers, and regression risk. Change only the smallest authorized file set inside the owning Box. Keep unrelated corrected behavior shielded and unchanged.
+
+A4. Read-only audit prefix
+Audit only. Inspect current Project source and relevant KANDA prompts, but do not modify source, generate an installable patch, write Project memory, or claim validation. Separate findings, evidence, assumptions, and unresolved questions.
+
+A5. Quality-over-growth prefix
+Do not create a new engine, scanner, registry, schema, report owner, or context system merely because it sounds useful. First prove a concrete inadequacy in the current canonical capability. Prefer repair, consolidation, or no change.
+
+======================================================================
+B. IMPROVED VERSIONS OF COMMON USER PHRASES
+======================================================================
+
+B1. Instead of: "Remember to respect box logic."
+Use: Apply the Box Architecture Canon. Identify the primary Box, public facade, private internals, state owner, allowed files, declared supporting touches, out-of-scope files, cross-Box contracts, and focused boundary validators before coding.
+
+B2. Instead of: "Use Brick Wall."
+Use: Invoke Brick Wall KPR-03-001 now. Show the live Q01-Q40 ledger, current blockers, next safe action, and authorization status. Do not begin with implementation code.
+
+B3. Instead of: "M-card logic is necessary here."
+Use: Evaluate MCard applicability under KPR-12-005. Treat KANDA Reasoner as the reusable card machine, <active_project> as the card owner, and <target> as the inserted card. Bind all work to current Project, target, freshness, generation, operation, authorization, and transaction identity. Preserve Project results and eject only target-specific Tool state after verified completion or rollback.
+
+B4. Instead of: "Use exactly the prompt uploaded."
+Use: Route to the canonical prompt by exact prompt_id, prompt_code, or prompt_path and apply its current text directly. Do not paraphrase, substitute, merge, or rely on a remembered version when exact prompt content is available.
+
+B5. Instead of: "Search in prompt library for the correct prompt."
+Use: Use startup routing first to identify the smallest applicable prompt group, folder card, and specialist prompt path. Open only those canonical prompt-library files. Check duplicates, overlap, owner conflicts, and required companions before applying them.
+
+B6. Instead of: "This is canonical."
+Use: Treat this as a proposed canon until current source, owner, consumers, validators, metadata, routing, and conflicts are audited. It becomes authoritative only after governed validation and explicit Freeze confirmation. Do not override an existing frozen owner silently.
+
+B7. Instead of: "Do not mess with the rest of the code."
+Use: Preserve every unrelated public contract and validated behavior. Declare the exact changed-file set and files explicitly out of scope. Reject opportunistic cleanup, formatting churn, renaming, or dependency changes outside the verified repair boundary.
+
+B8. Instead of: "Do not let code leak."
+Use: Apply NO_LEAK classification. Block wrong-root writes, Tool/Project leakage, cross-Box private reach-in, hidden mutable-state ownership, public API ownership leakage, generated-artifact-as-source authority, and validation or Freeze evidence leakage.
+
+B9. Instead of: "Check the real code; do not guess."
+Use: Inspect exact current source, imports, exports, consumers, state owners, current validators, and source fingerprints. Label unsupported conclusions as unresolved. Do not infer runtime success or current behavior from handoff text, memory, filenames, or generated artifacts alone.
+
+B10. Instead of: "Make it SOLID and DRY."
+Use: Preserve one cohesive responsibility per owner, stable dependency direction, explicit public contracts, and one authoritative implementation per behavior. Do not create abstraction, helper fragmentation, or indirection unless it removes verified duplication or ownership confusion.
+
+B11. Instead of: "Protect this feature."
+Use: Run a Shield Applicability Decision. Strengthen or create focused regression fitness functions only for proven authority, state, boundary, stale-result, path, concurrency, fallback, or high-impact contract risk. Reuse existing tests when sufficient.
+
+B12. Instead of: "Go step by step."
+Use: Work through explicit evidence checkpoints: verified problem, Error Memory, exact source, Tool/Project identity, Box boundary, public contracts, state ownership, implementation plan, sandbox validation, patch contract, user-local validation, Freeze, and handoff. Do not advance past a blocked checkpoint.
+
+======================================================================
+C. ROUTING AND PROMPT-LIBRARY COMMANDS
+======================================================================
+
+C1. Route this task before solving it. State Fast Path or Routed Work Path and list the exact required prompt groups and specialist prompt paths.
+
+C2. Load only the smallest current prompt set that owns this task. Do not load broad groups merely for reassurance.
+
+C3. Use the prompt navigation index, group assimilation index, and relevant folder card before selecting specialist prompts.
+
+C4. Search the canonical prompt library for existing ownership before proposing a new prompt, bridge, schema, or workflow.
+
+C5. Check whether this behavior already exists under another prompt_id, alias, router bridge, metadata record, or folder owner.
+
+C6. Prefer update, reconcile, link, or register over creating a duplicate prompt.
+
+C7. Use the exact canonical prompt path and preserve prompt identity, metadata, routing registration, and validator coverage.
+
+C8. Do not copy the full specialist prompt into GUI source. Keep the GUI dynamically linked to the canonical prompt path.
+
+C9. Do not promote an on-request prompt into always-startup loading without a separate governed startup-delivery change.
+
+C10. When prompts conflict, identify the narrow authoritative owner for each behavior instead of combining them into a larger super-prompt.
+
+C11. Apply project-specific prompt generalization: remove hardcoded project names, roots, slugs, feature instances, and one-off assumptions while preserving the domain contract.
+
+C12. Preserve placeholders for Active Project, Tool root, Project support root, target, feature identity, and validation marker.
+
+C13. Verify prompt freshness. Do not use a stale generated startup copy as the canonical source.
+
+C14. State which prompt owns architecture, which owns delivery, which owns Freeze, which owns Error Memory, and which owns final authorization.
+
+C15. If no existing prompt is adequate, return the verified gap and proposed owner before authoring anything.
+
+======================================================================
+D. VERIFIED PROBLEM, SCOPE, AND CHANGE ADMISSION
+======================================================================
+
+D1. Prove the problem before implementation. Show concrete evidence, practical impact, current owner inspected, and why the current capability is inadequate.
+
+D2. Search for disconfirming evidence that the current system may already solve this problem.
+
+D3. Classify the change as NEW_FEATURE, REPAIR_EXISTING, CONSOLIDATE, VALIDATOR_ONLY, or NO_CHANGE.
+
+D4. Prefer the smallest adequate intervention that yields a measurable reliability, correctness, safety, usability, or performance gain.
+
+D5. Do not expand scope to unrelated debt. Record unrelated findings separately.
+
+D6. Define the exact target and exact non-targets before editing.
+
+D7. Use one primary Box per governed release. Declare every supporting touch and why it is necessary.
+
+D8. Limit the patch to one coherent behavior or, when explicitly justified, no more than two tightly related implementation islands.
+
+D9. Do not bundle refactoring, feature expansion, GUI redesign, prompt changes, and storage migration into one vague patch.
+
+D10. Identify the stopping condition before implementation. Stop when the named objective is met.
+
+D11. State the rollback boundary before changing source.
+
+D12. Reject the task as BLOCKED when ownership, exact source, current Project identity, or validation evidence is unresolved.
+
+D13. Use NO_CHANGE when the existing implementation is already adequate.
+
+D14. Do not optimize without a named workload, current baseline, and correctness guard.
+
+======================================================================
+E. TOOL VERSUS ACTIVE PROJECT BOUNDARY
+======================================================================
+
+E1. Resolve and display Tool root, Active Project root, Active Project support root, and transient daily-work root separately.
+
+E2. Treat Tool and Project as logically separate even if their physical roots are identical during self-hosting.
+
+E3. KANDA Reasoner Tool owns reusable engines, GUI implementation, routing, validators, and generic workflow code.
+
+E4. <active_project> owns its source, generated helper modules, Project-specific Preview, receipts, validation evidence, Error Memory, and Freeze memory.
+
+E5. Do not hardcode KANDA Reasoner as the Active Project in Project-specific paths.
+
+E6. Do not write Project-specific support state inside <active_project_root>.
+
+E7. Route durable Project support artifacts to <active_project_support_root>, not to Tool source and not to transient daily-work.
+
+E8. Treat <daily_work_root> as disposable and ownership-free. It must not own source truth, durable validation evidence, Error Memory, Freeze memory, or canonical Preview truth.
+
+E9. Do not create reusable Tool-engine folders inside an external Project root.
+
+E10. Do not place Project source, Project memory, or Project receipts inside the KANDA Tool root merely because the Tool produced them.
+
+E11. Resolve the selected Project through the canonical Project-selection authority. Do not restore a competing private Project-root setting.
+
+E12. When no Project is selected, clear Project-owned state and block Project-owned background work.
+
+E13. Before every write, prove the target is structurally contained inside the intended owner root.
+
+E14. Reject traversal, sibling-prefix, cross-drive, UNC, symlink, junction, reparse-point, and case-collision escapes.
+
+E15. Do not derive support-root formulas independently when a public canonical root resolver exists.
+
+E16. Classify every touched item exactly once as Tool source, Project source, durable Project support, transient workspace, generated evidence, external input, or blocked write.
+
+E17. Keep selected-project source archives and handoffs as generated evidence, never as current source authority.
+
+E18. During self-hosting, explicitly state which operation changes the KANDA Tool and which operation analyzes or modifies the KANDA Project.
+
+======================================================================
+F. BOX ARCHITECTURE AND PUBLIC CONTRACTS
+======================================================================
+
+F1. Identify the one primary responsibility owner for <target>.
+
+F2. Name the public facade that consumers are allowed to call.
+
+F3. List private internals that must remain unreachable from other Boxes.
+
+F4. Consumers must use public contracts; no private import, callback reach-in, attribute mutation, or filesystem reach-in is allowed.
+
+F5. Commands request an owner action; events report an owner fact. Do not use shared mutable objects as an implicit contract.
+
+F6. Declare producer and consumer contracts, including inputs, outputs, events, errors, fallback, and compatibility expectations.
+
+F7. Preserve dependency direction toward stable abstractions and declared owners.
+
+F8. Every mutable state must have one owner Box, one canonical truth, one initializer, and one mutation route.
+
+F9. Derived views, caches, projections, and snapshots may exist but must not become mutation authorities.
+
+F10. Registries may locate public owners but must not absorb domain behavior or become hidden state owners.
+
+F11. Generated artifacts, Preview, reports, and exports are not implementation source truth.
+
+F12. Declare supporting touches explicitly and keep them bounded.
+
+F13. Reject God Box expansion, ownership-free helper layers, duplicate owners, and coordination super-systems.
+
+F14. If a consumer needs private data, change or extend the public contract instead of reaching into internals.
+
+F15. Define unavailable, disabled, replaced, deprecated, removed, and fallback behavior for optional features.
+
+F16. Preserve one canonical owner for each scanner, schema, report, state authority, and path formula.
+
+F17. Do not create a new shared helper merely to hide an unresolved ownership decision.
+
+F18. Return a Box Boundary Audit before implementation when boundaries are material.
+
+======================================================================
+G. SHIELDING AND NO-LEAK PROTECTION
+======================================================================
+
+G1. Shield the existing validated behavior before changing the owning Box.
+
+G2. State the invariant in public-contract language before writing a regression test.
+
+G3. Add or strengthen focused fitness functions for the exact boundary at risk.
+
+G4. Include positive controls and negative boundary cases.
+
+G5. Protect forbidden authority escalation, not just expected outputs.
+
+G6. Test stale-result, transaction, concurrency, path, fallback, and removal behavior when applicable.
+
+G7. Reuse current focused validators when they already prove the invariant.
+
+G8. Do not create a ceremonial shield for every milestone or refactor.
+
+G9. Keep shield tests inside the owning Box or canonical validation owner; do not create a parallel global shield engine.
+
+G10. Preserve source, durable Preview, and disposable Shadow as distinct authorities.
+
+G11. Prevent wrong-root writes and generated-artifact-as-source promotion.
+
+G12. Keep validation evidence in its durable owner and prevent evidence from leaking into source authority.
+
+G13. Do not call NO_LEAK a security sandbox; describe the exact architectural and runtime checks it performs.
+
+G14. Fail closed when ownership, state authority, or path containment is unknown.
+
+======================================================================
+H. BRICK WALL AND MCARD COMMANDS
+======================================================================
+
+H1. Brick Wall. Show the live Q01-Q40 status before any code.
+
+H2. Update Brick Wall after this evidence change and reset every source-sensitive item invalidated by the new source or patch revision.
+
+H3. Do not mark a Brick Wall item complete without current evidence.
+
+H4. Keep coding blocked until verified-problem, Error Memory, exact-source, Tool/Project, Box, public-contract, state-owner, and write-authorization gates are complete.
+
+H5. State separately whether you may begin coding, write source, build a patch, deliver a patch, claim validation, and Freeze.
+
+H6. Show the next safe action, not only the final goal.
+
+H7. Evaluate MCard applicability for <target>; do not assume every edited file is a card lifecycle.
+
+H8. Bind the card to Active Project identity, target relative path, freshness value, session, operation, plan, Preview, generation, authorization, and transaction.
+
+H9. Reject stale asynchronous results whose Project, target, source fingerprint, operation, or generation does not match the current card.
+
+H10. Root or target switching must invalidate old analysis, plan, Preview, authorization, callbacks, and worker generations.
+
+H11. Cancellation must stop or settle workers and callbacks; generation invalidation alone is not cleanup.
+
+H12. Do not eject while apply, rollback, cancellation, child process, callback, or transaction remains unresolved.
+
+H13. After verified terminal completion, clear target-specific Tool state and retain Project-owned source, helpers, Preview, receipts, and durable evidence.
+
+H14. MCard confirms lifecycle readiness but never authorizes coding or source mutation.
+
+H15. Preserve APPLIED_NOT_VERIFIED as a real state between mutation return and post-write verification.
+
+H16. Detect and block concurrent sessions that silently operate on the same card identity.
+
+======================================================================
+I. SOURCE TRUTH, FRESHNESS, AND EVIDENCE
+======================================================================
+
+I1. Current exact source is implementation truth. Error Memory is prevention guidance, not source truth.
+
+I2. Inspect current owner files, public facade, private implementations, imports, exports, consumers, validators, and module sizes.
+
+I3. Record source fingerprints before planning and recheck them immediately before write.
+
+I4. Do not rely on handoff-only, source-archive-only, filename-only, or generated-report-only evidence for current behavior.
+
+I5. Label every evidence item as current, stale, partial, unresolved, or not applicable.
+
+I6. Reset evidence-sensitive approvals after any source upload, patch revision, root switch, target switch, or validator change.
+
+I7. Preserve provenance: command, environment, source fingerprint, prompt revision, validator revision, marker, timestamp, and limitation.
+
+I8. Distinguish observed runtime evidence from static inference.
+
+I9. Do not convert a proposed validation command into a PASS claim.
+
+I10. Report NOT_RUN, BLOCKED, INCONCLUSIVE, FAIL, FLAKY, or PASS truthfully.
+
+I11. Request the smallest scenario-specific trace, log, focused test, or terminal evidence package when runtime behavior matters.
+
+I12. Do not over-request source archives when current source evidence is already sufficient.
+
+I13. Treat successful sandbox validation and user-local validation as separate evidence states.
+
+I14. Treat installation success and validation success as separate evidence states.
+
+======================================================================
+J. STATE, LIFECYCLE, ASYNC, AND GUI CONTROL
+======================================================================
+
+J1. Declare the source of truth for this UI or workflow state.
+
+J2. Define state reset before a new run so stale results cannot survive into the next operation.
+
+J3. Define failure-mode handling for partial success, missing data, invalid input, cancellation, timeout, and dependency failure.
+
+J4. Define the validation boundary that must pass before the next operation starts.
+
+J5. Define the rollback boundary that restores the exact predecessor without damaging unrelated state.
+
+J6. Preserve a human confirmation gate for consequential writes.
+
+J7. Separate read-only Preview from mutation authority.
+
+J8. Use immutable operation identity for workers, callbacks, results, and writes.
+
+J9. A stale result must not repopulate UI, open a gate, write source, or write durable evidence.
+
+J10. When no Active Project exists, present an explicit empty state instead of scanning Path.cwd() or restoring stale state.
+
+J11. Keep Project-selection controls visible while clearing only Project-specific values during unload.
+
+J12. Do not hide a backend error inside a GUI success state; propagate it to the validation and release gate.
+
+J13. For queued Qt signals, thread affinity, visibility, clicks, or destruction behavior, use real Qt validation when material.
+
+J14. Treat deterministic QObject and QWebEngine teardown and zero process exit as part of validation.
+
+J15. Design GUI layouts for laptop through 4K, avoiding fixed-size-only assumptions and hidden controls.
+
+J16. Separate GUI intent emission from domain logic ownership.
+
+======================================================================
+K. REFACTORING, CLEAN CODE, AND MODULE SIZE
+======================================================================
+
+K1. First decide whether this is refactoring or intentional behavior change.
+
+K2. Preserve public imports, names, signatures, decorators, defaults, exceptions, side effects, events, and observable behavior unless an explicit contract change is approved.
+
+K3. Name the smell and show exact evidence before selecting a transformation.
+
+K4. Prefer one coherent transformation unit over mechanical micro-edits.
+
+K5. Keep the original public facade thin and stable when splitting implementation.
+
+K6. Split by cohesive responsibility, not arbitrary line ranges.
+
+K7. Format normally under PEP 8 before counting physical lines.
+
+K8. Ideal touched Python module size is approximately 400 lines or fewer; hard maximum is 500 physical lines.
+
+K9. If a touched module is or would become larger than 500 lines, route to the Large Module Refactor Protocol before implementation.
+
+K10. Do not compress formatting, combine statements, remove required blank lines, duplicate logic, or pad files to satisfy a line target.
+
+K11. Avoid tiny helper crumbs. Create helpers only when they own a coherent responsibility.
+
+K12. Keep helper dependency direction one-way and prohibit helper-to-facade cycles.
+
+K13. Preserve one authoritative DRY owner for each behavior.
+
+K14. Do not rename stable symbols merely for stylistic preference when consumers or external contracts rely on them.
+
+K15. Use comments and docstrings to preserve non-obvious contracts, not to narrate obvious code or invent facts.
+
+K16. Stop refactoring when the named objective is met and record unrelated debt separately.
+
+K17. Require exact predecessor rollback and consumer compatibility validation.
+
+K18. For multiple refactor slices, deliver ordered bounded patches; validate and Freeze each before the next.
+
+======================================================================
+L. TESTING AND VALIDATION
+======================================================================
+
+L1. Select tests from behavior and risk, not from a universal test pyramid or fixed quota.
+
+L2. Define the behavior contract and failure reproduction before choosing tests.
+
+L3. Map every changed file to the validators that protect it or state why a validator is not applicable.
+
+L4. Use the smallest sufficient deterministic validation set.
+
+L5. Include negative and failure-path coverage when risk is material.
+
+L6. Verify public facade, consumers, state ownership, boundary rejection, and fallback behavior.
+
+L7. Use isolated fixtures that cannot mutate real Tool source, Project source, durable support, or drive-root locations.
+
+L8. Snapshot protected paths before and after validation when writes are possible.
+
+L9. Mock only at stable boundaries when it improves isolation.
+
+L10. Do not impose fixed coverage or mutation thresholds without risk evidence.
+
+L11. Use property or mutation testing only as a bounded pilot with measurable unique value.
+
+L12. Validate current source after installation; do not validate only the patch workspace.
+
+L13. Validate from the exact final ZIP on a clean copy when feasible.
+
+L14. Require exact expected markers and process exit code zero.
+
+L15. Preserve current-source execution evidence before claiming PASS.
+
+L16. Distinguish preexisting baseline failures from regressions introduced by the patch.
+
+L17. Do not waive a directly affected failed validator merely because unrelated validators pass.
+
+L18. Include rollback or reversal evidence for source-changing operations.
+
+======================================================================
+M. PATCH, ZIP, INSTALLATION, AND TERMINAL DELIVERY
+======================================================================
+
+M1. Treat patch delivery as a governed release event, not as a file attachment.
+
+M2. Never deliver an isolated ZIP. Include install instructions, validation instructions, expected markers, Freeze handling, and Error Memory handling when applicable in the same response.
+
+M3. Package only declared changed files and required release metadata.
+
+M4. Verify the exact ZIP member set, paths, hashes, collisions, traversal safety, links, and undeclared payloads.
+
+M5. A freezeable ZIP must contain one root-level KANDA_FREEZE_HINT.json generated from the same payload source as the Freeze form.
+
+M6. Do not duplicate KANDA_FREEZE_HINT.json inside the install payload.
+
+M7. Resolve the drive from <active_project_root>, stage the downloaded ZIP under <daily_work_root>, remove the drive-root copy after successful staging, and install only from the staged ZIP.
+
+M8. Do not search Downloads or Desktop as the default installer source.
+
+M9. Keep installers and disposable artifacts out of Tool and Project source roots.
+
+M10. Use transactional installation with exact baseline hash checks and rollback on failure.
+
+M11. Separate installation, validation, Freeze preparation, and Error Memory into independently pasteable lifecycle blocks.
+
+M12. One terminal block must not execute multiple lifecycle phases.
+
+M13. Successful installation may clear the terminal only under the canonical install-success footer. Validation, Freeze, diagnostics, and errors remain visible until the user confirms cleanup.
+
+M14. Keep the terminal open. Never close it automatically.
+
+M15. Use Windows PowerShell-compatible APIs for the verified target environment.
+
+M16. Use exact current artifact paths rather than guessed destinations or placeholders in executable commands.
+
+M17. Block ZIP delivery with CONTRACT NOT MET - PATCH DELIVERY BLOCKED when the release contract is unverified.
+
+M18. Do not claim the patch is installed merely because the ZIP was created or downloaded.
+
+======================================================================
+N. FREEZE AND ERROR MEMORY
+======================================================================
+
+N1. Treat Preview Freeze Entry as read-only.
+
+N2. Preserve explicit human Confirm and Write; never automate or bypass it.
+
+N3. Freeze only after current user-local validation contains the exact feature marker and STATUS: IN_SYNC when required.
+
+N4. Generate Freeze hint and Freeze form from one canonical payload source.
+
+N5. Store Project-specific freeze intake under the selected Project support root.
+
+N6. Store Project-specific frozen memory under the selected Project support root, never inside the reusable project_freeze_ledger engine.
+
+N7. Do not infer Freeze completion from a merged hint, a Preview, or staged evidence.
+
+N8. Refresh startup Freeze context after a confirmed local Freeze write.
+
+N9. Read compact Error Memory before implementation planning and coding.
+
+N10. Use full Error Memory only when the compact manifest or current task justifies it.
+
+N11. Map every relevant Error Memory lesson to an existing validator, a new focused test, a current-source reinterpretation, or an evidence-backed not-applicable decision.
+
+N12. Verify each lesson against current file, symbol, facade, owner, status, supersession, and source fingerprint.
+
+N13. Error Memory is prevention guidance, not implementation source truth.
+
+N14. Create or promote an Error Memory lesson only from actual reusable failure evidence and after duplicate checks.
+
+N15. Memorize Error remains explicitly human governed.
+
+N16. Do not infer memorization from staging, draft generation, or active-ready preparation.
+
+N17. When a user-detected mistake occurs, explain root cause, correct the workflow, validate the prevention check, and prepare the lesson for human review.
+
+N18. Do not include secrets, credentials, patient data, or proprietary source in Error Memory or Freeze evidence.
+
+======================================================================
+O. DOCUMENTATION, HELP, AND USER EXPERIENCE
+======================================================================
+
+O1. Inspect the real current UI and code before documenting controls or workflow.
+
+O2. Explain every control, action order, result, path, warning, recovery step, and orange reminder in plain English.
+
+O3. Separate technical explanation from first-time-user explanation.
+
+O4. Use practical daily-life analogies without changing the technical meaning.
+
+O5. Do not describe a deprecated, hidden, renamed, or nonexistent control as current.
+
+O6. Keep help dynamically aligned with the owning public contract and current UI labels.
+
+O7. Route durable help documents to the selected Project support owner when Project-specific; keep reusable Tool help with the Tool owner.
+
+O8. Do not store durable documentation only under daily-work.
+
+O9. Explain what happens on success, failure, cancellation, missing Project, stale input, and recovery.
+
+O10. Avoid ELI5 wording when professional plain-English explanation is clearer.
+
+O11. Preserve layout and visual canon when updating content unless a separate design change is approved.
+
+O12. Never invent technical behavior merely to make documentation complete.
+
+======================================================================
+P. RESEARCH, HANDOFF, AND ANTI-HALLUCINATION
+======================================================================
+
+P1. Use current Project evidence first. Escalate to web research, books, or specialist review only when it can materially change the decision.
+
+P2. Before web research, name the exact technical uncertainty and current files or contracts being compared.
+
+P3. Prefer official documentation, primary repositories, release notes, issues, and standards for technical implementation claims.
+
+P4. Separate source-derived findings, web findings, inference, and recommendation.
+
+P5. Do not cite a source that was not actually retrieved.
+
+P6. Reject suggestions supported only by one weak or untested source when risk is material.
+
+P7. Do not add complexity for marginal or unmeasured gain.
+
+P8. Ask an external specialist to review and advise, not to implement, when independent critique is useful.
+
+P9. A handoff must include role, Project context, current problem, proposed solution, specific questions, safety constraints, requested output, and the instruction: Do not implement. Only review and advise.
+
+P10. External review is evidence, not authority. Reconcile it with current source, canonical owners, and Brick Wall.
+
+P11. Do not guess when current source or runtime evidence can resolve the question.
+
+P12. If evidence conflicts, state the conflict and remain BLOCKED or INCONCLUSIVE.
+
+P13. Use the anti-hallucination protocol for bounded evidence synthesis and truthful evidence states.
+
+P14. Do not claim execution, test passage, installation, or validation from reasoning alone.
+
+======================================================================
+Q. STATUS, PROGRESS, AND HANDOFF PHRASES
+======================================================================
+
+Q1. Show what is verified, inferred, unresolved, blocked, and not applicable.
+
+Q2. State the current phase, primary Box, exact target, current source identity, and next safe action.
+
+Q3. Tell me which files are allowed to change and which are explicitly out of scope.
+
+Q4. Report what changed since the last Brick Wall update and which checks were reset by freshness changes.
+
+Q5. State how many roadmap steps are complete, which step is current, and what remains.
+
+Q6. Do not promise future background work. Complete the current bounded task or report the exact blocker.
+
+Q7. At session end, produce a factual handoff with current source state, installed state, validation state, Freeze state, Error Memory state, blockers, and next safe action.
+
+Q8. Preserve historical prose as historical when frontmatter already records a feature as frozen or superseded.
+
+Q9. Do not say complete when only source preparation, patch creation, installation, validation, Preview, or staging is complete.
+
+Q10. Use precise lifecycle language: prepared, packaged, installed, validated, Freeze-ready, Previewed, frozen, staged for Error Memory, memorized.
+
+======================================================================
+R. COMPOSITE MINI-PROMPT RECIPES
+======================================================================
+
+R1. Safe bug repair
+Treat this as a user-detected repair of <target>. Invoke Brick Wall, read compact Error Memory, inspect exact current owner source and consumers, resolve Tool/Project identity, run a Box Boundary Audit, and identify the smallest repair. Preserve unrelated behavior, add focused regression protection, validate on current source, and prepare one governed patch with separate install, validate, Freeze, and Error Memory phases. Do not claim completion without observed evidence.
+
+R2. Safe feature implementation
+Before implementing <target>, prove a verified capability gap and search for existing owners to avoid duplication. Resolve the Active Project, select one primary Box, define the public contract and single state owner, compare bounded options when necessary, and obtain Brick Wall authorization. Implement the smallest cohesive feature, validate positive and negative behavior, and deliver through the governed release lifecycle.
+
+R3. Safe refactor
+Classify this as behavior-preserving refactoring, inspect exact source and consumers, define the public contract and rollback boundary, and route to the Large Module Refactor Protocol if any touched module is or would exceed 500 lines. Split by cohesive responsibility, preserve imports and behavior, avoid micro-modules, validate consumers and exact rollback, and Freeze each bounded refactor slice before continuing.
+
+R4. GUI correction
+Audit the real current GUI implementation and owner contracts before changing it. Keep GUI code responsible for user intent and presentation only; preserve domain ownership, Project selection authority, state reset, failure-mode handling, stale-result rejection, and laptop-to-4K usability. Add real Qt validation when signal delivery, thread affinity, visibility, clicks, or teardown are material.
+
+R5. Prompt-library change
+Route this as governed prompt-authoring work. Audit existing prompts, aliases, metadata, routing indexes, folder card, duplicates, overlap, ownership, and create-versus-update-versus-register options. Apply project-specific generalization, preserve exact prompt identity and required companions, validate human and machine routing, and do not edit generated startup copies as canonical source.
+
+R6. Patch delivery
+Treat this delivery as a governed release event. Use the exact final ZIP, enforce the declared member set and hashes, stage it under the Active Project daily-work root, install transactionally, validate current installed source, merge Freeze evidence only after validation, and handle Error Memory only for actual reusable failure evidence. Never emit an isolated ZIP.
+
+R7. Freeze continuation
+Use the current validated feature identity and local evidence. Confirm that validation_evidence_summary contains the exact literal feature marker and STATUS: IN_SYNC when required. Generate the Freeze form from the same payload as KANDA_FREEZE_HINT.json, keep Preview read-only, and leave Confirm and Write to explicit human action.
+
+R8. Architecture audit
+Audit <target> using exact current source. Identify the primary Box, public facade, private internals, state owners, dependency direction, consumers, path authorities, generated-artifact status, cross-Box communication, and boundary risks. Search for duplicate owners or coordination super-systems. Return evidence and blockers; do not code from the audit alone.
+
+R9. Research-assisted decision
+State the verified current implementation and precise uncertainty. Search current authoritative sources only where they can change the decision, compare findings against existing KANDA owners, reject low-value complexity, and update the bounded proposal. External evidence does not authorize source writes.
+
+R10. Handoff to another AI
+Prepare a specialist review handoff for <target>. Explain the Project, Tool/Project boundary, primary Box, current source evidence, verified problem, proposed solution, unresolved risks, safety constraints, and exact questions. Ask for corrections and alternatives. End with: Do not implement. Only review and advise.
+
+======================================================================
+S. PHRASES THAT SHOULD NOT BE USED ALONE
+======================================================================
+
+S1. "Go."
+Replace with: Proceed only through the currently authorized Brick Wall phase and state the exact next safe action.
+
+S2. "This is canonical."
+Replace with: Treat this as a proposed canon pending owner reconciliation, validation, and explicit Freeze.
+
+S3. "Use box logic."
+Replace with: Run the complete Box Boundary Audit and preserve public-contract-only communication and single-state ownership.
+
+S4. "Use Brick Wall."
+Replace with: Invoke KPR-03-001 and display Q01-Q40, blockers, next safe action, and authorization before code.
+
+S5. "Use MCard."
+Replace with: Evaluate KPR-12-005 applicability and bind lifecycle to current Project, target, freshness, generation, operation, authorization, and transaction.
+
+S6. "Do not hallucinate."
+Replace with: Inspect exact current source and observed evidence; label unsupported claims unresolved and never convert inference into PASS.
+
+S7. "Do not break anything."
+Replace with: Preserve the named public contracts and validated behavior, declare out-of-scope files, and add focused regression tests for the exact risk.
+
+S8. "Make it faster."
+Replace with: Name the workload, measure a baseline, preserve correctness, and implement only a proven bottleneck improvement with repeatable evidence.
+
+S9. "Refactor this file."
+Replace with: Classify refactor versus feature, inspect consumers, define the preserved contract and rollback boundary, and route large-module work when required.
+
+S10. "Give me the ZIP."
+Replace with: Deliver one governed patch ZIP only after the exact ZIP contract passes, together with install, validation, expected markers, Freeze, and Error Memory handling.
+
+======================================================================
+T. ONE-LINE COMMAND DECK
+======================================================================
+
+T1. Brick Wall now; no code first.
+T2. Route this through the canonical prompt library.
+T3. Load the exact specialist prompt, not a remembered paraphrase.
+T4. Prove the problem before adding capability.
+T5. Prefer repair or consolidation over a new engine.
+T6. Resolve Tool and Active Project separately.
+T7. Preserve self-hosting logical separation.
+T8. Run the Box Boundary Audit.
+T9. Use public contracts only; no private reach-in.
+T10. Declare one mutable-state owner.
+T11. Apply NO_LEAK classification.
+T12. Run a Shield Applicability Decision.
+T13. Inspect exact current source and consumers.
+T14. Recheck source fingerprints immediately before write.
+T15. Treat generated artifacts as evidence, not source truth.
+T16. Apply MCard lifecycle to this target.
+T17. Reject stale asynchronous results.
+T18. Reset stale state before rerun.
+T19. Define failure-mode handling.
+T20. Preserve the human confirmation gate.
+T21. Keep Preview read-only.
+T22. Separate install success from validation success.
+T23. Do not claim PASS without observed markers.
+T24. Use the smallest sufficient deterministic tests.
+T25. Preserve exact rollback to the predecessor.
+T26. Keep touched modules at or below 500 physical lines.
+T27. Split by responsibility, not line ranges.
+T28. Do not create tiny helper crumbs.
+T29. Preserve PEP 8, SOLID, DRY, and stable public imports.
+T30. One primary Box per release.
+T31. Declare every supporting touch.
+T32. Never deliver an isolated ZIP.
+T33. Stage disposable artifacts only under daily-work.
+T34. Keep durable evidence under Project support.
+T35. Freeze only after user-local validation.
+T36. Confirm and Write remains human-only.
+T37. Read compact Error Memory before coding.
+T38. Memorize Error remains human-only.
+T39. Distinguish verified facts from inference.
+T40. Show the next safe action and current blocker.
+
+END OF PHRASEBOOK

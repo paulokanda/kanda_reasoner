@@ -1,0 +1,51 @@
+# Integration template only -- not a real diff, shows call-site placement
+# inside _build_from_complete_json() in graph_snapshot_builder.py
+
+# --- existing imports, add these two ---
+from .graph_cycle_detector import annotate_cycles
+from .graph_structure_findings import compute_structure_findings
+
+
+# --- existing body, after apply_relationship_counts(nodes, edges) ---
+def _build_from_complete_json(project_root, json_path, payload):
+    # ... existing node/edge/import construction unchanged ...
+
+    semantic_statistics = enrich_graph_semantics(project_root, payload, nodes, edges)
+    apply_relationship_counts(nodes, edges)
+
+    # NEW: cycle detection (mutates node["metadata"]["in_cycle"], node["risk_level"])
+    cycle_statistics = annotate_cycles(nodes, edges)
+
+    # NEW: derived findings (read-only, no mutation)
+    structure_findings = compute_structure_findings(nodes, edges)
+
+    module_count = sum(node["kind"] in {"module", "validator"} for node in nodes)
+
+    snapshot: dict = {
+        # ... existing top-level keys unchanged (schema_version, project_identity, etc.) ...
+        "nodes": nodes,
+        "edges": edges,
+        # ... clusters, legend, layout unchanged ...
+        "statistics": {
+            "node_count": len(nodes),
+            "edge_count": len(edges),
+            "package_count": len(package_names),
+            "module_count": module_count,
+            "external_dependency_count": len(external_allowed),
+            "fixture": False,
+            "source_file_count_available": len(records),
+            "source_file_limit": _MAX_MODULES,
+            **semantic_statistics,
+            "cycle_count": cycle_statistics["cycle_count"],
+            "cyclic_node_count": cycle_statistics["cyclic_node_count"],
+            "structure_findings": structure_findings,
+        },
+    }
+    validate_graph_snapshot(snapshot)
+    return snapshot
+
+
+# --- graph_schema.py: extend _REQUIRED_TOP_LEVEL statistics validation if needed ---
+# structure_findings / cycle_count / cyclic_node_count are additive keys inside
+# "statistics", which is not schema-enumerated per-key today, so no schema change
+# is strictly required -- confirm this against the real graph_schema.py before merging.

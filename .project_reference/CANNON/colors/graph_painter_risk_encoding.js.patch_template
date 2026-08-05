@@ -1,0 +1,60 @@
+// Integration template only -- shows additions to web/graph_painter.js
+// Existing nodePalette / nodeValues / nodeColor / nodeValue / nodeLabel stay as-is;
+// these are ADDITIONS alongside them inside the same create(flags) closure.
+
+const riskPalette = {
+  none: null,        // fall through to existing category color
+  review: "#ffcc57",
+  hotspot: "#ff5f5f"
+};
+
+function nodeRiskLevel(node) {
+  // node.risk_level is an existing schema field, default "none",
+  // set to "review" by annotate_cycles() when the node is in a cycle.
+  // "hotspot" is a template extension: set this in compute_structure_findings
+  // consumers, or derive it client-side from node.incoming_count if preferred.
+  return node.risk_level || "none";
+}
+
+function nodeColorWithRisk(node) {
+  if (flags.isSelected(node.id) || flags.isPathNode(node.id)) {
+    return "#ffffff";
+  }
+  if (flags.isHovered(node.id)) {
+    return "#dff6ff";
+  }
+  const riskColor = riskPalette[nodeRiskLevel(node)];
+  if (riskColor) {
+    return riskColor;
+  }
+  return nodePalette[node.category] || nodePalette.core;
+}
+
+function nodeValueWithFanIn(node) {
+  // Scale existing kind-based base size by incoming_count so hub nodes
+  // read as visibly larger, not just differently colored.
+  const base = nodeValues[node.kind] || 4;
+  const fanIn = Number(node.incoming_count || 0);
+  const scale = 1 + Math.min(1.5, fanIn / 25); // cap growth, avoid runaway giants
+  return base * scale;
+}
+
+function nodeLabelWithFindings(node) {
+  // Extends the existing status-suffix pattern in nodeLabel()
+  const statuses = [
+    node.frozen ? "Frozen" : "",
+    node.protected ? "Protected" : "",
+    node.external ? "External" : "",
+    node.metadata && node.metadata.in_cycle ? "In cycle" : "",
+    nodeRiskLevel(node) !== "none" ? "Risk: " + nodeRiskLevel(node) : ""
+  ].filter(Boolean);
+  const suffix = statuses.length ? " | " + statuses.join(", ") : "";
+  return String(node.label || node.id) + " | " + String(node.kind || "node") + suffix;
+}
+
+// Wire-up template: replace the returned function references in the object
+// returned by create(flags) --
+//   color: nodeColor        ->  color: nodeColorWithRisk
+//   val:   nodeValue        ->  val:   nodeValueWithFanIn
+//   label: nodeLabel        ->  label: nodeLabelWithFindings
+// Confirm the exact returned-object shape in graph_painter.js before wiring.
