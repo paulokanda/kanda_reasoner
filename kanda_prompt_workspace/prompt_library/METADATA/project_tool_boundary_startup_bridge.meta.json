@@ -8,11 +8,11 @@
   "load_type": "always_startup",
   "owner_box": "12_generalized_project_canons",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
-  "source_stage": "show-project-generated-portable-archive-exclusion-v1r2",
-  "updated_for": "show-project-generated-portable-archive-exclusion-v1r2",
-  "description": "Startup bridge that enforces selected-Project ownership and additionally canonizes that Show Project to AI never creates portable distributions; <project>-Windows-Portable.zip requires a separate explicit user request and productization/release workflow outside Project Support.",
+  "source_stage": "complete-bridge-classification-and-selected-project-feature-checklist-v1",
+  "updated_for": "complete-bridge-classification-and-selected-project-feature-checklist-v1",
+  "description": "Always-startup bridge that separates the reusable KANDA Tool from the selected Project and provides the feature handling checklist for identity, ownership, source, patch, install, validation, Project Support, Error Memory, Freeze, continuation, and no-merge behavior.",
   "box_logic_required": true,
-  "routing_coverage": "startup_bridge_cross_project_release_and_portable_separation_v2_1",
+  "routing_coverage": "startup_bridge_cross_project_release_portable_and_feature_handling_v2_3",
   "priority": 4,
   "trigger_phrases": [
     "tool project boundary startup bridge",
@@ -41,7 +41,8 @@
     "The button identity envelope must prevent wrong-root operational output.",
     "The bridge must route consequential work to KPR-12-001 and never authorize mutation.",
     "Show Project to AI never creates <project>-Windows-Portable.zip.",
-    "Portable builds require a separate explicit user request and productization/release workflow outside Project Support."
+    "Portable builds require a separate explicit user request and productization/release workflow outside Project Support.",
+    "Every selected-Project feature must pass the feature handling checklist and must never merge into KANDA Tool source, another Project, generated evidence, or transient staging."
   ],
-  "version": "2.2"
+  "version": "2.3"
 }

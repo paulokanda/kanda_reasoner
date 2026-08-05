@@ -75,7 +75,7 @@ def main() -> int:
     )
 
     for marker in (
-        "version: 3.1",
+        "version: 3.2",
         "Paste-safe PowerShell hard gate",
         "Windows PowerShell 5.1-compatible APIs",
         "lesson-powershell-detached-else-interactive-paste-footer-v1",
@@ -123,12 +123,16 @@ def main() -> int:
         "kanda_prompt_workspace/prompt_library/METADATA/"
         "terminal_cleanup_contract.meta.json",
     )
-    expected_versions = ("3.1", "2.1", "2.1")
-    for relative, version in zip(meta_paths, expected_versions):
+    expected = (
+        ("3.2", "separated-terminal-release-phases-v1"),
+        ("2.1", FEATURE_ID),
+        ("2.1", FEATURE_ID),
+    )
+    for relative, (version, source_stage) in zip(meta_paths, expected):
         data = json.loads(read(root, relative))
         require(data.get("version") == version, "PASTE_SAFE_METADATA_VERSION")
         require(
-            data.get("source_stage") == FEATURE_ID,
+            data.get("source_stage") == source_stage,
             "PASTE_SAFE_METADATA_SOURCE_STAGE",
         )
 

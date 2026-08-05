@@ -197,6 +197,9 @@ def build_freeze_payload(
     freeze_readiness: str = "pre_validation_hint",
     requires_user_validation: bool = True,
     source_patch_zip: str | None = None,
+    patch_provenance_required: bool = False,
+    delivery_manifest_name: str = "KANDA_PATCH_DELIVERY_MANIFEST.json",
+    patch_trace_name: str = "KANDA_PATCH_TRACE.json",
     schema_version: str = SCHEMA_VERSION,
     kind: str = KIND,
 ) -> dict[str, Any]:
@@ -230,6 +233,12 @@ def build_freeze_payload(
     }
     if source_patch_zip:
         payload["source_patch_zip"] = source_patch_zip.strip()
+    if patch_provenance_required:
+        payload["patch_provenance_required"] = True
+        payload["delivery_manifest_name"] = delivery_manifest_name.strip()
+        payload["patch_trace_name"] = patch_trace_name.strip()
+        if not payload["delivery_manifest_name"] or not payload["patch_trace_name"]:
+            raise FreezePayloadError("Patch provenance filenames must be non-empty.")
 
     for field_name in MANDATORY_FREEZE_FIELDS:
         _require_non_placeholder(payload, field_name)

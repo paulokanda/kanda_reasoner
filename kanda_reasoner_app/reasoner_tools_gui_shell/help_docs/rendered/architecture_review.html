@@ -18,7 +18,7 @@
 </figure>
 <section><h2>Start Here: The Safe First Run</h2>
 <div class="callout callout-note"><div class="callout-icon" aria-hidden="true">i</div><div><p><strong>Best first choice:</strong> Architecture Review &gt; Check Update Architecture &gt; Mode: validate.</p></div></div>
-<ol><li>Open <code>Audit Project</code>.</li><li>Select <code>Architecture Review</code>.</li><li>Select <code>Check Update Architecture</code>.</li><li>Confirm <code>Project root</code>.</li><li>Leave <code>Mode</code> on <code>validate</code>.</li><li>Keep <code>Require confirm before write</code> selected.</li><li>Click <code>Validate Project</code>.</li><li>Read <code>Project Audit Results</code>.</li><li>Use <code>Copy Audit Results</code> or <code>Save Audit Results</code> before asking another person or AI to help.</li></ol>
+<ol><li>Open <code>Audit Project</code>.</li><li>Select <code>Architecture Review</code>.</li><li>Select <code>Check Update Architecture</code>.</li><li>Confirm <code>Project root</code>.</li><li>Leave <code>Mode</code> on <code>validate</code>.</li><li>Keep <code>Require confirm before write</code> selected.</li><li>Click <code>Validate Project</code>.</li><li>Read <code>Project Audit Results</code>.</li><li>Use <code>Copy Audit Results</code>, <code>Copy and Open External AI</code>, or <code>Save Audit Results</code> before asking another person or AI to help. External review is manual and advisory.</li></ol>
 </section>
 <section><h2>What Audit Project Is</h2><p>Audit Project is the inspection area of KANDA Reasoner. It checks the project before repair work begins. It can identify architecture warnings, study oversized Python files, build a controlled refactor plan, review engineering safety, and inspect workflows.</p><p><strong>It does not mean every warning must be fixed.</strong> It gives evidence so the next decision is safer.</p></section>
 <section><h2>The Three Main Tabs</h2>
@@ -43,6 +43,7 @@
 <article class="control-card"><h4><code>Mode Help</code></h4><p>Shows a short explanation of the four modes.</p></article>
 <article class="control-card"><h4><code>Include latest Refactor Report evidence</code></h4><p>When selected, copied results can include compact evidence from the latest Refactor Report. Leave it selected for a more complete AI handoff.</p></article>
 <article class="control-card"><h4><code>Copy Audit Results</code></h4><p>Copies the report to the clipboard for an AI conversation, issue, or document.</p></article>
+<article class="control-card"><h4><code>Copy and Open External AI</code></h4><p>Copies a strict read-only audit review prompt and opens the selected external Python-coding assistant. The answer cannot modify Project source or approval state.</p></article>
 <article class="control-card"><h4><code>Warning Heuristic Resolver</code></h4><p>Starts the warning-resolution workflow after warnings exist. It may route work through heuristic, Local AI, or Web AI paths.</p></article>
 <article class="control-card"><h4><code>Cancel Resolver</code></h4><p>Stops the active warning resolver.</p></article>
 <article class="control-card"><h4><code>Large Module Creation/Refactor Protocol</code></h4><p>Copies the governed large-module rules. Paste them with the audit evidence when an AI will create or refactor Python modules.</p></article>

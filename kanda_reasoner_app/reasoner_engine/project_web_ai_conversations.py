@@ -9,7 +9,6 @@ project-context loading, credential persistence, or request identity.
 
 from __future__ import annotations
 
-import html
 import re
 import uuid
 from dataclasses import dataclass, field
@@ -21,6 +20,10 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QMessageBox
 
+from kanda_reasoner_app.reasoner_engine.project_web_ai_clipboard_actions import (
+    connect_project_web_ai_clipboard_actions,
+    render_project_web_ai_message_html,
+)
 from kanda_reasoner_app.web_ai_provider_contracts import (
     ChatResult,
     ProjectWebAIRequestIdentity,
@@ -108,6 +111,7 @@ class ProjectWebAIChatHistoryMixin:
         self.load_chat_button.clicked.connect(self.load_selected_chat)
         self.delete_chat_button.clicked.connect(self.delete_selected_chat)
         self.save_chat_button.clicked.connect(self.save_selected_chat)
+        connect_project_web_ai_clipboard_actions(self)
         self.chat_list.itemDoubleClicked.connect(
             lambda _item: self.load_selected_chat()
         )
@@ -430,7 +434,12 @@ class ProjectWebAIChatHistoryMixin:
                 "</div></div>"
             )
         else:
-            body = "".join(self._message_html(item) for item in session.messages)
+            body = "".join(
+                render_project_web_ai_message_html(
+                    item.role, item.content, item.state, index
+                )
+                for index, item in enumerate(session.messages)
+            )
         document = (
             '<html><body style="background:#0d0d0d; color:#eef1f5; '
             'font-family:\'Segoe UI\', sans-serif; font-size:14px;">'
@@ -442,29 +451,6 @@ class ProjectWebAIChatHistoryMixin:
         cursor.movePosition(QTextCursor.MoveOperation.End)
         self.answer_box.setTextCursor(cursor)
         self.answer_box.ensureCursorVisible()
-
-    @staticmethod
-    def _message_html(message: _ChatMessage) -> str:
-        """Return escaped rich text for one chat message."""
-        content = html.escape(message.content or "Thinking...").replace("\n", "<br>")
-        if message.role == "user":
-            return (
-                '<table width="100%" cellspacing="0" cellpadding="0" '
-                'style="margin:12px 0 18px 0;"><tr>'
-                '<td width="22%"></td><td bgcolor="#2b3039" '
-                'style="padding:13px 16px; color:#f6f7f9;">'
-                '<div style="font-size:11px; font-weight:600; color:#aeb6c2; '
-                'margin-bottom:6px;">YOU</div>' + content + "</td></tr></table>"
-            )
-        tone = "#ef6a6a" if message.state == "failed" else "#95a0ad"
-        return (
-            '<table width="100%" cellspacing="0" cellpadding="0" '
-            'style="margin:8px 0 24px 0;"><tr><td bgcolor="#15181e" '
-            'style="padding:15px 18px; color:#eef1f5;">'
-            '<div style="font-size:11px; font-weight:600; color:' + tone
-            + '; margin-bottom:7px;">PROJECT WEB AI</div>' + content
-            + '</td><td width="10%"></td></tr></table>'
-        )
 
     def _update_chat_history_action_state(self, running: bool) -> None:
         """Fail closed chat-history actions while a request is active."""

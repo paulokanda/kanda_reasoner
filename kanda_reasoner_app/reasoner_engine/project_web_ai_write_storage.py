@@ -23,7 +23,7 @@ __all__ = [
     "contained_shadow_file",
     "exclusive_apply_lock",
     "require_distinct_apply_roots",
-    "sha256_bytes",
+    "project_web_ai_sha256_bytes",
     "write_source_backups",
     "write_transaction_state",
 ]
@@ -61,7 +61,10 @@ def atomic_replace_source(
             handle.flush()
             os.fsync(handle.fileno())
         os.chmod(temp, mode)
-        if sha256_bytes(temp.read_bytes()) != sha256_bytes(raw):
+        if (
+            project_web_ai_sha256_bytes(temp.read_bytes())
+            != project_web_ai_sha256_bytes(raw)
+        ):
             raise RuntimeError("APPLY_TEMP_FILE_HASH_MISMATCH")
         os.replace(temp, target)
     finally:
@@ -170,7 +173,7 @@ def write_transaction_state(
     os.replace(temp, path)
 
 
-def sha256_bytes(raw: bytes) -> str:
+def project_web_ai_sha256_bytes(raw: bytes) -> str:
     """Return one SHA-256 digest."""
     return hashlib.sha256(raw).hexdigest()
 

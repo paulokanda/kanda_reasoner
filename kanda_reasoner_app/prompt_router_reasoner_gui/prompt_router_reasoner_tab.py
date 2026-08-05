@@ -19,6 +19,9 @@ from typing import Any
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtWidgets import QApplication, QFrame, QGroupBox, QWidget
 
+from kanda_reasoner_app.external_ai_workflow import (
+    handoff_to_selected_external_ai,
+)
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_manual_router_choice_capture import (
     ManualRouterChoiceCaptureError,
     capture_manual_router_choice,
@@ -342,15 +345,17 @@ class PromptRouterReasonerTab(QWidget):
         self._set_final_prompt_actions_enabled(has_text)
 
     def copy_manual_router_final_prompt(self) -> None:
-        """Copy the editable final prompt to clipboard only."""
+        """Copy the editable final prompt and open the selected external AI."""
         prompt_text = self.manual_router_final_prompt_editor.toPlainText()
         if not prompt_text.strip():
             self.manual_router_choice_status_label.setText("No complete prompt text to copy.")
             self.copy_manual_router_final_prompt_button.setEnabled(False)
             return
-        QApplication.clipboard().setText(prompt_text)
+        handoff = handoff_to_selected_external_ai(prompt_text)
         self.manual_router_choice_status_label.setText(
-            "Copied complete edited prompt for browser ChatGPT. Stored prompts and router state unchanged."
+            "External AI handoff: "
+            + (handoff.display_name if handoff.ok else handoff.error)
+            + ". Stored prompts and router state unchanged."
         )
 
     def save_manual_router_final_prompt_edit(self) -> dict[str, Any]:

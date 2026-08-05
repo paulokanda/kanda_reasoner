@@ -8,9 +8,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
-from kanda_reasoner_app.project_support_boundary import (
-    ProjectSupportBoundaryError,
-    resolve_project_tool_boundary_identity,
+from kanda_reasoner_app.project_operation_authority import (
+    ProjectOperationAuthorityError,
+    resolve_registered_project_boundary,
 )
 from kanda_reasoner_app.web_ai_provider_contracts import ProjectWebAIRequestIdentity
 
@@ -55,8 +55,8 @@ class ProjectAgentBoundaryContext:
     ) -> "ProjectAgentBoundaryContext":
         """Resolve current identity and require an exact request-bound match."""
         try:
-            identity = resolve_project_tool_boundary_identity(project_root)
-        except ProjectSupportBoundaryError as exc:
+            identity = resolve_registered_project_boundary(project_root)
+        except ProjectOperationAuthorityError as exc:
             raise ProjectAgentBoundaryError(str(exc)) from exc
         checks = (
             (request.project_id, identity.active_project_id, "PROJECT_ID"),

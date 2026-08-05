@@ -24,6 +24,7 @@ from kanda_reasoner_app.reasoner_symbol_atlas.output_policy import (
 from .complete_json_zip_cache import resolve_complete_json_evidence
 from .fixture_graph import build_fixture_graph
 from .graph_schema import validate_graph_snapshot
+from .graph_structure_analysis import analyze_graph_structure
 from .graph_semantic_enrichment import enrich_graph_semantics
 from .graph_snapshot_primitives import (
     apply_relationship_counts,
@@ -351,6 +352,7 @@ def _build_from_complete_json(
         edges,
     )
     apply_relationship_counts(nodes, edges)
+    structure_findings = analyze_graph_structure(nodes, edges)
     module_count = sum(node["kind"] in {"module", "validator"} for node in nodes)
     snapshot: dict[str, Any] = {
         "schema_version": "1.0",
@@ -406,6 +408,7 @@ def _build_from_complete_json(
             "fixture": False,
             "source_file_count_available": len(records),
             "source_file_limit": _MAX_MODULES,
+            "structure_findings": structure_findings,
             **semantic_statistics,
         },
     }

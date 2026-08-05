@@ -105,6 +105,8 @@ def main() -> int:
     require("STARTUP DELIVERY READ ORDER - READ tell_AI_read_before_all.md FIRST" in paste_content, "read order block missing")
     require("STARTUP PACK LOAD CHECK" in paste_content, "startup load check contract missing")
     require("PROJECT READY CHECK" in paste_content, "project ready check contract missing")
+    require("PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>" in paste_content, "active project display contract missing")
+    require("PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>\nWAIT_FOR_TASK" in paste_content, "project-in-use ordering contract missing")
     require("prompt_library.zip" in paste_content, "prompt-library ZIP contract missing")
 
     records = [
@@ -116,7 +118,8 @@ def main() -> int:
     )
     require("Startup Prompt Request Kernel Upload Pack" in readme, "README title missing")
     require("00_START_HERE_FOR_AI.md" in readme, "README file rows missing")
-    require("Next action: WAIT_FOR_TASK" in readme, "README second-upload next action missing")
+    require("PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>" in readme, "README active project display contract missing")
+    require("WAIT_FOR_TASK" in readme, "README second-upload ready token missing")
 
     for exported_name in ("make_paste_after_uploading_file", "make_readme"):
         require(hasattr(paste_readme_text, exported_name), f"startup_kernel.paste_readme_text missing {exported_name}")

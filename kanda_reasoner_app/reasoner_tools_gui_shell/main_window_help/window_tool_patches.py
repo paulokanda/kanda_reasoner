@@ -18,6 +18,7 @@ class _WindowToolPatchesMixin:
         if spec.tab_id:
             self._loaded_tools_by_tab_id[spec.tab_id] = widget
         self._patch_common_project_root_fields(widget)
+        self._apply_project_widget_enabled_state(spec.tab_id, widget)
         if 'reasoner_context_collector' in spec.source_hint:
             self._collector_widget = widget
             self._patch_collector_widget(widget)
@@ -25,7 +26,10 @@ class _WindowToolPatchesMixin:
             self._daily_refactor_widget = widget
             self._patch_daily_refactor_widget(widget)
         if self.current_project_root is not None:
-            self._propagate_project_root(self.current_project_root)
+            self._propagate_project_root(
+                self.current_project_root,
+                boundary=self.current_project_boundary,
+            )
 
     def _lazy_page_for_tab_index(self, index: int) -> QWidget | None:
         """Return the lazy page at a visible tab index after reordering."""
@@ -73,6 +77,16 @@ class _WindowToolPatchesMixin:
         
         _replace_exact_label_text(widget, 'Output JSON:', 'Output folder:')
         _prune_named_subtabs(widget, _COLLECTOR_SUBTABS_TO_REMOVE)
+        for control_name in (
+            'project_root_label',
+            'project_root_edit',
+            'backup_show_project_button',
+        ):
+            control = getattr(widget, control_name, None)
+            if isinstance(control, QWidget):
+                control.show()
+        if self.current_project_root is None and hasattr(widget, 'project_root_edit'):
+            widget.project_root_edit.clear()
         if hasattr(widget, 'close_button'):
             widget.close_button.hide()
         if hasattr(widget, 'browse_output_button'):
@@ -112,7 +126,7 @@ class _WindowToolPatchesMixin:
         project_root = self._normalize_project_root(text)
         if project_root is None:
             return
-        self._propagate_project_root(project_root)
+        self._propagate_project_root(project_root, explicit_selection=True)
 
     def _run_collector_via_wrapper(self, widget: QWidget) -> None:
         """Support run collector via wrapper behavior.
@@ -127,7 +141,11 @@ class _WindowToolPatchesMixin:
         if project_root is None:
             widget._original_run_collector()
             return
-        self._remember_project_root(project_root)
+        if not self._propagate_project_root(
+            project_root,
+            explicit_selection=True,
+        ):
+            return
         if self._output_dirs_have_content(project_root):
             if not self._confirm_delete_existing_outputs(project_root):
                 if hasattr(widget, 'status_bar'):
@@ -153,7 +171,10 @@ class _WindowToolPatchesMixin:
                 widget.output_json_edit.setText(str(display_folder))
             if hasattr(widget, 'runtime_trace_json_edit'):
                 widget.runtime_trace_json_edit.setText(str(runtime_trace))
-        self._propagate_project_root(project_root)
+        self._propagate_project_root(
+            project_root,
+            boundary=self.current_project_boundary,
+        )
 
     def _patch_daily_refactor_widget(self, widget: QWidget) -> None:
         """Support patch daily refactor widget behavior.
@@ -174,8 +195,14 @@ class _WindowToolPatchesMixin:
         if self.current_project_root is not None:
             self._apply_project_root_to_daily_refactor(self.current_project_root)
 
-    def _propagate_project_root(self, project_root: Path) -> bool:
-        """Atomically switch and synchronize the canonical active Project."""
+    def _propagate_project_root(
+        self,
+        project_root: Path,
+        *,
+        explicit_selection: bool = False,
+        boundary=None,
+    ) -> bool:
+        """Switch the canonical active Project through strict Tool authority."""
         if self._is_propagating_project_root:
             return False
 
@@ -188,12 +215,25 @@ class _WindowToolPatchesMixin:
                 self._show_project_switch_block(block_reason)
                 return False
 
+        next_boundary = boundary
+        if next_boundary is None and explicit_selection:
+            next_boundary = self._register_explicit_project_root(project_root)
+        if next_boundary is None:
+            current = getattr(self, "current_project_boundary", None)
+            if (
+                current is not None
+                and current.active_project_root == project_root
+            ):
+                next_boundary = current
+        if next_boundary is None:
+            return False
+
         self._is_propagating_project_root = True
         try:
             if changed:
                 self._reset_loaded_project_scopes()
                 self._project_switch_epoch += 1
-                self._remember_project_root(project_root)
+                self._remember_project_boundary(next_boundary)
 
             for widget in self._iter_loaded_tool_widgets():
                 self._apply_root_to_loaded_widget(widget, project_root)
@@ -205,6 +245,8 @@ class _WindowToolPatchesMixin:
                 )
             if self._daily_refactor_widget is not None:
                 self._apply_project_root_to_daily_refactor(project_root)
+            self._set_loaded_project_scopes_enabled(True)
+            self._refresh_active_project_controls()
         finally:
             self._is_propagating_project_root = False
         return True

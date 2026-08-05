@@ -104,7 +104,7 @@ def validate_static(root: Path) -> None:
         1,
     )[0]
     reset_index = propagate_block.index("self._reset_loaded_project_scopes()")
-    remember_index = propagate_block.index("self._remember_project_root(project_root)")
+    remember_index = propagate_block.index("self._remember_project_boundary(next_boundary)")
     apply_index = propagate_block.index(
         "self._apply_root_to_loaded_widget(widget, project_root)"
     )
@@ -156,7 +156,21 @@ def validate_architecture(root: Path) -> None:
     print("SHELL_ACTIVE_PROJECT_SYNC_SYMBOL_SHADOWING_ZERO: PASS")
 
 
-def validate_real_qt(root: Path) -> None:
+def _is_missing_pyside6_dependency(exc: ImportError) -> bool:
+    """Return True only for an unavailable PySide6 or shiboken6 dependency."""
+    module_name = str(getattr(exc, "name", "") or "")
+    message = str(exc)
+    return (
+        module_name == "PySide6"
+        or module_name.startswith("PySide6.")
+        or module_name == "shiboken6"
+        or module_name.startswith("shiboken6.")
+        or "PySide6" in message
+        or "shiboken6" in message
+    )
+
+
+def validate_real_qt(root: Path) -> bool:
     """Exercise field synchronization, reset, lazy load, and switch blocking."""
     try:
         from PySide6.QtWidgets import (
@@ -166,9 +180,11 @@ def validate_real_qt(root: Path) -> None:
             QPlainTextEdit,
             QWidget,
         )
-    except Exception:
+    except ImportError as exc:
+        if not _is_missing_pyside6_dependency(exc):
+            raise
         print("REAL_QT_ACTIVE_PROJECT_SYNC: NOT_APPLICABLE")
-        return
+        return False
 
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     sys.path.insert(0, str(root))
@@ -296,6 +312,7 @@ def validate_real_qt(root: Path) -> None:
     window.close()
     app.processEvents()
     print("REAL_QT_ACTIVE_PROJECT_SYNC: PASS")
+    return True
 
 
 def main() -> int:

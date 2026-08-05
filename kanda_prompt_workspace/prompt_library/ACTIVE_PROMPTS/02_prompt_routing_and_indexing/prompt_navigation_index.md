@@ -201,11 +201,19 @@ The exact final ZIP must pass the canonical validator. Do not search Downloads o
 
 Route to `patch_validate_freeze_error_memory_routine_blueprint` when the Show Project routine button is used or an AI must continue an external Project from answer or patch through ZIP delivery, install, live validation, synchronization, Freeze, Error Memory disposition, and final reporting without retraining. Load the Error Memory correction/template/model owners only when a durable lesson candidate is justified.
 
+For self-contained post-update intake artifacts, this bridge dispatches `KPR-03-007 self_contained_freeze_entry_intake_zip` and `KPR-05-008 self_contained_error_memory_lesson_intake_zip` as separate specialist ZIP owners. Preserve one shared selected-Project/feature/evidence context, never combine the ZIPs, and require an explicit disposition for both before declaring the routine complete.
+
+## Self-contained freeze loader route
+
+For one self-contained ZIP that validates the current feature and prepares the selected Project for Freeze Feature After Update -> New Local Freeze Entry, route to `KPR-03-007 self_contained_freeze_entry_intake_zip`. It must resolve governance helpers Project-first and use canonical KANDA Reasoner Tool-owned fallbacks only when the Project does not own them. Preview stays read-only and Confirm and Write stays human-only.
+
 ## Error Memory routes
 
 Direct Error Lesson ZIP is not a code patch. Use the Error Memory intake owner and the canonical `KANDA_ERROR_LESSON_JSON_BEGIN` contract.
 
 For default insertion after patch validation, route to the current Error Memory owner and `pending_ai_assisted_error_lesson_intake` under the selected Project Support root.
+
+For one self-contained ZIP that validates and stages multiple lessons for human approval, route to `KPR-05-008 self_contained_error_memory_lesson_intake_zip`. It must discover the selected Project dynamically, write pending intake only, and keep `Memorize Error` human-only.
 
 ## Terminal cleanup canon route
 

@@ -386,3 +386,126 @@ th {
     padding: 26px 18px 22px;
   }
 }
+
+.phrasebook-page {
+  scroll-behavior: smooth;
+}
+
+.phrasebook-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+
+.phrasebook-index a {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 2px 8px;
+  align-items: center;
+  padding: 9px 10px;
+  color: var(--blue-chapter);
+  text-decoration: none;
+  border: 1px solid var(--table-rule);
+  border-left: 5px solid var(--orange-rule);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.phrasebook-index a:hover,
+.phrasebook-index a:focus {
+  background: var(--sidebar-bg);
+  outline: 2px solid var(--blue-light);
+  outline-offset: 1px;
+}
+
+.phrasebook-index a strong {
+  grid-row: 1 / span 2;
+  color: var(--orange-rule);
+  font-family: "Myriad Pro Cond", "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  font-size: 18px;
+}
+
+.phrasebook-index a span {
+  font-family: "Myriad Pro Cond", "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.phrasebook-index a small {
+  color: var(--subtitle);
+  font-size: 9pt;
+}
+
+.phrasebook-section {
+  scroll-margin-top: 12px;
+}
+
+.phrasebook-card-list {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.prompt-card {
+  border: 1px solid var(--table-rule);
+  border-left: 5px solid var(--blue-mid);
+  border-radius: 6px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.prompt-card[open] {
+  border-left-color: var(--orange-rule);
+  box-shadow: 0 4px 12px rgba(15, 52, 96, 0.08);
+}
+
+.prompt-card summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  color: var(--blue-chapter);
+  font-family: "Myriad Pro Cond", "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  background: var(--sidebar-bg);
+}
+
+.prompt-card summary:hover,
+.prompt-card summary:focus {
+  background: var(--blue-light);
+}
+
+.prompt-code {
+  display: inline-block;
+  min-width: 34px;
+  margin-right: 6px;
+  color: var(--orange-rule);
+}
+
+.prompt-card-body {
+  padding: 10px 12px 12px;
+}
+
+.prompt-card-body pre {
+  margin-top: 6px;
+  background: #f8fafc;
+  border-left: 4px solid var(--blue-mid);
+}
+
+.prompt-label {
+  margin: 4px 0 0;
+  color: var(--blue-chapter);
+}
+
+.back-to-map {
+  text-align: right;
+  font-size: 9.5pt;
+}
+
+@media (max-width: 760px) {
+  .phrasebook-index {
+    grid-template-columns: 1fr;
+  }
+}

@@ -77,7 +77,21 @@ def validate_static(root: Path) -> None:
     print("TOUCHED_SOURCE_MODULES_MAX_500_LINES: PASS")
 
 
-def validate_real_qt(root: Path) -> None:
+def _is_missing_pyside6_dependency(exc: ImportError) -> bool:
+    """Return True only for an unavailable PySide6 or shiboken6 dependency."""
+    module_name = str(getattr(exc, "name", "") or "")
+    message = str(exc)
+    return (
+        module_name == "PySide6"
+        or module_name.startswith("PySide6.")
+        or module_name == "shiboken6"
+        or module_name.startswith("shiboken6.")
+        or "PySide6" in message
+        or "shiboken6" in message
+    )
+
+
+def validate_real_qt(root: Path) -> bool:
     try:
         from PySide6.QtCore import QTimer
         from PySide6.QtWidgets import (
@@ -91,9 +105,11 @@ def validate_real_qt(root: Path) -> None:
             QTextEdit,
             QWidget,
         )
-    except Exception:
+    except ImportError as exc:
+        if not _is_missing_pyside6_dependency(exc):
+            raise
         print("REAL_QT_PROJECT_SCOPE_MEMORY_RESET: NOT_APPLICABLE")
-        return
+        return False
 
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     if str(root) not in sys.path:
@@ -217,6 +233,7 @@ def validate_real_qt(root: Path) -> None:
         app.processEvents()
 
     print("REAL_QT_PROJECT_SCOPE_MEMORY_RESET: PASS")
+    return True
 
 
 def main() -> int:

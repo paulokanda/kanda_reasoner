@@ -19,17 +19,22 @@ from .generated_archive_policy import (
 from .hashing import sha256_file
 from .path_normalization import safe_resolve
 from .schema_models import ProjectContext
+from kanda_reasoner_app.source_hygiene.tool_archive_policy import (
+    is_kanda_reasoner_tool_root,
+    validate_registered_synthetic_fixtures,
+)
+
+from .source_archive_routing import (
+    SourceArchiveRouteKind,
+    route_builtin_source_archive_entry,
+    route_source_archive_entry,
+)
+
 from .source_tree_exporter_shared import (
     SOURCE_ARCHIVE_MANIFEST_SUFFIX,
-    _ALWAYS_EXCLUDED_DIRS,
-    _ALWAYS_EXCLUDED_EXTENSIONS,
-    _ALWAYS_EXCLUDED_FILES,
     _PNG_ASSET_EXTENSIONS,
     _context,
-    _excluded_by_project_rules,
     _exclusion_record,
-    _is_generated_output_path,
-    _is_generated_project_archive,
     _is_png_asset_record,
     _posix_rel,
 )
@@ -39,63 +44,17 @@ def _excluded_by_builtin_policy(
     context: ProjectContext,
     output_dir: Path,
 ) -> dict[str, Any] | None:
-    name = entry.name
-    name_low = name.lower()
-    if entry.is_symlink():
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code="symlink_unsupported",
-            reason="Symbolic links are skipped to keep cross-platform reconstruction deterministic.",
-            path_type="symlink",
-        )
-    if _is_generated_output_path(entry, context, output_dir):
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code="recursive_output_guard",
-            reason="Generated Show Project to AI output folders are excluded to prevent recursive handoff packaging.",
-            path_type="directory" if entry.is_dir() else "file",
-            matched_rule="show_project_to_AI_output",
-        )
-    if entry.is_dir() and name in _ALWAYS_EXCLUDED_DIRS:
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code="standard_noise_directory",
-            reason="Standard VCS/cache/build/runtime directory excluded from source archive.",
-            path_type="directory",
-            matched_rule=name,
-        )
-    if entry.is_file() and name in _ALWAYS_EXCLUDED_FILES:
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code="os_junk_file",
-            reason="OS metadata file excluded from source archive.",
-            path_type="file",
-            matched_rule=name,
-        )
-    if entry.is_file() and entry.suffix.lower() in _ALWAYS_EXCLUDED_EXTENSIONS:
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code="compiled_runtime_artifact",
-            reason="Compiled/runtime artifact excluded from source archive.",
-            path_type="file",
-            matched_rule=entry.suffix.lower(),
-        )
-    archive_classification = classify_generated_project_archive(entry, context)
-    if archive_classification is not None:
-        return _exclusion_record(
-            entry,
-            context,
-            reason_code=archive_classification.reason_code,
-            reason=archive_classification.reason,
-            path_type="file",
-            matched_rule=archive_classification.matched_rule,
-        )
-    return None
+    """Preserve the legacy exporter facade through the shared router.
+
+    ``source_tree_exporter`` imports this private name as part of its existing
+    compatibility surface.  Returning the router's exclusion record preserves
+    the established contract without duplicating routing logic.
+    """
+    route = route_builtin_source_archive_entry(entry, context, output_dir)
+    if route is None:
+        return None
+    return route.exclusion_record
+
 
 def _file_record(
     path: Path,
@@ -335,16 +294,31 @@ def gather_source_archive_inventory(
     previous_png_records = _previous_png_record_map(previous_manifest)
     included: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
+    tool_hygiene_active = is_kanda_reasoner_tool_root(root)
+    if tool_hygiene_active:
+        validate_registered_synthetic_fixtures(root)
 
     def walk(current: Path) -> None:
         for entry in _iter_sorted_entries(current):
-            builtin_exclusion = _excluded_by_builtin_policy(entry, context, output_path)
-            if builtin_exclusion is not None:
-                excluded.append(builtin_exclusion)
-                continue
-            project_exclusion = _excluded_by_project_rules(entry, context, rules)
-            if project_exclusion is not None:
-                excluded.append(project_exclusion)
+            route = route_source_archive_entry(
+                entry,
+                context,
+                output_path,
+                rules,
+                tool_hygiene_active=tool_hygiene_active,
+            )
+            if route.route is SourceArchiveRouteKind.BLOCK:
+                raise RuntimeError(
+                    "TOOL_SOURCE_ARCHIVE_HYGIENE_REJECTED:"
+                    + route.error
+                )
+            if route.route is SourceArchiveRouteKind.EXCLUDE:
+                if route.exclusion_record is None:
+                    raise RuntimeError(
+                        "SOURCE_ARCHIVE_EXCLUSION_RECORD_MISSING:"
+                        + route.relative_path
+                    )
+                excluded.append(route.exclusion_record)
                 continue
             enforce_large_root_archive_preflight(entry, context)
             if entry.is_dir():

@@ -2,13 +2,12 @@
   "schema": "project-reasoner-tab-help-error-catalog/v1",
   "project": "KANDA Reasoner",
   "tab": "Web AI",
-  "purpose": "Explain Web AI, project selection, current web research, source inspection, project mapping, conversation memory, Shadow Preview, export behavior, and source-change authority boundaries.",
+  "purpose": "Explain integrated gateway and direct API Web AI, Smart complete-JSON context routing, read-only Project inspection, conversation memory, Shadow Preview, and source-change boundaries.",
   "created_for": "Rich desktop help fallback catalog",
   "display_lines": [
-    "Web AI combines current web information with selected project context.",
-    "Select the correct project and confirm the web model before asking.",
-    "Read important answers together with their sources and project mapping.",
-    "Treat Shadow Preview as read-only review, not source installation.",
-    "Use a separate governed implementation and validation workflow for changes."
+    "Web AI uses the provider and Python-capable model selected in Config Web AI, through a gateway or direct API.",
+    "Every approved question starts with the compact Project handoff; Smart Context adds only relevant complete-JSON routing evidence instead of sending the whole file.",
+    "Inspect Project permits bounded read-only source tools so generated evidence can be verified against exact source.",
+    "Review the per-request context summary and cloud disclosure before approving transmission; source changes remain governed locally."
   ]
 }

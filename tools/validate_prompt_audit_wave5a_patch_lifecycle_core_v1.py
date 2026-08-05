@@ -17,7 +17,7 @@ ACTIVE = {
     "implementation_roadmap_builder": ("KPR-05-004", "2.0", "on_request"),
     "patch_validate_freeze_error_memory_routine_blueprint": (
         "KPR-05-005",
-        "3.1",
+        "3.2",
         "on_request",
     ),
 }
@@ -97,6 +97,13 @@ def validate_active_prompts(root: Path) -> None:
             "does not itself authorize implementation",
             "Paste-safe PowerShell hard gate",
             "Windows PowerShell 5.1-compatible APIs",
+            "One self-contained feature ZIP",
+            "Required user-visible delivery shape",
+            "Terminal 1 - INSTALL",
+            "Terminal 2 - VALIDATE",
+            "Terminal 3 - FREEZE",
+            "Terminal 4 - ERROR MEMORY",
+            "No-orphan-report rule",
         ),
     }
     forbidden = {
@@ -143,7 +150,7 @@ def validate_active_prompts(root: Path) -> None:
             and meta.get("load_type") == load_type
             and meta.get("owner_box") == CLASS_ID
             and meta.get("source_stage") == (
-                "powershell-paste-safe-operational-output-v1"
+                "separated-terminal-release-phases-v1"
                 if prompt_id == "patch_validate_freeze_error_memory_routine_blueprint"
                 else FEATURE_ID
             )

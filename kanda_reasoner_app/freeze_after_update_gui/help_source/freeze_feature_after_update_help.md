@@ -53,11 +53,12 @@ Opens this guide.
 
 ## Validation evidence comes first
 
-A freeze is trustworthy only when it contains real local validation evidence. Typical markers include:
+A freeze is trustworthy only when it contains real local validation evidence. Confirm and Write requires literal current-feature markers:
 
 - VALIDATION OK: feature-id
 - STATUS: IN_SYNC
-- ZIP CONTRACT: PASS
+
+Other hash, compile, runtime, or ZIP markers may support those lines but cannot replace them.
 - Hash, compile, runtime, or focused-validator markers required by the feature
 
 Do not invent evidence. Installation success alone is not validation.
@@ -111,6 +112,14 @@ Usually Preview, then Confirm and Write after human review. After an entry is fr
 ### Notes
 A brief explanation that helps future users and AI understand why the feature was frozen.
 
+### Copy Entry to AI
+
+Copies the strict draft-only Freeze formulary prompt to the clipboard. It does not open a browser or external assistant. Paste the prompt manually into the AI of your choice. The returned marker-wrapped form remains untrusted until **Receive Formulary from AI** parses it, the form is reviewed, and **Preview Freeze Entry** passes. This action never writes Freeze memory.
+
+### Receive Formulary from AI
+
+Imports a marker-wrapped external draft into the form. It does not write files, does not confirm the feature, and does not bypass Preview or Confirm and Write.
+
 ### Preview Freeze Entry
 Read-only. It shows exactly what would be written, including identity, validated files, protected paths, rules, evidence, warnings, and notes. It never writes a file.
 
@@ -152,7 +161,7 @@ Run the current package validation first. Confirm that evidence was merged into 
 Return to the current feature evidence. Add only files actually validated and paste real markers.
 
 ### No recognizable validation evidence
-Include the real local `VALIDATION OK` marker and any required `STATUS: IN_SYNC` or `ZIP CONTRACT: PASS` markers.
+Include the literal current-feature `VALIDATION OK: feature-id` line and `STATUS: IN_SYNC`. Narrative descriptions, installation-only messages, or planned validation do not authorize Freeze. A blocked Preview is shown as **FREEZE PREVIEW NOT READY** and is never rendered as a frozen entry.
 
 ### Preview contains the wrong feature
 Stop. Refresh the Freeze Hint and correct the intake. Never confirm a stale preview.

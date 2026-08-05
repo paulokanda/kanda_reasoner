@@ -6,6 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Iterable
 
+from ._active_scope import _build_active_source_scope
 from .schemas import SourceHygieneFinding, SourceHygieneReport
 
 UTF8_BOM_BYTES = b"\xef\xbb\xbf"
@@ -46,6 +47,9 @@ DEFAULT_SKIP_DIR_NAMES = frozenset(
         ".ruff_cache",
         ".tox",
         ".venv",
+        ".project_reference",
+        "_project_reference",
+        "project_freeze_ledger",
         "__pycache__",
         "build",
         "dist",
@@ -74,11 +78,12 @@ def iter_bom_scan_files(
     if not root.exists() or not root.is_dir():
         return []
 
+    scope = _build_active_source_scope(root)
     files: list[Path] = []
     for path in root.rglob("*"):
         if not path.is_file():
             continue
-        if _is_in_skipped_dir(path, root):
+        if not scope.includes(path, exclude_tests=False):
             continue
         if path.suffix.lower() not in allowed_suffixes:
             continue
@@ -198,30 +203,15 @@ def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
         if not value.startswith("."):
             value = "." + value
         normalized.add(value)
+    if not normalized:
+        return set(DEFAULT_BOM_SCAN_SUFFIXES)
     return normalized
 
 
 def _is_in_skipped_dir(path: Path, root: Path) -> bool:
-    """Support is in skipped dir behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    root : Path
-        The root path.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    try:
-        parts = path.relative_to(root).parts[:-1]
-    except ValueError:
-        parts = path.parts[:-1]
-    return any(part in DEFAULT_SKIP_DIR_NAMES for part in parts)
+    """Return whether a path is outside the active BOM source scope."""
+    scope = _build_active_source_scope(root)
+    return not scope.includes(path, exclude_tests=False)
 
 
 def _display_path(path: Path, root: Path | None) -> str:

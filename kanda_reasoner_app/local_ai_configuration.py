@@ -20,7 +20,7 @@ from PySide6.QtWidgets import QApplication
 
 from kanda_reasoner_app.local_ai_runtime_state import (
     LocalAIConfigurationSnapshot as _LocalAIConfigurationSnapshot,
-    publish_runtime_local_ai_configuration_snapshot as _publish_runtime_snapshot,
+    publish_runtime_local_ai_configuration_snapshot as _publish_runtime_configuration_snapshot,
 )
 
 __all__ = [
@@ -282,7 +282,7 @@ class LocalAIConfigurationController(QObject):
         self.configuration_changed.emit(self.snapshot())
 
     def _publish_runtime_snapshot(self) -> None:
-        _publish_runtime_snapshot(self.snapshot())
+        _publish_runtime_configuration_snapshot(self.snapshot())
 
     def _build_revision(self) -> str:
         payload = {

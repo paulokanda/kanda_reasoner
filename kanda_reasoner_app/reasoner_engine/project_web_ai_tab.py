@@ -13,11 +13,17 @@ from PySide6.QtWidgets import QFileDialog, QMessageBox, QWidget
 from kanda_reasoner_app.reasoner_engine.project_web_ai_apply_workflow import (
     ProjectWebAIApplyWorkflowMixin,
 )
-from kanda_reasoner_app.reasoner_engine.project_web_ai_bridge import (
-    load_project_web_ai_context,
-)
+from kanda_reasoner_app.reasoner_engine.project_web_ai_bridge import load_project_web_ai_context
 from kanda_reasoner_app.reasoner_engine.project_web_ai_change_preparation import (
     ProjectWebAIChangePreparationMixin,
+)
+from kanda_reasoner_app.reasoner_engine.project_web_ai_complete_json_router import (
+    SmartProjectContextError,
+    build_remote_approval_text,
+    route_complete_json_context,
+)
+from kanda_reasoner_app.reasoner_engine import (
+    project_web_ai_configuration_selector as web_selector,
 )
 from kanda_reasoner_app.reasoner_engine.project_web_ai_conversations import (
     ProjectWebAIChatHistoryMixin,
@@ -25,16 +31,12 @@ from kanda_reasoner_app.reasoner_engine.project_web_ai_conversations import (
 from kanda_reasoner_app.reasoner_engine.project_web_ai_session import (
     ProjectWebAISessionLifecycle,
 )
-from kanda_reasoner_app.reasoner_engine.project_web_ai_switch_guard import (
-    request_guarded_project_switch,
-)
+from kanda_reasoner_app.reasoner_engine.project_web_ai_switch_guard import request_guarded_project_switch
 from kanda_reasoner_app.reasoner_engine.project_web_ai_tab_ui import (
     build_project_web_ai_ui,
     create_project_web_ai_controls,
 )
-from kanda_reasoner_app.reasoner_engine.project_web_ai_workers import (
-    ProjectWebAIChatWorker,
-)
+from kanda_reasoner_app.reasoner_engine.project_web_ai_workers import ProjectWebAIChatWorker
 from kanda_reasoner_app.web_ai_configuration import (
     WebAIConfigurationController,
     application_web_ai_configuration,
@@ -86,6 +88,7 @@ class ProjectWebAITab(
         self._initialize_change_preparation()
         self._connect_signals()
         self._connect_web_configuration()
+        web_selector.connect(self)
         self._render_web_configuration()
         self._update_send_state()
     def _connect_signals(self) -> None:
@@ -229,7 +232,8 @@ class ProjectWebAITab(
             )
         else:
             self.status_value.setText(
-                "Compact project handoff loaded. No source files were attached."
+                "Compact project handoff loaded. Smart complete-JSON routing is "
+                "evaluated for each approved question."
             )
         self._update_send_state()
 
@@ -264,29 +268,7 @@ class ProjectWebAITab(
         self.web_config_privacy_value.setText(
             self._web_config.profile().privacy_summary
         )
-
-    def _approval_text(
-        self, profile: GatewayProfile, model: ModelDescriptor
-    ) -> str:
-        """Return the exact per-request cloud transmission summary."""
-        snapshot = self._context
-        assert snapshot is not None
-        key_state = "provided" if self._web_config.api_key() else "not provided"
-        read_tools = "enabled" if self.inspect_project_checkbox.isChecked() else "disabled"
-        return (
-            "You are about to send project context to a remote AI gateway.\n\n"
-            + "Gateway: " + profile.display_name + "\n"
-            + "Model: " + model.model_id + "\n"
-            + "Model cost status: " + model.price_label() + "\n"
-            + "API key: " + key_state + "\n"
-            + "Project: " + snapshot.project_slug + "\n"
-            + "Snapshot: " + snapshot.short_hash() + "\n"
-            + "Context: " + f"{snapshot.context_bytes:,} bytes" + "\n"
-            + "Bounded read-only Project tools: " + read_tools + "\n"
-            + "Conversation persistence: memory only\n\n"
-            + profile.privacy_summary + "\n\n"
-            + "Approve this request?"
-        )
+        web_selector.render(self)
 
     def send_question(self) -> None:
         """Confirm remote transmission and start one request-bound stream."""
@@ -306,16 +288,32 @@ class ProjectWebAITab(
             QMessageBox.warning(
                 self,
                 "Web AI not ready",
-                "Open Config Web AI and complete the gateway, credential, and model setup.",
+                "Open Config Web AI and complete the provider, credential, "
+                "and model setup.",
             )
             return
         question = self.question_edit.toPlainText().strip()
         if not question:
             return
+        try:
+            routed_context = route_complete_json_context(
+                self._context.project_root, question, self._context.context_text
+            )
+        except SmartProjectContextError as exc:
+            self.status_value.setText(str(exc))
+            QMessageBox.warning(self, "Smart context failed", str(exc))
+            return
         approved = QMessageBox.question(
             self,
             "Approve remote project-context transmission",
-            self._approval_text(profile, model),
+            build_remote_approval_text(
+                profile,
+                model,
+                self._context,
+                routed_context,
+                api_key_provided=bool(api_key),
+                read_tools_enabled=self.inspect_project_checkbox.isChecked(),
+            ),
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )
@@ -348,10 +346,11 @@ class ProjectWebAITab(
             privacy_approval_id=uuid.uuid4().hex,
             created_at_utc=datetime.now(timezone.utc).isoformat(),
             project_epoch=session_identity.project_epoch,
+            evidence_context_hash=routed_context.evidence_context_hash,
         )
         messages = build_project_messages(
             question,
-            context.context_text,
+            routed_context.context_text,
             self._history,
             trusted_boundary_text=context.trusted_boundary_text,
         )
@@ -384,7 +383,8 @@ class ProjectWebAITab(
         self._chat_worker = worker
         self._begin_chat_turn(question)
         self.provenance_box.clear()
-        self.status_value.setText("Starting remote request...")
+        route_label = "Smart complete-JSON" if routed_context.smart_context_used else "Compact"
+        self.status_value.setText("Starting remote request with " + route_label + " context...")
         self._update_send_state()
         thread.start()
 
@@ -404,6 +404,7 @@ class ProjectWebAITab(
             and self._project_session.request_is_current(identity, context)
             and identity.gateway_id == self._current_profile().gateway_id
             and identity.model_id == model.model_id
+            and bool(identity.evidence_context_hash)
         )
 
     def _chat_thread_finished(self) -> None:

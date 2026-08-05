@@ -1,4 +1,4 @@
-"""Environment, confirmation, and collision controls."""
+"""Environment, specification, confirmation, and collision controls."""
 
 from __future__ import annotations
 
@@ -9,12 +9,43 @@ import sys
 from pathlib import Path
 
 from portable.constants import (
+    BUILDER_VERSION,
     EXPECTED_PYINSTALLER,
     EXPECTED_PYTHON,
+    FEATURE_ID,
     FINAL_ZIP_NAME,
 )
 from portable.errors import PortableBuildError
+from portable.external_controls import (
+    ExternalControlError,
+    validate_external_build_controls,
+)
 from portable.models import BuildPaths
+
+
+_REQUIRED_SPEC_TOKENS = (
+    "reasoner_tools_gui.py",
+    "collect_data_files",
+    "collect_submodules",
+    "PySide6.QtWebEngineCore",
+    "PySide6.QtWebEngineWidgets",
+    "PySide6.QtWebChannel",
+    "collector_main_help",
+)
+
+_FORBIDDEN_SPEC_TOKENS = (
+    "E:\\kanda_reasoner",
+    "C:\\Users\\paulo",
+    "PyCharm",
+    ".venv",
+)
+
+
+def print_builder_identity() -> None:
+    """Print the installed creator identity before any long-running work."""
+
+    print(f"PORTABLE BUILDER VERSION: {BUILDER_VERSION}")
+    print(f"PORTABLE BUILDER FEATURE ID: {FEATURE_ID}")
 
 
 def confirm_explicit_request(skip_confirmation: bool) -> None:
@@ -55,7 +86,43 @@ def _audited_governed_python() -> Path:
     ).resolve()
 
 
-def require_environment(paths: BuildPaths) -> None:
+def audit_spec_contract(paths: BuildPaths) -> None:
+    """Validate the committed specification before PyInstaller starts."""
+
+    try:
+        source = paths.spec_path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        source = paths.spec_path.read_text(encoding="utf-8-sig")
+
+    missing = [
+        token
+        for token in _REQUIRED_SPEC_TOKENS
+        if token not in source
+    ]
+    if missing:
+        raise PortableBuildError(
+            "Canonical PyInstaller specification is missing required "
+            f"contracts: {missing}"
+        )
+
+    forbidden = [
+        token
+        for token in _FORBIDDEN_SPEC_TOKENS
+        if token.casefold() in source.casefold()
+    ]
+    if forbidden:
+        raise PortableBuildError(
+            "Canonical PyInstaller specification contains machine-specific "
+            f"development paths: {forbidden}"
+        )
+
+    print("PORTABLE CANONICAL SPECIFICATION: PASS")
+    print("PORTABLE SPEC MACHINE-SPECIFIC PATHS: ABSENT")
+    print("PORTABLE QT WEBENGINE SPEC CONTRACT: PASS")
+    print("PORTABLE PHYSICAL HELP DATA CONTRACT: PASS")
+
+
+def require_environment(paths: BuildPaths) -> dict[str, object]:
     """Require the audited governed Python and PyInstaller."""
 
     governed = _audited_governed_python()
@@ -94,6 +161,20 @@ def require_environment(paths: BuildPaths) -> None:
         )
 
     try:
+        external_controls = validate_external_build_controls(
+            paths.project_root, paths.project_root / "portable"
+        )
+    except ExternalControlError as exc:
+        raise PortableBuildError(
+            "EXTERNAL_BUILD_CONTROL_PREFLIGHT_REJECTED:" + str(exc)
+        ) from exc
+    print("PORTABLE EXTERNAL BUILD CONTROL PREFLIGHT: PASS")
+    print(
+        "PORTABLE EXTERNAL BUILD CONTROL ITEM COUNT: "
+        f"{external_controls['item_count']}"
+    )
+    print("PORTABLE EXTERNAL BUILD CONTROL EXACT SHA-256: PASS")
+    try:
         version = importlib.metadata.version("pyinstaller")
     except importlib.metadata.PackageNotFoundError as exc:
         raise PortableBuildError(
@@ -105,10 +186,12 @@ def require_environment(paths: BuildPaths) -> None:
             f"PyInstaller {EXPECTED_PYINSTALLER} is required; found {version}."
         )
 
+    audit_spec_contract(paths)
     print(f"GOVERNED PYTHON PATH: {governed}")
     print(f"PORTABLE PYTHON: {sys.version.split()[0]} 64-bit")
     print(f"PORTABLE PYINSTALLER: {version}")
     print("PORTABLE GOVERNED PYTHON IDENTITY: PASS")
+    return external_controls
 
 
 def check_output_collision(
@@ -127,8 +210,8 @@ def check_output_collision(
 
     if not replace_existing:
         raise PortableBuildError(
-            "Selected-folder Portable already exists. Use --replace-existing only "
-            "after approving replacement:\n"
+            "Selected-folder Portable already exists. Use --replace-existing "
+            "only after approving replacement:\n"
             f"{paths.final_zip}"
         )
 

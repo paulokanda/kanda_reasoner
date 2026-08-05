@@ -11,12 +11,18 @@ import sys
 from typing import Iterable
 
 FEATURE_ID = "config-ai-global-local-controller-v1r2"
-WEB_TAB_SHA256 = "3f4bfb912861da0cc276eed6e77e35217702e9aa94e0882d6807741ab81174e9"
+WEB_TAB_SHA256 = "882956d59d3cc6de1090c6447ba43c7c603ec07124d8ec26d22edec97fcd4843"
+CONFIG_AI_SUBTAB_LABELS = (
+    "Config Web AI",
+    "Direct API Providers",
+    "Config Local AI",
+)
 
 TOUCHED_MODULES = (
     "kanda_reasoner_app/local_ai_configuration.py",
     "kanda_reasoner_app/local_ai_runtime_state.py",
     "kanda_reasoner_app/reasoner_engine/config_ai_tab.py",
+    "kanda_reasoner_app/reasoner_engine/config_direct_web_ai_tab.py",
     "kanda_reasoner_app/reasoner_engine/config_local_ai_tab.py",
     "kanda_reasoner_app/reasoner_engine/v10_model_registry.py",
     "kanda_reasoner_app/reasoner_engine/v10_qwen_ai_models.py",
@@ -95,7 +101,10 @@ def validate_static(root: Path) -> None:
         composite,
         (
             "ConfigWebAITab()",
+            "ConfigDirectWebAITab",
+            "application_web_ai_configuration()",
             'addTab(self.web_ai_tab, "Config Web AI")',
+            'addTab(self.direct_web_ai_tab, "Direct API Providers")',
             'addTab(self.local_ai_tab, "Config Local AI")',
         ),
         "Config AI composite",
@@ -104,6 +113,7 @@ def validate_static(root: Path) -> None:
     if _sha256(web_tab) != WEB_TAB_SHA256:
         raise AssertionError("Existing Config Web AI source changed.")
     print("CONFIG_AI_WEB_SUBTAB_PRESERVED: PASS")
+    print("CONFIG_AI_DIRECT_SUBTAB_PRESERVED: PASS")
     print("CONFIG_AI_LOCAL_SUBTAB_PRESENT: PASS")
 
     local_owner = _text(root, "kanda_reasoner_app/local_ai_configuration.py")
@@ -312,11 +322,18 @@ def validate_real_qt(root: Path) -> None:
     controller._touch()
 
     composite = ConfigAITab(local_controller=controller)
-    labels = [composite.subtabs.tabText(i) for i in range(composite.subtabs.count())]
-    if labels != ["Config Web AI", "Config Local AI"]:
+    labels = tuple(
+        composite.subtabs.tabText(i)
+        for i in range(composite.subtabs.count())
+    )
+    if labels != CONFIG_AI_SUBTAB_LABELS:
         raise AssertionError("Unexpected Config AI subtab labels: " + repr(labels))
     if composite.web_ai_tab.__class__.__name__ != "ConfigWebAITab":
         raise AssertionError("Existing Config Web AI widget was not embedded.")
+    if composite.direct_web_ai_tab.__class__.__name__ != "ConfigDirectWebAITab":
+        raise AssertionError("Direct API Providers widget was not embedded.")
+    if composite.local_ai_tab.__class__.__name__ != "ConfigLocalAITab":
+        raise AssertionError("Config Local AI widget was not embedded.")
     print("REAL_QT_CONFIG_AI_SUBTABS: PASS")
 
     local = composite.local_ai_tab

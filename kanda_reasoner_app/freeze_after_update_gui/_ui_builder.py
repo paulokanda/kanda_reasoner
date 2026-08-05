@@ -44,6 +44,12 @@ class FreezeUiBuilderMixin:
         self.list_frozen_button.setObjectName("freeze_after_update_list_frozen_button")
         self.list_frozen_button.setToolTip("Open the floating frozen-entry status and management window")
         self.list_frozen_button.setStyleSheet("color: #0057B8; font-weight: bold;")
+        self.send_zip_freeze_button = QPushButton("Send zip freeze")
+        self.send_zip_freeze_button.setObjectName("freeze_after_update_send_zip_freeze_button")
+        self.send_zip_freeze_button.setToolTip(
+            "Copy the canonical self-contained freeze-entry intake ZIP prompt"
+        )
+        self.send_zip_freeze_button.setStyleSheet("color: #FF8C00; font-weight: bold;")
         columns_layout = QHBoxLayout()
         columns_layout.setSpacing(12)
         root_layout.addLayout(columns_layout, 1)
@@ -71,6 +77,7 @@ class FreezeUiBuilderMixin:
         freeze_copy_row.addWidget(self.get_all_frozen_button, 0)
         freeze_copy_row.addWidget(self.get_blueprint_freeze_button, 0)
         freeze_copy_row.addWidget(self.list_frozen_button, 0)
+        freeze_copy_row.addWidget(self.send_zip_freeze_button, 0)
         freeze_copy_row.addStretch(1)
         left_column.addLayout(freeze_copy_row)
         self.project_root_header_label = QLabel("Project Root:")
@@ -186,3 +193,4 @@ class FreezeUiBuilderMixin:
         self.get_all_frozen_button.clicked.connect(self._copy_all_frozen_snippets)
         self.get_blueprint_freeze_button.clicked.connect(self._copy_freeze_form_blueprint)
         self.list_frozen_button.clicked.connect(self._show_frozen_list_window)
+        self.send_zip_freeze_button.clicked.connect(self._copy_send_zip_freeze_prompt)

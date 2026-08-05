@@ -12,6 +12,7 @@ from typing import Any
 from kanda_reasoner_app.project_analysis_evidence_paths import (
     analysis_json_complete_dir,
     project_analysis_evidence_root,
+    working_copy_json_path,
 )
 
 from .complete_json_artifacts import complete_json_artifact_dir
@@ -209,6 +210,32 @@ def resolve_complete_json_evidence(
 
     evidence_dir = analysis_json_complete_dir(root).resolve(strict=False)
     legacy = evidence_dir / (root.name + "__complete.json")
+    legacy_error: ValueError | None = None
     if legacy.is_file():
-        return legacy, "legacy loose complete JSON", "legacy"
+        try:
+            _load_object(legacy)
+        except ValueError as exc:
+            legacy_error = exc
+        else:
+            return legacy, "legacy loose complete JSON", "legacy"
+
+    # Show Project to AI refreshes this exact local copy before it removes the
+    # loose canonical complete JSON from second_prompt_files after ZIP export.
+    # Project Structure 3D is a read-only consumer of that preserved evidence.
+    local_copy = working_copy_json_path(root).resolve(strict=False)
+    if local_copy.is_file():
+        try:
+            _load_object(local_copy)
+        except ValueError:
+            if legacy_error is not None:
+                raise legacy_error
+            raise
+        return (
+            local_copy,
+            "Show Project to AI local complete JSON",
+            "show_project_local",
+        )
+
+    if legacy_error is not None:
+        raise legacy_error
     return None, "", "missing"

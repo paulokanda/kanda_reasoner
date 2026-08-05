@@ -38,17 +38,17 @@ EXPECTED_SOURCE_HASHES = {
         "319d62e0b32eddf622ead24b000d841365d5032a8e115f6d1e3c089353620d3f"
     ),
     HELPER_REL.as_posix(): (
-        "036f11f85cf193589bd21c96746a308910f07b2d8f64e973af2be87400710757"
+        "06f5ff41d867a15bc7f56942bfc72b055729f3255d5cccdf135ec00458a48349"
     ),
 }
 EXPECTED_SOURCE_LOADER_HASH = (
     "fe476ac1bf74c7898a24adf85b680b55450a18f9c2316a87230c1004b35bb7d2"
 )
 EXPECTED_RECONSTRUCTED_SOURCE_HASH = (
-    "a8c44343f0cf458acf3e6d3119b96f7297a3664264a279458eb1d93f2676c497"
+    "b7f905d345979cb8c36edeb75ec41c07052834925a0a4d3d5112505ce07ce139"
 )
-EXPECTED_RECONSTRUCTED_LINES = 7207
-EXPECTED_RECONSTRUCTED_BYTES = 262463
+EXPECTED_RECONSTRUCTED_LINES = 7268
+EXPECTED_RECONSTRUCTED_BYTES = 265565
 
 FACADE_POLICY_ORDER = (
     "_apply_canonical_test_protection_alias_policy",
@@ -62,6 +62,7 @@ FACADE_POLICY_ORDER = (
 )
 
 HELPER_POLICY_ORDER = (
+    "_apply_governed_validator_classification_policy",
     "_apply_boundary_error_contract_marker_policy",
     "_apply_stale_variant_active_domain_terms_policy",
     "_apply_generated_prompt_delivery_duplicate_owner_policy",

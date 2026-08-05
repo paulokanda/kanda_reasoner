@@ -24,6 +24,12 @@ from .result import (
 from .send_pack_builder import (
     generate_freeze_after_update_ai_files as _generate_freeze_after_update_ai_files,
 )
+from .ownership import (
+    FreezeOwnerBinding,
+    assert_project_freeze_memory_owner,
+    inject_freeze_owner_metadata,
+    project_freeze_memory_owner,
+)
 
 FreezeAfterUpdateResult = _FreezeAfterUpdateResult
 FreezeAfterUpdateStatus = _FreezeAfterUpdateStatus
@@ -58,7 +64,6 @@ __all__ = [
 ]
 
 
-
 def _resolved_project_root(project_root: str | Path) -> Path:
     """Return the real selected project root used for user-facing metadata."""
     return Path(project_root).expanduser().resolve(strict=False)
@@ -73,6 +78,27 @@ def _normalized_path_text(value: str | Path) -> str:
     """Return one resolved path identity for freeze confirmation checks."""
 
     return str(Path(value).expanduser().resolve(strict=False))
+
+
+def _project_freeze_binding(
+    project_root: Path,
+    owner_binding: FreezeOwnerBinding | None,
+) -> FreezeOwnerBinding:
+    """Return and validate one Project Freeze Memory owner binding."""
+    binding = owner_binding or project_freeze_memory_owner(project_root)
+    assert_project_freeze_memory_owner(binding, project_root)
+    return binding
+
+
+def _preview_owner_binding_error(
+    preview: Mapping[str, Any],
+    binding: FreezeOwnerBinding,
+) -> str:
+    """Return a fail-closed error for stale or foreign Freeze ownership."""
+    for key, expected in binding.canonical_fields().items():
+        if str(preview.get(key) or "") != expected:
+            return "Freeze preview owner binding is stale: " + key
+    return ""
 
 
 def _preview_root_binding_error(
@@ -98,21 +124,18 @@ def _preview_root_binding_error(
 
 
 def _preview_for_ledger_engine(preview: Mapping[str, Any], owner_root: Path) -> dict[str, Any]:
-    """Return an engine-facing preview with the owner root as project_root.
-
-    The reusable local freeze writer from project_freeze_ledger validates that
-    the preview was produced for the same active root passed to validation and
-    write calls. After the external-root migration, that engine root is the
-    external project-support root, while the public contract still reports the
-    real selected project source root to the GUI. This adapter keeps both
-    boundaries true without mutating the read-only preview shown to the user.
-    """
+    """Return an engine preview bound to the external owner root."""
     engine_preview = dict(preview)
     engine_preview["project_root"] = str(owner_root)
     engine_preview["freeze_state_owner_root"] = str(owner_root)
     return engine_preview
 
-def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) -> dict[str, Any]:
+def preview_freeze_entry(
+    project_root: str | Path,
+    inputs: Mapping[str, Any],
+    *,
+    owner_binding: FreezeOwnerBinding | None = None,
+) -> dict[str, Any]:
     """Return a local freeze-entry preview without writing project memory.
 
     The deterministic engine lives in ``project_freeze_ledger/freeze_tools``.
@@ -126,6 +149,7 @@ def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) ->
         )
 
         resolved_project_root = _resolved_project_root(project_root)
+        binding = _project_freeze_binding(resolved_project_root, owner_binding)
         owner_root = _freeze_state_owner_root(resolved_project_root)
         preview = _engine_preview_freeze_entry(owner_root, inputs)
         result = _with_contract_status(preview, operation="preview_freeze_entry")
@@ -136,7 +160,7 @@ def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) ->
         result["freeze_state_owner_root"] = str(owner_root)
         result["selected_project_root"] = str(resolved_project_root)
         result["display_project_root"] = str(resolved_project_root)
-        return result
+        return inject_freeze_owner_metadata(result, binding)
     except Exception as exc:
         return _contract_error(
             operation="preview_freeze_entry",
@@ -148,16 +172,22 @@ def preview_freeze_entry(project_root: str | Path, inputs: Mapping[str, Any]) ->
 def validate_freeze_entry_preview(
     project_root: str | Path,
     preview: Mapping[str, Any],
+    *,
+    owner_binding: FreezeOwnerBinding | None = None,
 ) -> dict[str, Any]:
     """Validate a freeze-entry preview without writing files."""
 
     try:
         resolved_project_root = _resolved_project_root(project_root)
+        binding = _project_freeze_binding(resolved_project_root, owner_binding)
         owner_root = _freeze_state_owner_root(resolved_project_root)
         binding_error = _preview_root_binding_error(
             preview,
             resolved_project_root,
             owner_root,
+        )
+        binding_error = binding_error or _preview_owner_binding_error(
+            preview, binding
         )
         if binding_error:
             return _contract_error(
@@ -194,6 +224,7 @@ def write_confirmed_freeze_entry(
     preview: Mapping[str, Any],
     *,
     confirmation: bool = False,
+    owner_binding: FreezeOwnerBinding | None = None,
 ) -> dict[str, Any]:
     """Write a confirmed local freeze entry through the deterministic engine.
 
@@ -210,11 +241,15 @@ def write_confirmed_freeze_entry(
                 project_root=resolved_project_root,
                 message="Explicit human Confirm and Write action is required.",
             )
+        binding = _project_freeze_binding(resolved_project_root, owner_binding)
         owner_root = _freeze_state_owner_root(resolved_project_root)
         binding_error = _preview_root_binding_error(
             preview,
             resolved_project_root,
             owner_root,
+        )
+        binding_error = binding_error or _preview_owner_binding_error(
+            preview, binding
         )
         if binding_error:
             return _contract_error(
@@ -288,14 +323,7 @@ def refresh_freeze_exposure(project_root: str | Path, *, max_items: int = 40) ->
 
 
 def refresh_ai_compliance_context(project_root: str | Path, *, max_items: int = 40) -> dict[str, Any]:
-    """Refresh all AI-visible freeze context after a local freeze write.
-
-    The canonical freeze memory remains in the selected project external support root.
-    This function refreshes the generated AI-send pack and the startup upload
-    channel that the external AI reads at the beginning of a programming
-    session.  It does not write project-specific memory into
-    ``project_freeze_ledger``.
-    """
+    """Refresh generated AI-visible context after a local freeze write."""
 
     resolved_project_root = Path(project_root).expanduser().resolve()
     ai_send_result = None

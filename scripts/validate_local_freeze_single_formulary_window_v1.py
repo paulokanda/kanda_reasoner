@@ -6,8 +6,9 @@ import ast
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-TARGET = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "freeze_after_update_tab.py"
+TARGET = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "_local_freeze_dialog_runtime.py"
 SUPPORT_TARGET = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "_local_freeze_dialog_widgets.py"
+TAB_TARGET = PROJECT_ROOT / "kanda_reasoner_app" / "freeze_after_update_gui" / "freeze_after_update_tab.py"
 FEATURE_ID = "local-freeze-single-formulary-window-v1"
 
 
@@ -119,10 +120,10 @@ def _validate_open_method(tree: ast.Module, source: str) -> None:
     if not guard_index < require_root_index < create_dialog_index:
         raise AssertionError("single-window guard must run before project-root resolution and before QDialog creation")
 
-    _assert_contains(open_method, "def on_local_freeze_dialog_finished", "finished handler")
-    _assert_contains(open_method, "stop_local_ai_polling()", "local AI polling shutdown")
+    _assert_contains(open_method, "def on_finished", "finished handler")
+    _assert_contains(open_method, "ai_runtime.close()", "AI runtime shutdown")
     _assert_contains(open_method, "self._clear_local_freeze_dialog_reference(dialog)", "finished handler cleanup")
-    _assert_contains(open_method, "dialog.finished.connect(on_local_freeze_dialog_finished)", "finished signal binding")
+    _assert_contains(open_method, "dialog.finished.connect(on_finished)", "finished signal binding")
     _assert_contains(open_method, "self._local_freeze_dialog = dialog", "active dialog assignment")
 
 
@@ -139,9 +140,12 @@ def _validate_protected_freeze_flow_strings(source: str) -> None:
         "Preview Freeze Entry",
         "Confirm and Write Freeze Entry",
         "Ignore this Freeze",
-        "Preview is read-only; Confirm and Write uses the button click as confirmation and closes immediately.",
-        "write_confirmed_freeze_entry(project_root, preview, confirmation=True)",
-        "mark_latest_freeze_hint_used(project_root",
+        "Preview is read-only;",
+        "Confirm and Write uses the button click as confirmation and closes immediately.",
+        "write_confirmed_freeze_entry(",
+        "confirmation=True",
+        "mark_latest_freeze_hint_used(",
+        "project_root, freeze_id=",
         "refresh_ai_compliance_context(project_root)",
         "parse_args([]) must keep the safe read-only --check default",  # absent by design, checked in startup guard, not here
     ]
@@ -162,9 +166,12 @@ def main() -> int:
     tree = ast.parse(source, filename=str(TARGET))
     support_source = SUPPORT_TARGET.read_text(encoding="utf-8")
     support_tree = ast.parse(support_source, filename=str(SUPPORT_TARGET))
+    tab_source = TAB_TARGET.read_text(encoding="utf-8")
+    ast.parse(tab_source, filename=str(TAB_TARGET))
     _validate_guard_methods(support_tree, support_source)
     _validate_open_method(tree, source)
     _validate_protected_freeze_flow_strings(source + support_source)
+    _assert_contains(tab_source, "FreezeLocalEntryRuntimeMixin", "runtime mixin delegation")
     print(f"VALIDATION OK: {FEATURE_ID}")
     return 0
 

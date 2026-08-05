@@ -1,4 +1,4 @@
-"""Data models for Portable creation."""
+"""Data models for KANDA Reasoner Portable creation."""
 
 from __future__ import annotations
 
@@ -7,8 +7,33 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
+class ProtectedRoot:
+    """One governed owner root that Portable direct writes must not enter."""
+
+    label: str
+    owner_id: str
+    owner_slug: str
+    root_kind: str
+    path: Path
+
+
+@dataclass(frozen=True)
+class RegistryBoundary:
+    """Tool-owned registry authority and all protected owner roots."""
+
+    registry_path: Path
+    registry_sha256: str
+    current_project_id: str
+    selection_mode: str
+    tool_root: Path
+    tool_support_root: Path
+    tool_transient_root: Path
+    protected_roots: tuple[ProtectedRoot, ...]
+
+
+@dataclass(frozen=True)
 class BuildPaths:
-    """Resolved project, staging, and publication paths."""
+    """Resolved Tool, staging, publication, and registry-boundary paths."""
 
     project_root: Path
     drive_root: Path
@@ -26,6 +51,7 @@ class BuildPaths:
     spec_path: Path
     governed_python: Path
     zip_helper: Path
+    registry_boundary: RegistryBoundary | None = None
 
 
 @dataclass(frozen=True)

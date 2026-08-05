@@ -30,6 +30,10 @@ Pre-Output, validation specialists, or human confirmation.
   admission and current-owner dispatch.
 - `KPR-05-007 terminal_cleanup_contract`: interactive PowerShell entry,
   classification, provenance, and cleanup behavior.
+- `KPR-05-008 self_contained_error_memory_lesson_intake_zip`: one-ZIP
+  Error Memory lesson intake delivery for the selected Project, bridged through
+  KPR-05-005 to the separate KPR-03-007 Freeze intake owner, with pending-only
+  staging and human-only Memorize Error approval.
 
 ## Historical compatibility tombstones
 
@@ -50,6 +54,8 @@ be classified as tombstones.
 - interactive terminal output: compact startup bridge and KPR-05-007 when full
   detail is needed;
 - Show Project recovery: KPR-05-005.
+- self-contained Error Memory intake ZIP: KPR-05-008, with Class 12 lesson
+  schema owners and current Project ownership checks.
 
 ## Hard boundaries
 

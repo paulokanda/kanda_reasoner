@@ -99,14 +99,30 @@ def validate_static(root: Path) -> None:
     print("TOUCHED_SOURCE_MODULES_MAX_500_LINES: PASS")
 
 
-def validate_real_qt(root: Path) -> None:
+def _is_missing_pyside6_dependency(exc: ImportError) -> bool:
+    """Return True only for an unavailable PySide6 or shiboken6 dependency."""
+    module_name = str(getattr(exc, "name", "") or "")
+    message = str(exc)
+    return (
+        module_name == "PySide6"
+        or module_name.startswith("PySide6.")
+        or module_name == "shiboken6"
+        or module_name.startswith("shiboken6.")
+        or "PySide6" in message
+        or "shiboken6" in message
+    )
+
+
+def validate_real_qt(root: Path) -> bool:
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     try:
         from PySide6.QtCore import QCoreApplication, QEvent
         from PySide6.QtWidgets import QApplication
-    except Exception:
+    except ImportError as exc:
+        if not _is_missing_pyside6_dependency(exc):
+            raise
         print("REAL_QT_ARCHITECTURE_RUN_MODE_GROUP: SKIPPED_NO_PYSIDE6")
-        return
+        return False
 
     import sys
 
@@ -169,6 +185,7 @@ def validate_real_qt(root: Path) -> None:
         app.processEvents()
         QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
     print("REAL_QT_ARCHITECTURE_RUN_MODE_TEARDOWN_CLEAN: PASS")
+    return True
 
 
 def parse_args() -> argparse.Namespace:

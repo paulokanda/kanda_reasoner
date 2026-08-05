@@ -11,18 +11,23 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from kanda_reasoner_app.external_ai_workflow import (
+    handoff_to_selected_external_ai,
+)
 from kanda_reasoner_app.error_memory.exporter import (
     build_complete_error_memory_ai_clipboard_json,
     write_complete_error_memory_ai_clipboard_export,
 )
 from kanda_reasoner_app.error_memory_gui._intake_blueprint import (
     read_error_memory_ai_formulary_canon,
+    read_send_zip_errors_prompt,
 )
 
 __all__ = [
     "copy_ai_assisted_intake_error_draft_to_clipboard",
     "copy_complete_error_memory_json_to_clipboard",
     "copy_correct_error_delivery_canon_to_clipboard",
+    "copy_send_zip_errors_prompt_to_clipboard",
     "copy_error_draft_to_clipboard",
     "copy_error_lesson_intake_blueprint_to_clipboard",
     "copy_path_to_clipboard",
@@ -55,6 +60,29 @@ def copy_correct_error_delivery_canon_to_clipboard(tab: Any) -> None:
         "Error Memory",
         "Correct Error Memory delivery canon copied to clipboard.",
         "Source: error_memory_ai_formulary_startup_canon.md",
+    )
+
+
+def copy_send_zip_errors_prompt_to_clipboard(tab: Any) -> None:
+    """Copy the generalized self-contained Error Memory ZIP prompt."""
+    QApplication = _application()
+    try:
+        prompt_text = read_send_zip_errors_prompt(
+            tab._current_project_root(),
+            module_file=__file__,
+        )
+        QApplication.clipboard().setText(prompt_text, mode=_clipboard_mode())
+    except Exception as exc:
+        _show_error(
+            tab,
+            title="Send Zip Errors prompt copy failed",
+            message=str(exc),
+        )
+        return
+    tab._show_action_done(
+        "Error Memory",
+        "Send Zip Errors prompt copied to clipboard.",
+        "Source: self_contained_error_memory_lesson_intake_zip.md",
     )
 
 
@@ -190,46 +218,60 @@ def show_active_ready_failure_copy_window(tab: Any, *, source_label: str, lesson
 
 
 def copy_ai_assisted_intake_error_draft_to_clipboard(tab: Any) -> None:
-    """Copy AI-assisted intake text with the active-ready templates."""
-    QApplication = _application()
+    """Copy AI-assisted intake text and open the selected external assistant."""
     QMessageBox = _message_box()
     intake_text = tab.raw_error_edit.toPlainText().strip()
     if not intake_text:
-        QMessageBox.warning(tab, 'AI-assisted intake is empty', 'Copy error/draft uses only the AI-assisted error lesson intake window. Load, paste, or import one error first.')
+        QMessageBox.warning(tab, 'AI-assisted intake is empty', 'Copy and Open External AI uses only the AI-assisted error lesson intake window. Load, paste, or import one error first.')
         return
     context_text = "SOURCE WINDOW: AI-assisted error lesson intake\n\n" + intake_text
     try:
-        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(context_text=context_text)
-        QApplication.clipboard().setText(clipboard_text, mode=_clipboard_mode())
+        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(
+            context_text=context_text
+        )
+        result = handoff_to_selected_external_ai(clipboard_text)
     except Exception as exc:
-        _show_error(tab, title='AI-assisted intake copy failed', message=str(exc))
+        _show_error(tab, title='AI-assisted intake handoff failed', message=str(exc))
+        return
+    if not result.ok:
+        _show_error(tab, title='AI-assisted intake handoff failed', message=result.error)
         return
     tab._show_action_done(
-        'Copied error/draft',
-        'The current AI-assisted intake text plus Error Memory active-ready templates were copied.',
-        'Paste this to AI to create or correct one marker-wrapped KANDA Error Memory lesson for the AI-assisted intake window.',
+        'External AI handoff ready',
+        'The Error Memory draft and active-ready templates were copied and '
+        + result.display_name
+        + ' was opened.',
+        'Paste manually. The returned lesson remains a draft until it passes intake '
+        'validation and the human explicitly selects Memorize Error.',
     )
 
 
 def copy_error_draft_to_clipboard(tab: Any) -> None:
-    """Copy Error Editor text with the active-ready templates."""
-    QApplication = _application()
+    """Copy Error Editor text and open the selected external assistant."""
     QMessageBox = _message_box()
     error_draft_text = tab.received_preview_edit.toPlainText().strip()
     if not error_draft_text:
-        QMessageBox.warning(tab, 'Error Editor is empty', 'Copy error/draft uses only the Error Editor window. Load, paste, import, or select one error first.')
+        QMessageBox.warning(tab, 'Error Editor is empty', 'Copy and Open External AI uses only the Error Editor window. Load, paste, import, or select one error first.')
         return
     context_text = "SOURCE WINDOW: Error Editor\n\n" + error_draft_text
     try:
-        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(context_text=context_text)
-        QApplication.clipboard().setText(clipboard_text, mode=_clipboard_mode())
+        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(
+            context_text=context_text
+        )
+        result = handoff_to_selected_external_ai(clipboard_text)
     except Exception as exc:
-        _show_error(tab, title='Error Editor copy failed', message=str(exc))
+        _show_error(tab, title='Error Editor handoff failed', message=str(exc))
+        return
+    if not result.ok:
+        _show_error(tab, title='Error Editor handoff failed', message=result.error)
         return
     tab._show_action_done(
-        'Copied error/draft',
-        'The current Error Editor text plus Error Memory active-ready templates were copied.',
-        'Paste this to AI to create or correct one marker-wrapped KANDA Error Memory lesson for the AI-assisted intake window.',
+        'External AI handoff ready',
+        'The Error Editor draft and active-ready templates were copied and '
+        + result.display_name
+        + ' was opened.',
+        'Paste manually. The external answer cannot save, activate, supersede, or '
+        'memorize a lesson.',
     )
 
 

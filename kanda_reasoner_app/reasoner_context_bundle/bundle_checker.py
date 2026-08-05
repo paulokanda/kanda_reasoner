@@ -9,6 +9,7 @@ from typing import Any
 
 from .exclusion_engine import decide_path_exclusion
 from .exclusion_provider import load_bundle_exclusion_rules
+from .handoff_boundary_contract import handoff_trust_contract_failures
 from .hashing import sha256_file
 from .output_paths import bundle_artifact_paths
 from .path_normalization import resolve_logical_artifact_path
@@ -137,6 +138,9 @@ def _check_payload_project_contract(
     payload: dict[str, Any],
     expected_kind: str,
     failures: list[str],
+    *,
+    context: ProjectContext | None = None,
+    require_handoff_trust: bool = False,
 ) -> None:
     """Support check payload project contract behavior.
     
@@ -162,6 +166,54 @@ def _check_payload_project_contract(
         failures.append(expected_kind + " evidence root must be show_project_to_AI")
     if "_project" + "_reference" in json.dumps(project, sort_keys=True):
         failures.append(expected_kind + " project metadata must not use " + "_project" + "_reference")
+    if require_handoff_trust:
+        if context is None:
+            failures.append(expected_kind + " handoff trust context is missing")
+        else:
+            trust_failures = handoff_trust_contract_failures(
+                payload.get("handoff_trust"),
+                context,
+            )
+            failures.extend(
+                expected_kind + "." + item for item in trust_failures
+            )
+
+
+def _check_first_read_handoff_contracts(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+    failures: list[str],
+) -> None:
+    """Verify one identical trust envelope across first-read artifacts."""
+    paths = bundle_artifact_paths(context)
+    payloads: list[tuple[str, dict[str, Any]]] = [
+        ("bundle_manifest", manifest),
+    ]
+    for kind, path in (
+        ("ai_briefing", paths.ai_briefing_json),
+        ("routing_manifest", paths.routing_manifest_json),
+    ):
+        if not path.exists() or not path.is_file():
+            failures.append(kind + " artifact is missing")
+            continue
+        payloads.append((kind, _load_json(path)))
+
+    digests: set[str] = set()
+    for kind, payload in payloads:
+        _check_payload_project_contract(
+            payload,
+            kind,
+            failures,
+            context=context,
+            require_handoff_trust=True,
+        )
+        trust = payload.get("handoff_trust")
+        if isinstance(trust, dict):
+            digest = str(trust.get("boundary_digest_sha256", ""))
+            if digest:
+                digests.add(digest)
+    if len(digests) > 1:
+        failures.append("first-read handoff boundary digests disagree")
 
 
 def _check_paths_obey_exclusions(
@@ -326,7 +378,7 @@ def check_ai_context_bundle(project: str | Path | ProjectContext) -> dict[str, A
         }
 
     manifest = _load_json(paths.bundle_manifest_json)
-    _check_payload_project_contract(manifest, "bundle_manifest", failures)
+    _check_first_read_handoff_contracts(context, manifest, failures)
     _check_manifest_artifacts(context, manifest, failures)
     _check_manifest_paths(context, failures)
     # Hybrid Source Archive mode deliberately does not require the old heavy

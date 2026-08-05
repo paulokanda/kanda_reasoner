@@ -222,8 +222,27 @@ def _assert_behavior_contract() -> None:
         if summary.get(key) != expected:
             raise AssertionError(f"SUMMARY_COUNT_MISMATCH: {key}")
 
-    if len(test_index) != len(responsibility_index):
-        raise AssertionError("TEST_INDEX_CARDINALITY_CHANGED")
+    def is_protection_path(value: str) -> bool:
+        normalized = str(value).replace("\\", "/").casefold()
+        parts = normalized.split("/")
+        return (
+            normalized.startswith("tools/validate_")
+            or "tests" in parts
+            or "test" in Path(normalized).name
+        )
+
+    expected_production_count = sum(
+        1
+        for record in responsibility_index
+        if not is_protection_path(str(record.get("file", "")))
+    )
+    if len(test_index) != expected_production_count:
+        raise AssertionError("PROTECTION_INDEX_PRODUCTION_CARDINALITY_CHANGED")
+    if any(
+        is_protection_path(str(record.get("file", "")))
+        for record in test_index
+    ):
+        raise AssertionError("PROTECTION_SOURCE_EMITTED_AS_PRODUCTION_RECORD")
 
     without_stable = {
         key: value
@@ -379,6 +398,7 @@ def main() -> int:
     print("PUBLIC_API_PRESERVATION: PASS")
     print("ANNOTATION_IMPORT_PRESERVATION: PASS")
     print("BEHAVIOR_REGRESSION: PASS")
+    print("PROTECTION_INDEX_PRODUCTION_CARDINALITY: PASS")
     print("CLI_CONTRACT_PRESERVATION: PASS")
 
     _assert_ast_safe([target, helper])

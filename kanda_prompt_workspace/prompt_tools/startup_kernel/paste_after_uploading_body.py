@@ -16,6 +16,7 @@ from startup_kernel.constants import (
     OLD_PASTE_AFTER_UPLOAD_FILENAME,
     PASTE_AFTER_UPLOAD_FILENAME,
     PROJECT_READY_CHECK_TITLE,
+    PROJECT_IN_USE_TEMPLATE,
     PROMPT_LIBRARY_ZIP_NAME,
     SECOND_UPLOAD_READY_ACTION,
     STABLE_BOOT_FILENAME,
@@ -112,8 +113,11 @@ Compact Error Memory loaded:
 Second-upload handoff loaded:
 Tier-1 gates active:
 Next action:
+{PROJECT_IN_USE_TEMPLATE}
 {SECOND_UPLOAD_READY_ACTION}
 ```
+
+Derive `<ACTIVE PROJECT DISPLAY NAME>` from the selected active Project name or slug, not from the KANDA Tool name. Replace underscores with spaces and convert the result to uppercase. For example, `my_project` becomes `MY PROJECT`. `KANDA REASONER` is valid only when KANDA Reasoner itself is the selected active Project.
 ```
 
 ## Normal use
@@ -125,8 +129,8 @@ Next action:
 5. Wait for `STARTUP PACK LOAD CHECK`.
 6. Confirm that every required startup file is reported as loaded and that Next action is `{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}`.
 7. Upload all available project files from `second_prompt_files`, including `_RUN_COLLECTOR_STATUS.txt`, `<project_slug>__ai_handoff_upload_readme.txt`, compact Error Memory files, the zipped JSON handoff package `<project_slug>__ai_handoff_upload*.zip`, and source archive ZIP parts when exact source inspection may be needed.
-8. Wait for the AI to return `{PROJECT_READY_CHECK_TITLE}` ending with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
-9. Only after `{PROJECT_READY_CHECK_TITLE}` ends with `{SECOND_UPLOAD_READY_ACTION}`, send the real project task.
+8. Wait for the AI to return `{PROJECT_READY_CHECK_TITLE}` with `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>` immediately before `{SECOND_UPLOAD_READY_ACTION}`.
+9. Only after that exact readiness tail is present, send the real project task.
 
 ## Second upload group from second_prompt_files
 
@@ -144,7 +148,7 @@ When the user sends the second upload group, the AI should read it in this order
 9. <project_slug>__ai_handoff_all_in_one*.zip only as convenience/archive fallback
 ```
 
-The JSON handoff should be consumed from the ZIP package, not by relying on loose JSON uploads. Source archive ZIP parts are independent project-source packages and should be opened only when the routing/source manifests indicate they are needed. After this second-upload read is complete, the AI should return `{PROJECT_READY_CHECK_TITLE}` and end with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
+The JSON handoff should be consumed from the ZIP package, not by relying on loose JSON uploads. Source archive ZIP parts are independent project-source packages and should be opened only when the routing/source manifests indicate they are needed. After this second-upload read is complete, the AI should return `{PROJECT_READY_CHECK_TITLE}` and end with `Next action:`, then `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>`, then `{SECOND_UPLOAD_READY_ACTION}`.
 
 ## Do not use maintenance file unless needed
 

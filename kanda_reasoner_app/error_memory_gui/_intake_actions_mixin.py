@@ -100,22 +100,20 @@ class ErrorMemoryIntakeActionsMixin:
         show_action_done(self, title, message, detail_text)
 
     def _pending_ai_assisted_error_lesson_intake_dir(self) -> Path:
-        """Return the primary pending intake folder for this project."""
-        return resolve_project_error_memory_root(self._current_project_root()) / PENDING_AI_ASSISTED_INTAKE_DIR_NAME
+        """Return the primary pending intake folder for the selected Project."""
+        return resolve_project_error_memory_root(self._require_project_root()) / PENDING_AI_ASSISTED_INTAKE_DIR_NAME
 
     def _candidate_pending_ai_assisted_intake_dirs(self) -> list[Path]:
-        """Return pending-intake folders in priority order without duplicates."""
-        root_hints = [
-            self._current_project_root(),
-            getattr(self, '_project_root', None),
-            Path.cwd(),
-        ]
-        try:
-            root_hints.append(Path(__file__).resolve(strict=False).parents[2])
-        except Exception:
-            pass
+        """Return pending-intake folders only for the selected Project.
+
+        No Project selected: pending intake scanning is disabled. This prevents
+        the Tool source working directory from being mistaken for a Project.
+        """
+        root = self._current_project_root()
+        if root is None:
+            return []
         return candidate_pending_ai_assisted_intake_dirs(
-            root_hints,
+            [root],
             pending_dir_name=PENDING_AI_ASSISTED_INTAKE_DIR_NAME,
         )
 
@@ -269,7 +267,7 @@ class ErrorMemoryIntakeActionsMixin:
         return draft_lesson_from_pending_raw_text(
             pending_file,
             raw_text,
-            project_slug=self._current_project_root().name,
+            project_slug=self._require_project_root().name,
         )
 
     def _delete_pending_file_quietly(self, path: Path) -> bool:

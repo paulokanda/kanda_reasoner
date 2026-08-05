@@ -2,34 +2,28 @@
 prompt_id: patch_validate_freeze_error_memory_routine_blueprint
 prompt_code: KPR-05-005
 title: Answer Validate Freeze Memorize Error Routine Blueprint
-version: 3.1
+version: 3.2
 status: active
 load_type: on_request
 owner_box: 05_patch_delivery_and_validation
-source_stage: powershell-paste-safe-operational-output-v1
+source_stage: separated-terminal-release-phases-v1
 ---
-
 # Answer, Validate, Freeze, Memorize Error Routine Blueprint
-
 ## Purpose
-
 This is the canonical continuation wrapper copied by the Show Project to AI
-`Answer, Validate, Freeze, Memorize Error` button. It restores the complete
-project release cycle after an AI stops at an answer, patch, install, validation,
-Freeze, or Error Memory phase. It is also used when a prior phase failed.
-
-This wrapper selects owners and enforces phase order. Exact PowerShell bodies,
-ZIP schemas, Freeze fields, and Error Memory fields remain with their current
-canonical owners.
-
+`Answer, Validate, Freeze, Memorize Error` button. It resumes the selected
+Project release cycle after an answer, implementation, patch, install,
+validation, Freeze, or Error Memory phase stops or fails.
+Required user-facing delivery:
+1. one self-contained feature or update ZIP;
+2. one separate installation terminal block;
+3. one separate validation terminal block;
+4. one separate Freeze preparation terminal block after validation succeeds;
+5. one separate Error Memory terminal block only when reusable lessons exist.
+Never combine installation, validation, Freeze, and Error Memory in one command.
 ## Button context envelope
-
 The button must place a `KANDA_ANSWER_VALIDATE_FREEZE_MEMORIZE_CONTEXT` envelope
-before this prompt. Treat the envelope as current interaction identity and copy
-its values into the routine record.
-
-The envelope must identify:
-
+before this prompt containing:
 ```text
 Selected project slug
 Selected project source root
@@ -39,32 +33,27 @@ Selected Project Support root
 Selected project-linked transient root
 Canonical prompt source
 ```
-
-When the envelope is unavailable, resolve the same fields from the current
-`PROJECT READY CHECK`, exact handoff, and `project_tool_boundary_canon` before
-any source mutation or operational output.
-
+If absent, resolve the same fields from the current `PROJECT READY CHECK`, exact
+handoff, and `project_tool_boundary_canon` before mutation or artifact output.
+## Compact current-work intake
+Use current uploaded files, pasted compact updates, exact local output,
+validation markers, Freeze snippets, Error Memory evidence, and current source
+as one continuation context. Continue from the last reliable marker. Do not ask
+the user to repeat evidence already supplied.
+Generated archives remain evidence until current source and receiver ownership
+are verified. Compact context cannot bypass source, Box, delivery, validation,
+Freeze, or Error Memory gates.
 ## Hard Tool-versus-Project boundary
-
-- The selected Project owns its source patch, install destination, live
-  validation, Project Support, Freeze memory, and Error Memory.
-- KANDA Reasoner owns the reusable prompt source and governance UI. It is not
-  the selected Project merely because it created the handoff or receives Freeze
-  and Error Memory intake.
-- Do not patch KANDA Reasoner to repair an external Project release unless exact
-  source proves a separate Tool defect and the Tool operation is independently
-  authorized.
-- If Tool and Project are the same physical root, keep their logical roles
-  separate.
-- Generated handoffs and source archives are evidence, not editing authority.
-
-## Primary routine classification
-
-Select one primary class:
-
-- `ROUTINE_POST_IMPLEMENTATION_COMPLETION`: implementation or analysis exists,
-  but ZIP delivery, install instructions, validation, synchronization, Freeze,
-  Error Memory disposition, or final reporting is incomplete;
+- The selected Project owns payload, install, live validation, Project Support,
+  Freeze memory, and Error Memory.
+- KANDA Reasoner owns this prompt and governance UI.
+- Do not patch KANDA Reasoner for an external Project failure unless a separate
+  Tool defect is proven and authorized.
+- If Tool and Project share one physical root, keep logical roles separate.
+- Generated handoffs are evidence, not editing authority.
+## Routine classification and identity
+Select one class:
+- `ROUTINE_POST_IMPLEMENTATION_COMPLETION`;
 - `STARTUP_DELIVERY_FAILURE`;
 - `PROJECT_HANDOFF_FAILURE`;
 - `PATCH_BUILD_OR_DELIVERY_FAILURE`;
@@ -72,11 +61,7 @@ Select one primary class:
 - `VALIDATION_FAILURE`;
 - `FREEZE_INTAKE_FAILURE`;
 - `ERROR_MEMORY_INTAKE_FAILURE`.
-
-Do not combine unrelated defects into one correction release.
-
-## Required routine identity
-
+Do not combine unrelated defects.
 ```text
 ANSWER VALIDATE FREEZE MEMORIZE ROUTINE IDENTITY
 Project slug:
@@ -97,37 +82,23 @@ Next required phase:
 May modify selected Project source: YES / NO
 May modify KANDA Reasoner Tool source: YES / NO
 ```
-
-A blank, stale, ambiguous, or conflicting identity blocks mutation and artifact
-output.
-
+Blank, stale, ambiguous, or conflicting identity blocks output.
 ## Mandatory owner dispatch
-
-Apply the smallest current owner set needed for the remaining phases:
-
+Use only the smallest needed owner set:
 - identity: `project_tool_boundary_canon`;
-- implementation admission: Brick Wall and the exact Box owner;
-- release lifecycle: `bundle_gated_development_workflow`;
-- payload, baseline, install transaction, and rollback:
-  `implementation_and_delivery_protocol`;
-- output-time release gate: `pre_output_contract_gates`;
-- known delivery regressions: `patch_install_delivery_error_register`;
+- admission: Brick Wall and the exact Box owner;
+- release: `bundle_gated_development_workflow`;
+- payload/install/rollback: `implementation_and_delivery_protocol`;
+- output gate: `pre_output_contract_gates`;
+- regressions: `patch_install_delivery_error_register`;
 - terminal blocks: `terminal_cleanup_contract`;
-- Freeze: `freeze_code_intake_and_form_protocol` and current active Freeze
-  context;
-- Error Memory admission: `error_memory_ai_formulary_startup_canon` and, when a
-  candidate is justified, `error_memory_active_ready_correction_blueprint`,
-  `error_memory_active_ready_json_template`, and `error_memory_model_template`.
-
-Never load or depend on deprecated `router_bridge_patch_delivery_contract`.
-
+- retention: `durable_document_artifact_routing_canon`;
+- Freeze: `freeze_code_intake_and_form_protocol` and, when needed,
+  `self_contained_freeze_entry_intake_zip`;
+- Error Memory: `error_memory_ai_formulary_startup_canon` and, when justified,
+  `self_contained_error_memory_lesson_intake_zip` plus active-ready templates.
+Never load deprecated `router_bridge_patch_delivery_contract`.
 ## Continuation contract
-
-Continue from the last reliable marker. Do not make the user retrain the AI or
-repeat phases that already passed for the same exact feature and ZIP.
-
-For every response, return:
-
 ```text
 ROUTINE CONTINUATION STATE
 Feature ID:
@@ -139,117 +110,124 @@ Next exact action:
 User execution required: YES / NO
 Need new training prompt: NO
 ```
-
-If current evidence changes the feature, ZIP, source fingerprint, interpreter,
-or Project identity, invalidate only the affected later phases.
-
+Invalidate only later phases affected by changed identity or evidence.
 ## Paste-safe PowerShell hard gate
-
-Every user-facing PowerShell code fence is one independent paste unit that must
-start safely at a clean primary `PS ...>` prompt. Prefer a direct invocation of
-a packaged `.ps1` script over an inline control-flow wrapper.
-
-For interactive user-facing output:
-
-- never emit `elseif`, `else`, or `finally`;
-- never emit a standalone or separately pasted `catch`;
-- never split `if/elseif/else` or `try/catch/finally` across code fences or
-  console submissions;
-- never tell the user to paste the remainder of a control-flow chain later;
-- when a preflight is needed, use complete independent `if` checks or place the
-  guarded logic inside the packaged script;
-- require Windows PowerShell 5.1-compatible APIs unless PowerShell 7 or a newer
-  runtime has been explicitly verified;
-- use the exact artifact path produced by the current workflow instead of an
-  assumed destination or placeholder path.
-
-Before emitting a terminal block, scan the final visible code for detached
-control-flow tokens and unsupported runtime APIs. If the block is not one safe
-paste unit, repair it before output.
-
-Existing Error Memory owners include
-`lesson-powershell-detached-else-interactive-paste-footer-v1` and
-`lesson-powershell-validation-wrapper-marker-and-finally-v1`; do not create
-duplicate lessons for those failure classes.
-
-## Safe end-to-end sequence
-
+Every user-facing PowerShell code fence is one independent paste unit. Prefer a
+direct packaged `.ps1` invocation. Never emit `elseif`, `else`, `finally`, a
+detached `catch`, split control flow, unsupported runtime APIs, stale paths, or
+control characters. Use Windows PowerShell 5.1-compatible APIs unless newer is
+verified. Resolve Python as an executable plus optional prefix arguments, never
+as a single-item array whose index may collapse to one character.
+Do not duplicate existing lessons
+`lesson-powershell-detached-else-interactive-paste-footer-v1` or
+`lesson-powershell-validation-wrapper-marker-and-finally-v1`.
+## One self-contained feature ZIP
+Create exactly one primary feature/update ZIP containing:
+- exact source payload and manifest;
+- packaged `INSTALL.ps1`, `VALIDATE.ps1`, `RUN_INSTALL.ps1`, and
+  `RUN_VALIDATE.ps1` when used by the delivery contract;
+- focused validators and required helpers;
+- root-level `KANDA_FREEZE_HINT.json` when freezeable;
+- required README and receipts.
+Do not require a separate installer, validator, external runner, or standalone
+validation-report download. Do not split one update across multiple feature
+ZIPs.
+A separate Freeze intake ZIP or Error Memory intake ZIP is allowed only for its
+distinct schema and human approval gate. It must not contain or reinstall the
+feature source.
+## Required user-visible delivery shape
+Use these phases in order. Each terminal phase gets its own heading and separate
+PowerShell fence.
+### Artifact - one update ZIP
+Provide exactly one feature/update ZIP link and final SHA-256. It contains update
+code plus packaged install and validation logic.
+### Terminal 1 - INSTALL
+Invoke only the packaged installer. It may stage, verify, extract, back up,
+install, roll back, and verify installed hashes. It must not run live
+validation, Freeze, or Error Memory.
 ```text
-answer the requested task from exact current source
--> obtain implementation authorization when source changes
--> repair the smallest selected-Project owner
--> build one self-contained patch ZIP
--> validate the exact final ZIP contract before showing its link
--> deliver the ZIP with SHA-256, placement, separate install code, separate
-   validation code, expected markers, rollback, Freeze handling, and Error
-   Memory disposition in the same response
--> user installs into the selected Project from project-linked transient staging
--> verify installed hashes and receipt identity
--> execute current local validation with the selected Project interpreter
--> distinguish native warnings from process exit-code failure
--> regenerate or validate Show Project synchronization when source, prompts,
-   Freeze context, or Error Memory changed
--> require `VALIDATION OK: <feature_id>` and `STATUS: IN_SYNC`
--> merge current local validation evidence into the selected Project Freeze Hint
--> prepare read-only Preview; human performs explicit Confirm and Write
--> evaluate Error Memory eligibility and duplicates
--> prepare exactly one marker-wrapped lesson candidate only when justified;
-   human validates and explicitly uses Memorize Error
--> return the completed user-facing answer and remaining next action
+INSTALL PHASE COMPLETE: <feature_id>
 ```
-
-`INSTALL IS NOT VALIDATION`. Sandbox or package validation is not proof of the
-user's live installation.
-
-## Release delivery requirements
-
-No ZIP link may be emitted alone. The same response must include truthful
-release identity and all operational instructions required to continue.
-
-A freezeable ZIP must contain one root-level `KANDA_FREEZE_HINT.json`, must not
-install that sidecar as source, and must pass the current ZIP contract. Transient
-ZIPs, extraction folders, helpers, receipts, and evidence belong under:
-
+### Terminal 2 - VALIDATE
+Invoke only the packaged validator after installation. It may verify hashes,
+run focused/regression validators, validate synchronization, and write durable
+evidence through its canonical owner. It must not install, Freeze, or stage
+Error Memory.
 ```text
-<project_drive>/<project_name>_delete_after_daily_work
+VALIDATION OK: <feature_id>
+STATUS: IN_SYNC
 ```
-
-Install and validation commands must derive paths from the selected Project.
-Do not use Downloads/Desktop fallback searches. Do not default to generic
-`python` when the handoff or current Project defines a governed interpreter.
-
-## Freeze rules
-
-Freeze is eligible only after current local validation and synchronization.
-Installation alone must not create completed Freeze evidence. Validation must
-merge current markers into the current selected-Project Freeze intake record.
-Preview remains read-only. Confirm and Write remains an explicit human action.
-After writing, regenerate startup Freeze context.
-
-## Error Memory rules
-
-Create or correct a lesson only for a verified failure with durable, repeatable
-prevention value after duplicate, overlap, supersession, and current-schema
-checks.
-
-Do not create a new lesson merely for a user selecting the wrong Project, a
-skipped prerequisite, a correct fail-closed safeguard, a transient external
-failure, or an incident already owned by an active lesson.
-
-When an intake block is justified, use exactly one:
-
+`INSTALL IS NOT VALIDATION`.
+### Terminal 3 - FREEZE
+After live validation and synchronization, provide a separate Freeze preparation
+terminal block. Use the current Freeze owner and a separate self-contained
+Freeze intake ZIP when required. It may load `New Local Freeze Entry`, but must
+not run Preview or Confirm and Write.
 ```text
-KANDA_ERROR_LESSON_JSON_BEGIN
-{ one current-schema lesson object }
-KANDA_ERROR_LESSON_JSON_END
+FREEZE DISPOSITION: PREPARED_FOR_HUMAN_CONFIRMATION
 ```
-
-Do not wrap it in a markdown fence. Do not invent validation evidence. Do not
-write directly into canonical Lessons. Human validation and Memorize Error are
-required.
-
+```text
+Freeze Feature After Update
+-> New Local Freeze Entry
+-> Preview Freeze Entry
+-> Confirm and Write
+```
+### Terminal 4 - ERROR MEMORY
+Only after actual failures produce reusable evidence, check duplicates,
+overlap, supersession, and schema status. When lessons are justified, provide one
+separate Error Memory intake ZIP and a separate terminal block staging all
+current lessons for human review.
+Do not fabricate lessons to satisfy the phase list. If none is justified, state
+`ERROR MEMORY DISPOSITION: NOT_REQUIRED` and create no no-op loader or report.
+The terminal must never execute `Memorize Error`.
+```text
+KANDA Reasoner
+-> select the correct Project
+-> Error Memory
+-> review each pending lesson
+-> Memorize Error only after approval
+```
+## Strict phase isolation
+- One terminal block never executes two lifecycle phases.
+- Install cannot invoke validation, Freeze, or Error Memory.
+- Validate cannot invoke install, Freeze, or Error Memory.
+- Freeze cannot install source or stage lessons.
+- Error Memory cannot install, validate, write Freeze memory, or memorize.
+- Never present an all-in-one command.
+- Continue from the last passed marker.
+## No-orphan-report rule
+Do not create or deliver `*_VALIDATION_REPORT.txt`, external runners, duplicate
+manifests, or summary files without a named future consumer, owner, retention
+path, and reuse purpose. Keep temporary logs and receipts under the Project
+daily-work root. Keep durable validation evidence under Project Support through
+its canonical owner. Do not expose disposable reports as downloads.
+## Safe sequence
+```text
+answer from current source and compact update
+-> authorize and repair the smallest owner
+-> build and contract-validate one feature ZIP
+-> deliver ZIP plus separate INSTALL command
+-> install and verify hashes
+-> deliver separate VALIDATE command
+-> require VALIDATION OK and STATUS: IN_SYNC
+-> deliver separate FREEZE command
+-> human Preview and Confirm and Write
+-> evaluate actual failures
+-> when justified, deliver separate ERROR MEMORY command
+-> human review and Memorize Error
+```
+## Release, Freeze, and Error Memory rules
+No ZIP link may be emitted alone. Freezeable feature ZIPs require one root-level
+`KANDA_FREEZE_HINT.json` that is not installed as source. Transient artifacts
+belong under `<project_drive>/<project_name>_delete_after_daily_work`. Do not use
+Downloads/Desktop fallback or generic Python when a governed interpreter exists.
+Freeze is eligible only after local validation and synchronization. Preview is
+read-only; Confirm and Write is human-only. Refresh startup Freeze context after
+write.
+Create Error Memory only for verified reusable failures after duplicate checks.
+Stage active-ready lessons for review; do not write canonical lessons.
+Memorize Error remains human-only.
 ## Fail-closed response
-
 ```text
 ANSWER VALIDATE FREEZE MEMORIZE ROUTINE BLOCKED
 Routine class:
@@ -265,23 +243,17 @@ May freeze: NO
 May stage Error Memory: NO
 Next safe action:
 ```
-
 ## Button integration
-
-The GUI owns the resolved identity envelope, clipboard behavior, label, tooltip,
-and user feedback. The canonical prompt is read from the KANDA Reasoner Tool
-root; the selected external Project does not become prompt-library authority.
-
+The GUI owns identity envelope, clipboard behavior, label, tooltip, and user
+feedback. The canonical prompt is read from the KANDA Reasoner Tool root at the
+existing path. Keep the button linked to that path; never copy prompt text into
+GUI source or make an external Project prompt authority.
 ## Non-authorization statement
-
 This wrapper does not itself authorize implementation, release, validation
 claims, Freeze writes, or Error Memory persistence.
-
 ## Version history
-
-- 3.1: added a paste-safe PowerShell hard gate, Windows PowerShell 5.1 compatibility, exact artifact-path use, and existing Error Memory owner enforcement.
-- 3.0: added cross-project identity envelope, post-implementation completion,
-  no-retraining continuation state, complete ZIP/install/validate/sync/Freeze/
-  Error Memory sequence, and EEG Kanda regression protections.
-- 2.0: converted the historical mega-prompt to an owner-dispatch wrapper.
-- 1.x: historical combined routine.
+- 3.2: one primary update ZIP; separate install, validation, Freeze, and Error
+  Memory terminal phases; compact intake; no orphan reports.
+- 3.1: paste-safe PowerShell and Windows PowerShell 5.1 gates.
+- 3.0: cross-project identity and no-retraining continuation.
+- 2.0: owner-dispatch wrapper.

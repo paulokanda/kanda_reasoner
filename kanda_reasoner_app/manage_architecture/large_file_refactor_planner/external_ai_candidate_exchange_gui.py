@@ -16,6 +16,10 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
+from kanda_reasoner_app.external_ai_workflow import (
+    handoff_package,
+)
+
 from .external_ai_candidate_exchange_service import create_external_ai_candidate_exchange
 from .external_ai_candidate_return_dialog import choose_external_ai_return_input
 from .external_ai_candidate_return_text_intake import (
@@ -56,7 +60,7 @@ def build_external_ai_candidate_exchange_box(
     layout.addWidget(description)
 
     row = QHBoxLayout()
-    copy_button = QPushButton("Path Candidates to AI")
+    copy_button = QPushButton("Send Candidates to External AI")
     import_button = QPushButton("Import AI Answer")
     folder_button = QPushButton("Refactoring Folder")
     path_button = QPushButton("Refactoring Folder Path")
@@ -148,9 +152,20 @@ def _path_candidates_to_ai(window: object) -> None:
             completion_evidence=getattr(window, "_large_file_refactor_workbench_completion_evidence", None),
         )
         window._large_file_refactor_workbench_ai_exchange_result = result
-        QApplication.clipboard().setText(result.workspace_root)
+        task_text = Path(result.prompt_path).read_text(encoding="utf-8")
+        handoff = handoff_package(
+            title="KANDA EXTERNAL AI CANDIDATE EXCHANGE",
+            zip_path=result.zip_path,
+            task_text=task_text,
+            task_path=result.prompt_path,
+            package_sha256=result.zip_sha256,
+        )
         if output is not None:
-            output.setPlainText(_format_result(result))
+            output.setPlainText(
+                _format_result(result)
+                + "\n\nEXTERNAL AI HANDOFF: "
+                + (handoff.display_name if handoff.ok else handoff.error)
+            )
     except Exception as error:
         if output is not None:
             output.setPlainText(

@@ -9,6 +9,9 @@ import tokenize
 from pathlib import PurePath
 
 
+__all__: list[str] = []
+
+
 _STOP_WORDS = {
     "a", "about", "access", "after", "all", "also", "an", "and",
     "answer", "any", "are", "as", "at", "available", "be", "before",

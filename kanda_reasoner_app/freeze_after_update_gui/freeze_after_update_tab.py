@@ -61,6 +61,9 @@ class FreezeAfterUpdateTab(
         self._local_freeze_ai_identity: Any = None
         self._local_freeze_ai_generation = 0
         self._local_freeze_ai_poll_timer: QTimer | None = None
+        self._local_freeze_bootstrap_generation = 0
+        self._local_freeze_bootstrap_job: Any = None
+        self._local_freeze_bootstrap_retired_jobs: list[Any] = []
         self._freeze_web_ai_configuration: Any = None
         self._build_ui()
         self._connect_signals()

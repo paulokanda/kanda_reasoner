@@ -351,4 +351,9 @@ def compact_lesson(lesson: dict[str, Any]) -> dict[str, Any]:
         "validation_command_summary": lesson.get("validation_command_summary", ""),
         "notes": lesson.get("notes", ""),
         "superseded_by": lesson.get("superseded_by", ""),
+        "owner_scope": lesson.get("owner_scope", ""),
+        "owner_id": lesson.get("owner_id", ""),
+        "owner_slug": lesson.get("owner_slug", ""),
+        "owner_root_fingerprint": lesson.get("owner_root_fingerprint", ""),
+        "affected_box": lesson.get("affected_box", ""),
     }

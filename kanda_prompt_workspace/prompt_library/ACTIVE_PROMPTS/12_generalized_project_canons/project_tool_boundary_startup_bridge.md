@@ -2,7 +2,7 @@
 prompt_code: KPR-12-006
 prompt_id: project_tool_boundary_startup_bridge
 title: Project Tool Boundary Startup Bridge
-version: 2.2
+version: 2.3
 status: active
 load_type: always_startup
 owner_box: 12_generalized_project_canons
@@ -28,6 +28,30 @@ active_project_root = selected project source and install/validation target
 active_project_support_root = external durable support for the selected project
 transient_workspace_root = disposable selected-project staging and diagnostics
 ```
+
+## Absolute code-placement guard
+
+For build, update, regression, installation, validation, Freeze, Error Memory,
+and packaging work:
+
+```text
+Never write KANDA Tool-owned code into an external selected Project source tree.
+Never write external selected-Project code into KANDA Tool source.
+```
+
+Only these bounded cases are exceptions:
+
+1. `<project_drive>/<project_name>_show_project_to_AI` may contain the selected
+   Project source copies and KANDA-generated handoff, prompt, manifest, evidence,
+   Freeze, and Error Memory files required for AI-assisted work. It is support,
+   not source, runtime, or an install target.
+2. When the selected Project is KANDA Reasoner itself and canonical resolution
+   proves the Tool and Project source root are the same owner root, both roles may
+   physically write that same tree. Logical ownership, exact write sets,
+   validation, and rollback remain mandatory.
+
+A mixed governed operation may touch both separate roots only with owner-pure
+write sets. It never permits one owner's code to be installed into the other.
 
 ## Cross-project release ownership
 
@@ -73,9 +97,38 @@ context envelope containing selected Project root, Tool root, Project Support
 root, transient root, and same-physical-root status before the canonical routine
 prompt. The AI must use those values and must not ask the user to retrain it.
 
+## Selected Project feature handling checklist
+
+For every feature that KANDA Reasoner creates, corrects, validates, freezes, or
+memorizes for the selected Project, confirm all items before consequential
+output:
+
+```text
+[ ] Selected Project ID and root are current and explicit.
+[ ] Tool root, Project Support root, transient root, and self-hosting state are explicit.
+[ ] Operation is classified as PROJECT_OPERATION, TOOL_CHANGE, MIXED_GOVERNED, or BLOCKED.
+[ ] One feature ID, owner Box, exact source set, and current fingerprints are recorded.
+[ ] KANDA Tool source remains read-only unless a separate Tool defect is proven and authorized.
+[ ] No Tool-owned code is placed in an external Project source and no external Project-owned code is placed in Tool source.
+[ ] Project Support copies are non-source evidence, or the selected Project is proven KANDA Reasoner self-hosting.
+[ ] Patch payload, install destination, and live validator target belong to the selected Project.
+[ ] ZIP staging and extraction belong only to the selected Project transient workspace.
+[ ] Project-specific evidence, Error Memory, and Freeze Memory belong only to Project Support.
+[ ] Installation and validation remain separate, using the selected Project interpreter.
+[ ] Memorize Error and Freeze Confirm and Write remain explicit human actions.
+[ ] Handoff and startup context are refreshed after governed source or memory changes.
+[ ] Work continues from the last reliable marker without repeating completed phases.
+[ ] No feature is merged into KANDA Tool, another Project, generated evidence, or transient staging.
+[ ] Portable distribution remains a separate explicit productization workflow.
+```
+
+Any unresolved item blocks mutation and operational artifact output.
+
 ## Hard rules
 
 - Never collapse Tool and Project ownership, including self-hosting.
+- Never write Tool-owned code into an external Project source tree or external Project-owned code into Tool source.
+- The only physical-content exceptions are non-authoritative Project Support handoffs and proven KANDA Reasoner self-hosting.
 - Project source writes, ZIP payloads, installation, and live validation target
   the selected Project owner.
 - Reusable Tool writes target the Tool only for an independently verified and
@@ -115,6 +168,9 @@ May mutate from this bridge alone: NO
 
 ## Version history
 
+- 2.3: added the selected-Project feature handling checklist covering identity,
+  owner classification, exact source, patch/install/validation targets, Project
+  Support, Error Memory, Freeze, continuation state, and no-merge rules.
 - 2.2: made Box Logic explicit: Show Project and Portable Distribution must
   never share triggers, output ownership, folders, lifecycle, or implicit calls;
   portable identity is excluded wherever misplaced under Project source.

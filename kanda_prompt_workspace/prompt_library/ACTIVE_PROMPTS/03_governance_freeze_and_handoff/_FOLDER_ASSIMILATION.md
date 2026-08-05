@@ -28,6 +28,7 @@ draft governance and handoff profile authoring.
 | `pre_output_contract_gates` | `KPR-03-004` | active | Final dispatcher for operational and machine-consumed artifacts. |
 | `professional_engineering_governance_template` | `KPR-03-005` | draft_template | Draft-only Project governance profile authoring. |
 | `workflow_handoff_template` | `KPR-03-006` | draft_template | Draft-only generic handoff profile authoring. |
+| `self_contained_freeze_entry_intake_zip` | `KPR-03-007` | active | One-ZIP selected-Project Freeze intake, bridged through KPR-05-005 to the separate KPR-05-008 Error Memory intake owner. |
 
 ## Retired identities
 

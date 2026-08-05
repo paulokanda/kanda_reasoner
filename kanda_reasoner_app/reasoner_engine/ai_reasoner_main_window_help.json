@@ -9,8 +9,8 @@
   "generated_by": "reasoner_engine_main_window_manifest_contract_repair",
   "ai_instruction": "Keep this manifest aligned with the canonical ai_reasoner_main_window_help folder while the GUI migration remains staged.",
   "summary": {
-    "total_helpers": 17,
-    "public_helpers": 15,
+    "total_helpers": 19,
+    "public_helpers": 17,
     "internal_helpers": 2,
     "entry_exports": [
       "JsonProjectReasonerV10",
@@ -202,6 +202,32 @@
       ],
       "depends_on": [],
       "consumed_by": []
+    },
+    "local_ai_clipboard_actions.py": {
+      "purpose": "Wire clipboard actions for the canonical Local AI conversation surface.",
+      "reason": "Stable helper consumed by signal_wiring.py for local-only paste and copy actions.",
+      "stability": "stable",
+      "exports": [
+        "connect_local_ai_clipboard_actions"
+      ],
+      "depends_on": [
+        "kanda_reasoner_app.reasoner_engine.chat_clipboard_actions"
+      ],
+      "consumed_by": [
+        "signal_wiring.py"
+      ]
+    },
+    "ui_theme.py": {
+      "purpose": "Provide the professional dark theme for the Local AI project-reasoner surface.",
+      "reason": "Stable visual helper consumed by ui_builder.py.",
+      "stability": "stable",
+      "exports": [
+        "LOCAL_AI_THEME"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "ui_builder.py"
+      ]
     }
   },
   "dependency_graph": {
@@ -221,7 +247,21 @@
     "window_controller_bridge.py": {},
     "project_json_path_resolver.py": {},
     "project_qa_analysis_runner.py": {},
-    "project_qa_copy_error_ask_controller.py": {}
+    "project_qa_copy_error_ask_controller.py": {},
+    "local_ai_clipboard_actions.py": {
+      "depends_on": [
+        "kanda_reasoner_app.reasoner_engine.chat_clipboard_actions"
+      ],
+      "consumed_by": [
+        "signal_wiring.py"
+      ]
+    },
+    "ui_theme.py": {
+      "depends_on": [],
+      "consumed_by": [
+        "ui_builder.py"
+      ]
+    }
   },
   "domain_overlay": "GENERIC",
   "domain_specific": {}

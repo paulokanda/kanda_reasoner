@@ -12,7 +12,10 @@ import json
 from typing import Any
 
 from kanda_reasoner_app.error_memory.guard import analyze_error_against_lessons
-from kanda_reasoner_app.error_memory.heuristic_normalizer import classify_and_normalize_error_lesson_text
+from kanda_reasoner_app.error_memory.heuristic_normalizer import (
+    HeuristicCorrectionResult,
+    classify_and_normalize_error_lesson_text,
+)
 from kanda_reasoner_app.error_memory.models import active_ready, active_ready_missing_reasons
 from kanda_reasoner_app.error_memory_gui._correction_duplicate_guard import (
     consume_duplicate_correction_candidate,
@@ -69,10 +72,22 @@ def active_ready_missing_text(lesson: dict[str, Any], *, limit: int = 20) -> str
 
 
 def heuristic_correction_result_for_editor(tab: Any):
-    """Classify the Error Editor payload for deterministic Level-1 cleanup."""
+    """Classify the editor payload or explain that Project selection is required."""
+    root = tab._current_project_root()
+    if root is None:
+        return HeuristicCorrectionResult(
+            level=3,
+            can_apply=False,
+            label='Select Project',
+            reason=(
+                'No Project selected. Select a Project before correcting or saving '
+                'an Error Memory lesson.'
+            ),
+            lesson=None,
+        )
     return classify_and_normalize_error_lesson_text(
         tab.received_preview_edit.toPlainText(),
-        project_slug=tab._current_project_root().name,
+        project_slug=root.name,
     )
 
 
@@ -86,7 +101,7 @@ def refresh_heuristic_correction_button_state(tab: Any) -> None:
         tab.heuristic_correction_button.setToolTip(result.reason + '\n\nThis payload is active-ready after deterministic normalization.')
         return
     reason = result.reason
-    tab.heuristic_correction_button.setText('Need AI to Correct')
+    tab.heuristic_correction_button.setText(result.label or 'Need AI to Correct')
     tab.heuristic_correction_button.setEnabled(False)
     tab.heuristic_correction_button.setStyleSheet('QPushButton { color: #b00020; font-weight: 700; } QPushButton:disabled { color: #b00020; font-weight: 700; }')
     tab.heuristic_correction_button.setToolTip(reason)

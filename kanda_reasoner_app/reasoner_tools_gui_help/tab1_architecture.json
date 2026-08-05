@@ -32,7 +32,8 @@
     "22. Shared mutable state coupling - Mutable state is shared across architecture boxes, so one box can silently change another box's runtime behavior.",
     "23. Inconsistent error contract at boundaries - One box raises errors, another swallows errors, and another returns None. The boundary has no common rule.",
     "24. Tests assert implementation internals instead of public contracts - A test checks private details instead of checking what the user or public API should observe.",
-    "25. Missing __all__ or uncontrolled public surface - A module does not clearly say which names are public. Everything can look exportable."
+    "25. Missing __all__ or uncontrolled public surface - A module does not clearly say which names are public. Everything can look exportable.",
+    "Copy and Open External AI sends only a manual read-only advisory prompt through the selected external Python-coding assistant; it cannot write source, authorize a patch, or change audit pass/fail."
   ],
   "errors": [
     {

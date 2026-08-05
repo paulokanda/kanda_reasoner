@@ -9,7 +9,7 @@ module below the size threshold.
 from __future__ import annotations
 
 import base64
-import importlib.util
+import importlib
 from pathlib import Path
 
 _PART_FILES = [
@@ -22,22 +22,21 @@ _PART_FILES = [
 
 
 def _load_part(helper_path: Path, module_name: str):
-    """Support load part behavior.
-    
-    Parameters
-    ----------
-    helper_path : Path
-        The helper path value.
-    module_name : str
-        The module name value.
+    """Load one governed source part through the package import system.
+
+    Normal imports work both from source and from PyInstaller's bundled PYZ.
+    The previous file-path loader required loose ``.py`` files beside the
+    executable and therefore failed in the packaged Tool.
     """
-    
-    spec = importlib.util.spec_from_file_location(module_name, helper_path)
-    if spec is None or spec.loader is None:
-        raise ImportError(f"Cannot load collector_main helper part: {helper_path}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    del module_name
+    helper_module = helper_path.stem
+    package_name = f"{__package__}.collector_main_help.{helper_module}"
+    try:
+        return importlib.import_module(package_name)
+    except ImportError as exc:
+        raise ImportError(
+            "Cannot import bundled collector_main helper part: " + package_name
+        ) from exc
 
 
 def _load_original_source() -> str:

@@ -6,8 +6,8 @@ from pathlib import Path
 
 from PySide6.QtWidgets import QApplication, QMessageBox
 
-from kanda_reasoner_app.refactor_report_evidence import (
-    build_refactor_report_evidence_text,
+from kanda_reasoner_app.manage_architecture.architecture_audit_external_ai import (
+    copy_audit_results,
 )
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import (
@@ -75,38 +75,8 @@ class ArchitectureAuditActionsMixin:
         )
 
     def copy_audit_to_clipboard(self) -> None:
-        """Copy project audit results, optionally with refactor evidence."""
-        audit_text = self._output.toPlainText()
-        if self._include_refactor_report_checkbox.isChecked():
-            root_path = Path(self._root_path_edit.text().strip())
-            self.statusBar().showMessage(
-                "Running Refactor Report before copying Project Audit Results..."
-            )
-            QApplication.processEvents()
-            try:
-                audit_text += build_refactor_report_evidence_text(root_path)
-            except Exception as exc:
-                audit_text += (
-                    "\n\n---\n"
-                    "Refactor Report Evidence\n"
-                    f"Unable to auto-generate compact evidence for {root_path}:\n"
-                    f"{exc}\n"
-                )
-                show_error_copy_close_window(
-                    self,
-                    title="Refactor Report evidence failed",
-                    message=(
-                        "Project Audit Results will still be copied, but "
-                        f"Refactor Report evidence failed:\n{exc}"
-                    ),
-                )
-        QApplication.clipboard().setText(audit_text)
-        if self._include_refactor_report_checkbox.isChecked():
-            self.statusBar().showMessage(
-                "Copied Project Audit Results with compact Refactor Report evidence"
-            )
-        else:
-            self.statusBar().showMessage("Copied Project Audit Results to clipboard")
+        """Copy project audit results through the canonical export owner."""
+        copy_audit_results(self)
 
     def run_warning_heuristic_resolver(self) -> None:
         """Run warning routing and specialist analysis without blocking the GUI."""

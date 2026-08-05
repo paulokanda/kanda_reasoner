@@ -4,92 +4,130 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "schema_version",
+    "kind",
     "feature_id",
+    "patch_name",
     "router_bridge_used",
     "prompt_paths_loaded",
     "source_files_inspected",
+    "source_baselines",
     "target_box",
     "forbidden_boxes",
     "allowed_write_paths",
     "forbidden_write_paths",
     "files_changed",
     "validation_commands",
-    "validation_markers"
+    "validation_markers",
+    "delivery_manifest_sha256",
+    "install_manifest_sha256",
+    "freeze_hint_sha256"
   ],
-  "properties": {
-    "feature_id": {
+  "$defs": {
+    "nonEmptyString": {
       "type": "string",
       "minLength": 1
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sourceBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "operation",
+        "baseline_sha256",
+        "installed_sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "operation": {
+          "enum": [
+            "add",
+            "replace",
+            "delete"
+          ]
+        },
+        "baseline_sha256": {
+          "type": "string",
+          "pattern": "^$|^[0-9a-f]{64}$"
+        },
+        "installed_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "kind": {
+      "const": "kanda_patch_trace"
+    },
+    "feature_id": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "patch_name": {
+      "$ref": "#/$defs/nonEmptyString"
     },
     "router_bridge_used": {
-      "type": "string",
-      "minLength": 1
+      "const": "pre_output_contract_gates"
     },
     "prompt_paths_loaded": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "source_files_inspected": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "source_baselines": {
       "type": "array",
       "items": {
-        "type": "string",
-        "minLength": 1
-      }
+        "$ref": "#/$defs/sourceBaseline"
+      },
+      "minItems": 1
     },
     "target_box": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
     },
     "forbidden_boxes": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "allowed_write_paths": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "forbidden_write_paths": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "files_changed": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "validation_commands": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "validation_markers": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
-    "error_memory_lesson_id": {
-      "type": "string"
+    "delivery_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
     },
-    "freeze_hint_path": {
-      "type": "string"
+    "install_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "freeze_hint_sha256": {
+      "$ref": "#/$defs/sha256"
     }
   }
 }

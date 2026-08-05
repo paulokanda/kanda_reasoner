@@ -4,7 +4,7 @@
   "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
   "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "3.1",
+  "version": "3.2",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,13 +16,14 @@
     "Answer Validate Freeze Memorize Error",
     "recovery routine owner dispatch"
   ],
-  "source_stage": "powershell-paste-safe-operational-output-v1",
-  "updated_for": "powershell-paste-safe-operational-output-v1",
-  "description": "Cross-project continuation wrapper that resumes the governed ZIP, install, validation, synchronization, Freeze, Error Memory, and final-answer lifecycle without retraining, while enforcing independently pasteable Windows PowerShell output.",
+  "source_stage": "separated-terminal-release-phases-v1",
+  "updated_for": "separated-terminal-release-phases-v1",
+  "description": "Cross-project continuation wrapper that requires one primary update ZIP and separate install, validation, Freeze, and Error Memory terminal phases while preserving human approval gates and avoiding disposable report downloads.",
   "priority": 17,
   "trigger_phrases": [
     "Answer, Validate, Freeze, Memorize Error",
-    "finish zip install validate freeze error memory",
+    "one zip separate install validate freeze error memory commands",
+    "compact update release",
     "continue after patch creation",
     "AI stopped after coding",
     "cross-project release recovery",
@@ -35,17 +36,20 @@
     "implementation_and_delivery_protocol",
     "pre_output_contract_gates",
     "patch_install_delivery_error_register",
-    "terminal_cleanup_contract"
+    "terminal_cleanup_contract",
+    "durable_document_artifact_routing_canon"
   ],
   "optional_companion_prompts": [
     "freeze_code_intake_and_form_protocol",
     "error_memory_ai_formulary_startup_canon",
     "error_memory_active_ready_correction_blueprint",
     "error_memory_active_ready_json_template",
-    "error_memory_model_template"
+    "error_memory_model_template",
+    "self_contained_freeze_entry_intake_zip",
+    "self_contained_error_memory_lesson_intake_zip"
   ],
-  "when_to_load": "When the user presses the Show Project to AI routine button, asks to finish the release lifecycle, or an AI stopped or failed between answer, ZIP, install, validation, synchronization, Freeze, Error Memory, and final reporting.",
-  "when_not_to_load": "Do not load for explanation-only work that does not require lifecycle continuation or recovery.",
+  "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.",
+  "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
   "source_write_authorization": "NO",
   "do_not_regress": [
     "Embed the current selected Project and KANDA Reasoner Tool identities in the copied button text.",
@@ -58,6 +62,15 @@
     "Every user-facing PowerShell code fence must be one independently pasteable unit.",
     "Prefer direct packaged script invocation and never emit user-facing else, elseif, or finally clauses.",
     "Require Windows PowerShell 5.1-compatible APIs unless a newer runtime is explicitly verified.",
-    "Use the exact current artifact path rather than an assumed destination or placeholder path."
+    "Use the exact current artifact path rather than an assumed destination or placeholder path.",
+    "Use current uploaded files, compact updates, local validation output, Freeze snippets, and Error Memory evidence as one continuation context.",
+    "Create one self-contained feature ZIP containing packaged installation and validation scripts.",
+    "Do not create standalone validation-report downloads or external runners without a named future consumer and retention owner.",
+    "Keep the Show Project to AI button linked to the canonical prompt path instead of copying prompt text into GUI source.",
+    "Use one primary feature/update ZIP and do not create separate installer, validator, runner, or disposable validation-report downloads.",
+    "Present installation, validation, Freeze preparation, and Error Memory as separate independently pasteable terminal blocks in that order.",
+    "Never let one terminal block execute more than one lifecycle phase.",
+    "Create Error Memory lessons only after actual reusable failure evidence and duplicate checks; otherwise report NOT_REQUIRED.",
+    "Keep the Show Project to AI button dynamically linked to the canonical prompt path."
   ]
 }

@@ -197,7 +197,7 @@ def _build_preview_section(window: object) -> QGroupBox:
     local_ai_btn.setEnabled(False)
     window._large_file_refactor_llm_button = local_ai_btn
     pipeline_row.addWidget(local_ai_btn)
-    howto_btn = QPushButton("AI Refactor Version How To")
+    howto_btn = QPushButton("Open External AI Refactor How To")
     
     howto_btn.setStyleSheet("background-color: #f28c28; font-weight: bold;")
     howto_btn.setStyleSheet(
@@ -209,14 +209,14 @@ def _build_preview_section(window: object) -> QGroupBox:
         }
         """
     )
-    howto_btn.setToolTip("Copy the canonical Web AI refactor exchange and import protocol.")
+    howto_btn.setToolTip("Copy the canonical protocol and open the selected external AI.")
     howto_btn.clicked.connect(lambda: copy_web_ai_refactor_version_how_to(window))
     window._large_file_refactor_web_ai_howto_button = howto_btn
     pipeline_row.addWidget(howto_btn)
     pipeline_row.addStretch(1)
     layout.addLayout(pipeline_row)
     web_row = QHBoxLayout()
-    copy_web_btn = QPushButton("Copy Comprehensive Planning for Web AI")
+    copy_web_btn = QPushButton("Send Planning to External AI")
     copy_web_btn.clicked.connect(lambda: copy_comprehensive_planning_for_web_ai(window))
     copy_web_btn.setEnabled(False)
     window._large_file_refactor_copy_web_ai_button = copy_web_btn

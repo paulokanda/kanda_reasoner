@@ -11,6 +11,9 @@ from hashlib import sha256
 from importlib import import_module
 from pathlib import Path
 
+from kanda_reasoner_app.external_ai_workflow import (
+    handoff_to_selected_external_ai,
+)
 from kanda_reasoner_app.manage_architecture.kanda_ast_safe_refactor_orchestrator import (
     build_preflight_evidence_text,
 )
@@ -129,7 +132,10 @@ def copy_ast_split_web_ai_risk_repair_wrapper(window: object) -> None:
             safety_label=safety_label,
             preflight_evidence_text=preflight_evidence,
         )
-    except (OSError, UnicodeError, ValueError) as exc:
+        handoff = handoff_to_selected_external_ai(wrapper)
+        if not handoff.ok:
+            raise RuntimeError(handoff.error)
+    except (OSError, RuntimeError, UnicodeError, ValueError) as exc:
         QtWidgets.QMessageBox.warning(
             window,
             "Web AI SAFE repair wrapper not ready",
@@ -137,12 +143,11 @@ def copy_ast_split_web_ai_risk_repair_wrapper(window: object) -> None:
         )
         return
 
-    QtWidgets.QApplication.clipboard().setText(wrapper)
     status_bar = getattr(window, "statusBar", None)
     if callable(status_bar):
         status_bar().showMessage(
-            "Copied AST risk-repair prompt, exact source, audit, consumers, "
-            "public contract, and semantic safety evidence"
+            "Copied AST risk-repair evidence and opened "
+            + handoff.display_name
         )
 
 
@@ -169,7 +174,10 @@ def copy_safe_refactor_how_to_bundle(window: object) -> None:
             prompt_text=prompt_path.read_text(encoding="utf-8", errors="strict"),
             support_artifacts=support_artifacts,
         )
-    except (OSError, UnicodeError, ValueError) as exc:
+        handoff = handoff_to_selected_external_ai(clipboard_text)
+        if not handoff.ok:
+            raise RuntimeError(handoff.error)
+    except (OSError, RuntimeError, UnicodeError, ValueError) as exc:
         QtWidgets.QMessageBox.warning(
             window,
             "Safe Refactor How To not ready",
@@ -177,12 +185,11 @@ def copy_safe_refactor_how_to_bundle(window: object) -> None:
         )
         return
 
-    QtWidgets.QApplication.clipboard().setText(clipboard_text)
     status_bar = getattr(window, "statusBar", None)
     if callable(status_bar):
         status_bar().showMessage(
-            "Copied Safe Refactor How To plus current routine guide, routine implementation, "
-            "and non-authoritative worked report example"
+            "Copied Safe Refactor How To bundle and opened "
+            + handoff.display_name
         )
 
 

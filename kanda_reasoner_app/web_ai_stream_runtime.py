@@ -172,10 +172,11 @@ def execute_stream_chat_completion(
         "model": clean_model,
         "messages": [dict(message) for message in messages],
         "stream": True,
-        "stream_options": {"include_usage": True},
         "temperature": float(temperature),
         "max_tokens": max(1, int(max_tokens)),
     }
+    if profile.supports_stream_options:
+        body["stream_options"] = {"include_usage": True}
     request = urllib.request.Request(
         profile.chat_url(),
         data=json.dumps(body, ensure_ascii=False).encode("utf-8"),

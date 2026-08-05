@@ -134,65 +134,167 @@ def _wait_for_visible_scene(app: Any, page: Any, timeout: float) -> dict[str, An
     raise AssertionError("embedded scene did not become visible; last=" + repr(last))
 
 
+def _drain_deferred_deletes(
+    app: Any,
+    core_application: Any,
+    event_type: Any,
+    destroyed: dict[str, bool],
+    timeout: float = 5.0,
+) -> None:
+    """Drain deferred Qt deletes and require owned WebEngine objects to die."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        core_application.sendPostedEvents(None, event_type.DeferredDelete)
+        app.processEvents()
+        if all(destroyed.values()):
+            return
+        time.sleep(0.02)
+    pending = sorted(name for name, done in destroyed.items() if not done)
+    raise AssertionError("Qt teardown left live objects: " + ", ".join(pending))
+
+
 def validate_real_qt(root: Path) -> None:
-    """Reproduce inactive-tab activation and assert the actual CSS height owner."""
+    """Reproduce tab activation and deterministically release QWebEngine."""
     try:
-        from PySide6.QtCore import QCoreApplication, Qt
+        from PySide6.QtCore import QCoreApplication, QEvent, Qt
         from PySide6.QtWidgets import QApplication, QTabWidget, QWidget
     except ImportError as exc:
         raise AssertionError("PySide6 import failed: " + str(exc)) from exc
 
     if QApplication.instance() is None:
-        QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts, True)
+        QCoreApplication.setAttribute(
+            Qt.ApplicationAttribute.AA_ShareOpenGLContexts,
+            True,
+        )
     sys.path.insert(0, str(root))
-    from kanda_reasoner_app.project_structure_visualizer import ProjectStructure3DWidget
+    from kanda_reasoner_app.project_structure_visualizer import (
+        ProjectStructure3DWidget,
+    )
 
     app = QApplication.instance() or QApplication([])
     app.setQuitOnLastWindowClosed(False)
     ambient = environment_snapshot()
     with isolated_show_project_environment():
-        with isolated_project_fixture("kanda_visualizer_v1e_r2_qt_") as (project_root, _):
+        with isolated_project_fixture(
+            "kanda_visualizer_v1e_r2_qt_"
+        ) as (project_root, _):
             write_semantic_complete_json(project_root)
             write_semantic_freeze_entry(project_root)
-            host = QTabWidget()
-            placeholder = QWidget()
-            widget = ProjectStructure3DWidget()
-            host.addTab(placeholder, "Other")
-            host.addTab(widget, "Project Structure 3D")
-            host.resize(1500, 900)
-            host.setCurrentIndex(0)
-            host.show()
-            require(wait_until(app, host.isVisible, 5.0), "fixture host not visible")
-            widget.set_project_root(project_root)
-            require(wait_until(app, lambda: bool(widget._page_load_ok), 30.0), "page load")
-            host.setCurrentIndex(1)
-            require(wait_until(app, lambda: widget.isVisibleTo(host), 5.0), "tab page not visible")
-            require(wait_until(app, lambda: bool(widget._renderer_ready), 60.0), "renderer ready")
-            page = widget._web_view.page()
-            run_javascript(app, page, "window.kandaProjectGraph.activateViewport(true)")
-            first = _wait_for_visible_scene(app, page, 25.0)
-            require(first.get("rootDisplay") == "grid", "embedded root display")
-            require(int(first.get("shellHeight", 0)) > 300, "scene shell height")
-            require(int(first.get("hostHeight", 0)) > 300, "graph host height")
+            host: Any | None = QTabWidget()
+            placeholder: Any | None = QWidget()
+            widget: Any | None = ProjectStructure3DWidget()
+            page: Any | None = None
+            web_view: Any | None = None
+            destroyed = {
+                "page": False,
+                "web_view": False,
+                "widget": False,
+                "host": False,
+            }
+            try:
+                host.addTab(placeholder, "Other")
+                host.addTab(widget, "Project Structure 3D")
+                host.resize(1500, 900)
+                host.setCurrentIndex(0)
+                host.show()
+                require(wait_until(app, host.isVisible, 5.0), "fixture host not visible")
+                widget.set_project_root(project_root)
+                require(
+                    wait_until(app, lambda: bool(widget._page_load_ok), 30.0),
+                    "page load",
+                )
+                host.setCurrentIndex(1)
+                require(
+                    wait_until(app, lambda: widget.isVisibleTo(host), 5.0),
+                    "tab page not visible",
+                )
+                require(
+                    wait_until(app, lambda: bool(widget._renderer_ready), 60.0),
+                    "renderer ready",
+                )
+                web_view = widget._web_view
+                page = web_view.page()
+                page.destroyed.connect(
+                    lambda *_: destroyed.__setitem__("page", True)
+                )
+                web_view.destroyed.connect(
+                    lambda *_: destroyed.__setitem__("web_view", True)
+                )
+                widget.destroyed.connect(
+                    lambda *_: destroyed.__setitem__("widget", True)
+                )
+                host.destroyed.connect(
+                    lambda *_: destroyed.__setitem__("host", True)
+                )
+                run_javascript(
+                    app,
+                    page,
+                    "window.kandaProjectGraph.activateViewport(true)",
+                )
+                first = _wait_for_visible_scene(app, page, 25.0)
+                require(first.get("rootDisplay") == "grid", "embedded root display")
+                require(int(first.get("shellHeight", 0)) > 300, "scene shell height")
+                require(int(first.get("hostHeight", 0)) > 300, "graph host height")
 
-            host.setCurrentIndex(0)
-            app.processEvents()
-            host.setCurrentIndex(1)
-            require(wait_until(app, lambda: widget.isVisibleTo(host), 5.0), "reactivated tab not visible")
-            run_javascript(app, page, "window.kandaProjectGraph.activateViewport(true)")
-            second = _wait_for_visible_scene(app, page, 15.0)
-            require(int(second.get("hostHeight", 0)) > 300, "reactivated graph host height")
-            host.close()
-            host.deleteLater()
-            app.processEvents()
+                host.setCurrentIndex(0)
+                app.processEvents()
+                host.setCurrentIndex(1)
+                require(
+                    wait_until(app, lambda: widget.isVisibleTo(host), 5.0),
+                    "reactivated tab not visible",
+                )
+                run_javascript(
+                    app,
+                    page,
+                    "window.kandaProjectGraph.activateViewport(true)",
+                )
+                second = _wait_for_visible_scene(app, page, 15.0)
+                require(
+                    int(second.get("hostHeight", 0)) > 300,
+                    "reactivated graph host height",
+                )
+            finally:
+                if host is not None:
+                    try:
+                        host.setCurrentIndex(0)
+                    except RuntimeError:
+                        pass
+                if widget is not None:
+                    try:
+                        widget.close()
+                    except RuntimeError:
+                        pass
+                if host is not None:
+                    try:
+                        host.close()
+                    except RuntimeError:
+                        pass
+                for target in (web_view, widget, placeholder, host):
+                    if target is None:
+                        continue
+                    try:
+                        target.deleteLater()
+                    except RuntimeError:
+                        pass
+                page = None
+                web_view = None
+                widget = None
+                placeholder = None
+                host = None
+                _drain_deferred_deletes(
+                    app,
+                    QCoreApplication,
+                    QEvent,
+                    destroyed,
+                )
     require(environment_snapshot() == ambient, "Qt fixture environment changed")
     print("REAL_QT_PROJECT_STRUCTURE_3D_EMBEDDED_SCENE_HEIGHT: PASS")
     print("REAL_QT_PROJECT_STRUCTURE_3D_VISIBLE_GRAPH_HOST: PASS")
     print("REAL_QT_PROJECT_STRUCTURE_3D_SCENE_CONTENT: PASS")
     print("REAL_QT_PROJECT_STRUCTURE_3D_REACTIVATION: PASS")
+    print("REAL_QT_PROJECT_STRUCTURE_3D_QWEBENGINE_TEARDOWN: PASS")
     print("VALIDATED_PYTHON_EXECUTABLE: " + str(Path(sys.executable).resolve()))
     print("RUNTIME_PROVENANCE: " + runtime_provenance())
-
 
 def main() -> int:
     """Run static or real-Qt validation."""

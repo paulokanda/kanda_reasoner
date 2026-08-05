@@ -7,290 +7,518 @@
   <link rel="stylesheet" href="../css/book_help.css">
 </head>
 <body>
-  <article class="book-page">
-    <header class="chapter-opener">
-      <div>
-        <p class="part-label">KANDA Reasoner Help</p>
-        <span class="chapter-number">First-Time User Tutorial</span>
-        <h1>Config AI</h1>
-        <p class="subtitle">Configure the global Web AI gateway and model or the global Local AI endpoint and model, while keeping active project identity and source authority inside each workflow.</p>
-      </div>
-      <figure class="chapter-drawing">
-        <img src="../assets/drawings/config_ai_opener_global_controls.png" alt="Three colleagues review a central configuration board with separate Web AI and Local AI areas, model choices, privacy symbols, and shared global controls">
-      </figure>
-    </header>
+<article class="book-page">
+<header class="chapter-opener chapter-opener-text-only">
+<div><p class="part-label">KANDA Reasoner Help</p><span class="chapter-number">FIRST-TIME SETUP</span><h1>Config AI</h1>
+<p class="subtitle"><strong>Plain-English guide:</strong> connect a gateway, a direct provider, or a Local AI runtime; choose a model; understand keys, free limits, privacy, and the safe way to use the configuration.</p></div>
+</header>
+<!--
+Artwork metadata — maintainer only
+1. Subject: Config AI as a household control desk routing three kinds of AI connection.
+   Asset: assets/drawings/config_ai_opener_control_desk.png
+   Format: PNG, 1448x1086 source; full-width opener.
+   Alt: Friendly guide at a colorful control desk routing Gateway, Direct API, and Local AI tickets.
+   Caption: Choose one route, prepare its key or local runtime, then select the model you want to use.
+   Prompt summary: hand-drawn daily-life service desk with three clearly labeled lanes, navy/orange/blue palette, friendly people, imperfect linework, hand lettering.
+   Density justification: required opener for a comprehensive help file.
+   Analogy: a station information desk sends each traveler to the correct lane.
+   Artwork status: uploaded_existing_png.
+   Visual inspection: passed — visible characters, everyday objects, uneven strokes, hand-lettered labels, no stock-vector look.
+2. Subject: Gateway setup through OpenRouter or Kilo.
+   Asset: assets/drawings/config_ai_gateway_key_counter.png
+   Format: PNG, 1448x1086 source; section illustration.
+   Alt: A ticket counter where OpenRouter and Kilo keys open a shared gateway to approved free models.
+   Caption: A gateway is one front desk that can lead to several approved models.
+   Prompt summary: warm railway ticket counter, key cards, model departure board, two users, navy/orange accents.
+   Density justification: explains the complete Config Web AI section.
+   Analogy: one ticket counter gives access to several destinations.
+   Artwork status: uploaded_existing_png.
+   Visual inspection: passed.
+3. Subject: Direct API setup for Gemini, Mistral, Qwen, and Groq.
+   Asset: assets/drawings/config_ai_direct_provider_keyring.png
+   Format: PNG, 1448x1086 source; section illustration.
+   Alt: A key shop with four labeled provider doors and a safety meter for free access.
+   Caption: Each direct provider has its own key, account rules, free limit, and model catalog.
+   Prompt summary: hand-drawn key shop, four doors, quota meter, friendly clerk, bold handwritten labels.
+   Density justification: explains four distinct direct providers in one coherent section.
+   Analogy: separate building doors need separate keys.
+   Artwork status: uploaded_existing_png.
+   Visual inspection: passed.
+4. Subject: Local AI setup with a local OpenAI-compatible runtime.
+   Asset: assets/drawings/config_ai_local_home_workshop.png
+   Format: PNG, 1448x1086 source; section illustration.
+   Alt: A home workshop computer serving local models while an unplugged cloud remains outside.
+   Caption: Local AI works through a runtime running on your own computer.
+   Prompt summary: cozy workshop, desktop computer, small server tower, model cards, unplugged cloud outside the window.
+   Density justification: explains Config Local AI and local privacy expectations.
+   Analogy: a home workshop runs its own tools instead of visiting a remote service.
+   Artwork status: uploaded_existing_png.
+   Visual inspection: passed.
+5. Subject: Using the selected configuration and respecting the Tool-versus-Project boundary.
+   Asset: assets/drawings/config_ai_use_and_safety_bridge.png
+   Format: PNG, 1448x1086 source; section illustration.
+   Alt: A bridge from global AI settings to a selected project conversation with a human approval gate.
+   Caption: Config AI chooses the connection; each workflow still chooses the Project and asks for approval when required.
+   Prompt summary: bridge checkpoint, global settings backpack, project folder, approval gate, friendly guard, hand lettering.
+   Density justification: explains use after configuration, safety boundaries, and troubleshooting.
+   Analogy: a travel pass chooses the transport, but every trip still needs the correct destination and checkpoint.
+   Artwork status: uploaded_existing_png.
+   Visual inspection: passed.
+-->
 
-    <section>
-      <h2>What Config AI Means</h2>
-      <p>Config AI is the global settings area for AI connections and model selection. It does not hold the active project itself.</p>
-      <p><strong>In plain English:</strong> Config AI chooses which AI service KANDA may call and which model it should use. The workflow still decides which project is active and what exact information is sent.</p>
-      <p>The two sub-tabs are <strong>Config Web AI</strong> and <strong>Config Local AI</strong>.</p>
-    </section>
+<figure class="chapter-drawing chapter-opener-wide">
+<img src="../assets/drawings/config_ai_opener_control_desk.png" alt="Friendly guide at a colorful control desk routing Gateway, Direct API, and Local AI tickets">
+<figcaption>Choose one route, prepare its key or local runtime, then select the model you want to use.</figcaption>
+</figure>
 
-    <section>
-      <h2>What This Tab Does</h2>
-      <ul>
-        <li>Choose the Web AI gateway and session credential.</li>
-        <li>Refresh and filter the Web AI model catalog.</li>
-        <li>Select the global Web AI model.</li>
-        <li>Inspect capabilities and privacy information.</li>
-        <li>Set the Local AI base URL.</li>
-        <li>Refresh locally available models.</li>
-        <li>Select the global Local AI model.</li>
-        <li>Read connection and catalog status.</li>
-      </ul>
-      <p>Config AI does not store the active Project Root, approve a project payload, or grant source-writing authority.</p>
-      <div class="callout callout-note">
-        <div class="callout-icon">1</div>
-        <div><strong>Configure one side at a time.</strong> Complete Config Web AI only when you need a web provider. Complete Config Local AI only when a local model service is running.</div>
-      </div>
-    </section>
+<h2>The simple idea</h2>
+<p>Config AI is the control center for <strong>how KANDA Reasoner reaches an AI model</strong>.</p>
+<p>It answers three practical questions:</p>
+<ol>
+<li>Do you want to use an online model through a gateway?</li>
+<li>Do you want to connect directly to one official provider?</li>
+<li>Do you want to use a model running on your own computer?</li>
+</ol>
+<p>Config AI does not choose the active Project, does not decide what source evidence is sent, and does not grant permission to write files. It stores application-level connection and model choices. The exact Project and request are still chosen by the workflow that uses AI.</p>
+<div class="callout callout-note"><div class="callout-icon" aria-hidden="true">i</div><div><p><strong>Best first-time choice:</strong> configure one provider, refresh its model list, select one model, and send one short non-sensitive test question before configuring anything else.</p></div></div>
 
-    <section>
-      <h2>Before You Start</h2>
-      <p>Use Config Web AI for a web-connected provider, current external information, provider catalogs, and API-key-based access.</p>
-      <p>Use Config Local AI for an already running OpenAI-compatible local model service.</p>
-      <div class="callout callout-warning">
-        <div class="callout-icon">!</div>
-        <div><strong>Do not enter random addresses, keys, or model names.</strong> Config AI is shared global Tool state and can affect every workflow using that AI type.</div>
-      </div>
-    </section>
+<h2>How To Use This</h2>
+<ol>
+<li>Decide whether you want <strong>Config Web AI</strong>, <strong>Direct API Providers</strong>, or <strong>Config Local AI</strong>.</li>
+<li>Prepare the required API key or start your local AI runtime.</li>
+<li>Select the provider and load its model catalog.</li>
+<li>Select one approved model.</li>
+<li>Open Web AI or Local AI and send a small test question.</li>
+<li>Read the status message if the request fails; most first-time problems are a missing key, an exhausted free quota, or a local runtime that is not running.</li>
+</ol>
+<h2>Which option should a first-time user choose?</h2>
+<h3>Choose Config Web AI when</h3>
+<ul>
+<li>you want one gateway that can expose several models;</li>
+<li>you already have an OpenRouter or Kilo account;</li>
+<li>you want KANDA to show only approved free Python-coding models from that gateway;</li>
+<li>you are comfortable sending the approved request to a remote service.</li>
+</ul>
+<h3>Choose Direct API Providers when</h3>
+<ul>
+<li>you specifically want Gemini, Mistral, Qwen, or Groq;</li>
+<li>you have an official API key for that provider;</li>
+<li>you understand that each provider has its own free-tier rules and rate limits;</li>
+<li>you want the request to go directly to that provider instead of through OpenRouter or Kilo.</li>
+</ul>
+<h3>Choose Config Local AI when</h3>
+<ul>
+<li>you have a local OpenAI-compatible runtime such as Ollama running on your computer;</li>
+<li>you want the model to run locally;</li>
+<li>you understand that local speed and quality depend on your computer and installed model;</li>
+<li>you do not need a remote provider for that task.</li>
+</ul>
+<p>You can configure more than one route. Only the route selected for the current conversation is used.</p>
+<h2>Before you begin: what an API key is</h2>
+<p>An API key is a secret text value that lets an application use your provider account. Treat it like a password.</p>
+<p>In KANDA:</p>
+<ul>
+<li>a pasted key is kept only for the current application session;</li>
+<li>a loaded environment key is read from the process or your Windows User environment;</li>
+<li>the key remains masked in the field;</li>
+<li>KANDA does not intentionally save or log the secret;</li>
+<li>closing KANDA clears session-only keys.</li>
+</ul>
+<p>Never paste a key into a question, chat message, screenshot, issue report, source file, or Project document.</p>
+<div class="callout callout-warning"><div class="callout-icon" aria-hidden="true">!</div><div><p><strong>API keys are secrets.</strong> KANDA masks the key field, but your clipboard, screenshots, and other applications are outside KANDA's control.</p></div></div>
 
-    <section>
-      <h2>The Safest First-Time Workflow</h2>
-      <h3>Step 1 - Open the correct sub-tab</h3>
-      <p>Choose Config Web AI or Config Local AI.</p>
-      <h3>Step 2 - Enter only required connection information</h3>
-      <p>Choose the Web gateway and credential, or enter the real local base URL.</p>
-      <h3>Step 3 - Refresh the model list</h3>
-      <p>Click the appropriate refresh button and wait for status.</p>
-      <h3>Step 4 - Select one model</h3>
-      <p>Choose a model from the available list.</p>
-      <h3>Step 5 - Read status and capability information</h3>
-      <p>Confirm the catalog, credential, model, capabilities, privacy, and active configuration.</p>
-      <h3>Step 6 - Return to the workflow tab</h3>
-      <p>The workflow will use the global setting but still resolve its own active project and task context.</p>
-    </section>
+<h2>Two ways to provide a key</h2>
+<h3>Method 1: paste the key for this session</h3>
+<ol>
+<li>Open the correct Config AI subtab.</li>
+<li>Select the provider.</li>
+<li>Paste the key into the <strong>API key</strong> field.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Confirm that the Credential row says a key is loaded for this session.</li>
+</ol>
+<p>This is the easiest first-time method. You must repeat it after restarting KANDA.</p>
+<h3>Method 2: use a Windows User environment variable</h3>
+<p>Each provider has an expected variable name:</p>
+<table>
+<thead>
+<tr>
+  <th>Provider</th>
+  <th>Environment variable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>OpenRouter</td>
+  <td><code>OPENROUTER_API_KEY</code></td>
+</tr>
+<tr>
+  <td>Kilo</td>
+  <td><code>KILO_API_KEY</code></td>
+</tr>
+<tr>
+  <td>Google Gemini</td>
+  <td><code>GEMINI_API_KEY</code></td>
+</tr>
+<tr>
+  <td>Mistral</td>
+  <td><code>MISTRAL_API_KEY</code></td>
+</tr>
+<tr>
+  <td>Qwen / Alibaba Cloud Model Studio</td>
+  <td><code>DASHSCOPE_API_KEY</code></td>
+</tr>
+<tr>
+  <td>Groq</td>
+  <td><code>GROQ_API_KEY</code></td>
+</tr>
+</tbody>
+</table>
+<p>Plain-English Windows steps:</p>
+<ol>
+<li>Open the Windows Start menu.</li>
+<li>Search for <strong>environment variables</strong>.</li>
+<li>Open <strong>Edit environment variables for your account</strong>.</li>
+<li>Under User variables, click <strong>New</strong>.</li>
+<li>Enter the exact variable name from the table.</li>
+<li>Paste the API key as the value.</li>
+<li>Save the dialogs.</li>
+<li>In KANDA, leave the API-key field empty and click <strong>Use Key / Load Environment</strong>.</li>
+<li>If KANDA does not find the new variable, close and reopen KANDA, then try again.</li>
+</ol>
+<h2>Config Web AI: OpenRouter and Kilo</h2>
+<figure class="section-drawing">
+<img src="../assets/drawings/config_ai_gateway_key_counter.png" alt="A ticket counter where OpenRouter and Kilo keys open a shared gateway to approved free models">
+<figcaption>A gateway is one front desk that can lead to several approved models.</figcaption>
+</figure>
 
-    <section>
-      <h2>Config Web AI</h2>
-      <figure class="section-drawing">
-        <img src="../assets/drawings/config_ai_web_configuration.png" alt="A team reviews a Config Web AI board showing provider choice, a protected session key, model selection, web search, official sources, and project context">
-        <figcaption>Choose the gateway, load a session credential, refresh the catalog, and inspect the model before using Web AI.</figcaption>
-      </figure>
+<p>Config Web AI is the gateway configuration page. A gateway is like one front desk that can lead to several model providers.</p>
+<h3>Controls on this page</h3>
+<h4>Gateway</h4>
+<p>Select either <strong>OpenRouter</strong> or <strong>Kilo AI Gateway</strong>.</p>
+<p>Changing the gateway changes which API key, model catalog, privacy notice, and availability rules apply.</p>
+<h4>API key</h4>
+<p>Paste a session-only key here, or leave the field empty when loading an environment variable.</p>
+<h4>Use Key / Load Environment</h4>
+<p>This button has two behaviors:</p>
+<ul>
+<li>field contains text: use the pasted key for this session;</li>
+<li>field is empty: load the selected gateway's environment variable.</li>
+</ul>
+<h4>Credential</h4>
+<p>This line tells you whether KANDA currently has a usable key and where it came from. It never shows the actual secret.</p>
+<h4>Model</h4>
+<p>After refreshing the catalog, select one approved model. KANDA does not automatically substitute a different model when the selected model is unavailable.</p>
+<h4>Refresh Models</h4>
+<p>Requests the current model list from the selected gateway. The list is then filtered so that only approved zero-cost Python-coding models are visible.</p>
+<h4>Free models only</h4>
+<p>This is locked on. It is a safety rule, not a preference. KANDA's strict free-only configuration does not intentionally show paid models in this catalog.</p>
+<h4>Catalog status</h4>
+<p>Shows whether the list is loading, loaded, empty, or failed. It may also show how many gateway models were examined and how many were approved.</p>
+<h4>Capabilities</h4>
+<p>Shows useful facts such as context-window size and whether structured output is known to be supported.</p>
+<h4>Privacy</h4>
+<p>Summarizes that the request is remote and may be processed or retained under the selected gateway and upstream provider policies.</p>
+<h3>OpenRouter setup</h3>
+<ol>
+<li>Create or sign in to an OpenRouter account.</li>
+<li>Create an API key in the OpenRouter key settings.</li>
+<li>In KANDA, open <strong>Config AI &gt; Config Web AI</strong>.</li>
+<li>Select <strong>OpenRouter</strong>.</li>
+<li>Paste the key, or configure <code>OPENROUTER_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Click <strong>Refresh Models</strong>.</li>
+<li>Select one visible <code>[FREE]</code> Python-coding model.</li>
+<li>Read the Privacy and Capabilities rows.</li>
+<li>Open <strong>Web AI &gt; Web Advisory Config</strong>, choose <strong>Gateway</strong>, <strong>OpenRouter</strong>, and the selected model.</li>
+</ol>
+<p>Important: OpenRouter's free-model availability and limits can change. A model being labeled free does not mean unlimited, private, or suitable for production use.</p>
+<h3>Kilo AI Gateway setup</h3>
+<ol>
+<li>Open <strong>Config AI &gt; Config Web AI</strong>.</li>
+<li>Select <strong>Kilo AI Gateway</strong>.</li>
+<li>Try <strong>Refresh Models</strong>. KANDA currently allows the gateway's available anonymous free route when supported.</li>
+<li>If your Kilo setup requires an account key, create one in Kilo Gateway and paste it or configure <code>KILO_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong> when using a key.</li>
+<li>Refresh the catalog and choose one approved free model.</li>
+<li>Open <strong>Web AI &gt; Web Advisory Config</strong>, choose <strong>Gateway</strong>, <strong>Kilo AI Gateway</strong>, and the selected model.</li>
+</ol>
+<p>A free Kilo platform account and a free inference model are not the same thing. Always check the current model and usage status before sending important work.</p>
+<h2>Direct API Providers: the shared setup pattern</h2>
+<figure class="section-drawing">
+<img src="../assets/drawings/config_ai_direct_provider_keyring.png" alt="A key shop with four labeled provider doors and a safety meter for free access">
+<figcaption>Each direct provider has its own key, account rules, free limit, and model catalog.</figcaption>
+</figure>
 
-      <h3>Gateway</h3>
-      <p>Selects the supported web AI service KANDA will contact.</p>
+<p>Direct API Providers connects KANDA to an official provider without OpenRouter or Kilo.</p>
+<p>All four direct providers follow the same basic sequence:</p>
+<ol>
+<li>Select the provider.</li>
+<li>Obtain the provider's official API key.</li>
+<li>Paste the key or load the correct environment variable.</li>
+<li>Leave the official Base URL unchanged unless you have a specific, verified reason to change it.</li>
+<li>Keep the Free access guard checked only when your account really satisfies the statement beside it.</li>
+<li>Click <strong>Refresh Approved Models</strong>.</li>
+<li>Select a Python model.</li>
+<li>Read Catalog status, Capabilities, Privacy, and the final status line.</li>
+<li>In <strong>Web AI &gt; Web Advisory Config</strong>, select <strong>Direct API</strong>, that provider, and the selected model.</li>
+</ol>
+<h3>Direct provider control reference</h3>
+<h4>Direct provider</h4>
+<p>Chooses Gemini, Mistral, Qwen, or Groq. Selecting a name in the list displays that provider. Using the key, changing the Base URL, toggling the guard, or refreshing models activates it in the shared configuration.</p>
+<h4>Base URL</h4>
+<p>This is the official API address. First-time users should leave it unchanged.</p>
+<p>Only advanced users with an official regional or organization-specific endpoint should edit it. KANDA requires a valid HTTPS URL and rejects credentials or fragments inside the URL.</p>
+<h4>Free access guard</h4>
+<p>The guard is a statement from you to KANDA. It does not inspect your billing account and does not turn on a provider's free mode.</p>
+<p>When checked, you are confirming that the provider account meets the displayed free-access condition. When unchecked, KANDA blocks chat readiness for that provider.</p>
+<h4>Refresh Approved Models</h4>
+<p>Loads or constructs the provider catalog and then shows only models allowed by KANDA's free Python-coding policy.</p>
+<h3>Google Gemini API</h3>
+<p>Use this when you want a direct Gemini model.</p>
+<ol>
+<li>Create or view a Gemini API key in Google AI Studio.</li>
+<li>Keep the Google project on the unbilled Free Tier when you intend strict free-only use.</li>
+<li>In KANDA, select <strong>Google Gemini API</strong>.</li>
+<li>Paste the key or configure <code>GEMINI_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Keep <strong>Require an unbilled Gemini Free Tier project</strong> checked only when that statement is true.</li>
+<li>Click <strong>Refresh Approved Models</strong>.</li>
+<li>Select a visible Gemini model.</li>
+</ol>
+<p>Common Gemini message:</p>
+<ul>
+<li><code>429 RESOURCE_EXHAUSTED</code>: the request reached Gemini, but the current request, token, or daily quota was exceeded. Wait for the retry period or select another configured provider/model. This is not a broken Send button.</li>
+</ul>
+<p>Privacy warning: Gemini Free Tier content may be used by Google to improve products under its current terms. Do not send sensitive Project source unless that policy is acceptable to you.</p>
+<h3>Mistral API Free Mode</h3>
+<ol>
+<li>Create or sign in to a Mistral account.</li>
+<li>Activate Mistral Studio in Free mode.</li>
+<li>Create an API key.</li>
+<li>In KANDA, select <strong>Mistral API Free Mode</strong>.</li>
+<li>Paste the key or configure <code>MISTRAL_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Confirm <strong>Require Mistral Free mode</strong> only while the account is actually in Free mode.</li>
+<li>Refresh and select one approved model.</li>
+</ol>
+<p>Mistral Free mode has limited usage and rate limits. KANDA does not authorize a paid fallback.</p>
+<h3>Qwen API Free Quota</h3>
+<ol>
+<li>Create or sign in to Alibaba Cloud Model Studio.</li>
+<li>Create a general Model Studio API key for the region and service you intend to use.</li>
+<li>Enable <strong>Free Quota Only</strong> where the official console offers it and where it applies.</li>
+<li>In KANDA, select <strong>Qwen API Free Quota</strong>.</li>
+<li>Paste the key or configure <code>DASHSCOPE_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Confirm <strong>Require Qwen Free Quota Only</strong> only when the account and selected model are protected by that setting.</li>
+<li>Refresh and select one approved Qwen coding model.</li>
+</ol>
+<p>Qwen free quota can depend on account, model, region, activation date, and remaining quota. A subscription-specific or coding-plan key may follow different billing rules from a general Model Studio key. Use the official key type that matches KANDA's displayed Base URL and your intended free-quota setup.</p>
+<h3>Groq API Free Plan</h3>
+<ol>
+<li>Create or sign in to GroqCloud.</li>
+<li>Create an API key in Groq Console.</li>
+<li>Keep the organization on the Free Plan when you intend strict free-only use.</li>
+<li>In KANDA, select <strong>Groq API Free Plan</strong>.</li>
+<li>Paste the key or configure <code>GROQ_API_KEY</code>.</li>
+<li>Click <strong>Use Key / Load Environment</strong>.</li>
+<li>Confirm <strong>Require a Groq Free Plan organization</strong> only when true.</li>
+<li>Refresh and select one approved model.</li>
+</ol>
+<p>Groq uses request and token rate limits. A 429 response normally means a rate limit was reached. Wait for the provider's reset or use another configured provider.</p>
+<h2>Config Local AI</h2>
+<figure class="section-drawing">
+<img src="../assets/drawings/config_ai_local_home_workshop.png" alt="A home workshop computer serving local models while an unplugged cloud remains outside">
+<figcaption>Local AI works through a runtime running on your own computer.</figcaption>
+</figure>
 
-      <h3>API key</h3>
-      <p>Accepts the selected gateway's credential. The field hides typed characters and is described as session-only.</p>
+<p>Config Local AI sets one global local endpoint and one global local model for KANDA workflows that use Local AI.</p>
+<h3>What KANDA expects</h3>
+<p>KANDA expects an OpenAI-compatible local API. The common Ollama-compatible address is:</p>
+<p><code>http&#58;//127.0.0.1:11434/v1</code></p>
+<p>KANDA does not install the runtime, start it, or download a model. Those steps happen in the local runtime itself.</p>
+<h3>First-time local setup</h3>
+<ol>
+<li>Install and start your chosen OpenAI-compatible local runtime.</li>
+<li>Download or make available at least one chat model in that runtime.</li>
+<li>Open <strong>Config AI &gt; Config Local AI</strong>.</li>
+<li>Leave the Base URL on <code>http&#58;//127.0.0.1:11434/v1</code> when using the normal local Ollama address.</li>
+<li>Click <strong>Refresh Local AI Models</strong>.</li>
+<li>Select a model in <strong>Global Local AI model</strong>.</li>
+<li>Read the Status line and confirm it shows the endpoint and selected model.</li>
+<li>Open <strong>Local AI</strong> and send a small test question.</li>
+</ol>
+<h3>OpenAI-compatible base URL</h3>
+<p>This is the address where KANDA contacts the local runtime.</p>
+<ul>
+<li><code>127.0.0.1</code> means this computer.</li>
+<li><code>11434</code> is the common Ollama local port.</li>
+<li><code>/v1</code> selects the OpenAI-compatible API shape expected by KANDA.</li>
+</ul>
+<p>KANDA normalizes common variations, including a full <code>/chat/completions</code> path, back to a stable <code>/v1</code> root.</p>
+<h3>Refresh Local AI Models</h3>
+<p>This asks the local runtime which models are currently available. The runtime must be running before this button can succeed.</p>
+<h3>Global Local AI model</h3>
+<p>Select the model you want all Local AI workflows to use. The field is editable so an advanced user can enter a model identifier that the runtime supports, even if it was not returned in the current catalog.</p>
+<h3>Local privacy expectations</h3>
+<p>A local model can keep inference on your computer, but privacy still depends on the runtime, model, extensions, cloud-model features, logging, and network configuration you chose. “Local AI” does not automatically prove that every component is offline.</p>
+<h2>How to use the configured model</h2>
+<figure class="section-drawing">
+<img src="../assets/drawings/config_ai_use_and_safety_bridge.png" alt="A bridge from global AI settings to a selected project conversation with a human approval gate">
+<figcaption>Config AI chooses the connection; each workflow still chooses the Project and asks for approval when required.</figcaption>
+</figure>
 
-      <h3>Load Environment Key</h3>
-      <p>Looks for the expected key in the process or Windows User environment.</p>
+<h3>Use a gateway or direct provider in Web AI</h3>
+<ol>
+<li>Configure the provider in Config AI.</li>
+<li>Open <strong>Web AI</strong>.</li>
+<li>Open <strong>Web Advisory Config</strong>.</li>
+<li>Set <strong>Access</strong> to Gateway or Direct API.</li>
+<li>Select the Provider.</li>
+<li>Select the Python model.</li>
+<li>Confirm the Active Project and context information.</li>
+<li>Open <strong>Project Conversation</strong>.</li>
+<li>Paste or type your question.</li>
+<li>Click Send and review the approval dialog when shown.</li>
+</ol>
+<p>Config AI chooses the connection and model. Web AI chooses the Active Project and builds the exact Project-aware request.</p>
+<h3>Use Local AI</h3>
+<ol>
+<li>Configure the local Base URL and model.</li>
+<li>Open <strong>Local AI</strong>.</li>
+<li>Confirm the correct Active Project when the workflow provides a Project selector.</li>
+<li>Ask a small test question.</li>
+<li>Read the evidence and status before using the answer for important work.</li>
+</ol>
+<h2>What each status means</h2>
+<table>
+<thead>
+<tr>
+  <th>Status or symptom</th>
+  <th>Plain-English meaning</th>
+  <th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>API key not configured</td>
+  <td>KANDA has no usable key for that provider</td>
+  <td>Paste the correct key or load the correct environment variable</td>
+</tr>
+<tr>
+  <td>Environment variable not found</td>
+  <td>The selected variable name is missing from the process and Windows User environment</td>
+  <td>Check the exact variable name; reopen KANDA after creating it</td>
+</tr>
+<tr>
+  <td>Not loaded</td>
+  <td>No model catalog has been loaded for the active provider</td>
+  <td>Configure the key if required, then refresh</td>
+</tr>
+<tr>
+  <td>Loading...</td>
+  <td>KANDA is contacting the provider or runtime</td>
+  <td>Wait; do not start several refreshes</td>
+</tr>
+<tr>
+  <td>FAILED</td>
+  <td>The provider/runtime request failed</td>
+  <td>Read the final status line for the exact reason</td>
+</tr>
+<tr>
+  <td>No approved models</td>
+  <td>The catalog loaded, but nothing matched KANDA's strict free Python-coding rules</td>
+  <td>Try another provider or wait for catalog availability to change</td>
+</tr>
+<tr>
+  <td>Credential ready, model missing</td>
+  <td>The key works, but no model is selected</td>
+  <td>Refresh and select a model</td>
+</tr>
+<tr>
+  <td>Free access guard unchecked</td>
+  <td>KANDA is intentionally blocking direct-provider chat readiness</td>
+  <td>Confirm the account's actual free setting before checking the guard</td>
+</tr>
+<tr>
+  <td>401 / unauthenticated</td>
+  <td>The key is missing, incorrect, expired, or for the wrong service</td>
+  <td>Create or paste the correct key</td>
+</tr>
+<tr>
+  <td>403 / permission denied</td>
+  <td>The account, project, region, or key lacks permission</td>
+  <td>Check the provider console and official setup</td>
+</tr>
+<tr>
+  <td>429 / rate limit / quota exhausted</td>
+  <td>The request arrived, but the current free allowance is exhausted</td>
+  <td>Wait for reset or select another configured provider/model</td>
+</tr>
+<tr>
+  <td>Local connection refused</td>
+  <td>Nothing is listening at the local Base URL</td>
+  <td>Start the local runtime and verify its port</td>
+</tr>
+<tr>
+  <td>Local model not listed</td>
+  <td>The runtime did not report that model</td>
+  <td>Download/activate the model, refresh, or enter its exact supported ID</td>
+</tr>
+</tbody>
+</table>
+<h2>Common mistakes</h2>
+<ul>
+<li>Pasting a Gemini key while Mistral is the displayed provider.</li>
+<li>Clicking Refresh before the required key is loaded.</li>
+<li>Assuming the Free access guard changes provider billing.</li>
+<li>Editing the Base URL without an official reason.</li>
+<li>Assuming a free model has unlimited requests.</li>
+<li>Assuming free means private.</li>
+<li>Expecting KANDA to install or start Ollama.</li>
+<li>Selecting a provider in Config AI but not selecting it again in Web Advisory Config.</li>
+<li>Reading a 429 quota error as a broken Send button.</li>
+<li>Sending secrets or sensitive Project content before reading the Privacy row.</li>
+</ul>
+<h2>Good habits</h2>
+<ol>
+<li>Test with a short, non-sensitive question first.</li>
+<li>Keep only the provider account mode you actually intend to use.</li>
+<li>Use environment variables for repeated use and session paste for quick testing.</li>
+<li>Never store keys in Project source.</li>
+<li>Read the provider's current rate-limit and data-policy pages.</li>
+<li>Keep a second configured provider for small tasks when the first free quota is exhausted.</li>
+<li>Use ChatGPT or the primary approved workflow for important Project changes; treat secondary free providers as advisory unless their result is independently verified.</li>
+<li>Confirm the Active Project before every Project-aware request.</li>
+</ol>
+<h2>Tool-versus-Project boundary</h2>
+<p>Config AI owns global connection settings such as provider, endpoint, key presence, model selection, and free-access confirmation.</p>
+<p>It does not own:</p>
+<ul>
+<li>Active Project identity;</li>
+<li>Project Root or Project Support Root;</li>
+<li>source snapshots;</li>
+<li>the exact evidence included in a request;</li>
+<li>approval to send sensitive context;</li>
+<li>permission to write Project files;</li>
+<li>Error Memory or Freeze Memory authority.</li>
+</ul>
+<p>Each workflow resolves its own Project and request identity immediately before the call. This separation prevents a global AI setting from silently becoming Project authority.</p>
+<h2>Further reading</h2>
+<p>Local code remains the primary source of truth for what KANDA displays and enforces. For account creation, keys, quotas, and current provider policies, consult the current official documentation:</p>
+<ul>
+<li>OpenRouter: API Keys, Models, Free Models, and FAQ.</li>
+<li>Kilo AI Gateway: Quickstart, Authentication, Models and Providers, and Usage/Billing.</li>
+<li>Google AI for Developers: Gemini API keys, Pricing, Rate limits, and Troubleshooting.</li>
+<li>Mistral Docs: Activate Studio and generate an API key, Free mode, and Usage and limits.</li>
+<li>Alibaba Cloud Model Studio: Get an API key, OpenAI-compatible API, New-user free quota, and Free Quota Only.</li>
+<li>GroqDocs: Quickstart, Models, Rate Limits, Billing FAQs, and Spend Limits.</li>
+<li>Ollama Docs: API Introduction, OpenAI compatibility, and Authentication.</li>
+</ul>
+<h2>Validation rule</h2>
+<p>The Config AI help page must remain local-only, preserve the standard blue-orange book layout, use the same hand-drawn daily-life illustration language as the approved help files, describe only real controls, and never change provider runtime behavior or imply that configuration grants Project write authority.</p>
 
-      <h3>Credential</h3>
-      <p>Shows the credential source or availability.</p>
-
-      <h3>Model</h3>
-      <p>Shows the visible Web AI models and makes the selected entry the global Web AI model.</p>
-
-      <h3>Refresh Models</h3>
-      <p>Requests the current model catalog from the selected gateway.</p>
-
-      <h3>Free models only</h3>
-      <p>Filters the visible catalog. Free does not mean private, better, safer, or suitable for every task.</p>
-
-      <h3>Catalog status</h3>
-      <p>Reports loading, availability, or errors.</p>
-
-      <h3>Capabilities</h3>
-      <p>Summarizes structured-output support, context window, and cost label.</p>
-
-      <h3>Privacy</h3>
-      <p>Shows the gateway profile's privacy summary.</p>
-
-      <div class="callout callout-warning">
-        <div class="callout-icon">!</div>
-        <div><strong>API keys remain in memory only. Free does not mean private. Every workflow still requires approval for its exact Project payload.</strong></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Web AI First-Time Setup</h2>
-      <ol>
-        <li>Select the Gateway.</li>
-        <li>Enter the session-only key or load the environment key.</li>
-        <li>Confirm Credential status.</li>
-        <li>Set the Free models only filter deliberately.</li>
-        <li>Click Refresh Models.</li>
-        <li>Wait for Catalog status.</li>
-        <li>Select one model.</li>
-        <li>Read Capabilities.</li>
-        <li>Read Privacy.</li>
-        <li>Return to the Web AI workflow.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>Config Local AI</h2>
-      <figure class="section-drawing">
-        <img src="../assets/drawings/config_ai_local_configuration.png" alt="A team reviews a Local AI configuration board with a loopback base URL, local server, local model list, refresh control, and privacy checks">
-        <figcaption>Point KANDA to the real local model service, refresh the catalog, and select one global Local AI model.</figcaption>
-      </figure>
-
-      <h3>OpenAI-compatible base URL</h3>
-      <p>The address KANDA uses to contact the local model service. The visible placeholder is <code>http://127.0.0.1:11434/v1</code>, but your actual service may use another address.</p>
-
-      <h3>Global Local AI model</h3>
-      <p>Shows the current model and models returned by the local service.</p>
-
-      <h3>Refresh Local AI Models</h3>
-      <p>Requests the available model list from the configured local service.</p>
-
-      <h3>Status</h3>
-      <p>Shows the catalog state and active Local AI configuration summary.</p>
-
-      <h3>Global Tool ownership</h3>
-      <p>This setting is shared across KANDA workflows and stores no active Project identity, Project Root, Project Support path, source snapshot, or write authority.</p>
-    </section>
-
-    <section>
-      <h2>Local AI First-Time Setup</h2>
-      <ol>
-        <li>Start the local model service outside KANDA.</li>
-        <li>Confirm its OpenAI-compatible base URL.</li>
-        <li>Enter the base URL.</li>
-        <li>Click Refresh Local AI Models.</li>
-        <li>Read Status.</li>
-        <li>Select the global Local AI model.</li>
-        <li>Return to the Local AI workflow.</li>
-        <li>Confirm the workflow's active project before asking.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>Tool-versus-Project Boundary</h2>
-      <figure class="section-drawing">
-        <img src="../assets/drawings/config_ai_tool_project_boundary.png" alt="A central Config AI board receives preferences and safety rules, then supplies separate Web AI and Local AI workspaces while protected project decisions remain outside the global settings">
-        <figcaption>Config AI stores global connection and model rules. Each workflow still owns its active project and exact request.</figcaption>
-      </figure>
-      <p><strong>Tool state</strong> includes gateway, session credential, Web AI model, free-only filter, local base URL, Local AI model, and catalog state.</p>
-      <p><strong>Project state</strong> includes the active Project Root, files, source snapshot, task request, exact payload, write authority, and validation responsibility.</p>
-      <p><strong>In plain English:</strong> Config AI chooses the telephone service and the person answering the call. The workflow decides which project is being discussed and what information is allowed into that call.</p>
-    </section>
-
-    <section>
-      <h2>What Is Shared Globally</h2>
-      <p>Changing Config AI may affect Local AI chat, Web AI chat, architecture assistance, code or docstring assistance, Error Memory assistance, Freeze assistance, and other tabs using Config AI.</p>
-      <p>Do not change the global model during important work without understanding that other tabs may use the new selection.</p>
-    </section>
-
-    <section>
-      <h2>Session Keys and Environment Keys</h2>
-      <p>A session-only key is retained for the running application session.</p>
-      <p>An environment key is stored outside the project and loaded by the expected variable name.</p>
-      <p>Never place a key in source code, Git, patch ZIPs, validation evidence, screenshots, reports, or unrelated provider requests.</p>
-    </section>
-
-    <section>
-      <h2>Choosing a Model</h2>
-      <p>Consider web access, structured output, context window, cost, speed, privacy, availability, code reasoning, and response quality.</p>
-      <p>The most expensive model is not automatically best. A free model is not automatically safest. A large context window does not guarantee correct use of all context.</p>
-    </section>
-
-    <section>
-      <h2>What Success Looks Like</h2>
-      <h3>Web AI</h3>
-      <ul>
-        <li>Correct gateway selected</li>
-        <li>Credential recognized</li>
-        <li>Catalog loaded</li>
-        <li>Model selected</li>
-        <li>Capabilities visible</li>
-        <li>Privacy summary read</li>
-      </ul>
-      <h3>Local AI</h3>
-      <ul>
-        <li>Local service running</li>
-        <li>Correct base URL entered</li>
-        <li>Catalog refreshed</li>
-        <li>Model selected</li>
-        <li>Status shows active configuration</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Common Mistakes</h2>
-      <ul>
-        <li>Entering a project path in Config AI</li>
-        <li>Assuming the Local AI placeholder URL is always correct</li>
-        <li>Refreshing Web AI models without a credential</li>
-        <li>Assuming free means private</li>
-        <li>Selecting a model without reading capabilities</li>
-        <li>Changing the global model during another workflow</li>
-        <li>Treating model configuration as source-write authority</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>If Something Goes Wrong</h2>
-      <h3>Environment key not found</h3>
-      <p>Confirm the expected variable name and restart KANDA after environment changes when necessary.</p>
-      <h3>Web catalog does not load</h3>
-      <p>Check gateway, credential, internet connection, provider availability, and status.</p>
-      <h3>No Web AI model is visible</h3>
-      <p>Adjust Free models only and refresh again.</p>
-      <h3>Local model refresh fails</h3>
-      <p>Confirm the service is running, the base URL is correct, and the service exposes an OpenAI-compatible catalog.</p>
-      <h3>A workflow reports no model configured</h3>
-      <p>Confirm the global selection, then reopen or refresh the workflow.</p>
-    </section>
-
-    <section>
-      <h2>First-Time Checklist</h2>
-      <h3>Config Web AI</h3>
-      <ul>
-        <li>Correct gateway</li>
-        <li>Correct credential</li>
-        <li>Credential status checked</li>
-        <li>Catalog refreshed</li>
-        <li>Filter understood</li>
-        <li>Model selected</li>
-        <li>Capabilities and Privacy read</li>
-      </ul>
-      <h3>Config Local AI</h3>
-      <ul>
-        <li>Local service installed and running</li>
-        <li>Correct OpenAI-compatible base URL</li>
-        <li>Local models refreshed</li>
-        <li>Model selected</li>
-        <li>Status checked</li>
-      </ul>
-      <h3>Before returning to a workflow</h3>
-      <ul>
-        <li>Correct AI type chosen</li>
-        <li>Global model confirmed</li>
-        <li>Active project will be selected in the workflow</li>
-        <li>Exact payload will be reviewed there</li>
-        <li>No source-writing authority assumed</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Important Safety Boundary</h2>
-      <p>Config AI chooses global connection and model settings. It does not choose the active project, approve the exact payload, authorize source modification, validate a patch, or freeze behavior.</p>
-      <p>Each workflow must still resolve the active project, build its own request identity, decide appropriate context, preserve human confirmation, and validate resulting changes separately.</p>
-    </section>
-
-    <section>
-      <h2>Final Rule</h2>
-      <p><strong>Configure the connection and model globally, but select the project, review the payload, and authorize any source change only inside the specific governed workflow that needs it.</strong></p>
-    </section>
-
-    <footer class="running-footer">
-      <span>Config AI</span>
-      <span>First-Time User Help</span>
-    </footer>
-  </article>
+<footer class="running-footer">KANDA Reasoner desktop help - Config AI - local-only rendered HTML</footer>
+</article>
 </body>
 </html>

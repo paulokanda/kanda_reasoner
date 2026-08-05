@@ -16,6 +16,7 @@ from kanda_reasoner_app.templates.green_sonar_monitor import (
 )
 
 from .complete_json_artifacts import inspect_complete_json_artifacts
+from .complete_json_zip_cache import resolve_complete_json_evidence
 
 __all__: list[str] = []
 
@@ -51,6 +52,15 @@ class ProjectStructureJsonControlsMixin:
             return
         status = inspect_complete_json_artifacts(self._project_root)
         running = self._complete_json_process is not None
+        legacy_path = None
+        legacy_source = ""
+        if not status.get("valid"):
+            try:
+                legacy_path, legacy_source, _cache_status = resolve_complete_json_evidence(
+                    self._project_root
+                )
+            except (OSError, ValueError, TypeError):
+                legacy_path = None
         if status.get("valid"):
             self.create_project_json_button.setStyleSheet(
                 "color: #2fbf71; font-weight: 700;"
@@ -59,12 +69,23 @@ class ProjectStructureJsonControlsMixin:
             self.json_artifact_status_label.setText(
                 f"JSON ready ({part_count} ZIP part{'s' if part_count != 1 else ''})"
             )
+        elif legacy_path is not None:
+            self.create_project_json_button.setStyleSheet(
+                "color: #2fbf71; font-weight: 700;"
+            )
+            self.json_artifact_status_label.setText(
+                "JSON ready from Show Project to AI: "
+                + str(legacy_path)
+                + (" [" + legacy_source + "]" if legacy_source else "")
+            )
         else:
             self.create_project_json_button.setStyleSheet(
                 "color: #d84a4a; font-weight: 700;"
             )
             reason = str(status.get("reason") or "missing")
-            self.json_artifact_status_label.setText("JSON missing: " + reason)
+            self.json_artifact_status_label.setText(
+                "JSON missing: " + reason + ". Run Show Project to AI or click Create Project JSON."
+            )
         self.create_project_json_button.setEnabled(not running)
         self.update_project_json_button.setEnabled(
             not running

@@ -4,6 +4,14 @@ from __future__ import annotations
 
 from typing import Any
 
+__all__ = [
+    "PNG_REUSE_PROMPT",
+    "install_controls",
+    "update_cancel_enabled",
+    "cancel_run",
+    "consume_cancel_on_finish",
+]
+
 PNG_REUSE_PROMPT = (
     "Inspect and preserve the canonical Show Project to AI PNG reuse behavior. "
     "When the selected Project's current PNG content signature - path, byte size, "

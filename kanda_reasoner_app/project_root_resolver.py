@@ -14,6 +14,10 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+from kanda_reasoner_app._project_support_path_contracts import (
+    _canonical_transient_garbage_root,
+)
+
 __all__ = [
     "CANONICAL_PROJECT_ROOT_ENV",
     "PROJECT_ROOT_ENV_NAMES",
@@ -22,6 +26,7 @@ __all__ = [
     "is_reasoner_project_root",
     "normalize_project_root_text",
     "resolve_active_project_root",
+    "resolve_selected_project_root",
     "resolve_app_runtime_root",
 ]
 
@@ -164,6 +169,38 @@ def normalize_project_root_text(text: str | Path | None) -> Path | None:
     return candidate
 
 
+
+def resolve_selected_project_root(
+    project_root: str | Path | None = None,
+    *,
+    persisted_root: str | Path | None = None,
+) -> Path | None:
+    """Resolve only explicitly configured Project authority.
+
+    Unlike :func:`resolve_active_project_root`, this strict selector never falls
+    back to the Tool source tree, runtime folder, or current working directory.
+    It is the required entry point for mutation-capable Tool shells.
+
+    Priority:
+    1. Explicit project_root argument.
+    2. Canonical or legacy environment variable.
+    3. Existing persisted Project root.
+    4. No active Project.
+    """
+    explicit = normalize_project_root_text(project_root)
+    if explicit is not None and explicit.exists() and explicit.is_dir():
+        return explicit
+
+    env_root = _env_project_root()
+    if env_root is not None and env_root.exists() and env_root.is_dir():
+        return env_root
+
+    persisted = normalize_project_root_text(persisted_root)
+    if persisted is not None and persisted.exists() and persisted.is_dir():
+        return persisted
+
+    return None
+
 def resolve_active_project_root(
     project_root: str | Path | None = None,
     *,
@@ -203,6 +240,11 @@ def resolve_active_project_root(
 
 
 def default_smoke_output_json_path(project_root: str | Path | None = None) -> Path:
-    """Return the default smoke-test output path for an active project root."""
+    """Return a transient, non-source path for static-context smoke output."""
     root = resolve_active_project_root(project_root)
-    return root / _LEGACY_REASONER_PACKAGE_NAME / "outputs" / "real_project_static_context_smoke.json"
+    transient_root = _canonical_transient_garbage_root(root)
+    return (
+        transient_root
+        / "static_context_smoke"
+        / "real_project_static_context_smoke.json"
+    )

@@ -21,7 +21,9 @@ __all__ = [
     "PROJECT_SCOPED_TAB_IDS",
     "ProjectSwitchBlock",
     "apply_project_root_to_widget",
+    "project_eject_block",
     "project_switch_block",
+    "request_project_scope_settlement",
     "reset_project_scoped_widget",
 ]
 
@@ -58,6 +60,13 @@ def project_switch_block(
     """Return a fail-closed block for unsafe active Project work."""
     if tab_id not in PROJECT_SCOPED_TAB_IDS:
         return None
+
+    public_blocker = getattr(widget, "project_scope_switch_block_reason", None)
+    if callable(public_blocker):
+        with contextlib.suppress(Exception):
+            reason = str(public_blocker() or "").strip()
+            if reason:
+                return ProjectSwitchBlock(tab_id, reason)
 
     if tab_id == "project_web_ai":
         session = getattr(widget, "_project_session", None)
@@ -130,6 +139,45 @@ def project_switch_block(
             return ProjectSwitchBlock(tab_id, "collector process is still running")
 
     return None
+
+
+def project_eject_block(
+    tab_id: str,
+    widget: QWidget,
+) -> ProjectSwitchBlock | None:
+    """Return a block until one Project-scoped widget is fully settled."""
+    block = project_switch_block(tab_id, widget)
+    if block is not None:
+        return block
+
+    if tab_id == "project_web_ai":
+        session = getattr(widget, "_project_session", None)
+        waiting = bool(getattr(session, "waiting_for_worker", False))
+        thread_active = getattr(widget, "_chat_thread", None) is not None
+        if waiting or thread_active:
+            return ProjectSwitchBlock(
+                tab_id,
+                "Web AI request cancellation must settle before Project eject",
+            )
+
+    return None
+
+
+def request_project_scope_settlement(
+    tab_id: str,
+    widget: QWidget,
+) -> ProjectSwitchBlock | None:
+    """Request cooperative settlement through a public widget facade."""
+    requester = getattr(widget, "request_project_scope_settlement", None)
+    if callable(requester):
+        with contextlib.suppress(Exception):
+            requester()
+    elif tab_id == "project_web_ai":
+        stopper = getattr(widget, "stop_request", None)
+        if callable(stopper):
+            with contextlib.suppress(Exception):
+                stopper()
+    return project_eject_block(tab_id, widget)
 
 
 def apply_project_root_to_widget(widget: QWidget, project_root: Path) -> None:

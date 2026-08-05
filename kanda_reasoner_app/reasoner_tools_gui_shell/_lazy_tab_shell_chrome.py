@@ -20,6 +20,12 @@ _ENGINEERING_SAFETY_GUI_SOURCE = "reasoner_tools_gui_engineering_safety_panel.py
 _FREEZE_AFTER_UPDATE_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/freeze_after_update_gui/freeze_after_update_tab.py"
 _DAILY_REFACTOR_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/daily_rfctr_report/daily_refactor_report.py"
 _PROJECT_QA_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/ai_reasoner_main_window.py"
+_CONFIG_AI_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/config_ai_tab.py"
+_WEB_AI_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/project_web_ai_tab.py"
+_ACTIVE_PROJECT_BUTTON_ONLY_SOURCES = {
+    _CONFIG_AI_GUI_SOURCE,
+    _WEB_AI_GUI_SOURCE,
+}
 _HEADER_TEMPLATE_ONLY_SOURCES = {
     _ARCHITECTURE_GUI_SOURCE,
     _WORKFLOWS_GUI_SOURCE,

@@ -8,6 +8,10 @@ import json
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
+from kanda_reasoner_app.freeze_after_update.ownership import (
+    project_freeze_memory_owner,
+)
+
 __all__ = [
     "FreezeActionStateController",
     "apply_freeze_form_inputs",
@@ -141,10 +145,12 @@ def build_freeze_confirmation_binding(
 ) -> dict[str, str]:
     """Bind confirmation to one selected project and one exact form snapshot."""
 
+    owner = project_freeze_memory_owner(project_root)
     return {
         "schema_version": "1.0",
         "selected_project_root": _resolved_root_text(project_root),
         "form_sha256": _inputs_digest(inputs),
+        **owner.canonical_fields(),
     }
 
 
@@ -165,6 +171,10 @@ def freeze_confirmation_binding_matches(
         return False, "The selected project changed after Preview."
     if str(binding.get("form_sha256") or "") != _inputs_digest(inputs):
         return False, "The freeze form changed after Preview."
+    expected_owner = project_freeze_memory_owner(project_root).canonical_fields()
+    for key, expected in expected_owner.items():
+        if str(binding.get(key) or "") != expected:
+            return False, "The Freeze owner changed after Preview: " + key
     return True, ""
 
 

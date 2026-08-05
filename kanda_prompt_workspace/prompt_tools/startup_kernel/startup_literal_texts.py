@@ -246,6 +246,6 @@ Do not solve any project task yet.
 
 If any required file above is missing or unreadable, mark Startup status as INCOMPLETE and request the missing files.
 
-If all startup files are complete, do not answer the project task yet. Wait for all files from the second_prompt_files folder. After the second upload group is read, return PROJECT READY CHECK and end with Next action: WAIT_FOR_TASK.
+If all startup files are complete, do not answer the project task yet. Wait for all files from the second_prompt_files folder. After the second upload group is read, return PROJECT READY CHECK and end with Next action:, then PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>, then WAIT_FOR_TASK. Derive the display name from the selected active Project, not the KANDA Tool; replace underscores with spaces and convert it to uppercase.
 """
 

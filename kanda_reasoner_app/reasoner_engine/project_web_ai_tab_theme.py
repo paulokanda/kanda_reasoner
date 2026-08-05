@@ -13,6 +13,40 @@ QWidget#projectWebAITab {
     font-family: "Segoe UI Variable Text", "Segoe UI", sans-serif;
     font-size: 13px;
 }
+
+QTabWidget#projectWebAISubtabs::pane {
+    border: 0;
+    background: #0d0d0d;
+}
+QTabWidget#projectWebAISubtabs QTabBar::tab {
+    background: #15181e;
+    color: #aeb6c2;
+    border: 0;
+    border-right: 1px solid #252932;
+    border-bottom: 1px solid #252932;
+    padding: 11px 22px;
+    min-width: 170px;
+    font-weight: 600;
+}
+QTabWidget#projectWebAISubtabs QTabBar::tab:selected {
+    background: #1b211f;
+    color: #f4f8f6;
+    border-bottom: 2px solid #10a37f;
+}
+QTabWidget#projectWebAISubtabs QTabBar::tab:hover:!selected {
+    background: #1c2027;
+    color: #e6ebf0;
+}
+QWidget#projectWebAIConversationPage,
+QWidget#projectWebAIAdvisoryConfigPage,
+QWidget#projectWebAIAdvisoryContent {
+    background: #0d0d0d;
+}
+QSplitter#projectWebAIAdvisorySplitter::handle {
+    background: #252932;
+    width: 1px;
+}
+
 QFrame#projectWebAISidebar {
     background: #111318;
     border-right: 1px solid #252932;

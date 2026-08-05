@@ -6,7 +6,13 @@ import os
 import tempfile
 from pathlib import Path
 
+from portable.constants import FINAL_ZIP_NAME
 from portable.errors import PortableBuildError
+from portable.models import RegistryBoundary
+from portable.registry_boundary import (
+    assert_registry_unchanged,
+    validate_publication_directory,
+)
 
 
 def _windows_folder_picker(initial_directory: Path) -> Path:
@@ -50,8 +56,9 @@ def _windows_folder_picker(initial_directory: Path) -> Path:
 
 
 def _verify_writable(directory: Path) -> None:
-    """Fail before building when the selected destination is not writable."""
+    """Probe writability only after registry-boundary validation passes."""
 
+    probe: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(
             mode="wb",
@@ -63,6 +70,8 @@ def _verify_writable(directory: Path) -> None:
             handle.write(b"KANDA_PORTABLE_DESTINATION_PROBE")
         probe.unlink()
     except OSError as exc:
+        if probe is not None:
+            probe.unlink(missing_ok=True)
         raise PortableBuildError(
             f"Selected Portable destination is not writable: {directory}"
         ) from exc
@@ -71,8 +80,9 @@ def _verify_writable(directory: Path) -> None:
 def select_output_directory(
     project_root: Path,
     requested_directory: Path | None,
+    boundary: RegistryBoundary,
 ) -> Path:
-    """Select and validate the final Portable destination folder."""
+    """Select and boundary-validate the final destination before probing it."""
 
     project = project_root.resolve()
     default_directory = Path(project.anchor).resolve()
@@ -91,7 +101,14 @@ def select_output_directory(
             "The native Portable destination picker is supported on Windows."
         )
 
-    _verify_writable(selected)
-    print(f"PORTABLE DESTINATION FOLDER SELECTED: {selected}")
+    validated = validate_publication_directory(
+        selected,
+        boundary,
+        final_zip_name=FINAL_ZIP_NAME,
+    )
+    print("PORTABLE DESTINATION REGISTRY BOUNDARY: PASS")
+    assert_registry_unchanged(boundary)
+    _verify_writable(validated)
+    print(f"PORTABLE DESTINATION FOLDER SELECTED: {validated}")
     print("PORTABLE DESTINATION FOLDER WRITABLE: PASS")
-    return selected
+    return validated

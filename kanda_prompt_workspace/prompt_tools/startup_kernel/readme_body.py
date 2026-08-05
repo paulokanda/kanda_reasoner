@@ -7,6 +7,7 @@ from typing import Any
 from startup_kernel.constants import (
     MANIFEST_FILENAME,
     PROJECT_READY_CHECK_TITLE,
+    PROJECT_IN_USE_TEMPLATE,
     PROMPT_LIBRARY_ZIP_NAME,
     SECOND_UPLOAD_READY_ACTION,
 )
@@ -59,7 +60,7 @@ Use `--sync --yes` when you intentionally want to force regeneration even if the
 4. The AI reads `{paste_after_uploading_name}` before opening ZIP contents, then opens this startup ZIP.
 5. Wait for `STARTUP PACK LOAD CHECK`.
 6. After the first load check completes, upload the project handoff files from `second_prompt_files`.
-7. Wait for `{PROJECT_READY_CHECK_TITLE}` to end with `Next action: {SECOND_UPLOAD_READY_ACTION}`.
+7. Wait for `{PROJECT_READY_CHECK_TITLE}` to end with `Next action:`, `{PROJECT_IN_USE_TEMPLATE}`, and `{SECOND_UPLOAD_READY_ACTION}` in that order.
 8. Only then provide the project task.
 
 ## Companion prompt library ZIP

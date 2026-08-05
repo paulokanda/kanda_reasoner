@@ -69,7 +69,18 @@ class PromptLibraryTab(QWidget):
         )
         button_row.addWidget(self.prompt_library_help_button)
         self._prompt_library_help_dialog = None
+
         button_row.addStretch(1)
+
+        self.kanda_phrasebook_button = QPushButton("Kanda Phrasebook")
+        self.kanda_phrasebook_button.setToolTip(
+            "Open the explained KANDA mini-prompt phrasebook."
+        )
+        self.kanda_phrasebook_button.clicked.connect(
+            self._open_kanda_phrasebook
+        )
+        button_row.addWidget(self.kanda_phrasebook_button)
+        self._kanda_phrasebook_dialog = None
         layout.addLayout(button_row)
 
         self.dashboard = PromptGroupDashboard()
@@ -85,6 +96,25 @@ class PromptLibraryTab(QWidget):
 
     def _open_prompt_library_help(self) -> None:
         """Open the local Prompt Library help document."""
+        self._prompt_library_help_dialog = self._open_help_catalog(
+            "prompt_library.json",
+            window_title="Help - Prompt Library",
+        )
+
+    def _open_kanda_phrasebook(self) -> None:
+        """Open the explained KANDA mini-prompt phrasebook."""
+        self._kanda_phrasebook_dialog = self._open_help_catalog(
+            "kanda_phrasebook.json",
+            window_title="Help - Kanda Phrasebook",
+        )
+
+    def _open_help_catalog(
+        self,
+        catalog_name: str,
+        *,
+        window_title: str,
+    ):
+        """Open one registered rich help page with a text fallback."""
         try:
             from ..reasoner_tools_gui_shell.help_docs.renderer import (
                 open_help_document_for_legacy_catalog,
@@ -92,15 +122,14 @@ class PromptLibraryTab(QWidget):
 
             rich_dialog = open_help_document_for_legacy_catalog(
                 self,
-                "prompt_library.json",
-                window_title="Help - Prompt Library",
+                catalog_name,
+                window_title=window_title,
             )
         except Exception:
             rich_dialog = None
 
         if rich_dialog is not None:
-            self._prompt_library_help_dialog = rich_dialog
-            return
+            return rich_dialog
 
         try:
             from ..reasoner_tools_gui_shell.gui_support import (
@@ -108,18 +137,18 @@ class PromptLibraryTab(QWidget):
                 _help_catalog_path,
             )
 
-            catalog_path = _help_catalog_path("prompt_library.json")
+            catalog_path = _help_catalog_path(catalog_name)
             if not catalog_path.is_file():
                 QMessageBox.warning(
                     self,
                     "Help catalog not found",
-                    "Expected Prompt Library help was not found:\n"
+                    "Expected help catalog was not found:\n"
                     f"{catalog_path}",
                 )
-                return
+                return None
 
             dialog = QMainWindow(self)
-            dialog.setWindowTitle("Help - Prompt Library")
+            dialog.setWindowTitle(window_title)
             dialog.resize(1080, 800)
 
             editor = QTextEdit(dialog)
@@ -127,14 +156,15 @@ class PromptLibraryTab(QWidget):
             editor.setPlainText(_format_help_catalog_text(catalog_path))
             dialog.setCentralWidget(editor)
             dialog.show()
-            self._prompt_library_help_dialog = dialog
+            return dialog
         except Exception as exc:
             QMessageBox.warning(
                 self,
                 "Help could not be opened",
-                "Failed to open Prompt Library help.\n\n"
+                "Failed to open the requested help page.\n\n"
                 f"Details: {exc}",
             )
+            return None
 
     def reload_library(self) -> None:
         """Reload current groups and prompts from the canonical workspace."""

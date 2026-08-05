@@ -17,12 +17,13 @@ from .intake_normalization import (
     _normalize_regression_check_for_error_memory_json,
 )
 from .models import active_ready, build_lesson
+from .backend import ErrorMemoryBackend
 from .store import save_lesson
 
 
 def build_lesson_from_ai_form(
     *,
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     form_inputs: Mapping[str, Any],
     fallback_raw_error_text: str = "",
     fallback_operation_phase: str = "unknown",
@@ -73,8 +74,6 @@ def build_lesson_from_ai_form(
         lesson["redaction"] = normalized_redaction
     if _as_text(form_inputs.get("updated_at_utc")):
         lesson["updated_at_utc"] = _as_text(form_inputs.get("updated_at_utc"))
-    if _as_text(form_inputs.get("project_slug")):
-        lesson["project_slug"] = _as_text(form_inputs.get("project_slug"))
     if _coerce_status_for_ai_form(form_inputs, _as_text(form_inputs.get("status")) or "active") == "active" and active_ready(lesson):
         lesson["status"] = "active"
     _downgrade_non_active_ready_lesson(lesson)
@@ -83,7 +82,7 @@ def build_lesson_from_ai_form(
 
 def save_ai_form_as_lesson(
     *,
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     form_inputs: Mapping[str, Any],
     fallback_raw_error_text: str = "",
     fallback_operation_phase: str = "unknown",

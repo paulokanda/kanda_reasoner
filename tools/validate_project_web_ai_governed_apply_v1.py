@@ -11,22 +11,24 @@ import sys
 import tempfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-
-
 def require(condition: bool, message: str) -> None:
     """Raise one deterministic assertion when a gate fails."""
     if not condition:
         raise AssertionError(message)
-
-
 def _context(root: Path, *, generated_at: str) -> object:
-    """Build one current synthetic Project context and boundary identity."""
-    from kanda_reasoner_app.project_support_boundary import (
-        resolve_project_tool_boundary_identity,
+    """Build one current registry-backed synthetic Project context."""
+    from kanda_reasoner_app.project_selection_registry import (
+        ProjectSelectionRegistry,
     )
     from kanda_reasoner_app.web_ai_provider_contracts import ContextSnapshot
-
-    boundary = resolve_project_tool_boundary_identity(root)
+    registry_path = root.parent / "tool_support" / "projects.json"
+    from kanda_reasoner_app import project_operation_authority as authority_module
+    registry_type = ProjectSelectionRegistry
+    authority_module.ProjectSelectionRegistry = lambda **kwargs: registry_type(
+        registry_path=registry_path
+    )
+    registry = registry_type(registry_path=registry_path)
+    boundary = registry.register_explicit_root(root)
     boundary.active_project_support_root.mkdir(parents=True, exist_ok=True)
     boundary.active_project_daily_work_root.mkdir(parents=True, exist_ok=True)
     return ContextSnapshot(
@@ -137,7 +139,6 @@ def _authorization(context: object, session: object, operation: object, preview:
         build_apply_authorization,
         required_confirmation_phrase,
     )
-
     identity = session.identity
     require(identity is not None, "fixture session identity is missing")
     return build_apply_authorization(
@@ -180,7 +181,6 @@ def validate_success_and_one_use(root: Path) -> None:
         ProjectWebAIApplyReceiptError,
         assert_project_web_ai_handoff_fresh,
     )
-
     old_handoff = (
         datetime.fromisoformat(receipt.completed_at_utc) - timedelta(seconds=1)
     ).isoformat()
@@ -216,7 +216,6 @@ def validate_success_and_one_use(root: Path) -> None:
 def validate_rollback(root: Path) -> None:
     """Force post-write validation failure and require exact rollback."""
     import kanda_reasoner_app.reasoner_engine.project_web_ai_write_broker as broker
-
     project = root / "rollback_project"
     project.mkdir()
     source_path = project / "sample.py"
@@ -399,6 +398,9 @@ def validate_path_and_static_contracts(project_root: Path, fixture_root: Path) -
 def validate_real_qt(project_root: Path) -> None:
     """Instantiate the real Preview dialog and require local authorization UI."""
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    if os.name == "nt" and Path("C:/Windows/Fonts").is_dir():
+        os.environ.setdefault("QT_QPA_FONTDIR", "C:/Windows/Fonts")
+        print("QT_OFFSCREEN_FONTDIR_READY: PASS")
     try:
         from PySide6.QtWidgets import QApplication, QPushButton
     except ImportError:

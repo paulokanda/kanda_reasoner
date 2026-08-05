@@ -8,6 +8,7 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from ._active_scope import _build_active_source_scope
 from .schemas import SourceHygieneFinding, SourceHygieneReport
 
 __all__ = [
@@ -25,6 +26,9 @@ _SKIP_DIR_NAMES = frozenset(
         ".mypy_cache",
         ".pytest_cache",
         ".ruff_cache",
+        ".project_reference",
+        "_project_reference",
+        "project_freeze_ledger",
         "__pycache__",
         "build",
         "dist",
@@ -72,9 +76,10 @@ def iter_empty_init_files(project_root: str | Path) -> tuple[Path, ...]:
     root = Path(project_root).resolve()
     if not root.exists() or not root.is_dir():
         return ()
+    scope = _build_active_source_scope(root)
     results: list[Path] = []
     for path in root.rglob("__init__.py"):
-        if _is_skipped(path, root):
+        if not scope.includes(path, exclude_tests=True):
             continue
         if _is_empty_init_file(path):
             results.append(path)
@@ -180,26 +185,9 @@ def apply_safe_package_marker_fix(
 
 
 def _is_skipped(path: Path, root: Path) -> bool:
-    """Support is skipped behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    root : Path
-        The root path.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    try:
-        relative_parts = path.relative_to(root).parts
-    except ValueError:
-        return True
-    return any(part in _SKIP_DIR_NAMES for part in relative_parts)
+    """Return whether a path is outside active production facade scope."""
+    scope = _build_active_source_scope(root)
+    return not scope.includes(path, exclude_tests=True)
 
 
 def _is_empty_init_file(path: Path) -> bool:

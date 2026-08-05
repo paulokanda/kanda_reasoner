@@ -25,7 +25,7 @@ from kanda_reasoner_app.reasoner_engine.v10_models import (
 )
 
 from ._live_source_query import (
-        extract_live_identifier_terms,
+        extract_live_identifier_terms as _extract_live_identifier_terms,
         score_live_source_candidate,
     )
 
@@ -35,6 +35,13 @@ __all__ = [
     "extract_live_identifier_terms",
     "find_live_source_candidates",
 ]
+
+
+
+
+def extract_live_identifier_terms(question: str) -> list[str]:
+    """Return ranked live-source identifiers through the stable facade."""
+    return _extract_live_identifier_terms(question)
 
 
 _EXCLUDED_DIRS = {

@@ -8,12 +8,15 @@ from pathlib import Path
 from typing import Any
 
 from PySide6.QtWidgets import (
-    QApplication,
     QDialog,
     QLabel,
     QPlainTextEdit,
     QPushButton,
     QVBoxLayout,
+)
+
+from kanda_reasoner_app.external_ai_workflow import (
+    handoff_to_selected_external_ai,
 )
 
 from .docstring_formatting import format_docstring_proposals
@@ -103,11 +106,14 @@ def copy_web_ai_split_file_wrapper(window: object) -> None:
         + "\n\n# CURRENT TARGET-SPECIFIC PLANNING PACKAGE\n\n"
         + planning_package
     )
-    QApplication.clipboard().setText(clipboard_text)
+    handoff = handoff_to_selected_external_ai(clipboard_text)
+    if not handoff.ok:
+        _show_plan_message(window, "EXTERNAL AI HANDOFF BLOCKED\n\n" + handoff.error)
+        return
     status = getattr(window, "_large_file_refactor_status_label", None)
     if status is not None:
         status.setText(
-            "Web AI split wrapper copied: canonical bundle blueprint plus current plan."
+            "Web AI split wrapper copied and opened in " + handoff.display_name
         )
 
 
@@ -125,11 +131,17 @@ def copy_web_ai_refactor_version_how_to(window: object) -> None:
                 + str(prompt_path)
             )
         return
-    QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
+    handoff = handoff_to_selected_external_ai(
+        prompt_path.read_text(encoding="utf-8")
+    )
+    if not handoff.ok:
+        _show_plan_message(window, "EXTERNAL AI HANDOFF BLOCKED\n\n" + handoff.error)
+        return
     status = getattr(window, "_large_file_refactor_status_label", None)
     if status is not None:
         status.setText(
-            "Web AI Refactor Version How To copied from canonical Prompt Library source."
+            "Web AI Refactor Version How To copied and opened in "
+            + handoff.display_name
         )
 
 
@@ -153,9 +165,13 @@ def copy_comprehensive_planning_for_web_ai(window: object) -> None:
         import_contract=build_web_ai_import_contract(project_root),
         base_version_name=bundle.version_name,
     )
-    QApplication.clipboard().setText(text)
+    handoff = handoff_to_selected_external_ai(text)
+    if not handoff.ok:
+        _show_plan_message(window, "EXTERNAL AI HANDOFF BLOCKED\n\n" + handoff.error)
+        return
     window._large_file_refactor_plan_output.setPlainText(
-        "COMPREHENSIVE PLANNING COPIED FOR EXTERNAL WEB AI\n\n"
+        "COMPREHENSIVE PLANNING COPIED AND EXTERNAL AI OPENED\n\n"
+        "Assistant: " + handoff.display_name + "\n\n"
         "Export base version: " + _display_version_name(bundle.version_name) + "\n\n"
         "The external Web AI should return a governed ZIP by default. Install, "
         "validate, and prepare freeze evidence, then select Imported Web AI "

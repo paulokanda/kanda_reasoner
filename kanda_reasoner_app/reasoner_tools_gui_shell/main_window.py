@@ -62,7 +62,15 @@ from .brain_navigator.contract import create_brain_navigator_tab
 from .tab_navigation_controller import create_tab_navigation_controller
 from kanda_reasoner_app.prompt_library_gui.prompt_library_tab import PromptLibraryTab
 from .tool_specs import TOOLS, ToolSpec
-from kanda_reasoner_app.project_root_resolver import resolve_active_project_root
+from kanda_reasoner_app.project_root_resolver import resolve_selected_project_root
+from kanda_reasoner_app.project_selection_registry import (
+    ProjectSelectionRegistry,
+    ProjectSelectionRegistryError,
+)
+from kanda_reasoner_app.external_ai_configuration import (
+    ExternalAIConfigurationController,
+    install_application_external_ai_configuration,
+)
 from kanda_reasoner_app.local_ai_configuration import (
     LocalAIConfigurationController,
     install_application_local_ai_configuration,
@@ -96,14 +104,34 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         resize_window_for_primary_screen(self)
 
         self._prefs = self._load_prefs()
-        saved_project_root = self._normalize_project_root(
-            self._prefs.get("last_project_root", "")
-        )
-        self.current_project_root: Path | None = resolve_active_project_root(
-            persisted_root=saved_project_root
+        self._project_selection_registry = ProjectSelectionRegistry()
+        try:
+            boundary = self._project_selection_registry.resolve_current_boundary()
+        except ProjectSelectionRegistryError:
+            boundary = None
+
+        if boundary is None:
+            legacy_root = resolve_selected_project_root(
+                persisted_root=self._normalize_project_root(
+                    self._prefs.get("last_project_root", "")
+                )
+            )
+            if legacy_root is not None:
+                boundary = (
+                    self._project_selection_registry
+                    .register_legacy_external_root(legacy_root)
+                )
+
+        self.current_project_boundary = boundary
+        self.current_project_root: Path | None = (
+            boundary.active_project_root if boundary is not None else None
         )
         self._web_ai_configuration = WebAIConfigurationController(self)
         install_application_web_ai_configuration(self._web_ai_configuration)
+        self._external_ai_configuration = ExternalAIConfigurationController(self)
+        install_application_external_ai_configuration(
+            self._external_ai_configuration
+        )
         self._local_ai_configuration = LocalAIConfigurationController(self)
         install_application_local_ai_configuration(self._local_ai_configuration)
         self._collector_widget: QWidget | None = None
@@ -168,6 +196,14 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         subtitle.setAlignment(_qt_core_attr("Qt").AlignCenter)
         subtitle.setWordWrap(True)
         root.addWidget(subtitle)
+
+        self.select_project_button = QPushButton("Select Active Project", central)
+        self.select_project_button.clicked.connect(self._select_active_project)
+        self.select_project_button.hide()
+        self.eject_project_button = QPushButton("Eject Active Project", central)
+        self.eject_project_button.clicked.connect(self._eject_active_project)
+        self.eject_project_button.hide()
+        self._refresh_active_project_controls()
 
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
@@ -294,7 +330,13 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
             return
 
         if spec.tab_kind == "lazy_tool":
-            page = LazyToolTab(spec, self._on_tool_loaded)
+            page = LazyToolTab(
+                spec,
+                self._on_tool_loaded,
+                select_project_handler=self._select_active_project,
+                eject_project_handler=self._eject_active_project,
+                active_project_provider=lambda: self.current_project_root,
+            )
             self._pages.append(page)
             index = self.tabs.addTab(page, spec.step_title)
             self._lazy_pages_by_tab_index[index] = page
@@ -304,6 +346,10 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         if spec.tab_kind == "builtin_ignore_rules":
             self.ignore_rules_tab = IgnoreRulesTab(self._prefs_path())
             self.ignore_rules_tab.set_project_root(self.current_project_root)
+            self._apply_project_widget_enabled_state(
+                "exclusion_rules",
+                self.ignore_rules_tab,
+            )
             if hasattr(self.ignore_rules_tab, "project_root_edit"):
                 self._bind_project_root_field(self.ignore_rules_tab.project_root_edit)
                 if self.current_project_root is not None:

@@ -30,7 +30,7 @@ The tab does not automatically decide that every error deserves a permanent less
 
 1. Put the raw error and useful context in **AI-assisted error lesson intake**.
 2. Click **Check Against Lessons** to see whether a similar lesson already exists.
-3. Use **Copy error/draft** when you need AI help creating or correcting the lesson.
+3. Use **Copy and Open External AI** when you need AI help creating or correcting the lesson.
 4. Paste the formatted result back with **Paste error formatted from AI**, or import an approved Error Lesson ZIP.
 5. Review the complete lesson in **Error Editor**.
 6. Use **Correct with AI** only when you want a preview correction. This does not save the lesson.
@@ -59,6 +59,10 @@ These buttons copy folder paths. They do not copy lesson content.
 
 Copies the canonical instructions for sending an error to AI. Use it when preparing a new error report outside the tab.
 
+### Send Zip Errors
+
+Copies the generalized current-Project prompt that instructs AI to create one self-contained Error Memory lesson intake ZIP. The resulting loader stages lessons for review only; Memorize Error remains human-controlled.
+
 ## AI-Assisted Error Lesson Intake
 
 This left-side area is a temporary preparation area.
@@ -67,9 +71,9 @@ This left-side area is a temporary preparation area.
 
 Loads a formatted Error Memory JSON block into the tab. It does not memorize the lesson automatically.
 
-### Copy error/draft
+### Copy and Open External AI
 
-Copies the current intake text together with the required Error Memory instructions so AI can create or correct one valid lesson.
+Copies the current intake text together with the required Error Memory instructions and opens the selected external Python-coding assistant. Paste manually. The returned lesson remains untrusted until it is imported, checked against existing lessons, reviewed, and explicitly memorized.
 
 ### Clean
 
@@ -113,9 +117,9 @@ You may edit the lesson before saving it. Read the complete content instead of c
 
 Saves the JSON currently shown in the editor to the canonical lesson store. Use this carefully because it is a direct save action.
 
-### Copy error/draft
+### Copy and Open External AI
 
-Copies the current editor content with the required AI instructions.
+Copies the current editor content with the required AI instructions and opens the selected external Python-coding assistant. The external answer cannot save, activate, supersede, or memorize a lesson.
 
 ### Clean
 

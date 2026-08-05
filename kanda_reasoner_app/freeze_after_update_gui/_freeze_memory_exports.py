@@ -12,9 +12,49 @@ from kanda_reasoner_app.templates.floating_windows import show_auto_close_action
 
 __all__ = ["FreezeMemoryExportMixin"]
 
+SEND_ZIP_FREEZE_PROMPT_RELATIVE_PATH = Path(
+    "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
+    "03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md"
+)
+
 
 class FreezeMemoryExportMixin:
     """Clipboard and help-window behavior for frozen memory snippets."""
+
+    def _send_zip_freeze_prompt_path(self) -> Path:
+        """Return the Tool-owned canonical Send zip freeze prompt path."""
+        return (
+            Path(__file__).resolve(strict=False).parents[2]
+            / SEND_ZIP_FREEZE_PROMPT_RELATIVE_PATH
+        )
+
+    def _copy_send_zip_freeze_prompt(self) -> None:
+        """Copy the canonical self-contained freeze-entry ZIP prompt."""
+        prompt_path = self._send_zip_freeze_prompt_path()
+        if not prompt_path.exists() or not prompt_path.is_file():
+            show_error_copy_close_window(
+                self,
+                title="Send zip freeze prompt copy failed",
+                message="Send zip freeze prompt not found: " + str(prompt_path),
+            )
+            return
+        try:
+            prompt_text = prompt_path.read_text(encoding="utf-8")
+            QApplication.clipboard().setText(prompt_text)
+        except Exception as exc:
+            show_error_copy_close_window(
+                self,
+                title="Send zip freeze prompt copy failed",
+                message=str(exc),
+            )
+            return
+        self._append_log("Copied Send zip freeze prompt to clipboard: " + str(prompt_path))
+        show_auto_close_action_window(
+            self,
+            title="Send zip freeze",
+            message="Self-contained freeze-entry ZIP prompt copied to clipboard.",
+            detail_text="Source: self_contained_freeze_entry_intake_zip.md",
+        )
 
     def _freeze_entry_sort_key(self, entry_path: Path) -> tuple[str, int, str]:
         """Return a stable sort key for freeze entries."""
@@ -103,7 +143,7 @@ class FreezeMemoryExportMixin:
         )
 
     def _build_freeze_form_blueprint_text(self) -> str:
-        """Return the strict AI prompt for local freeze-form formulary output."""
+        """Return the transport-safe AI prompt for local freeze-form output."""
         return """KANDA FREEZE FORM BLUEPRINT FOR AI
 
 Task for AI:
@@ -114,10 +154,13 @@ Do not invent validation evidence. If local validation evidence is missing, say 
 Strict output contract:
 - The first visible characters of your answer must be KANDA_FREEZE_FORM_JSON_BEGIN.
 - The last visible characters of your answer must be KANDA_FREEZE_FORM_JSON_END.
-- Between the markers, return one valid JSON object only.
+- Between the markers, put one valid JSON object inside one fenced json code block.
 - Use double quotes for every JSON key and string value.
-- For multiline fields, encode line breaks as \\n inside JSON strings.
-- Do not use markdown fences, comments, bullets, or trailing commas.
+- Use JSON arrays for validated_files, generated_files, protected_paths, do_not_regress_rules, and validation_evidence_summary.
+- Preserve every existing array item exactly and in order.
+- Encode Windows backslashes as doubled backslashes or \\u005C.
+- Do not place JSON in ordinary Markdown prose.
+- Do not use comments or trailing commas.
 - Use project-relative paths where possible.
 - Keep project-specific frozen memory under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.
 - Do not store project-specific frozen memory inside project_freeze_ledger.
@@ -130,7 +173,21 @@ ZIP CONTRACT: PASS
 
 Copy/paste-ready answer shape:
 KANDA_FREEZE_FORM_JSON_BEGIN
-{"feature_title":"<exact current feature title>","primary_box":"<project-relative owning box/path>","box_type":"<module/gui/tool/prompt/etc>","validated_files":"<one project-relative validated path per line encoded with \\n>","generated_files":"<one generated artifact per line encoded with \\n, or n/a if none>","protected_paths":"<one protected path per line encoded with \\n>","do_not_regress_rules":"<one rule per line encoded with \\n>","validation_evidence_summary":"<real validation markers only, encoded with \\n>","known_warnings":"<known warnings or n/a>","planned_next_step":"<next human action, usually Preview then Confirm and Write>","notes":"<short freeze notes for future AI>"}
+```json
+{
+  "feature_title": "<exact current feature title>",
+  "primary_box": "<project-relative owning box/path>",
+  "box_type": "<module/gui/tool/prompt/etc>",
+  "validated_files": ["<validated path 1>", "<validated path 2>"],
+  "generated_files": ["<generated artifact or n/a>"],
+  "protected_paths": ["<protected path 1>"],
+  "do_not_regress_rules": ["<rule 1>"],
+  "validation_evidence_summary": ["VALIDATION OK: <feature_id>", "STATUS: IN_SYNC"],
+  "known_warnings": "<known warnings or n/a>",
+  "planned_next_step": "<next human action, usually Preview then Confirm and Write>",
+  "notes": "<short freeze notes for future AI>"
+}
+```
 KANDA_FREEZE_FORM_JSON_END
 """
 

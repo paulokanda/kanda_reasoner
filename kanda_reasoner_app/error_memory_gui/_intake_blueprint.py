@@ -11,6 +11,10 @@ ERROR_MEMORY_AI_FORMULARY_CANON_RELATIVE_PATH = Path(
     "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
     "01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md"
 )
+SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH = Path(
+    "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
+    "05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md"
+)
 ACTIVE_READY_JSON_TEMPLATE_NAME = "error_memory_active_ready_json_template.md"
 MODEL_TEMPLATE_NAME = "error_memory_model_template.md"
 
@@ -19,11 +23,14 @@ __all__ = [
     "ERROR_MEMORY_AI_FORMULARY_CANON_RELATIVE_PATH",
     "ERROR_MEMORY_TEMPLATE_RELATIVE_DIR",
     "MODEL_TEMPLATE_NAME",
+    "SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH",
     "error_lesson_intake_blueprint_clipboard_text",
     "error_memory_ai_formulary_canon_path",
     "error_memory_prompt_template_dir",
     "read_error_memory_ai_formulary_canon",
     "read_error_memory_intake_template_file",
+    "read_send_zip_errors_prompt",
+    "send_zip_errors_prompt_path",
 ]
 
 
@@ -59,6 +66,28 @@ def read_error_memory_ai_formulary_canon(
         raise FileNotFoundError(
             "Error Memory AI formulary startup canon not found: " + str(path)
         )
+    return path.read_text(encoding="utf-8")
+
+
+def send_zip_errors_prompt_path(project_root: Path, *, module_file: str) -> Path:
+    """Return the canonical generalized Send Zip Errors prompt path."""
+    root = Path(project_root).expanduser().resolve(strict=False)
+    candidates = [
+        root / SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH,
+        Path(module_file).resolve(strict=False).parents[2]
+        / SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH,
+    ]
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_file():
+            return candidate
+    return candidates[0]
+
+
+def read_send_zip_errors_prompt(project_root: Path, *, module_file: str) -> str:
+    """Read the canonical generalized Send Zip Errors prompt."""
+    path = send_zip_errors_prompt_path(project_root, module_file=module_file)
+    if not path.exists() or not path.is_file():
+        raise FileNotFoundError("Send Zip Errors prompt not found: " + str(path))
     return path.read_text(encoding="utf-8")
 
 

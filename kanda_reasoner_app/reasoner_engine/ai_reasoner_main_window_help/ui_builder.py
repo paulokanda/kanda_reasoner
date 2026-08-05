@@ -122,6 +122,19 @@ def _configure_controls(window: Any) -> None:
     window.clear_button.setObjectName("localAINewSessionButton")
     window.clear_memory_button.setText("Clear memory")
 
+    window.paste_question_button = QPushButton("Paste")
+    window.copy_draft_button = QPushButton("Copy")
+    window.copy_history_question_button = QPushButton("Copy question")
+    window.copy_answer_button = QPushButton("Copy answer")
+    for button in (
+        window.paste_question_button,
+        window.copy_draft_button,
+        window.copy_history_question_button,
+        window.copy_answer_button,
+    ):
+        button.setObjectName("localAIClipboardAction")
+        button.setFixedHeight(30)
+
     window.local_ai_model_label.hide()
     window.model_combo.hide()
     for combo in (
@@ -233,7 +246,11 @@ def _history_panel(window: Any) -> QWidget:
     heading_row.addWidget(_muted_label("memory only"))
     layout.addLayout(heading_row)
     layout.addWidget(window.history_list, 1)
-    layout.addWidget(window.clear_memory_button)
+    history_actions = QHBoxLayout()
+    history_actions.setSpacing(6)
+    history_actions.addWidget(window.copy_history_question_button)
+    history_actions.addWidget(window.clear_memory_button)
+    layout.addLayout(history_actions)
     return panel
 
 
@@ -352,6 +369,8 @@ def _composer(window: Any) -> QFrame:
     layout.setContentsMargins(11, 7, 8, 7)
     layout.setSpacing(8)
     layout.addWidget(window.question_edit, 1)
+    layout.addWidget(window.paste_question_button)
+    layout.addWidget(window.copy_draft_button)
     layout.addWidget(window.ask_ai_button, 0, Qt.AlignmentFlag.AlignRight)
     return frame
 
@@ -379,6 +398,7 @@ def _chat_canvas(window: Any) -> QFrame:
     status.setObjectName("localAIStatus")
     heading_stack.addWidget(status)
     header_layout.addLayout(heading_stack, 1)
+    header_layout.addWidget(window.copy_answer_button, 0, Qt.AlignmentFlag.AlignTop)
     header_layout.addWidget(_muted_label("Local model runtime"), 0, Qt.AlignmentFlag.AlignTop)
     layout.addWidget(header)
 

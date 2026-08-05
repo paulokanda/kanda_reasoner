@@ -1,9 +1,9 @@
 # project-path: kanda_reasoner_app/web_ai_provider_contracts.py
-"""Shared contracts for KANDA OpenAI-compatible web gateways.
+"""Shared contracts for KANDA remote Web AI providers.
 
-This module is intentionally free of Qt and network imports.  It defines the
-stable provider, model, context, usage, and failure shapes shared by the
-Project Web AI tab and the existing OpenAI-compatible local provider adapter.
+This module is intentionally free of Qt and network imports. It defines the
+stable provider, model, context, usage, and failure shapes shared by Project
+Web AI and all OpenAI-compatible gateway or direct-provider transports.
 """
 
 from __future__ import annotations
@@ -43,6 +43,7 @@ __all__ = [
     "UnsafeArchiveMemberError",
     "gateway_profiles",
     "get_gateway_profile",
+    "provider_profiles",
 ]
 
 
@@ -55,7 +56,7 @@ class ProviderConfigurationError(ProviderError):
 
 
 class ProviderAuthenticationError(ProviderError):
-    """Raised when a gateway rejects the supplied credential."""
+    """Raised when a provider rejects the supplied credential."""
 
 
 class ProviderCatalogError(ProviderError):
@@ -63,11 +64,11 @@ class ProviderCatalogError(ProviderError):
 
 
 class ProviderRateLimitError(ProviderError):
-    """Raised when a gateway reports a rate-limit response."""
+    """Raised when a provider reports a rate-limit response."""
 
 
 class ProviderTimeoutError(ProviderError):
-    """Raised when a gateway request exceeds its timeout."""
+    """Raised when a provider request exceeds its timeout."""
 
 
 class ProviderConnectionError(ProviderError):
@@ -75,7 +76,7 @@ class ProviderConnectionError(ProviderError):
 
 
 class ProviderResponseError(ProviderError):
-    """Raised when a gateway returns malformed or explicit error content."""
+    """Raised when a provider returns malformed or explicit error content."""
 
 
 class ProviderCancelledError(ProviderError):
@@ -140,7 +141,7 @@ class SupportIdentityMismatchError(SupportContextError):
 
 @dataclass(frozen=True)
 class GatewayProfile:
-    """Describe one OpenAI-compatible web gateway preset."""
+    """Describe one OpenAI-compatible gateway or direct provider."""
 
     gateway_id: str
     display_name: str
@@ -152,9 +153,17 @@ class GatewayProfile:
     anonymous_free_allowed: bool
     privacy_summary: str
     static_headers: tuple[tuple[str, str], ...] = ()
+    provider_class: str = "gateway"
+    free_access_kind: str = "catalog_zero_price"
+    free_access_summary: str = ""
+    requires_free_confirmation: bool = False
+    supports_stream_options: bool = True
+    static_models: tuple[tuple[str, str, int], ...] = ()
 
     def models_url(self) -> str:
         """Return the absolute model-catalog URL."""
+        if not self.models_path:
+            return ""
         return self.base_url.rstrip("/") + "/" + self.models_path.lstrip("/")
 
     def chat_url(self) -> str:
@@ -177,7 +186,7 @@ class GatewayProfile:
 
 @dataclass(frozen=True)
 class ModelDescriptor:
-    """Normalized model-catalog entry for a gateway."""
+    """Normalized model-catalog entry for a remote provider."""
 
     gateway_id: str
     model_id: str
@@ -188,13 +197,20 @@ class ModelDescriptor:
     supports_streaming: bool = True
     supports_tools: bool = False
     free_status: bool = False
+    free_access_label: str = ""
     catalog_timestamp: str = ""
     owned_by: str = ""
     supported_parameters: tuple[str, ...] = ()
-    raw_metadata: Mapping[str, object] = field(default_factory=dict, compare=False, repr=False)
+    raw_metadata: Mapping[str, object] = field(
+        default_factory=dict,
+        compare=False,
+        repr=False,
+    )
 
     def price_label(self) -> str:
-        """Return a compact human-readable price label."""
+        """Return a compact human-readable access or price label."""
+        if self.free_access_label:
+            return self.free_access_label
         if self.free_status:
             return "free according to current catalog"
         if self.input_price is None and self.output_price is None:
@@ -250,11 +266,12 @@ class ProjectWebAIRequestIdentity:
     privacy_approval_id: str
     created_at_utc: str
     project_epoch: int = 0
+    evidence_context_hash: str = ""
 
 
 @dataclass(frozen=True)
 class ChatUsage:
-    """Normalized usage and cost metadata returned by a gateway."""
+    """Normalized usage and cost metadata returned by a provider."""
 
     prompt_tokens: int = 0
     completion_tokens: int = 0
@@ -275,7 +292,11 @@ class ChatResult:
     finish_reason: str
     response_id: str
     usage: ChatUsage
-    raw_metadata: Mapping[str, object] = field(default_factory=dict, compare=False, repr=False)
+    raw_metadata: Mapping[str, object] = field(
+        default_factory=dict,
+        compare=False,
+        repr=False,
+    )
 
 
 _GATEWAY_PROFILES: tuple[GatewayProfile, ...] = (
@@ -289,8 +310,9 @@ _GATEWAY_PROFILES: tuple[GatewayProfile, ...] = (
         api_key_required=True,
         anonymous_free_allowed=False,
         privacy_summary=(
-            "Remote gateway. Provider retention/training rules vary by routed endpoint; "
-            "review current OpenRouter privacy controls before sending sensitive source."
+            "Remote gateway. Provider retention and training rules vary by routed "
+            "endpoint; review current OpenRouter privacy controls before sending "
+            "sensitive source."
         ),
         static_headers=(("X-OpenRouter-Title", "KANDA Reasoner"),),
     ),
@@ -304,22 +326,130 @@ _GATEWAY_PROFILES: tuple[GatewayProfile, ...] = (
         api_key_required=False,
         anonymous_free_allowed=True,
         privacy_summary=(
-            "Remote gateway. Anonymous access is limited to current :free models; "
+            "Remote gateway. Anonymous access is limited to current free models; "
             "data-collection rules may differ by organization and upstream provider."
         ),
+    ),
+    GatewayProfile(
+        gateway_id="gemini",
+        display_name="Google Gemini API",
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai",
+        models_path="models",
+        chat_path="chat/completions",
+        api_key_env="GEMINI_API_KEY",
+        api_key_required=True,
+        anonymous_free_allowed=False,
+        privacy_summary=(
+            "Direct Google API. Free-tier prompts and responses may be used to improve "
+            "Google products. Do not send sensitive Project source without accepting "
+            "that free-tier data policy."
+        ),
+        provider_class="direct",
+        free_access_kind="provider_free_tier",
+        free_access_summary=(
+            "Official Gemini Developer API free tier. Use an unbilled Free Tier "
+            "project so quota exhaustion stops requests instead of creating charges."
+        ),
+        requires_free_confirmation=True,
+        supports_stream_options=False,
+    ),
+    GatewayProfile(
+        gateway_id="mistral",
+        display_name="Mistral API Free Mode",
+        base_url="https://api.mistral.ai/v1",
+        models_path="models",
+        chat_path="chat/completions",
+        api_key_env="MISTRAL_API_KEY",
+        api_key_required=True,
+        anonymous_free_allowed=False,
+        privacy_summary=(
+            "Direct Mistral API. This KANDA mode requires a key from Mistral Free "
+            "mode and never enables a paid fallback. Review Mistral data controls "
+            "before sending private source."
+        ),
+        provider_class="direct",
+        free_access_kind="account_free_mode",
+        free_access_summary=(
+            "Mistral Studio Free mode with limited usage and rate limits; explicit "
+            "user confirmation is required before chat is enabled."
+        ),
+        requires_free_confirmation=True,
+        supports_stream_options=False,
+    ),
+    GatewayProfile(
+        gateway_id="qwen",
+        display_name="Qwen API Free Quota",
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        models_path="",
+        chat_path="chat/completions",
+        api_key_env="DASHSCOPE_API_KEY",
+        api_key_required=True,
+        anonymous_free_allowed=False,
+        privacy_summary=(
+            "Direct Alibaba Cloud Model Studio API. Use a general-purpose API key "
+            "with Free Quota Only enabled. Free quota is account, model, region, and "
+            "time dependent."
+        ),
+        provider_class="direct",
+        free_access_kind="time_limited_free_quota",
+        free_access_summary=(
+            "New-user Qwen model quota is time limited. KANDA requires confirmation "
+            "that Free Quota Only is enabled to block automatic paid usage."
+        ),
+        requires_free_confirmation=True,
+        supports_stream_options=False,
+        static_models=(
+            ("qwen3-coder-flash", "Qwen3 Coder Flash", 1_000_000),
+            ("qwen3-coder-next", "Qwen3 Coder Next", 262_144),
+            ("qwen3-coder-plus", "Qwen3 Coder Plus", 1_000_000),
+        ),
+    ),
+    GatewayProfile(
+        gateway_id="groq",
+        display_name="Groq API Free Plan",
+        base_url="https://api.groq.com/openai/v1",
+        models_path="models",
+        chat_path="chat/completions",
+        api_key_env="GROQ_API_KEY",
+        api_key_required=True,
+        anonymous_free_allowed=False,
+        privacy_summary=(
+            "Direct Groq API. This KANDA mode requires an organization on the "
+            "Groq Free Plan and never authorizes a paid-plan fallback."
+        ),
+        provider_class="direct",
+        free_access_kind="account_free_plan",
+        free_access_summary=(
+            "Groq Free Plan with organization-level request and token limits. "
+            "Explicit confirmation is required before chat is enabled."
+        ),
+        requires_free_confirmation=True,
+        supports_stream_options=False,
     ),
 )
 
 
 def gateway_profiles() -> Sequence[GatewayProfile]:
-    """Return the immutable supported web-gateway profiles."""
+    """Return all immutable remote-provider profiles for compatibility."""
     return _GATEWAY_PROFILES
 
 
+def provider_profiles(provider_class: str = "") -> Sequence[GatewayProfile]:
+    """Return all profiles or only one provider class."""
+    clean = str(provider_class or "").strip().lower()
+    if not clean:
+        return _GATEWAY_PROFILES
+    return tuple(
+        profile
+        for profile in _GATEWAY_PROFILES
+        if profile.provider_class == clean
+    )
+
+
 def get_gateway_profile(gateway_id: str) -> GatewayProfile:
-    """Return one gateway profile or raise an explicit configuration error."""
+    """Return one provider profile or raise an explicit configuration error."""
     clean_id = str(gateway_id or "").strip().lower()
     for profile in _GATEWAY_PROFILES:
         if profile.gateway_id == clean_id:
             return profile
-    raise ProviderConfigurationError("Unknown web gateway: " + clean_id)
+    raise ProviderConfigurationError("Unknown Web AI provider: " + clean_id)

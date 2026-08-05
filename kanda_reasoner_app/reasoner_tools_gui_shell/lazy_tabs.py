@@ -3,10 +3,15 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import traceback
 
 from PySide6.QtCore import Qt, QBasicTimer, QMetaObject, Slot
-from PySide6.QtWidgets import QApplication, QFrame, QLabel, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget
+from PySide6.QtWidgets import QApplication, QFrame, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget
+
+from kanda_reasoner_app.portable_smoke_runtime_report import (
+    record_portable_smoke_event,
+)
 
 from .error_panels import ToolLoadErrorPanel
 from .gui_support import _first_existing_attr, _first_imported_module, _prepare_embedded_widget
@@ -41,7 +46,15 @@ _LEGACY_HEADER_AI_GROUP_SOURCES = {
 class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget):
     """Represent one lazy-loading tool tab host."""
 
-    def __init__(self, spec: ToolSpec, on_loaded) -> None:
+    def __init__(
+        self,
+        spec: ToolSpec,
+        on_loaded,
+        *,
+        select_project_handler: Callable[[], None] | None = None,
+        eject_project_handler: Callable[[], None] | None = None,
+        active_project_provider: Callable[[], object] | None = None,
+    ) -> None:
         """Support init behavior.
         
         Parameters
@@ -57,6 +70,13 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
         self._loaded = False
         self._embedded_widget: QWidget | None = None
         self._on_loaded = on_loaded
+        self._select_project_handler = select_project_handler
+        self._eject_project_handler = eject_project_handler
+        self._active_project_provider = active_project_provider
+        self.active_project_label: QLabel | None = None
+        self.active_project_path_edit: QLineEdit | None = None
+        self.active_project_select_button: QPushButton | None = None
+        self.active_project_eject_button: QPushButton | None = None
         self._help_dialog: QMainWindow | None = None
         self._pending_intake_loader = None
         self._pending_intake_retry_phase = 0
@@ -77,6 +97,7 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
         self._header_controls_insert_index = self.header_row.indexOf(
             self.tab_header_template.project_root_host
         )
+        self._install_title_active_project_buttons()
 
         self.python_executable_label: QLabel | None = None
         self.help_button: QPushButton | None = self.tab_header_template.help_button
@@ -154,6 +175,37 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
         self.content_layout.setSpacing(0)
         outer.addWidget(self.content_host, 1)
         QMetaObject.connectSlotsByName(self)
+
+    def request_select_active_project(self) -> None:
+        """Invoke the shell-owned active Project selector."""
+        handler = self._select_project_handler
+        if callable(handler):
+            handler()
+
+    def request_eject_active_project(self) -> None:
+        """Invoke the shell-owned active Project eject command."""
+        handler = self._eject_project_handler
+        if callable(handler):
+            handler()
+
+    def refresh_active_project_controls(self, active_root: object = None) -> None:
+        """Refresh this tab's proxy identity and commands from shell authority."""
+        if active_root is None and callable(self._active_project_provider):
+            active_root = self._active_project_provider()
+        path_text = str(active_root) if active_root is not None else ""
+        if self.active_project_path_edit is not None:
+            self.active_project_path_edit.setText(path_text)
+            self.active_project_path_edit.setToolTip(
+                path_text or "No active Project selected."
+            )
+        if self.active_project_select_button is not None:
+            self.active_project_select_button.setEnabled(
+                callable(self._select_project_handler)
+            )
+        if self.active_project_eject_button is not None:
+            self.active_project_eject_button.setEnabled(
+                callable(self._eject_project_handler) and active_root is not None
+            )
 
     @Slot()
     def on_lazy_tool_load_button_clicked(self) -> None:
@@ -236,6 +288,12 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
 
             self._loaded = True
             self._on_loaded(self.spec, widget)
+            record_portable_smoke_event(
+                status="PASS",
+                kind="lazy_tab",
+                source=self.spec.source_hint,
+                message="LOADED",
+            )
 
             try:
                 pending_loader = widget.load_pending_ai_assisted_error_lesson_intake_now
@@ -253,10 +311,17 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
             return True
 
         except (ImportError, AttributeError, RuntimeError, TypeError):
+            error_text = traceback.format_exc()
+            record_portable_smoke_event(
+                status="FAIL",
+                kind="lazy_tab",
+                source=self.spec.source_hint,
+                message=error_text,
+            )
             error_panel = ToolLoadErrorPanel(
                 title=self.spec.step_title,
                 source_hint=self.spec.source_hint,
-                error_text=traceback.format_exc(),
+                error_text=error_text,
             )
 
             self.content_layout.addWidget(error_panel)

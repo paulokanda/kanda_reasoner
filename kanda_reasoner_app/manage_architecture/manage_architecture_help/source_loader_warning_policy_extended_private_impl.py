@@ -8,6 +8,32 @@ from collections.abc import Callable
 ReplaceOnce = Callable[[str, str, str], str]
 
 
+def _apply_governed_validator_classification_policy(
+    source: str,
+    replace_once: ReplaceOnce,
+) -> str:
+    """Classify governed validate/repair CLIs as validator artifacts."""
+    old = (
+        'def is_validator_script(module: ModuleInfo) -> bool:\n'
+        '    return module.filename.endswith("_validate_manifests.py")\n'
+    )
+    new = (
+        'GOVERNED_VALIDATOR_ROOTS = {"scripts", "tools"}\n'
+        'GOVERNED_VALIDATOR_PREFIXES = ("validate_", "repair_")\n\n\n'
+        'def is_validator_script(module: ModuleInfo) -> bool:\n'
+        '    """Return True for governed validator or repair command modules."""\n'
+        '    if module.filename.endswith("_validate_manifests.py"):\n'
+        '        return True\n'
+        '    normalized_path = module.path.replace("\\\\", "/")\n'
+        '    root_name = normalized_path.split("/", 1)[0].lower()\n'
+        '    if root_name not in GOVERNED_VALIDATOR_ROOTS:\n'
+        '        return False\n'
+        '    stem = Path(module.filename).stem.lower().replace("-", "_")\n'
+        '    return stem.startswith(GOVERNED_VALIDATOR_PREFIXES)\n'
+    )
+    return replace_once(source, old, new)
+
+
 def _apply_boundary_error_contract_marker_policy(
     source: str,
     replace_once: ReplaceOnce,
@@ -75,18 +101,29 @@ def _apply_stale_variant_active_domain_terms_policy(
         '    "preflight_backup",\n'
         '    "copy_error",\n'
         '    "chat_service",\n'
-        ')\n\n\n'
+        '    "transport_repair",\n'
+        '    "archive_policy",\n'
+        '    "archive_routing",\n'
+        '    "archive_validation",\n'
+        '    "archive_safety",\n'
+        '    "chat_clipboard",\n'
+        '    "show_project_backup",\n'
+        ')\n'
+        'ACTIVE_DOMAIN_STALE_EXACT_STEMS = {"archive"}\n\n\n'
         'def _filename_has_stale_marker(filename: str) -> bool:\n'
         '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
         '    stem = Path(filename).stem.lower()\n'
-        '    if any(phrase in stem for phrase in ACTIVE_DOMAIN_STALE_TOKEN_PHRASES):\n'
+        '    if stem in ACTIVE_DOMAIN_STALE_EXACT_STEMS:\n'
         '        return False\n'
-        '    tokens = _tokenize_variant_text(stem)\n'
+        '    candidate = stem\n'
+        '    for phrase in ACTIVE_DOMAIN_STALE_TOKEN_PHRASES:\n'
+        '        candidate = candidate.replace(phrase, "_")\n'
+        '    tokens = _tokenize_variant_text(candidate)\n'
         '    if tokens.intersection(STALE_VARIANT_TOKEN_MARKERS):\n'
         '        return True\n'
-        '    if any(marker in stem for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
+        '    if any(marker in candidate for marker in STALE_VARIANT_SUBSTRING_MARKERS):\n'
         '        return True\n'
-        '    if any(stem.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
+        '    if any(candidate.endswith(suffix) for suffix in STALE_VARIANT_SUFFIXES):\n'
         '        return True\n'
         '    return False\n'
     )
@@ -195,6 +232,7 @@ def _apply_mixed_responsibility_boundary_policy(
             '            "workflow_governance",\n'
             '            "daily_refactor_report",\n'
             '            "architecture_governance",\n'
+            '            "ai_bridge",\n'
             '        }),\n'
             '    ),\n'
             '    (\n'
@@ -207,6 +245,14 @@ def _apply_mixed_responsibility_boundary_policy(
             '            "static_collection",\n'
             '            "runtime_collection",\n'
             '        }),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/reasoner_tools_gui_shell/",\n'
+            '        frozenset({"gui_ui", "ai_bridge"}),\n'
+            '    ),\n'
+            '    (\n'
+            '        "kanda_reasoner_app/local_ai_configuration.py",\n'
+            '        frozenset({"gui_ui", "ai_bridge"}),\n'
             '    ),\n'
             ')\n\n\n'
             'def _is_mixed_responsibility_governed_artifact(module: ModuleInfo) -> bool:\n'
@@ -275,7 +321,36 @@ def _apply_import_heaviness_gui_boundary_policy(
         '    "kanda_reasoner_app/tab3_manual_review_runtime/",\n'
         ')\n'
         'INTENTIONAL_KANDA_GUI_IMPORT_PATHS = {\n'
+        '    "kanda_reasoner_app/external_ai_configuration.py",\n'
+        '    "kanda_reasoner_app/external_ai_handoff.py",\n'
+        '    "kanda_reasoner_app/local_ai_configuration.py",\n'
+        '    "kanda_reasoner_app/manage_architecture/architecture_audit_external_ai.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/project_structure_3d_tab.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/safe_web_page.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/tab_evidence_mixin.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/tab_json_controls_mixin.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/tab_navigation_mixin.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/tab_ui_builder.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/tab_viewport_activation_mixin.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/web_bridge.py",\n'
+        '    "kanda_reasoner_app/project_structure_visualizer/web_runtime.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/chat_clipboard_actions.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/config_ai_tab.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/config_direct_web_ai_tab.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/config_local_ai_tab.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/config_web_ai_tab.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/config_web_ai_ui_support.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_apply_workflow.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_change_preparation.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_change_preview.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_configuration_selector.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_conversations.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_switch_guard.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_tab_ui.py",\n'
+        '    "kanda_reasoner_app/reasoner_engine/project_web_ai_workers.py",\n'
         '    "kanda_reasoner_app/reasoner_runtime_collector/runtime_runner_help/_runtime_runner_part_2_scenarios.py",\n'
+        '    "kanda_reasoner_app/web_ai_configuration.py",\n'
         '}\n\n\n'
         'def _is_intentional_gui_import_surface(module: ModuleInfo) -> bool:\n'
         '    """Return True for explicit GUI/profiling surfaces that own Qt imports."""\n'
@@ -337,6 +412,10 @@ def apply_manage_architecture_extended_warning_policies(
     replace_once: ReplaceOnce,
 ) -> str:
     """Apply the extended warning-policy chain in its governed order."""
+    source = _apply_governed_validator_classification_policy(
+        source,
+        replace_once,
+    )
     source = _apply_boundary_error_contract_marker_policy(
         source,
         replace_once,

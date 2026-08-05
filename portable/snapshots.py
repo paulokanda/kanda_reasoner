@@ -1,4 +1,4 @@
-"""Metadata snapshots proving source and Project Support immutability."""
+"""Content-hash snapshots proving project and Project Support immutability."""
 
 from __future__ import annotations
 
@@ -9,12 +9,29 @@ from portable.constants import PROJECT_SNAPSHOT_IGNORES
 from portable.errors import PortableBuildError
 
 
-def metadata_snapshot(
+_BLOCK_SIZE = 1024 * 1024
+
+
+def _update_file_content(
+    digest: "hashlib._Hash",
+    path: Path,
+) -> None:
+    """Add a file's exact bytes to a tree digest."""
+
+    with path.open("rb") as handle:
+        for block in iter(
+            lambda: handle.read(_BLOCK_SIZE),
+            b"",
+        ):
+            digest.update(block)
+
+
+def content_snapshot(
     root: Path,
     *,
     ignored_names: set[str] | None = None,
 ) -> dict[str, object]:
-    """Create a deterministic metadata-only tree fingerprint."""
+    """Create a deterministic path-and-content tree fingerprint."""
 
     if not root.exists():
         return {
@@ -22,6 +39,7 @@ def metadata_snapshot(
             "digest": "",
             "files": 0,
             "directories": 0,
+            "symlinks": 0,
         }
 
     ignored = {
@@ -31,6 +49,7 @@ def metadata_snapshot(
     digest = hashlib.sha256()
     files = 0
     directories = 0
+    symlinks = 0
 
     entries = sorted(
         root.rglob("*"),
@@ -38,40 +57,64 @@ def metadata_snapshot(
     )
     for entry in entries:
         relative = entry.relative_to(root)
-        if any(part.casefold() in ignored for part in relative.parts):
+        if any(
+            part.casefold() in ignored
+            for part in relative.parts
+        ):
             continue
 
-        stat = entry.lstat()
+        relative_text = relative.as_posix()
         if entry.is_symlink():
-            kind = "L"
-            size = 0
-        elif entry.is_dir():
-            kind = "D"
-            size = 0
-            directories += 1
-        else:
-            kind = "F"
-            size = stat.st_size
-            files += 1
+            symlinks += 1
+            digest.update(
+                f"L\0{relative_text}\0".encode("utf-8")
+            )
+            digest.update(
+                str(entry.readlink()).encode("utf-8")
+            )
+            digest.update(b"\n")
+            continue
 
-        record = (
-            f"{kind}\0{relative.as_posix()}\0"
-            f"{size}\0{stat.st_mtime_ns}\n"
+        if entry.is_dir():
+            directories += 1
+            digest.update(
+                f"D\0{relative_text}\n".encode("utf-8")
+            )
+            continue
+
+        files += 1
+        digest.update(
+            f"F\0{relative_text}\0".encode("utf-8")
         )
-        digest.update(record.encode("utf-8"))
+        _update_file_content(digest, entry)
+        digest.update(b"\n")
 
     return {
         "exists": True,
         "digest": digest.hexdigest(),
         "files": files,
         "directories": directories,
+        "symlinks": symlinks,
     }
 
 
-def project_snapshot(root: Path) -> dict[str, object]:
-    """Snapshot source while ignoring developer-owned caches."""
+def metadata_snapshot(
+    root: Path,
+    *,
+    ignored_names: set[str] | None = None,
+) -> dict[str, object]:
+    """Compatibility alias now backed by exact content hashes."""
 
-    return metadata_snapshot(
+    return content_snapshot(
+        root,
+        ignored_names=ignored_names,
+    )
+
+
+def project_snapshot(root: Path) -> dict[str, object]:
+    """Hash project contents while ignoring developer-owned caches."""
+
+    return content_snapshot(
         root,
         ignored_names=PROJECT_SNAPSHOT_IGNORES,
     )

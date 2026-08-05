@@ -21,6 +21,8 @@ def _ensure_project_root_on_path() -> None:
 
 HELPER_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "reasoner_tools_shell" / "runner_help" / "complete_bridge_list_private_impl.py"
 WINDOW_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "reasoner_tools_shell" / "runner_help" / "window_methods_private_impl.py"
+METADATA_HELPER_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "reasoner_tools_shell" / "runner_help" / "bridge_metadata_classification.py"
+WRAPPER_PATH = PROJECT_ROOT / "kanda_reasoner_app" / "reasoner_tools_shell" / "runner_help" / "bridge_list_wrapper_buttons_private_impl.py"
 
 
 
@@ -73,17 +75,25 @@ def _make_startup_zip(zip_path: Path) -> None:
         archive.writestr("03_GROUP_ASSIMILATION_INDEX.md", "No bridge here.\n")
         archive.writestr("07_daily_patch_delivery_guardrails.md", "Patch delivery bridge active.\n")
         archive.writestr("09_active_project_freeze_context.md", "freeze bridge memory active.\n")
+        archive.writestr(
+            "14_project_tool_boundary_canon.md",
+            "---\nprompt_id: project_tool_boundary_startup_bridge\nstatus: active\nload_type: always_startup\n---\n# Project Tool Boundary Startup Bridge\n",
+        )
 
 
 def _make_prompt_library_zip(zip_path: Path) -> None:
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.writestr(
             "ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_zip_fixture_dynamic.md",
-            "# ZIP Fixture Dynamic Bridge\n",
+            "---\nprompt_id: router_bridge_zip_fixture_dynamic\nstatus: active\nload_type: routed\n---\n# ZIP Fixture Dynamic Bridge\n",
         )
         archive.writestr(
-            "ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
-            "router_bridge_patch_delivery_contract\n",
+            "ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_zip_deprecated.md",
+            "---\nprompt_id: router_bridge_zip_deprecated\nstatus: deprecated\nload_type: never\nactive_route: false\n---\n# Deprecated ZIP Bridge\n",
+        )
+        archive.writestr(
+            "ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
+            "---\nprompt_id: project_tool_boundary_startup_bridge\nstatus: active\nload_type: always_startup\n---\n# Project Tool Boundary Startup Bridge\n",
         )
 
 
@@ -100,15 +110,32 @@ def _write_fixture_project(root: Path) -> Path:
         encoding="utf-8",
     )
     (patch_dir / "router_bridge_governed_implementation.md").write_text(
-        "# Governed Implementation Bridge\n",
+        "---\nprompt_id: router_bridge_governed_implementation\nstatus: deprecated\nload_type: never\nactive_route: false\n---\n# Governed Implementation Bridge\n",
         encoding="utf-8",
     )
     (patch_dir / "router_bridge_patch_delivery_contract.md").write_text(
-        "# Patch Delivery Bridge\n",
+        "---\nprompt_id: router_bridge_patch_delivery_contract\nstatus: deprecated\nload_type: never\nactive_route: false\n---\n# Patch Delivery Bridge\n",
+        encoding="utf-8",
+    )
+    (patch_dir / "router_bridge_user_detected_correction.md").write_text(
+        "---\nprompt_id: router_bridge_user_detected_correction\nstatus: active\nload_type: routed\n---\n# User-Detected Correction Incident Dispatcher\n",
+        encoding="utf-8",
+    )
+    boundary_dir = prompt_dir / "12_generalized_project_canons"
+    boundary_dir.mkdir(parents=True)
+    (boundary_dir / "project_tool_boundary_startup_bridge.md").write_text(
+        "---\nprompt_id: project_tool_boundary_startup_bridge\nstatus: active\nload_type: always_startup\n---\n# Project Tool Boundary Startup Bridge\n",
         encoding="utf-8",
     )
     (routing_dir / "prompt_navigation_index.md").write_text(
         "router_bridge_governed_implementation\nrouter_bridge_patch_delivery_contract\n",
+        encoding="utf-8",
+    )
+
+    prompt_tools = root / "kanda_prompt_workspace" / "prompt_tools"
+    prompt_tools.mkdir(parents=True)
+    (prompt_tools / "STARTUP_ROUTING_KERNEL_SOURCES.json").write_text(
+        '{"startup_sources":[{"load_order":11,"canonical_source":"prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md","generated_filename":"14_project_tool_boundary_canon.md","prompt_id":"project_tool_boundary_startup_bridge","load_mode":"always_startup","role":"Tool versus Project startup bridge"}]}\n',
         encoding="utf-8",
     )
 
@@ -133,12 +160,20 @@ def _write_fixture_project(root: Path) -> Path:
 def validate_static_files() -> None:
     _assert(HELPER_PATH.is_file(), "helper file missing")
     _assert(WINDOW_PATH.is_file(), "window file missing")
+    _assert(METADATA_HELPER_PATH.is_file(), "metadata helper file missing")
+    _assert(WRAPPER_PATH.is_file(), "wrapper file missing")
     _assert_ascii(HELPER_PATH)
     _assert_ascii(WINDOW_PATH)
+    _assert_ascii(METADATA_HELPER_PATH)
+    _assert_ascii(WRAPPER_PATH)
     _assert_line_count(HELPER_PATH)
     _assert_line_count(WINDOW_PATH)
+    _assert_line_count(METADATA_HELPER_PATH)
+    _assert_line_count(WRAPPER_PATH)
 
     helper_text = _read(HELPER_PATH)
+    metadata_helper_text = _read(METADATA_HELPER_PATH)
+    wrapper_text = _read(WRAPPER_PATH)
     window_text = _read(WINDOW_PATH)
     required_helper_fragments = [
         "KANDA_COMPLETE_BRIDGE_LIST_BEGIN",
@@ -151,24 +186,45 @@ def validate_static_files() -> None:
         "analysis_project_freeze_after_update_dir",
         "prompt_library.zip",
         "PurePosixPath",
+        "SELECTED PROJECT FEATURE HANDLING CHECKLIST",
+        "_is_active_on_demand_bridge",
     ]
     for fragment in required_helper_fragments:
         _assert(fragment in helper_text, "missing helper fragment: " + fragment)
+    for fragment in (
+        "STARTUP_ROUTING_KERNEL_SOURCES.json",
+        "is_active_on_demand_bridge",
+        "always_startup",
+        "never",
+        "active_route",
+    ):
+        _assert(fragment in metadata_helper_text, "missing metadata helper fragment: " + fragment)
+
+    required_wrapper_fragments = [
+        "KANDA_STARTUP_BRIDGE_LIST_BEGIN",
+        "KANDA_ON_DEMAND_BRIDGE_LIST_BEGIN",
+        "build_startup_bridge_list",
+        "build_on_demand_bridge_list",
+        "dynamic complete bridge list",
+    ]
+    for fragment in required_wrapper_fragments:
+        _assert(fragment in wrapper_text, "missing wrapper fragment: " + fragment)
 
     required_window_fragments = [
-        "Bridge List:",
-        "Complete Bridge List",
-        "copy_complete_bridge_list_button",
-        "complete_bridge_list_private_impl",
-        "copy_complete_bridge_list_to_clipboard",
+        "Bridges:",
+        "copy_startup_bridge_list_button",
+        "copy_on_demand_bridge_list_button",
+        "bridge_list_wrapper_buttons_private_impl",
+        "copy_startup_bridge_list_to_clipboard",
+        "copy_on_demand_bridge_list_to_clipboard",
     ]
     for fragment in required_window_fragments:
         _assert(fragment in window_text, "missing window fragment: " + fragment)
     _assert(
-        window_text.index("AI answer Routine Blueprint:")
-        < window_text.index("Complete Bridge List")
+        window_text.index("copy_patch_validate_freeze_routine_button")
+        < window_text.index("copy_startup_bridge_list_button")
         < window_text.index("collector_layout.addLayout(project_root_row)"),
-        "Complete Bridge List button is not near the AI answer routine controls",
+        "split bridge buttons are not near the AI answer routine controls",
     )
 
 
@@ -192,19 +248,41 @@ def validate_builder_output() -> None:
             "ON-DEMAND BRIDGES",
             "FROZEN BRIDGE MEMORIES",
             "Code Module Size Bridge",
-            "router_bridge_governed_implementation",
-            "router_bridge_patch_delivery_contract",
+            "project_tool_boundary_startup_bridge",
+            "router_bridge_user_detected_correction",
             "router_bridge_zip_fixture_dynamic",
+            "SELECTED PROJECT FEATURE HANDLING CHECKLIST",
+            "Never merge a selected Project feature into KANDA Tool source",
             "Beginning-of-Day Code Module Size Bridge Visibility v1",
             "400 lines or fewer",
             "500 lines or fewer",
         ]
         for fragment in required_output_fragments:
             _assert(fragment in output, "missing output fragment: " + fragment)
+        startup = output.split("ACTIVE STARTUP BRIDGES", 1)[1].split("ON-DEMAND BRIDGES", 1)[0]
         on_demand = output.split("ON-DEMAND BRIDGES", 1)[1].split("FROZEN BRIDGE MEMORIES", 1)[0]
         _assert(
-            on_demand.count("router_bridge_patch_delivery_contract") == 1,
-            "duplicate on-demand bridge item was not compacted",
+            "project_tool_boundary_startup_bridge" in startup,
+            "always-startup boundary bridge is absent from Startup Bridges",
+        )
+        _assert(
+            "project_tool_boundary_startup_bridge" not in on_demand,
+            "always-startup boundary bridge leaked into On-Demand Bridges",
+        )
+        for forbidden in (
+            "router_bridge_governed_implementation",
+            "router_bridge_patch_delivery_contract",
+            "router_bridge_zip_deprecated",
+        ):
+            _assert(forbidden not in on_demand, "inactive bridge leaked on-demand: " + forbidden)
+        on_demand_lines = on_demand.splitlines()
+        _assert(
+            sum(line.startswith("- router_bridge_user_detected_correction --") for line in on_demand_lines) == 1,
+            "active routed bridge missing or duplicated",
+        )
+        _assert(
+            sum(line.startswith("- router_bridge_zip_fixture_dynamic --") for line in on_demand_lines) == 1,
+            "active ZIP bridge missing or duplicated",
         )
     finally:
         bridge_impl.analysis_first_prompt_files_dir = original_first_prompt_files_dir
@@ -219,6 +297,7 @@ def main() -> int:
     print("VALIDATION OK: complete-bridge-list-button-v1")
     print("VALIDATION OK: complete-bridge-list-button-v1-validation-repair-v2")
     print("VALIDATION OK: complete-bridge-list-button-v1-validation-repair-v3")
+    print("VALIDATION OK: complete-bridge-classification-and-selected-project-feature-checklist-v1")
     print("STATUS: IN_SYNC")
     return 0
 

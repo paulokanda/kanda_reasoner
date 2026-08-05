@@ -29,6 +29,13 @@ class ProjectContext:
     json_complete_dir: Path
     active_project_id: str
     active_project_root_fingerprint: str
+    tool_project_slug: str = "kanda_reasoner"
+    tool_source_root: Path = Path(".")
+    active_project_support_root: Path = Path(".")
+    active_project_daily_work_root: Path = Path(".")
+    selection_mode: str = "EXPLICIT_EXTERNAL_PROJECT"
+    same_canonical_resolved_root: bool = False
+    self_hosting_mode: bool = False
 
     def as_dict(self) -> dict[str, str]:
         """Return a JSON-friendly representation of the project context."""
@@ -39,6 +46,19 @@ class ProjectContext:
             "json_complete_dir": str(self.json_complete_dir),
             "active_project_id": self.active_project_id,
             "active_project_root_fingerprint": self.active_project_root_fingerprint,
+            "tool_project_slug": self.tool_project_slug,
+            "tool_source_root": str(self.tool_source_root),
+            "active_project_support_root": str(
+                self.active_project_support_root
+            ),
+            "active_project_daily_work_root": str(
+                self.active_project_daily_work_root
+            ),
+            "selection_mode": self.selection_mode,
+            "same_canonical_resolved_root": (
+                self.same_canonical_resolved_root
+            ),
+            "self_hosting_mode": self.self_hosting_mode,
         }
 
 

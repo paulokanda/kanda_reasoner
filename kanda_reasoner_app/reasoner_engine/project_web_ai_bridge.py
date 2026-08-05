@@ -8,10 +8,12 @@ import json
 from pathlib import Path
 from typing import Mapping
 
+from kanda_reasoner_app.project_operation_authority import (
+    ProjectOperationAuthorityError,
+    resolve_registered_project_boundary,
+)
 from kanda_reasoner_app.project_support_boundary import (
-    ProjectSupportBoundaryError,
     ProjectToolBoundaryIdentity,
-    resolve_project_tool_boundary_identity,
 )
 from kanda_reasoner_app.reasoner_engine.project_web_ai_apply_receipts import (
     assert_project_web_ai_handoff_fresh,
@@ -45,8 +47,8 @@ def _resolved_project_identity(project_root: str | Path) -> ProjectToolBoundaryI
     if not text:
         raise ProjectNotSelectedError("Select an active Project source root first.")
     try:
-        identity = resolve_project_tool_boundary_identity(text)
-    except ProjectSupportBoundaryError as exc:
+        identity = resolve_registered_project_boundary(text)
+    except ProjectOperationAuthorityError as exc:
         raise ProjectRootInvalidError(str(exc)) from exc
     root = identity.active_project_root
     if not root.exists() or not root.is_dir():

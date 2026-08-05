@@ -2,11 +2,11 @@
 prompt_id: session_start_upload_checklist
 prompt_code: KPR-01-002
 title: Session Start Upload Checklist
-version: 2.0
+version: 2.1
 status: active
 load_type: always_startup
 owner_box: 01_session_start_and_navigation
-source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+source_stage: project-ready-check-active-project-display-v1
 ---
 
 # Session Start Upload Checklist
@@ -67,9 +67,25 @@ Include:
 - compact Error Memory status;
 - second-upload handoff status;
 - Tier-1 gate status;
-- next action.
+- next action;
+- active Project display name immediately before the ready token.
 
-End with `WAIT_FOR_TASK` only when the required handoff is complete.
+Use this exact tail:
+
+```text
+Next action:
+PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>
+WAIT_FOR_TASK
+```
+
+Derive `<ACTIVE PROJECT DISPLAY NAME>` from the selected active Project name or
+slug, not from the KANDA Tool name. Replace underscores with spaces and convert
+the result to uppercase. For example, `my_project` becomes `MY PROJECT`.
+`KANDA REASONER` is valid only when KANDA Reasoner itself is the selected active
+Project.
+
+End with `WAIT_FOR_TASK` only when the required handoff is complete, and only
+after the `PROJECT IN USE:` line.
 
 ## Hard blockers
 

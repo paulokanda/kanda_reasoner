@@ -7,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from .handoff_boundary_contract import build_handoff_trust_envelope
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
@@ -22,7 +23,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "routing_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.routing_manifest_builder"
-GENERATOR_VERSION = "1.2.0"
+GENERATOR_VERSION = "1.3.0"
 
 
 def _utc_now() -> str:
@@ -132,8 +133,13 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
             "version": GENERATOR_VERSION,
         },
         "generated_at_utc": _utc_now(),
+        "handoff_trust": build_handoff_trust_envelope(context),
         "project": {
             "project_slug": context.project_slug,
+            "active_project_id": context.active_project_id,
+            "active_project_root_fingerprint": (
+                context.active_project_root_fingerprint
+            ),
             "project_root_marker": "<PROJECT_ROOT>",
             "evidence_root_relative": "show_project_to_AI",
             "json_complete_relative": "show_project_to_AI/second_prompt_files",

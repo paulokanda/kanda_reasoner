@@ -211,7 +211,7 @@ def build_final_prompt_group(owner) -> QGroupBox:
     intro = QLabel(
         "The complete routed prompt appears here automatically after validation. "
         "You can edit it, save the edited version as an audit artifact, and copy "
-        "it back to browser ChatGPT."
+        "it to the selected external Python-coding assistant."
     )
     intro.setObjectName("prompt_router_reasoner_complete_prompt_editor_intro")
     intro.setWordWrap(True)
@@ -251,13 +251,13 @@ def build_final_prompt_group(owner) -> QGroupBox:
     owner.clear_final_prompt_button.setToolTip("Clear only the complete prompt editor.")
     button_row.addWidget(owner.clear_final_prompt_button)
 
-    owner.copy_manual_router_final_prompt_button = QPushButton("Copy")
+    owner.copy_manual_router_final_prompt_button = QPushButton("Copy and Open External AI")
     owner.copy_manual_router_final_prompt_button.setObjectName(
         "prompt_router_reasoner_copy_manual_router_final_prompt_button"
     )
     owner.copy_manual_router_final_prompt_button.setEnabled(False)
     owner.copy_manual_router_final_prompt_button.setToolTip(
-        "Copy the editable final prompt to paste back into browser ChatGPT."
+        "Copy the editable final prompt and open the selected external assistant."
     )
     button_row.addWidget(owner.copy_manual_router_final_prompt_button)
     button_row.addStretch(1)

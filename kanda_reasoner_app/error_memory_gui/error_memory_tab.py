@@ -76,6 +76,7 @@ from kanda_reasoner_app.error_memory_gui._clipboard_export import (
     copy_ai_assisted_intake_error_draft_to_clipboard,
     copy_complete_error_memory_json_to_clipboard,
     copy_correct_error_delivery_canon_to_clipboard,
+    copy_send_zip_errors_prompt_to_clipboard,
     copy_error_draft_to_clipboard,
     copy_error_lesson_intake_blueprint_to_clipboard,
     copy_path_to_clipboard,
@@ -146,7 +147,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         """
         
         super().__init__()
-        self._project_root = Path.cwd()
+        self._project_root: Path | None = None
         self._last_received_lesson: dict[str, Any] | None = None
         self._selected_lesson_id = ''
         self._undo_deleted_lesson: dict[str, Any] | None = None
@@ -180,7 +181,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         self._project_root_controls_moved = False
         self.project_root_header_label = QLabel('Project Root:')
         self.project_root_header_label.setStyleSheet('color: #0B3D91; font-weight: bold;')
-        self.project_root_value_label = QLineEdit(str(self._project_root))
+        self.project_root_value_label = QLineEdit("")
         self.project_root_value_label.setObjectName('error_memory_project_root_edit')
         self.project_root_value_label.setReadOnly(True)
         self.project_root_value_label.setPlaceholderText('Project root')
@@ -195,12 +196,25 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         self.copy_second_prompt_path_button = QPushButton('Get path to Second Prompt Files')
         self.copy_correct_error_delivery_button = QPushButton('Get correct way to send me errors')
         self.copy_correct_error_delivery_button.setStyleSheet('color: #FF8C00; font-weight: bold;')
+        self.send_zip_errors_button = QPushButton('Send Zip Errors')
+        self.send_zip_errors_button.setStyleSheet('color: #FF8C00; font-weight: bold;')
+        self.send_zip_errors_button.setToolTip('Copy the generalized self-contained Error Memory lesson intake ZIP prompt.')
+        self.project_selection_status_label = QLabel(
+            "No Project selected. Select a Project in the Show Project to AI tab. "
+            "Project Error Memory will load automatically after selection."
+        )
+        self.project_selection_status_label.setWordWrap(True)
+        self.project_selection_status_label.setStyleSheet(
+            "color: #9A6700; font-weight: bold; padding: 4px 0;"
+        )
+        outer.addWidget(self.project_selection_status_label)
         path_action_row = QHBoxLayout()
         path_action_row.addWidget(self.open_memory_button)
         path_action_row.addWidget(self.open_second_prompt_button)
         path_action_row.addWidget(self.copy_memory_path_button)
         path_action_row.addWidget(self.copy_second_prompt_path_button)
         path_action_row.addWidget(self.copy_correct_error_delivery_button)
+        path_action_row.addWidget(self.send_zip_errors_button)
         path_action_row.addStretch(1)
         outer.addLayout(path_action_row)
         splitter = QSplitter(Qt.Horizontal)
@@ -223,7 +237,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         intake_layout.addWidget(self.raw_error_edit, 1)
         intake_buttons_1 = QHBoxLayout()
         self.receive_formulary_button = QPushButton('Paste error formatted from AI')
-        self.copy_ai_assisted_intake_error_draft_button = QPushButton('Copy error/draft')
+        self.copy_ai_assisted_intake_error_draft_button = QPushButton('Copy and Open External AI')
         self.clean_intake_button = QPushButton('Clean')
         self.delete_draft_button = QPushButton('Del Draft')
         intake_buttons_1.addWidget(self.receive_formulary_button)
@@ -246,7 +260,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         intake_buttons_3.addStretch(1)
         intake_layout.addLayout(intake_buttons_3)
         self.receive_formulary_button.setToolTip("Paste AI's formatted Error Memory JSON block; KANDA loads it into the intake window and Error Editor without saving until Memorize Error.")
-        self.copy_ai_assisted_intake_error_draft_button.setToolTip('Copy the current AI-assisted intake text plus the active-ready Error Memory templates so AI can correct or create valid intake JSON.')
+        self.copy_ai_assisted_intake_error_draft_button.setToolTip('Copy the current intake plus active-ready templates and open the selected external Python-coding assistant. The answer remains untrusted until imported and reviewed.')
         self.clean_intake_button.setToolTip('Clear both AI-assisted intake and Error Editor. It remembers the dismissed pending source for this session, but it does not delete disk-backed drafts.')
         self.delete_draft_button.setToolTip('Delete the current Error Memory draft completely: AI-assisted intake, Error Editor, pending source files, matching draft Lessons row, and stale index entry.')
         self.memorize_error_button.setToolTip('Save the formatted lesson currently shown in Error Editor/intake only when it is active-ready. Draft lessons use Mark Draft, or AI correction before Mark Active.')
@@ -266,7 +280,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         preview_layout.addWidget(self.received_preview_edit, 1)
         preview_buttons = QHBoxLayout()
         self.save_preview_button = QPushButton('Save')
-        self.copy_error_draft_button = QPushButton('Copy error/draft')
+        self.copy_error_draft_button = QPushButton('Copy and Open External AI')
         self.clean_editor_button = QPushButton('Clean')
         self.undo_button = QPushButton('Undo')
         self.delete_button = QPushButton('Delete')
@@ -276,12 +290,22 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         self.export_errors_button.setObjectName('error_memory_export_errors_button')
         self.import_errors_button.setObjectName('error_memory_import_errors_button')
         self.save_preview_button.setToolTip('Save the JSON currently shown in Error Editor into the canonical lesson store.')
-        self.copy_error_draft_button.setToolTip('Copy the current Error Editor text plus the active-ready Error Memory templates so AI can correct or create valid intake JSON.')
+        self.copy_error_draft_button.setToolTip('Copy the Error Editor draft plus active-ready templates and open the selected external Python-coding assistant. This does not save or memorize the answer.')
         self.clean_editor_button.setToolTip('Clear both Error Editor and AI-assisted intake.')
         self.undo_button.setToolTip('Restore the most recently deleted lesson, or reload the selected lesson if nothing was deleted.')
         self.delete_button.setToolTip('Delete the selected lesson from the canonical Error Memory store. Undo is available until another delete.')
-        self.export_errors_button.setToolTip('Choose a folder and save a portable copy of every valid lesson from the current project, including inactive lessons.')
-        self.import_errors_button.setToolTip('Choose a KANDA Error Memory export folder and merge only unique validated lessons into the current project. Current lessons are never deleted or replaced.')
+        self.export_errors_button.setToolTip(
+            'Create a complete portable backup of every valid saved lesson '
+            'from the current project, across all statuses and without the '
+            'compact AI-export cap. The export fails instead of creating a '
+            'partial backup.'
+        )
+        self.import_errors_button.setToolTip(
+            'Choose a KANDA Error Memory backup folder and merge only unique '
+            'validated lessons into the current project. Duplicate IDs, '
+            'fingerprints, and canonical error families are skipped; current '
+            'lessons are never deleted or replaced.'
+        )
         self.export_button.setToolTip('Copy the complete Error Memory JSON payload to the clipboard. This button does not copy the second_prompt_files path.')
         preview_buttons.addWidget(self.save_preview_button)
         preview_buttons.addWidget(self.copy_error_draft_button)
@@ -336,6 +360,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         self.copy_memory_path_button.clicked.connect(lambda: self._copy_path_to_clipboard(resolve_project_error_memory_root(self._project_root), 'Error Memory folder'))
         self.copy_second_prompt_path_button.clicked.connect(lambda: self._copy_path_to_clipboard(resolve_second_prompt_files_root(self._project_root), 'Second Prompt Files'))
         self.copy_correct_error_delivery_button.clicked.connect(lambda: copy_correct_error_delivery_canon_to_clipboard(self))
+        self.send_zip_errors_button.clicked.connect(lambda: copy_send_zip_errors_prompt_to_clipboard(self))
         self.copy_error_draft_button.clicked.connect(self._copy_error_draft_to_clipboard)
         self.copy_ai_assisted_intake_error_draft_button.clicked.connect(self._copy_ai_assisted_intake_error_draft_to_clipboard)
         self.heuristic_correction_button.clicked.connect(self._apply_heuristic_correction_to_error_editor)

@@ -1,10 +1,14 @@
 # project-path: kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/window_state.py
-"""Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
+"""Private persisted-state helpers for the Reasoner tools main window."""
 
 from __future__ import annotations
 
-from pathlib import Path
 import json
+from pathlib import Path
+
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_tool_support_root,
+)
 
 from ..app_constants import _PREFS_FILENAME, _PROJECT_ROOT
 
@@ -15,44 +19,72 @@ class _WindowStateMixin:
     """Private implementation mixin for ReasonerToolsWindow."""
 
     @staticmethod
+    def _legacy_prefs_path() -> Path:
+        """Return the retired Tool-source preference path for migration only."""
+        return _PROJECT_ROOT / _PREFS_FILENAME
+
+    @staticmethod
     def _prefs_path() -> Path:
-        """Support prefs path behavior.
-        
-        Returns
-        -------
-        Path
-            The resolved path.
-        """
-        
+        """Return the Tool-owned preference path outside Tool source."""
+        return canonical_tool_support_root(_PROJECT_ROOT) / _PREFS_FILENAME
+
+    @classmethod
+    def _migrate_legacy_prefs_if_needed(cls) -> None:
+        """Copy legacy preferences to Tool Support without deleting history."""
+        source = cls._legacy_prefs_path()
+        target = cls._prefs_path()
+        if target.exists() or not source.exists() or not source.is_file():
+            return
         try:
-            return _PROJECT_ROOT / _PREFS_FILENAME
-        except Exception:
-            return _PROJECT_ROOT / _PREFS_FILENAME
+            payload = json.loads(source.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError):
+            return
+        if not isinstance(payload, dict):
+            return
+        try:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(
+                json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+        except OSError:
+            return
 
     def _load_prefs(self) -> dict:
-        """Support load prefs behavior.
-        
-        Returns
-        -------
-        dict
-            The mapped values.
-        """
-        
+        """Load Tool-owned shell preferences after safe legacy migration."""
+        self._migrate_legacy_prefs_if_needed()
         path = self._prefs_path()
         try:
             if path.exists():
-                return json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                if isinstance(payload, dict):
+                    return payload
+        except (OSError, UnicodeError, json.JSONDecodeError):
             pass
         return {}
 
     def _save_prefs(self) -> None:
-        """Support save prefs behavior.
-        """
-        
+        """Persist lightweight shell state outside the Tool source tree."""
         path = self._prefs_path()
+        boundary = getattr(self, "current_project_boundary", None)
         payload = {
-            "last_project_root": str(self.current_project_root) if self.current_project_root else "",
+            "last_project_root": (
+                str(self.current_project_root)
+                if self.current_project_root is not None
+                else ""
+            ),
+            "project_selection_mode": (
+                boundary.selection_mode.value if boundary is not None else ""
+            ),
+            "stable_project_id": (
+                boundary.active_project_id if boundary is not None else ""
+            ),
+            "project_root_fingerprint": (
+                boundary.active_project_root_fingerprint
+                if boundary is not None
+                else ""
+            ),
         }
         tab_order = getattr(self, "_prefs", {}).get("tab_order", [])
         if isinstance(tab_order, list):
@@ -61,42 +93,39 @@ class _WindowStateMixin:
                 for tab_id in tab_order
                 if str(tab_id).strip()
             ]
-        # Note: project_ignore_rules are saved directly by IgnoreRulesTab; we do not overwrite them here.
         try:
-            # merge with existing prefs to preserve ignore_rules
+            path.parent.mkdir(parents=True, exist_ok=True)
             if path.exists():
                 existing = json.loads(path.read_text(encoding="utf-8"))
-                existing.update(payload)
-                payload = existing
-            path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-        except Exception:
+                if isinstance(existing, dict):
+                    existing.update(payload)
+                    payload = existing
+            temporary = path.with_name(path.name + ".tmp")
+            temporary.write_text(
+                json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+            temporary.replace(path)
+        except (OSError, UnicodeError, json.JSONDecodeError):
             pass
 
     @staticmethod
     def _accept_close_event_safely(event) -> None:
-        """Accept a Qt close event without letting shutdown cleanup block exit."""
+        """Accept a Qt close event without letting cleanup block exit."""
         try:
             event.accept()
         except Exception:
             pass
 
     def closeEvent(self, event) -> None:
-        """Persist lightweight window state while keeping shutdown non-blocking.
-
-        PyCharm/Qt can surface a noisy KeyboardInterrupt traceback if the
-        process is interrupted while Python is inside this close hook.  Closing
-        the main window should never be blocked by preference-write failures or
-        late shutdown interruptions, so this handler saves preferences on a
-        best-effort basis and then accepts the close event if anything goes
-        wrong during shutdown.
-        """
+        """Persist lightweight state while keeping shutdown non-blocking."""
         try:
             self._save_prefs()
         except KeyboardInterrupt:
             self._accept_close_event_safely(event)
             return
         except Exception:
-            # Preference persistence is best-effort only; never block closing.
             pass
 
         try:

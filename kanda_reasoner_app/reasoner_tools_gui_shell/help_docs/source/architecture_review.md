@@ -20,7 +20,7 @@ It does not mean that every warning must be fixed. It gives evidence so you can 
 6. Keep Require confirm before write selected.
 7. Click Validate Project.
 8. Wait for the result and read Project Audit Results.
-9. Save or copy the results before asking an AI to help.
+9. Save, copy, or use **Copy and Open External AI** before asking an AI to help. The external route is manual and advisory.
 10. Use the advanced child tabs only when the audit identifies a specific large file or refactor need.
 
 ## Main Audit Project sections
@@ -98,6 +98,10 @@ When selected, copied audit results can include compact evidence from the latest
 ### Copy Audit Results
 
 Copies the current audit report to the clipboard. You can paste it into an AI conversation, document, or issue report.
+
+### Copy and Open External AI
+
+Copies the current audit evidence, including Refactor Report evidence when selected, and opens the configured external Python-coding assistant. The user pastes manually. The external answer is advisory only: it cannot change audit pass/fail, write Project source, authorize a patch, create Error Memory, or write Freeze memory.
 
 ### Warning Heuristic Resolver
 

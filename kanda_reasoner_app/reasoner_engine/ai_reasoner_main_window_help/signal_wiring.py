@@ -5,6 +5,9 @@ from __future__ import annotations
 
 from typing import Any
 
+from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.local_ai_clipboard_actions import (
+    connect_local_ai_clipboard_actions,
+)
 from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.project_qa_copy_error_ask_controller import (
     install_project_qa_copy_error_ask_handler,
 )
@@ -15,6 +18,7 @@ __all__ = ["connect_main_window_signals"]
 def connect_main_window_signals(window: Any) -> None:
     """Connect all main window widget signals to their current callbacks."""
     install_project_qa_copy_error_ask_handler(window)
+    connect_local_ai_clipboard_actions(window)
     window.pick_project_root_button.clicked.connect(window.pick_project_root)
     window.run_analysis_button.clicked.connect(window.run_analysis)
     window.load_button.clicked.connect(window.load_json)

@@ -1,88 +1,27 @@
-# KANDA Reasoner Portable Builder
+# KANDA Reasoner Portable hardening state
 
-This folder is the independent Portable Distribution Box.
+The stable Portable builder identity remains `kanda-reasoner-portable-builder-install-v1r12`.
 
-It never invokes, refreshes, publishes, moves, deletes, or owns Show Project
-to AI output.
+Completed hardening capabilities, in order:
 
-## Run
+1. `registry-boundary-gate`
+2. `packaged-gui-smoke-isolation`
+3. `governed-root-exact-rollback`
+4. `runtime-path-hash-allowlist`
+5. `exact-builder-member-governance`
+6. `external-build-control-hash-binding`
 
-```powershell
-& "C:\Users\paulo\AppData\Local\Programs\Python\Python312\python.exe" `
-    "E:\kanda_reasoner\portable\create_kanda_reasoner_portable.py"
-```
+Stage 6 is identified separately by
+`kanda-reasoner-portable-external-build-control-hash-binding-v1r1`.
 
-Type:
+Seven external build-control authorities are bound by exact relative path, role,
+size, and SHA-256: the PyInstaller specification, both import-time package
+initializers, the archive-policy owner, its Kilo-workspace dependency, and the
+two policy manifests. They are checked during environment preflight, immediately
+before PyInstaller, and immediately after PyInstaller. Any mutation fails closed
+before staging or publication.
 
-```text
-BUILD KANDA PORTABLE
-```
-
-After the clean extracted application opens, test the main application,
-Project Structure 3D, Show Project, Audit Project, and confirm Web AI credentials
-start blank. Then type:
-
-```text
-YES
-```
-
-Final output:
-
-```text
-E:\KandaReasoner-Windows-Portable.zip
-```
-
-## Replace an existing output
-
-```powershell
-& "C:\Users\paulo\AppData\Local\Programs\Python\Python312\python.exe" `
-    "E:\kanda_reasoner\portable\create_kanda_reasoner_portable.py" `
-    --replace-existing
-```
-
-The script additionally requires:
-
-```text
-REPLACE KANDA PORTABLE
-```
-
-The existing drive-root ZIP is not replaced until the new candidate passes all
-build, archive, clean-extraction, GUI-smoke, project-immutability, and Project
-Support immutability checks.
-
-## Box boundaries
-
-Project source:
-
-```text
-E:\kanda_reasoner
-```
-
-Project Support:
-
-```text
-E:\kanda_reasoner_show_project_to_AI
-```
-
-Transient build:
-
-```text
-E:\kanda_reasoner_delete_after_daily_work\portable_build\<run>
-```
-
-Final Portable:
-
-```text
-E:\KandaReasoner-Windows-Portable.zip
-```
-
-
-## Non-interactive destination
-
-Use an existing folder explicitly:
-
-```powershell
-C:\Users\paulo\AppData\Local\Programs\Python\Python312\python.exe `
-    E:\kanda_reasoner\portable\create_kanda_reasoner_portable.py `
-    --output-dir E:\
-```
+The exact `portable/` builder member baseline is now 29 files and 0 directories.
+Production Portable creation remains blocked until Stage 6 is independently
+validated, frozen, memorized, and a separate final readiness authorization
+explicitly opens the production gate.

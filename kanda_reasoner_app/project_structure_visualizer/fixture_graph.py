@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .graph_schema import validate_graph_snapshot
+from .graph_structure_analysis import analyze_graph_structure
 
 __all__ = ["build_fixture_graph"]
 
@@ -355,6 +356,7 @@ def build_fixture_graph(project_root: Path | None = None) -> dict[str, Any]:
     nodes = _fixture_nodes()
     edges = _fixture_edges()
     _apply_relationship_counts(nodes, edges)
+    structure_findings = analyze_graph_structure(nodes, edges)
     project_slug = project_root.name if project_root is not None else "kanda_reasoner"
     snapshot: dict[str, Any] = {
         "schema_version": "1.0",
@@ -392,6 +394,7 @@ def build_fixture_graph(project_root: Path | None = None) -> dict[str, Any]:
             "node_count": len(nodes),
             "edge_count": len(edges),
             "fixture": True,
+            "structure_findings": structure_findings,
         },
     }
     validate_graph_snapshot(snapshot)

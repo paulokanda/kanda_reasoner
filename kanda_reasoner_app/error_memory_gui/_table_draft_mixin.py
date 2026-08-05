@@ -332,7 +332,7 @@ class ErrorMemoryTableDraftMixin:
         """Return a schema-saveable draft lesson without inventing semantics."""
         return canonical_draft_lesson_from_partial(
             lesson,
-            project_slug=self._current_project_root().name,
+            project_slug=self._require_project_root().name,
             source_text=source_text,
         )
 

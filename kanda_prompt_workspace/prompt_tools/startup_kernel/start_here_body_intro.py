@@ -6,6 +6,7 @@ from startup_kernel.constants import (
     FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION,
     MANIFEST_FILENAME,
     PROJECT_READY_CHECK_TITLE,
+    PROJECT_IN_USE_TEMPLATE,
     README_FILENAME,
     SECOND_UPLOAD_READY_ACTION,
     STABLE_BOOT_FILENAME,
@@ -153,9 +154,12 @@ Compact Error Memory loaded:
 Second-upload handoff loaded:
 Tier-1 gates active:
 Next action:
+{PROJECT_IN_USE_TEMPLATE}
 {SECOND_UPLOAD_READY_ACTION}
 ```
 
 Use `Same physical root: YES` only when the active project root and KANDA tool root are intentionally the same root; otherwise use `NO`. For this project, `kanda_reasoner` can be both the active project and the KANDA tool, so the distinction must be stated explicitly instead of merged silently.
 
-Only after `{PROJECT_READY_CHECK_TITLE}` ends with `Next action: {SECOND_UPLOAD_READY_ACTION}` should the AI handle the real project task."""
+Derive `<ACTIVE PROJECT DISPLAY NAME>` from the selected active Project name or slug, never from the KANDA Tool name. Replace underscores with spaces and convert the result to uppercase. For example, `my_project` becomes `MY PROJECT`. Use `KANDA REASONER` only when KANDA Reasoner itself is the selected active Project.
+
+Only after `{PROJECT_READY_CHECK_TITLE}` places `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>` immediately before `{SECOND_UPLOAD_READY_ACTION}` should the AI handle the real project task."""

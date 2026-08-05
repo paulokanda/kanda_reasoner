@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
+from ._active_scope import _build_active_source_scope
 from ._shadow_audit_ast import (
     _collect_explicit_all,
     _collect_public_symbols,
@@ -26,6 +27,9 @@ DEFAULT_SHADOW_SKIP_DIR_NAMES = frozenset(
         ".ruff_cache",
         ".tox",
         ".venv",
+        ".project_reference",
+        "_project_reference",
+        "project_freeze_ledger",
         "__pycache__",
         "build",
         "dist",
@@ -62,13 +66,14 @@ def iter_shadow_audit_files(
     """Return active Python files considered by the shadow conflict audit."""
     root = Path(project_root).resolve()
     allowed = _normalize_suffixes(suffixes)
+    scope = _build_active_source_scope(root)
     files: list[Path] = []
     for candidate in root.rglob("*"):
         if not candidate.is_file():
             continue
         if candidate.suffix.lower() not in allowed:
             continue
-        if _is_in_skipped_dir(candidate, root):
+        if not scope.includes(candidate, exclude_tests=True):
             continue
         files.append(candidate)
     return sorted(files, key=lambda item: str(item).lower())
@@ -330,26 +335,9 @@ def _normalize_suffixes(suffixes: Iterable[str] | None) -> set[str]:
 
 
 def _is_in_skipped_dir(path: Path, root: Path) -> bool:
-    """Support is in skipped dir behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    root : Path
-        The root path.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    try:
-        parts = path.relative_to(root).parts[:-1]
-    except ValueError:
-        parts = path.parts[:-1]
-    return any(part in DEFAULT_SHADOW_SKIP_DIR_NAMES for part in parts)
+    """Return whether a path is outside active production Python scope."""
+    scope = _build_active_source_scope(root)
+    return not scope.includes(path, exclude_tests=True)
 
 
 def _display_path(path: Path, root: Path | None) -> str:

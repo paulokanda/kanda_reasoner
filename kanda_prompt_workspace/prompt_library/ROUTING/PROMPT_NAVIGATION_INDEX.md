@@ -208,6 +208,18 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
   owner dispatch. The compact file is a deprecated redirect with no route.
 ## Patch Delivery And Validation (`05_patch_delivery_and_validation`)
 
+### `self_contained_freeze_entry_intake_zip` - Self-Contained Freeze Entry Intake ZIP
+
+- **Code:** `KPR-03-007`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md`
+- **Status / load:** `active` / `on_request`
+- **When to load:** When the user requests one self-contained ZIP that loads the currently validated feature into Freeze Feature After Update -> New Local Freeze Entry for the currently selected Project.
+- **When not to load:** Do not load for ordinary source patch installation, direct frozen-memory writes, unvalidated features, or freeze-form text only.
+- **Triggers:** `Send zip freeze`; `create freeze loader ZIP`; `load current feature into New Local Freeze Entry`; `self-contained freeze intake ZIP`; `prepare freeze entry ZIP`
+- **Aliases:** `KPR-03-007`; `self_contained_freeze_entry_intake_zip`; `Send zip freeze`; `send zip freeze`; `self-contained freeze loader ZIP`; `New Local Freeze Entry ZIP`
+- **Required companion prompts:** `freeze_code_intake_and_form_protocol`; `pre_output_contract_gates`; `implementation_and_delivery_protocol`
+- **Optional companion prompts:** `terminal_cleanup_contract`; `project_tool_boundary_canon`; `patch_install_delivery_error_register`
+
 ### `bundle_gated_development_workflow` - Bundle-Gated Development Workflow
 
 - **Code:** `KPR-05-002`
@@ -249,12 +261,12 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Code:** `KPR-05-005`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md`
 - **Status / load:** `active` / `on_request`
-- **When to load:** When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.
-- **When not to load:** Do not load for ordinary delivery when no reusable recovery handoff is requested.
-- **Triggers:** `Answer, Validate, Freeze, Memorize Error`; `Show Project to AI recovery routine`; `collector export failed`; `patch validation freeze recovery`; `copy recovery routine`
+- **When to load:** When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.
+- **When not to load:** Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.
+- **Triggers:** `Answer, Validate, Freeze, Memorize Error`; `one zip separate install validate freeze error memory commands`; `compact update release`; `finish release phases`; `copy recovery routine`
 - **Aliases:** `KPR-05-005`; `patch_validate_freeze_error_memory_routine_blueprint`; `Show Project to AI recovery blueprint`; `Answer Validate Freeze Memorize Error`; `recovery routine owner dispatch`
-- **Required companion prompts:** `project_tool_boundary_canon`; `brick_wall_comprehensive_quality_gate`
-- **Optional companion prompts:** `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `terminal_cleanup_contract`; `freeze_code_intake_and_form_protocol`; `error_memory_ai_formulary_startup_canon`
+- **Required companion prompts:** `project_tool_boundary_canon`; `brick_wall_comprehensive_quality_gate`; `durable_document_artifact_routing_canon`
+- **Optional companion prompts:** `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `terminal_cleanup_contract`; `freeze_code_intake_and_form_protocol`; `self_contained_freeze_entry_intake_zip`; `error_memory_ai_formulary_startup_canon`; `self_contained_error_memory_lesson_intake_zip`
 
 ### `patch_install_delivery_error_register` - Patch Install Delivery Active Regression Index
 
@@ -280,6 +292,18 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-05-007`; `terminal_cleanup_contract`; `terminal cleanup contract`; `PowerShell cleanup`; `clean PowerShell prompt`
 - **Required companion prompts:** None
 - **Optional companion prompts:** `pre_output_contract_gates`; `implementation_and_delivery_protocol`; `patch_install_delivery_error_register`
+
+### `self_contained_error_memory_lesson_intake_zip` - Self-Contained Error Memory Lesson Intake ZIP
+
+- **Code:** `KPR-05-008`
+- **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md`
+- **Status / load:** `active` / `on_request`
+- **When to load:** When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for approval in the currently selected Project.
+- **When not to load:** Do not load for a single pasted lesson JSON, direct canonical memorization, ordinary patch delivery, or when no reusable lesson candidate exists.
+- **Triggers:** `Send Zip Errors`; `create error lesson loader ZIP`; `self-contained Error Memory ZIP`; `stage Error Memory lessons for approval`; `pending error lesson intake`
+- **Aliases:** `KPR-05-008`; `self_contained_error_memory_lesson_intake_zip`; `Send Zip Errors`; `send zip errors`; `self-contained Error Memory ZIP`; `Error Memory lesson intake loader`
+- **Required companion prompts:** `error_memory_ai_formulary_startup_canon`; `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`
+- **Optional companion prompts:** `terminal_cleanup_contract`; `project_tool_boundary_canon`; `patch_install_delivery_error_register`
 
 ### `router_bridge_user_detected_correction` - User-Detected Correction Incident Dispatcher
 
@@ -992,3 +1016,12 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When a KANDA help page must reproduce the established book-style layout and design model exactly.
 - **Required companion:** `desktop_help_document_layout_canon`
 - **Aliases:** `KPR-12-015`; `KANDA help exact layout`; `kanda_desktop_help_exact_layout_blueprint`
+
+## Self-contained Freeze/Error intake bridge
+
+`KPR-05-005 patch_validate_freeze_error_memory_routine_blueprint` is the lifecycle bridge between:
+
+- `KPR-03-007 self_contained_freeze_entry_intake_zip`; and
+- `KPR-05-008 self_contained_error_memory_lesson_intake_zip`.
+
+They remain separate specialist ZIP owners. Route shared selected-Project identity, feature identity, patch identity, focused validator, and current validation evidence through KPR-05-005. Never merge artifacts or human approval gates.

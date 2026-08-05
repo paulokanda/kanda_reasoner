@@ -7,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from .handoff_boundary_contract import build_handoff_trust_envelope
 from .hashing import sha256_file
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
@@ -23,7 +24,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "bundle_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.bundle_manifest_builder"
-GENERATOR_VERSION = "1.4.0"
+GENERATOR_VERSION = "1.5.0"
 
 BUNDLE_ARTIFACT_ORDER = (
     "ai_briefing_json",
@@ -234,6 +235,7 @@ def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[
             "version": GENERATOR_VERSION,
         },
         "generated_at_utc": datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+        "handoff_trust": build_handoff_trust_envelope(context),
         "project": {
             "project_slug": context.project_slug,
             "active_project_id": context.active_project_id,

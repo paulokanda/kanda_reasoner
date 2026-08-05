@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 
@@ -9,6 +10,8 @@ __all__ = [
     "build_answer_validate_freeze_memorize_wrapper",
     "copy_answer_validate_freeze_memorize_to_clipboard",
 ]
+
+_LOGGER = logging.getLogger(__name__)
 
 _PROMPT_REL = Path(
     "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
@@ -55,6 +58,11 @@ def build_answer_validate_freeze_memorize_wrapper(
         "Hard boundary: selected Project owns payload, install, live validation, Freeze memory, and Error Memory.",
         "Tool boundary: KANDA Reasoner owns this prompt and governance UI; do not patch it for an external Project failure unless a separate Tool defect is proven.",
         "Continuation rule: resume from the last reliable marker; need new training prompt: NO.",
+        "Compact update rule: use current uploaded artifacts, pasted compact updates, local validation output, Freeze snippets, and Error Memory evidence as one continuation context.",
+        "Single-ZIP rule: one primary feature release uses one self-contained update ZIP with packaged install and validation scripts; do not create separate installer, validator, runner, or disposable validation-report downloads.",
+        "Terminal phase rule: output separate INSTALL, VALIDATE, FREEZE, and ERROR MEMORY terminal blocks in that order; no block may execute a later phase.",
+        "Freeze rule: prepare Freeze only after VALIDATION OK and STATUS: IN_SYNC; Preview and Confirm and Write remain human-only.",
+        "Error Memory rule: create a separate pending-intake ZIP and terminal block only for verified reusable failures after duplicate checks; Memorize Error remains human-only.",
         "PowerShell paste rule: every user-facing block is one independent paste unit; prefer direct packaged scripts; no else, elseif, or finally.",
         "",
         _PROMPT_BEGIN,
@@ -65,7 +73,7 @@ def build_answer_validate_freeze_memorize_wrapper(
     return "\n".join(lines) + "\n"
 
 
-def copy_answer_validate_freeze_memorize_to_clipboard(window: object) -> None:
+def copy_answer_validate_freeze_memorize_to_clipboard(window: object) -> bool:
     """Copy the resolved cross-project routine wrapper to the clipboard."""
     try:
         from PySide6.QtWidgets import QApplication
@@ -78,10 +86,13 @@ def copy_answer_validate_freeze_memorize_to_clipboard(window: object) -> None:
         message = "Copied complete routine for selected Project: " + Path(raw_root).name
         _set_status(window, message)
         _append_log(window, message)
+        return True
     except Exception as exc:
         message = "[ERROR] Could not copy Answer, Validate, Freeze, Memorize Error routine: " + str(exc)
+        _LOGGER.exception(message)
         _set_status(window, message)
         _append_log(window, message)
+        return False
 
 
 def _resolve_existing_directory(value: str | Path, label: str) -> Path:

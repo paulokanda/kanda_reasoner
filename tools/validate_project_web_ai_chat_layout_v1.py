@@ -1,5 +1,5 @@
 # project-path: tools/validate_project_web_ai_chat_layout_v1.py
-"""Focused validation for the Project Web AI sidebar-and-chat layout."""
+"""Validate the Project Web AI conversation-first subtab layout."""
 
 from __future__ import annotations
 
@@ -10,45 +10,48 @@ import sys
 from pathlib import Path
 
 FEATURE_ID = "project-web-ai-chat-layout-v1"
-UI_RELATIVE = "kanda_reasoner_app/reasoner_engine/project_web_ai_tab_ui.py"
-CONTROLLER_RELATIVE = "kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py"
-VALIDATOR_RELATIVE = "tools/validate_project_web_ai_chat_layout_v1.py"
-TOUCHED_CODE = (UI_RELATIVE, VALIDATOR_RELATIVE)
+UI = "kanda_reasoner_app/reasoner_engine/project_web_ai_tab_ui.py"
+CONTROLLER = "kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py"
+VALIDATOR = "tools/validate_project_web_ai_chat_layout_v1.py"
+TOUCHED = (UI, VALIDATOR)
 
 
-def _assert(condition: bool, message: str) -> None:
-    """Raise one focused validation error when a contract is false."""
+def require(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
 
 
-def _sha256(path: Path) -> str:
-    """Return the exact SHA-256 of one file."""
+def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _validate_static_layout_contract(root: Path) -> None:
-    """Validate source-level presentation and ownership boundaries."""
-    ui_source = (root / UI_RELATIVE).read_text(encoding="utf-8")
-    controller_source = (root / CONTROLLER_RELATIVE).read_text(encoding="utf-8")
-
-    required_ui_markers = (
-        'setObjectName("projectWebAITab")',
+def validate_static(root: Path) -> None:
+    ui = (root / UI).read_text(encoding="utf-8")
+    controller = (root / CONTROLLER).read_text(encoding="utf-8")
+    required = (
+        'QTabWidget()',
+        'setObjectName("projectWebAISubtabs")',
+        '"Project Conversation"',
+        '"Web Advisory Config"',
+        'setObjectName("projectWebAIConversationPage")',
+        'setObjectName("projectWebAIAdvisoryConfigPage")',
         'setObjectName("projectWebAISidebar")',
         'setObjectName("projectWebAIChatCanvas")',
         'setObjectName("projectWebAIConversation")',
         'setObjectName("projectWebAIComposer")',
-        'setObjectName("projectWebAISendButton")',
-        "QStyle.StandardPixmap.SP_ArrowUp",
-        "QSplitter(Qt.Orientation.Horizontal)",
-        "splitter.setSizes([360, 1180])",
-        "background: #0d0d0d",
-        "Message Web AI",
+        'QSplitter(Qt.Orientation.Horizontal)',
+        'splitter.setSizes([320, 1200])',
+        'background: #0d0d0d',
+        'Message Web AI',
     )
-    for marker in required_ui_markers:
-        _assert(marker in ui_source, "missing chat-layout source marker: " + marker)
-
-    forbidden_ui_markers = (
+    for marker in required:
+        require(marker in ui, "missing conversation layout marker: " + marker)
+    require(
+        ui.index('tabs.addTab(_conversation_page(owner), "Project Conversation")')
+        < ui.index('tabs.addTab(_advisory_config_page(owner), "Web Advisory Config")'),
+        "conversation must be the first Web AI subtab",
+    )
+    forbidden = (
         "urllib.request",
         "stream_chat_completion",
         "fetch_gateway_models",
@@ -56,47 +59,29 @@ def _validate_static_layout_contract(root: Path) -> None:
         "write_text(",
         "write_bytes(",
     )
-    for marker in forbidden_ui_markers:
-        _assert(marker not in ui_source, "presentation module owns forbidden logic: " + marker)
-
-    required_controller_markers = (
+    for marker in forbidden:
+        require(marker not in ui, "presentation module owns forbidden logic: " + marker)
+    for marker in (
         "_active_request_identity",
         "ProjectWebAIRequestIdentity",
         "_event_is_current",
         "load_project_web_ai_context",
         "build_project_messages",
         "QThread",
-    )
-    for marker in required_controller_markers:
-        _assert(marker in controller_source, "existing controller contract missing: " + marker)
+    ):
+        require(marker in controller, "controller contract missing: " + marker)
+    print("PROJECT_WEB_AI_CONVERSATION_SUBTAB_STATIC: PASS")
+    print("PROJECT_WEB_AI_ADVISORY_SUBTAB_STATIC: PASS")
+    print("PROJECT_WEB_AI_PRESENTATION_ONLY_BOUNDARY: PASS")
 
-    _assert(
-        "urllib.request" not in controller_source,
-        "controller unexpectedly owns a second HTTP client",
-    )
-    print("CHATGPT_LIKE_LEFT_OPTIONS_LAYOUT: PASS")
-    print("DOMINANT_BLACK_CHAT_CANVAS: PASS")
-    print("UP_ARROW_SEND_CONTROL: PASS")
-    print("PRESENTATION_ONLY_OWNER_BOUNDARY: PASS")
-    print("BRICK_WALL_PROVIDER_RUNTIME_UNCHANGED: PASS")
-    print("MCARD_STALE_RESULT_GUARD_PRESERVED: PASS")
-
-
-def _validate_module_sizes(root: Path) -> None:
-    """Enforce the project's strict physical-line delivery constraint."""
-    for relative in TOUCHED_CODE:
+    for relative in TOUCHED:
         path = root / relative
-        _assert(path.is_file(), "missing touched source: " + relative)
-        line_count = len(path.read_text(encoding="utf-8").splitlines())
-        _assert(
-            0 < line_count <= 500,
-            f"module-size violation {relative}: {line_count}",
-        )
+        lines = len(path.read_text(encoding="utf-8").splitlines())
+        require(0 < lines <= 500, f"module-size violation {relative}: {lines}")
     print("TOUCHED_SOURCE_MODULES_MAX_500_LINES: PASS")
 
 
-def _validate_real_widget() -> None:
-    """Instantiate the real widget and verify visible layout contracts."""
+def validate_real_qt() -> None:
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     if os.name == "nt" and Path("C:/Windows/Fonts").is_dir():
         os.environ.setdefault("QT_QPA_FONTDIR", "C:/Windows/Fonts")
@@ -108,65 +93,56 @@ def _validate_real_widget() -> None:
 
     app = QApplication.instance() or QApplication([])
     widget = ProjectWebAITab()
-    widget.resize(1320, 820)
+    widget.resize(1440, 900)
     widget.show()
     app.processEvents()
 
-    _assert(widget.objectName() == "projectWebAITab", "tab object identity mismatch")
-    _assert(
+    require(widget.web_ai_subtabs.count() == 2, "Web AI subtab count mismatch")
+    require(widget.web_ai_subtabs.tabText(0) == "Project Conversation", "chat tab label")
+    require(widget.web_ai_subtabs.tabText(1) == "Web Advisory Config", "config tab label")
+    require(widget.web_ai_subtabs.currentIndex() == 0, "conversation is not default")
+    require(widget.conversation_page.isVisibleTo(widget), "conversation page hidden")
+    require(
         widget.main_splitter.orientation() == Qt.Orientation.Horizontal,
-        "main splitter is not horizontal",
+        "conversation splitter is not horizontal",
     )
-    _assert(widget.main_splitter.widget(0) is widget.sidebar_panel, "sidebar is not left")
-    _assert(widget.main_splitter.widget(1) is widget.chat_panel, "chat canvas is not right")
-    _assert(widget.sidebar_panel.maximumWidth() <= 410, "sidebar is not bounded")
-    _assert(widget.chat_panel.minimumWidth() >= 620, "chat canvas is not dominant")
-    _assert(widget.answer_box.objectName() == "projectWebAIConversation", "answer identity")
-    _assert(widget.answer_box.isReadOnly(), "conversation output must remain read-only")
-    _assert(widget.question_edit.objectName() == "projectWebAIComposer", "composer identity")
-    _assert(not widget.send_button.icon().isNull(), "send control has no up-arrow icon")
-    _assert(
-        widget.send_button.accessibleName() == "Send to Web AI",
-        "send arrow lacks accessible action name",
+    require(widget.main_splitter.widget(0) is widget.sidebar_panel, "history is not left")
+    require(widget.main_splitter.widget(1) is widget.chat_panel, "chat is not right")
+    require(widget.sidebar_panel.maximumWidth() <= 360, "history panel too wide")
+    require(widget.chat_panel.minimumWidth() >= 620, "chat canvas is not dominant")
+    require(widget.answer_box.isReadOnly(), "conversation output must remain read-only")
+    require(not widget.send_button.icon().isNull(), "send button icon missing")
+    require(not widget.send_button.isEnabled(), "send must fail closed initially")
+    require(
+        not widget.conversation_page.isAncestorOf(widget.project_root_edit),
+        "advisory controls leaked into conversation subtab",
     )
-    _assert(widget.send_button.width() == 44, "send arrow width changed")
-    _assert(widget.send_button.height() == 44, "send arrow height changed")
-    _assert(not widget.send_button.isEnabled(), "send must remain fail-closed initially")
-    _assert(hasattr(widget, "open_web_config_button"), "Config Web AI shortcut was lost")
-    _assert("Open Config Web AI" in widget.open_web_config_button.text(), "central config action missing")
-    _assert(not hasattr(widget, "gateway_combo"), "duplicate gateway controls remain in Project Web AI")
-    _assert("#0d0d0d" in widget.styleSheet(), "dark chat theme is not installed")
+    print("REAL_QT_PROJECT_CONVERSATION_SUBTAB: PASS")
+    print("REAL_QT_CONVERSATION_ONLY_SURFACE: PASS")
+    print("REAL_QT_SEND_CONTROL_FAILS_CLOSED: PASS")
 
     widget.close()
     app.processEvents()
-    print("REAL_PROJECT_WEB_AI_CHAT_LAYOUT_WIDGET: PASS")
-    print("LEFT_SIDEBAR_RIGHT_CHAT_ORDER: PASS")
-    print("SEND_CONTROL_FAILS_CLOSED: PASS")
 
 
 def main() -> int:
-    """Run static, real-widget, and source-immutability validation."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default=str(Path.cwd()))
     parser.add_argument("--static-only", action="store_true")
-    arguments = parser.parse_args()
-
-    root = Path(arguments.root).expanduser().resolve(strict=True)
+    args = parser.parse_args()
+    root = Path(args.root).expanduser().resolve(strict=True)
     sys.path.insert(0, str(root))
     before = {
-        relative: _sha256(root / relative)
-        for relative in (*TOUCHED_CODE, CONTROLLER_RELATIVE)
+        relative: sha256(root / relative)
+        for relative in (*TOUCHED, CONTROLLER)
         if (root / relative).is_file()
     }
-
     os.chdir(root)
-    _validate_static_layout_contract(root)
-    _validate_module_sizes(root)
-    if not arguments.static_only:
-        _validate_real_widget()
-
-    after = {relative: _sha256(root / relative) for relative in before}
-    _assert(before == after, "chat-layout validation mutated Tool source")
+    validate_static(root)
+    if not args.static_only:
+        validate_real_qt()
+    after = {relative: sha256(root / relative) for relative in before}
+    require(before == after, "chat-layout validation mutated Tool source")
     print("LIVE_TOOL_SOURCE_UNCHANGED: PASS")
     print("VALIDATION OK: " + FEATURE_ID)
     print("STATUS: IN_SYNC")

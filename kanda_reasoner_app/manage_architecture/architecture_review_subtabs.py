@@ -10,6 +10,9 @@ from .audit_project_workflow_review import (
     create_embedded_workflow_review,
 )
 
+from kanda_reasoner_app.manage_architecture.architecture_audit_external_ai import (
+    handoff_audit_results_to_external_ai,
+)
 from kanda_reasoner_app.manage_architecture.architecture_review_card_lifecycle import (
     bind_architecture_review_card_lifecycle,
 )
@@ -301,6 +304,12 @@ def _build_general_audit_page(
     window._copy_audit_btn = QPushButton("Copy Audit Results")
     window._copy_audit_btn.clicked.connect(window.copy_audit_to_clipboard)
     audit_header.addWidget(window._copy_audit_btn)
+    window._external_audit_btn = QPushButton("Copy and Open External AI")
+    window._external_audit_btn.setObjectName("audit_project_external_ai_handoff")
+    window._external_audit_btn.clicked.connect(
+        lambda: handoff_audit_results_to_external_ai(window)
+    )
+    audit_header.addWidget(window._external_audit_btn)
     resolver_control = build_warning_resolver_split_control(
         page,
         heuristic_callback=window.run_warning_heuristic_resolver,

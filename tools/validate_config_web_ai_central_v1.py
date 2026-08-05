@@ -29,6 +29,8 @@ def validate_static(root: Path) -> None:
     controller = read(root, "kanda_reasoner_app/web_ai_configuration.py")
     config_tab = read(root, "kanda_reasoner_app/reasoner_engine/config_web_ai_tab.py")
     config_ai_tab = read(root, "kanda_reasoner_app/reasoner_engine/config_ai_tab.py")
+    direct_tab = read(root, "kanda_reasoner_app/reasoner_engine/config_direct_web_ai_tab.py")
+    popup_helper = read(root, "kanda_reasoner_app/reasoner_engine/config_web_ai_ui_support.py")
     project_tab = read(root, "kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py")
     project_ui = read(root, "kanda_reasoner_app/reasoner_engine/project_web_ai_tab_ui.py")
     doc_controls = read(root, "kanda_reasoner_app/tab3_manual_review_runtime/ai_web_controls_runtime.py")
@@ -58,7 +60,9 @@ def validate_static(root: Path) -> None:
         require(marker in specs, "Config AI registration missing: " + marker)
     for marker in (
         "ConfigWebAITab()",
+        "ConfigDirectWebAITab",
         'addTab(self.web_ai_tab, "Config Web AI")',
+        'addTab(self.direct_web_ai_tab, "Direct API Providers")',
         'addTab(self.local_ai_tab, "Config Local AI")',
     ):
         require(marker in config_ai_tab, "Config AI composition missing: " + marker)
@@ -68,11 +72,11 @@ def validate_static(root: Path) -> None:
     print("APPLICATION_SCOPED_CONFIGURATION_OWNER: PASS")
 
     for marker in (
-        'QPushButton("Load Environment Key")',
+        'QPushButton("Use Key / Load Environment")',
         'QPushButton("Refresh Models")',
         'QCheckBox("Free models only")',
         'setEchoMode(QLineEdit.EchoMode.Password)',
-        "gateway_profiles()",
+        "provider_profiles(\"gateway\")",
     ):
         require(marker in config_tab, "central config UI missing: " + marker)
     print("CENTRAL_GATEWAY_KEY_MODEL_CONTROLS: PASS")
@@ -82,13 +86,40 @@ def validate_static(root: Path) -> None:
         'Qt.WidgetAttribute.WA_StyledBackground',
         'QPalette.ColorRole.Window',
     ):
-        require(marker in config_tab, "central popup opacity contract missing: " + marker)
+        require(marker in popup_helper, "central popup opacity contract missing: " + marker)
     print("CENTRAL_WEB_AI_OPAQUE_POPUP_CONTRACT: PASS")
+    for marker in (
+        'provider_profiles("direct")',
+        'QLabel("Direct API Providers")',
+        'form.addRow("Free access guard", self.free_access_checkbox)',
+        'display_profile.requires_free_confirmation',
+        'self.free_access_checkbox.setEnabled(required)',
+        'self.free_access_checkbox.setText(label)',
+    ):
+        require(marker in direct_tab, "direct provider UI missing: " + marker)
+    print("CENTRAL_DIRECT_PROVIDER_KEY_MODEL_CONTROLS: PASS")
 
-    require("gateway_combo" not in project_ui, "Project Web AI retains editable gateway control")
-    require("api_key_edit" not in project_ui, "Project Web AI retains editable key control")
-    require("model_combo" not in project_ui, "Project Web AI retains editable model control")
-    require("open_web_config_button" in project_ui, "Project Web AI Config shortcut missing")
+    selector = read(
+        root,
+        "kanda_reasoner_app/reasoner_engine/"
+        "project_web_ai_configuration_selector.py",
+    )
+    for marker in (
+        "web_access_combo",
+        "web_provider_combo",
+        "web_model_combo",
+        "web_refresh_models_button",
+    ):
+        require(marker in project_ui, "Project Web AI selector missing: " + marker)
+    for forbidden in (
+        "api_key_edit",
+        "load_env_button",
+        "base_url_edit",
+        "free_access_checkbox",
+    ):
+        require(forbidden not in project_ui, "Project Web AI owns secret config: " + forbidden)
+    require("provider_profiles" in selector, "selector does not use shared profiles")
+    require("owner._web_config" in selector, "selector does not use central owner")
     require("application_web_ai_configuration" in project_tab, "Project Web AI ignores central owner")
     require("ProjectWebAIModelCatalogWorker" not in project_tab, "Project Web AI owns duplicate catalog")
     require("resolve_environment_key" not in project_tab, "Project Web AI owns duplicate credential resolver")
@@ -115,10 +146,13 @@ def validate_static(root: Path) -> None:
     changed = (
         "kanda_reasoner_app/web_ai_configuration.py",
         "kanda_reasoner_app/reasoner_engine/config_web_ai_tab.py",
+        "kanda_reasoner_app/reasoner_engine/config_direct_web_ai_tab.py",
+        "kanda_reasoner_app/reasoner_engine/config_web_ai_ui_support.py",
         "kanda_reasoner_app/reasoner_engine/config_ai_tab.py",
         "kanda_reasoner_app/reasoner_engine/config_local_ai_tab.py",
         "kanda_reasoner_app/reasoner_engine/project_web_ai_tab.py",
         "kanda_reasoner_app/reasoner_engine/project_web_ai_tab_ui.py",
+        "kanda_reasoner_app/reasoner_engine/project_web_ai_configuration_selector.py",
         "kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py",
         "kanda_reasoner_app/reasoner_tools_gui_shell/tool_specs.py",
         "kanda_reasoner_app/tab3_manual_review_runtime/ai_web_controls_runtime.py",
@@ -145,13 +179,15 @@ def validate_real_qt(root: Path) -> None:
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
     from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui import MissingDocstringsWindow
+    from kanda_reasoner_app.reasoner_engine.config_ai_tab import ConfigAITab
     from kanda_reasoner_app.reasoner_engine.config_web_ai_tab import ConfigWebAITab
     from kanda_reasoner_app.reasoner_engine.project_web_ai_tab import ProjectWebAITab
     from kanda_reasoner_app.web_ai_configuration import application_web_ai_configuration
     from kanda_reasoner_app.web_ai_provider_contracts import ModelDescriptor
 
     app = QApplication.instance() or QApplication([])
-    config = ConfigWebAITab()
+    config_ai = ConfigAITab()
+    config = config_ai.web_ai_tab
     project = ProjectWebAITab()
     doc = MissingDocstringsWindow()
     try:
@@ -160,6 +196,8 @@ def validate_real_qt(root: Path) -> None:
         require(project._web_config is controller, "Project Web AI controller mismatch")
         require(doc._web_ai_configuration is controller, "Docstring controller mismatch")
         require(config.gateway_combo.count() == 2, "gateway options missing")
+        require(config_ai.direct_web_ai_tab.provider_combo.count() == 4, "direct provider options missing")
+        require(config_ai.subtabs.count() == 3, "Config AI subtab count mismatch")
         require(config.api_key_edit.echoMode() == QLineEdit.EchoMode.Password, "key is visible")
         for combo in (config.gateway_combo, config.model_combo):
             popup = combo.view()
@@ -193,13 +231,15 @@ def validate_real_qt(root: Path) -> None:
                     "central dropdown " + label + " Window is transparent",
                 )
         print("REAL_CENTRAL_WEB_AI_OPAQUE_POPUPS: PASS")
-        require(not hasattr(project, "gateway_combo"), "Project Web AI duplicate gateway control")
+        require(not hasattr(project, "api_key_edit"), "Project Web AI duplicate key control")
+        require(project.web_access_combo.count() == 2, "access selector options missing")
+        require(project.web_provider_combo.count() == 2, "gateway selector options missing")
         require(doc._heuristic_radio.isChecked(), "Docstring heuristic default missing")
 
         model = ModelDescriptor(
             gateway_id="openrouter",
-            model_id="fixture/model",
-            display_name="Fixture Model",
+            model_id="openai/gpt-oss-20b:free",
+            display_name="GPT OSS 20B Free",
             free_status=True,
             supported_parameters=("response_format",),
             catalog_timestamp="fixture",
@@ -208,17 +248,18 @@ def validate_real_qt(root: Path) -> None:
         controller._selected_model_id = model.model_id
         controller._touch()
         app.processEvents()
-        require("fixture/model" in project.web_config_summary_value.text(), "Project summary did not update")
+        require(project.web_model_combo.count() == 1, "mirrored model selector did not update")
+        require("openai/gpt-oss-20b:free" in project.web_config_summary_value.text(), "Project summary did not update")
         doc._web_ai_radio.setChecked(True)
         app.processEvents()
-        require("fixture/model" in doc._web_ai_summary_label.text(), "Docstring summary did not update")
+        require("openai/gpt-oss-20b:free" in doc._web_ai_summary_label.text(), "Docstring summary did not update")
         require(doc._ai_enabled_checkbox.isChecked(), "Docstring compatibility state missing")
         print("SHARED_CONFIGURATION_PROPAGATES_TO_CONSUMERS: PASS")
         print("REAL_CONFIG_WEB_AI_TAB: PASS")
         print("REAL_PROJECT_WEB_AI_CENTRAL_CONFIG: PASS")
         print("REAL_DOCSTRING_MODE_ONLY_CONFIG: PASS")
     finally:
-        for widget in (doc, project, config):
+        for widget in (doc, project, config_ai):
             widget.close()
             widget.deleteLater()
         app.processEvents()

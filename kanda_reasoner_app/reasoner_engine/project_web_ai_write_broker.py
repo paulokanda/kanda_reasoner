@@ -12,9 +12,12 @@ import stat
 from datetime import datetime, timezone
 from pathlib import Path
 
-from kanda_reasoner_app.project_support_boundary import (
-    ProjectSupportBoundaryError,
-    resolve_project_tool_boundary_identity,
+from kanda_reasoner_app.project_operation_authority import (
+    ProjectOperationAuthority,
+    ProjectOperationAuthorityError,
+    ProjectOperationKind,
+    assert_authorized_project_target,
+    build_project_operation_authority,
 )
 from kanda_reasoner_app.reasoner_engine.project_web_ai_apply_contracts import (
     ProjectWebAIApplyAuthorization,
@@ -40,7 +43,7 @@ from kanda_reasoner_app.reasoner_engine.project_web_ai_write_storage import (
     contained_shadow_file,
     exclusive_apply_lock,
     require_distinct_apply_roots,
-    sha256_bytes,
+    project_web_ai_sha256_bytes,
     write_source_backups,
     write_transaction_state,
 )
@@ -80,13 +83,14 @@ def execute_project_web_ai_apply(
 ) -> ProjectWebAIApplyReceipt:
     """Apply one exact authorized Preview and return a durable receipt."""
     started_at = _utc_now()
-    boundary = _validate_authority(
+    authority = _validate_authority(
         operation,
         preview,
         authorization,
         session_identity,
         context,
     )
+    boundary = authority.boundary
     project_root = boundary.active_project_root.resolve(strict=True)
     daily_root = boundary.active_project_daily_work_root.resolve(strict=False)
     support_root = boundary.active_project_support_root.resolve(strict=False)
@@ -125,6 +129,7 @@ def execute_project_web_ai_apply(
                 updated_at_utc=_utc_now(),
             )
             source_before, source_modes = _preflight_targets(
+                authority,
                 project_root,
                 preview,
                 authorization,
@@ -267,9 +272,16 @@ def _validate_authority(
     if actual != expected:
         raise ProjectWebAIApplyError("APPLY_AUTHORIZATION_IDENTITY_MISMATCH")
     try:
-        boundary = resolve_project_tool_boundary_identity(operation.project_root)
-    except ProjectSupportBoundaryError as exc:
+        authority = build_project_operation_authority(
+            operation.project_root,
+            operation_kind=ProjectOperationKind.PROJECT_SOURCE_WRITE,
+            operation_id=operation.operation_id,
+            project_epoch=identity.project_epoch,
+            source_snapshot_identity=identity.snapshot_id,
+        )
+    except ProjectOperationAuthorityError as exc:
         raise ProjectWebAIApplyError(str(exc)) from exc
+    boundary = authority.boundary
     if boundary.active_project_id != identity.project_id:
         raise ProjectWebAIApplyError("APPLY_PROJECT_ID_STALE")
     if boundary.active_project_root_fingerprint != identity.project_root_fingerprint:
@@ -281,10 +293,11 @@ def _validate_authority(
     target_paths = tuple(item.relative_path for item in preview.targets)
     if target_paths != authorization.target_paths:
         raise ProjectWebAIApplyError("APPLY_AUTHORIZED_TARGET_SET_MISMATCH")
-    return boundary
+    return authority
 
 
 def _preflight_targets(
+    authority: ProjectOperationAuthority,
     project_root: Path,
     preview: ProjectWebAIShadowPreview,
     authorization: ProjectWebAIApplyAuthorization,
@@ -294,14 +307,21 @@ def _preflight_targets(
     source_modes: dict[str, int] = {}
     for index, item in enumerate(preview.targets):
         source_path = contained_project_file(project_root, item.relative_path)
+        assert_authorized_project_target(authority, source_path)
         shadow_path = contained_shadow_file(preview, item.relative_path)
         source_raw = source_path.read_bytes()
         shadow_raw = shadow_path.read_bytes()
-        if sha256_bytes(source_raw) != authorization.source_sha256[index]:
+        if (
+            project_web_ai_sha256_bytes(source_raw)
+            != authorization.source_sha256[index]
+        ):
             raise ProjectWebAIApplyError(
                 "APPLY_IMMEDIATE_SOURCE_FRESHNESS_MISMATCH:" + item.relative_path
             )
-        if sha256_bytes(shadow_raw) != authorization.proposed_sha256[index]:
+        if (
+            project_web_ai_sha256_bytes(shadow_raw)
+            != authorization.proposed_sha256[index]
+        ):
             raise ProjectWebAIApplyError(
                 "APPLY_SHADOW_PAYLOAD_HASH_MISMATCH:" + item.relative_path
             )
@@ -324,7 +344,10 @@ def _validate_installed_source(
     for index, item in enumerate(preview.targets):
         path = contained_project_file(project_root, item.relative_path)
         raw = path.read_bytes()
-        if sha256_bytes(raw) != authorization.proposed_sha256[index]:
+        if (
+            project_web_ai_sha256_bytes(raw)
+            != authorization.proposed_sha256[index]
+        ):
             raise ProjectWebAIApplyError(
                 "APPLY_INSTALLED_HASH_MISMATCH:" + item.relative_path
             )

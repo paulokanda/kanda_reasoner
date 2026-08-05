@@ -75,8 +75,9 @@ def _build_ui(self) -> None:
     answer_routine_button_font.setBold(True)
     self.copy_patch_validate_freeze_routine_button.setFont(answer_routine_button_font)
     self.copy_patch_validate_freeze_routine_button.setToolTip(
-        "Copies the canonical routine with the resolved selected Project, "
-        "KANDA Reasoner Tool, Project Support, and transient roots."
+        "Copies the canonical routine for the resolved selected Project: one "
+        "update ZIP followed by separate Install, Validate, Freeze, and Error "
+        "Memory terminal phases."
     )
     project_root_row.addWidget(self.copy_patch_validate_freeze_routine_button)
     self.copy_terminal_cleanup_contract_button = QPushButton("Clean 2sec 2xEnter")

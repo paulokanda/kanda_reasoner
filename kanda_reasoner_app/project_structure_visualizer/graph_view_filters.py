@@ -7,6 +7,7 @@ from copy import deepcopy
 from typing import Any
 
 from .graph_schema import validate_graph_snapshot
+from .graph_structure_analysis import analyze_graph_structure
 
 __all__ = ["filter_graph_snapshot"]
 
@@ -69,6 +70,7 @@ def filter_graph_snapshot(
 
     result["nodes"] = filtered_nodes
     result["edges"] = filtered_edges
+    structure_findings = analyze_graph_structure(filtered_nodes, filtered_edges)
     statistics = dict(result.get("statistics", {}))
     statistics.update(
         {
@@ -79,6 +81,7 @@ def filter_graph_snapshot(
             "external_visible": bool(show_external),
             "symbols_visible": bool(show_symbols),
             "semantic_visible": bool(show_semantic),
+            "structure_findings": structure_findings,
         }
     )
     result["statistics"] = statistics

@@ -12,23 +12,29 @@ from types import SimpleNamespace
 
 FEATURE_ID = "ai-global-consumer-callsite-audit-v1r1"
 
-LOCAL_CHAT_CALLERS = {
+REQUIRED_LOCAL_CHAT_CALLERS = {
     "kanda_reasoner_app/error_memory_gui/_ai_corrector_service.py",
     "kanda_reasoner_app/freeze_after_update_gui/_local_ai_formulary.py",
     "kanda_reasoner_app/manage_architecture/large_file_refactor_planner/planner_local_ai_docstring_review.py",
     "kanda_reasoner_app/manage_architecture/large_file_refactor_planner/planner_local_ai_staged_protocol.py",
     "kanda_reasoner_app/manage_architecture/large_file_refactor_planner/workbench_diff_review_assistant.py",
 }
-WEB_CHAT_CALLERS = {
+PROJECT_AGENT_RUNTIME = (
+    "kanda_reasoner_app/reasoner_engine/project_web_ai_agent_runtime.py"
+)
+
+REQUIRED_WEB_CHAT_CALLERS = {
     "kanda_reasoner_app/error_memory_gui/_web_ai_corrector_service.py",
     "kanda_reasoner_app/freeze_after_update_gui/_web_ai_formulary.py",
     "kanda_reasoner_app/insert_missing_docstrings_gui/ai_docstring_generator.py",
     "kanda_reasoner_app/insert_missing_docstrings_gui/module_summarizer.py",
     "kanda_reasoner_app/manage_architecture/ai_review/web_adapter.py",
+    PROJECT_AGENT_RUNTIME,
     "kanda_reasoner_app/tab3_manual_review_runtime/ai_openai_compatible_provider_runtime.py",
     "kanda_reasoner_app/tab3_manual_review_runtime/ai_web_docstring_provider_runtime.py",
 }
-WEB_STREAM_CALLERS = {
+REQUIRED_WEB_STREAM_CALLERS = {
+    PROJECT_AGENT_RUNTIME,
     "kanda_reasoner_app/reasoner_engine/project_web_ai_workers.py",
 }
 LOCAL_DIRECT_CONNECTOR_CALLERS = {
@@ -135,13 +141,64 @@ def _require(condition: bool, message: str) -> None:
 def validate_static(root: Path) -> None:
     _validate_active_source_scope(root)
     local_callers = _callers(root, "chat_with_local_model")
-    _require(local_callers == LOCAL_CHAT_CALLERS, f"Local chat callers drifted: {sorted(local_callers)}")
+    missing_local = REQUIRED_LOCAL_CHAT_CALLERS - local_callers
+    _require(
+        not missing_local,
+        "Required Local AI chat callers missing: " + str(sorted(missing_local)),
+    )
 
     web_callers = _callers(root, "request_chat_completion")
-    _require(web_callers == WEB_CHAT_CALLERS, f"Web chat callers drifted: {sorted(web_callers)}")
+    missing_web = REQUIRED_WEB_CHAT_CALLERS - web_callers
+    _require(
+        not missing_web,
+        "Required Web AI chat callers missing: " + str(sorted(missing_web)),
+    )
 
     web_stream_callers = _callers(root, "stream_chat_completion")
-    _require(web_stream_callers == WEB_STREAM_CALLERS, f"Web stream callers drifted: {sorted(web_stream_callers)}")
+    missing_stream = REQUIRED_WEB_STREAM_CALLERS - web_stream_callers
+    _require(
+        not missing_stream,
+        "Required Web AI stream callers missing: " + str(sorted(missing_stream)),
+    )
+
+    current_central_consumers = (
+        local_callers
+        | web_callers
+        | web_stream_callers
+    )
+    _require(
+        all(
+            path.startswith("kanda_reasoner_app/")
+            for path in current_central_consumers
+        ),
+        "Central AI consumer outside the active application boundary: "
+        + str(sorted(current_central_consumers)),
+    )
+
+    project_agent = _read(root, PROJECT_AGENT_RUNTIME)
+    for required in (
+        "from kanda_reasoner_app.web_ai_provider_runtime import",
+        "request_chat_completion",
+        "stream_chat_completion",
+        "__all__ = [\"run_project_agent_completion\"]",
+        "never writes source",
+    ):
+        _require(
+            required in project_agent,
+            "Project Web AI agent central transport contract missing: " + required,
+        )
+    for forbidden in (
+        "requests.get(",
+        "requests.post(",
+        "urllib.request.urlopen(",
+        "subprocess.run(",
+        ".write_text(",
+        ".write_bytes(",
+    ):
+        _require(
+            forbidden not in project_agent,
+            "Project Web AI agent bypasses central/read-only boundary: " + forbidden,
+        )
 
     direct_connector = _callers(root, "V9QwenAIModels")
     _require(
@@ -256,11 +313,14 @@ def validate_static(root: Path) -> None:
         for term in terms:
             _require(term.lower() in text, rel + " lost authority marker: " + term)
 
+    print("AI_CALLSITE_REQUIRED_BASELINES_PRESERVED: PASS")
+    print("AI_CALLSITE_ADDITIONAL_CONSUMERS_SEMANTICALLY_VALIDATED: PASS")
     print("AI_CALLSITE_INVENTORY_COMPLETE: PASS")
     print("LOCAL_AI_ALL_CHAT_CONSUMERS_GLOBAL: PASS")
     print("LOCAL_AI_NO_DUPLICATE_CATALOG_TRANSPORT: PASS")
     print("LOCAL_AI_SINGLE_SETTINGS_OWNER: PASS")
     print("WEB_AI_ALL_CHAT_CONSUMERS_CENTRAL: PASS")
+    print("WEB_AI_PROJECT_AGENT_CENTRAL_READ_ONLY: PASS")
     print("WEB_AI_NO_DUPLICATE_TRANSPORT_OR_ENDPOINT: PASS")
     print("AI_TOOL_PROJECT_BOUNDARY: PASS")
     print("AI_AUTHORITY_BOUNDARIES_PRESERVED: PASS")

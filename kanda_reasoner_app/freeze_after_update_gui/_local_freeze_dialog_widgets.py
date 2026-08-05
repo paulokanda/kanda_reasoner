@@ -25,6 +25,7 @@ __all__ = [
     "FreezeLocalFreezeDialogSupportMixin",
     "LocalFreezeDialogWidgets",
     "build_local_freeze_dialog_widgets",
+    "build_local_freeze_fallback_inputs",
 ]
 
 
@@ -97,49 +98,13 @@ class FreezeLocalFreezeDialogSupportMixin:
         self._local_freeze_preview = None
 
     def _build_heuristic_local_freeze_inputs(self, project_root: Path) -> dict:
-        """Build the local freeze form from project-local intake, then fallback.
-
-        The normal local-freeze path is: patch ZIP carries root-level
-        KANDA_FREEZE_HINT.json, the intake box saves that sidecar under the
-        selected project's <project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake, and
-        the Freeze Feature After Update tab fills this form from that saved
-        project-local JSON.
-
-        If no current hint exists, return a safe starter draft. The starter is
-        intentionally not writable until the human/AI supplies current feature
-        validation evidence.
-        """
-        fallback_inputs = {
-            "feature_title": "Current validated feature - replace with exact feature title",
-            "primary_box": "Replace with the primary box for the current feature",
-            "box_type": "Replace with the current box type",
-            "validated_files": "",
-            "generated_files": "",
-            "protected_paths": "project_freeze_after_update/frozen_features_memory/",
-            "do_not_regress_rules": "\n".join(
-                [
-                    "Do not freeze without current feature validation evidence.",
-                    "Preserve the current feature behavior validated by the user.",
-                    "Keep project-specific frozen memory under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.",
-                    "Do not store project-specific frozen memory inside project_freeze_ledger.",
-                    "Do not replace current feature data with stale legacy workflow data.",
-                ]
-            ),
-            "validation_evidence_summary": "",
-            "known_warnings": (
-                "Starter draft only. Replace placeholders with the current validated feature data. "
-                "No validation evidence has been inferred or invented."
-            ),
-            "planned_next_step": (
-                "Replace placeholders with current feature evidence, then Preview Freeze Entry before Confirm and Write."
-            ),
-            "notes": (
-                "Auto-filled by the Freeze Feature After Update tab as a safe current-feature starter. "
-                "This draft intentionally avoids stale legacy freeze-workflow titles, paths, and validation markers."
-            ),
-        }
+        """Build local freeze inputs through the shared deterministic contract."""
+        fallback_inputs = build_local_freeze_fallback_inputs()
         try:
-            return build_freeze_form_inputs_from_latest_hint(project_root, fallback_inputs)
+            return build_freeze_form_inputs_from_latest_hint(
+                project_root,
+                fallback_inputs,
+            )
         except Exception as exc:
             recovered = dict(fallback_inputs)
             recovered["known_warnings"] = (
@@ -148,6 +113,39 @@ class FreezeLocalFreezeDialogSupportMixin:
                 + str(exc)
             ).strip()
             return recovered
+
+
+def build_local_freeze_fallback_inputs() -> dict[str, str]:
+    """Return the safe non-writable starter used by all intake routes."""
+    return {
+        "feature_title": "Current validated feature - replace with exact feature title",
+        "primary_box": "Replace with the primary box for the current feature",
+        "box_type": "Replace with the current box type",
+        "validated_files": "",
+        "generated_files": "",
+        "protected_paths": "project_freeze_after_update/frozen_features_memory/",
+        "do_not_regress_rules": "\n".join(
+            [
+                "Do not freeze without current feature validation evidence.",
+                "Preserve the current feature behavior validated by the user.",
+                "Keep project-specific frozen memory under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.",
+                "Do not store project-specific frozen memory inside project_freeze_ledger.",
+                "Do not replace current feature data with stale legacy workflow data.",
+            ]
+        ),
+        "validation_evidence_summary": "",
+        "known_warnings": (
+            "Starter draft only. Replace placeholders with the current validated feature data. "
+            "No validation evidence has been inferred or invented."
+        ),
+        "planned_next_step": (
+            "Replace placeholders with current feature evidence, then Preview Freeze Entry before Confirm and Write."
+        ),
+        "notes": (
+            "Auto-filled by the Freeze Feature After Update tab as a safe current-feature starter. "
+            "This draft intentionally avoids stale legacy freeze-workflow titles, paths, and validation markers."
+        ),
+    }
 
 
 def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: str) -> LocalFreezeDialogWidgets:
@@ -208,8 +206,8 @@ def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: 
     do_not_regress_edit.setPlaceholderText("One do-not-regress rule per line")
     validation_evidence_edit = QTextEdit()
     validation_evidence_edit.setPlaceholderText(
-        "Paste validation output. Must include a marker such as VALIDATION OK, INSTALL OK, "
-        "py_compile passed, validator passed, or STATUS: IN_SYNC."
+        "Paste real local validation output. It must include literal lines "
+        "VALIDATION OK: <feature_id> and STATUS: IN_SYNC."
     )
     known_warnings_edit = QTextEdit()
     known_warnings_edit.setPlaceholderText("Optional warnings")
@@ -271,7 +269,7 @@ def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: 
     layout.addWidget(preview_group, 1)
     button_row = QHBoxLayout()
     autofill_button = QPushButton("Fill Form Now")
-    copy_to_ai_button = QPushButton("Copy Formulary to AI")
+    copy_to_ai_button = QPushButton("Copy Entry to AI")
     receive_from_ai_button = QPushButton("Receive Formulary from AI")
     preview_button = QPushButton("Preview Freeze Entry")
     confirm_write_button = QPushButton("Confirm and Write Freeze Entry")
@@ -283,7 +281,7 @@ def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: 
     ignore_freeze_button.setEnabled(False)
     confirm_write_button.setToolTip("Preview and validate a writable freeze entry before confirming.")
     ignore_freeze_button.setToolTip("No current writable freeze draft is available to ignore.")
-    copy_to_ai_button.setToolTip("Copy a strict review prompt with the current auto-filled freeze form for an AI specialist")
+    copy_to_ai_button.setToolTip("Copy the strict draft-only form prompt to the clipboard without opening an external site")
     receive_from_ai_button.setToolTip("Paste the strict AI JSON answer and apply it back into this form")
     autofill_button.setToolTip("Fill using Heuristic, Local AI, or the central Config Web AI selection.")
     button_row.addWidget(autofill_button)

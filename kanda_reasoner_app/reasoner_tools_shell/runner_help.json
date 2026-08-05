@@ -162,6 +162,66 @@
       ],
       "depends_on": [],
       "consumed_by": []
+    },
+    "answer_validate_freeze_memorize_button_private_impl.py": {
+      "purpose": "Stable clipboard owner for the complete Answer, Validate, Freeze, and Error Memory routine.",
+      "reason": "Public helper surface consumed by the Show Project window controls.",
+      "stability": "stable",
+      "exports": [
+        "build_answer_validate_freeze_memorize_wrapper",
+        "copy_answer_validate_freeze_memorize_to_clipboard"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "window_methods_private_impl.py"
+      ]
+    },
+    "bridge_metadata_classification.py": {
+      "purpose": "Stable bridge metadata classification helpers for complete bridge-list generation.",
+      "reason": "Public helper surface consumed by the complete bridge-list owner.",
+      "stability": "stable",
+      "exports": [
+        "bridge_display_name",
+        "is_active_on_demand_bridge",
+        "prompt_front_matter",
+        "startup_source_records"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "complete_bridge_list_private_impl.py"
+      ]
+    },
+    "png_reuse_cancel_controls_private_impl.py": {
+      "purpose": "Stable PNG reuse prompt and cancellation controls for Show Project workflows.",
+      "reason": "Public helper surface shared by UI construction and prompt-file process owners.",
+      "stability": "stable",
+      "exports": [
+        "PNG_REUSE_PROMPT",
+        "install_controls",
+        "update_cancel_enabled",
+        "cancel_run",
+        "consume_cancel_on_finish"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "window_methods_private_impl.py",
+        "window_process_private_impl.py",
+        "zip_json_files_process_private_impl.py"
+      ]
+    },
+    "project_tool_boundary_prompt_button_private_impl.py": {
+      "purpose": "Stable Show Project clipboard control for the canonical Tool and Project boundary prompt.",
+      "reason": "Public helper surface installed through the runner-help package initializer.",
+      "stability": "stable",
+      "exports": [
+        "build_project_tool_boundary_wrapper",
+        "copy_project_tool_boundary_to_clipboard",
+        "install_control"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "__init__.py"
+      ]
     }
   }
 }

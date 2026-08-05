@@ -7,7 +7,6 @@ from pathlib import Path
 
 from PySide6.QtCore import QObject, Slot
 from PySide6.QtWidgets import (
-    QApplication,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -15,6 +14,8 @@ from PySide6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
 )
+
+from kanda_reasoner_app.external_ai_workflow import handoff_package
 
 from .main_workbench_pipeline import (
     MAIN_WORKBENCH_FAILED,
@@ -347,20 +348,19 @@ def _on_package_status(window: object, status: str, payload: object | None) -> N
             "Exchange " + str(payload.exchange_id) + " is verified and ready.",
         )
         prompt_text = Path(payload.prompt_path).read_text(encoding="utf-8-sig")
-        clipboard_text = "\n".join(
-            [
-                "KANDA COMPLETE REFACTOR PACKAGE READY",
-                "",
-                "ZIP:",
-                payload.zip_path,
-                "",
-                "Upload the ZIP, then use the complete instruction below:",
-                "",
-                prompt_text,
-            ]
+        handoff = handoff_package(
+            title="KANDA COMPLETE REFACTOR PACKAGE READY",
+            zip_path=payload.zip_path,
+            task_text=prompt_text,
+            task_path=payload.prompt_path,
+            package_sha256=payload.zip_sha256,
         )
-        QApplication.clipboard().setText(clipboard_text)
-        _set_output(window, _format_package_result(payload))
+        _set_output(
+            window,
+            _format_package_result(payload)
+            + "\n\nEXTERNAL AI HANDOFF: "
+            + (handoff.display_name if handoff.ok else handoff.error),
+        )
     sync_main_workbench_controls(window)
 
 

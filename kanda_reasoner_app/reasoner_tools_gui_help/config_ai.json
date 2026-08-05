@@ -2,13 +2,21 @@
   "schema": "project-reasoner-tab-help-error-catalog/v1",
   "project": "KANDA Reasoner",
   "tab": "Config AI",
-  "purpose": "Explain Config Web AI, Config Local AI, gateways, session credentials, environment keys, model catalogs, capabilities, privacy, local base URLs, model refresh, and the Tool-versus-Project boundary.",
+  "purpose": "Plain-English first-time setup for gateway Web AI, direct provider APIs, and Local AI without changing Project authority.",
   "created_for": "Rich desktop help fallback catalog",
   "display_lines": [
-    "Config AI stores global AI connection and model settings.",
-    "Config Web AI controls gateway, credential, catalog, model, capabilities, and privacy.",
-    "Config Local AI controls the OpenAI-compatible base URL and global local model.",
-    "The active Project and exact payload remain owned by each workflow.",
-    "Config AI never grants source-writing authority."
+    "Config AI chooses how KANDA connects to an AI model. It does not choose the Active Project or grant file-writing permission.",
+    "Config Web AI supports the OpenRouter and Kilo gateways. Load a key when required, refresh the catalog, and select one approved [FREE] Python-coding model.",
+    "Direct API Providers supports Google Gemini, Mistral, Qwen, and Groq through their official APIs.",
+    "Use Key / Load Environment uses a pasted key when the field contains text; when the field is empty it loads the provider's Windows User or process environment variable.",
+    "Keys are masked and session-only. Do not paste an API key into a question, screenshot, source file, or Project document.",
+    "The Direct API Free access guard is only your confirmation. It does not inspect or change provider billing.",
+    "Gemini requires an unbilled Free Tier project; Mistral requires Free mode; Qwen requires remaining free quota with Free Quota Only; Groq requires a Free Plan organization.",
+    "A 429 quota or rate-limit response means the request reached the provider but the current allowance was exhausted.",
+    "Config Local AI expects a running OpenAI-compatible local endpoint, commonly http://127.0.0.1:11434/v1 for Ollama.",
+    "KANDA does not install, start, or download Local AI models. Start the runtime first, then Refresh Local AI Models and select one model.",
+    "After remote setup, open Web AI > Web Advisory Config and select Access, Provider, and Python model before using Project Conversation.",
+    "Always confirm the Active Project, privacy notice, credential status, catalog status, and selected model before an important request.",
+    "The full rich Help page contains step-by-step setup, environment-variable names, provider guidance, troubleshooting, and illustrated examples."
   ]
 }

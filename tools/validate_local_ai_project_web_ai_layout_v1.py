@@ -123,6 +123,52 @@ def _validate_layout_source(root: Path) -> None:
     print("LOCAL_AI_UI_MODULE_SIZE_GATE: PASS")
 
 
+def _project_web_ai_splitter_children(source: str) -> tuple[list[str], bool]:
+    """Return semantic splitter children and owner assignment contract."""
+    tree = ast.parse(source)
+    conversation_page = next(
+        (
+            node
+            for node in tree.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "_conversation_page"
+        ),
+        None,
+    )
+    _require(
+        conversation_page is not None,
+        "Project Web AI conversation page builder missing.",
+    )
+
+    children: list[str] = []
+    owner_assignment = False
+    for node in ast.walk(conversation_page):
+        if isinstance(node, ast.Call):
+            if (
+                isinstance(node.func, ast.Attribute)
+                and node.func.attr == "addWidget"
+                and isinstance(node.func.value, ast.Name)
+                and node.func.value.id == "splitter"
+                and len(node.args) == 1
+                and isinstance(node.args[0], ast.Call)
+                and isinstance(node.args[0].func, ast.Name)
+            ):
+                children.append(node.args[0].func.id)
+        if isinstance(node, ast.Assign):
+            if not isinstance(node.value, ast.Name) or node.value.id != "splitter":
+                continue
+            for target in node.targets:
+                if (
+                    isinstance(target, ast.Attribute)
+                    and isinstance(target.value, ast.Name)
+                    and target.value.id == "owner"
+                    and target.attr == "main_splitter"
+                ):
+                    owner_assignment = True
+
+    return children, owner_assignment
+
+
 def _validate_theme(root: Path) -> None:
     theme = _text(root, UI_THEME)
     required = (
@@ -147,8 +193,15 @@ def _validate_theme(root: Path) -> None:
         for token in ('#0d0d0d', '#111318', '#10a37f', 'Segoe UI Variable Text'):
             _require(token in web_theme and token in theme, "Visual parity token mismatch: " + token)
         web_ui = web_ui_path.read_text(encoding="utf-8", errors="strict")
-        _require('splitter.addWidget(_sidebar(owner))' in web_ui, "Project Web AI sidebar reference missing.")
-        _require('splitter.addWidget(_chat_canvas(owner))' in web_ui, "Project Web AI chat reference missing.")
+        children, owner_assignment = _project_web_ai_splitter_children(web_ui)
+        _require(
+            children == ["_conversation_sidebar", "_chat_canvas"],
+            "Project Web AI conversation splitter order mismatch: " + str(children),
+        )
+        _require(
+            owner_assignment,
+            "Project Web AI main splitter owner assignment missing.",
+        )
     print("LOCAL_AI_PROJECT_WEB_AI_VISUAL_PARITY: PASS")
     print("LOCAL_AI_PROFESSIONAL_DARK_THEME: PASS")
 

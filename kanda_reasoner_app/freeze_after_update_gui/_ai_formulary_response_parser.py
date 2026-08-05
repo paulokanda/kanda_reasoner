@@ -6,6 +6,11 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
+from kanda_reasoner_app.freeze_after_update_gui._ai_formulary_transport_repair import (
+    payload_has_suspicious_windows_control_damage,
+    transport_repair_variants,
+)
+
 __all__ = ["ParsedAIFormulary", "parse_ai_formulary_response"]
 
 _START_MARKER = "KANDA_FREEZE_FORM_JSON_BEGIN"
@@ -241,19 +246,22 @@ def _collect_candidate_blocks(raw_text: str) -> list[str]:
 
 
 def _json_load_attempts(raw_block: str) -> dict | None:
-    """Try strict and repaired JSON parsing for one candidate block."""
+    """Try strict and transport-repaired JSON parsing for one candidate block."""
     variants: list[str] = []
     base = _strip_markdown_fences(raw_block)
-    variants.append(base)
-    variants.append(_remove_trailing_commas(base))
-    variants.append(_remove_trailing_commas(_escape_raw_control_chars_inside_strings(base)))
+
+    def add_variants(candidate_text: str) -> None:
+        repaired_controls = _escape_raw_control_chars_inside_strings(candidate_text)
+        variants.extend((candidate_text, repaired_controls))
+        variants.extend(transport_repair_variants(candidate_text))
+        variants.extend(transport_repair_variants(repaired_controls))
+
+    add_variants(base)
     for obj in _extract_balanced_json_objects(base):
-        variants.append(obj)
-        variants.append(_remove_trailing_commas(obj))
-        variants.append(_remove_trailing_commas(_escape_raw_control_chars_inside_strings(obj)))
+        add_variants(obj)
     attempted: set[str] = set()
     for variant in variants:
-        candidate = variant.strip()
+        candidate = _remove_trailing_commas(variant).strip()
         if not candidate or candidate in attempted:
             continue
         attempted.add(candidate)
@@ -261,7 +269,10 @@ def _json_load_attempts(raw_block: str) -> dict | None:
             payload = json.loads(candidate)
         except json.JSONDecodeError:
             continue
-        if isinstance(payload, dict):
+        if (
+            isinstance(payload, dict)
+            and not payload_has_suspicious_windows_control_damage(payload)
+        ):
             return payload
     return None
 
@@ -304,7 +315,10 @@ def parse_ai_formulary_response(text: str, current_inputs: dict[str, Any]) -> Pa
     if not parsed_payloads:
         raise ValueError(
             "Could not find a usable freeze-form JSON object in the AI answer. "
-            "The receiver searched marker payloads, fenced JSON, balanced JSON objects, and broad fallback slices."
+            "The receiver searched marker payloads, fenced JSON, balanced JSON objects, "
+            "broad fallback slices, and transport repairs. For Windows paths, paste the "
+            "marker block with its JSON inside a fenced code block or use \\u005C for "
+            "backslashes."
         )
     payload = max(parsed_payloads, key=_payload_score)
     if not isinstance(payload, dict):

@@ -1,10 +1,12 @@
 # project-path: kanda_reasoner_app/error_memory_gui/_portable_transfer.py
 """Portable folder export/import actions for project-scoped Error Memory lessons.
 
-The transfer contract is merge-only. Export copies every valid saved lesson,
-including inactive statuses. Import never deletes or replaces current lessons;
-it validates the portable folder and adds only lessons that do not match the
-canonical Error Memory duplicate-family rules.
+The transfer contract is a complete portable backup plus merge-only restore.
+Export copies every valid saved lesson across all statuses without applying the
+compact AI-export cap. A successful export is all-or-nothing: it never reports a
+partial backup. Import never deletes or replaces current lessons; it validates
+the portable folder and adds only lessons that do not match the canonical Error
+Memory duplicate-family rules.
 """
 from __future__ import annotations
 
@@ -24,6 +26,10 @@ from pathlib import Path
 import re
 from typing import Any
 
+from kanda_reasoner_app.error_memory.backend import project_error_memory_backend
+from kanda_reasoner_app.error_memory.cross_owner_reference import (
+    create_cross_owner_reference_from_identity,
+)
 from kanda_reasoner_app.error_memory.paths import resolve_error_memory_lessons_dir
 from kanda_reasoner_app.error_memory.schema import validate_lesson_shape
 from kanda_reasoner_app.error_memory.store import (
@@ -35,15 +41,19 @@ from kanda_reasoner_app.error_memory.store import (
 from kanda_reasoner_app.error_memory_gui._memorize_duplicate_guard import (
     lesson_matches_candidate_error,
 )
+from kanda_reasoner_app.error_memory_gui._portable_owner_contract import (
+    owner_manifest_fields,
+    owner_policy_for_same_owner_lesson,
+    portable_source_owner,
+)
 
 ERROR_MEMORY_EXPORT_MANIFEST = "KANDA_ERROR_MEMORY_EXPORT.json"
 ERROR_MEMORY_EXPORT_ARTIFACT_TYPE = "kanda_error_memory_portable_export"
 ERROR_MEMORY_EXPORT_SCHEMA_VERSION = "1.0"
-ERROR_MEMORY_EXPORTER_VERSION = "1.0"
+ERROR_MEMORY_EXPORTER_VERSION = "1.1"
 ERROR_MEMORY_EXPORT_LESSONS_DIR = "lessons"
 _MAX_LESSON_BYTES = 2_000_000
 _MAX_LESSON_COUNT = 5_000
-
 
 def _utc_now_iso() -> str:
     """Return a stable second-resolution UTC timestamp."""
@@ -110,16 +120,19 @@ def export_error_lessons_folder(
     """Copy all valid saved lessons into a portable export folder.
 
     Existing source lessons are read only. The export includes active, draft,
-    deprecated, and superseded lessons and records per-file SHA-256 values.
+    deprecated, and superseded lessons, applies no compact-export cap, and
+    records per-file SHA-256 values. Any invalid lesson aborts the export so a
+    successful result is always a complete backup of the canonical lesson set.
     """
     root = Path(selected_project_root).expanduser().resolve(strict=True)
     destination = Path(destination_parent).expanduser().resolve(strict=True)
     if not destination.is_dir():
         raise NotADirectoryError("Export destination is not a folder: " + str(destination))
 
-    bootstrap_error_memory_store(root)
-    rebuild_index(root)
-    source_lessons = resolve_error_memory_lessons_dir(root)
+    backend = project_error_memory_backend(root)
+    bootstrap_error_memory_store(backend)
+    rebuild_index(backend)
+    source_lessons = resolve_error_memory_lessons_dir(backend)
     export_root = _unique_export_folder(destination, root.name)
     export_lessons = export_root / ERROR_MEMORY_EXPORT_LESSONS_DIR
     export_lessons.mkdir(parents=True, exist_ok=False)
@@ -132,11 +145,7 @@ def export_error_lessons_folder(
 
     try:
         for source in source_files:
-            try:
-                raw, lesson = _read_lesson_object(source)
-            except Exception as exc:
-                skipped.append({"file": source.name, "reason": str(exc)})
-                continue
+            raw, lesson = _read_lesson_object(source)
             destination_file = export_lessons / source.name
             destination_file.write_bytes(raw)
             exported.append(
@@ -151,14 +160,22 @@ def export_error_lessons_folder(
 
         manifest = {
             "artifact_type": ERROR_MEMORY_EXPORT_ARTIFACT_TYPE,
+            **owner_manifest_fields(backend),
             "schema_version": ERROR_MEMORY_EXPORT_SCHEMA_VERSION,
             "exporter_version": ERROR_MEMORY_EXPORTER_VERSION,
-            "source_project_slug": root.name,
+            "source_project_slug": backend.owner.owner_slug,
             "exported_at_utc": _utc_now_iso(),
             "lesson_count": len(exported),
             "lessons_directory": ERROR_MEMORY_EXPORT_LESSONS_DIR,
             "lessons": exported,
             "skipped": skipped,
+            "backup_contract": {
+                "scope": "all_valid_saved_lessons",
+                "status_filter": "none",
+                "compact_limit_applied": False,
+                "preserve_source_bytes": True,
+                "partial_success_allowed": False,
+            },
             "merge_contract": {
                 "import_mode": "merge_unique_only",
                 "delete_current_lessons": False,
@@ -184,9 +201,12 @@ def export_error_lessons_folder(
         "ok": True,
         "export_folder": str(export_root),
         "manifest": str(export_root / ERROR_MEMORY_EXPORT_MANIFEST),
+        "source_lesson_count": len(source_files),
         "exported_count": len(exported),
         "skipped_count": len(skipped),
         "skipped": skipped,
+        "backup_complete": len(exported) == len(source_files),
+        "compact_limit_applied": False,
     }
 
 
@@ -242,39 +262,20 @@ def _duplicate_reason(
     return "", ""
 
 
-def _transfer_owned_lesson(
-    lesson: dict[str, Any],
-    *,
-    target_project_slug: str,
-    source_project_slug: str,
-    source_exported_at_utc: str,
-) -> dict[str, Any]:
-    """Return a target-project-owned lesson while preserving source provenance."""
-    transferred = json.loads(json.dumps(lesson, ensure_ascii=False))
-    original_slug = str(transferred.get("project_slug") or source_project_slug)
-    transferred["project_slug"] = target_project_slug
-    transferred["transfer_provenance"] = {
-        "source_project_slug": source_project_slug or original_slug,
-        "original_lesson_project_slug": original_slug,
-        "source_exported_at_utc": source_exported_at_utc,
-        "imported_at_utc": _utc_now_iso(),
-        "mode": "merge_unique_only",
-    }
-    return transferred
-
-
 def import_error_lessons_folder(
     selected_project_root: str | Path,
     selected_export_folder: str | Path,
 ) -> dict[str, Any]:
-    """Merge unique exported lessons into the current selected project.
+    """Restore same-owner lessons or create foreign-owner references.
 
-    Current lesson files are snapshotted and verified byte-for-byte. Canonical
-    duplicates are skipped. Existing lessons are never deleted, replaced, or
-    rewritten; only new lesson files may be created.
+    A portable export from the same canonical owner may restore unique lesson
+    files. A foreign-owner export never becomes local canonical history; each
+    accepted item becomes a read-only cross-owner reference instead.
     """
     root = Path(selected_project_root).expanduser().resolve(strict=True)
+    target_backend = project_error_memory_backend(root)
     export_root, manifest = _resolve_export_root(selected_export_folder)
+    source_owner = portable_source_owner(manifest)
     lessons_dir_name = str(manifest.get("lessons_directory") or "")
     if lessons_dir_name != ERROR_MEMORY_EXPORT_LESSONS_DIR:
         raise ValueError("Error Memory export lessons_directory is invalid.")
@@ -287,31 +288,34 @@ def import_error_lessons_folder(
         raise ValueError("Error Memory export manifest lessons must be a list.")
     if len(entries) > _MAX_LESSON_COUNT:
         raise ValueError("Error Memory export contains more than 5000 lessons.")
-    declared_count = int(manifest.get("lesson_count") or 0)
-    if declared_count != len(entries):
+    if int(manifest.get("lesson_count") or 0) != len(entries):
         raise ValueError("Error Memory export lesson_count does not match its manifest.")
 
-    bootstrap_error_memory_store(root)
-    rebuild_index(root)
-    target_lessons_dir = resolve_error_memory_lessons_dir(root)
+    bootstrap_error_memory_store(target_backend)
+    rebuild_index(target_backend)
+    target_lessons_dir = resolve_error_memory_lessons_dir(target_backend)
     existing_files = {
         path.resolve(strict=True): path.read_bytes()
         for path in target_lessons_dir.glob("lesson-*.json")
         if path.is_file()
     }
-    stored_lessons = list_lessons(root, include_inactive=True)
+    stored_lessons = list_lessons(target_backend, include_inactive=True)
+    same_owner = source_owner.owner_id == target_backend.owner.owner_id
     accepted: list[dict[str, Any]] = []
+    reference_candidates: list[dict[str, Any]] = []
     duplicates: list[dict[str, str]] = []
     invalid: list[dict[str, str]] = []
-    source_project_slug = str(manifest.get("source_project_slug") or "")
-    source_exported_at_utc = str(manifest.get("exported_at_utc") or "")
 
     for entry in entries:
         if not isinstance(entry, dict):
             invalid.append({"file": "", "reason": "manifest lesson entry is not an object"})
             continue
         filename = str(entry.get("file") or "").strip()
-        if Path(filename).name != filename or not filename.startswith("lesson-") or not filename.endswith(".json"):
+        if (
+            Path(filename).name != filename
+            or not filename.startswith("lesson-")
+            or not filename.endswith(".json")
+        ):
             invalid.append({"file": filename, "reason": "unsafe lesson filename"})
             continue
         source = export_lessons / filename
@@ -328,36 +332,50 @@ def import_error_lessons_folder(
             invalid.append({"file": filename, "reason": str(exc)})
             continue
 
-        reason, stored_id = _duplicate_reason(lesson, stored_lessons + accepted)
-        if reason:
-            duplicates.append(
-                {
-                    "lesson_id": str(lesson.get("lesson_id") or ""),
-                    "matched_lesson_id": stored_id,
-                    "reason": reason,
-                }
-            )
-            continue
-        transferred = _transfer_owned_lesson(
-            lesson,
-            target_project_slug=root.name,
-            source_project_slug=source_project_slug,
-            source_exported_at_utc=source_exported_at_utc,
-        )
-        ok, failures = validate_lesson_shape(transferred)
-        if not ok:
-            invalid.append({"file": filename, "reason": "; ".join(failures)})
-            continue
-        accepted.append(transferred)
+        if same_owner:
+            reason, stored_id = _duplicate_reason(lesson, stored_lessons + accepted)
+            if reason:
+                duplicates.append(
+                    {
+                        "lesson_id": str(lesson.get("lesson_id") or ""),
+                        "matched_lesson_id": stored_id,
+                        "reason": reason,
+                    }
+                )
+                continue
+            accepted.append(lesson)
+        else:
+            reference_candidates.append(lesson)
 
     created_paths: list[Path] = []
+    created_reference_paths: list[Path] = []
     try:
-        for lesson in accepted:
-            saved = save_lesson(root, lesson).resolve(strict=True)
-            if saved in existing_files:
-                raise RuntimeError("Import attempted to replace a current lesson: " + saved.name)
-            created_paths.append(saved)
-        rebuild_index(root)
+        if same_owner:
+            for lesson in accepted:
+                policy = owner_policy_for_same_owner_lesson(
+                    target_backend, source_owner, lesson
+                )
+                saved = save_lesson(
+                    target_backend,
+                    lesson,
+                    owner_metadata_policy=policy,
+                ).resolve(strict=True)
+                if saved in existing_files:
+                    raise RuntimeError(
+                        "Import attempted to replace a current lesson: " + saved.name
+                    )
+                created_paths.append(saved)
+        else:
+            for lesson in reference_candidates:
+                created_reference_paths.append(
+                    create_cross_owner_reference_from_identity(
+                        target_backend,
+                        source_owner_scope=source_owner.owner_scope,
+                        source_owner_id=source_owner.owner_id,
+                        lesson_id=str(lesson.get("lesson_id") or ""),
+                    )
+                )
+        rebuild_index(target_backend)
         for path, original_bytes in existing_files.items():
             if not path.is_file() or path.read_bytes() != original_bytes:
                 raise RuntimeError("Import modified a current lesson: " + path.name)
@@ -366,22 +384,34 @@ def import_error_lessons_folder(
             resolved = candidate_path.resolve(strict=False)
             if resolved not in existing_files and candidate_path.is_file():
                 candidate_path.unlink()
+        for path in created_reference_paths:
+            if path.is_file():
+                path.unlink()
         for path, original_bytes in existing_files.items():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(original_bytes)
-        rebuild_index(root)
+        rebuild_index(target_backend)
         raise
 
     return {
         "ok": True,
         "source_export_folder": str(export_root),
-        "imported_count": len(accepted),
+        "imported_count": len(accepted) if same_owner else 0,
+        "referenced_count": len(created_reference_paths),
         "duplicate_count": len(duplicates),
         "invalid_count": len(invalid),
-        "imported_lesson_ids": [str(item.get("lesson_id") or "") for item in accepted],
+        "imported_lesson_ids": [
+            str(item.get("lesson_id") or "") for item in accepted
+        ],
+        "referenced_lesson_ids": [
+            str(item.get("lesson_id") or "")
+            for item in reference_candidates
+        ],
         "duplicates": duplicates,
         "invalid": invalid,
         "merge_only": True,
+        "same_owner_restore": same_owner,
+        "foreign_owner_reference_only": not same_owner,
         "current_lessons_deleted": 0,
         "current_lessons_replaced": 0,
     }
@@ -421,11 +451,17 @@ def export_errors_from_tab(tab: Any) -> None:
         show_error_copy_close_window(tab, title="Export Errors failed", message=str(exc))
         return
     detail = (
-        "Lessons exported: " + str(result["exported_count"])
-        + "\nSkipped invalid lessons: " + str(result["skipped_count"])
+        "Complete backup lessons: " + str(result["exported_count"])
+        + "\nAll statuses included: YES"
+        + "\nCompact export cap applied: NO"
+        + "\nPartial backup allowed: NO"
         + "\n\nExport folder:\n" + str(result["export_folder"])
     )
-    tab._show_action_done("Export Errors", "Error Memory lessons were copied.", detail)
+    tab._show_action_done(
+        "Export Errors",
+        "Complete Error Memory backup created.",
+        detail,
+    )
 
 
 def import_errors_into_tab(tab: Any) -> None:
@@ -447,7 +483,8 @@ def import_errors_into_tab(tab: Any) -> None:
         return
     tab._reload_table()
     detail_lines = [
-        "Unique lessons imported: " + str(result["imported_count"]),
+        "Canonical lessons imported: " + str(result["imported_count"])
+        + " | Foreign-owner references: " + str(result["referenced_count"]),
         "Duplicate lessons skipped: " + str(result["duplicate_count"]),
         "Invalid lessons skipped: " + str(result["invalid_count"]),
         "Current lessons deleted: 0",

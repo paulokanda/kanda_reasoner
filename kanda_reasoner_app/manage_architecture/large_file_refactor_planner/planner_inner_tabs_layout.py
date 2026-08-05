@@ -99,11 +99,11 @@ def _build_send_web_ai_split_button(
     """Build the orange-text Web AI split wrapper action beside Plan & Actions."""
     if callback is None:
         return None
-    button = QPushButton("Send Web Ai to split file")
+    button = QPushButton("Send to External AI to split file")
     button.setObjectName("largeFilePlannerSendWebAiSplitFileButton")
     button.setStyleSheet("color: #FF8C00; font-weight: bold;")
     button.setToolTip(
-        "Copy the canonical Web AI bundle blueprint plus current planning package."
+        "Copy the canonical bundle and open the selected external Python-coding AI."
     )
     button.clicked.connect(callback)
     return button

@@ -8,6 +8,7 @@
     "Error Memory stores lessons learned from real project failures so the same mistake is less likely to happen again.",
     "Use the intake area to prepare one lesson, the Error Editor to review it, and the Lessons table to manage saved records.",
     "Lessons to Clipboard copies the complete lesson library as JSON for manual AI transfer.",
-    "Memorize Error is an explicit human action and should be used only after the lesson is complete and evidence is correct."
+    "Memorize Error is an explicit human action and should be used only after the lesson is complete and evidence is correct.",
+    "Copy and Open External AI copies the current draft plus active-ready templates, opens the selected external Python-coding assistant, and never memorizes the returned lesson automatically."
   ]
 }

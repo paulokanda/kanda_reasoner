@@ -7,6 +7,17 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from threading import Event
 
+from _reasoner_tools_gui_engineering_safety_review_signals import (
+    ASSESSMENT_DEGRADED,
+    ASSESSMENT_DRAFT,
+    ASSESSMENT_FAILED,
+    ASSESSMENT_INVALID_COVERAGE,
+    ASSESSMENT_MANUAL_REVIEW_REQUIRED,
+    ASSESSMENT_MISSING_EVIDENCE,
+    ASSESSMENT_NOT_RUN,
+    ASSESSMENT_PASS_WITH_FINDINGS,
+    classify_engineering_review_signal,
+)
 from _reasoner_tools_gui_engineering_safety_sonar import (
     create_engineering_safety_sonar,
 )
@@ -25,6 +36,8 @@ class _EngineeringReviewItemResult:
     stdout: str
     stderr: str
     outcome: str
+    assessment: str
+    assessment_reason: str
 
 
 def _run_catalog_item(
@@ -41,14 +54,26 @@ def _run_catalog_item(
             stdout="",
             stderr=f"{type(exc).__name__}: {exc}",
             outcome="FAIL",
+            assessment=ASSESSMENT_FAILED,
+            assessment_reason="Command runner raised an exception.",
         )
 
     status_code = _result_status_code(result)
+    stdout_text = _result_text(result, "stdout")
+    stderr_text = _result_text(result, "stderr")
+    signal = classify_engineering_review_signal(
+        command_name,
+        status_code,
+        stdout_text,
+        stderr_text,
+    )
     return _EngineeringReviewItemResult(
         status_code=status_code,
-        stdout=_result_text(result, "stdout"),
-        stderr=_result_text(result, "stderr"),
+        stdout=stdout_text,
+        stderr=stderr_text,
         outcome="PASS" if status_code == 0 else "FAIL",
+        assessment=signal.assessment,
+        assessment_reason=signal.reason,
     )
 
 
@@ -72,6 +97,8 @@ def _format_item_result(
     total: int,
     tool: object,
     outcome: str,
+    assessment: str,
+    assessment_reason: str,
     status_code: int | None,
     stdout_text: str,
     stderr_text: str,
@@ -84,6 +111,9 @@ def _format_item_result(
         f"[{index:02d}/{total:02d}] {section} - {label}",
         f"Command: {command_name}",
         f"Outcome: {outcome}",
+        f"Execution: {outcome}",
+        f"Assessment: {assessment}",
+        f"Assessment reason: {assessment_reason}",
     ]
     if status_code is not None:
         lines.append(f"Status: {status_code}")
@@ -117,9 +147,19 @@ def run_complete_engineering_review(
     ]
     passed = 0
     failed = 0
-    manual = 0
     completed = 0
     cancelled = False
+    assessment_counts = {
+        "CLEAN": 0,
+        ASSESSMENT_PASS_WITH_FINDINGS: 0,
+        ASSESSMENT_DEGRADED: 0,
+        ASSESSMENT_INVALID_COVERAGE: 0,
+        ASSESSMENT_MISSING_EVIDENCE: 0,
+        ASSESSMENT_DRAFT: 0,
+        ASSESSMENT_NOT_RUN: 0,
+        ASSESSMENT_MANUAL_REVIEW_REQUIRED: 0,
+        ASSESSMENT_FAILED: 0,
+    }
 
     for index, tool in enumerate(catalog, start=1):
         if cancel_requested is not None and cancel_requested():
@@ -137,7 +177,7 @@ def run_complete_engineering_review(
 
         command_name = str(getattr(tool, "command_name", ""))
         if command_name in _MANUAL_COMMANDS:
-            manual += 1
+            assessment_counts[ASSESSMENT_MANUAL_REVIEW_REQUIRED] += 1
             completed += 1
             lines.extend(
                 _format_item_result(
@@ -145,6 +185,8 @@ def run_complete_engineering_review(
                     total,
                     tool,
                     "MANUAL REVIEW REQUIRED",
+                    ASSESSMENT_MANUAL_REVIEW_REQUIRED,
+                    "Interactive correction requires explicit human review.",
                     None,
                     "",
                     (
@@ -165,6 +207,7 @@ def run_complete_engineering_review(
         else:
             failed += 1
 
+        assessment_counts[item_result.assessment] += 1
         completed += 1
         lines.extend(
             _format_item_result(
@@ -172,6 +215,8 @@ def run_complete_engineering_review(
                 total,
                 tool,
                 item_result.outcome,
+                item_result.assessment,
+                item_result.assessment_reason,
                 item_result.status_code,
                 item_result.stdout,
                 item_result.stderr,
@@ -184,17 +229,51 @@ def run_complete_engineering_review(
     overall = "PASS"
     if cancelled:
         overall = "CANCELLED"
-    elif failed:
+    elif failed or assessment_counts[ASSESSMENT_FAILED]:
         overall = "ATTENTION REQUIRED"
-    elif manual:
-        overall = "PASS WITH MANUAL REVIEW ITEMS"
+    elif assessment_counts[ASSESSMENT_INVALID_COVERAGE]:
+        overall = "INVALID REVIEW"
+    elif (
+        assessment_counts[ASSESSMENT_MISSING_EVIDENCE]
+        or assessment_counts[ASSESSMENT_DEGRADED]
+        or assessment_counts[ASSESSMENT_NOT_RUN]
+    ):
+        overall = "DEGRADED REVIEW"
+    elif (
+        assessment_counts[ASSESSMENT_PASS_WITH_FINDINGS]
+        or assessment_counts[ASSESSMENT_DRAFT]
+        or assessment_counts[ASSESSMENT_MANUAL_REVIEW_REQUIRED]
+    ):
+        overall = "PASS WITH REVIEW ITEMS"
     lines.extend(
         (
             "SUMMARY",
             f"Overall: {overall}",
             f"Passed: {passed}",
             f"Failed: {failed}",
-            f"Manual review required: {manual}",
+            f"Commands succeeded: {passed}",
+            f"Commands failed: {failed}",
+            f"Clean checks: {assessment_counts['CLEAN']}",
+            (
+                "Checks with findings: "
+                + str(assessment_counts[ASSESSMENT_PASS_WITH_FINDINGS])
+            ),
+            f"Degraded checks: {assessment_counts[ASSESSMENT_DEGRADED]}",
+            (
+                "Invalid coverage checks: "
+                + str(assessment_counts[ASSESSMENT_INVALID_COVERAGE])
+            ),
+            (
+                "Missing evidence checks: "
+                + str(assessment_counts[ASSESSMENT_MISSING_EVIDENCE])
+            ),
+            f"Draft checks: {assessment_counts[ASSESSMENT_DRAFT]}",
+            f"Not-run checks: {assessment_counts[ASSESSMENT_NOT_RUN]}",
+            (
+                "Manual review required: "
+                + str(assessment_counts[ASSESSMENT_MANUAL_REVIEW_REQUIRED])
+            ),
+            f"Failed assessments: {assessment_counts[ASSESSMENT_FAILED]}",
             f"Completed catalog items: {completed}",
             f"Cancelled: {'YES' if cancelled else 'NO'}",
             f"Total catalog items: {total}",

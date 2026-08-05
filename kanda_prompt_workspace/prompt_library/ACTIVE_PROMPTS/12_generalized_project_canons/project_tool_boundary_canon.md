@@ -136,6 +136,55 @@ Before mutation:
 
 No reusable Tool code may be installed into Project Support. No selected-Project result may be installed into reusable Tool source merely because KANDA performed the work.
 
+## Explicit code-placement and cross-write rule
+
+For every build, update, regression repair, installation, validation, Freeze,
+Error Memory, or packaging operation, the AI must enforce this default rule:
+
+```text
+KANDA Tool-owned reusable code and files stay under the canonical Tool owner.
+Selected-Project-owned code and files stay under the canonical selected Project owner.
+Never write KANDA Tool code into an external selected Project source tree.
+Never write external selected-Project code into KANDA Tool source.
+```
+
+A `MIXED_GOVERNED` operation may write both owners only through two explicit,
+owner-pure write sets. Every Tool path must contain Tool-owned behavior and every
+Project path must contain Project-owned behavior. Writing both roots is not
+authorization to copy one owner's runtime, source, prompt library, installer, or
+validator into the other owner's source tree.
+
+### Project Support handoff exception
+
+The selected Project's dynamic support root, normally:
+
+```text
+<project_drive>/<project_name>_show_project_to_AI
+```
+
+may contain the files needed to show, explain, validate, freeze, or memorize the
+selected Project for AI-assisted work. This includes generated handoffs, source
+archives or source-part copies, manifests, prompts, screenshots, validation
+evidence, Freeze intake and memory, and Error Memory intake and lessons produced
+by KANDA Reasoner.
+
+This is a support and evidence exception only. Project Support remains outside
+both source owners, is non-authoritative unless a canon assigns authority, and
+must never become an import root, install destination, runtime dependency, or
+substitute for current exact source. The canonical name uses one separator
+underscore: `<project_name>_show_project_to_AI`.
+
+### KANDA Reasoner self-hosting exception
+
+When the selected Project is KANDA Reasoner itself and canonical resolution
+proves that the active Project source root and KANDA Tool source root are the
+same owner root, Tool work and Project work may physically write the same source
+tree. The operation must still classify each change, declare the exact write
+set, use current fingerprints, and run owner-appropriate validation and rollback.
+
+Self-hosting does not collapse logical ownership and never authorizes code from
+a different selected Project to be written into KANDA Tool source.
+
 ## Mixed governed operations
 
 `MIXED_GOVERNED` requires separate Tool and Project write sets, owner-specific validators, explicit ordering, atomicity boundaries, rollback behavior, partial-failure handling, and public-contract migration when both owners change.
@@ -233,6 +282,10 @@ May begin coding: NO
 - Never duplicate MCard, Workbench, delivery, or durable-document owner contracts in this canon.
 - Never silently merge support state after project rename, move, or collision.
 - Never allow undeclared or unauthorized cross-project mutation.
+- Never write KANDA Tool-owned code into an external Project source tree.
+- Never write external Project-owned code into KANDA Tool source.
+- Treat `<project_name>_show_project_to_AI` as support/evidence only, never as source or an install target.
+- Permit same-tree physical writes only when the selected Project is KANDA Reasoner itself and canonical Tool/Project root identity is proven.
 - Never create or refresh `<project>-Windows-Portable.zip` from Show Project to AI; require a separate explicit user request and productization/release workflow.
 
 ## Version history

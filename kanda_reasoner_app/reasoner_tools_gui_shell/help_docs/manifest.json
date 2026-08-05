@@ -151,10 +151,11 @@
       "rendered": "rendered/config_ai.html",
       "css": "css/book_help.css",
       "assets": [
-        "assets/drawings/config_ai_opener_global_controls.png",
-        "assets/drawings/config_ai_web_configuration.png",
-        "assets/drawings/config_ai_local_configuration.png",
-        "assets/drawings/config_ai_tool_project_boundary.png"
+        "assets/drawings/config_ai_opener_control_desk.png",
+        "assets/drawings/config_ai_gateway_key_counter.png",
+        "assets/drawings/config_ai_direct_provider_keyring.png",
+        "assets/drawings/config_ai_local_home_workshop.png",
+        "assets/drawings/config_ai_use_and_safety_bridge.png"
       ]
     },
     {
@@ -200,6 +201,23 @@
         "assets/drawings/prompt_library_active_group_cubes.png",
         "assets/drawings/prompt_library_group_browser.png",
         "assets/drawings/prompt_library_read_only_boundary.png"
+      ]
+    },
+    {
+      "id": "kanda_phrasebook",
+      "title": "Kanda Phrasebook",
+      "tab_id": "prompt_library",
+      "legacy_help_catalog": "kanda_phrasebook.json",
+      "source": "source/kanda_phrasebook.md",
+      "rendered": "rendered/kanda_phrasebook.html",
+      "css": "css/book_help.css",
+      "assets": [
+        "assets/drawings/kanda_phrasebook_opener.png",
+        "assets/drawings/kanda_phrasebook_choose_prompt.png",
+        "assets/drawings/kanda_phrasebook_tool_project_boundary.png",
+        "assets/drawings/kanda_phrasebook_box_logic_repair.png",
+        "assets/drawings/kanda_phrasebook_validation.png",
+        "assets/drawings/kanda_phrasebook_freeze.png"
       ]
     }
   ]

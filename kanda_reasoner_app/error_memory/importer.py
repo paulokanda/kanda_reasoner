@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 import zipfile
 
+from .backend import ErrorMemoryBackend, OwnerMetadataPolicy
 from .intake import parse_error_lesson_ai_response, save_ai_form_as_lesson
 from .schema import validate_lesson_shape
 from .store import rebuild_index, save_lesson
@@ -66,14 +67,18 @@ def _looks_like_importable_text_lesson(text: str) -> bool:
 
 def _save_payload_or_form(
     *,
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     payload: dict[str, Any],
     source_name: str,
 ) -> tuple[Path, dict[str, Any], str]:
     """Save a canonical lesson payload or convert an AI form payload."""
     ok, _failures = validate_lesson_shape(payload)
     if ok:
-        path = save_lesson(selected_project_root, payload)
+        path = save_lesson(
+            selected_project_root,
+            payload,
+            owner_metadata_policy=OwnerMetadataPolicy.REQUIRE_MATCH,
+        )
         return path, payload, "canonical_json"
     path, lesson = save_ai_form_as_lesson(
         selected_project_root=selected_project_root,
@@ -86,7 +91,7 @@ def _save_payload_or_form(
 
 def _import_json_text(
     *,
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     text: str,
     source_name: str,
 ) -> list[dict[str, Any]]:
@@ -135,7 +140,7 @@ def _import_json_text(
     return imported
 
 
-def import_error_memory_zip(selected_project_root: str | Path, zip_path: str | Path) -> dict[str, Any]:
+def import_error_memory_zip(selected_project_root: ErrorMemoryBackend | str | Path, zip_path: str | Path) -> dict[str, Any]:
     """Import lessons from an Error Memory ZIP into the selected project's store.
 
     The ZIP is not extracted to disk.  JSON lesson files and marker-wrapped AI
@@ -180,7 +185,7 @@ def import_error_memory_zip(selected_project_root: str | Path, zip_path: str | P
     }
 
 
-def import_error_memory_file(selected_project_root: str | Path, source_path: str | Path) -> dict[str, Any]:
+def import_error_memory_file(selected_project_root: ErrorMemoryBackend | str | Path, source_path: str | Path) -> dict[str, Any]:
     """Import an Error Memory ZIP, JSON lesson, or marker-wrapped text file."""
     source = Path(source_path).expanduser().resolve(strict=False)
     if not source.is_file():

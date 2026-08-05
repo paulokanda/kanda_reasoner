@@ -34,6 +34,23 @@ def overview_details_html(build: GraphSnapshotBuild) -> str:
         + html.escape(str(statistics.get("inheritance_edge_count", 0)))
         + " inheritance links."
     )
+    findings = statistics.get("structure_findings")
+    findings = findings if isinstance(findings, dict) else {}
+    structure_summary = (
+        html.escape(str(findings.get("cyclic_component_count", 0)))
+        + " import-cycle components, "
+        + html.escape(str(findings.get("cyclic_node_count", 0)))
+        + " participating modules, and "
+        + html.escape(str(findings.get("low_confidence_edge_count", 0)))
+        + " low-confidence visible relationships."
+    )
+    review_count = len(
+        findings.get("high_import_fan_in_without_visible_validation", [])
+        if isinstance(
+            findings.get("high_import_fan_in_without_visible_validation"), list
+        )
+        else []
+    )
     return (
         "<h2>Project Structure 3D</h2>"
         "<p><b>v1D stable layout and focus-path view</b></p>"
@@ -47,7 +64,12 @@ def overview_details_html(build: GraphSnapshotBuild) -> str:
         + html.escape(str(statistics.get("edge_count", 0)))
         + " edges.</p><p><b>Semantic evidence:</b> "
         + semantic_summary
-        + "</p><p><b>Layout cache:</b> "
+        + "</p><p><b>Structural findings:</b> "
+        + structure_summary
+        + " Review candidates without a visible validation link: "
+        + html.escape(str(review_count))
+        + ". These signals describe only the rendered snapshot, not guaranteed "
+        "whole-Project completeness.</p><p><b>Layout cache:</b> "
         + html.escape(str(build.snapshot.get("layout", {}).get(
             "position_cache", {}
         ).get("status", "disabled")))
@@ -90,8 +112,18 @@ def node_details_html(
         ("Relative path", node.get("relative_path", "") or "Not applicable"),
         ("Package", node.get("package", "") or "Not applicable"),
         ("Parent", node.get("parent_id", "") or "Not applicable"),
-        ("Incoming", node.get("incoming_count", 0)),
-        ("Outgoing", node.get("outgoing_count", 0)),
+        ("Incoming relationships", node.get("incoming_count", 0)),
+        ("Outgoing relationships", node.get("outgoing_count", 0)),
+        ("Import fan-in", metadata.get("import_fan_in", 0)),
+        ("Import fan-out", metadata.get("import_fan_out", 0)),
+        (
+            "Import cycle",
+            metadata.get("import_cycle_component_id") or "No",
+        ),
+        (
+            "Visible validation links",
+            metadata.get("visible_validation_link_count", 0),
+        ),
         ("Line", metadata.get("line", "Not available")),
         ("Lines", metadata.get("line_count", "Not available")),
         ("Symbols", metadata.get("symbol_count", "Not available")),

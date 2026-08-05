@@ -11,6 +11,10 @@ from pathlib import Path
 from typing import Any, Mapping
 import zipfile
 
+from .delivery_provenance_contract import (
+    DeliveryProvenanceContractError,
+    validate_delivery_provenance_contract,
+)
 from .models import (
     FREEZE_HINT_FILENAME,
     MANDATORY_FREEZE_FIELDS,
@@ -403,6 +407,16 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True)
                 _validate_hint_data(loaded)
                 hint = dict(loaded)
             error_memory_lesson_blocks = _validate_error_memory_lesson_blocks(archive)
+            provenance_required = bool(hint and hint.get("patch_provenance_required"))
+            try:
+                provenance_report = validate_delivery_provenance_contract(
+                    archive,
+                    actual_zip_name=path.name,
+                    freeze_hint=hint,
+                    required=provenance_required,
+                )
+            except DeliveryProvenanceContractError as exc:
+                _raise(str(exc))
     except zipfile.BadZipFile as exc:
         raise PatchZipContractError(f"Invalid ZIP archive: {path}") from exc
 
@@ -417,6 +431,10 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True)
         "zip_member_contract": True,
         "zip_member_count": len(member_inventory.names),
         "declared_payload_member_count": len(member_inventory.declared_payload_members),
+        "patch_provenance_contract": bool(provenance_report),
+        "receiver_classification": (
+            provenance_report.receiver_classification if provenance_report else ""
+        ),
     }
 
 

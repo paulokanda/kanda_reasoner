@@ -4,140 +4,185 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "schema_version",
+    "kind",
     "feature_id",
+    "patch_name",
     "zip_name",
     "zip_purpose",
     "zip_placement_path",
     "what_zip_is",
     "what_zip_is_not",
-    "install_commands",
-    "validation_commands",
-    "expected_validation_markers",
+    "target_box",
     "files_changed",
     "allowed_write_paths",
     "forbidden_write_paths",
-    "target_box",
     "forbidden_boxes",
     "generated_vs_canonical_status",
+    "install_commands",
+    "validation_commands",
+    "expected_validation_markers",
+    "receiver_contract",
     "freeze_intake",
     "error_memory_intake",
     "post_validation_steps",
     "beginner_do_not_do"
   ],
-  "properties": {
-    "feature_id": {
+  "$defs": {
+    "nonEmptyString": {
       "type": "string",
       "minLength": 1
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "receiverContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "classification",
+        "actual_receiver_path_or_action",
+        "installer_stages_to_receiver",
+        "manual_paste_required",
+        "storage_only_helper",
+        "proof_artifacts"
+      ],
+      "properties": {
+        "classification": {
+          "enum": [
+            "SOURCE_PATCH",
+            "FREEZE_HINT_INTAKE",
+            "MANUAL_FREEZE_FORM_RECEIVER",
+            "ERROR_MEMORY_AI_ASSISTED_INTAKE",
+            "STORAGE_ONLY_MANUAL_HELPER"
+          ]
+        },
+        "actual_receiver_path_or_action": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "installer_stages_to_receiver": {
+          "type": "boolean"
+        },
+        "manual_paste_required": {
+          "type": "boolean"
+        },
+        "storage_only_helper": {
+          "type": "boolean"
+        },
+        "proof_artifacts": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "kind": {
+      "const": "kanda_patch_delivery_manifest"
+    },
+    "feature_id": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "patch_name": {
+      "$ref": "#/$defs/nonEmptyString"
     },
     "zip_name": {
       "type": "string",
       "pattern": "^[A-Za-z0-9_.-]+\\.zip$"
     },
     "zip_purpose": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
     },
     "zip_placement_path": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
     },
     "what_zip_is": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
     },
     "what_zip_is_not": {
-      "type": "string",
-      "minLength": 1
-    },
-    "install_commands": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
-    },
-    "validation_commands": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
-    },
-    "expected_validation_markers": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
-    },
-    "files_changed": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
-    },
-    "allowed_write_paths": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
-    },
-    "forbidden_write_paths": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyString"
     },
     "target_box": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "files_changed": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "allowed_write_paths": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "forbidden_write_paths": {
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "forbidden_boxes": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "generated_vs_canonical_status": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "install_commands": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "validation_commands": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "expected_validation_markers": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "receiver_contract": {
+      "$ref": "#/$defs/receiverContract"
     },
     "freeze_intake": {
-      "type": [
-        "object",
-        "string"
-      ]
+      "$ref": "#/$defs/receiverContract"
     },
     "error_memory_intake": {
-      "type": [
-        "object",
-        "string"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "status": {
+              "const": "NOT_APPLICABLE"
+            },
+            "reason": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "receiver_contract"
+          ],
+          "properties": {
+            "status": {
+              "const": "ACTIVE_READY"
+            },
+            "receiver_contract": {
+              "$ref": "#/$defs/receiverContract"
+            }
+          }
+        }
       ]
     },
     "post_validation_steps": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
+      "$ref": "#/$defs/nonEmptyStringArray"
     },
     "beginner_do_not_do": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "minItems": 1
+      "$ref": "#/$defs/nonEmptyStringArray"
     }
   }
 }

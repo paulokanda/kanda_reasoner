@@ -46,7 +46,7 @@ EXPECTED_HASHES = {
         "0b8fb74c176120c74e6de3ce7fbfde2201392fc40edd8801ab62c97b5ec980cb"
     ),
     VALIDATOR_RELS[0].as_posix(): (
-        "e21d9b69b5e2f803a06655683d55fc7f410ce6a4ab9aab721f9e6e577e0597a0"
+        "58d51b4deb2804e7b2fba635f10728e45fb8f7231f274b4ad1347e148c259178"
     ),
     VALIDATOR_RELS[1].as_posix(): (
         "b8731b2b41a9c48e93f5e77ab52bf2fffc4e9a08e94a2d7fd8e87b33b1a6ee7d"
@@ -61,7 +61,7 @@ EXPECTED_HASHES = {
 
 EXPECTED_NON_ALL_SOURCE_HASHES = {
     VALIDATOR_RELS[0].as_posix(): (
-        "eaedbd969351330e25482d2f733006699dd18224d3f747f8e34e2842c2c50a4f"
+        "09d9be5b1079dd818b0a3a3afe8a120238746d5dbeb2afd8304db0145e8fe809"
     ),
     VALIDATOR_RELS[1].as_posix(): (
         "be77e1204a2ebf2ac1ee100193cdd1db6ca07a4a8fd252d58ad64caf444ad187"

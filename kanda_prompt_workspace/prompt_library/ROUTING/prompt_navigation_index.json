@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_for": "kanda-help-exact-layout-prompt-patch-v1",
-  "generated_at": "2026-07-17",
+  "generated_for": "send-zip-freeze-button-v2",
+  "generated_at": "2026-08-02",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use active current metadata and exact owners. Retired identities resolve through KPR-02-005 and never appear as active route entries.",
-  "prompt_count": 102,
+  "prompt_count": 104,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -890,6 +890,51 @@
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
+      "prompt_id": "self_contained_freeze_entry_intake_zip",
+      "prompt_code": "KPR-03-007",
+      "display_name": "Self-Contained Freeze Entry Intake ZIP",
+      "filename": "self_contained_freeze_entry_intake_zip.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 27,
+      "trigger_phrases": [
+        "Send zip freeze",
+        "create freeze loader ZIP",
+        "load current feature into New Local Freeze Entry",
+        "self-contained freeze intake ZIP",
+        "prepare freeze entry ZIP"
+      ],
+      "user_intent_examples": [
+        "Create one ZIP that loads this validated feature into New Local Freeze Entry for the selected Project."
+      ],
+      "aliases": [
+        "KPR-03-007",
+        "self_contained_freeze_entry_intake_zip",
+        "self_contained_freeze_entry_intake_zip.md",
+        "Send zip freeze",
+        "send zip freeze",
+        "self-contained freeze loader ZIP",
+        "New Local Freeze Entry ZIP"
+      ],
+      "when_to_load": "When the user requests one self-contained ZIP that loads the currently validated feature into Freeze Feature After Update -> New Local Freeze Entry for the currently selected Project.",
+      "when_not_to_load": "Do not load for ordinary source patch installation, direct frozen-memory writes, unvalidated features, or freeze-form text only.",
+      "required_companion_prompts": [
+        "freeze_code_intake_and_form_protocol",
+        "pre_output_contract_gates",
+        "implementation_and_delivery_protocol"
+      ],
+      "optional_companion_prompts": [
+        "terminal_cleanup_contract",
+        "project_tool_boundary_canon",
+        "patch_install_delivery_error_register",
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "self_contained_error_memory_lesson_intake_zip"
+      ],
+      "status": "active",
+      "load_type": "on_request",
+      "version": "1.1"
+    },
+    {
       "prompt_id": "boundary_first_repair_protocol",
       "prompt_code": "KPR-04-006",
       "display_name": "Boundary-First Repair Protocol",
@@ -1231,13 +1276,13 @@
       "priority": 17,
       "trigger_phrases": [
         "Answer, Validate, Freeze, Memorize Error",
-        "Show Project to AI recovery routine",
-        "collector export failed",
-        "patch validation freeze recovery",
+        "one zip separate install validate freeze error memory commands",
+        "compact update release",
+        "finish release phases",
         "copy recovery routine"
       ],
       "user_intent_examples": [
-        "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper."
+        "When the user presses the Show Project to AI routine button or asks for one update ZIP followed by separate install, validation, Freeze, and Error Memory terminal commands."
       ],
       "aliases": [
         "KPR-05-005",
@@ -1246,11 +1291,12 @@
         "Answer Validate Freeze Memorize Error",
         "recovery routine owner dispatch"
       ],
-      "when_to_load": "When the user presses the Show Project to AI recovery-copy button or requests the equivalent incident-recovery wrapper.",
-      "when_not_to_load": "Do not load for ordinary delivery when no reusable recovery handoff is requested.",
+      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.",
+      "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
       "required_companion_prompts": [
         "project_tool_boundary_canon",
-        "brick_wall_comprehensive_quality_gate"
+        "brick_wall_comprehensive_quality_gate",
+        "durable_document_artifact_routing_canon"
       ],
       "optional_companion_prompts": [
         "bundle_gated_development_workflow",
@@ -1259,7 +1305,9 @@
         "patch_install_delivery_error_register",
         "terminal_cleanup_contract",
         "freeze_code_intake_and_form_protocol",
-        "error_memory_ai_formulary_startup_canon"
+        "self_contained_freeze_entry_intake_zip",
+        "error_memory_ai_formulary_startup_canon",
+        "self_contained_error_memory_lesson_intake_zip"
       ],
       "status": "active",
       "load_type": "on_request",
@@ -1346,6 +1394,51 @@
       ],
       "status": "active",
       "load_type": "always_startup"
+    },
+    {
+      "prompt_id": "self_contained_error_memory_lesson_intake_zip",
+      "prompt_code": "KPR-05-008",
+      "display_name": "Self-Contained Error Memory Lesson Intake ZIP",
+      "filename": "self_contained_error_memory_lesson_intake_zip.md",
+      "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md",
+      "category": "05_patch_delivery_and_validation",
+      "priority": 18,
+      "trigger_phrases": [
+        "Send Zip Errors",
+        "create error lesson loader ZIP",
+        "self-contained Error Memory ZIP",
+        "stage Error Memory lessons for approval",
+        "pending error lesson intake"
+      ],
+      "user_intent_examples": [
+        "Create one ZIP that puts these validated error lessons into the current Project Error Memory tab for approval."
+      ],
+      "aliases": [
+        "KPR-05-008",
+        "self_contained_error_memory_lesson_intake_zip",
+        "Send Zip Errors",
+        "send zip errors",
+        "self-contained Error Memory ZIP",
+        "Error Memory lesson intake loader"
+      ],
+      "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for approval in the currently selected Project.",
+      "when_not_to_load": "Do not load for a single pasted lesson JSON, direct canonical memorization, ordinary patch delivery, or when no reusable lesson candidate exists.",
+      "required_companion_prompts": [
+        "error_memory_ai_formulary_startup_canon",
+        "bundle_gated_development_workflow",
+        "implementation_and_delivery_protocol",
+        "pre_output_contract_gates"
+      ],
+      "optional_companion_prompts": [
+        "terminal_cleanup_contract",
+        "project_tool_boundary_canon",
+        "patch_install_delivery_error_register",
+        "patch_validate_freeze_error_memory_routine_blueprint",
+        "self_contained_freeze_entry_intake_zip"
+      ],
+      "status": "active",
+      "load_type": "on_request",
+      "version": "1.2"
     },
     {
       "prompt_id": "architecture_hardening_triage_protocol",

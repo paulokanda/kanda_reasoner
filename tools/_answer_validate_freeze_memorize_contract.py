@@ -8,6 +8,11 @@ import py_compile
 import tempfile
 from pathlib import Path
 
+__all__ = [
+    "HELPER_REL",
+    "validate_all",
+]
+
 PROMPT_ID = "patch_validate_freeze_error_memory_routine_blueprint"
 PROMPT_REL = Path(
     "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
@@ -58,7 +63,7 @@ def read_text(root: Path, relative: Path) -> str:
 def validate_prompt(root: Path) -> None:
     text = read_text(root, PROMPT_REL)
     required = (
-        "version: 3.1",
+        "version: 3.2",
         "canonical continuation wrapper",
         "KANDA_ANSWER_VALIDATE_FREEZE_MEMORIZE_CONTEXT",
         "Hard Tool-versus-Project boundary",
@@ -67,18 +72,30 @@ def validate_prompt(root: Path) -> None:
         "ANSWER VALIDATE FREEZE MEMORIZE ROUTINE IDENTITY",
         "Need new training prompt: NO",
         "Continue from the last reliable marker",
-        "build one self-contained patch ZIP",
+        "One self-contained feature ZIP",
+        "exactly one primary feature/update ZIP",
+        "packaged `INSTALL.ps1`, `VALIDATE.ps1`, `RUN_INSTALL.ps1`",
+        "Required user-visible delivery shape",
+        "Terminal 1 - INSTALL",
+        "Terminal 2 - VALIDATE",
+        "Terminal 3 - FREEZE",
+        "Terminal 4 - ERROR MEMORY",
+        "One terminal block never executes two lifecycle phases",
+        "*_VALIDATION_REPORT.txt",
         "No ZIP link may be emitted alone",
         "INSTALL IS NOT VALIDATION",
         "VALIDATION OK: <feature_id>",
         "STATUS: IN_SYNC",
+        "FREEZE DISPOSITION: PREPARED_FOR_HUMAN_CONFIRMATION",
+        "ERROR MEMORY DISPOSITION: NOT_REQUIRED",
         "freeze_code_intake_and_form_protocol",
-        "error_memory_active_ready_json_template",
-        "KANDA_ERROR_LESSON_JSON_BEGIN",
-        "Confirm and Write remains an explicit human action",
-        "explicitly uses Memorize Error",
-        "selected external Project does not become prompt-library authority",
-        "return the completed user-facing answer",
+        "self_contained_freeze_entry_intake_zip",
+        "self_contained_error_memory_lesson_intake_zip",
+        "Confirm and Write is human-only",
+        "Memorize Error remains human-only",
+        "Keep the button linked to that path",
+        "Compact current-work intake",
+        "No-orphan-report rule",
         "Paste-safe PowerShell hard gate",
         "Every user-facing PowerShell code fence is one independent paste unit",
         "Windows PowerShell 5.1-compatible APIs",
@@ -87,9 +104,12 @@ def validate_prompt(root: Path) -> None:
     )
     for marker in required:
         require(marker in text, "PROMPT_MARKER_" + marker)
-    require(DEPRECATED_BRIDGE not in text.replace(
-        "Never load or depend on deprecated `" + DEPRECATED_BRIDGE + "`.", ""
-    ), "PROMPT_NO_DEPRECATED_OWNER")
+    require(
+        DEPRECATED_BRIDGE not in text.replace(
+            "Never load deprecated `" + DEPRECATED_BRIDGE + "`.", ""
+        ),
+        "PROMPT_NO_DEPRECATED_OWNER",
+    )
     require(text.count("pre_output_contract_gates") == 1, "PROMPT_OWNER_UNIQUE_PRE_OUTPUT")
     require(len(text.splitlines()) <= 300, "PROMPT_LINE_LIMIT")
 
@@ -98,7 +118,12 @@ def validate_metadata(root: Path) -> None:
     data = json.loads(read_text(root, META_REL))
     require(data.get("prompt_id") == PROMPT_ID, "META_PROMPT_ID")
     require(data.get("prompt_code") == "KPR-05-005", "META_PROMPT_CODE")
-    require(data.get("version") == "3.1", "META_VERSION")
+    require(data.get("version") == "3.2", "META_VERSION")
+    require(
+        data.get("source_stage") == "separated-terminal-release-phases-v1"
+        and data.get("updated_for") == "separated-terminal-release-phases-v1",
+        "META_SOURCE_STAGE",
+    )
     require(data.get("status") == "active", "META_STATUS")
     require(data.get("load_type") == "on_request", "META_LOAD_TYPE")
     required = list(data.get("required_companion_prompts") or [])
@@ -113,6 +138,7 @@ def validate_metadata(root: Path) -> None:
         "pre_output_contract_gates",
         "patch_install_delivery_error_register",
         "terminal_cleanup_contract",
+        "durable_document_artifact_routing_canon",
     }
     require(set(required) == expected_required, "META_REQUIRED_OWNER_SET")
     expected_optional = {
@@ -121,6 +147,8 @@ def validate_metadata(root: Path) -> None:
         "error_memory_active_ready_correction_blueprint",
         "error_memory_active_ready_json_template",
         "error_memory_model_template",
+        "self_contained_freeze_entry_intake_zip",
+        "self_contained_error_memory_lesson_intake_zip",
     }
     require(set(optional) == expected_optional, "META_OPTIONAL_OWNER_SET")
     require(DEPRECATED_BRIDGE not in required + optional, "META_NO_DEPRECATED_BRIDGE")
@@ -129,7 +157,7 @@ def validate_metadata(root: Path) -> None:
 def validate_bridge_and_navigation(root: Path) -> None:
     bridge = read_text(root, BRIDGE_REL)
     for marker in (
-        "version: 2.0",
+        "version: 2.3",
         "Cross-project release ownership",
         "patch payload owner            = active_project_root",
         "Freeze intake and memory       = active_project_support_root",
@@ -184,6 +212,11 @@ def validate_button(root: Path) -> None:
         "Selected project-linked transient root:",
         "Canonical prompt source:",
         "Need new training prompt: NO",
+        "Compact update rule:",
+        "Single-ZIP rule:",
+        "Terminal phase rule:",
+        "Freeze rule:",
+        "Error Memory rule:",
         "PowerShell paste rule:",
     ):
         require(marker.lower() in helper.lower(), "HELPER_MARKER_" + marker)
@@ -210,6 +243,13 @@ def validate_button(root: Path) -> None:
         require("Selected project-linked transient root: " + str(expected_transient.resolve()) in wrapped, "WRAPPER_EXTERNAL_TRANSIENT")
         require("Canonical prompt source: " + str((root / PROMPT_REL).resolve()) in wrapped, "WRAPPER_TOOL_PROMPT_SOURCE")
         require("Need new training prompt: NO" in wrapped, "WRAPPER_NO_RETRAINING")
+        require("Compact update rule:" in wrapped, "WRAPPER_COMPACT_UPDATE_RULE")
+        require("Single-ZIP rule:" in wrapped, "WRAPPER_SINGLE_ZIP_RULE")
+        require("Terminal phase rule:" in wrapped, "WRAPPER_TERMINAL_PHASE_RULE")
+        require("FREEZE, and ERROR MEMORY terminal blocks" in wrapped, "WRAPPER_SEPARATE_PHASES")
+        require("disposable validation-report downloads" in wrapped, "WRAPPER_NO_ORPHAN_REPORT_RULE")
+        require("Freeze rule:" in wrapped, "WRAPPER_FREEZE_RULE")
+        require("Error Memory rule:" in wrapped, "WRAPPER_ERROR_MEMORY_RULE")
         require("PowerShell paste rule:" in wrapped, "WRAPPER_PASTE_SAFE_RULE")
         self_host = module.build_answer_validate_freeze_memorize_wrapper(root, tool_root=root)
         require("Same physical root: YES" in self_host, "WRAPPER_SELF_HOST_SAME_PHYSICAL")
