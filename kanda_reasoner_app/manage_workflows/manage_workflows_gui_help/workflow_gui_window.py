@@ -12,10 +12,13 @@ from importlib import import_module
 from pathlib import Path
 from PySide6.QtCore import QThread, QTimer
 from PySide6.QtGui import QAction, QFont
-from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QFileDialog, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QPlainTextEdit, QSizePolicy, QStatusBar, QToolBar, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QFileDialog, QHBoxLayout, QLabel, QMainWindow, QMessageBox, QPushButton, QPlainTextEdit, QSizePolicy, QStatusBar, QToolBar, QVBoxLayout, QWidget
 from .workflow_gui_constants import _WORKFLOW_GUI_DEFAULT_MANAGER_NAME, _WORKFLOW_GUI_DEFAULT_PROJECT_ROOT
 from .workflow_gui_history import get_recent_roots, get_recent_scripts, record_root, record_script
-from .workflow_gui_worker import WorkflowRunWorker
+from .workflow_gui_worker import (
+    WorkflowRunWorker,
+    build_workflow_execution_context,
+)
 from .workflow_gui_presentation import (
     copy_workflow_audit_to_clipboard as _copy_workflow_audit_to_clipboard,
     show_history as _show_history,
@@ -267,7 +270,15 @@ class WorkflowManagerWindow(QMainWindow):
         record_root(str(root_path.resolve()))
         record_script(str(script_path.resolve()))
         self._output.clear()
-        self._output.appendPlainText(f'> {script_path.name} --root {root_path} --{mode}\n')
+        self._output.appendPlainText(
+            build_workflow_execution_context(
+                str(script_path), str(root_path), mode
+            )
+        )
+        self._output.appendPlainText(
+            f'> [KANDA TOOL EXECUTION PROVIDER] {script_path.resolve()} '
+            f'--root {root_path.resolve()} --{mode}\n'
+        )
         self.statusBar().showMessage(f'Running {mode}...')
         self._worker_thread = QThread(self)
         self._worker = WorkflowRunWorker(manager_script_path=str(script_path), project_root=str(root_path), mode=mode)

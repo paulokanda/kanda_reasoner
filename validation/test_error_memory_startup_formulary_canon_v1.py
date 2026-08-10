@@ -3,10 +3,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
-import sys
-import tempfile
-import zipfile
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

@@ -12,7 +12,6 @@ import sys
 import zipfile
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any
 
 __all__ = [
     "main",

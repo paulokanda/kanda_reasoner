@@ -8,24 +8,33 @@ contract is owned by reasoner_tools_gui_engineering_safety_panel.py.
 from __future__ import annotations
 
 import contextlib as _contextlib
-import importlib as _importlib
 import io as _io
+import os as _os
 import subprocess as _subprocess
 import sys as _sys
 from dataclasses import dataclass as _dataclass
 from dataclasses import field as _field
 from typing import Any as _Any
 
-from kanda_reasoner_app.project_root_resolver import (
-    resolve_active_project_root as _resolve_active_project_root,
+from _reasoner_tools_gui_engineering_safety_boundary import (
+    ProjectContextUnavailable as _ProjectContextUnavailable,
+    import_tool_module as _import_tool_module,
+    project_command_context as _project_command_context,
+    require_project_symbol as _require_project_symbol,
+    tool_root as _tool_root,
 )
-
 __all__ = []
 
-_DEFAULT_PANEL_ROOT = str(_resolve_active_project_root())
+_root_resolver_module = _import_tool_module(
+    "kanda_reasoner_app.project_root_resolver", "project_root_resolver"
+)
+_resolve_active_project_root = getattr(
+    _root_resolver_module, "resolve_active_project_root", None
+)
+if not callable(_resolve_active_project_root):
+    raise RuntimeError("TOOL_PROJECT_ROOT_RESOLVER_PUBLIC_CONTRACT_MISSING")
 _CLI_MODULE_PATH = "kanda_reasoner_app.safety_suite_cli.commands"
-_DEFAULT_CHANGED_FILE = "reasoner_tools_gui_engineering_safety_panel.py"
-_DEFAULT_EVIDENCE = "GUI button smoke run from Engineering Safety panel."
+_PROJECT_CONTEXT_UNAVAILABLE = "PROJECT_CONTEXT_UNAVAILABLE"
 
 _ROOT_COMMANDS = {
     "bom-scan",
@@ -118,148 +127,76 @@ def _build_display_command(command_name: str) -> list[str]:
 
 
 def _build_cli_args(command_name: str, project_root: object | None = None) -> list[str]:
-    """Build runnable safety-suite CLI arguments for a panel command."""
+    """Build runnable CLI arguments without borrowing Tool-specific Project targets."""
     root = _root_value(project_root)
 
     if command_name == "list-tools":
         return ["list-tools"]
-
-    if command_name == "stack-brief":
-        return ["stack-brief"]
-
-    # BEGIN PA021_PROJECT_SYMBOL_ATLAS_GUI_COMMANDS
-    if command_name == "atlas-report":
-        return [
-            "atlas-report",
-            "--root",
-            root,
-            "--query",
-            "Engineering Safety panel Project Symbol Atlas report.",
-            "--symbol",
-            "build_reasoner_symbol_atlas_reports",
-            "--target",
-            "reasoner_tools_gui_engineering_safety_panel.py",
-            "--task",
-            "Review Project Symbol Atlas GUI integration from the Engineering Safety panel.",
-        ]
-
     if command_name == "evidence-freshness":
         return ["evidence-freshness", "--root", root]
-
-    if command_name == "find-symbol":
-        return [
-            "find-symbol",
-            "--root",
-            root,
-            "--symbol",
-            "build_reasoner_symbol_atlas_reports",
-            "--exact",
-        ]
-
-    if command_name == "find-owner":
-        return [
-            "find-owner",
-            "--root",
-            root,
-            "--symbol",
-            "build_reasoner_symbol_atlas_reports",
-            "--exact",
-        ]
-
-    if command_name == "facade-owner":
-        return ["facade-owner", "--root", root, "--target", "reasoner_tools_gui.py"]
-
-    if command_name == "main-helpers":
-        return [
-            "main-helpers",
-            "--root",
-            root,
-            "--target",
-            "reasoner_tools_gui_engineering_safety_panel.py",
-        ]
-
-    if command_name == "related-files":
-        return [
-            "related-files",
-            "--root",
-            root,
-            "--target",
-            "reasoner_tools_gui_engineering_safety_panel.py",
-        ]
-
-    if command_name == "pre-patch-gate":
-        return [
-            "pre-patch-gate",
-            "--root",
-            root,
-            "--symbol",
-            "create_engineering_safety_panel",
-            "--target",
-            "reasoner_tools_gui_engineering_safety_panel.py",
-            "--task",
-            "Review Project Symbol Atlas GUI button wiring before patching.",
-            "--exact",
-        ]
-    # END PA021_PROJECT_SYMBOL_ATLAS_GUI_COMMANDS
-
     if command_name in _ROOT_COMMANDS:
         return [command_name, "--root", root]
+    if command_name == "crash-triage":
+        return ["crash-triage", "--root", root]
 
+    context = _project_command_context(root)
+
+    if command_name == "stack-brief":
+        return [
+            "stack-brief", "--runtime", "Active Project: " + context.project_name,
+            "--runtime", "Project root: " + str(context.root),
+        ]
+    if command_name == "atlas-report":
+        args = [
+            "atlas-report", "--root", root,
+            "--query", "Complete Engineering Review project-scoped Symbol Atlas report.",
+            "--target", context.target,
+            "--task", "Review ownership and related source only inside the active Project.",
+        ]
+        if context.symbol:
+            args.extend(["--symbol", context.symbol])
+        return args
+    if command_name in {"find-symbol", "find-owner"}:
+        return [
+            command_name, "--root", root, "--symbol",
+            _require_project_symbol(context), "--exact",
+        ]
+    if command_name in {"facade-owner", "main-helpers", "related-files"}:
+        return [command_name, "--root", root, "--target", context.target]
+    if command_name == "pre-patch-gate":
+        args = [
+            "pre-patch-gate", "--root", root, "--target", context.target,
+            "--task", "Review active-Project ownership before any source patch.",
+        ]
+        if context.symbol:
+            args.extend(["--symbol", context.symbol, "--exact"])
+        return args
     if command_name == "risk-radar":
         return [
-            "risk-radar",
-            "--root",
-            root,
-            "--changed-file",
-            _DEFAULT_CHANGED_FILE,
-            "--evidence",
-            _DEFAULT_EVIDENCE,
+            "risk-radar", "--root", root, "--changed-file", context.target,
+            "--evidence", "Complete Engineering Review project-derived target seed.",
         ]
-
     if command_name == "refactor-playbook":
         return [
-            "refactor-playbook",
-            "--root",
-            root,
-            "--target",
-            _DEFAULT_CHANGED_FILE,
-            "--goal",
-            "Review safe GUI panel action wiring without changing backend logic.",
+            "refactor-playbook", "--root", root, "--target", context.target,
+            "--goal", "Review a project-owned target without changing backend logic.",
         ]
-
     if command_name == "release-notes":
         return [
-            "release-notes",
-            "--bundle-name",
-            "GUI003 Engineering Safety panel actions",
-            "--title",
-            "Engineering Safety panel actions",
-            "--summary",
-            "Button action smoke report from the Engineering Safety panel.",
-            "--status",
-            "draft",
+            "release-notes", "--bundle-name", context.project_name + " Complete Engineering Review",
+            "--title", context.project_name + " engineering review draft",
+            "--summary", "Project-scoped draft derived from the active Project only.",
+            "--status", "draft", "--changed-file", context.target,
         ]
-
-    if command_name == "property-test":
-        return [
-            "property-test",
-            "--module",
-            "reasoner_tools_gui_engineering_safety_panel",
-            "--function",
-            "build_engineering_safety_panel_cli_args",
-            "--property",
-            "Known commands produce runnable default CLI arguments.",
-        ]
-
-    if command_name == "api-contract":
-        return [
-            "api-contract",
-            "--module",
-            "reasoner_tools_gui_engineering_safety_panel",
-            "--function",
-            "build_engineering_safety_panel_cli_args",
-        ]
-
+    if command_name in {"property-test", "api-contract"}:
+        symbol = _require_project_symbol(context)
+        args = [command_name, "--module", context.module, "--function", symbol]
+        if command_name == "property-test":
+            args.extend([
+                "--property",
+                "Project-owned function preserves its explicit input/output contract.",
+            ])
+        return args
     return [command_name, "--root", root]
 
 
@@ -293,7 +230,7 @@ def _run_cli_in_process(args: list[str]) -> _PanelCommandResult:
 
     with _contextlib.redirect_stdout(stdout_buffer), _contextlib.redirect_stderr(stderr_buffer):
         try:
-            module = _importlib.import_module(_CLI_MODULE_PATH)
+            module = _import_tool_module(_CLI_MODULE_PATH, "safety_suite_cli.commands")
             main_func = getattr(module, "main", None)
             if main_func is None:
                 raise AttributeError("safety_suite_cli.commands has no main function")
@@ -325,11 +262,14 @@ def _run_cli_subprocess(args: list[str]) -> _PanelCommandResult:
     """Run the safety-suite CLI as a fallback subprocess."""
     command = [_sys.executable, "-m", _CLI_MODULE_PATH, *args]
     try:
+        env = _os.environ.copy()
+        existing_pythonpath = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = str(_tool_root()) + (
+            _os.pathsep + existing_pythonpath if existing_pythonpath else ""
+        )
         completed = _subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=False,
+            command, capture_output=True, text=True, check=False,
+            cwd=str(_tool_root()), env=env,
         )
         return _PanelCommandResult(
             command_name=args[0] if args else "",
@@ -345,11 +285,104 @@ def _run_cli_subprocess(args: list[str]) -> _PanelCommandResult:
         )
 
 
+
+def _tool_execution_provider_command(kind: str, project_root: object | None = None) -> str:
+    """Return an explicit Tool-owned validator command targeting the active Project."""
+    root = _root_value(project_root)
+    relative = {
+        "architecture": "kanda_reasoner_app/manage_architecture/manage_architecture.py",
+        "workflows": "kanda_reasoner_app/manage_workflows/manage_workflows.py",
+    }.get(kind)
+    if relative is None:
+        raise RuntimeError("UNKNOWN_TOOL_EXECUTION_PROVIDER_COMMAND:" + str(kind))
+    script = (_tool_root() / relative).resolve(strict=False)
+    return (
+        '[KANDA TOOL EXECUTION PROVIDER] "'
+        + str(_sys.executable)
+        + '" "'
+        + str(script)
+        + '" --root "'
+        + str(root)
+        + '" --validate'
+    )
+
+
+def _shield_external_project_guidance(
+    text: str,
+    project_root: object | None = None,
+) -> str:
+    """Rewrite ambiguous Tool-relative guidance at the Tool/Project boundary."""
+    if not text:
+        return text
+    root = _root_value(project_root)
+
+    architecture_needles = (
+        r"python kanda_reasoner_app\manage_architecture\manage_architecture.py",
+        "python kanda_reasoner_app/manage_architecture/manage_architecture.py",
+    )
+    workflow_needles = (
+        r"python kanda_reasoner_app\manage_workflows\manage_workflows.py",
+        "python kanda_reasoner_app/manage_workflows/manage_workflows.py",
+    )
+    smoke_needles = (
+        'python -c "import kanda_reasoner_app; import reasoner_tools_gui; print(\'import smoke ok\')"',
+        "python -c 'import kanda_reasoner_app; import reasoner_tools_gui; print(\"import smoke ok\")'",
+    )
+
+    def replace_from(line: str, needles: tuple[str, ...], replacement: str) -> str:
+        positions = [line.find(needle) for needle in needles if needle in line]
+        if not positions:
+            return line
+        return line[: min(positions)] + replacement
+
+    rewritten: list[str] = []
+    architecture = _tool_execution_provider_command("architecture", root)
+    workflows = _tool_execution_provider_command("workflows", root)
+    smoke = (
+        "[KANDA TOOL EXECUTION PROVIDER] Tool import smoke is internal to "
+        "KANDA Reasoner and is not emitted as a Project-local validation command."
+    )
+    for line in text.splitlines(keepends=True):
+        ending = ""
+        body = line
+        if body.endswith("\r\n"):
+            body, ending = body[:-2], "\r\n"
+        elif body.endswith("\n"):
+            body, ending = body[:-1], "\n"
+        body = replace_from(body, architecture_needles, architecture)
+        body = replace_from(body, workflow_needles, workflows)
+        body = replace_from(body, smoke_needles, smoke)
+        rewritten.append(body + ending)
+    return "".join(rewritten)
+
+
 def _run_command(command_name: str, project_root: object | None = None) -> _PanelCommandResult:
-    """Run a panel command and always return an explicit result."""
-    args = _build_cli_args(command_name, project_root)
+    """Run a panel command and fail closed when no Project-owned seed exists."""
+    try:
+        args = _build_cli_args(command_name, project_root)
+    except _ProjectContextUnavailable as exc:
+        return _PanelCommandResult(
+            command_name=command_name,
+            stdout=(
+                _PROJECT_CONTEXT_UNAVAILABLE + ": " + str(exc)
+                + "\nAudit target role: ACTIVE PROJECT"
+                + "\nKANDA Tool role: AUDIT EXECUTION PROVIDER ONLY\n"
+            ),
+            status_code=0,
+            extra={
+                "boundary_disposition": "NOT_RUN_NO_SAFE_PROJECT_CONTEXT",
+                "args": [],
+            },
+        )
     result = _run_cli_in_process(args)
     if result.status_code == 1 and "has no main function" in result.stderr:
-        return _run_cli_subprocess(args)
+        result = _run_cli_subprocess(args)
+    result.stdout = _shield_external_project_guidance(result.stdout, project_root)
+    result.stderr = _shield_external_project_guidance(result.stderr, project_root)
     result.command_name = command_name
+    result.extra.setdefault("args", list(args))
+    result.extra.setdefault(
+        "tool_project_guidance_boundary",
+        "EXPLICIT_TOOL_PROVIDER" if _root_value(project_root) != str(_tool_root()) else "SELF_HOSTING",
+    )
     return result

@@ -9,7 +9,6 @@ __all__ = [
 ]
 
 import ast
-import io
 import re
 import shutil
 import subprocess

@@ -27,7 +27,6 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from kanda_reasoner_app.error_memory.exporter import (  # noqa: E402
-    build_complete_error_memory_ai_clipboard_json,
     write_error_memory_ai_send_files,
 )
 from kanda_reasoner_app.error_memory.models import build_lesson  # noqa: E402

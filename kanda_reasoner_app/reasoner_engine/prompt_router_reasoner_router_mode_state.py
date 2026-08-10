@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 from typing import Any, Mapping
 
-from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
+from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_models import (
     REVIEW_FOLDER_NAME,
     ROUTER_WITH_HEURISTICS,
     ROUTER_WITH_HELP_OF_ML,

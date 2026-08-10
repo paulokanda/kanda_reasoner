@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import kanda_reasoner_app.reasoner_engine.v10_static_context_inspector_widget as direct_import_0
 
 import unittest
 

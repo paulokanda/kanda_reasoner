@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import hashlib
-import inspect
 import json
 from pathlib import Path
 import shutil

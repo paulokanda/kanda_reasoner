@@ -2,6 +2,7 @@
 """Validate Patch 6 on the approved real 786-line module in a controlled copy."""
 from __future__ import annotations
 
+from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_journaled_apply_models import build_journaled_apply_authorization
 import ast
 import hashlib
 import json
@@ -45,10 +46,7 @@ from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbenc
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_dependency_readiness import (  # noqa: E402
     build_workbench_dependency_readiness,
 )
-from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_journaled_apply_executor import (  # noqa: E402
-    build_journaled_apply_authorization,
-    execute_journaled_refactor_apply,
-)
+from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_journaled_apply_executor import execute_journaled_refactor_apply
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_patch5_executor_proof import (  # noqa: E402
     find_patch5_executor_proof,
 )

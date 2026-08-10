@@ -8,8 +8,7 @@ during normal Python test collection.
 from __future__ import annotations
 
 if False:
-    import _inject_missing_module_docstrings
-    import reasoner_tools_gui
+    pass
 
 
 def test_remaining_test_gap_contract_file_is_parseable() -> None:

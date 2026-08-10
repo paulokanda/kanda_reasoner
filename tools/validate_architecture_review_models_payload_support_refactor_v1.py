@@ -15,7 +15,7 @@ import py_compile
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, get_type_hints
+from typing import get_type_hints
 
 FEATURE_ID = "architecture-review-models-payload-support-refactor-v1"
 PUBLIC_MODULE = (

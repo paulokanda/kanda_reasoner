@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, Qt
 from PySide6.QtWidgets import (
-    QCheckBox,
     QGraphicsOpacityEffect,
     QGroupBox,
     QLabel,

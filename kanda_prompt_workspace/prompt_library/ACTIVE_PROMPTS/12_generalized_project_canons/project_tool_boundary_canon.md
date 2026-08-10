@@ -1,6 +1,6 @@
 # Project Tool Boundary Canon
 
-Version: 2.2
+Version: 2.3
 Status: Active prompt-library canon
 Prompt ID: project_tool_boundary_canon
 Prompt code: KPR-12-001
@@ -197,6 +197,42 @@ External dependencies, comparison repositories, controlled fixtures, and migrati
 
 The hard prohibition is undeclared or unauthorized cross-project mutation, not every non-empty cross-project path list.
 
+## Fire Shield programmatic authority
+
+The frozen Tool feature `kanda-reasoner-fire-shield-cross-project-immutability-v1`
+is the application-level, fail-closed programmatic authority for governed
+operations when the verified Active Project is external to KANDA Reasoner.
+Prompt compliance coordinates intent; it is not a security boundary and never
+substitutes for Fire Shield execution.
+
+For consequential external-Project work:
+
+1. Resolve the current selected-Project boundary and operation through the
+   existing public identity/operation owners.
+2. Use `kanda_reasoner_app.project_fire_shield` or an existing public workflow
+   already integrated with that module. Never reach into `_project_fire_shield_*`.
+3. Build the current Fire Shield context for the exact lifecycle phase and
+   operation ID before mutation, extraction, packaging, restore, move, rename,
+   delete, or Project Python/import-isolation work.
+4. Preflight source transfer, payload bytes, and archives before any destination
+   write or extraction. Recheck current identity immediately before mutation.
+5. If Fire Shield is missing, stale, ambiguous, unavailable, or returns BLOCKED,
+   stop the consequential action. Do not fall back to direct filesystem writes,
+   prompt-only approval, private imports, or an alternate unguarded path.
+6. Project execution must use the selected Project interpreter or its canonical
+   resolver and must not inject the KANDA Tool root into external Project
+   `sys.path` or resolve private Tool implementation as a Project dependency.
+7. Tool reads and governance remain allowed, but Tool source must remain
+   unchanged for an external Project operation unless a separate Tool defect is
+   independently proven and authorized.
+8. KANDA self-hosting is exempt from external-Project mode only after current
+   registry identity proves the reserved KANDA Project identity and canonical
+   owner-root equality. Path-string equality alone is never sufficient.
+
+Fire Shield is an application-level guard, not an operating-system sandbox, ACL,
+or process-isolation boundary. Do not claim protection outside its validated
+programmatic scope.
+
 
 ## Portable-distribution ownership
 
@@ -257,6 +293,8 @@ Validation must prove, as applicable:
 - KANDA-managed support stays external to Project source;
 - nested support writes fail closed;
 - cross-project access is typed and unauthorized mutation is rejected;
+- external-Project consequential operations require the public Fire Shield authority and fail closed when it is unavailable or blocked;
+- prompt policy cannot weaken, replace, or bypass Fire Shield programmatic enforcement;
 - generated evidence authority is structured;
 - mixed write sets and rollback owners are complete;
 - session/operation conflict protection is declared;
@@ -282,6 +320,8 @@ May begin coding: NO
 - Never duplicate MCard, Workbench, delivery, or durable-document owner contracts in this canon.
 - Never silently merge support state after project rename, move, or collision.
 - Never allow undeclared or unauthorized cross-project mutation.
+- Never treat prompt compliance, user wording, or routing approval as a substitute for Fire Shield on an external Project consequential operation.
+- Never bypass a missing, stale, unavailable, or BLOCKED Fire Shield with direct filesystem mutation, private Fire Shield imports, or an unguarded alternate path.
 - Never write KANDA Tool-owned code into an external Project source tree.
 - Never write external Project-owned code into KANDA Tool source.
 - Treat `<project_name>_show_project_to_AI` as support/evidence only, never as source or an install target.
@@ -290,6 +330,7 @@ May begin coding: NO
 
 ## Version history
 
+- 2.3: bound external-Project consequential operations to the frozen Fire Shield public authority, made missing or BLOCKED Fire Shield fail closed, and prohibited prompt-only or private-reach-in bypasses.
 - 2.2: made Show Project and Portable Distribution separate Box owners with no
   shared trigger, output owner, folder, lifecycle, or implicit call; portable
   identity is excluded wherever misplaced under Project source.

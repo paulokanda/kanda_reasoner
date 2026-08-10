@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import importlib
 from pathlib import Path
-import tempfile
 import unittest
 
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.cst_transform_fidelity import (

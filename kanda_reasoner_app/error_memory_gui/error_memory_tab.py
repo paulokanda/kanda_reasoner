@@ -1,120 +1,22 @@
 # project-path: kanda_reasoner_app/error_memory_gui/error_memory_tab.py
 """Error Memory GUI tab with AI-assisted intake and editable lessons."""
 from __future__ import annotations
-import json
 from pathlib import Path
 from typing import Any
 from kanda_reasoner_app.error_memory_gui._intake_actions_mixin import (
     ErrorMemoryIntakeActionsMixin,
-    PENDING_AI_ASSISTED_INTAKE_DIR_NAME,
-    PENDING_AI_ASSISTED_INTAKE_SUFFIXES,
 )
 from kanda_reasoner_app.error_memory_gui._project_paths_mixin import ErrorMemoryProjectPathsMixin
 from kanda_reasoner_app.error_memory_gui._table_draft_mixin import ErrorMemoryTableDraftMixin
 from kanda_reasoner_app.error_memory_gui._text_payloads import (
-    json_payload_from_text,
-    lesson_id_from_text_lenient,
     operation_phase_from_editor_texts,
-    pending_file_updated_text,
-    summary_from_pending_raw_text,
-    text_has_formatted_lesson_payload,
-    validation_evidence_is_passing,
-)
-from kanda_reasoner_app.error_memory_gui._pending_sources import (
-    candidate_pending_ai_assisted_intake_dirs,
-    delete_matching_pending_intake_files,
-    pending_file_matches_draft_identity,
-    pending_intake_dirs_for_root_hint,
-    pending_intake_files_for_candidate_dirs,
-    safe_pending_lesson_id_from_file,
-)
-from kanda_reasoner_app.error_memory_gui._lesson_payloads import (
-    canonical_draft_lesson_from_partial,
-    lesson_from_formatted_text,
-    text_is_formatted_error_lesson_payload,
-)
-from kanda_reasoner_app.error_memory_gui._lesson_imports import (
-    formatted_import_text_for_window,
-    formatted_text_from_manifested_lesson_zip,
-)
-from kanda_reasoner_app.error_memory_gui._intake_blueprint import (
-    error_lesson_intake_blueprint_clipboard_text,
-    error_memory_prompt_template_dir,
-    read_error_memory_intake_template_file,
-)
-from kanda_reasoner_app.error_memory_gui._project_roots import (
-    existing_directory_from_text,
-    source_root_from_directory_hint,
-    source_root_peer_from_generated_output,
-)
-from kanda_reasoner_app.error_memory_gui._pending_rows import (
-    draft_lesson_from_pending_raw_text,
-    pending_lesson_rows_for_table,
-)
-from kanda_reasoner_app.error_memory_gui._draft_deletion import (
-    delete_matching_canonical_draft_lessons,
-    draft_delete_identity_from_sources,
-)
-from kanda_reasoner_app.error_memory_gui._lesson_actions import (
-    delete_selected_lesson,
-    lesson_from_preview_or_selection,
-    save_draft_lesson_from_partial,
-    save_preview_lesson,
-    set_selected_lesson_status,
-    supersede_selected_lesson,
-    undo_lesson_action,
-)
-from kanda_reasoner_app.error_memory_gui._memorize_flow import (
-    candidate_text_for_memorize,
-    clear_ai_assisted_intake_after_memorize,
-    consume_loaded_pending_intake_file_if_matches,
-    memorize_error_from_text_window,
-    save_active_ready_lesson,
-    select_saved_active_lesson_row,
 )
 from kanda_reasoner_app.error_memory_gui._clipboard_export import (
-    copy_ai_assisted_intake_error_draft_to_clipboard,
-    copy_complete_error_memory_json_to_clipboard,
     copy_correct_error_delivery_canon_to_clipboard,
     copy_send_zip_errors_prompt_to_clipboard,
-    copy_error_draft_to_clipboard,
-    copy_error_lesson_intake_blueprint_to_clipboard,
-    copy_path_to_clipboard,
-    export_for_ai,
-    show_action_done,
-    show_active_ready_failure_copy_window,
 )
 from kanda_reasoner_app.error_memory_gui._correction_guard import (
-    active_ready_missing_text,
-    apply_heuristic_correction_to_error_editor,
-    check_against_lessons,
-    heuristic_correction_result_for_editor,
-    operation_phase_for_guard,
     refresh_heuristic_correction_button_state,
-    show_repeat_guard_report,
-)
-from kanda_reasoner_app.error_memory_gui._table_view import (
-    formatted_lesson_block,
-    lesson_id_for_row,
-    lesson_json_text_for_windows,
-    load_selected_lesson_into_preview,
-    pending_path_for_row,
-    reload_table,
-    row_kind_for_row,
-    selected_lesson_id_from_table,
-    set_ai_assisted_intake_and_error_editor_from_pending_text,
-)
-from kanda_reasoner_app.error_memory_gui._pending_loader import (
-    delete_pending_file_quietly,
-    lesson_id_exists_in_lessons,
-    load_pending_ai_assisted_error_lesson_intake,
-    load_pending_ai_assisted_error_lesson_intake_now,
-    load_pending_intake_row_into_editor,
-    show_duplicate_pending_intake_warning,
-)
-from kanda_reasoner_app.error_memory_gui._receive_import import (
-    import_error_lesson_zip,
-    receive_formulary_from_ai,
 )
 from kanda_reasoner_app.error_memory_gui._portable_transfer import (
     export_errors_from_tab,
@@ -124,12 +26,9 @@ from kanda_reasoner_app.error_memory_gui._pending_live_refresh import (
     initialize_pending_intake_live_refresh,
     refresh_pending_intake_live,
 )
-from PySide6.QtCore import Qt, QTimer, QUrl
-from PySide6.QtGui import QDesktopServices
-from PySide6.QtWidgets import QFileDialog, QGroupBox, QLineEdit, QHBoxLayout, QLabel, QMessageBox, QPushButton, QPlainTextEdit, QSplitter, QTableWidget, QVBoxLayout, QWidget
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtWidgets import QGroupBox, QLineEdit, QHBoxLayout, QLabel, QPushButton, QPlainTextEdit, QSplitter, QTableWidget, QVBoxLayout, QWidget
 from kanda_reasoner_app.error_memory.paths import resolve_project_error_memory_root, resolve_second_prompt_files_root
-from kanda_reasoner_app.error_memory.store import bootstrap_error_memory_store, delete_lesson, list_lessons, rebuild_index, save_lesson
-from kanda_reasoner_app.templates.floating_windows import show_copy_message_window
 ERROR_MEMORY_ROW_KIND_ROLE = Qt.UserRole + 1
 ERROR_MEMORY_PENDING_PATH_ROLE = Qt.UserRole + 2
 
@@ -237,7 +136,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         intake_layout.addWidget(self.raw_error_edit, 1)
         intake_buttons_1 = QHBoxLayout()
         self.receive_formulary_button = QPushButton('Paste error formatted from AI')
-        self.copy_ai_assisted_intake_error_draft_button = QPushButton('Copy and Open External AI')
+        self.copy_ai_assisted_intake_error_draft_button = QPushButton('Copy error to AI')
         self.clean_intake_button = QPushButton('Clean')
         self.delete_draft_button = QPushButton('Del Draft')
         intake_buttons_1.addWidget(self.receive_formulary_button)
@@ -260,7 +159,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         intake_buttons_3.addStretch(1)
         intake_layout.addLayout(intake_buttons_3)
         self.receive_formulary_button.setToolTip("Paste AI's formatted Error Memory JSON block; KANDA loads it into the intake window and Error Editor without saving until Memorize Error.")
-        self.copy_ai_assisted_intake_error_draft_button.setToolTip('Copy the current intake plus active-ready templates and open the selected external Python-coding assistant. The answer remains untrusted until imported and reviewed.')
+        self.copy_ai_assisted_intake_error_draft_button.setToolTip('Copy only the current error/intake text to the clipboard for manual AI transfer. This button does not open an external application or browser.')
         self.clean_intake_button.setToolTip('Clear both AI-assisted intake and Error Editor. It remembers the dismissed pending source for this session, but it does not delete disk-backed drafts.')
         self.delete_draft_button.setToolTip('Delete the current Error Memory draft completely: AI-assisted intake, Error Editor, pending source files, matching draft Lessons row, and stale index entry.')
         self.memorize_error_button.setToolTip('Save the formatted lesson currently shown in Error Editor/intake only when it is active-ready. Draft lessons use Mark Draft, or AI correction before Mark Active.')
@@ -280,7 +179,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         preview_layout.addWidget(self.received_preview_edit, 1)
         preview_buttons = QHBoxLayout()
         self.save_preview_button = QPushButton('Save')
-        self.copy_error_draft_button = QPushButton('Copy and Open External AI')
+        self.copy_error_draft_button = QPushButton('Copy error to AI')
         self.clean_editor_button = QPushButton('Clean')
         self.undo_button = QPushButton('Undo')
         self.delete_button = QPushButton('Delete')
@@ -290,7 +189,7 @@ class ErrorMemoryTab(ErrorMemoryProjectPathsMixin, ErrorMemoryTableDraftMixin, E
         self.export_errors_button.setObjectName('error_memory_export_errors_button')
         self.import_errors_button.setObjectName('error_memory_import_errors_button')
         self.save_preview_button.setToolTip('Save the JSON currently shown in Error Editor into the canonical lesson store.')
-        self.copy_error_draft_button.setToolTip('Copy the Error Editor draft plus active-ready templates and open the selected external Python-coding assistant. This does not save or memorize the answer.')
+        self.copy_error_draft_button.setToolTip('Copy only the current Error Editor error text to the clipboard for manual AI transfer. This button does not open an external application or browser.')
         self.clean_editor_button.setToolTip('Clear both Error Editor and AI-assisted intake.')
         self.undo_button.setToolTip('Restore the most recently deleted lesson, or reload the selected lesson if nothing was deleted.')
         self.delete_button.setToolTip('Delete the selected lesson from the canonical Error Memory store. Undo is available until another delete.')

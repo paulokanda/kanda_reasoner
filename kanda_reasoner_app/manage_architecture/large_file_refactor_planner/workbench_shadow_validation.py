@@ -11,6 +11,10 @@ import subprocess
 import sys
 from typing import Any
 
+from kanda_reasoner_app.project_python_fire_shield import (
+    run_project_python_governed,
+)
+
 from .models import SCHEMA_VERSION
 from .workbench_dynamic_python_risks import DynamicPythonRiskReport
 from .workbench_execution_contract import WorkbenchExecutionContract
@@ -394,7 +398,7 @@ def _behavior_validation(
             stdout_excerpt="",
             stderr_excerpt="",
         )
-    collect = _run_pytest(shadow_root, ["--collect-only", "-q", *shadow_targets])
+    collect = _run_pytest(project_root, shadow_root, ["--collect-only", "-q", *shadow_targets])
     collected_lines = tuple(line for line in collect.stdout.splitlines() if "::" in line)
     if collect.returncode == 5:
         collection_status = "NO_TESTS_COLLECTED"
@@ -414,7 +418,7 @@ def _behavior_validation(
             stdout_excerpt=_excerpt(collect.stdout),
             stderr_excerpt=_excerpt(collect.stderr),
         )
-    run = _run_pytest(shadow_root, ["-q", *shadow_targets])
+    run = _run_pytest(project_root, shadow_root, ["-q", *shadow_targets])
     output_hash = hashlib.sha256((run.stdout + "\n" + run.stderr).encode("utf-8")).hexdigest()
     execution_status = "BEHAVIOR_PASS" if run.returncode == 0 else "BEHAVIOR_FAILED"
     baseline_state = baseline.behavior_baseline.status
@@ -435,19 +439,22 @@ def _behavior_validation(
     )
 
 
-def _run_pytest(shadow_root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
+def _run_pytest(
+    project_root: Path,
+    shadow_root: Path,
+    args: list[str],
+) -> subprocess.CompletedProcess[str]:
+    argv = ["-m", "pytest", *args]
     try:
-        return subprocess.run(
-            [sys.executable, "-m", "pytest", *args],
-            cwd=str(shadow_root),
-            text=True,
-            capture_output=True,
+        return run_project_python_governed(
+            project_root,
+            argv,
+            cwd=shadow_root,
             timeout=_TIMEOUT_SECONDS,
-            check=False,
         )
     except subprocess.TimeoutExpired as exc:
         return subprocess.CompletedProcess(
-            [sys.executable, "-m", "pytest", *args], 124, exc.stdout or "", exc.stderr or "timeout"
+            argv, 124, exc.stdout or "", exc.stderr or "timeout"
         )
 
 

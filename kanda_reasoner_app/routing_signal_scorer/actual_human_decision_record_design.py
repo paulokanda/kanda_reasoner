@@ -25,7 +25,6 @@ __all__ = [
 from kanda_reasoner_app.routing_signal_scorer._actual_human_decision_record_constants import (
     ACTUAL_HUMAN_DECISION_RECORD_FEATURE_ID,
     ACTUAL_HUMAN_DECISION_RECORD_SCHEMA_VERSION,
-    ACTUAL_HUMAN_DECISION_RECORD_STATUS,
     REQUIRED_RECORD_FIELDS,
     REQUIRED_RECORD_SCOPE,
     ALLOWED_RECORD_STATUSES,

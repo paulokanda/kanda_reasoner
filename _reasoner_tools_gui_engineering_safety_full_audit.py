@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from threading import Event
 
 from _reasoner_tools_gui_engineering_safety_review_signals import (
     ASSESSMENT_DEGRADED,
@@ -18,8 +17,9 @@ from _reasoner_tools_gui_engineering_safety_review_signals import (
     ASSESSMENT_PASS_WITH_FINDINGS,
     classify_engineering_review_signal,
 )
-from _reasoner_tools_gui_engineering_safety_sonar import (
-    create_engineering_safety_sonar,
+from kanda_reasoner_app.engineering_safety.complete_review_contract import (
+    CompleteEngineeringReviewItem,
+    CompleteEngineeringReviewResult,
 )
 
 __all__: list[str] = []
@@ -125,13 +125,13 @@ def _format_item_result(
     return lines
 
 
-def run_complete_engineering_review(
+def collect_complete_engineering_review(
     tools: Iterable[object],
     project_root: str,
     command_runner: Callable[[str, str], object],
     cancel_requested: Callable[[], bool] | None = None,
-) -> str:
-    """Run every safe catalog item and return one complete audit log.
+) -> CompleteEngineeringReviewResult:
+    """Run every safe catalog item and return immutable result plus log.
 
     Interactive actions are represented in the report but are not opened or
     applied automatically. A failed command does not stop later checks.
@@ -149,6 +149,7 @@ def run_complete_engineering_review(
     failed = 0
     completed = 0
     cancelled = False
+    review_items: list[CompleteEngineeringReviewItem] = []
     assessment_counts = {
         "CLEAN": 0,
         ASSESSMENT_PASS_WITH_FINDINGS: 0,
@@ -179,6 +180,29 @@ def run_complete_engineering_review(
         if command_name in _MANUAL_COMMANDS:
             assessment_counts[ASSESSMENT_MANUAL_REVIEW_REQUIRED] += 1
             completed += 1
+            section = str(getattr(tool, "section", "Engineering Safety"))
+            label = str(getattr(tool, "label", "Unnamed tool"))
+            manual_stderr = (
+                "This interactive correction workflow is intentionally "
+                "not opened or applied by Complete Engineering Review."
+            )
+            review_items.append(
+                CompleteEngineeringReviewItem(
+                    index=index,
+                    total=total,
+                    section=section,
+                    label=label,
+                    command_name=command_name,
+                    outcome="MANUAL REVIEW REQUIRED",
+                    assessment=ASSESSMENT_MANUAL_REVIEW_REQUIRED,
+                    assessment_reason=(
+                        "Interactive correction requires explicit human review."
+                    ),
+                    status_code=None,
+                    stdout="",
+                    stderr=manual_stderr,
+                )
+            )
             lines.extend(
                 _format_item_result(
                     index,
@@ -189,10 +213,7 @@ def run_complete_engineering_review(
                     "Interactive correction requires explicit human review.",
                     None,
                     "",
-                    (
-                        "This interactive correction workflow is intentionally "
-                        "not opened or applied by Complete Engineering Review."
-                    ),
+                    manual_stderr,
                 )
             )
             continue
@@ -209,6 +230,21 @@ def run_complete_engineering_review(
 
         assessment_counts[item_result.assessment] += 1
         completed += 1
+        review_items.append(
+            CompleteEngineeringReviewItem(
+                index=index,
+                total=total,
+                section=str(getattr(tool, "section", "Engineering Safety")),
+                label=str(getattr(tool, "label", "Unnamed tool")),
+                command_name=command_name,
+                outcome=item_result.outcome,
+                assessment=item_result.assessment,
+                assessment_reason=item_result.assessment_reason,
+                status_code=item_result.status_code,
+                stdout=item_result.stdout,
+                stderr=item_result.stderr,
+            )
+        )
         lines.extend(
             _format_item_result(
                 index,
@@ -279,7 +315,34 @@ def run_complete_engineering_review(
             f"Total catalog items: {total}",
         )
     )
-    return "\n".join(lines)
+    rendered_log = "\n".join(lines)
+    return CompleteEngineeringReviewResult(
+        project_root=str(project_root),
+        items=tuple(review_items),
+        overall=overall,
+        passed=passed,
+        failed=failed,
+        completed=completed,
+        cancelled=cancelled,
+        total=total,
+        assessment_counts=tuple(sorted(assessment_counts.items())),
+        rendered_log=rendered_log,
+    )
+
+
+def run_complete_engineering_review(
+    tools: Iterable[object],
+    project_root: str,
+    command_runner: Callable[[str, str], object],
+    cancel_requested: Callable[[], bool] | None = None,
+) -> str:
+    """Backward-compatible text facade over the structured Full Audit result."""
+    return collect_complete_engineering_review(
+        tools,
+        project_root,
+        command_runner,
+        cancel_requested,
+    ).rendered_log
 
 
 def _install_complete_engineering_review(
@@ -293,126 +356,21 @@ def _install_complete_engineering_review(
     command_runner: Callable[[str, str], object],
     status_label: object,
 ) -> None:
-    """Create and bind the Full Audit page without owning panel state."""
-    from PySide6.QtCore import QTimer  # type: ignore[import-not-found]
-    from PySide6.QtWidgets import (  # type: ignore[import-not-found]
-        QHBoxLayout,
-        QPushButton,
-        QTextEdit,
-        QVBoxLayout,
-        QWidget,
+    """Install Full Audit through the Project-card guarded handoff UI helper."""
+    from _reasoner_tools_gui_engineering_safety_full_audit_handoff import (
+        install_review_handoff,
     )
 
-    full_page = QWidget(audit_tabs)
-    full_page.setObjectName("engineering_safety_full_audit_page")
-    layout = QVBoxLayout(full_page)
-    layout.setContentsMargins(0, 0, 0, 0)
-    layout.setSpacing(8)
-
-    controls = QHBoxLayout()
-    controls.setContentsMargins(0, 0, 0, 0)
-    controls.setSpacing(8)
-
-    start_button = QPushButton("Complete Enginneering Review")
-    start_button.setObjectName(
-        "engineering_safety_complete_engineering_review_button"
+    install_review_handoff(
+        panel,
+        audit_tabs,
+        command_executor,
+        running_commands,
+        set_buttons_enabled,
+        current_project_root,
+        catalog_provider,
+        command_runner,
+        status_label,
+        collect_complete_engineering_review,
+        _COMPLETE_REVIEW_COMMAND,
     )
-    start_button.setToolTip(
-        "Run every safe Engineering Safety catalog item in order and build one report"
-    )
-    cancel_button = QPushButton("Cancel Review")
-    cancel_button.setObjectName("engineering_safety_cancel_review_button")
-    cancel_button.setToolTip(
-        "Request cooperative cancellation. The current catalog command is allowed "
-        "to settle before the review stops."
-    )
-    cancel_button.setEnabled(False)
-    controls.addWidget(start_button)
-    controls.addWidget(cancel_button)
-    controls.addStretch(1)
-
-    sonar = create_engineering_safety_sonar(full_page)
-    output = QTextEdit()
-    output.setObjectName("engineering_safety_full_audit_log")
-    output.setReadOnly(True)
-    output.setPlainText(
-        "Run Complete Enginneering Review to audit every Engineering Safety item."
-    )
-    layout.addLayout(controls)
-    layout.addWidget(output, 1)
-    audit_tabs.insertTab(0, full_page, "Full Audit")
-
-    cancel_event = Event()
-    panel.engineering_safety_full_audit_page = full_page
-    panel.engineering_safety_full_audit_button = start_button
-    panel.engineering_safety_cancel_review_button = cancel_button
-    panel.engineering_safety_full_audit_sonar = sonar
-    panel.engineering_safety_full_audit_sonar_widget = sonar.widget()
-    panel.engineering_safety_full_audit_log = output
-    panel.engineering_safety_full_audit_cancel_event = cancel_event
-
-    def finish(future: object) -> None:
-        try:
-            output.setPlainText(str(future.result()))  # type: ignore[attr-defined]
-            if cancel_event.is_set():
-                status_label.setText("Cancelled: complete-engineering-review")
-            else:
-                status_label.setText("Finished: complete-engineering-review")
-        except Exception as exc:  # noqa: BLE001
-            output.setPlainText(f"{type(exc).__name__}: {exc}")
-            status_label.setText(f"Failed: complete-engineering-review: {exc}")
-        finally:
-            sonar.stop()  # type: ignore[attr-defined]
-            running_commands.discard(_COMPLETE_REVIEW_COMMAND)
-            set_buttons_enabled(True)
-            cancel_button.setEnabled(False)
-            start_button.setEnabled(True)
-
-    def poll(future: object) -> None:
-        if future.done():  # type: ignore[attr-defined]
-            finish(future)
-            return
-        QTimer.singleShot(150, lambda: poll(future))
-
-    def cancel() -> None:
-        if _COMPLETE_REVIEW_COMMAND not in running_commands:
-            status_label.setText("No complete Engineering review is running.")
-            return
-        if cancel_event.is_set():
-            return
-        cancel_event.set()
-        sonar.stop()  # Visual feedback stops immediately on user cancellation.
-        cancel_button.setEnabled(False)
-        status_label.setText("Cancellation requested: complete-engineering-review")
-        output.append(
-            "\nCancellation requested. Sonar stopped immediately. The active "
-            "catalog command will settle before the review stops."
-        )
-
-    def start() -> None:
-        if running_commands:
-            active = sorted(running_commands)[0]
-            status_label.setText(f"Still running: {active}")
-            return
-        cancel_event.clear()
-        running_commands.add(_COMPLETE_REVIEW_COMMAND)
-        set_buttons_enabled(False)
-        start_button.setEnabled(False)
-        cancel_button.setEnabled(True)
-        sonar.start()  # type: ignore[attr-defined]
-        output.setPlainText(
-            "Running Complete Enginneering Review.\n"
-            "Every catalog item will receive a separate result block.\n"
-            "Cancel Review stops cooperatively between catalog items."
-        )
-        future = command_executor.submit(
-            run_complete_engineering_review,
-            catalog_provider(),
-            current_project_root(),
-            command_runner,
-            cancel_event.is_set,
-        )
-        QTimer.singleShot(150, lambda: poll(future))
-
-    start_button.clicked.connect(start)
-    cancel_button.clicked.connect(cancel)

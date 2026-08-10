@@ -7,7 +7,7 @@ from pathlib import Path
 import unittest
 
 if False:
-    from kanda_reasoner_app.prompt_library_gui.prompt_library_tab import PromptLibraryTab
+    pass
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

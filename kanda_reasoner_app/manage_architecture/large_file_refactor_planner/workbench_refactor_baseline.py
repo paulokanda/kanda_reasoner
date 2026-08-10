@@ -2,7 +2,7 @@
 """Durable BEFORE-state evidence for one Workbench-owned Planner snapshot."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 import hashlib
 import json
 from pathlib import Path

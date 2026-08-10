@@ -20,7 +20,6 @@ from kanda_reasoner_app.reasoner_engine.config_web_ai_ui_support import (
     configure_opaque_combo,
 )
 from kanda_reasoner_app.web_ai_configuration import (
-    WebAIConfigurationController,
     application_web_ai_configuration,
 )
 from kanda_reasoner_app.web_ai_provider_contracts import (

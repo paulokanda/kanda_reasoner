@@ -13,7 +13,6 @@ from kanda_reasoner_app.manage_architecture.large_module_target_queue import (
     LargeModuleTarget,
     count_python_lines,
     format_target_counter,
-    normalize_target_text,
     parse_module_too_large_findings,
 )
 from kanda_reasoner_app.templates.floating_windows import (

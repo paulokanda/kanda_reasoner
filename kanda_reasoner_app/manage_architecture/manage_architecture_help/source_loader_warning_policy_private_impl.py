@@ -34,6 +34,175 @@ def _apply_test_protection_generated_private_policy(source: str) -> str:
     return _replace_once(source, old, new)
 
 
+def _apply_dead_code_reachability_precision_policy(source: str) -> str:
+    """Preserve exact import-graph and governed-runtime reachability."""
+    old_import_from = r'''        elif isinstance(node, ast.ImportFrom):
+            resolved = resolve_imported_module(
+                current_module_id=module_id,
+                is_init=is_init,
+                level=node.level,
+                imported_module=node.module,
+            )
+            if resolved:
+                imports.append(resolved)
+                if resolved.split(".")[0] in top_names:
+                    internal_imports.append(resolved)
+'''
+    new_import_from = r'''        elif isinstance(node, ast.ImportFrom):
+            resolved = resolve_imported_module(
+                current_module_id=module_id,
+                is_init=is_init,
+                level=node.level,
+                imported_module=node.module,
+            )
+            if resolved:
+                imports.append(resolved)
+                if resolved.split(".")[0] in top_names:
+                    internal_imports.append(resolved)
+                    for alias in node.names:
+                        if alias.name == "*":
+                            continue
+                        candidate = f"{resolved}.{alias.name}"
+                        candidate_path = root.joinpath(*candidate.split("."))
+                        if (
+                            candidate_path.with_suffix(".py").is_file()
+                            or (candidate_path / "__init__.py").is_file()
+                        ):
+                            imports.append(candidate)
+                            internal_imports.append(candidate)
+'''
+    source = _replace_once(source, old_import_from, new_import_from)
+
+    old_active_users = r'''        if importer.is_init or is_test_path(importer.path) or stale_variant_reasons(importer):
+            continue
+'''
+    new_active_users = r'''        if is_test_path(importer.path) or stale_variant_reasons(importer):
+            continue
+'''
+    source = _replace_once(source, old_active_users, new_active_users)
+
+    marker = r'''def _is_dead_code_candidate_module(
+'''
+    manifest_helpers = r'''def _dead_code_manifest_string_values(value: Any) -> Iterable[str]:
+    """Yield strings from an authoritative dead-code ownership manifest."""
+    if isinstance(value, str):
+        yield value
+        return
+    if isinstance(value, list):
+        for item in value:
+            yield from _dead_code_manifest_string_values(item)
+        return
+    if isinstance(value, dict):
+        for item in value.values():
+            yield from _dead_code_manifest_string_values(item)
+
+
+def _dead_code_authoritative_manifest_owned_paths(root: Path) -> set[str]:
+    """Return exact paths owned by workflow or portable-runtime contracts."""
+    owned: set[str] = set()
+    for relative in (
+        "workflow_manifest.json",
+        "portable/PORTABLE_RUNTIME_ALLOWLIST.json",
+    ):
+        manifest_path = root / relative
+        try:
+            data = json.loads(read_text(manifest_path))
+        except Exception:
+            continue
+        for value in _dead_code_manifest_string_values(data):
+            normalized = value.replace("\\", "/").lstrip("./")
+            if normalized.startswith("_internal/"):
+                normalized = normalized[len("_internal/"):]
+            if normalized.endswith(".py"):
+                owned.add(normalized)
+    return owned
+
+
+'''
+    source = _replace_once(source, marker, manifest_helpers + marker)
+
+    old_sig = r'''def _is_dead_code_candidate_module(
+    module: ModuleInfo,
+    modules: dict[str, ModuleInfo],
+    protected_by_tests: set[str],
+) -> bool:
+'''
+    new_sig = r'''def _is_dead_code_candidate_module(
+    module: ModuleInfo,
+    modules: dict[str, ModuleInfo],
+    protected_by_tests: set[str],
+    authoritative_manifest_paths: set[str],
+) -> bool:
+'''
+    source = _replace_once(source, old_sig, new_sig)
+
+    old_tail = r'''    if module.module_id in protected_by_tests:
+        return False
+    if _active_used_by_module_ids(module, modules):
+        return False
+    return True
+'''
+    new_tail = r'''    if module.module_id in protected_by_tests:
+        return False
+    normalized_path = module.path.replace("\\", "/").lstrip("./")
+    if normalized_path in authoritative_manifest_paths:
+        return False
+    if _active_used_by_module_ids(module, modules):
+        return False
+    return True
+'''
+    source = _replace_once(source, old_tail, new_tail)
+
+    old_detect = r'''    issues: list[ValidationIssue] = []
+    protected_by_tests = _test_protected_module_ids(root, modules)
+
+    for module in sorted(modules.values(), key=lambda item: item.path):
+        if not _is_dead_code_candidate_module(module, modules, protected_by_tests):
+            continue
+'''
+    new_detect = r'''    issues: list[ValidationIssue] = []
+    protected_by_tests = _test_protected_module_ids(root, modules)
+    authoritative_manifest_paths = _dead_code_authoritative_manifest_owned_paths(root)
+
+    for module in sorted(modules.values(), key=lambda item: item.path):
+        if not _is_dead_code_candidate_module(
+            module,
+            modules,
+            protected_by_tests,
+            authoritative_manifest_paths,
+        ):
+            continue
+'''
+    return _replace_once(source, old_detect, new_detect)
+
+
+
+def _apply_circular_import_module_scope_policy(source: str) -> str:
+    """Use module-scope import edges only for hard circular-import errors."""
+    source = _replace_once(
+        source,
+        '    direct_internal_imports: list[str] = field(default_factory=list)\n    used_by: list[str] = field(default_factory=list)\n',
+        '    direct_internal_imports: list[str] = field(default_factory=list)\n    module_scope_internal_imports: list[str] = field(default_factory=list)\n    used_by: list[str] = field(default_factory=list)\n',
+    )
+    source = _replace_once(
+        source,
+        '    imports: list[str] = []\n    internal_imports: list[str] = []\n\n    for node in ast.walk(tree):\n',
+        '    imports: list[str] = []\n    internal_imports: list[str] = []\n    module_scope_internal_imports: list[str] = []\n\n    for node in ast.walk(tree):\n',
+    )
+    marker = '    (\n        public_symbols,\n        all_symbols,\n        top_level_imported_symbols,\n        has_explicit_all,\n    ) = extract_public_symbols(tree)\n'
+    module_scope_scan = '    for node in iter_top_level_import_nodes(tree):\n        if isinstance(node, ast.Import):\n            for alias in node.names:\n                if alias.name.split(".")[0] in top_names:\n                    module_scope_internal_imports.append(alias.name)\n        elif isinstance(node, ast.ImportFrom):\n            resolved = resolve_imported_module(\n                current_module_id=module_id,\n                is_init=is_init,\n                level=node.level,\n                imported_module=node.module,\n            )\n            if resolved and resolved.split(".")[0] in top_names:\n                module_scope_internal_imports.append(resolved)\n                for alias in node.names:\n                    if alias.name == "*":\n                        continue\n                    candidate = f"{resolved}.{alias.name}"\n                    candidate_path = root.joinpath(*candidate.split("."))\n                    if (\n                        candidate_path.with_suffix(".py").is_file()\n                        or (candidate_path / "__init__.py").is_file()\n                    ):\n                        module_scope_internal_imports.append(candidate)\n\n'
+    source = _replace_once(source, marker, module_scope_scan + marker)
+    source = _replace_once(
+        source,
+        '            direct_internal_imports=sorted(set(internal_imports)),\n',
+        '            direct_internal_imports=sorted(set(internal_imports)),\n            module_scope_internal_imports=sorted(set(module_scope_internal_imports)),\n',
+    )
+    return _replace_once(
+        source,
+        '            for dep in module.direct_internal_imports\n',
+        '            for dep in module.module_scope_internal_imports\n',
+    )
+
 def _apply_stale_variant_compatibility_shim_policy(source: str) -> str:
     """Suppress stale/deprecated errors for documented active shims."""
     source = _replace_once(
@@ -201,6 +370,8 @@ def apply_manage_architecture_warning_policies(source: str) -> str:
     """Apply warning, test-protection, and stale-variant policies."""
     source = _apply_canonical_test_protection_alias_policy(source)
     source = _apply_test_protection_generated_private_policy(source)
+    source = _apply_dead_code_reachability_precision_policy(source)
+    source = _apply_circular_import_module_scope_policy(source)
     source = _apply_stale_variant_compatibility_shim_policy(source)
     source = _apply_generated_artifact_bundle_temp_manifest_policy(source)
     source = _apply_generated_prompt_delivery_manifest_location_policy(source)

@@ -6,13 +6,6 @@ import importlib
 from pathlib import Path
 import unittest
 
-import kanda_reasoner_app.reasoner_engine.ai_bridge
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.bridge_signals
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.deterministic_answers
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.focus_snippets
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.grounding_checks
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.prompt_extraction
-import kanda_reasoner_app.reasoner_engine.ai_bridge_help.prompt_modes
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_DIR = PROJECT_ROOT / "kanda_reasoner_app" / "reasoner_engine"

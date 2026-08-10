@@ -5,8 +5,8 @@
   "category": "01_session_start_and_navigation",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "prompt-audit-wave2a-routing-owner-foundation-v1",
-  "description": "Classifies Fast Path versus Routed Work Path, requests the smallest current context, and escalates runtime-only conclusions to scenario-specific execution evidence.",
+  "source_stage": "fire-shield-ai-policy-enforcement-v1",
+  "description": "Classifies Fast Path versus Routed Work Path, requests the smallest current context, escalates runtime-only conclusions, and treats unavailable or BLOCKED Fire Shield as a hard stop for consequential external-Project work.",
   "priority": 6,
   "required_companion_prompts": [
     "prompt_navigation_index",
@@ -21,18 +21,22 @@
     "freeze",
     "runtime evidence",
     "runtime trace",
-    "intermittent runtime behavior"
+    "intermittent runtime behavior",
+    "fire shield"
   ],
   "prompt_code": "KPR-01-014",
   "title": "AI Prompt Request Canon",
-  "version": "3.1",
+  "version": "3.2",
   "owner_box": "01_session_start_and_navigation",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
-  "updated_for": "prompt-audit-wave2a-routing-owner-foundation-v1",
+  "updated_for": "fire-shield-ai-policy-enforcement-v1",
   "authority_boundary": {
     "may_route_or_select_context": true,
     "may_mutate_source": false,
     "may_authorize_coding": false,
     "may_authorize_freeze": false
-  }
+  },
+  "do_not_regress": [
+    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+  ]
 }

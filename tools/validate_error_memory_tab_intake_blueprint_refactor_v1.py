@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import ast
-import py_compile
 import subprocess
 import sys
 from pathlib import Path

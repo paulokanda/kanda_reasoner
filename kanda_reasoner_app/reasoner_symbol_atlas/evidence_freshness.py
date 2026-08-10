@@ -4,20 +4,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .reference_folder_policy import (
-    PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS,
-)
-from .complete_json_adapter import (
-    collect_reasoner_symbol_atlas_complete_json_files,
-    load_reasoner_symbol_atlas_complete_json,
-)
 from .schemas import (
     ProjectSymbolAtlasReport,
-    normalize_project_atlas_sequence,
     normalize_project_atlas_text,
 )
 
@@ -84,6 +75,9 @@ class ProjectSymbolAtlasEvidenceFreshnessSummary:
     evidence_project_root: str = ""
     checked_file_count: int = 0
     evidence_file_count: int = 0
+    missing_source_file_count: int = 0
+    new_source_file_count: int = 0
+    modified_after_generation_count: int = 0
     missing_source_files: tuple[str, ...] = field(default_factory=tuple)
     new_source_files: tuple[str, ...] = field(default_factory=tuple)
     modified_after_generation: tuple[str, ...] = field(default_factory=tuple)
@@ -101,6 +95,9 @@ class ProjectSymbolAtlasEvidenceFreshnessSummary:
             if self.evidence_project_root else "",
             "checked_file_count": int(self.checked_file_count),
             "evidence_file_count": int(self.evidence_file_count),
+            "missing_source_file_count": int(self.missing_source_file_count),
+            "new_source_file_count": int(self.new_source_file_count),
+            "modified_after_generation_count": int(self.modified_after_generation_count),
             "missing_source_files": list(self.missing_source_files),
             "new_source_files": list(self.new_source_files),
             "modified_after_generation": list(self.modified_after_generation),
@@ -154,19 +151,25 @@ def check_reasoner_symbol_atlas_evidence_freshness(
     )
     evidence_set = set(snapshot.evidence_files)
     live_set = set(live_files.keys())
-    missing = tuple(sorted(evidence_set - live_set)[: options.max_items])
-    new_files = tuple(sorted(live_set - evidence_set)[: options.max_items])
-    modified = _modified_after_generation(
+    missing_all = tuple(sorted(evidence_set - live_set))
+    new_files_all = tuple(sorted(live_set - evidence_set))
+    modified_all = _modified_after_generation(
         live_files=live_files,
         evidence_files=evidence_set,
         generated_dt=snapshot.generated_dt,
-        limit=options.max_items,
+        limit=None,
+        project_root=project_root,
+        evidence_hashes=snapshot.evidence_hashes,
     )
+    max_items = max(0, int(options.max_items))
+    missing = missing_all[:max_items]
+    new_files = new_files_all[:max_items]
+    modified = modified_all[:max_items]
     status, notes = _classify_freshness(
         generated_dt=snapshot.generated_dt,
-        missing=missing,
-        new_files=new_files,
-        modified=modified,
+        missing=missing_all,
+        new_files=new_files_all,
+        modified=modified_all,
     )
 
     return ProjectSymbolAtlasEvidenceFreshnessSummary(
@@ -177,6 +180,9 @@ def check_reasoner_symbol_atlas_evidence_freshness(
         evidence_project_root=snapshot.project_root,
         checked_file_count=len(live_files),
         evidence_file_count=len(snapshot.evidence_files),
+        missing_source_file_count=len(missing_all),
+        new_source_file_count=len(new_files_all),
+        modified_after_generation_count=len(modified_all),
         missing_source_files=missing,
         new_source_files=new_files,
         modified_after_generation=modified,
@@ -200,11 +206,11 @@ def build_reasoner_symbol_atlas_evidence_freshness_report(
         + "; evidence_files="
         + str(data["evidence_file_count"])
         + "; missing="
-        + str(len(data["missing_source_files"]))
+        + str(data["missing_source_file_count"])
         + "; post_evidence_new="
-        + str(len(data["new_source_files"]))
+        + str(data["new_source_file_count"])
         + "; modified="
-        + str(len(data["modified_after_generation"]))
+        + str(data["modified_after_generation_count"])
         + "; json_path="
         + str(data["json_path"])
     )

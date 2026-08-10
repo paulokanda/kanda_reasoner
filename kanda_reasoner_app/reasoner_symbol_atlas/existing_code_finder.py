@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
 
 from ._existing_code_finder_support import (
     format_existing_code_summary,
@@ -39,17 +38,17 @@ from .schemas import (
     ProjectSymbolAtlasReport,
     ProjectSymbolQuery,
     ProjectSymbolQueryResult,
-    normalize_project_atlas_sequence,
     normalize_project_atlas_text,
 )
 from .shadow_report import (
     ProjectSymbolAtlasShadowReportOptions,
-    collect_reasoner_symbol_atlas_shadow_findings,
 )
 
 from .existing_code_finder_matching_private import (
     _choose_query_type,
+    _inactive_owner_paths,
     _matching_duplicate_symbols,
+    _matching_inactive_symbols,
     _matching_symbols,
     _merge_reasons,
     _owner_paths,
@@ -249,7 +248,9 @@ class ProjectSymbolAtlasExistingCodeFinderResult:
     status: str = PROJECT_SYMBOL_ATLAS_EXISTING_CODE_STATUS_INVALID_QUERY
     confidence: str = "low"
     symbol_matches: tuple[ProjectSymbol, ...] = field(default_factory=tuple)
+    inactive_symbol_matches: tuple[ProjectSymbol, ...] = field(default_factory=tuple)
     owner_paths: tuple[str, ...] = field(default_factory=tuple)
+    inactive_owner_paths: tuple[str, ...] = field(default_factory=tuple)
     duplicate_symbols: tuple[ProjectSymbol, ...] = field(default_factory=tuple)
     facade_owner_path: str = ""
     main_path: str = ""
@@ -274,7 +275,12 @@ class ProjectSymbolAtlasExistingCodeFinderResult:
             "confidence": normalize_project_atlas_text(self.confidence),
             "symbol_match_count": len(self.symbol_matches),
             "symbol_matches": [symbol.to_dict() for symbol in self.symbol_matches],
+            "inactive_symbol_match_count": len(self.inactive_symbol_matches),
+            "inactive_symbol_matches": [
+                symbol.to_dict() for symbol in self.inactive_symbol_matches
+            ],
             "owner_paths": list(self.owner_paths),
+            "inactive_owner_paths": list(self.inactive_owner_paths),
             "duplicate_symbols": [symbol.to_dict() for symbol in self.duplicate_symbols],
             "facade_owner_path": self.facade_owner_path,
             "main_path": self.main_path,
@@ -316,10 +322,21 @@ def find_reasoner_symbol_atlas_existing_code(
         include_private=options.include_private,
         max_matches=options.max_matches,
     )
+    inactive_matches = _matching_inactive_symbols(
+        report.symbols,
+        symbol_name=symbol_name,
+        exact=options.exact,
+        include_private=options.include_private,
+        max_matches=options.max_matches,
+    )
     duplicate_symbols = _matching_duplicate_symbols(options, symbol_name)
     components = run_existing_code_component_plan(options, query_type)
 
     owner_paths = _owner_paths(matches, components.facade_owner_path)
+    inactive_owner_paths = _inactive_owner_paths(
+        inactive_matches,
+        components.facade_owner_path,
+    )
     status, confidence = _status_and_confidence(
         query_type=query_type,
         matches=matches,
@@ -337,7 +354,12 @@ def find_reasoner_symbol_atlas_existing_code(
         components.related_evidence,
         components.responsibility_reasons,
         components.pre_patch_reasons,
-        _query_reasons(query_type, matches, duplicate_symbols),
+        _query_reasons(
+            query_type,
+            matches,
+            inactive_matches,
+            duplicate_symbols,
+        ),
     )
     return ProjectSymbolAtlasExistingCodeFinderResult(
         project_root=project_root,
@@ -348,7 +370,9 @@ def find_reasoner_symbol_atlas_existing_code(
         status=status,
         confidence=confidence,
         symbol_matches=matches,
+        inactive_symbol_matches=inactive_matches,
         owner_paths=owner_paths,
+        inactive_owner_paths=inactive_owner_paths,
         duplicate_symbols=duplicate_symbols,
         facade_owner_path=components.facade_owner_path,
         main_path=components.main_path,

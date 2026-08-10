@@ -11,7 +11,6 @@ from .evidence_merger import (
     merge_reasoner_symbol_atlas_live_and_json_evidence,
 )
 from .schemas import (
-    ProjectModuleRecord,
     ProjectSymbol,
     ProjectSymbolAtlasReport,
     normalize_project_atlas_sequence,
@@ -23,6 +22,7 @@ from .facade_owner_resolver_helpers_private import (
     _coerce_project_root,
     _decision_status,
     _facade_evidence,
+    _inactive_candidate_owner_paths,
     _find_target_record,
     _record_is_facade,
     _select_likely_owner,
@@ -101,6 +101,7 @@ class ProjectSymbolAtlasFacadeOwnerDecision:
     status: str = PROJECT_SYMBOL_ATLAS_FACADE_STATUS_INSUFFICIENT_EVIDENCE
     confidence: str = "low"
     owner_candidates: tuple[str, ...] = field(default_factory=tuple)
+    inactive_owner_candidates: tuple[str, ...] = field(default_factory=tuple)
     facade_evidence: tuple[str, ...] = field(default_factory=tuple)
     reasons: tuple[str, ...] = field(default_factory=tuple)
 
@@ -119,6 +120,9 @@ class ProjectSymbolAtlasFacadeOwnerDecision:
             "status": normalize_project_atlas_text(self.status),
             "confidence": normalize_project_atlas_text(self.confidence),
             "owner_candidates": normalize_project_atlas_sequence(self.owner_candidates),
+            "inactive_owner_candidates": normalize_project_atlas_sequence(
+                self.inactive_owner_candidates
+            ),
             "facade_evidence": normalize_project_atlas_sequence(self.facade_evidence),
             "reasons": normalize_project_atlas_sequence(self.reasons),
         }
@@ -154,6 +158,12 @@ def resolve_reasoner_symbol_atlas_facade_owner(
         symbols=symbols,
         symbol_name=options.symbol_name,
     )
+    inactive_owner_candidates = _inactive_candidate_owner_paths(
+        target_record=target_record,
+        modules=modules,
+        symbols=symbols,
+        symbol_name=options.symbol_name,
+    )
     likely_owner = _select_likely_owner(modules, owner_candidates)
     likely_owner_path = likely_owner.path if likely_owner is not None else ""
     likely_owner_module = likely_owner.module if likely_owner is not None else ""
@@ -162,6 +172,7 @@ def resolve_reasoner_symbol_atlas_facade_owner(
         target_is_facade=target_is_facade,
         likely_owner=likely_owner,
         owner_candidates=owner_candidates,
+        inactive_owner_candidates=inactive_owner_candidates,
         merge_status=merge_summary.status,
     )
     return ProjectSymbolAtlasFacadeOwnerDecision(
@@ -176,6 +187,7 @@ def resolve_reasoner_symbol_atlas_facade_owner(
         status=status,
         confidence=confidence,
         owner_candidates=owner_candidates,
+        inactive_owner_candidates=inactive_owner_candidates,
         facade_evidence=facade_evidence,
         reasons=reasons,
     )

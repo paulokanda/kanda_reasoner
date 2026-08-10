@@ -5,8 +5,8 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, and route owner relationships.",
+  "source_stage": "fire-shield-ai-policy-enforcement-v1",
+  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, route owner relationships, and the Fire Shield policy route for consequential external-Project work.",
   "priority": 7,
   "required_companion_prompts": [
     "ai_prompt_request_canon",
@@ -16,12 +16,13 @@
     "what prompt should I use",
     "route this request",
     "prompt map",
-    "exact prompt path"
+    "exact prompt path",
+    "fire shield"
   ],
-  "version": "5.0",
+  "version": "5.1",
   "owner_box": "02_prompt_routing_and_indexing",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
-  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
+  "updated_for": "fire-shield-ai-policy-enforcement-v1",
   "prompt_code": "KPR-02-004",
   "title": "Prompt Navigation Index",
   "authority_boundary": {
@@ -29,5 +30,8 @@
     "may_mutate_source": false,
     "may_authorize_coding": false,
     "may_authorize_freeze": false
-  }
+  },
+  "do_not_regress": [
+    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+  ]
 }

@@ -12,7 +12,6 @@ from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store impo
     PromptRouterReasonerStoreError,
 )
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_router_mode_state import (
-    BLOCK_REASON_ML_PILOT_LOCKED,
     MODE_CHANGE_STATUS_APPLIED,
     MODE_CHANGE_STATUS_BLOCKED,
     MODE_CHANGE_STATUS_UNCHANGED,

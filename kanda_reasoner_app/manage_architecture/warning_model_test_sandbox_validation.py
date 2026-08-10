@@ -9,13 +9,15 @@ from datetime import datetime, timezone
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.project_python_fire_shield import (
+    run_project_python_governed,
+)
 from kanda_reasoner_app.project_support_boundary import (
     canonical_transient_garbage_root,
 )
 import py_compile
 import shutil
 import subprocess
-import sys
 
 from kanda_reasoner_app.manage_architecture.warning_model_test_generation_contract import (
     ModelTestMutationProposal,
@@ -117,6 +119,7 @@ def _overlay_proposals(
 
 
 def _run_targeted_pytest(
+    project_root: Path,
     sandbox: Path,
     test_path: str,
     *,
@@ -125,20 +128,18 @@ def _run_targeted_pytest(
 ) -> subprocess.CompletedProcess[str]:
     env = dict(os.environ)
     env["PYTHONPATH"] = str(sandbox)
-    return runner(
-        [sys.executable, "-m", "pytest", test_path, "-q", "--disable-warnings", "--maxfail=1"],
-        cwd=str(sandbox),
+    return run_project_python_governed(
+        project_root,
+        ["-m", "pytest", test_path, "-q", "--disable-warnings", "--maxfail=1"],
+        cwd=sandbox,
         env=env,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
         timeout=timeout_seconds,
-        check=False,
+        self_host_runner=runner,
     )
 
 
 def _run_architecture_audit(
+    project_root: Path,
     sandbox: Path,
     *,
     runner: Runner,
@@ -154,16 +155,14 @@ def _run_architecture_audit(
         )
     env = dict(os.environ)
     env["PYTHONPATH"] = str(sandbox)
-    return runner(
-        [sys.executable, str(cli), "--root", str(sandbox), "--validate"],
-        cwd=str(sandbox),
+    return run_project_python_governed(
+        project_root,
+        ["-m", "kanda_reasoner_app.manage_architecture.manage_architecture",
+         "--root", str(sandbox), "--validate"],
+        cwd=sandbox,
         env=env,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
         timeout=timeout_seconds,
-        check=False,
+        self_host_runner=runner,
     )
 
 
@@ -235,6 +234,7 @@ def validate_mutation_proposals(
             )
         try:
             pytest_results[target] = _run_targeted_pytest(
+                root,
                 sandbox,
                 target,
                 runner=runner,
@@ -259,6 +259,7 @@ def validate_mutation_proposals(
         )
     try:
         audit = _run_architecture_audit(
+            root,
             sandbox,
             runner=runner,
             timeout_seconds=audit_timeout_seconds,

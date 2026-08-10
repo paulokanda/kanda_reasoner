@@ -4,16 +4,21 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+import hashlib
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+
+from kanda_reasoner_app.reasoner_context_collector import (
+    collect_canonical_project_python_files,
+)
 
 from .reference_folder_policy import (
     PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS,
 )
 from .complete_json_adapter import (
-    collect_reasoner_symbol_atlas_complete_json_files,
     load_reasoner_symbol_atlas_complete_json,
+    resolve_reasoner_symbol_atlas_complete_json_path,
 )
 from .schemas import normalize_project_atlas_text
 
@@ -24,6 +29,7 @@ _STATUS_STALE = "stale"
 __all__: list[str] = []
 
 
+@dataclass(frozen=True)
 class _EvidenceSnapshot:
     """Represent evidence snapshot."""
     
@@ -33,6 +39,7 @@ class _EvidenceSnapshot:
     generated_at: str
     generated_dt: datetime | None
     evidence_files: tuple[str, ...]
+    evidence_hashes: dict[str, str]
 
 
 def _select_json_path(project_root: Path, json_path: str) -> Path | None:
@@ -51,10 +58,10 @@ def _select_json_path(project_root: Path, json_path: str) -> Path | None:
         The resolved path.
     """
     
-    if json_path.strip():
-        return Path(json_path).expanduser().resolve(strict=False)
-    candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
-    return candidates[0] if candidates else None
+    return resolve_reasoner_symbol_atlas_complete_json_path(
+        project_root,
+        json_path or None,
+    )
 
 
 def _load_snapshot(project_root: Path, json_path: Path) -> _EvidenceSnapshot:
@@ -88,6 +95,7 @@ def _load_snapshot(project_root: Path, json_path: Path) -> _EvidenceSnapshot:
         generated_at=generated_at,
         generated_dt=_parse_generated_at(generated_at),
         evidence_files=_source_files_from_index(source_index, project_root),
+        evidence_hashes=_source_hashes_from_index(source_index, project_root),
     )
 
 
@@ -107,6 +115,7 @@ def _find_generated_at(payload: dict[str, Any]) -> str:
     
     candidates = (
         payload.get("generated_at"),
+        payload.get("generated_at_utc"),
         payload.get("created_at"),
         _nested_value(payload, ("metadata", "generated_at")),
         _nested_value(payload, ("metadata", "created_at")),
@@ -227,32 +236,56 @@ def _source_files_from_index(source_index: dict[str, Any], project_root: Path) -
     return tuple(sorted(set(paths)))
 
 
+def _source_hashes_from_index(
+    source_index: dict[str, Any],
+    project_root: Path,
+) -> dict[str, str]:
+    """Return canonical SHA-256 values keyed by project-relative Python path."""
+
+    hashes: dict[str, str] = {}
+    for key, value in source_index.items():
+        if not isinstance(value, dict):
+            continue
+        path_text = normalize_project_atlas_text(
+            value.get("file") or value.get("path") or value.get("relative_path") or key
+        )
+        relative = _as_project_relative_path(project_root, path_text)
+        digest = normalize_project_atlas_text(
+            value.get("sha256") or value.get("file_sha256")
+        ).lower()
+        if (
+            relative
+            and relative.endswith(".py")
+            and len(digest) == 64
+            and all(char in "0123456789abcdef" for char in digest)
+        ):
+            hashes[relative] = digest
+    return hashes
+
+
 def _collect_live_files(
     project_root: Path,
     include_non_python_files: bool,
 ) -> dict[str, datetime]:
-    """Support collect live files behavior.
-    
-    Parameters
-    ----------
-    project_root : Path
-        The project root path.
-    include_non_python_files : bool
-        The include non python files value.
-    
-    Returns
-    -------
-    dict[str, datetime]
-        The mapped values.
-    """
-    
+    """Collect live files using the canonical complete-JSON Python scope by default."""
+
     result: dict[str, datetime] = {}
-    pattern = "*" if include_non_python_files else "*.py"
-    for path in project_root.rglob(pattern):
-        if not path.is_file() or _should_skip(path, project_root):
+    if not include_non_python_files:
+        candidates = collect_canonical_project_python_files(project_root)
+    else:
+        candidates = tuple(
+            path
+            for path in project_root.rglob("*")
+            if path.is_file() and not _should_skip(path, project_root)
+        )
+
+    for path in candidates:
+        try:
+            relative = path.relative_to(project_root).as_posix()
+            modified = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+        except (OSError, ValueError):
             continue
-        relative = path.relative_to(project_root).as_posix()
-        result[relative] = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+        result[relative] = modified
     return result
 
 
@@ -321,35 +354,47 @@ def _modified_after_generation(
     live_files: dict[str, datetime],
     evidence_files: set[str],
     generated_dt: datetime | None,
-    limit: int,
+    limit: int | None,
+    *,
+    project_root: Path | None = None,
+    evidence_hashes: dict[str, str] | None = None,
 ) -> tuple[str, ...]:
-    """Support modified after generation behavior.
-    
-    Parameters
-    ----------
-    live_files : dict[str, datetime]
-        The live files value.
-    evidence_files : set[str]
-        The evidence files value.
-    generated_dt : datetime | None
-        The generated dt value.
-    limit : int
-        The limit value.
-    
-    Returns
-    -------
-    tuple[str, ...]
-        The tuple of values.
-    """
-    
+    """Return true post-generation content changes, using mtime only as a candidate gate."""
+
     if generated_dt is None:
         return ()
-    modified = [
-        path
-        for path, mtime in live_files.items()
-        if path in evidence_files and mtime > generated_dt
-    ]
-    return tuple(sorted(modified)[:limit])
+    precision_tolerance = (
+        timedelta(seconds=1) if generated_dt.microsecond == 0 else timedelta(0)
+    )
+    threshold = generated_dt + precision_tolerance
+    hashes = evidence_hashes or {}
+    modified: list[str] = []
+
+    for relative, mtime in live_files.items():
+        if relative not in evidence_files or mtime <= threshold:
+            continue
+        evidence_hash = hashes.get(relative, "")
+        if evidence_hash and project_root is not None:
+            live_hash = _sha256_file(project_root / relative)
+            if live_hash and live_hash == evidence_hash:
+                continue
+        modified.append(relative)
+
+    ordered = tuple(sorted(modified))
+    return ordered if limit is None else ordered[: max(0, int(limit))]
+
+
+def _sha256_file(path: Path) -> str:
+    """Return the SHA-256 of one live source file, or empty text on read failure."""
+
+    digest = hashlib.sha256()
+    try:
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+    except OSError:
+        return ""
+    return digest.hexdigest()
 
 
 def _classify_freshness(
@@ -383,10 +428,10 @@ def _classify_freshness(
             notes.append("Some files recorded in evidence are missing from live source.")
         if modified:
             notes.append("Some live files were modified after evidence generation.")
-        return PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_STALE, tuple(notes)
+        return _STATUS_STALE, tuple(notes)
     if new_files:
         return (
-            PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_JSON_CANONICAL,
+            _STATUS_JSON_CANONICAL,
             (
                 "Complete JSON is authoritative; live-only files are post-evidence candidates.",
                 "Use Tab 4/5 again only when those files should become canonical project evidence.",
@@ -394,11 +439,11 @@ def _classify_freshness(
         )
     if generated_dt is None:
         return (
-            PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_JSON_CANONICAL,
+            _STATUS_JSON_CANONICAL,
             ("Complete JSON is authoritative; generated_at was not parseable.",),
         )
     return (
-        PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_FRESH,
+        _STATUS_FRESH,
         ("Evidence matches the live source tree checks performed.",),
     )
 

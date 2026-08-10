@@ -46,7 +46,6 @@ from kanda_reasoner_app.error_memory_gui._receive_import import (
 )
 from kanda_reasoner_app.error_memory_gui._table_view import (
     formatted_lesson_block,
-    lesson_from_current_windows_or_selection,
     lesson_id_for_row,
     load_selected_lesson_into_preview,
     reload_table,

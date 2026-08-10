@@ -12,21 +12,7 @@ from pathlib import Path
 
 
 if False:
-    from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.manual_docstring_review_editor import (
-        DocstringReviewEditorDialog,
-    )
-    from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.manual_docstring_review_support import (
-        backup_source_file,
-        docstring_text_from_row,
-        docstring_text_or_placeholder,
-        format_review_row_context,
-        format_tab1_findings_for_editor,
-        format_tab1_snippets,
-        manual_review_is_inside_project_root,
-        manual_review_safe_int,
-        project_root_for_window,
-        refresh_tab1_findings_for_window,
-    )
+    pass
 
 
 ROOT = Path(__file__).resolve().parents[1]

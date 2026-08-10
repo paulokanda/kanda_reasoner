@@ -1,6 +1,5 @@
 # project-path: kanda_reasoner_app/reasoner_engine/v10_intent_detection.py
 """Canonical intent detection functions used by both retriever and router."""
-import re
 from typing import Any
 
 def norm_text(value: Any) -> str:

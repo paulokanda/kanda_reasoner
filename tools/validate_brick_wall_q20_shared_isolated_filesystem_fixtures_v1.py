@@ -77,6 +77,7 @@ BRIDGE_MARKERS = (
 SHARED_FIXTURE_MARKERS = (
     "class IsolatedFilesystemLayout",
     "def isolated_filesystem_fixture(",
+    "def isolated_registered_project_fixture(",
     "def expected_external_root_read_only(",
     "Q20_PROTECTED_PATH_MUTATED",
     "Q20_FIXTURE_CLEANUP_FAILED",

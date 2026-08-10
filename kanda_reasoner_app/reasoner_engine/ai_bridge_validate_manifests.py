@@ -7,7 +7,6 @@ import logging
 
 import ast
 import json
-import sys
 from pathlib import Path
 
 HEADER_FIELDS = [

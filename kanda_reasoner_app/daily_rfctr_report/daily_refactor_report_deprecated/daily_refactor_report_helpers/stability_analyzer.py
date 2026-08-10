@@ -1,6 +1,5 @@
-import copy
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Set
 
 
 @dataclass(frozen=True)

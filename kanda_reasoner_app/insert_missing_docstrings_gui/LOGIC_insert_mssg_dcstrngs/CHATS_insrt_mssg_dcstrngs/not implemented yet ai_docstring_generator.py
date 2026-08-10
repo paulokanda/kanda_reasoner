@@ -24,12 +24,12 @@ import json
 import re
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
 from ai_config import AIConfig
-from context_builder import AttributeInfo, ParameterInfo, SymbolContext
+from context_builder import SymbolContext
 from docstring_validator import (
     ValidationConfig,
     ValidationResult,

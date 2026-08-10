@@ -28,7 +28,6 @@ from typing import Optional, Tuple
 
 from .read_only_advisory_panel_runtime_activation import (
     ReadOnlyAdvisoryPanelRuntimeActivationEnvelope,
-    ReadOnlyPanelRuntimeActivationEnvelopeState,
     build_phase9_read_only_panel_runtime_activation_implementation_probe,
 )
 from ._read_only_advisory_panel_renderer_mount_support import (

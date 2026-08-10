@@ -7,7 +7,6 @@ import csv
 import hashlib
 import json
 from pathlib import Path
-import sys
 from typing import Any
 
 __all__: list[str] = []

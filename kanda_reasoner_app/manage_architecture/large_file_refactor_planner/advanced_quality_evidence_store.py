@@ -2,7 +2,7 @@
 """Durable Project-owned persistence for Advanced Quality Review evidence."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
 import json

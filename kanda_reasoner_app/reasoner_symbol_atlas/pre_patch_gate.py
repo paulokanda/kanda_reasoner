@@ -30,7 +30,6 @@ from .pre_patch_gate_helpers_private import (
 from .schemas import (
     ProjectSymbol,
     ProjectSymbolAtlasReport,
-    normalize_project_atlas_sequence,
     normalize_project_atlas_text,
 )
 

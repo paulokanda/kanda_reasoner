@@ -2,11 +2,17 @@
 """Shadow backend implementations for isolated validation of one sealed payload."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 import shutil
 import subprocess
+import uuid
 from typing import Any, Protocol
+
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldMode,
+    build_fire_shield_context,
+)
 
 from .models import SCHEMA_VERSION
 from .workbench_sealed_payload import WorkbenchSealedPayload, verify_sealed_payload
@@ -140,6 +146,16 @@ class GitWorktreeBackend:
         root = Path(project_root).resolve()
         reasons: list[str] = []
         warnings: list[str] = []
+        context = build_fire_shield_context(
+            root,
+            phase="VALIDATE_READ_ONLY",
+            operation_id="shadow-backend-v2e-" + uuid.uuid4().hex,
+        )
+        if context.mode is FireShieldMode.EXTERNAL_PROJECT:
+            reasons.append("EXTERNAL_PROJECT_GIT_WORKTREE_DISABLED_BY_FIRE_SHIELD_V2E")
+            return ShadowBackendEligibility(
+                self.name, False, str(root), tuple(reasons), tuple(warnings)
+            )
         git = shutil.which("git")
         if not git:
             reasons.append("GIT_EXECUTABLE_UNAVAILABLE")

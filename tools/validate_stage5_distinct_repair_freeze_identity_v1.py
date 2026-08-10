@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 OLD_FEATURE_ID = 'advanced-quality-review-stage5-runtime-cumulative-correction-repair-v1'

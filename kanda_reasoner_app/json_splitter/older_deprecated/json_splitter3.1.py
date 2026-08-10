@@ -222,20 +222,20 @@ class MainWindow(QMainWindow):
         # Title
         title = QLabel("JSON File Splitter")
         title.setAlignment(Qt.AlignCenter)
-        f = QFont();
-        f.setPointSize(18);
+        f = QFont()
+        f.setPointSize(18)
         f.setBold(True)
-        title.setFont(f);
+        title.setFont(f)
         title.setObjectName("title")
         root.addWidget(title)
 
         sub = QLabel("Splits nested JSON — preserves meta/header keys in every output file")
-        sub.setAlignment(Qt.AlignCenter);
+        sub.setAlignment(Qt.AlignCenter)
         sub.setObjectName("subtitle")
         root.addWidget(sub)
 
-        sep = QFrame();
-        sep.setFrameShape(QFrame.HLine);
+        sep = QFrame()
+        sep.setFrameShape(QFrame.HLine)
         sep.setObjectName("separator")
         root.addWidget(sep)
 
@@ -248,7 +248,7 @@ class MainWindow(QMainWindow):
         browse_btn = QPushButton("Browse…")
         browse_btn.setObjectName("browse_btn")
         browse_btn.clicked.connect(self._browse_file)
-        fl.addWidget(self.file_edit);
+        fl.addWidget(self.file_edit)
         fl.addWidget(browse_btn)
         root.addWidget(file_group)
 
@@ -263,7 +263,7 @@ class MainWindow(QMainWindow):
         out_browse = QPushButton("Browse…")
         out_browse.setObjectName("browse_btn")
         out_browse.clicked.connect(self._browse_output)
-        out_layout.addWidget(self.out_edit);
+        out_layout.addWidget(self.out_edit)
         out_layout.addWidget(out_browse)
         out_vertical.addWidget(out_group)
 
@@ -281,14 +281,14 @@ class MainWindow(QMainWindow):
             "Choose the top-level key whose contents will be divided.\n"
             "All other top-level keys are copied into every output file."
         )
-        hint.setObjectName("hint");
+        hint.setObjectName("hint")
         hint.setWordWrap(True)
         kl.addWidget(hint)
         kr = QHBoxLayout()
         kr.addWidget(QLabel("Split key:"))
         self.key_combo = QComboBox()
         self.key_combo.setMinimumWidth(220)
-        kr.addWidget(self.key_combo);
+        kr.addWidget(self.key_combo)
         kr.addStretch()
         kl.addLayout(kr)
         root.addWidget(key_group)
@@ -299,7 +299,7 @@ class MainWindow(QMainWindow):
         ml.setSpacing(3)
         ml.setContentsMargins(12, 10, 12, 10)
 
-        small_font = QFont();
+        small_font = QFont()
         small_font.setPointSize(10)
 
         self.radio_parts = QRadioButton("By number of parts  (evenly distribute entries)")
@@ -307,7 +307,7 @@ class MainWindow(QMainWindow):
         self.radio_top = QRadioButton("By top-level children  (one file per immediate child key)")
 
         self.spin_parts = QSpinBox()
-        self.spin_parts.setRange(2, 9999);
+        self.spin_parts.setRange(2, 9999)
         self.spin_parts.setValue(5)
         self.spin_parts.setSuffix(" parts")
         self.spin_parts.setSingleStep(1)
@@ -316,9 +316,9 @@ class MainWindow(QMainWindow):
         self.spin_parts.setMinimumWidth(160)
 
         self.spin_kb = QDoubleSpinBox()
-        self.spin_kb.setRange(0.1, 999999);
+        self.spin_kb.setRange(0.1, 999999)
         self.spin_kb.setValue(500)
-        self.spin_kb.setSuffix(" KB");
+        self.spin_kb.setSuffix(" KB")
         self.spin_kb.setDecimals(1)
         self.spin_kb.setMinimumHeight(48)
         self.spin_kb.setMinimumWidth(160)
@@ -326,20 +326,20 @@ class MainWindow(QMainWindow):
 
         bg = QButtonGroup(self)
         for r in (self.radio_parts, self.radio_kb, self.radio_top):
-            r.setFont(small_font);
+            r.setFont(small_font)
             bg.addButton(r)
         self.radio_parts.setChecked(True)
         self.radio_parts.toggled.connect(self._toggle_mode)
         self.radio_kb.toggled.connect(self._toggle_mode)
         self.radio_top.toggled.connect(self._toggle_mode)
 
-        row_parts = QHBoxLayout();
+        row_parts = QHBoxLayout()
         row_parts.setSpacing(10)
         row_parts.addWidget(self.radio_parts)
         row_parts.addWidget(self.spin_parts)
         row_parts.addStretch()
 
-        row_kb = QHBoxLayout();
+        row_kb = QHBoxLayout()
         row_kb.setSpacing(10)
         row_kb.addWidget(self.radio_kb)
         row_kb.addWidget(self.spin_kb)
@@ -352,16 +352,16 @@ class MainWindow(QMainWindow):
 
         # ---- Progress ----
         self.progress_bar = QProgressBar()
-        self.progress_bar.setValue(0);
+        self.progress_bar.setValue(0)
         self.progress_bar.setObjectName("progress")
         root.addWidget(self.progress_bar)
 
         # ---- Log ----
         log_group = QGroupBox("Log")
         ll = QVBoxLayout(log_group)
-        self.log_box = QTextEdit();
+        self.log_box = QTextEdit()
         self.log_box.setReadOnly(True)
-        self.log_box.setMinimumHeight(140);
+        self.log_box.setMinimumHeight(140)
         self.log_box.setObjectName("log_box")
         ll.addWidget(self.log_box)
         root.addWidget(log_group)
@@ -374,8 +374,8 @@ class MainWindow(QMainWindow):
         self.run_btn = QPushButton("▶  Split JSON")
         self.run_btn.setObjectName("run_btn")
         self.run_btn.clicked.connect(self._run)
-        btn_row.addWidget(self.clear_btn);
-        btn_row.addStretch();
+        btn_row.addWidget(self.clear_btn)
+        btn_row.addStretch()
         btn_row.addWidget(self.run_btn)
         root.addLayout(btn_row)
 

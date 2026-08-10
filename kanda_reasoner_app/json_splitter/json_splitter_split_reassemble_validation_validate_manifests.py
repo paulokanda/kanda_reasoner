@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import ast
 import json
-import sys
 from pathlib import Path
 
 ROOT_PUBLIC_API = ['CHUNK_SCHEMA', 'stable_hash', 'validate_split_reassemble_output', 'main']

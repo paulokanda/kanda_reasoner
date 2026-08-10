@@ -8,6 +8,10 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+
+from kanda_reasoner_app.project_python_fire_shield import (
+    run_project_python_governed,
+)
 from typing import Any
 
 from .models import SCHEMA_VERSION
@@ -87,14 +91,12 @@ def prove_shadow_runtime_provenance(
     probe = _probe_source(modules)
     env = _shadow_environment(shadow)
     try:
-        completed = subprocess.run(
-            [sys.executable, "-c", probe],
-            cwd=str(shadow),
+        completed = run_project_python_governed(
+            materialization.project_root,
+            ["-c", probe],
+            cwd=shadow,
             env=env,
-            text=True,
-            capture_output=True,
             timeout=_TIMEOUT_SECONDS,
-            check=False,
         )
     except subprocess.TimeoutExpired as exc:
         return _blocked(materialization, ["SHADOW_PROVENANCE_TIMEOUT"], stderr=str(exc))

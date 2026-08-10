@@ -9,6 +9,14 @@ import os
 from pathlib import Path
 from typing import Any, Iterable
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .models import SCHEMA_VERSION
 from .workbench_source_payload_builder import SourceApplyPayloadReadinessResult
 
@@ -140,7 +148,21 @@ def apply_source_mutation_operation(
     """Apply one exact-byte operation after immediate precondition verification."""
     payload_path = Path(operation.payload_path).resolve()
     destination = Path(operation.destination_path).resolve()
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id=operation_id,
+    )
+    assert_fire_shield_write_allowed(
+        fire_shield,
+        destination,
+        operation="REPLACE" if operation.operation_type == "REPLACE_FILE" else "CREATE",
+    )
     raw = payload_path.read_bytes()
+    assert_fire_shield_payload_bytes_allowed(
+        fire_shield,
+        raw,
+        operation.relative_path,
+    )
     payload_hash = hashlib.sha256(raw).hexdigest()
     if payload_hash != operation.payload_hash:
         raise RuntimeError("OPERATION_PAYLOAD_HASH_MISMATCH:" + str(destination))
@@ -165,6 +187,7 @@ def apply_source_mutation_operation(
     resulting_hash = current_file_hash(destination)
     if resulting_hash != operation.payload_hash:
         raise RuntimeError("OPERATION_RESULT_HASH_MISMATCH:" + str(destination))
+    verify_tool_snapshot_unchanged(fire_shield)
     return resulting_hash
 
 

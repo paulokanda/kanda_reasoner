@@ -18,12 +18,8 @@ from kanda_reasoner_app.project_analysis_evidence_paths import (
 
 from ._complete_json_web_ai_enrichment_analysis import (
     _file_responsibility_index,
-    _iter_python_files,
     _read_text,
-    _responsibility_from_path,
-    _safe_parse,
     _stable_evidence_index,
-    _symbol_kind,
     _symbol_records,
     _test_protection_index,
 )

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import replace
 import hashlib
-import json
 from pathlib import Path
 import tempfile
 
@@ -30,7 +29,6 @@ from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.analyzer
     AdapterDeltaState,
     AdapterEvidenceBundle,
     AdapterFindingDelta,
-    build_adapter_input_pair,
 )
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.analyzer_capability_preflight import AnalyzerCapabilityEvidence
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.analyzer_environment_contract import (

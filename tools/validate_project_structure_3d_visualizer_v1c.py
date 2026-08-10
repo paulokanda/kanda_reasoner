@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import ast
 import importlib.metadata
-import json
 import os
 import platform
 import subprocess

@@ -9,22 +9,6 @@ from __future__ import annotations
 import ast
 
 from ._widget_registry_part1_bindings import _bindings, _configure_bindings
-from ._widget_registry_part1_layout import (
-    _wrg__append_layout_record_impl,
-    _wrg__handle_add_row_impl,
-    _wrg__handle_add_tab_impl,
-    _wrg__handle_add_widget_impl,
-    _wrg__handle_layout_call_impl,
-)
-from ._widget_registry_part1_registration import (
-    _wrg__handle_widget_property_call_impl,
-    _wrg__register_assigned_widget_impl,
-    _wrg__register_inline_widget_impl,
-    _wrg__resolve_or_create_widget_from_expr_impl,
-    _wrg_visit_AnnAssign_impl,
-    _wrg_visit_Assign_impl,
-    _wrg_visit_Call_impl,
-)
 
 __all__ = []
 

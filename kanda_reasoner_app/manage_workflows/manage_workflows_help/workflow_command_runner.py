@@ -3,24 +3,11 @@
 
 from __future__ import annotations
 
-import argparse
-import contextlib
-import difflib
-import fnmatch
-import importlib.util
-import io
-import json
-import logging
 import os
-import shutil
 import subprocess
-import sys
-import tempfile
 import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .workflow_file_contract import (
     validate_file_contract,
@@ -39,8 +26,11 @@ from .workflow_placeholder_contract import (
     placeholder_command_preview,
     placeholder_contract_failure_message,
 )
-from .workflow_project_scan import (
-    pytest_available,
+from .workflow_python_runtime import (
+    resolve_project_python,
+)
+from .workflow_test_runner import (
+    _run_project_tests,
 )
 
 __all__ = ["command_list_results", "run_tests"]
@@ -61,7 +51,10 @@ def replace_placeholders(value: str, *, root: Path) -> str:
         The string result.
     """
     
-    return value.replace("{root}", str(root)).replace("{python}", sys.executable)
+    replaced = value.replace("{root}", str(root))
+    if "{python}" in replaced:
+        replaced = replaced.replace("{python}", str(resolve_project_python(root)))
+    return replaced
 
 def maybe_stringify_command(args: list[str], shell: bool) -> str:
     """Support maybe stringify command behavior.
@@ -415,78 +408,10 @@ def command_list_results(
         results.append(result)
     return results
 
-def run_tests(root: Path, discovered: dict[str, Any], cfg: dict[str, Any]) -> list[CheckResult]:
-    """Run the tests.
-    
-    Parameters
-    ----------
-    root : Path
-        The root path.
-    discovered : dict[str, Any]
-        The discovered value.
-    cfg : dict[str, Any]
-        The configuration data.
-    
-    Returns
-    -------
-    list[CheckResult]
-        The list of values.
-    """
-    
-    if not cfg.get("enabled", True):
-        return [CheckResult("tests", "tests", "skip", "Workflow disabled.")]
-
-    timeout = cfg.get("timeout_seconds", 900)
-    runner = str(cfg.get("runner", "auto")).lower()
-    pytest_args = cfg.get("pytest_args") or ["-q"]
-    if not isinstance(pytest_args, list):
-        return [CheckResult("tests", "tests", "fail", "pytest_args must be a list.")]
-
-    should_try_pytest = runner in {"auto", "pytest"}
-    has_pytest_signals = bool(discovered["pytest_files"] or discovered["test_dirs"])
-
-    if should_try_pytest and pytest_available() and has_pytest_signals:
-        result = execute_command(
-            category="tests",
-            spec={
-                "name": "pytest",
-                "args": [sys.executable, "-m", "pytest", *[str(x) for x in pytest_args]],
-                "cwd": "{root}",
-                "timeout_seconds": timeout,
-            },
-            root=root,
-            default_timeout=timeout,
-        )
-        if result.status == "pass" or runner == "pytest":
-            return [result]
-
-    if runner in {"auto", "unittest"} and discovered["test_dirs"]:
-        start_dir = str(cfg.get("unittest_start_dir") or discovered["test_dirs"][0])
-        result = execute_command(
-            category="tests",
-            spec={
-                "name": "unittest",
-                "args": [
-                    sys.executable,
-                    "-m",
-                    "unittest",
-                    "discover",
-                    "-s",
-                    start_dir,
-                ],
-                "cwd": "{root}",
-                "timeout_seconds": timeout,
-            },
-            root=root,
-            default_timeout=timeout,
-        )
-        return [result]
-
-    return [
-        CheckResult(
-            "tests",
-            "tests",
-            "warn",
-            "No runnable test workflow discovered. Configure tests in workflow_manifest.json.",
-        )
-    ]
+def run_tests(
+    root: Path,
+    discovered: dict[str, Any],
+    cfg: dict[str, Any],
+) -> list[CheckResult]:
+    """Run Project tests through the dedicated governed test owner."""
+    return _run_project_tests(root, discovered, cfg)

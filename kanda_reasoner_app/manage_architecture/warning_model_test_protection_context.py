@@ -13,10 +13,6 @@ from kanda_reasoner_app.manage_architecture.ai_review.adapter import (
     AUTO_MODEL_LABEL,
     Tab1AIReviewAdapter,
 )
-from kanda_reasoner_app.manage_architecture.warning_model_test_generation_contract import (
-    ACTION_CREATE_FOCUSED_TEST,
-    ACTION_EXTEND_EXISTING_TEST,
-)
 from kanda_reasoner_app.manage_architecture.warning_model_test_semantic_evidence import (
     build_semantic_source_evidence,
     build_semantic_test_evidence,

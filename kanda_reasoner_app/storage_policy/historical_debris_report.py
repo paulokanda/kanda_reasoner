@@ -11,15 +11,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from kanda_reasoner_app.storage_policy.maintenance_root_resolver import (
-    get_maintenance_root,
-)
 from kanda_reasoner_app.storage_policy.maintenance_subfolder_policy import (
     get_maintenance_subfolder,
 )
 from kanda_reasoner_app.storage_policy.path_resolver import (
     get_app_drive_or_anchor,
-    normalize_path,
 )
 
 LEGACY_DEBRIS_FOLDER_NAMES = (

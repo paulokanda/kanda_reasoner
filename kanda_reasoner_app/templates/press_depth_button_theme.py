@@ -112,6 +112,20 @@ def apply_color_preserving_press_depth_theme(app: Any) -> None:
     QPushButton = qt_widgets.QPushButton
     QToolButton = qt_widgets.QToolButton
     button_types = (QPushButton, QToolButton)
+
+    try:
+        is_valid_qt_wrapper = import_module("shiboken6").isValid
+    except (AttributeError, ModuleNotFoundError):
+        is_valid_qt_wrapper = None
+
+    def _qt_wrapper_is_live(value: Any) -> bool:
+        if is_valid_qt_wrapper is None:
+            return True
+        try:
+            return bool(is_valid_qt_wrapper(value))
+        except (RuntimeError, TypeError):
+            return False
+
     watched_event_types = {
         QEvent.Type.Polish,
         QEvent.Type.Show,
@@ -130,13 +144,27 @@ def apply_color_preserving_press_depth_theme(app: Any) -> None:
                 self._active_widget_ids: set[int] = set()
 
             def eventFilter(self, watched: Any, event: Any) -> bool:
-                if isinstance(watched, button_types):
-                    if event.type() in watched_event_types:
+                if not isinstance(watched, button_types):
+                    return False
+                if event is None or not _qt_wrapper_is_live(watched):
+                    return False
+                try:
+                    event_type = event.type()
+                    if event_type in watched_event_types:
                         self.apply_to_button(watched)
+                except RuntimeError:
+                    # Qt can dispatch late lifecycle events while a Python
+                    # wrapper still exists but its C++ object is tearing down.
+                    return False
                 return False
 
             def apply_to_button(self, button: Any) -> None:
-                current_style = button.styleSheet()
+                if not _qt_wrapper_is_live(button):
+                    return
+                try:
+                    current_style = button.styleSheet()
+                except RuntimeError:
+                    return
                 merged_style = _merge_button_style(current_style)
                 if current_style.strip() == merged_style.strip():
                     return
@@ -145,7 +173,10 @@ def apply_color_preserving_press_depth_theme(app: Any) -> None:
                     return
                 self._active_widget_ids.add(widget_id)
                 try:
-                    button.setStyleSheet(merged_style)
+                    if _qt_wrapper_is_live(button):
+                        button.setStyleSheet(merged_style)
+                except RuntimeError:
+                    return
                 finally:
                     self._active_widget_ids.discard(widget_id)
 

@@ -22,7 +22,6 @@ from .models import (
     HISTORY_REL,
     INTAKE_REL,
     LATEST_NAME,
-    SCHEMA_VERSION,
     FreezeHintIntakeError,
     FreezeHintIntakePaths,
 )

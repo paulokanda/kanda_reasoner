@@ -12,7 +12,6 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
     PromptRouterReasonerReviewStore,
     PromptSnapshot,
-    STATUS_PENDING,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

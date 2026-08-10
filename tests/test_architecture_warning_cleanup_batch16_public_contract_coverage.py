@@ -58,30 +58,7 @@ import tools.validate_router_bridge_module_size_law_v1 as router_bridge_validato
 # Static architecture coverage only. These imports are intentionally guarded so
 # headless validation does not require Qt/PySide6 or package-mode startup-kernel imports.
 if TYPE_CHECKING:
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.boot_text as pkg_startup_boot_text
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.constants as pkg_startup_constants
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.core_helpers as pkg_startup_core_helpers
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.generic_helpers as pkg_startup_generic_helpers
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.paste_after_uploading_body as pkg_startup_paste_after_uploading_body
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.paste_readme_text as pkg_startup_paste_readme_text
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.prompt_library_manifest as pkg_startup_prompt_library_manifest
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.prompt_library_payload as pkg_startup_prompt_library_payload
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.prompt_library_zip as pkg_startup_prompt_library_zip
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.read_order as pkg_startup_read_order
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.readme_body as pkg_startup_readme_body
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.source_resolution as pkg_startup_source_resolution
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.start_here_body_intro as pkg_startup_start_here_body_intro
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.start_here_body_routing as pkg_startup_start_here_body_routing
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.start_here_lists as pkg_startup_start_here_lists
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.start_here_text as pkg_startup_start_here_text
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.startup_literal_texts as pkg_startup_literal_texts
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.startup_names as pkg_startup_names
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.startup_source_map as pkg_startup_source_map
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.zip_contract as pkg_startup_zip_contract
-    import kanda_prompt_workspace.prompt_tools.startup_kernel.zip_delivery as pkg_startup_zip_delivery
-    import kanda_reasoner_app.error_memory_gui._project_paths_mixin as error_project_paths_mixin
-    import kanda_reasoner_app.freeze_after_update_gui._local_ai_formulary as freeze_local_ai_formulary
-    import kanda_reasoner_app.templates.green_sonar_monitor as green_sonar_monitor
+    pass
 
 _RUNTIME_MODULES = (
     startup_boot_text,

@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from pathlib import PurePosixPath
 from typing import Any
 
 from .graph_snapshot_primitives import (

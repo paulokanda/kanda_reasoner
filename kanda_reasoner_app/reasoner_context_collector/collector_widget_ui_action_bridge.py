@@ -15,11 +15,8 @@ from .collector_widget_ui_action_bridge_help import (
     _find_matching_signal_record,
     _list_or_empty,
     _match_confidence,
-    _match_widget_by_hint,
-    _match_widget_by_signal_name,
     _match_widget_for_action,
     _normalize_qt_signal_records,
-    _prefer_interactive_widget,
     _safe_str,
 )
 

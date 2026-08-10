@@ -11,6 +11,14 @@ from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .models import SCHEMA_VERSION
 from .workbench_import_rewrite_apply_readiness import ImportRewriteApplyReadinessResult
 
@@ -187,6 +195,10 @@ def _apply_safe_records(
         grouped.setdefault(str(Path(item["importer_file"]).resolve()), []).append(item)
     backup_root = preview_root / _BACKUP_DIR
     backup_root.mkdir(parents=True, exist_ok=True)
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="workbench-import-rewrite-apply",
+    )
     for filename, items in grouped.items():
         path = Path(filename).resolve()
         text = path.read_text(encoding="utf-8")
@@ -205,6 +217,16 @@ def _apply_safe_records(
             new_text = new_text.replace(original, suggested, 1)
         if blockers or new_text == text:
             continue
+        assert_fire_shield_write_allowed(
+            fire_shield,
+            path,
+            operation="REPLACE",
+        )
+        assert_fire_shield_payload_bytes_allowed(
+            fire_shield,
+            new_text.encode("utf-8"),
+            path.relative_to(project_root).as_posix(),
+        )
         backup_file = backup_root / (_sha256_text(str(path))[:16] + ".bak")
         backup_file.write_text(text, encoding="utf-8")
         temp_file = path.with_suffix(path.suffix + ".kanda_import_rewrite_tmp")
@@ -222,6 +244,7 @@ def _apply_safe_records(
             path.relative_to(project_root)
         except ValueError:
             blockers.append(f"IMPORTER_OUTSIDE_PROJECT_AFTER_WRITE:{path}")
+    verify_tool_snapshot_unchanged(fire_shield)
     return changed, skipped, rollback_entries, blockers
 
 

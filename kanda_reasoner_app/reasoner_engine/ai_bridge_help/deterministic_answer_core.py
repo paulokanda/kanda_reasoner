@@ -3,25 +3,18 @@
 
 from __future__ import annotations
 
-import re
 from typing import Any
 from .prompt_extraction import (
     extract_file_evidence_blocks,
-    extract_file_id_map,
-    extract_file_score_map,
     extract_locator_target,
-    extract_runtime_anchors_from_detail,
     extract_snippet_blocks,
     extract_symbol_evidence_blocks,
-    extract_symbol_id_map,
-    extract_symbol_score_map,
     extract_user_question,
 )
 from .prompt_modes import is_one_line_prompt
 
 from .deterministic_answer_parts import (
     _answer_one_line_from_prompt_impl,
-    _repair_one_line_symbol_ids_impl,
     _score_file_locator_candidate_impl,
 )
 

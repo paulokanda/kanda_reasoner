@@ -3,7 +3,12 @@
 from __future__ import annotations
 __all__: list[str] = []
 from datetime import datetime, timezone
-import hashlib, json, os, platform, sys, zipfile
+import hashlib
+import json
+import os
+import platform
+import sys
+import zipfile
 from pathlib import Path
 from typing import Callable
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    import kanda_reasoner_app.manage_architecture.large_file_refactor_planner.patch_gate_formatting as _test_protection_patch_gate_formatting
+    pass
 
 
 import hashlib

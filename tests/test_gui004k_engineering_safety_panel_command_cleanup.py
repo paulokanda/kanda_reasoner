@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import reasoner_tools_gui_engineering_safety_panel as panel
-import reasoner_tools_gui_engineering_safety_panel_commands as commands
 
 ROOT = Path(__file__).resolve().parents[1]
 

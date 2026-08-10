@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import re
 
-from ._documentation_intent_result_helpers import _dedupe_keep_order, _truncate_text
+from ._documentation_intent_result_helpers import _dedupe_keep_order
 
 __all__: list[str] = []
 

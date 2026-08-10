@@ -5,12 +5,7 @@ from __future__ import annotations
 
 from startup_kernel.constants import (
     PASTE_AFTER_UPLOAD_FILENAME,
-    FIRST_PROMPT_FILES_DIR_NAME,
-    MODIFY_STARTUP_DELIVERY_FILENAME,
     PROMPT_LIBRARY_ZIP_NAME,
-    README_FILENAME,
-    SOURCE_MAP_FILENAME,
-    STABLE_BOOT_FILENAME,
 )
 
 def make_modify_startup_delivery_protocol_body(generated_at: str, zip_filename: str) -> str:

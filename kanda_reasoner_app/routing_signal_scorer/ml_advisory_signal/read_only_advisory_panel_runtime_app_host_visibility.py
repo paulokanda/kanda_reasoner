@@ -35,12 +35,6 @@ from .read_only_advisory_panel_host_binding import (
     build_phase11_read_only_panel_host_binding_implementation_probe,
 )
 from ._read_only_advisory_panel_runtime_app_host_visibility_invariants import (
-    _descriptor_forbidden_true_fields,
-    _descriptor_required_true_fields,
-    _policy_required_false_fields,
-    _policy_required_true_fields,
-    _require_text,
-    _require_tuple_of_text,
     _require_tuple_of_visible_sections as _require_tuple_of_visible_sections_impl,
     validate_descriptor,
     validate_policy,

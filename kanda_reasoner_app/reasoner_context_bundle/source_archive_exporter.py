@@ -9,9 +9,3 @@ New active code must import kanda_reasoner_app.reasoner_context_bundle.source_tr
 
 from __future__ import annotations
 
-from .source_tree_exporter import (
-    SOURCE_ARCHIVE_MANIFEST_SUFFIX,
-    build_source_archive_manifest_path,
-    gather_source_archive_inventory,
-    write_source_archive_parts,
-)

@@ -25,7 +25,7 @@ __all__ = [
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Iterable, List, Tuple
 
 
 EXPECTED_GROUPS = [

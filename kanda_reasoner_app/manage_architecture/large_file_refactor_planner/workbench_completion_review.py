@@ -2,7 +2,7 @@
 """Semantic review, warning acknowledgment, summary, and final button gating."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Iterable
 

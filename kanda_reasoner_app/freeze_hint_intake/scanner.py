@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+from .form_text_validation import (
+    _has_safe_validation_evidence_marker,
+    _hint_to_form_inputs,
+)
+
 __all__: list[str] = []
 
 
@@ -12,7 +17,7 @@ import zipfile
 
 from .models import FREEZE_HINT_FILENAME, FreezeHintIntakeError
 from .paths_io import _default_staging_dir, _resolve_project_root, _safe_mtime_ns, _source_signature, build_freeze_hint_intake_paths
-from .form_normalization import _has_safe_validation_evidence_marker, _hint_to_form_inputs, _normalize_hint
+from .form_normalization import _normalize_hint
 from .frozen_matching import _find_matching_frozen_feature
 from .records import (
     _existing_validated_latest_source_mtime_ns,

@@ -6,12 +6,7 @@ import tempfile
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from kanda_reasoner_app.manage_architecture.warning_model_test_apply import (
-        ModelTestProtectionApplyResult,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_model_test_semantic_evidence import (
-        SemanticSourceEvidence,
-    )
+    pass
 
 from kanda_reasoner_app.manage_architecture.warning_model_test_generation_contract import (
     ACTION_CREATE_FOCUSED_TEST,

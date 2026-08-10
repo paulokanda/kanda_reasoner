@@ -47,7 +47,6 @@ from PySide6.QtWidgets import (
     QGroupBox,
 )
 from PySide6.QtGui import QFont
-from PySide6.QtCore import Qt
 
 
 # ═════════════════════════════════════════════════════════════════════════════

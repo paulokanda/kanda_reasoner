@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-from types import SimpleNamespace
 
 from kanda_reasoner_app.tab3_manual_review_runtime import scan_only_workflow
 

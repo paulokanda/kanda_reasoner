@@ -10,14 +10,11 @@ import tempfile
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
-    AGREEMENT_DISAGREE,
     LABEL_HEURISTICS_CORRECT,
     LABEL_ML_CORRECT,
     PromptRouterReasonerReviewStore,
     PromptSnapshot,
     REVIEW_FOLDER_NAME,
-    STATUS_PENDING,
-    STATUS_REVIEWED,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

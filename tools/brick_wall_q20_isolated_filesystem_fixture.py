@@ -15,6 +15,7 @@ __all__ = [
     "IsolatedFilesystemLayout",
     "expected_external_root_read_only",
     "isolated_filesystem_fixture",
+    "isolated_registered_project_fixture",
     "snapshot_path",
 ]
 
@@ -193,3 +194,70 @@ def isolated_filesystem_fixture(
             )
     if sandbox_path is None or sandbox_path.exists():
         raise AssertionError("Q20_FIXTURE_CLEANUP_FAILED")
+
+@contextmanager
+def isolated_registered_project_fixture(
+    *,
+    tool_source_root: str | Path,
+    protected_paths: Iterable[str | Path] = (),
+    prefix: str = "kanda_q20_registered_fixture_",
+) -> Iterator[IsolatedFilesystemLayout]:
+    """Create one isolated registered Project without touching live authority."""
+    from kanda_reasoner_app import project_operation_authority as authority_module
+    from kanda_reasoner_app import project_support_boundary as boundary_module
+    from kanda_reasoner_app.project_selection_registry import (
+        ProjectSelectionRegistry,
+    )
+
+    tool_root = Path(tool_source_root).expanduser().resolve(strict=True)
+    live_tool_support = boundary_module.canonical_tool_support_root(tool_root)
+    protected = tuple(protected_paths) + (
+        live_tool_support / "tool_project_registry" / "projects.json",
+        live_tool_support / "project_error_memory",
+    )
+    with isolated_filesystem_fixture(
+        protected_paths=protected,
+        prefix=prefix,
+    ) as layout:
+        source_key = os.path.normcase(str(layout.source_root.resolve(strict=True)))
+        original_support = boundary_module.canonical_project_support_root
+        original_transient = boundary_module.canonical_transient_garbage_root
+        original_registry_type = authority_module.ProjectSelectionRegistry
+
+        def fixture_support(owner_root: str | Path) -> Path:
+            candidate = Path(owner_root).expanduser().resolve(strict=False)
+            if os.path.normcase(str(candidate)) == source_key:
+                return layout.support_root.resolve(strict=True)
+            return original_support(candidate)
+
+        def fixture_transient(owner_root: str | Path) -> Path:
+            candidate = Path(owner_root).expanduser().resolve(strict=False)
+            if os.path.normcase(str(candidate)) == source_key:
+                return layout.transient_root.resolve(strict=True)
+            return original_transient(candidate)
+
+        registry_path = layout.sandbox / "tool_support" / "projects.json"
+        boundary_module.canonical_project_support_root = fixture_support
+        boundary_module.canonical_transient_garbage_root = fixture_transient
+        try:
+            registry = ProjectSelectionRegistry(
+                tool_source_root=tool_root,
+                registry_path=registry_path,
+            )
+            boundary = registry.register_explicit_root(layout.source_root)
+            if boundary.active_project_support_root != layout.support_root:
+                raise AssertionError("Q20_REGISTERED_FIXTURE_SUPPORT_MISMATCH")
+            if boundary.active_project_daily_work_root != layout.transient_root:
+                raise AssertionError("Q20_REGISTERED_FIXTURE_TRANSIENT_MISMATCH")
+            authority_module.ProjectSelectionRegistry = lambda **_kwargs: (
+                ProjectSelectionRegistry(
+                    tool_source_root=tool_root,
+                    registry_path=registry_path,
+                )
+            )
+            yield layout
+        finally:
+            authority_module.ProjectSelectionRegistry = original_registry_type
+            boundary_module.canonical_project_support_root = original_support
+            boundary_module.canonical_transient_garbage_root = original_transient
+

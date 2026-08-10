@@ -10,6 +10,10 @@ import shlex
 import subprocess
 from typing import Any
 
+from kanda_reasoner_app.project_python_fire_shield import (
+    run_project_python_governed,
+)
+
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
 from .models import SCHEMA_VERSION
@@ -178,19 +182,21 @@ def _parse_allowed_command(command: str) -> tuple[bool, list[str], list[str]]:
 
 
 def _run_command(tokens: list[str], project_root: Path) -> tuple[int | None, bool, str, str]:
-    """Run a test command without a shell and return exit code, timeout, stdout, stderr."""
+    """Run an allow-listed Project test command through governed Project Python."""
     env = dict(os.environ)
     current_pythonpath = env.get("PYTHONPATH", "")
     env["PYTHONPATH"] = str(project_root) if not current_pythonpath else str(project_root) + os.pathsep + current_pythonpath
+    exe_name = Path(tokens[0]).name.lower()
+    python_args = ["-m", "pytest", *tokens[1:]]
+    if _is_python_executable(exe_name):
+        python_args = tokens[1:]
     try:
-        completed = subprocess.run(
-            tokens,
-            cwd=str(project_root),
+        completed = run_project_python_governed(
+            project_root,
+            python_args,
+            cwd=project_root,
             env=env,
-            text=True,
-            capture_output=True,
             timeout=_TIMEOUT_SECONDS,
-            check=False,
         )
     except subprocess.TimeoutExpired as exc:
         return None, True, exc.stdout or "", exc.stderr or ""

@@ -15,7 +15,6 @@ __all__ = [
 from typing import Any
 from .collector_canonical_conflicts_helpers_private import (
     _legacy_token_hits,
-    _normalize_path,
     _preference_token_hits,
     _safe_bucket,
     _safe_float,

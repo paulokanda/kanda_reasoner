@@ -8,7 +8,6 @@ import ast
 import hashlib
 import io
 import json
-import sys
 import zipfile
 from contextlib import redirect_stdout
 from pathlib import Path

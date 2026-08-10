@@ -9,6 +9,13 @@ from typing import Any
 
 from kanda_reasoner_app.engineering_safety.project_mutation_lane import ProjectMutationLaneStore
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .models import SCHEMA_VERSION
 from .workbench_journaled_apply_support import load_persisted_operation_plan
 from .workbench_source_mutation_primitives import (
@@ -95,6 +102,10 @@ def rollback_journaled_refactor_transaction(
     restored: list[str] = []
     removed: list[str] = []
     already: list[str] = []
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="journaled-rollback-" + transaction_id,
+    )
     for operation in sorted(operations, key=lambda item: item.sequence_no, reverse=True):
         row = rows[operation.sequence_no]
         destination = Path(operation.destination_path).resolve()
@@ -103,6 +114,11 @@ def rollback_journaled_refactor_transaction(
             if not destination.exists():
                 already.append(str(destination))
                 continue
+            assert_fire_shield_write_allowed(
+                fire_shield,
+                destination,
+                operation="DELETE",
+            )
             destination.unlink()
             if destination.exists():
                 raise RuntimeError("ROLLBACK_CREATE_DELETE_FAILED:" + str(destination))
@@ -132,6 +148,7 @@ def rollback_journaled_refactor_transaction(
         if current_file_hash(destination) != operation.precondition_hash:
             raise RuntimeError("ROLLBACK_RESTORE_HASH_MISMATCH:" + str(destination))
         restored.append(str(destination))
+    verify_tool_snapshot_unchanged(fire_shield)
     final_blockers = _verify_original_state(operations)
     if final_blockers:
         return _conflict_result(

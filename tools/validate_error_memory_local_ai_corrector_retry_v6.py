@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import importlib.util
-import json
 import py_compile
 import sys
 from pathlib import Path

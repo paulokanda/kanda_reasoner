@@ -8,7 +8,6 @@ Deps: pip install PySide6
 
 import sys
 import math
-import random
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout,
     QHBoxLayout, QLabel, QPushButton, QSizePolicy,
@@ -16,8 +15,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer, QPointF, QRectF
 from PySide6.QtGui import (
     QPainter, QColor, QPen, QBrush, QRadialGradient,
-    QConicalGradient, QLinearGradient, QFont, QPainterPath,
-    QPolygonF,
+    QFont, QPainterPath,
 )
 
 # ─────────────────────────────────────────────────────────────────────────────

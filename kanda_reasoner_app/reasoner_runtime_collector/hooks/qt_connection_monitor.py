@@ -31,7 +31,7 @@ if __name__ == "__main__":
     if str(PROJECT_DIR) not in sys.path:
         sys.path.insert(0, str(PROJECT_DIR))
 
-from runtime_trace_api import configure_runtime_trace, get_runtime_trace_writer
+from runtime_trace_api import configure_runtime_trace
 from qt_hooks.qt_connection_monitor import (
     install_qt_connection_monitor,
     uninstall_qt_connection_monitor,

@@ -2,7 +2,6 @@
 """Patch 4 completion review GUI and fail-closed Refactor Large Module button."""
 from __future__ import annotations
 
-from pathlib import Path
 
 from kanda_reasoner_app.manage_architecture.architecture_review_card_lifecycle import (
     release_completed_architecture_review_card,

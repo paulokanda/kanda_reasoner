@@ -14,7 +14,6 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QTextCursor

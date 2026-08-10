@@ -29,7 +29,6 @@ from kanda_reasoner_app.reasoner_engine.reasoner_retriever_help.query_text impor
     tokenize_query,
 )
 
-from .symbol_retrieval_evidence_private_impl import _build_symbol_evidence_impl
 
 __all__ = []
 

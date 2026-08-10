@@ -8,6 +8,14 @@ import hashlib
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from kanda_reasoner_app.project_support_boundary import (
     canonical_transient_garbage_root,
 )
@@ -438,14 +446,23 @@ def apply_test_protection_gap_plan(
         backup_path.parent.mkdir(parents=True, exist_ok=True)
         backup_path.write_text(original, encoding="utf-8", newline="")
     changed: list[str] = []
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="test-protection-gap-apply",
+    )
     for test_path, rendered in sorted(rendered_by_path.items(), key=lambda item: str(item[0])):
         original = original_by_path[test_path]
         if rendered == original:
             continue
+        payload = rendered.encode("utf-8")
+        assert_fire_shield_write_allowed(fire_shield, test_path, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(fire_shield, test_path, payload)
         temporary = test_path.with_name(test_path.name + ".warning_resolver_tmp")
-        temporary.write_text(rendered, encoding="utf-8", newline="")
+        temporary.write_bytes(payload)
         os.replace(temporary, test_path)
         changed.append(test_path.relative_to(root).as_posix())
+    verify_tool_snapshot_unchanged(fire_shield)
     return TestProtectionApplyResult(
         applied_count=len(selected),
         changed_files=tuple(changed),

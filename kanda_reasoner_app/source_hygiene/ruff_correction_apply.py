@@ -9,6 +9,14 @@ import os
 from pathlib import Path
 from typing import Iterator, Sequence
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .ruff_correction_models import (
     RUFF_CORRECTION_FEATURE_ID,
     RUFF_CORRECTION_SCHEMA_VERSION,
@@ -265,14 +273,22 @@ def _apply_payload(
     record: RuffCorrectionPreviewRecord,
 ) -> None:
     """Atomically install reviewed payload bytes into active project source."""
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="ruff-correction-apply",
+    )
     for item in record.files:
         target, relative = ensure_project_relative_file(root, item.relative_path)
         payload = (payload_root / relative).read_bytes()
+        assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(fire_shield, target, payload)
         atomic_write_bytes(target, payload)
         if sha256_file(target) != item.preview_sha256:
             raise RuffCorrectionApplyError(
                 "RUFF_CORRECTION_ATOMIC_WRITE_HASH_MISMATCH:" + relative
             )
+    verify_tool_snapshot_unchanged(fire_shield)
 
 
 def _validate_applied_files(
@@ -358,6 +374,11 @@ def _rollback_from_backups(
     source_before: dict[str, bytes],
 ) -> tuple[str, ...]:
     """Restore all changed files and verify exact baseline hashes."""
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="ruff-correction-rollback",
+    )
     for relative, expected in source_before.items():
         backup = backup_root / relative
         if not backup.is_file():
@@ -365,11 +386,15 @@ def _rollback_from_backups(
                 "RUFF_CORRECTION_ROLLBACK_BACKUP_MISSING:" + relative
             )
         target, _ = ensure_project_relative_file(root, relative)
-        atomic_write_bytes(target, backup.read_bytes())
+        payload = backup.read_bytes()
+        assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(fire_shield, target, payload)
+        atomic_write_bytes(target, payload)
         if target.read_bytes() != expected:
             raise RuffCorrectionApplyError(
                 "RUFF_CORRECTION_ROLLBACK_HASH_FAILED:" + relative
             )
+    verify_tool_snapshot_unchanged(fire_shield)
     return (
         "RUFF_CORRECTION_ROLLBACK_COMPLETED: PASS",
         "RUFF_CORRECTION_BASELINE_HASH_RESTORED: PASS",

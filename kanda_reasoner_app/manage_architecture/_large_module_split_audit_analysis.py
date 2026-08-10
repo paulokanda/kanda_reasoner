@@ -7,20 +7,9 @@ from dataclasses import dataclass, field
 from typing import Any, Iterable
 
 from kanda_reasoner_app.manage_architecture._large_module_split_audit_symbol_analysis import (
-    ARCHIVE_NAMES,
-    DELETE_METHODS,
-    GUI_IMPORT_PREFIXES,
-    GUI_NAME_HINTS,
-    SUBPROCESS_NAMES,
-    WIDGET_ATTR_HINTS,
-    WRITE_METHODS,
     _SymbolVisitor,
-    _call_name,
     _candidate_label,
-    _literal_write_mode,
-    _looks_like_widget_attr,
     _risk_for,
-    _root_name,
 )
 
 __all__: list[str] = []

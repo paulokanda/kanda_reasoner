@@ -7,7 +7,6 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 import json
 from pathlib import Path
-from typing import Any
 
 from kanda_reasoner_app.manage_architecture.ai_review.adapter import Tab1AIReviewAdapter
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import WarningFinding

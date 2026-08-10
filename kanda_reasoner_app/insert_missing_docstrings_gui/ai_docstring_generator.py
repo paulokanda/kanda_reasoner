@@ -12,8 +12,6 @@ __all__ = [
 
 import hashlib
 import json
-import re
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
@@ -29,7 +27,7 @@ from kanda_reasoner_app.web_ai_provider_contracts import (
 from kanda_reasoner_app.web_ai_provider_runtime import request_chat_completion
 
 from .ai_config import AIConfig
-from .context_builder import AttributeInfo, ParameterInfo, SymbolContext
+from .context_builder import SymbolContext
 from .docstring_policy import DocstringPolicy
 from .docstring_validator import ValidationConfig, validate
 

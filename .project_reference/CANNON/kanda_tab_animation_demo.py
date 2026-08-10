@@ -13,13 +13,11 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QLabel, QPushButton, QSizePolicy,
 )
 from PySide6.QtCore import (
-    Qt, QTimer, QPropertyAnimation, QEasingCurve,
-    Property, QObject, Signal, QPoint, QRect, QSize,
+    Qt, QTimer, Signal, QPoint, QRect,
 )
 from PySide6.QtGui import (
     QPainter, QColor, QPen, QBrush, QLinearGradient,
-    QRadialGradient, QFont, QPainterPath, QFontDatabase,
-    QConicalGradient,
+    QRadialGradient, QFont, QPainterPath,
 )
 
 # ─────────────────────────────────────────────────────────────────────────────

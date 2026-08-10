@@ -9,31 +9,33 @@ __all__ = [
 
 import ast
 from typing import Any
-from .collector_widget_registry_help.ast_primitives import (
-    FUNCTION_SCOPE_KINDS,
-    LAYOUT_METHODS,
-    LIST_SETTER_TO_FIELD,
-    SINGLE_ITEM_SETTER_TO_FIELD,
-    SUPPORTED_WIDGET_TYPES,
-    TAB_TEXT_SETTERS,
-    TEXT_CONSTRUCTOR_WIDGET_TYPES,
-    TEXT_SETTER_TO_FIELD,
-    _build_widget_id,
-    _callable_name,
-    _expr_to_ref,
-    _extract_constructor_display_text,
-    _extract_constructor_parent_ref,
-    _extract_layout_position_from_add_widget,
-    _first_arg,
-    _get_widget_type_from_call,
-    _keyword_value,
-    _node_to_number,
-    _node_to_text,
-    _node_to_text_list,
-    _safe_str,
-    _variable_name_from_ref,
+
+from .collector_widget_registry_help.widget_registry_methods_part_1_private_impl import (
+    _bind_root_globals, _wrg__current_source_symbol_impl,
+    _wrg__current_class_name_impl, _wrg__current_method_name_impl,
+    _wrg__push_scope_impl, _wrg__pop_scope_impl, _wrg_visit_ClassDef_impl,
+    _wrg_visit_FunctionDef_impl, _wrg_visit_AsyncFunctionDef_impl,
+    _wrg__index_widget_ref_impl, _wrg__index_widget_var_impl,
+    _wrg__resolve_widget_id_impl,
 )
-from .collector_widget_registry_help import widget_registry_methods_part_1_private_impl as _wrg_methods_part_1
+
+from .collector_widget_registry_help._widget_registry_part1_registration import (
+    _wrg_visit_Assign_impl, _wrg_visit_AnnAssign_impl, _wrg_visit_Call_impl,
+    _wrg__register_assigned_widget_impl, _wrg__register_inline_widget_impl,
+    _wrg__handle_widget_property_call_impl,
+    _wrg__resolve_or_create_widget_from_expr_impl,
+)
+
+from .collector_widget_registry_help._widget_registry_part1_layout import (
+    _wrg__handle_layout_call_impl, _wrg__handle_add_widget_impl,
+    _wrg__handle_add_row_impl, _wrg__handle_add_tab_impl,
+    _wrg__append_layout_record_impl,
+)
+
+from .collector_widget_registry_help.ast_primitives import (
+    _expr_to_ref,
+    _safe_str,
+)
 
 
 def build_widget_registry(files_payload: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -123,7 +125,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__current_source_symbol_impl(self, *args, **kwargs)
+        return _wrg__current_source_symbol_impl(self, *args, **kwargs)
 
     def _current_class_name(self, *args, **kwargs):
         """Support current class name behavior.
@@ -136,7 +138,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__current_class_name_impl(self, *args, **kwargs)
+        return _wrg__current_class_name_impl(self, *args, **kwargs)
 
     def _current_method_name(self, *args, **kwargs):
         """Support current method name behavior.
@@ -149,7 +151,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__current_method_name_impl(self, *args, **kwargs)
+        return _wrg__current_method_name_impl(self, *args, **kwargs)
 
     def _push_scope(self, *args, **kwargs):
         """Support push scope behavior.
@@ -162,7 +164,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__push_scope_impl(self, *args, **kwargs)
+        return _wrg__push_scope_impl(self, *args, **kwargs)
 
     def _pop_scope(self, *args, **kwargs):
         """Support pop scope behavior.
@@ -175,7 +177,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__pop_scope_impl(self, *args, **kwargs)
+        return _wrg__pop_scope_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # AST visitors
@@ -192,7 +194,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_ClassDef_impl(self, *args, **kwargs)
+        return _wrg_visit_ClassDef_impl(self, *args, **kwargs)
 
     def visit_FunctionDef(self, *args, **kwargs):
         """Support visit function def behavior.
@@ -205,7 +207,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_FunctionDef_impl(self, *args, **kwargs)
+        return _wrg_visit_FunctionDef_impl(self, *args, **kwargs)
 
     def visit_AsyncFunctionDef(self, *args, **kwargs):
         """Support visit async function def behavior.
@@ -218,7 +220,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_AsyncFunctionDef_impl(self, *args, **kwargs)
+        return _wrg_visit_AsyncFunctionDef_impl(self, *args, **kwargs)
 
     def visit_Assign(self, *args, **kwargs):
         """Support visit assign behavior.
@@ -231,7 +233,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_Assign_impl(self, *args, **kwargs)
+        return _wrg_visit_Assign_impl(self, *args, **kwargs)
 
     def visit_AnnAssign(self, *args, **kwargs):
         """Support visit ann assign behavior.
@@ -244,7 +246,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_AnnAssign_impl(self, *args, **kwargs)
+        return _wrg_visit_AnnAssign_impl(self, *args, **kwargs)
 
     def visit_Call(self, *args, **kwargs):
         """Support visit call behavior.
@@ -257,7 +259,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg_visit_Call_impl(self, *args, **kwargs)
+        return _wrg_visit_Call_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # Widget registration
@@ -274,7 +276,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__register_assigned_widget_impl(self, *args, **kwargs)
+        return _wrg__register_assigned_widget_impl(self, *args, **kwargs)
 
     def _register_inline_widget(self, *args, **kwargs):
         """Support register inline widget behavior.
@@ -287,7 +289,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__register_inline_widget_impl(self, *args, **kwargs)
+        return _wrg__register_inline_widget_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # Property setters
@@ -304,7 +306,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__handle_widget_property_call_impl(self, *args, **kwargs)
+        return _wrg__handle_widget_property_call_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # Layout and container relationships
@@ -321,7 +323,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__handle_layout_call_impl(self, *args, **kwargs)
+        return _wrg__handle_layout_call_impl(self, *args, **kwargs)
 
     def _handle_add_widget(self, *args, **kwargs):
         """Support handle add widget behavior.
@@ -334,7 +336,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__handle_add_widget_impl(self, *args, **kwargs)
+        return _wrg__handle_add_widget_impl(self, *args, **kwargs)
 
     def _handle_add_row(self, *args, **kwargs):
         """Support handle add row behavior.
@@ -347,7 +349,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__handle_add_row_impl(self, *args, **kwargs)
+        return _wrg__handle_add_row_impl(self, *args, **kwargs)
 
     def _handle_add_tab(self, *args, **kwargs):
         """Support handle add tab behavior.
@@ -360,7 +362,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__handle_add_tab_impl(self, *args, **kwargs)
+        return _wrg__handle_add_tab_impl(self, *args, **kwargs)
 
     def _append_layout_record(self, *args, **kwargs):
         """Support append layout record behavior.
@@ -373,7 +375,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__append_layout_record_impl(self, *args, **kwargs)
+        return _wrg__append_layout_record_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # Resolution and indexing
@@ -390,7 +392,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__index_widget_ref_impl(self, *args, **kwargs)
+        return _wrg__index_widget_ref_impl(self, *args, **kwargs)
 
     def _index_widget_var(self, *args, **kwargs):
         """Support index widget var behavior.
@@ -403,7 +405,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__index_widget_var_impl(self, *args, **kwargs)
+        return _wrg__index_widget_var_impl(self, *args, **kwargs)
 
     def _resolve_widget_id(self, *args, **kwargs):
         """Support resolve widget id behavior.
@@ -416,7 +418,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__resolve_widget_id_impl(self, *args, **kwargs)
+        return _wrg__resolve_widget_id_impl(self, *args, **kwargs)
 
     def _resolve_or_create_widget_from_expr(self, *args, **kwargs):
         """Support resolve or create widget from expr behavior.
@@ -429,7 +431,7 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
             The kwargs value.
         """
         
-        return _wrg_methods_part_1._wrg__resolve_or_create_widget_from_expr_impl(self, *args, **kwargs)
+        return _wrg__resolve_or_create_widget_from_expr_impl(self, *args, **kwargs)
 
     # -------------------------------------------------
     # Small helpers
@@ -458,4 +460,4 @@ class _WidgetRegistryAstCollector(ast.NodeVisitor):
 
 
 # Bind root globals for private method implementation helpers.
-_wrg_methods_part_1._bind_root_globals(globals())
+_bind_root_globals(globals())

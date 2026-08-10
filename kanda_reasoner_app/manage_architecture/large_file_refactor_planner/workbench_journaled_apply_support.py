@@ -2,7 +2,6 @@
 """Durable operation planning and evidence helpers for journaled Workbench apply."""
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 from typing import Any

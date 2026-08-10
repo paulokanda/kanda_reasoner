@@ -3,14 +3,6 @@
 
 from __future__ import annotations
 
-import contextlib
-import importlib
-import json
-import shutil
-import sys
-import traceback
-import warnings
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
@@ -21,40 +13,21 @@ def _qt_core_attr(name: str):
     """Return a PySide6.QtCore attribute without a static QtCore import."""
     return getattr(_qtcore_import_module("PySide6.QtCore"), name)
 
-from PySide6.QtGui import QDesktopServices, QFont, QIcon
+from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import (
-    QApplication,
-    QFrame,
     QLabel,
-    QLineEdit,
-    QListWidget,
-    QListWidgetItem,
     QMainWindow,
-    QMessageBox,
     QPushButton,
     QTabWidget,
-    QTextEdit,
     QVBoxLayout,
     QHBoxLayout,
     QWidget,
-    QInputDialog,
-    QGroupBox,
-    QFileDialog,
 )
 
 from .app_constants import (
     APP_DISPLAY_NAME,
     APP_ICON_PATH,
     APP_TITLE_DETAIL,
-    _COLLECTOR_SUBTABS_TO_REMOVE,
-    _HELP_FILENAME,
-    _PREFS_FILENAME,
-)
-from .gui_support import (
-    _find_button_by_text,
-    _prune_named_subtabs,
-    _replace_exact_label_text,
-    _safe_disconnect,
 )
 from .ignore_rules_tab import IgnoreRulesTab
 from .lazy_tabs import LazyToolTab

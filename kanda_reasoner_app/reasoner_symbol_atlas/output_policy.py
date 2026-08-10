@@ -78,6 +78,7 @@ __all__ = [
     "MAX_RELATED_FILES",
     "MAX_TESTS_TO_RUN",
     "is_active_atlas_path",
+    "is_active_owner_candidate",
     "is_active_project_source_path",
     "is_active_test_command",
     "normalize_atlas_path",
@@ -107,6 +108,29 @@ def is_active_project_source_path(value: str) -> bool:
     if not is_active_atlas_path(normalized):
         return False
     return not (normalized.startswith("tests/") or "/tests/" in normalized)
+
+
+def is_active_owner_candidate(
+    value: str,
+    owner_role: str = "",
+    is_test_file: bool = False,
+) -> bool:
+    """Return True when a record may compete for active canonical ownership."""
+    normalized = normalize_atlas_path(value).lower().strip("/")
+    if not normalized or not is_active_project_source_path(normalized):
+        return False
+    if is_test_file:
+        return False
+    role = str(owner_role or "").strip().lower()
+    if role in {"generated_or_stale", "test_only"}:
+        return False
+    parts = tuple(part for part in normalized.split("/") if part)
+    if any(part in {"fixtures", "generated", "_generated", "workbench"} for part in parts):
+        return False
+    name = parts[-1] if parts else ""
+    if name.startswith("test_") or name.endswith("_test.py"):
+        return False
+    return True
 
 
 def is_active_test_command(value: str) -> bool:

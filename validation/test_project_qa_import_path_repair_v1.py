@@ -10,7 +10,6 @@ project_reasoner_v10 candidate.
 from __future__ import annotations
 
 import ast
-import os
 import py_compile
 import zipfile
 from pathlib import Path

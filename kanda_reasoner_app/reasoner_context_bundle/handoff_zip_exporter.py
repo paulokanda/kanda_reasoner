@@ -12,7 +12,6 @@ import argparse
 import json
 import shutil
 import tempfile
-import os
 from pathlib import Path
 from typing import Any
 
@@ -32,7 +31,6 @@ from .handoff_zip_exporter_validation_private import (
     _validate_destination,
 )
 from .handoff_zip_exporter_support import (
-    _BYTES_PER_MB,
     _EXPORT_GENERATOR,
     _EXPORT_GENERATOR_VERSION,
     _EXPORT_KIND,

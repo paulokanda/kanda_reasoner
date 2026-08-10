@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -57,6 +58,12 @@ class ShadowAuditFileSummary:
     public_symbols: tuple[str, ...]
     explicit_all: tuple[str, ...]
     findings: tuple[SourceHygieneFinding, ...]
+
+
+def _runtime_statement_fingerprint(node: ast.AST) -> str:
+    """Return a line-independent structural identity for one runtime statement."""
+    payload = ast.dump(node, annotate_fields=True, include_attributes=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def iter_shadow_audit_files(
@@ -247,6 +254,7 @@ def _audit_init_facade(
     
     findings: list[SourceHygieneFinding] = []
     has_public_import = False
+    runtime_statement_occurrences: dict[str, int] = {}
 
     for node in module.body:
         if isinstance(node, ast.ImportFrom):
@@ -281,6 +289,11 @@ def _audit_init_facade(
                 )
             )
         elif _is_runtime_statement(node):
+            statement_fingerprint = _runtime_statement_fingerprint(node)
+            statement_ordinal = runtime_statement_occurrences.get(
+                statement_fingerprint, 0
+            ) + 1
+            runtime_statement_occurrences[statement_fingerprint] = statement_ordinal
             findings.append(
                 SourceHygieneFinding(
                     code="RUNTIME_LOGIC_IN_FACADE",
@@ -289,6 +302,11 @@ def _audit_init_facade(
                     message="Package __init__.py contains runtime logic.",
                     severity="warning",
                     confidence="medium",
+                    evidence={
+                        "runtime_statement_fingerprint": statement_fingerprint,
+                        "runtime_statement_ordinal": statement_ordinal,
+                        "runtime_statement_kind": type(node).__name__,
+                    },
                     suggested_action="Keep package facades import-only and side-effect free.",
                 )
             )

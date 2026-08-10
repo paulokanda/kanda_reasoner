@@ -23,7 +23,7 @@ from kanda_reasoner_app.error_memory_gui._text_payloads import (
 )
 
 if TYPE_CHECKING:
-    from kanda_reasoner_app.error_memory_gui._text_payloads import pending_file_updated_text
+    pass
 
 
 def test_json_payload_from_wrapped_text_and_lesson_id() -> None:

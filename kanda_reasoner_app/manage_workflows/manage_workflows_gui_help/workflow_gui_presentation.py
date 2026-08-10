@@ -8,7 +8,6 @@ owned by ``workflow_gui_window.py``.
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any
 
 from PySide6.QtWidgets import QApplication, QMessageBox

@@ -15,16 +15,7 @@ from kanda_reasoner_app.manage_architecture.warning_test_protection_gap_formatti
     format_test_protection_gap_plan,
 )
 if TYPE_CHECKING:
-    from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver_qt_controller import (
-        WarningHeuristicResolverController,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver_qt_worker import (
-        WarningHeuristicResolverWorker,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver_sonar import (
-        start_warning_resolver_sonar,
-        update_warning_resolver_sonar,
-    )
+    pass
 from kanda_reasoner_app.manage_architecture.warning_test_protection_family_evidence import (
     score_test_family_evidence,
 )

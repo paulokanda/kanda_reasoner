@@ -7,7 +7,7 @@ __all__: list[str] = []
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Callable, Mapping
+from typing import Any, Callable
 
 from brick_wall_q31_changed_file_validator_coverage_contract import (
     COVERAGE_KINDS,

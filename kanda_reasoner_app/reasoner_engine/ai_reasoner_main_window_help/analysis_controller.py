@@ -1,7 +1,6 @@
 # project-path: kanda_reasoner_app/reasoner_engine/ai_reasoner_main_window_help/analysis_controller.py
 """Support V10 project reasoning and evidence handling."""
 from __future__ import annotations
-from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 import os
 import sys
 from PySide6.QtCore import QProcess

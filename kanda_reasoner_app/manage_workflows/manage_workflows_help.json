@@ -32,8 +32,11 @@
     "main",
     "print_history",
     "print_results",
+    "project_python_has_module",
     "record_root",
     "register_workflow_detector",
+    "resolve_project_python",
+    "run_project_python_probe",
     "run_import_checks",
     "run_tests",
     "run_workflow_detector_results",
@@ -235,6 +238,18 @@
         "detect_workflow_environment_contract_issues"
       ],
       "purpose": "Tab 2 remaining help parity detector for encoding, empty output, dependency, and path-root contracts."
+    },
+    "workflow_python_runtime.py": {
+      "exports": [
+        "project_python_has_module",
+        "resolve_project_python",
+        "run_project_python_probe"
+      ],
+      "purpose": "Resolve selected-Project Python authority and route external-Project probes through the frozen OS Fire Shield worker without host-interpreter fallback."
+    },
+    "workflow_test_runner.py": {
+      "exports": [],
+      "purpose": "Private Manage Workflows pytest/unittest execution owner. Routes selected-Project test execution through the frozen Project-Python authority and OS Fire Shield path for verified external Projects."
     }
   }
 }

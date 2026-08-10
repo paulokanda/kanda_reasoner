@@ -180,7 +180,6 @@ def validate_real_qt(root: Path) -> None:
         sys.path.insert(0, str(root))
     from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui import MissingDocstringsWindow
     from kanda_reasoner_app.reasoner_engine.config_ai_tab import ConfigAITab
-    from kanda_reasoner_app.reasoner_engine.config_web_ai_tab import ConfigWebAITab
     from kanda_reasoner_app.reasoner_engine.project_web_ai_tab import ProjectWebAITab
     from kanda_reasoner_app.web_ai_configuration import application_web_ai_configuration
     from kanda_reasoner_app.web_ai_provider_contracts import ModelDescriptor

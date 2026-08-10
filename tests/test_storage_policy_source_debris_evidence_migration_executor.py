@@ -12,7 +12,6 @@ from kanda_reasoner_app.storage_policy.source_debris_evidence_migration_dry_run 
     build_source_debris_evidence_migration_dry_run,
 )
 from kanda_reasoner_app.storage_policy.source_debris_evidence_migration_executor import (
-    SOURCE_DEBRIS_EVIDENCE_MIGRATION_EXECUTOR_ACTION,
     SOURCE_DEBRIS_EVIDENCE_MIGRATION_EXECUTOR_CONFIRMATION_TOKEN,
     SOURCE_DEBRIS_EVIDENCE_MIGRATION_EXECUTOR_STATUS_COMPLETED,
     SOURCE_DEBRIS_EVIDENCE_MIGRATION_EXECUTOR_STATUS_CONFIRMATION_REQUIRED,

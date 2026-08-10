@@ -10,7 +10,6 @@ import json
 from pathlib import Path
 import subprocess
 import sys
-from typing import Any
 
 __all__ = ["main"]
 

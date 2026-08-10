@@ -28,20 +28,8 @@ __all__ = [
 ]
 from typing import Optional, Tuple
 
-from ._passive_visibility_activation_invariants import (
-    _descriptor_forbidden_true_fields,
-    _descriptor_required_true_fields,
-    _policy_required_false_fields,
-    _policy_required_true_fields,
-    _require_text,
-    _require_tuple_of_text,
-)
 from ._passive_visibility_activation_models import (
     FEATURE_ID,
-    SOURCE_CONTRACT_FEATURE_ID,
-    SOURCE_REVIEW_FEATURE_ID,
-    SOURCE_RUNTIME_APP_HOST_VISIBILITY_IMPLEMENTATION_ID,
-    _require_tuple_of_passive_visibility_slots,
 )
 from .model_contracts.passive_visibility_activation import (
     ReadOnlyAdvisoryPanelPassiveVisibilityActivationDescriptor,

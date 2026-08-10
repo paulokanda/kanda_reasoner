@@ -14,12 +14,11 @@ from .generated_archive_policy import (
     classify_generated_project_archive,
     enforce_large_root_archive_preflight,
 )
-from .hashing import sha256_file
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
 from .path_normalization import relative_posix_path, safe_resolve
 from .project_context import resolve_project_context
-from .schema_models import ExclusionDecision, ExclusionRules, ProjectContext
+from .schema_models import ExclusionRules, ProjectContext
 
 __all__ = [
     "TEXT_FILE_EXTENSIONS",

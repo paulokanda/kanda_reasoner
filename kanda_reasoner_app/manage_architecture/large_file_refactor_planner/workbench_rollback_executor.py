@@ -10,6 +10,14 @@ from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .models import SCHEMA_VERSION
 from .workbench_guarded_source_apply import GuardedSourceApplyResult
 from .workbench_source_payload_builder import SourceApplyPayloadReadinessResult
@@ -142,11 +150,28 @@ def execute_workbench_rollback(
         _write_report(result)
         return result
     removed: list[str] = []
-    target.write_bytes(backup.read_bytes())
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="workbench-source-rollback",
+    )
+    backup_raw = backup.read_bytes()
+    assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
+    assert_fire_shield_payload_bytes_allowed(
+        fire_shield,
+        backup_raw,
+        target.relative_to(project_root).as_posix(),
+    )
+    target.write_bytes(backup_raw)
     for path in generated:
         if path.exists():
+            assert_fire_shield_write_allowed(
+                fire_shield,
+                path,
+                operation="DELETE",
+            )
             path.unlink()
             removed.append(str(path))
+    verify_tool_snapshot_unchanged(fire_shield)
     final_hash = _sha256_file(target)
     restored = final_hash == before_hash
     final_blockers = [] if restored else ["TARGET_HASH_NOT_RESTORED_TO_BEFORE_APPLY"]

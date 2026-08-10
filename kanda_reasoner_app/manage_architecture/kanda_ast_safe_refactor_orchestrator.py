@@ -26,7 +26,6 @@ from kanda_reasoner_app.manage_architecture.kanda_refactor_project_index import 
 )
 from kanda_reasoner_app.manage_architecture.kanda_refactor_semantic_safety import (
     build_semantic_safety_evidence,
-    evaluate_box_shielding,
 )
 
 __all__ = [

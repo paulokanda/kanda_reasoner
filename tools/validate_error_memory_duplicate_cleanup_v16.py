@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import ast
-import json
 from pathlib import Path
 import py_compile
-import shutil
 import tempfile
 from typing import Any
 

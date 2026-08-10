@@ -37,7 +37,6 @@ from .read_only_advisory_surface_wiring import (
     ReadOnlySurfaceAttachmentState,
     build_phase7_read_only_surface_wiring_probe,
 )
-from .guarded_runtime_display import GuardedRuntimeAdvisoryDisplayPayload
 
 
 FEATURE_ID = "rss_ml_adv_phase8_read_only_advisory_panel_ui_implementation_v1"

@@ -9,10 +9,6 @@ from ``kanda_reasoner_app.routing_signal_scorer.contract``.
 from __future__ import annotations
 
 from .advisory import (
-    _advisory_notes,
-    _caution_flags,
-    _coerce_score,
-    _route_family_suggestions,
     build_routing_advisory as _public_build_routing_advisory,
     summarize_advisory as _public_summarize_advisory,
 )
@@ -39,15 +35,6 @@ from .models import (
     SignalRule as _public_SignalRule,
 )
 from .scoring import (
-    _add_evidence,
-    _add_score,
-    _apply_combination_rules,
-    _excerpt,
-    _level,
-    _matched_patterns,
-    _normalize,
-    _recommended_hooks,
-    _rules,
     score_routing_signals as _public_score_routing_signals,
     summarize_signal_result as _public_summarize_signal_result,
 )
@@ -56,36 +43,12 @@ from .shield import (
     render_similarity_box_shield_status_text as _public_render_similarity_box_shield_status_text,
 )
 from .similarity_preview import (
-    _candidate_prompt_contexts_for_route_families,
-    _similarity_prompt_context_preview_lines,
-    _similarity_ui_preview_lines,
     build_similarity_prompt_context_preview as _public_build_similarity_prompt_context_preview,
     build_similarity_ui_preview_adapter as _public_build_similarity_ui_preview_adapter,
     render_similarity_prompt_context_preview_text as _public_render_similarity_prompt_context_preview_text,
     render_similarity_ui_preview_text as _public_render_similarity_ui_preview_text,
 )
 from .similarity_runtime import (
-    _containment,
-    _jaccard,
-    _load_similarity_corpus,
-    _matched_terms_from_profiles,
-    _merge_route_family_suggestions,
-    _merge_string_lists,
-    _profile_similarity,
-    _similarity_advisory_only_reason,
-    _similarity_decision_report,
-    _similarity_decision_report_summary,
-    _similarity_expected_values,
-    _similarity_explainability_summary,
-    _similarity_level,
-    _similarity_match_explainability,
-    _similarity_notes,
-    _similarity_route_family_suggestions,
-    _similarity_rule_hook_independence_reason,
-    _similarity_threshold_level,
-    _similarity_threshold_policy,
-    _text_profile,
-    _tokenize_for_similarity,
     build_similarity_runtime_lite_advisory as _public_build_similarity_runtime_lite_advisory,
     summarize_similarity_runtime_lite_advisory as _public_summarize_similarity_runtime_lite_advisory,
 )

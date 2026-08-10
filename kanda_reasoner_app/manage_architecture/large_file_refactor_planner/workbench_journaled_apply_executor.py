@@ -15,7 +15,6 @@ from .workbench_journaled_apply_models import (
     JournaledApplyAuthorization,
     JournaledApplyResult,
     build_blocked_apply_result,
-    build_journaled_apply_authorization,
 )
 from .workbench_journaled_apply_support import (
     build_applied_result,

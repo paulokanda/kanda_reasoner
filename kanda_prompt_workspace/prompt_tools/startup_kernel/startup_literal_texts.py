@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from startup_kernel.startup_names import DEFAULT_ZIP_NAME, PROMPT_LIBRARY_ZIP_NAME
 
 
 __all__ = [

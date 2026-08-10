@@ -1,6 +1,7 @@
 """Validate the KANDA desktop help exact-layout prompt registration."""
 from __future__ import annotations
-import argparse, json
+import argparse
+import json
 from pathlib import Path
 FEATURE_ID = "kanda-help-exact-layout-prompt-v1"
 PID = "kanda_desktop_help_exact_layout_blueprint"

@@ -7,7 +7,6 @@ import importlib
 import json
 import py_compile
 import sys
-from copy import deepcopy
 from pathlib import Path
 from typing import Any
 

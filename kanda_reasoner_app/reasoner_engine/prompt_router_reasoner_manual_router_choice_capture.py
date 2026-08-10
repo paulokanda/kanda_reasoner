@@ -37,9 +37,7 @@ from pathlib import Path
 from typing import Any, Mapping
 from uuid import uuid4
 
-from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
-    REVIEW_FOLDER_NAME,
-)
+from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_models import REVIEW_FOLDER_NAME
 
 CHOICE_START_MARKER = "KANDA_ROUTING_CHOICE_START"
 CHOICE_END_MARKER = "KANDA_ROUTING_CHOICE_END"

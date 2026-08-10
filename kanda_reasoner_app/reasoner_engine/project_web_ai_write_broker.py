@@ -12,6 +12,14 @@ import stat
 from datetime import datetime, timezone
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldContext,
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_fire_shield_context_from_authority,
+    verify_tool_snapshot_unchanged,
+)
 from kanda_reasoner_app.project_operation_authority import (
     ProjectOperationAuthority,
     ProjectOperationAuthorityError,
@@ -90,6 +98,10 @@ def execute_project_web_ai_apply(
         session_identity,
         context,
     )
+    fire_shield = build_fire_shield_context_from_authority(
+        authority,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+    )
     boundary = authority.boundary
     project_root = boundary.active_project_root.resolve(strict=True)
     daily_root = boundary.active_project_daily_work_root.resolve(strict=False)
@@ -130,6 +142,7 @@ def execute_project_web_ai_apply(
             )
             source_before, source_modes = _preflight_targets(
                 authority,
+                fire_shield,
                 project_root,
                 preview,
                 authorization,
@@ -139,6 +152,11 @@ def execute_project_web_ai_apply(
                 source_path = contained_project_file(
                     project_root,
                     item.relative_path,
+                )
+                assert_fire_shield_write_allowed(
+                    fire_shield,
+                    source_path,
+                    operation="REPLACE",
                 )
                 shadow_path = contained_shadow_file(
                     preview,
@@ -155,6 +173,7 @@ def execute_project_web_ai_apply(
                 project_root,
                 preview,
                 authorization,
+                fire_shield,
             )
             receipt = _receipt(
                 operation=operation,
@@ -298,6 +317,7 @@ def _validate_authority(
 
 def _preflight_targets(
     authority: ProjectOperationAuthority,
+    fire_shield: FireShieldContext,
     project_root: Path,
     preview: ProjectWebAIShadowPreview,
     authorization: ProjectWebAIApplyAuthorization,
@@ -308,6 +328,11 @@ def _preflight_targets(
     for index, item in enumerate(preview.targets):
         source_path = contained_project_file(project_root, item.relative_path)
         assert_authorized_project_target(authority, source_path)
+        assert_fire_shield_write_allowed(
+            fire_shield,
+            source_path,
+            operation="REPLACE",
+        )
         shadow_path = contained_shadow_file(preview, item.relative_path)
         source_raw = source_path.read_bytes()
         shadow_raw = shadow_path.read_bytes()
@@ -325,6 +350,11 @@ def _preflight_targets(
             raise ProjectWebAIApplyError(
                 "APPLY_SHADOW_PAYLOAD_HASH_MISMATCH:" + item.relative_path
             )
+        assert_fire_shield_payload_bytes_allowed(
+            fire_shield,
+            shadow_raw,
+            item.relative_path,
+        )
         source_before[item.relative_path] = source_raw
         source_modes[item.relative_path] = stat.S_IMODE(source_path.stat().st_mode)
     return source_before, source_modes
@@ -334,6 +364,7 @@ def _validate_installed_source(
     project_root: Path,
     preview: ProjectWebAIShadowPreview,
     authorization: ProjectWebAIApplyAuthorization,
+    fire_shield: FireShieldContext,
 ) -> tuple[str, ...]:
     """Verify installed hashes, Python syntax, and module-size limits."""
     markers = [
@@ -365,8 +396,12 @@ def _validate_installed_source(
         if python_seen
         else "PROJECT_WEB_AI_APPLY_PYTHON_SYNTAX: NOT_APPLICABLE"
     )
+    verify_tool_snapshot_unchanged(fire_shield)
+    markers.extend(fire_shield.markers())
     markers.extend(
         (
+            "FIRE_SHIELD_TOOL_POST_STATE_UNCHANGED: PASS",
+            "FIRE_SHIELD_CROSS_PROJECT_CODE_TRANSFER: ZERO",
             "PROJECT_WEB_AI_APPLY_SOURCE_VERIFICATION: PASS",
             "PROJECT_WEB_AI_APPLY_RECEIPT_REQUIRED: PASS",
         )

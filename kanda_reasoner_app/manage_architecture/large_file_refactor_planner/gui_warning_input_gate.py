@@ -24,7 +24,6 @@ from PySide6.QtWidgets import (
 )
 
 from kanda_reasoner_app.manage_architecture.large_module_target_queue import (
-    LargeModuleTarget,
     normalize_target_text,
     parse_module_too_large_findings,
 )

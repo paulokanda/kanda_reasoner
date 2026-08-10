@@ -50,7 +50,8 @@
         "missing context",
         "may proceed now",
         "implement",
-        "freeze"
+        "freeze",
+        "fire shield"
       ],
       "user_intent_examples": [
         "Classify whether this task may use Fast Path or needs Routed Work Path."
@@ -60,7 +61,7 @@
         "ai prompt request canon",
         "request admission"
       ],
-      "when_to_load": "Classifies Fast Path versus Routed Work Path and requests the smallest current context package required for the next safe step.",
+      "when_to_load": "Classifies Fast Path versus Routed Work Path, requests the smallest current context package, and hard-stops consequential external-Project work when Fire Shield authority is unavailable or blocked.",
       "when_not_to_load": "Do not use as a specialist implementation, delivery, validation, or freeze owner.",
       "required_companion_prompts": [
         "prompt_navigation_index",
@@ -1279,7 +1280,8 @@
         "one zip separate install validate freeze error memory commands",
         "compact update release",
         "finish release phases",
-        "copy recovery routine"
+        "copy recovery routine",
+        "fire shield"
       ],
       "user_intent_examples": [
         "When the user presses the Show Project to AI routine button or asks for one update ZIP followed by separate install, validation, Freeze, and Error Memory terminal commands."
@@ -1291,7 +1293,7 @@
         "Answer Validate Freeze Memorize Error",
         "recovery routine owner dispatch"
       ],
-      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.",
+      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases, with Fire Shield gating for consequential external-Project operations.",
       "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
       "required_companion_prompts": [
         "project_tool_boundary_canon",
@@ -3221,7 +3223,8 @@
         "transient workspace cleanup",
         "concurrent project sessions",
         "wrong-root write",
-        "show_project_to_AI"
+        "show_project_to_AI",
+        "fire shield"
       ],
       "user_intent_examples": [
         "Resolve Tool and selected Project ownership before this mixed patch.",
@@ -3235,7 +3238,7 @@
         "active project boundary",
         "selected project boundary"
       ],
-      "when_to_load": "Route for consequential coding, patching, validation, freeze, handoff, migration, mixed Tool/Project writes, cross-project access, or any unresolved owner or write target. A compact startup bridge routes here.",
+      "when_to_load": "Route for consequential coding, patching, validation, freeze, handoff, migration, mixed Tool/Project writes, cross-project access, Fire Shield policy, or any unresolved owner or write target. A compact startup bridge routes here.",
       "when_not_to_load": "The compact startup bridge is sufficient only for simple tasks with no consequential owner, path, write, or migration question.",
       "required_companion_prompts": [],
       "load_type": "routed"
@@ -3253,7 +3256,8 @@
         "wrong-root risk",
         "self-hosting separation",
         "project support outside source",
-        "non-authoritative transient workspace"
+        "non-authoritative transient workspace",
+        "fire shield"
       ],
       "user_intent_examples": [
         "Keep the selected Project separate from the KANDA Tool before any source work.",
@@ -3263,7 +3267,7 @@
         "project tool boundary bridge",
         "project_tool_boundary_startup_bridge"
       ],
-      "when_to_load": "Always at startup as a compact invariant; route consequential work to KPR-12-001.",
+      "when_to_load": "Always at startup as a compact invariant, including the Fire Shield hard-stop bridge for consequential external-Project work; route consequential work to KPR-12-001.",
       "when_not_to_load": "It remains startup context but never replaces the full routed canon.",
       "required_companion_prompts": [
         "project_tool_boundary_canon"

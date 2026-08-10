@@ -14,6 +14,7 @@ from kanda_reasoner_app.project_exclusion_policy import (  # PA024_UNIFIED_PROJE
     load_reasoner_project_exclusion_rules as _pa024_load_reasoner_project_exclusion_rules,
 )
 
+
 _ALWAYS_EXCLUDED_PARTS = {
     ".env",
     ".git",
@@ -367,3 +368,10 @@ def walk_python_files_filtered(root: Path, config: CollectorConfig) -> list[Path
 
     _walk(root)
     return sorted(results)
+
+def _collect_canonical_project_python_files(root: str | Path) -> tuple[Path, ...]:
+    """Return the exact Python source scope used by canonical complete-JSON collection."""
+
+    project_root = Path(root).expanduser().resolve(strict=False)
+    return tuple(walk_python_files_filtered(project_root, CollectorConfig()))
+

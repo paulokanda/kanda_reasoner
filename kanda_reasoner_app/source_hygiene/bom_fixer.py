@@ -5,9 +5,16 @@ from __future__ import annotations
 
 import json
 import py_compile
-import shutil
 from dataclasses import dataclass
 from pathlib import Path
+
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
 
 from .bom_scanner import UTF8_BOM_BYTES, iter_bom_scan_files, scan_file_for_bom
 from .schemas import SourceHygieneFinding, SourceHygieneReport, utc_timestamp
@@ -93,16 +100,35 @@ def remove_utf8_bom_from_file(
 
     backup_path = _make_backup_path(file_path, root, backup_root)
     backup_path.parent.mkdir(parents=True, exist_ok=True)
+    fire_shield = None
+    if project_root is not None:
+        fire_shield = build_current_fire_shield_context(
+            project_root=root,
+            phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+            operation_id="source-hygiene-bom-fix",
+        )
+    proposed = payload[len(UTF8_BOM_BYTES) :]
 
     try:
         backup_path.write_bytes(payload)
-        file_path.write_bytes(payload[len(UTF8_BOM_BYTES) :])
+        if fire_shield is not None:
+            assert_fire_shield_write_allowed(fire_shield, file_path, operation="REPLACE")
+            assert_fire_shield_payload_bytes_allowed(fire_shield, file_path, proposed)
+        file_path.write_bytes(proposed)
         if validate:
             validate_text_file_after_bom_fix(file_path)
     except Exception as exc:
         try:
             if backup_path.exists():
-                file_path.write_bytes(backup_path.read_bytes())
+                rollback = backup_path.read_bytes()
+                if fire_shield is not None:
+                    assert_fire_shield_write_allowed(
+                        fire_shield, file_path, operation="REPLACE"
+                    )
+                    assert_fire_shield_payload_bytes_allowed(
+                        fire_shield, file_path, rollback
+                    )
+                file_path.write_bytes(rollback)
         except OSError:
             pass
         return BomFixResult(
@@ -113,6 +139,8 @@ def remove_utf8_bom_from_file(
             message="BOM fix failed and rollback was attempted: " + str(exc),
         )
 
+    if fire_shield is not None:
+        verify_tool_snapshot_unchanged(fire_shield)
     return BomFixResult(
         path=display_path,
         changed=True,

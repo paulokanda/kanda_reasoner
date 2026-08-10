@@ -6,8 +6,8 @@ from importlib import import_module
 from typing import Callable
 
 from .architecture_review_mode_ui import bind_mode_action_button
-from .audit_project_workflow_review import (
-    create_embedded_workflow_review,
+from .audit_project_sibling_tabs import (
+    _build_audit_project_sibling_tabs,
 )
 
 from kanda_reasoner_app.manage_architecture.architecture_audit_external_ai import (
@@ -40,8 +40,6 @@ from kanda_reasoner_app.manage_architecture.warning_resolver_split_control impor
 __all__ = ["build_architecture_review_ui"]
 
 _AUDIT_PROJECT_ARCHITECTURE_TAB_LABEL = "Architecture Review"
-_AUDIT_PROJECT_ENGINEERING_SAFETY_TAB_LABEL = "Engineering Safety"
-_AUDIT_PROJECT_WORKFLOW_REVIEW_TAB_LABEL = "Workflow Review"
 _ARCHITECTURE_REVIEW_CHILD_TAB_LABELS = (
     "Check Update Architecture",
     "Large Module AST Split Audit",
@@ -70,6 +68,7 @@ def _contain_subtab_horizontal_size_pressure(window: object) -> None:
         window._engineering_safety_page.engineering_safety_audit_tabs,
         window._engineering_safety_page.engineering_safety_full_audit_page,
         window._engineering_safety_page.engineering_safety_pontual_audit_page,
+        window._engineering_diagnostics_page,
         window._workflow_review_page,
         window._workflow_review_page.centralWidget(),
     )
@@ -145,34 +144,7 @@ def build_architecture_review_ui(
         window._architecture_review_page,
         _AUDIT_PROJECT_ARCHITECTURE_TAB_LABEL,
     )
-    engineering_safety_module = import_module(
-        "reasoner_tools_gui_engineering_safety_panel"
-    )
-    engineering_safety_factory = getattr(
-        engineering_safety_module,
-        "create_engineering_safety_panel",
-    )
-    window._engineering_safety_page = engineering_safety_factory(
-        project_root_provider=lambda: window._root_path_edit.text().strip(),
-    )
-    window._engineering_safety_page.setParent(
-        window._audit_project_subtab_widget
-    )
-    window._audit_project_subtab_widget.addTab(
-        window._engineering_safety_page,
-        _AUDIT_PROJECT_ENGINEERING_SAFETY_TAB_LABEL,
-    )
-    window._workflow_review_page = create_embedded_workflow_review(
-        parent=window._audit_project_subtab_widget,
-        project_root_provider=lambda: window._root_path_edit.text().strip(),
-    )
-    window._root_path_edit.textChanged.connect(
-        window._workflow_review_page._audit_project_root_sync
-    )
-    window._audit_project_subtab_widget.addTab(
-        window._workflow_review_page,
-        _AUDIT_PROJECT_WORKFLOW_REVIEW_TAB_LABEL,
-    )
+    _build_audit_project_sibling_tabs(window)
     layout.addWidget(window._audit_project_subtab_widget, 1)
     _contain_subtab_horizontal_size_pressure(window)
 

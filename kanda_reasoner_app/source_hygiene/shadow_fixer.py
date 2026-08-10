@@ -8,6 +8,14 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from ._active_scope import _build_active_source_scope
 from .schemas import SourceHygieneFinding, SourceHygieneReport
 
@@ -162,11 +170,22 @@ def apply_safe_package_marker_fix(
         )
     backup_path = _create_backup(candidate, root, backup_dir)
     original = candidate.read_bytes()
-    candidate.write_text(new_text, encoding="utf-8", newline="")
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="source-hygiene-shadow-fix",
+    )
+    proposed = new_text.encode("utf-8")
+    assert_fire_shield_write_allowed(fire_shield, candidate, operation="REPLACE")
+    assert_fire_shield_payload_bytes_allowed(fire_shield, candidate, proposed)
+    candidate.write_bytes(proposed)
     try:
         py_compile.compile(str(candidate), doraise=True)
     except Exception as exc:
+        assert_fire_shield_write_allowed(fire_shield, candidate, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(fire_shield, candidate, original)
         candidate.write_bytes(original)
+        verify_tool_snapshot_unchanged(fire_shield)
         return FacadeFixResult(
             path=str(candidate),
             action="Rolled back package-marker fix after validation failure.",
@@ -175,6 +194,7 @@ def apply_safe_package_marker_fix(
             backup_path=str(backup_path),
             error="py_compile failed after package-marker fix: " + str(exc),
         )
+    verify_tool_snapshot_unchanged(fire_shield)
     return FacadeFixResult(
         path=str(candidate),
         action="Wrote explicit package marker and __all__ = [].",

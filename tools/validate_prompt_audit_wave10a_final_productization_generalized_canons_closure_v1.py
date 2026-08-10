@@ -1,6 +1,9 @@
 """Validate Wave 10A final productization/generalized-canon closure."""
 from __future__ import annotations
-import argparse,csv,json,re,zipfile
+import argparse
+import json
+import re
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -35,7 +38,7 @@ MARKERS={
 "transform_resolver_architecture_contract":("side-effect-free","RESOLVED, UNSUPPORTED, CONFLICT, AMBIGUOUS, INVALID and STALE","Do not execute operations")}
 
 def load_json(p:Path)->dict[str,Any]:
- d=json.loads(p.read_text(encoding="utf-8-sig"));
+ d=json.loads(p.read_text(encoding="utf-8-sig"))
  if not isinstance(d,dict): raise AssertionError("JSON root: "+str(p))
  return d
 

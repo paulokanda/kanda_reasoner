@@ -55,7 +55,6 @@ import ast
 import collections
 import itertools
 import json
-import os
 import re
 import sys
 import textwrap

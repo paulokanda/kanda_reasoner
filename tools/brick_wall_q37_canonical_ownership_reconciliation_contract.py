@@ -21,6 +21,21 @@ DISPOSITIONS = {
     "COEXISTENCE_JUSTIFIED",
     "NOT_DUPLICATE",
 }
+GENERALIZATION_SEQUENCE = (
+    "RECONCILE",
+    "REPAIR",
+    "VALIDATE",
+    "SHIELD",
+    "FREEZE",
+    "EXTRACT",
+    "ADOPT",
+)
+SHIELD_DECISIONS = {
+    "COMPLETE",
+    "STRENGTHEN_EXISTING",
+    "NOT_APPLICABLE",
+}
+ADOPTION_SCOPE = "BOUNDED_ONE_CONSUMER_AT_A_TIME"
 REQUIRED_FIELDS = {
     "reconciliation_required",
     "no_reconciliation_evidence",
@@ -38,6 +53,17 @@ REQUIRED_FIELDS = {
     "new_super_system_created",
     "new_coordination_registry_created",
     "runtime_owner_modified",
+    "reusable_contract_extraction_proposed",
+    "no_extraction_evidence",
+    "strategy_sequence",
+    "repair_validated_before_extraction",
+    "shield_decision",
+    "freeze_baseline_before_extraction",
+    "extraction_owner_path",
+    "new_owner_created",
+    "new_owner_gap_proven",
+    "adoption_scope",
+    "extraction_blockers",
     "validators",
     "expected_markers",
     "durable_evidence_path",
@@ -150,6 +176,17 @@ def valid_complete_record() -> dict[str, Any]:
         "new_super_system_created": False,
         "new_coordination_registry_created": False,
         "runtime_owner_modified": False,
+        "reusable_contract_extraction_proposed": True,
+        "no_extraction_evidence": [],
+        "strategy_sequence": list(GENERALIZATION_SEQUENCE),
+        "repair_validated_before_extraction": True,
+        "shield_decision": "COMPLETE",
+        "freeze_baseline_before_extraction": "freeze-validated-repair-fixture-v1",
+        "extraction_owner_path": "kanda_prompt_workspace/prompt_library",
+        "new_owner_created": False,
+        "new_owner_gap_proven": False,
+        "adoption_scope": ADOPTION_SCOPE,
+        "extraction_blockers": [],
         "validators": ["tools/validate_brick_wall_q37_canonical_ownership_reconciliation_v1.py"],
         "expected_markers": ["Q37_CANONICAL_OWNERSHIP_RECONCILIATION_REGRESSION_SET: PASS"],
         "durable_evidence_path": "project_validation_evidence/q37.txt",
@@ -174,6 +211,20 @@ def valid_not_applicable_record() -> dict[str, Any]:
         canonical_owner_selected=True,
         consumer_migration_complete=True,
         state_owner_reconciled=True,
+        reusable_contract_extraction_proposed=False,
+        no_extraction_evidence=[
+            "The release does not extract a repaired local implementation into reusable infrastructure.",
+            "No new reusable owner or cross-box adoption is introduced by this release.",
+        ],
+        strategy_sequence=[],
+        repair_validated_before_extraction=False,
+        shield_decision="NOT_APPLICABLE",
+        freeze_baseline_before_extraction="NOT_APPLICABLE",
+        extraction_owner_path="NOT_APPLICABLE",
+        new_owner_created=False,
+        new_owner_gap_proven=False,
+        adoption_scope="NOT_APPLICABLE",
+        extraction_blockers=[],
         decision="NOT_APPLICABLE",
     )
     return record
@@ -199,6 +250,33 @@ def validate_record(record: Mapping[str, Any]) -> None:
     _assert(record["new_super_system_created"] is False, "new ownership super-system is forbidden")
     _assert(record["new_coordination_registry_created"] is False, "new coordination registry is forbidden")
     _assert(record["runtime_owner_modified"] is False, "governance-only Q37 release may not modify runtime owners")
+    extraction = record["reusable_contract_extraction_proposed"]
+    _assert(isinstance(extraction, bool), "reusable_contract_extraction_proposed must be bool")
+    _assert(isinstance(record["no_extraction_evidence"], list), "no_extraction_evidence must be a list")
+    _assert(isinstance(record["strategy_sequence"], list), "strategy_sequence must be a list")
+    _assert(isinstance(record["new_owner_created"], bool), "new_owner_created must be bool")
+    _assert(isinstance(record["new_owner_gap_proven"], bool), "new_owner_gap_proven must be bool")
+    _assert(isinstance(record["extraction_blockers"], list), "extraction_blockers must be a list")
+    if extraction:
+        _assert(tuple(record["strategy_sequence"]) == GENERALIZATION_SEQUENCE, "reusable extraction sequence is incomplete or out of order")
+        _assert(record["repair_validated_before_extraction"] is True, "repair must be validated before extraction")
+        _assert(record["shield_decision"] in SHIELD_DECISIONS, "shield decision is invalid")
+        _assert(bool(record["freeze_baseline_before_extraction"]), "frozen repair baseline is required before extraction")
+        _assert(record["freeze_baseline_before_extraction"] != "NOT_APPLICABLE", "frozen repair baseline cannot be N/A when extracting")
+        _assert(_safe_relative(record["extraction_owner_path"]), "extraction owner path is invalid")
+        _assert(not record["new_owner_created"] or record["new_owner_gap_proven"], "new owner requires a verified responsibility gap")
+        _assert(record["adoption_scope"] == ADOPTION_SCOPE, "reusable adoption must remain bounded")
+        _assert(not record["extraction_blockers"], "reusable extraction contains blockers")
+    else:
+        _assert(len(record["no_extraction_evidence"]) >= 2, "non-extraction disposition requires evidence")
+        _assert(not record["strategy_sequence"], "non-extraction record must not claim a strategy sequence")
+        _assert(record["shield_decision"] == "NOT_APPLICABLE", "non-extraction shield decision mismatch")
+        _assert(record["freeze_baseline_before_extraction"] == "NOT_APPLICABLE", "non-extraction freeze baseline mismatch")
+        _assert(record["extraction_owner_path"] == "NOT_APPLICABLE", "non-extraction owner path mismatch")
+        _assert(record["new_owner_created"] is False, "non-extraction record cannot create a new owner")
+        _assert(record["new_owner_gap_proven"] is False, "non-extraction record cannot claim a new-owner gap")
+        _assert(record["adoption_scope"] == "NOT_APPLICABLE", "non-extraction adoption scope mismatch")
+        _assert(not record["extraction_blockers"], "non-extraction record cannot contain extraction blockers")
     _assert(record["canonical_owner_selected"] is True, "canonical owner selection must be explicit")
     _assert(record["consumer_migration_complete"] is True, "consumer migration must be complete")
     _assert(record["state_owner_reconciled"] is True, "mutable-state owner reconciliation must be complete")
@@ -264,14 +342,15 @@ def validate_record(record: Mapping[str, Any]) -> None:
 def q37_release_record(paths: list[str]) -> dict[str, Any]:
     record = valid_not_applicable_record()
     record.update(
-        operation_id="brick-wall-q37-canonical-ownership-reconciliation-enforcement-v1-release",
+        feature_id="brick-wall-q37-reconcile-repair-shield-extract-sequence-v1",
+        operation_id="brick-wall-q37-reconcile-repair-shield-extract-sequence-v1-release",
         changed_files=list(paths),
         validators=["tools/validate_brick_wall_q37_canonical_ownership_reconciliation_v1.py"],
         expected_markers=[
             "Q37_CANONICAL_OWNERSHIP_RECONCILIATION_REGRESSION_SET: PASS",
             "Q37_CURRENT_RELEASE_RECONCILIATION_NOT_APPLICABLE: PASS",
         ],
-        durable_evidence_path="project_validation_evidence/brick-wall-q37-canonical-ownership-reconciliation-enforcement-v1.txt",
+        durable_evidence_path="project_validation_evidence/brick-wall-q37-reconcile-repair-shield-extract-sequence-v1.txt",
     )
     return record
 
@@ -286,10 +365,12 @@ def q37_release_coverage_record(paths: list[str]) -> dict[str, Any]:
         "tools/validate_brick_wall_q37_canonical_ownership_reconciliation_v1.py",
     ]
     lessons = [
-        "lesson-brick-wall-q01-validator-forward-version-rigidity-v1",
-        "lesson-brick-wall-q02-validator-forward-contract-rigidity-v1",
-        "lesson-brick-wall-q03-validator-package-import-context-v1",
-        "lesson-brick-wall-focused-validator-task-route-key-assumption-v1",
+        "lesson-self-hosting-physical-root-equality-validator-false-negative-v1",
+        "lesson-no-isolated-zip-delivery-contract-v1",
+        "lesson-brick-wall-install-literalpath-null-guard-and-provenance-v1",
+        "lesson-validate-freeze-evidence-path-contract-v1",
+        "lesson-freeze-hint-no-stale-local-validation-pending-v1",
+        "lesson-error-memory-active-ready-regression-check-contract-v1",
     ]
     rows = []
     for path in paths:

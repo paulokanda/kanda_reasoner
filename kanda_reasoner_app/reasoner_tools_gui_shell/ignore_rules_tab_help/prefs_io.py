@@ -4,7 +4,6 @@ from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 __all__ = ['IgnoreRulesPrefsMixin']
 import json
-from PySide6.QtWidgets import QMessageBox
 
 class IgnoreRulesPrefsMixin:
     """Provide persistence operations for ignore-rules state."""

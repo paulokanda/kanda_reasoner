@@ -5,7 +5,6 @@ from __future__ import annotations
 import builtins
 import importlib
 import json
-import shutil
 import sys
 import tempfile
 from pathlib import Path

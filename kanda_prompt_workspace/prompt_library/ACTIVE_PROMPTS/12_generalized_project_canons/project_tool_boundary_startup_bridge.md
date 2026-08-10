@@ -2,7 +2,7 @@
 prompt_code: KPR-12-006
 prompt_id: project_tool_boundary_startup_bridge
 title: Project Tool Boundary Startup Bridge
-version: 2.3
+version: 2.4
 status: active
 load_type: always_startup
 owner_box: 12_generalized_project_canons
@@ -71,6 +71,17 @@ Show Project / Freeze / Error UI= KANDA Reasoner Tool
 
 KANDA Reasoner creating the handoff or providing the UI does not make it the
 Project being changed.
+
+## Fire Shield startup gate
+
+For a verified external Project, any consequential mutation, extraction,
+packaging, restore, move, rename, delete, or Project Python/import-isolation
+operation requires the Tool-owned public Fire Shield authority. Prompt compliance
+alone is never authorization. Use `kanda_reasoner_app.project_fire_shield` or an
+already-integrated public workflow; never `_project_fire_shield_*`. Missing,
+stale, unavailable, ambiguous, or BLOCKED Fire Shield means STOP with no direct
+filesystem or prompt-only fallback. Path equality alone never grants self-hosting.
+Fire Shield is application-level protection, not an OS sandbox.
 
 ## Portable-distribution separation
 
@@ -147,6 +158,8 @@ Any unresolved item blocks mutation and operational artifact output.
   human Memorize Error.
 - A missing, stale, ambiguous, or wrong-root identity blocks mutation and
   operational artifact output.
+- External-Project consequential work must not bypass missing or BLOCKED Fire
+  Shield through direct filesystem writes, private imports, or prompt-only approval.
 
 ## Route to the full canon
 
@@ -168,6 +181,7 @@ May mutate from this bridge alone: NO
 
 ## Version history
 
+- 2.4: added the always-startup Fire Shield gate for external-Project consequential work, including public-surface-only use and fail-closed no-fallback behavior.
 - 2.3: added the selected-Project feature handling checklist covering identity,
   owner classification, exact source, patch/install/validation targets, Project
   Support, Error Memory, Freeze, continuation state, and no-merge rules.

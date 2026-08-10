@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+from .form_text_validation import (
+    _clean_stale_pending_text_after_local_validation,
+    _has_safe_validation_evidence_marker,
+    _hint_to_form_inputs,
+    _normalize_validation_evidence_summary,
+)
+
 __all__: list[str] = []
 
 
@@ -15,17 +22,10 @@ from .paths_io import (
     _coerce_mapping,
     _history_filename,
     _resolve_project_root,
-    _source_name,
     _utc_now,
     build_freeze_hint_intake_paths,
 )
-from .form_normalization import (
-    _clean_stale_pending_text_after_local_validation,
-    _has_safe_validation_evidence_marker,
-    _hint_to_form_inputs,
-    _normalize_hint,
-    _normalize_validation_evidence_summary,
-)
+from .form_normalization import _normalize_hint
 from .frozen_matching import (
     _find_matching_frozen_feature,
     _same_feature_id_alias,

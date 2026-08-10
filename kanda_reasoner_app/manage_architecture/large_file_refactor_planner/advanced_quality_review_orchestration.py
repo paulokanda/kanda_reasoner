@@ -6,7 +6,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-from typing import Callable, Mapping
+from typing import Callable
 
 from .advanced_quality_cross_check_rules import (
     AdvancedQualityCrossCheckInputs,

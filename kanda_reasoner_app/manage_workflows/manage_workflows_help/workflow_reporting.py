@@ -3,24 +3,6 @@
 
 from __future__ import annotations
 
-import argparse
-import contextlib
-import difflib
-import fnmatch
-import importlib.util
-import io
-import json
-import logging
-import os
-import shutil
-import subprocess
-import sys
-import tempfile
-import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Iterable
 
 from .workflow_models import (
     CheckResult,
@@ -52,6 +34,9 @@ def print_results(results: list[CheckResult]) -> None:
         )
         if result.command:
             print(f"      command: {result.command}")
+        cwd = str(result.details.get("cwd", "")).strip()
+        if cwd:
+            print(f"      cwd: {cwd}")
         stdout = str(result.details.get("stdout", "")).strip()
         stderr = str(result.details.get("stderr", "")).strip()
         if stdout:

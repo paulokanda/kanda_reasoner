@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import ast
 import json
-import shutil
 import tempfile
 import sys
 import zipfile

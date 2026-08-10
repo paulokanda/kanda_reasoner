@@ -1,11 +1,9 @@
 import sys
-import os
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout, QWidget,
     QStackedWidget, QLabel, QPushButton
 )
 from PySide6.QtCore import Qt
-from PySide6.QtCore import QUrl, QTimer
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtCore import QObject, Signal

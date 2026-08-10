@@ -20,11 +20,9 @@ try:
     )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
     from validate_ai_response_patch_delivery_contract import (
-        CODE_FENCE_PATTERN,
         DAILY_WORK_TOKEN,
         RECEIVER_GATE_FIELDS,
         REQUIRED_GATE_FIELDS,
-        ZIP_PATTERN,
         _fail,
         _has_zip_reference,
     )

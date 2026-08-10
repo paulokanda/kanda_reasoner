@@ -7,7 +7,6 @@ __all__: list[str] = []
 import ast
 import json
 import py_compile
-import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

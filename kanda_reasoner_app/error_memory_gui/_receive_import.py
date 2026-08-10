@@ -12,7 +12,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from kanda_reasoner_app.error_memory.intake import ERROR_LESSON_JSON_BEGIN, ERROR_LESSON_JSON_END
+from kanda_reasoner_app.error_memory import (
+    ERROR_LESSON_JSON_BEGIN,
+    ERROR_LESSON_JSON_END,
+)
 
 __all__ = [
     "import_error_lesson_zip",

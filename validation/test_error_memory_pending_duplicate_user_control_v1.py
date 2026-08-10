@@ -1,7 +1,6 @@
 """Validate Error Memory pending-intake duplicate user-control behavior."""
 from __future__ import annotations
 
-import ast
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

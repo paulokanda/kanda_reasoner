@@ -31,8 +31,6 @@ from PySide6.QtWidgets import (
 )
 
 from .constants import (
-    DEFAULT_BASE_URL,
-    DEFAULT_MODEL,
     DEFAULT_PROJECT_ROOT,
     DEFAULT_WORKER_NAME,
 )

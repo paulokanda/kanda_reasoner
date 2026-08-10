@@ -2,7 +2,6 @@
 """Focused validation for guarded import rewrite apply v1."""
 from __future__ import annotations
 
-import json
 import py_compile
 import shutil
 import tempfile

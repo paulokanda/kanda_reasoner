@@ -8,6 +8,14 @@ import json
 from pathlib import Path
 import zipfile
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
 from .models import FEATURE_ID, SCHEMA_VERSION
 from .source_apply_preflight_backup_contract import SourceApplyPreflightBackupContractResult
@@ -228,6 +236,12 @@ def _execution_blockers(
 
 def _apply_payload_files(result: GuardedSourceApplyExecutionResult, destination_root: Path) -> list[str]:
     """Copy safe payload entries from the reviewed payload ZIP into project source."""
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="guarded-source-apply-" + hashlib.sha256(
+            result.payload_zip_path.encode("utf-8")
+        ).hexdigest()[:24],
+    )
     target = Path(result.target_file).resolve()
     if hashlib.sha256(target.read_bytes()).hexdigest() != result.source_content_hash_before:
         raise RuntimeError("Selected source hash changed immediately before guarded write.")
@@ -236,9 +250,20 @@ def _apply_payload_files(result: GuardedSourceApplyExecutionResult, destination_
         for relative in result.planned_write_targets:
             destination = (destination_root / relative).resolve()
             data = archive.read(relative)
+            assert_fire_shield_write_allowed(
+                fire_shield,
+                destination,
+                operation="REPLACE" if destination.exists() else "CREATE",
+            )
+            assert_fire_shield_payload_bytes_allowed(
+                fire_shield,
+                data,
+                relative,
+            )
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(data)
             written.append(str(destination))
+    verify_tool_snapshot_unchanged(fire_shield)
     return sorted(written)
 
 

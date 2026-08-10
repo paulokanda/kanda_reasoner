@@ -2,6 +2,14 @@
 
 from __future__ import annotations
 
+from .form_text_validation import (
+    _append_missing_lines,
+    _append_text,
+    _clean_stale_pending_text_after_local_validation,
+    _has_safe_validation_evidence_marker,
+    _normalize_form_inputs,
+)
+
 __all__: list[str] = []
 
 
@@ -11,14 +19,9 @@ from typing import Any, Iterable, Mapping
 from .models import FORM_KEYS, MANDATORY_PROTECTED_PATHS, MANDATORY_RULES
 from .paths_io import _resolve_project_root, _source_name
 from .form_normalization import (
-    _append_missing_lines,
-    _append_text,
-    _clean_stale_pending_text_after_local_validation,
     _field_value_or_empty_if_placeholder,
     _form_has_mandatory_freeze_fields,
-    _has_safe_validation_evidence_marker,
     _is_starter_placeholder,
-    _normalize_form_inputs,
     _repair_hint_form_inputs_from_raw_hint,
 )
 from .records import _consume_latest_hint_if_already_frozen, load_latest_freeze_hint_record

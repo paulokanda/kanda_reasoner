@@ -25,7 +25,6 @@ __all__ = [
 ]
 import hashlib
 import importlib.util
-import json
 import sys
 from pathlib import Path
 from types import ModuleType

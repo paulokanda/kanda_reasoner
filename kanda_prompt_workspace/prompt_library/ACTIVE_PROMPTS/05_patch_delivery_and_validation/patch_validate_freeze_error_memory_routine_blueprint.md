@@ -2,7 +2,7 @@
 prompt_id: patch_validate_freeze_error_memory_routine_blueprint
 prompt_code: KPR-05-005
 title: Answer Validate Freeze Memorize Error Routine Blueprint
-version: 3.2
+version: 3.3
 status: active
 load_type: on_request
 owner_box: 05_patch_delivery_and_validation
@@ -51,6 +51,13 @@ Freeze, or Error Memory gates.
   Tool defect is proven and authorized.
 - If Tool and Project share one physical root, keep logical roles separate.
 - Generated handoffs are evidence, not editing authority.
+- For a verified external Project, consequential mutation, extraction, package
+  preflight, install, restore, move, rename, delete, and Project Python/import
+  isolation must pass the Tool-owned public Fire Shield authority or an existing
+  public workflow already integrated with it.
+- Missing, stale, unavailable, ambiguous, or BLOCKED Fire Shield stops the
+  consequential phase. Never substitute prompt approval, direct filesystem
+  mutation, or private `_project_fire_shield_*` reach-in.
 ## Routine classification and identity
 Select one class:
 - `ROUTINE_POST_IMPLEMENTATION_COMPLETION`;
@@ -85,7 +92,7 @@ May modify KANDA Reasoner Tool source: YES / NO
 Blank, stale, ambiguous, or conflicting identity blocks output.
 ## Mandatory owner dispatch
 Use only the smallest needed owner set:
-- identity: `project_tool_boundary_canon`;
+- identity and Fire Shield policy: `project_tool_boundary_canon`;
 - admission: Brick Wall and the exact Box owner;
 - release: `bundle_gated_development_workflow`;
 - payload/install/rollback: `implementation_and_delivery_protocol`;
@@ -204,6 +211,7 @@ its canonical owner. Do not expose disposable reports as downloads.
 ## Safe sequence
 ```text
 answer from current source and compact update
+-> resolve Tool/Project identity and Fire Shield applicability
 -> authorize and repair the smallest owner
 -> build and contract-validate one feature ZIP
 -> deliver ZIP plus separate INSTALL command
@@ -252,6 +260,7 @@ GUI source or make an external Project prompt authority.
 This wrapper does not itself authorize implementation, release, validation
 claims, Freeze writes, or Error Memory persistence.
 ## Version history
+- 3.3: required the frozen Fire Shield public authority for consequential external-Project phases and prohibited prompt-only, direct-filesystem, or private-reach-in fallback.
 - 3.2: one primary update ZIP; separate install, validation, Freeze, and Error
   Memory terminal phases; compact intake; no orphan reports.
 - 3.1: paste-safe PowerShell and Windows PowerShell 5.1 gates.

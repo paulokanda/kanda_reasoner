@@ -9,10 +9,8 @@ stack_compatibility, and reliability_guidance.
 from __future__ import annotations
 
 import argparse
-import json
 import sys
-from pathlib import Path
-from typing import Any, TextIO
+from typing import TextIO
 
 __all__ = [
     "available_cli_commands",
@@ -79,7 +77,6 @@ def main(argv: list[str] | None = None) -> int:
 
 from .commands_catalog_private import _available_cli_commands
 from .commands_parsers_private import (
-    _add_common_output_arguments,
     _add_list_tools_parser,
     _add_risk_radar_parser,
     _add_crash_triage_parser,

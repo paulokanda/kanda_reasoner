@@ -3,25 +3,14 @@
 
 from __future__ import annotations
 
+from .form_text_validation import (
+    _field_to_text,
+    _hint_to_form_inputs,
+)
+
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from .form_text_validation import (
-    _append_missing_lines,
-    _append_text,
-    _clean_stale_pending_text_after_local_validation,
-    _field_to_text,
-    _has_local_validation_completion_marker,
-    _has_recognizable_validation_marker,
-    _has_safe_validation_evidence_marker,
-    _has_stale_local_validation_pending_text,
-    _hint_to_form_inputs,
-    _normalize_form_inputs,
-    _normalize_line,
-    _normalize_validation_evidence_summary,
-    _strip_stale_pending_validation_sentences,
-    _strip_stale_pending_validation_text,
-)
 from .models import (
     FORM_KEYS,
     HINT_FIELD_ALIASES,

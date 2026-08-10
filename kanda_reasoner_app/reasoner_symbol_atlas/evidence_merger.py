@@ -10,6 +10,7 @@ from typing import Any
 from .complete_json_adapter import (
     ProjectSymbolAtlasCompleteJsonOptions,
     build_reasoner_symbol_atlas_complete_json_report,
+    collect_reasoner_symbol_atlas_complete_json_files,
 )
 from .evidence_freshness import (
     PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_FRESH,
@@ -26,9 +27,8 @@ from .owner_classifier import (
     ProjectSymbolAtlasOwnerClassifyOptions,
     classify_reasoner_symbol_atlas_owners,
 )
+from .review_session import _review_cache_get, _review_cache_put
 from .schemas import (
-    ProjectModuleRecord,
-    ProjectSymbol,
     ProjectSymbolAtlasReport,
     normalize_project_atlas_sequence,
     normalize_project_atlas_text,
@@ -166,10 +166,40 @@ def merge_reasoner_symbol_atlas_live_and_json_evidence(
 
     Live AST evidence always wins for current file existence and current public
     symbols. Fresh JSON enriches matching live records. Stale JSON is advisory
-    only. Wrong-project and invalid JSON evidence is rejected.
+    only. Wrong-project and invalid JSON evidence is rejected. During an
+    explicit Complete Review session, identical immutable merge results may be
+    reused while the selected Project source/evidence freshness stamp matches.
     """
 
     project_root = Path(options.project_root).expanduser().resolve(strict=False)
+    cache_key = (
+        "merged_evidence",
+        str(project_root),
+        str(Path(options.json_path).expanduser().resolve(strict=False))
+        if options.json_path
+        else "",
+        bool(options.include_tests),
+        bool(options.include_workbench),
+        bool(options.include_private),
+        bool(options.include_constants),
+        bool(options.include_private_reexports),
+        bool(options.include_wildcard_symbols),
+        int(options.max_json_modules),
+        int(options.max_json_symbols),
+    )
+    evidence_paths = _selected_merge_evidence_paths(options, project_root)
+    cached = _review_cache_get(
+        project_root,
+        cache_key,
+        evidence_paths=evidence_paths,
+    )
+    if cached is not None:
+        report, summary = cached
+        if isinstance(report, ProjectSymbolAtlasReport) and isinstance(
+            summary, ProjectSymbolAtlasEvidenceMergeSummary
+        ):
+            return report, summary
+
     live_modules = classify_reasoner_symbol_atlas_owners(
         project_root,
         options=options.to_owner_classify_options(),
@@ -185,7 +215,9 @@ def merge_reasoner_symbol_atlas_live_and_json_evidence(
 
     if merge_status == PROJECT_SYMBOL_ATLAS_MERGE_STATUS_JSON_ENRICHED:
         merged_modules = _merge_fresh_modules(live_modules, json_modules)
-        merged_symbols = _merge_fresh_symbols(_symbols_from_modules(merged_modules), json_symbols)
+        merged_symbols = _merge_fresh_symbols(
+            _symbols_from_modules(merged_modules), json_symbols
+        )
         input_sources = (
             "live_ast",
             "owner_classifier",
@@ -194,7 +226,9 @@ def merge_reasoner_symbol_atlas_live_and_json_evidence(
         )
     elif merge_status == PROJECT_SYMBOL_ATLAS_MERGE_STATUS_JSON_CANONICAL:
         merged_modules = _merge_canonical_modules(live_modules, json_modules)
-        merged_symbols = _merge_fresh_symbols(_symbols_from_modules(merged_modules), json_symbols)
+        merged_symbols = _merge_fresh_symbols(
+            _symbols_from_modules(merged_modules), json_symbols
+        )
         input_sources = (
             "complete_json_canonical",
             freshness.json_path,
@@ -202,9 +236,13 @@ def merge_reasoner_symbol_atlas_live_and_json_evidence(
             "owner_classifier",
         )
     else:
-        merged_modules = _tag_live_modules_for_advisory_status(live_modules, merge_status)
+        merged_modules = _tag_live_modules_for_advisory_status(
+            live_modules, merge_status
+        )
         merged_symbols = _symbols_from_modules(merged_modules)
-        input_sources = _input_sources_for_non_enriched_merge(merge_status, freshness.json_path)
+        input_sources = _input_sources_for_non_enriched_merge(
+            merge_status, freshness.json_path
+        )
 
     summary = ProjectSymbolAtlasEvidenceMergeSummary(
         project_root=str(project_root),
@@ -227,8 +265,29 @@ def merge_reasoner_symbol_atlas_live_and_json_evidence(
         symbols=merged_symbols,
         input_sources=input_sources,
     )
-    return report, summary
+    result = (report, summary)
+    _review_cache_put(
+        project_root,
+        cache_key,
+        result,
+        evidence_paths=evidence_paths,
+    )
+    return result
 
+
+
+def _selected_merge_evidence_paths(
+    options: ProjectSymbolAtlasEvidenceMergeOptions,
+    project_root: Path,
+) -> tuple[str, ...]:
+    """Return the exact JSON evidence path that can affect this merge."""
+    if options.json_path:
+        path = Path(options.json_path).expanduser().resolve(strict=False)
+        return (str(path),)
+    candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
+    if not candidates:
+        return ()
+    return (str(candidates[0].resolve(strict=False)),)
 
 def build_reasoner_symbol_atlas_live_json_merge_report(
     options: ProjectSymbolAtlasEvidenceMergeOptions,
@@ -268,7 +327,9 @@ def _build_json_report_safely(
     """
     
     try:
-        return build_reasoner_symbol_atlas_complete_json_report(options.to_json_options())
+        return build_reasoner_symbol_atlas_complete_json_report(
+            options.to_json_options()
+        )
     except (OSError, ValueError):
         return ProjectSymbolAtlasReport(
             project_root=options.project_root,
@@ -308,7 +369,10 @@ def _classify_merge_status(freshness_status: str) -> tuple[str, tuple[str, ...]]
     }:
         return (
             PROJECT_SYMBOL_ATLAS_MERGE_STATUS_JSON_ADVISORY,
-            ("Complete JSON conflicts with live source; live AST evidence is advisory context.",),
+            (
+                "Complete JSON conflicts with live source; "
+                "live AST evidence is advisory context.",
+            ),
         )
     if freshness_status == PROJECT_SYMBOL_ATLAS_EVIDENCE_STATUS_MISSING_EVIDENCE:
         return (

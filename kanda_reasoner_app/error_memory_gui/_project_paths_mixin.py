@@ -3,16 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 from PySide6.QtCore import Qt, QTimer, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QFileDialog
 
-from kanda_reasoner_app.error_memory.paths import (
-    resolve_project_error_memory_root,
-    resolve_second_prompt_files_root,
-)
 from kanda_reasoner_app.portable_smoke_runtime_report import (
     record_portable_smoke_event,
 )

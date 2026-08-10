@@ -16,11 +16,11 @@ from startup_kernel.constants import (
 )
 from startup_kernel.core_helpers import collect_status, load_source_map
 from startup_kernel.prompt_library_zip import validate_prompt_library_zip_contract
-from startup_kernel.zip_delivery import (
-    find_delivery_zip,
+from startup_kernel.zip_contract import (
     read_manifest_from_zip,
     validate_generated_zip_contract,
 )
+from startup_kernel.zip_delivery import find_delivery_zip
 
 
 def command_check(workspace_root: Path, output_dir: Path, active_project_root: Path) -> int:

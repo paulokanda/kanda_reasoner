@@ -8,7 +8,6 @@ source_archive_manifest/source_archive_part ZIPs.
 from __future__ import annotations
 
 import json
-import os
 import shutil
 import tempfile
 from pathlib import Path

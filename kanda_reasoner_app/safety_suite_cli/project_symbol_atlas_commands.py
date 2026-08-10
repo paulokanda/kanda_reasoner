@@ -271,7 +271,6 @@ def _cmd_symbol_atlas(args: argparse.Namespace, stdout: TextIO, stderr: TextIO) 
     
     del stderr
     from kanda_reasoner_app.reasoner_symbol_atlas.existing_code_finder import (
-        ProjectSymbolAtlasExistingCodeFinderOptions,
         build_reasoner_symbol_atlas_existing_code_report,
     )
     from kanda_reasoner_app.reasoner_symbol_atlas.report_writer import (

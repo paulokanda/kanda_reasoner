@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .normalization import _list_or_empty, _safe_str
+from .normalization import _safe_str
 
 __all__: list[str] = []
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from .output_policy import is_active_owner_candidate
 from .schemas import ProjectModuleRecord, ProjectSymbol
 
 _STATUS_NO_FACADE = "no_facade"
@@ -218,31 +219,13 @@ def _record_for_module_name(
     return None
 
 
-def _candidate_owner_paths(
+def _all_candidate_owner_paths(
     target_record: ProjectModuleRecord,
     modules: tuple[ProjectModuleRecord, ...],
     symbols: tuple[ProjectSymbol, ...],
     symbol_name: str,
 ) -> tuple[str, ...]:
-    """Support candidate owner paths behavior.
-    
-    Parameters
-    ----------
-    target_record : ProjectModuleRecord
-        The target record value.
-    modules : tuple[ProjectModuleRecord, ...]
-        The modules value.
-    symbols : tuple[ProjectSymbol, ...]
-        The symbols value.
-    symbol_name : str
-        The symbol name value.
-    
-    Returns
-    -------
-    tuple[str, ...]
-        The tuple of values.
-    """
-    
+    """Return all evidence-backed owner paths before active-scope partitioning."""
     candidates: list[str] = []
     for symbol in target_record.symbols:
         if symbol.kind != "import":
@@ -263,6 +246,46 @@ def _candidate_owner_paths(
             if record is not None and not _record_is_facade(record):
                 candidates.append(record.path)
     return tuple(dict.fromkeys(candidates))
+
+
+def _candidate_owner_paths(
+    target_record: ProjectModuleRecord,
+    modules: tuple[ProjectModuleRecord, ...],
+    symbols: tuple[ProjectSymbol, ...],
+    symbol_name: str,
+) -> tuple[str, ...]:
+    """Return active owner candidates before canonical owner ranking."""
+    candidates = _all_candidate_owner_paths(
+        target_record,
+        modules,
+        symbols,
+        symbol_name,
+    )
+    return tuple(
+        path
+        for path in candidates
+        if _record_is_active_owner_candidate(_record_for_path(modules, path))
+    )
+
+
+def _inactive_candidate_owner_paths(
+    target_record: ProjectModuleRecord,
+    modules: tuple[ProjectModuleRecord, ...],
+    symbols: tuple[ProjectSymbol, ...],
+    symbol_name: str,
+) -> tuple[str, ...]:
+    """Return owner candidates excluded from active canonical ranking."""
+    candidates = _all_candidate_owner_paths(
+        target_record,
+        modules,
+        symbols,
+        symbol_name,
+    )
+    return tuple(
+        path
+        for path in candidates
+        if not _record_is_active_owner_candidate(_record_for_path(modules, path))
+    )
 
 
 def _record_for_path(
@@ -291,6 +314,19 @@ def _record_for_path(
     return None
 
 
+def _record_is_active_owner_candidate(
+    record: ProjectModuleRecord | None,
+) -> bool:
+    """Return True when a module may compete for canonical ownership."""
+    if record is None:
+        return False
+    return is_active_owner_candidate(
+        record.path,
+        record.owner_role,
+        record.is_test_file,
+    )
+
+
 def _select_likely_owner(
     modules: tuple[ProjectModuleRecord, ...],
     candidate_paths: tuple[str, ...],
@@ -311,7 +347,9 @@ def _select_likely_owner(
     """
     
     records = [_record_for_path(modules, path) for path in candidate_paths]
-    records = [record for record in records if record is not None]
+    records = [
+        record for record in records if _record_is_active_owner_candidate(record)
+    ]
     if not records:
         return None
     non_facades = [record for record in records if not _record_is_facade(record)]
@@ -334,6 +372,7 @@ def _decision_status(
     target_is_facade: bool,
     likely_owner: ProjectModuleRecord | None,
     owner_candidates: tuple[str, ...],
+    inactive_owner_candidates: tuple[str, ...],
     merge_status: str,
 ) -> tuple[str, str, bool, tuple[str, ...]]:
     """Support decision status behavior.
@@ -348,6 +387,8 @@ def _decision_status(
         The likely owner value.
     owner_candidates : tuple[str, ...]
         The owner candidates value.
+    inactive_owner_candidates : tuple[str, ...]
+        The owner candidates excluded from active ranking.
     merge_status : str
         The merge status value.
     
@@ -360,6 +401,11 @@ def _decision_status(
     reasons: list[str] = []
     reasons.append("Target owner role: " + target_record.owner_role + ".")
     reasons.append("Evidence merge status: " + merge_status + ".")
+    if inactive_owner_candidates:
+        reasons.append(
+            "Inactive owner candidates excluded before ranking: "
+            + str(len(inactive_owner_candidates))
+        )
     if target_is_facade:
         reasons.append("Target appears to be a facade or compatibility re-export surface.")
         if likely_owner is not None:
@@ -370,7 +416,7 @@ def _decision_status(
                 False,
                 tuple(reasons),
             )
-        reasons.append("No real owner candidate was identified from current evidence.")
+        reasons.append("No active real owner candidate was identified from current evidence.")
         return (
             _STATUS_OWNER_NOT_FOUND,
             "medium" if owner_candidates else "low",

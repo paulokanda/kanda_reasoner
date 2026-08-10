@@ -10,8 +10,6 @@ from __future__ import annotations
 
 import ast
 import py_compile
-import re
-import sys
 import tokenize
 from pathlib import Path
 

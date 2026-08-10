@@ -30,7 +30,8 @@
     },
     "workflow_gui_worker.py": {
       "exports": [
-        "WorkflowRunWorker"
+        "WorkflowRunWorker",
+        "build_workflow_execution_context"
       ]
     },
     "workflow_gui_presentation.py": {

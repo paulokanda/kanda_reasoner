@@ -11,7 +11,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .blueprint_adapter import generate_ai_send_files
 from .paths import build_paths
 from .result import FreezeAfterUpdateResult, FreezeAfterUpdateStatus
 

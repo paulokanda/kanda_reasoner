@@ -53,7 +53,6 @@ from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbenc
     preview_root_blockers,
     preview_runs_root,
     project_support_root,
-    shadow_runs_root,
     workbench_path_class,
     workbench_support_root,
 )

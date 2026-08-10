@@ -9,6 +9,14 @@ import hashlib
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from kanda_reasoner_app.project_support_boundary import (
     canonical_transient_garbage_root,
 )
@@ -128,17 +136,28 @@ def _write_backups(
 
 def _restore_after_failure(
     original_by_path: dict[Path, str],
+    root: Path,
 ) -> None:
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="warning-model-test-rollback",
+    )
     for path, original in original_by_path.items():
         try:
             if original:
+                payload = original.encode("utf-8")
+                assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
+                assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
                 temporary = path.with_name(path.name + ".warning_model_rollback_tmp")
-                temporary.write_text(original, encoding="utf-8", newline="")
+                temporary.write_bytes(payload)
                 os.replace(temporary, path)
             elif path.exists():
+                assert_fire_shield_write_allowed(fire_shield, path, operation="DELETE")
                 path.unlink()
         except OSError:
             pass
+    verify_tool_snapshot_unchanged(fire_shield)
 
 
 def apply_validated_model_test_changes(
@@ -170,21 +189,30 @@ def apply_validated_model_test_changes(
         for item in mutations
     }
     changed_paths: set[Path] = set()
+    fire_shield = build_current_fire_shield_context(
+        project_root=root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="warning-model-test-apply",
+    )
     try:
         for path, rendered in sorted(rendered_by_path.items(), key=lambda item: str(item[0])):
             original = original_by_path[path]
             if rendered == original:
                 continue
+            payload = rendered.encode("utf-8")
+            assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
+            assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
             path.parent.mkdir(parents=True, exist_ok=True)
             temporary = path.with_name(path.name + ".warning_model_tmp")
-            temporary.write_text(rendered, encoding="utf-8", newline="")
+            temporary.write_bytes(payload)
             os.replace(temporary, path)
             resolved_path = path.resolve()
             changed_paths.add(resolved_path)
             changed.append(path.relative_to(root).as_posix())
     except Exception:
-        _restore_after_failure(original_by_path)
+        _restore_after_failure(original_by_path, root)
         raise
+    verify_tool_snapshot_unchanged(fire_shield)
     return ModelTestProtectionApplyResult(
         linked_count=len(changed_paths & link_paths),
         mutated_test_count=len(changed_paths & mutation_paths),

@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 
 from startup_kernel.constants import (
-    READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME,
     STARTUP_ARTIFACT_READ_ORDER_MARKER,
 )
 

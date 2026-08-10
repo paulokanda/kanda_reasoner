@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
-from .complete_json_adapter import collect_reasoner_symbol_atlas_complete_json_files
+from .complete_json_adapter import resolve_reasoner_symbol_atlas_complete_json_path
 
 __all__: list[str] = []
 
@@ -31,10 +31,10 @@ class _JsonActiveScopeScanResult:
 
 
 def _select_json_path(project_root: Path, json_path: str) -> Path | None:
-    if json_path.strip():
-        return Path(json_path).expanduser().resolve(strict=False)
-    candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
-    return candidates[0] if candidates else None
+    return resolve_reasoner_symbol_atlas_complete_json_path(
+        project_root,
+        json_path or None,
+    )
 
 
 def _scan_json_active_scope_payload(

@@ -219,8 +219,6 @@ def _exercise_publish_retention(root: Path) -> None:
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
     from kanda_reasoner_app.project_analysis_evidence_paths import (
-        analysis_json_building_dir,
-        analysis_json_complete_dir,
         primary_evidence_json_path,
         working_copy_json_path,
         working_copy_metadata_path,

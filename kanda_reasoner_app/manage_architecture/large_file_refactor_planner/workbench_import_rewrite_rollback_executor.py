@@ -11,6 +11,14 @@ from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .models import SCHEMA_VERSION
 
 __all__ = [
@@ -138,6 +146,10 @@ def _restore_entries(
     restored: list[str] = []
     retained: list[str] = []
     blockers: list[str] = []
+    fire_shield = build_current_fire_shield_context(
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="workbench-import-rewrite-rollback",
+    )
     for item in entries:
         target = Path(str(item.get("file", ""))).resolve()
         backup = Path(str(item.get("backup_file", ""))).resolve()
@@ -159,10 +171,21 @@ def _restore_entries(
             retained.append(str(target))
             blockers.append(f"IMPORT_REWRITE_BACKUP_HASH_MISMATCH:{backup}")
             continue
+        assert_fire_shield_write_allowed(
+            fire_shield,
+            target,
+            operation="REPLACE",
+        )
+        assert_fire_shield_payload_bytes_allowed(
+            fire_shield,
+            backup_text.encode("utf-8"),
+            target.relative_to(project_root).as_posix(),
+        )
         temp_file = target.with_suffix(target.suffix + ".kanda_import_rewrite_rollback_tmp")
         temp_file.write_text(backup_text, encoding="utf-8")
         shutil.move(str(temp_file), str(target))
         restored.append(str(target))
+    verify_tool_snapshot_unchanged(fire_shield)
     return restored, retained, blockers
 
 

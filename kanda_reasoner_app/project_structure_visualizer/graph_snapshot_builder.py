@@ -14,7 +14,6 @@ from kanda_reasoner_app.project_analysis_evidence_paths import (
     project_analysis_evidence_root,
 )
 from kanda_reasoner_app.reasoner_symbol_atlas.complete_json_adapter import (
-    collect_reasoner_symbol_atlas_complete_json_files,
     load_reasoner_symbol_atlas_complete_json,
 )
 from kanda_reasoner_app.reasoner_symbol_atlas.output_policy import (

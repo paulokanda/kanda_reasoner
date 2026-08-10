@@ -7,7 +7,6 @@ __all__ = [
 ]
 
 import json
-import re
 
 from .heuristics import _prettify
 

@@ -258,7 +258,7 @@ class LazyTabLayoutRelocationMixin:
         path_edit.setReadOnly(True)
         path_edit.setMinimumWidth(280)
         path_edit.setMaximumWidth(460)
-        path_edit.setStyleSheet("color: #9DC08B; font-weight: bold;")
+        path_edit.setStyleSheet("color: #166534; font-weight: bold;")
         path_edit.setToolTip("Shell-owned Active Project source root.")
 
         destination_layout.insertWidget(destination_layout.count(), label, 0)
@@ -282,7 +282,7 @@ class LazyTabLayoutRelocationMixin:
         label.setStyleSheet(
             "color: #0B3D91; font-weight: bold; padding-left: 4px;"
         )
-        path_widget.setStyleSheet("color: #9DC08B; font-weight: bold;")
+        path_widget.setStyleSheet("color: #166534; font-weight: bold;")
 
         destination_layout = self.tab_header_template.project_root_layout
         if isinstance(browse_button, QWidget):

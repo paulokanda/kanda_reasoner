@@ -25,7 +25,6 @@ __all__ = [
 from kanda_reasoner_app.routing_signal_scorer._human_decision_intake_constants import (
     HUMAN_DECISION_INTAKE_FEATURE_ID,
     HUMAN_DECISION_INTAKE_SCHEMA_VERSION,
-    HUMAN_DECISION_INTAKE_STATUS,
     REQUIRED_INTAKE_FIELDS,
     REQUIRED_DECISION_SCOPE,
     ALLOWED_INTAKE_STATUSES,

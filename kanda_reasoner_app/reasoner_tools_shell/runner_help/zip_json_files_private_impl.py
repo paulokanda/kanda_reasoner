@@ -17,35 +17,14 @@ from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_state_pr
     STATUS_FILE_NAME as _public_STATUS_FILE_NAME,
 )
 from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_paths_private_impl import (
-    _destination_inside_project_root,
-    _existing_dialog_start_folder,
-    _fallback_dialog_start_folder,
-    _is_known_show_project_root_file,
-    _is_transient_daily_refactor_folder,
-    _require_show_project_child_dir,
-    _start_folder_for_dialog,
     cleanup_show_project_to_ai_root_after_success as _public_cleanup_show_project_to_ai_root_after_success,
     resolve_zip_dialog_start_folder as _public_resolve_zip_dialog_start_folder,
 )
 from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_process_private_impl import (
-    _append_log,
-    _decode_process_output,
-    _finish_zip_status,
-    _on_zip_process_error,
-    _on_zip_process_finished,
-    _process_helpers,
-    _qt_widgets,
-    _set_controls_enabled,
-    _start_zip_process,
-    _start_zip_status,
     auto_zip_json_complete as _public_auto_zip_json_complete,
     run_zip_json_files as _public_run_zip_json_files,
 )
 from kanda_reasoner_app.reasoner_tools_shell.runner_help.zip_json_files_publish_private_impl import (
-    _clear_dir_contents,
-    _refresh_bundle_manifest_after_publish_rewrite,
-    _remove_forbidden_second_prompt_payloads,
-    _rewrite_generated_text_paths,
     clear_second_prompt_files_building_dir as _public_clear_second_prompt_files_building_dir,
     clear_second_prompt_files_dir as _public_clear_second_prompt_files_dir,
     cleanup_loose_json_files_after_success as _public_cleanup_loose_json_files_after_success,

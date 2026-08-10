@@ -19,7 +19,7 @@ import sys
 import traceback
 from pathlib import Path
 
-from PySide6.QtCore import QObject, QThread, Signal, Qt
+from PySide6.QtCore import QObject, QThread, Signal
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (
     QApplication,

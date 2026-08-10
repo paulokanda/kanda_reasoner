@@ -81,6 +81,12 @@ def validate_prompt(project_root: Path) -> None:
     gate("BRICK_WALL_FRESHNESS_RESET", "reset evidence-sensitive ticks" in prompt.lower())
     gate("BRICK_WALL_HUMAN_FREEZE_GUARD", "Confirm and Write" in prompt and "user-local validation" in prompt)
     gate("BRICK_WALL_COORDINATOR_NOT_OWNER", "does not replace the owner" in prompt.lower())
+    sequence = "RECONCILE -> REPAIR -> VALIDATE -> SHIELD -> FREEZE -> EXTRACT -> ADOPT"
+    gate("BRICK_WALL_Q37_PROVEN_EXTRACTION_SEQUENCE", sequence in prompt)
+    gate(
+        "BRICK_WALL_Q37_METADATA_SEQUENCE_GUARD",
+        any(sequence in str(rule) for rule in meta.get("do_not_regress", [])),
+    )
 
 
 def validate_routing(project_root: Path) -> None:

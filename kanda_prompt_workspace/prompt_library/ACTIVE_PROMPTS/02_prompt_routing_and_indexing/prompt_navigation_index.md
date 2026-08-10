@@ -2,7 +2,7 @@
 prompt_id: prompt_navigation_index
 prompt_code: KPR-02-004
 title: Prompt Navigation Index
-version: 5.0
+version: 5.1
 status: active
 load_type: always_startup
 owner_box: 02_prompt_routing_and_indexing
@@ -104,7 +104,7 @@ KANDA_FREEZE_HINT.json
 
 ## Project Tool Boundary route
 
-Load KPR-12-001 for root ownership, self-hosting, Project Support, transient workspace, generated-evidence authority, or cross-project access.
+Load KPR-12-001 for root ownership, self-hosting, Project Support, transient workspace, generated-evidence authority, cross-project access, or Fire Shield policy. For a verified external Project, consequential mutation/extraction/package/install/restore/move/rename/delete or Project Python/import-isolation work must use the Tool-owned public Fire Shield authority. Missing, stale, unavailable, ambiguous, or BLOCKED Fire Shield is a hard stop; prompt-only compliance is not a fallback.
 
 ## Architecture Review Project Card Machine route
 

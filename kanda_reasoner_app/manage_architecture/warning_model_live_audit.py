@@ -8,7 +8,10 @@ from dataclasses import dataclass
 from pathlib import Path
 import os
 import subprocess
-import sys
+
+from kanda_reasoner_app.project_python_fire_shield import (
+    run_project_python_governed,
+)
 
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import (
     WarningFinding,
@@ -83,16 +86,13 @@ def run_fresh_test_protection_audit(
     env = dict(os.environ)
     env["PYTHONPATH"] = str(root)
     try:
-        completed = runner(
-            [sys.executable, str(cli), "--root", str(root), "--validate"],
-            cwd=str(root),
+        completed = run_project_python_governed(
+            root,
+            [str(cli), "--root", str(root), "--validate"],
+            cwd=root,
             env=env,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
             timeout=timeout_seconds,
-            check=False,
+            self_host_runner=runner,
         )
     except subprocess.TimeoutExpired as exc:
         raise RuntimeError("Fresh Architecture Review timed out.") from exc

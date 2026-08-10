@@ -7,7 +7,7 @@ __all__: list[str] = []
 
 from typing import Mapping, Sequence
 
-from .models import ADVISORY_AUTHORITY, ADVISORY_FEATURE_ID, PRE_OUTPUT_HOOK
+from .models import ADVISORY_AUTHORITY, ADVISORY_FEATURE_ID
 from .scoring import _level, score_routing_signals
 
 def build_routing_advisory(text: str, *, max_suggestions: int = 5) -> dict[str, object]:

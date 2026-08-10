@@ -1,5 +1,9 @@
 
 # project-path: kanda_reasoner_app/reasoner_symbol_atlas/__init__.py
+from .review_session import (
+    ProjectSymbolAtlasReviewSessionIdentity,
+    reasoner_symbol_atlas_review_session,
+)
 from .reference_folder_policy import (
     PROJECT_SYMBOL_ATLAS_INACTIVE_REFERENCE_FOLDERS,
     build_reasoner_symbol_atlas_reference_path_markers,
@@ -184,6 +188,8 @@ from .json_active_scope_quality import (
 )
 
 __all__ = [
+    "ProjectSymbolAtlasReviewSessionIdentity",
+    "reasoner_symbol_atlas_review_session",
     "ACTIVE_PATH_FIELD_NAMES",
     "ACTIVE_PATH_SECTIONS",
     "PROJECT_SYMBOL_ATLAS_JSON_QUALITY_STATUS_ACTIVE_LEAK",

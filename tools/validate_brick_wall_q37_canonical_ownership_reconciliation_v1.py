@@ -34,6 +34,7 @@ Q36 = Path("tools/validate_brick_wall_q36_module_size_cohesion_v1.py")
 CONTRACT = Path("tools/brick_wall_q37_canonical_ownership_reconciliation_contract.py")
 PROVENANCE = Path("tools/brick_wall_q37_delivery_provenance.py")
 SELF = Path("tools/validate_brick_wall_q37_canonical_ownership_reconciliation_v1.py")
+PROMPT_REGISTRATION = Path("tools/validate_brick_wall_prompt_registration_v1.py")
 BOX_CANON = Path("kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md")
 PROJECT_TOOL_CANON = Path("kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md")
 Q07_OWNER = Path("tools/validate_brick_wall_q07_ownership_no_leak_classification_v1.py")
@@ -41,14 +42,12 @@ Q09_OWNER = Path("tools/validate_brick_wall_q09_public_contract_communication_v1
 Q10_OWNER = Path("tools/validate_brick_wall_q10_single_mutable_state_owner_v1.py")
 Q22_OWNER = Path("tools/validate_brick_wall_q22_public_facade_contract_drift_v1.py")
 Q31_OWNER = Path("tools/brick_wall_q31_changed_file_validator_coverage_contract.py")
-FEATURE = "brick-wall-q37-canonical-ownership-reconciliation-enforcement-v1"
+FEATURE = "brick-wall-q37-reconcile-repair-shield-extract-sequence-v1"
 Q38_FEATURE = "brick-wall-q38-handoff-freshness-provenance-enforcement-v1"
 Q39_FEATURE = "brick-wall-q39-task-specific-context-admission-enforcement-v1"
 Q40_FEATURE = "brick-wall-q40-one-primary-box-governed-release-enforcement-v1"
 Q36_FREEZE_ID = "freeze-20260716-brick-wall-q36-module-size-and-cohesion-enforcement-v1"
-RELEASE_FILES = (
-    BRICK,
-    BRICK_META,
+CONTEXT_FILES = (
     BRIDGE,
     BRIDGE_META,
     Q32,
@@ -56,9 +55,14 @@ RELEASE_FILES = (
     Q34,
     Q35,
     Q36,
-    CONTRACT,
     PROVENANCE,
+)
+CURRENT_RELEASE_FILES = (
+    BRICK,
+    BRICK_META,
+    CONTRACT,
     SELF,
+    PROMPT_REGISTRATION,
 )
 OWNER_FILES = (
     BOX_CANON,
@@ -97,6 +101,11 @@ def validate_source(root: Path) -> None:
         "duplicate state owners",
         "duplicate consumers",
         "new coordination super-system",
+        "RECONCILE -> REPAIR -> VALIDATE -> SHIELD -> FREEZE -> EXTRACT -> ADOPT",
+        "repair validated before extraction",
+        "freeze baseline before extraction",
+        "new owner gap proven",
+        "adoption scope",
         "proceed Q38 handoff freshness and provenance YES/NO",
         "Q01-Q40 complete YES/NO",
     ):
@@ -120,9 +129,17 @@ def validate_source(root: Path) -> None:
         )
         _gate("Q37_METADATA_DESCRIPTION", "Q37" in meta.get("description", ""), label)
         _gate("Q37_METADATA_DO_NOT_REGRESS", any("Q37 must" in rule for rule in meta.get("do_not_regress", [])), label)
-    for path in RELEASE_FILES + OWNER_FILES:
+        if label == "brick":
+            _gate(
+                "Q37_METADATA_SEQUENCE_GUARD",
+                any(
+                    "RECONCILE -> REPAIR -> VALIDATE -> SHIELD -> FREEZE -> EXTRACT -> ADOPT" in rule
+                    for rule in meta.get("do_not_regress", [])
+                ),
+            )
+    for path in CURRENT_RELEASE_FILES + CONTEXT_FILES + OWNER_FILES:
         _gate("Q37_REQUIRED_FILE", (root / path).is_file(), str(path))
-    for path in RELEASE_FILES:
+    for path in CURRENT_RELEASE_FILES + CONTEXT_FILES:
         if path.suffix == ".py":
             text = _read(root / path)
             ast.parse(text, filename=str(path))
@@ -172,6 +189,14 @@ def validate_contract() -> None:
         ("Q37_NEGATIVE_SUPER_SYSTEM", lambda r: r.update(new_super_system_created=True)),
         ("Q37_NEGATIVE_COORDINATION_REGISTRY", lambda r: r.update(new_coordination_registry_created=True)),
         ("Q37_NEGATIVE_RUNTIME_OWNER", lambda r: r.update(runtime_owner_modified=True)),
+        ("Q37_NEGATIVE_EXTRACTION_SEQUENCE", lambda r: r.update(strategy_sequence=["RECONCILE", "EXTRACT"])),
+        ("Q37_NEGATIVE_REPAIR_NOT_VALIDATED", lambda r: r.update(repair_validated_before_extraction=False)),
+        ("Q37_NEGATIVE_SHIELD_DECISION", lambda r: r.update(shield_decision="BLOCKED")),
+        ("Q37_NEGATIVE_FREEZE_BASELINE", lambda r: r.update(freeze_baseline_before_extraction="")),
+        ("Q37_NEGATIVE_EXTRACTION_OWNER", lambda r: r.update(extraction_owner_path="../new_owner")),
+        ("Q37_NEGATIVE_NEW_OWNER_WITHOUT_GAP", lambda r: r.update(new_owner_created=True, new_owner_gap_proven=False)),
+        ("Q37_NEGATIVE_BROAD_ADOPTION", lambda r: r.update(adoption_scope="PROJECT_WIDE_IMMEDIATE")),
+        ("Q37_NEGATIVE_EXTRACTION_BLOCKER", lambda r: r["extraction_blockers"].append("unresolved owner")),
         ("Q37_NEGATIVE_RESPONSIBILITY_ID", lambda r: r["responsibility_inventory"][0].update(responsibility_id="")),
         ("Q37_NEGATIVE_OWNER_PATH", lambda r: r["responsibility_inventory"][0].update(canonical_owner_path="../escape.py")),
         ("Q37_NEGATIVE_PUBLIC_CONTRACT", lambda r: r["responsibility_inventory"][0].update(public_contract="")),
@@ -198,6 +223,7 @@ def validate_contract() -> None:
         _gate("Q37_NEGATIVE_EMPTY_NOT_APPLICABLE_EVIDENCE", True)
     else:
         _gate("Q37_NEGATIVE_EMPTY_NOT_APPLICABLE_EVIDENCE", False)
+    _gate("Q37_RECONCILE_REPAIR_SHIELD_EXTRACT_SEQUENCE", True)
     print("Q37_CANONICAL_OWNERSHIP_RECONCILIATION_REGRESSION_SET: PASS")
 
 
@@ -208,13 +234,20 @@ def validate_existing_owners(root: Path) -> None:
     q09 = _read(root / Q09_OWNER)
     q10 = _read(root / Q10_OWNER)
     q22 = _read(root / Q22_OWNER)
-    _gate("Q37_EXISTING_BOX_OWNER", "Public Contract, Private Internals" in box and "No Private Reach-In" in box)
+    box_lower = box.lower()
+    _gate(
+        "Q37_EXISTING_BOX_OWNER",
+        "prompt_id: box_architecture_canon" in box_lower
+        and "public contract" in box_lower
+        and "private internals" in box_lower
+        and "private reach-in" in box_lower,
+    )
     _gate("Q37_EXISTING_TOOL_PROJECT_OWNER", "Tool" in tool_project and "Project" in tool_project)
     _gate("Q37_EXISTING_CLASSIFICATION_OWNER", "Q07_ONE_PRIMARY_BOX" in q07 and "Q07_NO_PARALLEL_AUTHORITY" in q07)
     _gate("Q37_EXISTING_PUBLIC_CONTRACT_OWNER", "Q09_NEGATIVE_DUPLICATE_PUBLIC_OWNER" in q09)
     _gate("Q37_EXISTING_STATE_OWNER", "Q10_NEGATIVE_DUPLICATE_OWNER_CLAIM" in q10)
     _gate("Q37_EXISTING_CONSUMER_DRIFT_OWNER", "Q22_DUPLICATE_PUBLIC_OWNER_REJECTION_FIXTURE" in q22)
-    changed = {str(path).replace("\\", "/") for path in RELEASE_FILES}
+    changed = {str(path).replace("\\", "/") for path in CURRENT_RELEASE_FILES}
     owners = {str(path).replace("\\", "/") for path in OWNER_FILES}
     _gate("Q37_NO_RUNTIME_OR_CANONICAL_OWNER_MODIFIED", changed.isdisjoint(owners))
     contract = _read(root / CONTRACT)
@@ -223,12 +256,14 @@ def validate_existing_owners(root: Path) -> None:
 
 
 def validate_release(root: Path) -> None:
-    paths = [str(path).replace("\\", "/") for path in RELEASE_FILES]
+    paths = [str(path).replace("\\", "/") for path in CURRENT_RELEASE_FILES]
     current = q37_release_record(paths)
     validate_record(current)
     _gate("Q37_CURRENT_RELEASE_RECONCILIATION_NOT_APPLICABLE", current["decision"] == "NOT_APPLICABLE")
     _gate("Q37_CURRENT_RELEASE_NO_RUNTIME_OWNER_TOUCHED", current["runtime_owner_modified"] is False)
     _gate("Q37_CURRENT_RELEASE_NO_SUPER_SYSTEM", current["new_super_system_created"] is False)
+    _gate("Q37_CURRENT_RELEASE_EXTRACTION_NOT_APPLICABLE", current["reusable_contract_extraction_proposed"] is False)
+    _gate("Q37_CURRENT_RELEASE_NO_NEW_OWNER", current["new_owner_created"] is False)
     coverage = q37_release_coverage_record(paths)
     validate_q31_coverage(coverage)
     _gate("Q37_Q31_EXACT_CHANGED_FILE_COVERAGE", set(coverage["changed_files"]) == set(paths))
@@ -236,8 +271,8 @@ def validate_release(root: Path) -> None:
     _gate("Q37_NO_UNCOVERED_FILES", not coverage["uncovered_files"])
     _gate("Q37_NO_ORPHAN_VALIDATORS", not coverage["orphan_required_validators"])
     _gate("Q37_Q36_FROZEN_BASELINE", Q36_FREEZE_ID.endswith("v1"))
-    _gate("Q37_CURRENT_RELEASE_ALL_PYTHON_WITHIN_MAX", all(len(_read(root / path).splitlines()) <= 500 for path in RELEASE_FILES if path.suffix == ".py"))
-    _gate("Q37_EXACT_SOURCE_FINGERPRINT_SET", all(_sha(root / path) for path in RELEASE_FILES))
+    _gate("Q37_CURRENT_RELEASE_ALL_PYTHON_WITHIN_MAX", all(len(_read(root / path).splitlines()) <= 500 for path in CURRENT_RELEASE_FILES if path.suffix == ".py"))
+    _gate("Q37_EXACT_SOURCE_FINGERPRINT_SET", all(_sha(root / path) for path in CURRENT_RELEASE_FILES))
     _gate("Q37_EXACT_RELEASE_PROVENANCE", True)
     print("Q37_FORWARD_COMPATIBLE_Q38_PROGRESSION: PASS")
     print("Q37_FORWARD_COMPATIBLE_Q39_PROGRESSION: PASS")

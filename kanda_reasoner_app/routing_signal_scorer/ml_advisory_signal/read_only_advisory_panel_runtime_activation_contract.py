@@ -24,7 +24,6 @@ from enum import Enum
 from typing import Mapping, Optional, Tuple
 
 from .read_only_advisory_panel_ui import (
-    ReadOnlyAdvisoryPanelUIState,
     ReadOnlyAdvisoryPanelViewModel,
     build_phase8_read_only_advisory_panel_ui_probe,
 )

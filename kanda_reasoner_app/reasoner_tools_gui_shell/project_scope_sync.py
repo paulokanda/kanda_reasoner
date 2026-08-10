@@ -6,7 +6,6 @@ from __future__ import annotations
 import contextlib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 from PySide6.QtWidgets import (
     QListWidget,

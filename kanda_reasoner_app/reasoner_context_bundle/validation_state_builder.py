@@ -5,9 +5,10 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-import subprocess
 import sys
 from typing import Any, Mapping, Sequence
+
+from kanda_reasoner_app.project_python_fire_shield import run_project_python_governed
 
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
@@ -374,14 +375,11 @@ def _run_one_validation_command(
     
     argv = _argv_for_command(command_spec, context)
     try:
-        completed = subprocess.run(
-            argv,
-            cwd=str(context.root),
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            check=False,
+        completed = run_project_python_governed(
+            context.root,
+            argv[1:],
+            cwd=context.root,
+            tool_source_root=context.tool_source_root,
         )
     except OSError as exc:
         return {

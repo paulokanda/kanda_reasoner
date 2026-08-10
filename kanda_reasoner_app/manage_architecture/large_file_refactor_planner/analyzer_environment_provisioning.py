@@ -7,11 +7,8 @@ from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
-import platform
 import shutil
 import subprocess
-import sys
-import time
 import venv
 
 from .analyzer_capability_preflight import preflight_analyzer_capabilities

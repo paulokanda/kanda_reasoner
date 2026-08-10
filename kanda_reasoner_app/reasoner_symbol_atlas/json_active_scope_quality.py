@@ -23,7 +23,6 @@ from .json_active_scope_quality_helpers_private import (
 from .schemas import (
     ProjectSymbol,
     ProjectSymbolAtlasReport,
-    normalize_project_atlas_sequence,
     normalize_project_atlas_text,
 )
 

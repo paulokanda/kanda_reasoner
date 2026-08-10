@@ -3,7 +3,7 @@
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 from PySide6.QtCore import QProcess, QProcessEnvironment
-from kanda_reasoner_app.project_analysis_evidence_paths import SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, analysis_json_building_dir, analysis_json_complete_dir, primary_evidence_json_path, secondary_evidence_json_path
+from kanda_reasoner_app.project_analysis_evidence_paths import SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, analysis_json_building_dir, analysis_json_complete_dir
 import json
 import os
 import sys

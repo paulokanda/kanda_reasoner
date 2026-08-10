@@ -7,6 +7,14 @@ import hashlib
 import json
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
 from .models import FEATURE_ID, SCHEMA_VERSION
 
@@ -139,7 +147,19 @@ def write_source_apply_rollback_recovery_manifest(result: SourceApplyRollbackRec
         if _sha256_file(target) != result.source_content_hash_after_apply:
             raise RuntimeError("Current source hash changed after rollback readiness check.")
         before_backup_hash = _sha256_file(backup)
-        target.write_bytes(backup.read_bytes())
+        fire_shield = build_current_fire_shield_context(
+            phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+            operation_id="source-apply-rollback-recovery",
+        )
+        backup_raw = backup.read_bytes()
+        assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(
+            fire_shield,
+            backup_raw,
+            target.name,
+        )
+        target.write_bytes(backup_raw)
+        verify_tool_snapshot_unchanged(fire_shield)
         after_target_hash = _sha256_file(target)
         after_backup_hash = _sha256_file(backup)
         payload["source_content_hash_after_rollback"] = after_target_hash

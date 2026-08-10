@@ -68,7 +68,7 @@ and optional performance limits.
 Supported placeholders:
 
 - `{root}` => selected project root
-- `{python}` => current Python executable
+- `{python}` => selected Active Project `.venv` Python interpreter
 
 ## Recommended flow
 

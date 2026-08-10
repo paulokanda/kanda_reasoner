@@ -1,15 +1,35 @@
 # project-path: kanda_reasoner_app/reasoner_context_collector/collector_widget_registry_help/_widget_registry_part1_bindings.py
-"""Explicit dependency bindings for widget registry part 1 private methods."""
+"""Canonical immutable bindings for widget registry private methods."""
 from __future__ import annotations
 
 import ast
 from typing import Any, Callable, Mapping
 
+from .ast_primitives import (
+    FUNCTION_SCOPE_KINDS,
+    LAYOUT_METHODS,
+    LIST_SETTER_TO_FIELD,
+    SINGLE_ITEM_SETTER_TO_FIELD,
+    TEXT_SETTER_TO_FIELD,
+    _build_widget_id,
+    _expr_to_ref,
+    _extract_constructor_display_text,
+    _extract_constructor_parent_ref,
+    _extract_layout_position_from_add_widget,
+    _first_arg,
+    _get_widget_type_from_call,
+    _node_to_number,
+    _node_to_text,
+    _node_to_text_list,
+    _safe_str,
+    _variable_name_from_ref,
+)
+
 __all__ = []
 
 
 class _WidgetRegistryPart1Bindings:
-    """Explicit immutable-by-convention dependency contract for implementation owners."""
+    """Immutable-by-convention dependency contract for implementation owners."""
 
     __slots__ = (
         "function_scope_kinds",
@@ -61,7 +81,9 @@ class _WidgetRegistryPart1Bindings:
         self.expr_to_ref = expr_to_ref
         self.extract_constructor_display_text = extract_constructor_display_text
         self.extract_constructor_parent_ref = extract_constructor_parent_ref
-        self.extract_layout_position_from_add_widget = extract_layout_position_from_add_widget
+        self.extract_layout_position_from_add_widget = (
+            extract_layout_position_from_add_widget
+        )
         self.first_arg = first_arg
         self.get_widget_type_from_call = get_widget_type_from_call
         self.node_to_number = node_to_number
@@ -71,56 +93,41 @@ class _WidgetRegistryPart1Bindings:
         self.variable_name_from_ref = variable_name_from_ref
 
 
-class _WidgetRegistryPart1BindingHolder:
-    """Single explicit holder for the active binding contract."""
+_CANONICAL_BINDINGS = _WidgetRegistryPart1Bindings(
+    function_scope_kinds=FUNCTION_SCOPE_KINDS,
+    layout_methods=LAYOUT_METHODS,
+    text_setter_to_field=TEXT_SETTER_TO_FIELD,
+    single_item_setter_to_field=SINGLE_ITEM_SETTER_TO_FIELD,
+    list_setter_to_field=LIST_SETTER_TO_FIELD,
+    build_widget_id=_build_widget_id,
+    expr_to_ref=_expr_to_ref,
+    extract_constructor_display_text=_extract_constructor_display_text,
+    extract_constructor_parent_ref=_extract_constructor_parent_ref,
+    extract_layout_position_from_add_widget=(
+        _extract_layout_position_from_add_widget
+    ),
+    first_arg=_first_arg,
+    get_widget_type_from_call=_get_widget_type_from_call,
+    node_to_number=_node_to_number,
+    node_to_text=_node_to_text,
+    node_to_text_list=_node_to_text_list,
+    safe_str=_safe_str,
+    variable_name_from_ref=_variable_name_from_ref,
+)
 
-    __slots__ = ("current",)
 
-    def __init__(self) -> None:
-        self.current: _WidgetRegistryPart1Bindings | None = None
-
-
-_BINDING_HOLDER = _WidgetRegistryPart1BindingHolder()
-
-
-def _configure_bindings(root_globals: Mapping[str, Any]) -> None:
-    """Bind the exact dependency surface formerly injected into module globals."""
-    _BINDING_HOLDER.current = _WidgetRegistryPart1Bindings(
-        function_scope_kinds=root_globals["FUNCTION_SCOPE_KINDS"],
-        layout_methods=root_globals["LAYOUT_METHODS"],
-        text_setter_to_field=root_globals["TEXT_SETTER_TO_FIELD"],
-        single_item_setter_to_field=root_globals["SINGLE_ITEM_SETTER_TO_FIELD"],
-        list_setter_to_field=root_globals["LIST_SETTER_TO_FIELD"],
-        build_widget_id=root_globals["_build_widget_id"],
-        expr_to_ref=root_globals["_expr_to_ref"],
-        extract_constructor_display_text=root_globals["_extract_constructor_display_text"],
-        extract_constructor_parent_ref=root_globals["_extract_constructor_parent_ref"],
-        extract_layout_position_from_add_widget=root_globals[
-            "_extract_layout_position_from_add_widget"
-        ],
-        first_arg=root_globals["_first_arg"],
-        get_widget_type_from_call=root_globals["_get_widget_type_from_call"],
-        node_to_number=root_globals["_node_to_number"],
-        node_to_text=root_globals["_node_to_text"],
-        node_to_text_list=root_globals["_node_to_text_list"],
-        safe_str=root_globals["_safe_str"],
-        variable_name_from_ref=root_globals["_variable_name_from_ref"],
-    )
+def _configure_bindings(_root_globals: Mapping[str, Any]) -> None:
+    """Preserve the old call surface without accepting injected state."""
+    return None
 
 
 def _bindings() -> _WidgetRegistryPart1Bindings:
-    """Return configured bindings or fail closed before implementation use."""
-    current = _BINDING_HOLDER.current
-    if current is None:
-        raise RuntimeError(
-            "widget registry part 1 bindings are not configured; "
-            "_bind_root_globals must run before implementation methods"
-        )
-    return current
+    """Return the single canonical binding state."""
+    return _CANONICAL_BINDINGS
 
 
 def _node_line(node: object, default: Any) -> Any:
-    """Read AST line metadata explicitly while preserving missing-value fallback."""
+    """Read AST line metadata with an explicit missing-value fallback."""
     if isinstance(node, ast.AST):
         try:
             return node.lineno
@@ -130,7 +137,7 @@ def _node_line(node: object, default: Any) -> Any:
 
 
 def _node_col(node: object, default: Any) -> Any:
-    """Read AST column metadata explicitly while preserving missing fallback."""
+    """Read AST column metadata with an explicit missing-value fallback."""
     if isinstance(node, ast.AST):
         try:
             return node.col_offset
@@ -140,7 +147,7 @@ def _node_col(node: object, default: Any) -> Any:
 
 
 def _node_end_line(node: object, default: Any) -> Any:
-    """Read AST end-line metadata explicitly while preserving missing fallback."""
+    """Read AST end-line metadata with an explicit missing-value fallback."""
     if isinstance(node, ast.AST):
         try:
             return node.end_lineno

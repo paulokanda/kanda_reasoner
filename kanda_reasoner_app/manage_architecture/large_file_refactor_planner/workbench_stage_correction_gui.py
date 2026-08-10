@@ -42,8 +42,6 @@ from .workbench_stage_correction_context import (
 from .workbench_aqr_correction_session import note_aqr_correction_candidate
 from .workbench_correction_candidate_guard import web_ai_plan_materially_changes
 from .workbench_stage_correction_service import (
-    HeuristicWorkbenchCorrectionCandidate,
-    apply_heuristic_workbench_correction,
     build_web_ai_workbench_correction_prompt,
 )
 

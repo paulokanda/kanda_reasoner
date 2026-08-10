@@ -10,11 +10,6 @@ import zipfile
 from pathlib import Path
 
 __all__ = ['ResponseValidationError', 'validate_response_text', 'validate_zip_member_names']
-import argparse
-import json
-import re
-import zipfile
-from pathlib import Path
 
 REQUIRED_GATE_FIELDS = (
     "PATCH DELIVERY GATE",

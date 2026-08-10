@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass
 import hashlib
 import json
 from pathlib import Path
-from typing import Iterable, Mapping
+from typing import Mapping
 
 from .analyzer_environment_contract import AnalyzerEnvironmentLock
 from .analyzer_pinned_environment_spec import pinned_analyzer_spec_hash

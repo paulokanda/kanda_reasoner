@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 __all__: list[str] = []
-import argparse, ast, hashlib, json
+import argparse
+import ast
+import hashlib
+import json
 from pathlib import Path
 from typing import Callable
 

@@ -16,15 +16,10 @@ from _reasoner_tools_gui_engineering_safety_full_audit import (
     _install_complete_engineering_review,
 )
 
-from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import dataclass
-from io import StringIO
-import traceback
 from typing import Callable, Iterable
 
-from kanda_reasoner_app.project_root_resolver import resolve_active_project_root
-
-DEFAULT_PROJECT_ROOT = str(resolve_active_project_root())
+DEFAULT_PROJECT_ROOT = _panel_commands._root_value()
 
 
 @dataclass(frozen=True)
@@ -53,66 +48,33 @@ def get_engineering_safety_panel_catalog() -> tuple[EngineeringSafetyPanelTool, 
 
 
 def _project_root_text(project_root: str | None = None) -> str:
-    """Return a non-empty project root text for default GUI commands."""
-    if project_root is not None:
-        return str(project_root)
-    return str(resolve_active_project_root())
+    """Return the selected Project root through the provenance-checked helper."""
+    return _panel_commands._root_value(project_root)
 
 
 def _call_safety_suite_cli(args: list[str]) -> tuple[int, str, str]:
-    """Call the Safety Suite CLI in-process and capture text output."""
-    stdout_buffer = StringIO()
-    stderr_buffer = StringIO()
-    status = 0
-    try:
-        from kanda_reasoner_app.safety_suite_cli import commands
-
-        cli_main = getattr(commands, "main", None)
-        if cli_main is None:
-            raise RuntimeError("safety_suite_cli.commands.main is not available")
-        with redirect_stdout(stdout_buffer), redirect_stderr(stderr_buffer):
-            result = cli_main(args)
-        if isinstance(result, int):
-            status = result
-        elif result is None:
-            status = 0
-        else:
-            try:
-                status = int(result)
-            except (TypeError, ValueError):
-                status = 0
-    except SystemExit as exc:
-        code = exc.code
-        if isinstance(code, int):
-            status = code
-        elif code is None:
-            status = 0
-        else:
-            status = 1
-            stderr_buffer.write(str(code))
-    except Exception:
-        status = 1
-        stderr_buffer.write(traceback.format_exc())
-    return status, stdout_buffer.getvalue(), stderr_buffer.getvalue()
+    """Call the Tool-owned Safety Suite CLI through the boundary-safe runner."""
+    result = _panel_commands._run_cli_in_process(args)
+    return result.status_code, result.stdout, result.stderr
 
 
 def run_engineering_safety_panel_cli_command(
     command_name: str,
     project_root: str | None = None,
 ) -> str:
-    """Run a panel command and return the formatted display text."""
-    args = build_engineering_safety_panel_cli_args(command_name, project_root)
-    status, stdout_text, stderr_text = _call_safety_suite_cli(args)
+    """Run a Pontual Audit through the same Tool/Project shield as Full Audit."""
+    result = _panel_commands._run_command(command_name, project_root)
+    args = list(result.extra.get("args") or [])
     lines = [
         f"Command: {command_name}",
-        f"Status: {status}",
-        f"Arguments: {' '.join(args)}",
+        f"Status: {result.status_code}",
+        f"Arguments: {' '.join(str(value) for value in args)}",
         "",
         "STDOUT:",
-        stdout_text.strip() or "(no stdout)",
+        result.stdout.strip() or "(no stdout)",
     ]
-    if stderr_text.strip():
-        lines.extend(["", "STDERR:", stderr_text.strip()])
+    if result.stderr.strip():
+        lines.extend(["", "STDERR:", result.stderr.strip()])
     return "\n".join(lines)
 
 
@@ -153,7 +115,16 @@ def create_engineering_safety_panel(
     outer.setContentsMargins(0, 0, 0, 0)
     outer.setSpacing(8)
 
-    audit_tabs = QTabWidget(panel)
+    section_tabs = QTabWidget(panel)
+    section_tabs.setObjectName("engineering_safety_section_tabs")
+
+    engineering_audit_page = QWidget(section_tabs)
+    engineering_audit_page.setObjectName("engineering_safety_engineering_audit_page")
+    engineering_audit_layout = QVBoxLayout(engineering_audit_page)
+    engineering_audit_layout.setContentsMargins(0, 0, 0, 0)
+    engineering_audit_layout.setSpacing(8)
+
+    audit_tabs = QTabWidget(engineering_audit_page)
     audit_tabs.setObjectName("engineering_safety_audit_tabs")
     pontual_audit_page = QWidget(audit_tabs)
     pontual_audit_page.setObjectName("engineering_safety_pontual_audit_page")
@@ -161,8 +132,13 @@ def create_engineering_safety_panel(
     pontual_audit_layout.setContentsMargins(0, 0, 0, 0)
     pontual_audit_layout.setSpacing(8)
     audit_tabs.addTab(pontual_audit_page, "Pontual Audit")
-    outer.addWidget(audit_tabs, 1)
+    engineering_audit_layout.addWidget(audit_tabs, 1)
 
+    section_tabs.addTab(engineering_audit_page, "Engineering Audit")
+    outer.addWidget(section_tabs, 1)
+
+    panel.engineering_safety_section_tabs = section_tabs
+    panel.engineering_safety_engineering_audit_page = engineering_audit_page
     panel.engineering_safety_audit_tabs = audit_tabs
     panel.engineering_safety_pontual_audit_page = pontual_audit_page
     panel.engineering_safety_project_root_provider = project_root_provider
@@ -193,7 +169,7 @@ def create_engineering_safety_panel(
                 selected = ""
             if selected:
                 return selected
-        return str(resolve_active_project_root())
+        return _panel_commands._root_value()
 
     # BEGIN PA021B2_ENGINEERING_SAFETY_PYSIDE6_ASYNC_RUNNER
     from concurrent.futures import ThreadPoolExecutor
@@ -203,7 +179,7 @@ def create_engineering_safety_panel(
 
     def set_tool_buttons_enabled(enabled: bool) -> None:
         """Enable or disable all tool buttons while a command is running."""
-        for button in panel.findChildren(QPushButton):
+        for button in engineering_audit_page.findChildren(QPushButton):
             button.setEnabled(enabled)
 
     _install_complete_engineering_review(

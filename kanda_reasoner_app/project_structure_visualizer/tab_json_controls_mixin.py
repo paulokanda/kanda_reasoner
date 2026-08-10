@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import os
 import sys
-from pathlib import Path
-from typing import Any
 
 from PySide6.QtCore import QProcess, QProcessEnvironment, Slot
 from PySide6.QtWidgets import QMessageBox

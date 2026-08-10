@@ -13,7 +13,6 @@ globals().update({
 })
 # PASS_068A_OVERLAP_CONSTANT_BINDINGS_END
 
-from typing import Any
 
 __all__: list[str] = []
 

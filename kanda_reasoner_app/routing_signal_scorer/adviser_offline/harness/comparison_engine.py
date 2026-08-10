@@ -20,34 +20,20 @@ from typing import Any, Mapping, Sequence
 from ..core.adviser_contract import validate_candidate_answer
 from ..core.adviser_output_guard import guard_candidate_output
 from ..core.adviser_resource_limits import check_all_resource_limits
-from ..core.adviser_severity import evaluate_guard_result, evaluate_candidate_risk
+from ..core.adviser_severity import evaluate_guard_result
 
 from ._comparison_engine_analysis import (
     _candidate_domain,
     _compare_core_fields,
-    _field_impact,
-    _field_recommendation,
-    _field_severity,
-    _missing_context_items,
-    _missing_list_items,
-    _risk_severity_disagreement,
     _severity_from_guard,
 )
 from ._comparison_engine_result_model import (
     _final_result,
 )
 from ._comparison_engine_support import (
-    AUTHORITY_STATEMENT,
-    FEATURE_ID,
     GOVERNED_DOMAINS,
-    P_SEVERITY_TO_DISAGREEMENT,
-    SCHEMA_VERSION,
-    SEVERITY_ORDER,
     TEACHER_REVIEWED_STATUSES,
-    UNSAFE_PROCEED_VALUES,
-    _aggregate_severity,
     _answer_ref,
-    _as_string_sequence,
     _disagreement,
     _extract_case_id,
     _teacher_payload,

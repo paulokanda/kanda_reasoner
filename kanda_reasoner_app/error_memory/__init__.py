@@ -24,11 +24,13 @@ from .exporter import (
 from .guard import analyze_error_against_lessons
 from .importer import import_error_memory_file, import_error_memory_zip
 from .intake import (
-    ERROR_LESSON_JSON_BEGIN,
-    ERROR_LESSON_JSON_END,
     build_error_lesson_ai_form_prompt,
     parse_error_lesson_ai_response,
     save_ai_form_as_lesson,
+)
+from .intake_normalization import (
+    ERROR_LESSON_JSON_BEGIN,
+    ERROR_LESSON_JSON_END,
 )
 from .paths import (
     PROJECT_ERROR_MEMORY_DIR,

@@ -8,7 +8,6 @@ from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.session_ser
     SessionService,
 )
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
-    AGREEMENT_DISAGREE,
     PromptRouterReasonerReviewStore,
     STATUS_PENDING,
 )

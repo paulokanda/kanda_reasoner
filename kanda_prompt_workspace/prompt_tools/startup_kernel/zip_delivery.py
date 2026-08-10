@@ -14,7 +14,6 @@ from startup_freeze_context import (
 )
 from startup_kernel.constants import (
     DEFAULT_ZIP_NAME,
-    FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION,
     MANIFEST_FILENAME,
     PASTE_AFTER_UPLOAD_FILENAME,
     MODIFY_STARTUP_DELIVERY_FILENAME,
@@ -22,8 +21,6 @@ from startup_kernel.constants import (
     README_FILENAME,
     READ_BEFORE_ANY_STARTUP_ARTIFACT_FILENAME,
     SCRIPT_NAME,
-    STABLE_BOOT_FILENAME,
-    STARTUP_ARTIFACT_READ_ORDER_MARKER,
     TOOLS_DIR_NAME,
 )
 from startup_kernel.core_helpers import (
@@ -44,7 +41,6 @@ from startup_kernel.read_order import add_read_order_block, make_startup_artifac
 from startup_kernel.start_here_text import make_start_here_file
 
 from startup_kernel.zip_contract import (
-    read_manifest_from_zip,
     validate_generated_zip_contract,
 )
 

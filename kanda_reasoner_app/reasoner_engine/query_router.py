@@ -6,18 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from kanda_reasoner_app.reasoner_engine._query_router_rules import (
-    CODE_EXPLANATION_TERMS,
-    CODE_LOCALIZATION_TERMS,
-    DISCOVERY_TERMS,
-    EXPLANATORY_CORE_TERMS,
-    EXPLANATORY_TERMS,
-    FILE_LOCATOR_TERMS,
-    RESPONSIBILITY_TERMS,
-    SIGNAL_ACTION_TERMS,
-    SYMBOL_LOCATOR_TERMS,
-    WHICH_CALLS_TERMS,
     WHICH_CALLS_WITH_CODE_EXTRA_TERMS,
-    WIDGET_LISTING_TERMS,
     code_localization_matches as _code_localization_matches,
     exact_file_locator_matches as _exact_file_locator_matches,
     exact_symbol_locator_matches as _exact_symbol_locator_matches,

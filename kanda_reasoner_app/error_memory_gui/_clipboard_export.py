@@ -11,8 +11,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from kanda_reasoner_app.external_ai_workflow import (
-    handoff_to_selected_external_ai,
+from kanda_reasoner_app.error_memory.editor_clipboard import (
+    extract_error_editor_text_for_ai,
 )
 from kanda_reasoner_app.error_memory.exporter import (
     build_complete_error_memory_ai_clipboard_json,
@@ -217,61 +217,40 @@ def show_active_ready_failure_copy_window(tab: Any, *, source_label: str, lesson
     )
 
 
-def copy_ai_assisted_intake_error_draft_to_clipboard(tab: Any) -> None:
-    """Copy AI-assisted intake text and open the selected external assistant."""
+def _copy_error_text_only(tab: Any, text: str, *, empty_title: str) -> None:
+    """Copy only the current meaningful error text to the system clipboard."""
     QMessageBox = _message_box()
-    intake_text = tab.raw_error_edit.toPlainText().strip()
-    if not intake_text:
-        QMessageBox.warning(tab, 'AI-assisted intake is empty', 'Copy and Open External AI uses only the AI-assisted error lesson intake window. Load, paste, or import one error first.')
-        return
-    context_text = "SOURCE WINDOW: AI-assisted error lesson intake\n\n" + intake_text
-    try:
-        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(
-            context_text=context_text
+    clipboard_text = extract_error_editor_text_for_ai(text)
+    if not clipboard_text:
+        QMessageBox.warning(
+            tab,
+            empty_title,
+            'There is no error text to copy. Load, paste, import, or select one error first.',
         )
-        result = handoff_to_selected_external_ai(clipboard_text)
-    except Exception as exc:
-        _show_error(tab, title='AI-assisted intake handoff failed', message=str(exc))
         return
-    if not result.ok:
-        _show_error(tab, title='AI-assisted intake handoff failed', message=result.error)
-        return
-    tab._show_action_done(
-        'External AI handoff ready',
-        'The Error Memory draft and active-ready templates were copied and '
-        + result.display_name
-        + ' was opened.',
-        'Paste manually. The returned lesson remains a draft until it passes intake '
-        'validation and the human explicitly selects Memorize Error.',
+    QApplication = _application()
+    clipboard = QApplication.clipboard()
+    mode = _clipboard_mode()
+    clipboard.clear(mode=mode)
+    clipboard.setText(clipboard_text, mode=mode)
+    QApplication.processEvents()
+
+
+def copy_ai_assisted_intake_error_draft_to_clipboard(tab: Any) -> None:
+    """Copy only the AI-assisted intake error text to the clipboard."""
+    _copy_error_text_only(
+        tab,
+        tab.raw_error_edit.toPlainText(),
+        empty_title='AI-assisted intake is empty',
     )
 
 
 def copy_error_draft_to_clipboard(tab: Any) -> None:
-    """Copy Error Editor text and open the selected external assistant."""
-    QMessageBox = _message_box()
-    error_draft_text = tab.received_preview_edit.toPlainText().strip()
-    if not error_draft_text:
-        QMessageBox.warning(tab, 'Error Editor is empty', 'Copy and Open External AI uses only the Error Editor window. Load, paste, import, or select one error first.')
-        return
-    context_text = "SOURCE WINDOW: Error Editor\n\n" + error_draft_text
-    try:
-        clipboard_text = tab._error_lesson_intake_blueprint_clipboard_text(
-            context_text=context_text
-        )
-        result = handoff_to_selected_external_ai(clipboard_text)
-    except Exception as exc:
-        _show_error(tab, title='Error Editor handoff failed', message=str(exc))
-        return
-    if not result.ok:
-        _show_error(tab, title='Error Editor handoff failed', message=result.error)
-        return
-    tab._show_action_done(
-        'External AI handoff ready',
-        'The Error Editor draft and active-ready templates were copied and '
-        + result.display_name
-        + ' was opened.',
-        'Paste manually. The external answer cannot save, activate, supersede, or '
-        'memorize a lesson.',
+    """Copy only the current Error Editor error text to the clipboard."""
+    _copy_error_text_only(
+        tab,
+        tab.received_preview_edit.toPlainText(),
+        empty_title='Error Editor is empty',
     )
 
 

@@ -7,9 +7,12 @@ __all__: list[str] = []
 import importlib
 import json
 from pathlib import Path
-import tempfile
 import sys
 from typing import Iterable
+
+from brick_wall_q20_isolated_filesystem_fixture import (
+    isolated_registered_project_fixture,
+)
 
 FEATURE_ID = "brick-wall-q03-error-memory-regression-obligation-matrix-v1"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -181,13 +184,13 @@ def _validate_contract_sources() -> None:
 def _validate_generated_export() -> None:
     module = _load_exporter_module()
     print("Q03_VALIDATOR_PACKAGE_IMPORT_CONTEXT: PASS")
-    with tempfile.TemporaryDirectory(prefix="kanda_q03_") as temp_dir:
-        fixture = Path(temp_dir)
-        project_root = fixture / "sample_project"
-        destination = fixture / "second_prompt_files"
-        project_root.mkdir()
+    with isolated_registered_project_fixture(
+        tool_source_root=PROJECT_ROOT,
+        prefix="kanda_q03_",
+    ) as layout:
+        destination = layout.transient_root / "second_prompt_files"
         result = module.write_error_memory_ai_send_files(
-            project_root,
+            layout.source_root,
             destination,
             max_lessons=10,
         )

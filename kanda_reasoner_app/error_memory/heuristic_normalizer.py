@@ -9,6 +9,11 @@ locked in the GUI and requires AI-assisted correction.
 
 from __future__ import annotations
 
+from .intake_normalization import (
+    ERROR_LESSON_JSON_BEGIN,
+    ERROR_LESSON_JSON_END,
+)
+
 
 __all__ = ['classify_and_normalize_error_lesson_text', 'HeuristicCorrectionResult']
 from dataclasses import dataclass
@@ -19,8 +24,6 @@ from typing import Any, Callable
 
 from .models import active_ready_missing_reasons
 
-ERROR_LESSON_JSON_BEGIN = "KANDA_ERROR_LESSON_JSON_BEGIN"
-ERROR_LESSON_JSON_END = "KANDA_ERROR_LESSON_JSON_END"
 
 
 def utc_now_iso() -> str:

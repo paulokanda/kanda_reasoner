@@ -27,7 +27,6 @@ from .collector_responsibility_overlap_helpers_private import (
     _safe_role,
     _basename_tokens,
     _semantic_role_set,
-    _normalize_text_tokens,
     _summary_terms,
 )
 

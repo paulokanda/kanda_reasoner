@@ -16,7 +16,6 @@ from typing import Any
 from .collector_implementation_chronology_helpers_private import (
     _safe_float,
     _safe_int,
-    _normalize_path,
     _path_tokens,
     _safe_bucket,
     _safe_boundary_role,

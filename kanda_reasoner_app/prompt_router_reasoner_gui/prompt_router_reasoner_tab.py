@@ -27,9 +27,7 @@ from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_manual_router_cho
     capture_manual_router_choice,
     sha256_text,
 )
-from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
-    REVIEW_FOLDER_NAME,
-)
+from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_models import REVIEW_FOLDER_NAME
 
 from ._prompt_router_reasoner_tab_ui import (
     build_final_prompt_group as _build_final_prompt_group_ui,

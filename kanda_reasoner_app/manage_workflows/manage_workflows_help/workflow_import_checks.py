@@ -3,27 +3,20 @@
 
 from __future__ import annotations
 
-import argparse
-import contextlib
-import difflib
 import fnmatch
-import importlib.util
-import io
 import json
 import logging
-import os
-import shutil
 import subprocess
-import sys
-import tempfile
 import time
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .workflow_constants import (
     IMPORT_PROBE_CODE,
+)
+from .workflow_python_runtime import (
+    resolve_project_python,
+    run_project_python_probe,
 )
 from .workflow_models import (
     CheckResult,
@@ -32,6 +25,23 @@ from .workflow_models import (
 __all__ = [
     "run_import_checks",
 ]
+
+
+def _probe_argv(project_python: Path, root: Path, module: str) -> list[str]:
+    """Return the exact argument vector used for an isolated import probe."""
+    return [
+        str(project_python),
+        "-I",
+        "-c",
+        IMPORT_PROBE_CODE,
+        str(root),
+        module,
+    ]
+
+
+def _render_probe_argv(argv: list[str]) -> str:
+    """Render the exact probe argument vector without shell re-interpretation."""
+    return "argv=" + json.dumps(argv, ensure_ascii=True)
 
 def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any]) -> list[CheckResult]:
     """Run the import checks.
@@ -76,18 +86,21 @@ def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any
     if not filtered:
         return [CheckResult("imports", "imports", "warn", "No eligible modules for import probing.")]
 
+    try:
+        project_python = resolve_project_python(root)
+    except RuntimeError as exc:
+        return [CheckResult("imports", "imports", "fail", str(exc))]
+
     results: list[CheckResult] = []
     for module in filtered[:module_limit]:
         start = time.perf_counter()
         try:
-            completed = subprocess.run(
-                [sys.executable, "-I", "-c", IMPORT_PROBE_CODE, str(root), module],
-                capture_output=True,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                timeout=timeout,
-                check=False,
+            probe_argv = _probe_argv(project_python, root, module)
+            completed = run_project_python_probe(
+                root,
+                probe_argv[1:],
+                cwd=root,
+                timeout=float(timeout),
             )
         except subprocess.TimeoutExpired as exc:
             results.append(
@@ -97,7 +110,7 @@ def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any
                     "fail",
                     f"Import probe timed out after {timeout} second(s).",
                     duration_seconds=time.perf_counter() - start,
-                    command=f"{sys.executable} -I -c <probe> {module}",
+                    command=_render_probe_argv(probe_argv),
                     details={"stdout": exc.stdout or "", "stderr": exc.stderr or ""},
                 )
             )
@@ -112,7 +125,7 @@ def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any
                     "fail",
                     f"Import probe process exited with code {completed.returncode}.",
                     duration_seconds=duration,
-                    command=f"{sys.executable} -I -c <probe> {module}",
+                    command=_render_probe_argv(probe_argv),
                     details={"stdout": completed.stdout, "stderr": completed.stderr},
                 )
             )
@@ -129,7 +142,7 @@ def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any
                     "fail",
                     f"Import probe returned invalid JSON: {exc}",
                     duration_seconds=duration,
-                    command=f"{sys.executable} -I -c <probe> {module}",
+                    command=_render_probe_argv(probe_argv),
                     details={"stdout": completed.stdout, "stderr": completed.stderr},
                 )
             )
@@ -162,7 +175,7 @@ def run_import_checks(root: Path, discovered: dict[str, Any], cfg: dict[str, Any
                 status,
                 "; ".join(message_parts),
                 duration_seconds=float(payload.get("duration_seconds", duration)),
-                command=f"{sys.executable} -I -c <probe> {module}",
+                command=_render_probe_argv(probe_argv),
                 details=payload,
             )
         )

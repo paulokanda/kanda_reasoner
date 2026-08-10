@@ -7,10 +7,7 @@ from pathlib import Path
 
 
 if False:
-    from kanda_reasoner_app.insert_missing_docstrings_gui.insert_missing_docstrings_gui_help.manual_docstring_review_support import (
-        apply_saved_manual_review_state,
-        save_manual_review_state,
-    )
+    pass
 
 
 ROOT = Path(__file__).resolve().parents[1]

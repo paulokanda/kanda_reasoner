@@ -13,34 +13,18 @@ canonical complete JSON.
 from __future__ import annotations
 
 import argparse
-import copy
-import hashlib
 import json
-import os
-import sys
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 from .json_splitter_split_reassemble_validation_help.core import (
     CHUNK_SCHEMA,
-    ROUTE_MANIFEST_SCHEMA,
     stable_hash,
     _load_json,
     _safe_text,
     _safe_int,
-    _get_entries,
-    _sort_key_for_entry,
-    _rebuild_container,
-    _set_nested_value,
-    _get_nested_value,
-    _resolve_source_file,
-    _expected_chunk_from_source,
-    _expected_coverage_keys,
-    _sorted_key_sample,
     _validate_partitions_against_source,
     _find_single_manifest,
-    _chunk_value_from_doc,
     _validate_route_manifest,
     _reassemble_from_manifest,
 )

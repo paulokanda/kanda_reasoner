@@ -5,7 +5,6 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from pathlib import Path
 import shutil
-from typing import Iterable
 
 from .advanced_quality_review_contract import (
     AnalysisExecutionStatus,

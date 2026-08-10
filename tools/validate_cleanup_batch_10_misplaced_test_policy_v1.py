@@ -1,7 +1,7 @@
 # project-path: tools/validate_cleanup_batch_10_misplaced_test_policy_v1.py
 """Validate Cleanup Batch 10 misplaced-test policy wiring."""
 from __future__ import annotations
-import importlib.util, sys
+import sys
 from pathlib import Path
 FEATURE_ID = "cleanup-batch-10-misplaced-test-policy-v1"
 

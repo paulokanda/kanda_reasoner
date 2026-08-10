@@ -6,7 +6,6 @@ from __future__ import annotations
 import ast
 import importlib.util
 import py_compile
-import sys
 from pathlib import Path
 
 FEATURE_ID = "architecture-review-warning-heuristic-resolver-async-sonar-v1"

@@ -8,14 +8,17 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
-from kanda_reasoner_app.project_analysis_evidence_paths import project_name_from_root
-
-from .evidence_paths import get_reasoner_symbol_atlas_canonical_evidence_dir
+from kanda_reasoner_app.project_analysis_evidence_paths import (
+    project_analysis_evidence_root,
+    project_name_from_root,
+)
+from kanda_reasoner_app.project_structure_visualizer.complete_json_zip_cache import (
+    resolve_complete_json_evidence,
+)
 from .schemas import (
     ProjectModuleRecord,
     ProjectSymbol,
     ProjectSymbolAtlasReport,
-    normalize_project_atlas_sequence,
     normalize_project_atlas_text,
 )
 
@@ -63,6 +66,7 @@ __all__ = [
     "build_reasoner_symbol_atlas_complete_json_report",
     "expected_reasoner_symbol_atlas_complete_json_name",
     "collect_reasoner_symbol_atlas_complete_json_files",
+    "resolve_reasoner_symbol_atlas_complete_json_path",
     "load_reasoner_symbol_atlas_complete_json",
     "summarize_reasoner_symbol_atlas_complete_json",
 ]
@@ -132,28 +136,47 @@ def collect_reasoner_symbol_atlas_complete_json_files(
 ) -> tuple[Path, ...]:
     """Return candidate generated complete JSON evidence files.
 
-    The search is recursive under the canonical evidence directory so it can
-    support both flat layouts and the json_complete subfolder created by Tab 4.
-    Runtime-trace and split-part JSON files are intentionally excluded. Files
-    named with the current project prefix, for example
-    ``<project_slug>__complete.json``, are ranked ahead of generic fallback
-    matches so Tab 8 reads the active project's evidence when several projects
-    have JSON files in the same evidence tree.
+    With no explicit evidence directory, delegate to the existing canonical
+    Project Structure 3D resolver so its manifest fingerprint decides whether
+    the Project-owned reconstructed cache is reusable or must be rebuilt.
+    Explicit evidence directories retain the legacy recursive discovery helper
+    for focused tests and compatibility callers.
     """
 
-    root = Path(evidence_dir) if evidence_dir is not None else (
-        get_reasoner_symbol_atlas_canonical_evidence_dir(project_root)
-    )
+    project = Path(project_root).expanduser().resolve(strict=False)
+    if evidence_dir is None:
+        try:
+            selected, _source_label, _cache_status = resolve_complete_json_evidence(
+                project
+            )
+        except (OSError, TypeError, ValueError):
+            return ()
+        if selected is None:
+            return ()
+        support_root = project_analysis_evidence_root(project).resolve(
+            strict=False
+        )
+        resolved = Path(selected).expanduser().resolve(strict=False)
+        try:
+            resolved.relative_to(support_root)
+        except ValueError:
+            return ()
+        return (resolved,)
+
+    root = Path(evidence_dir)
     if not root.is_dir():
         return ()
 
-    expected_name = expected_reasoner_symbol_atlas_complete_json_name(project_root).lower()
+    expected_name = expected_reasoner_symbol_atlas_complete_json_name(
+        project
+    ).lower()
     ranked_candidates: list[tuple[int, float, str, Path]] = []
     for path in root.rglob("*.json"):
         name = path.name.lower()
         if "runtime_trace" in name:
             continue
-        if "split" in path.as_posix().lower() or "json_splitted" in path.as_posix().lower():
+        normalized_path = path.as_posix().lower()
+        if "split" in normalized_path or "json_splitted" in normalized_path:
             continue
         rank = _complete_json_name_rank(name, expected_name)
         if rank is None:
@@ -172,6 +195,24 @@ def expected_reasoner_symbol_atlas_complete_json_name(project_root: str | Path) 
     """Return the preferred complete JSON filename for the supplied project."""
 
     return project_name_from_root(project_root) + "__complete.json"
+
+
+def resolve_reasoner_symbol_atlas_complete_json_path(
+    project_root: str | Path,
+    json_path: str | Path | None = None,
+) -> Path | None:
+    """Resolve current complete JSON through canonical Project-owned evidence.
+
+    Explicit caller paths retain precedence. Otherwise the canonical Project
+    Structure 3D resolver owns verification/reconstruction of Project Support
+    evidence; Symbol Atlas only consumes the resulting verified path.
+    """
+
+    root = Path(project_root).expanduser().resolve(strict=False)
+    if json_path is not None and str(json_path).strip():
+        return Path(json_path).expanduser().resolve(strict=False)
+    candidates = collect_reasoner_symbol_atlas_complete_json_files(root)
+    return candidates[0] if candidates else None
 
 
 def _complete_json_name_rank(name: str, expected_name: str) -> int | None:
@@ -315,9 +356,9 @@ def _select_complete_json_path(
         The resolved path.
     """
     
-    if json_path is not None and str(json_path).strip():
-        return Path(json_path).expanduser().resolve(strict=False)
-    candidates = collect_reasoner_symbol_atlas_complete_json_files(project_root)
-    return candidates[0] if candidates else None
+    return resolve_reasoner_symbol_atlas_complete_json_path(
+        project_root,
+        json_path,
+    )
 
 

@@ -1,7 +1,8 @@
 """Validate Brick Wall Q25 mutation-testing pilot decision governance."""
 from __future__ import annotations
-import argparse, json, re
-from copy import deepcopy
+import argparse
+import json
+import re
 from pathlib import Path
 from typing import Callable, Sequence
 from brick_wall_q25_mutation_testing_pilot_contract import mutated_record, run_bounded_mutation_pilot, validate_record, valid_not_applicable_record, valid_rejected_record, valid_retained_record

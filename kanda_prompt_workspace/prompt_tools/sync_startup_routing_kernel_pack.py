@@ -40,7 +40,6 @@ from __future__ import annotations
 import sys
 
 from startup_kernel.boot_text import (
-    _prepend_startup_first_position_overrides,
     make_boot_command_text,
 )
 from startup_kernel.cli import command_check, command_ensure_sync, confirm_sync, main, parse_args
@@ -62,9 +61,6 @@ from startup_kernel.core_helpers import (
 from startup_kernel.maintenance_text import make_modify_startup_delivery_protocol
 from startup_kernel.paste_readme_text import make_paste_after_uploading_file, make_readme
 from startup_kernel.prompt_library_zip import (
-    _is_prompt_library_payload_file,
-    _load_prompt_metadata_entries,
-    _prompt_library_relpath,
     iter_prompt_library_payload_files,
     make_prompt_library_zip,
     prompt_library_source_fingerprint,
@@ -77,11 +73,13 @@ from startup_kernel.read_order import (
 )
 from startup_kernel.start_here_text import make_start_here_file
 from startup_kernel.startup_source_map import SourceEntry
+from startup_kernel.zip_contract import (
+    read_manifest_from_zip,
+    validate_generated_zip_contract,
+)
 from startup_kernel.zip_delivery import (
     find_delivery_zip,
     make_zip,
-    read_manifest_from_zip,
-    validate_generated_zip_contract,
 )
 
 __all__ = [

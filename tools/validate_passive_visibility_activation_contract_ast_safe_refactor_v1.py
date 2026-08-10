@@ -8,7 +8,6 @@ import ast
 import dataclasses
 import hashlib
 import json
-import sys
 import zipfile
 from pathlib import Path
 from typing import Any

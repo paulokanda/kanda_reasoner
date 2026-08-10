@@ -14,7 +14,7 @@ import json
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
-from typing import Any, Iterable
+from typing import Any
 
 __all__ = [
     "PayloadSpec",

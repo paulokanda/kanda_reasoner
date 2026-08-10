@@ -2,7 +2,7 @@
 """Exact immutable payload sealing for Preview, Shadow Apply, and later real apply."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 import hashlib
 import json
 from pathlib import Path

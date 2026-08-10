@@ -2,14 +2,16 @@
 """Bridge Patch 4 human review state into the proven Patch 5 transaction executor."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from .workbench_journaled_apply_models import (
+    JournaledApplyResult,
+    build_journaled_apply_authorization,
+)
+from dataclasses import dataclass
 from typing import Any
 
 from .workbench_behavior_validation import WorkbenchBehaviorValidationResult, run_workbench_behavior_validation
 from .workbench_completion_workflow import CompletionEvidenceBundle, CompletionTransactionBundle
 from .workbench_journaled_apply_executor import (
-    JournaledApplyResult,
-    build_journaled_apply_authorization,
     execute_journaled_refactor_apply,
     finalize_journaled_refactor_transaction,
 )

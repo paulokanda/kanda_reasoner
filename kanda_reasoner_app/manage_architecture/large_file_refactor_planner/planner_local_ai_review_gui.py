@@ -9,7 +9,6 @@ from collections.abc import Callable
 
 from PySide6.QtCore import QTimer
 
-from .docstring_formatting import format_docstring_proposals
 from .models import PlannerState
 from .planner_local_ai_comprehensive_formatting import (
     format_comprehensive_local_ai_review,
@@ -32,7 +31,6 @@ from .planner_sonar_activity import (
     finish_planner_sonar_success,
     start_local_ai_review_sonar,
 )
-from .split_formatting import format_split_plan
 
 __all__ = ["start_comprehensive_local_ai_review_for_window"]
 

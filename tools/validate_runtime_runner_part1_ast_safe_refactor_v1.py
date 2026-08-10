@@ -6,7 +6,6 @@ import ast
 import base64
 import hashlib
 import json
-import os
 import py_compile
 import tempfile
 import zipfile

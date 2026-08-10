@@ -14,7 +14,6 @@ from .workbench_plan_intake import (
     recheck_workbench_source_hash,
 )
 from .workbench_plan_snapshot import (
-    WorkbenchPlanSnapshot,
     build_workbench_plan_snapshot,
 )
 

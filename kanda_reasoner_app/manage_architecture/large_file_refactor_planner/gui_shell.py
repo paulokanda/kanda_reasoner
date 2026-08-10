@@ -24,7 +24,7 @@ from .gui_warning_input_gate import (
 )
 from .docstring_planner import build_docstring_proposals
 from .split_formatting import format_split_plan
-from .models import FEATURE_ID, PlannerSettings, PlannerState
+from .models import PlannerSettings, PlannerState
 from .planner_background_cancel import cancel_planner_background_work
 from .planner_bounded_refinement import (
     attach_docstring_proposals_to_plan,

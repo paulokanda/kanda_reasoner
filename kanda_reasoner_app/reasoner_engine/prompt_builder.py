@@ -7,7 +7,6 @@ functions live under prompt_builder_help.
 
 from __future__ import annotations
 
-from typing import Any
 
 from .v10_models import ConversationTurn, RetrievalBundle
 from .prompt_builder_help.answer_style import build_answer_style_instructions

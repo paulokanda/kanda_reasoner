@@ -18,7 +18,6 @@ import zipfile
 from tools._query_intents_refactor_spec_v1 import (
     BASELINE_ENTRY,
     BASELINE_SOURCE_SHA256,
-    BASELINE_TERMS,
     ERROR_LESSON_ENTRIES,
     EXPECTED_CONSUMERS_ENTRY,
     EXPECTED_CONSUMERS_SHA256,
@@ -33,7 +32,6 @@ from tools._query_intents_refactor_spec_v1 import (
     TARGET_RELATIVE_PATH,
     VALIDATOR_RELATIVE_PATH,
     _assert,
-    _build_corpus,
     _digest,
     _parse_source,
     _sha256,

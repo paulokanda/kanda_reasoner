@@ -23,26 +23,6 @@ __all__ = [
     'validate_generator_candidate_human_decision_record_contract',
 ]
 
-from kanda_reasoner_app.routing_signal_scorer._generator_candidate_human_decision_record_constants import (
-    GENERATOR_CANDIDATE_HUMAN_DECISION_RECORD_FEATURE_ID,
-    GENERATOR_CANDIDATE_HUMAN_DECISION_RECORD_SCHEMA_VERSION,
-    GENERATOR_CANDIDATE_HUMAN_DECISION_RECORD_STATUS,
-    REQUIRED_HUMAN_DECISION_RECORD_FIELDS,
-    REQUIRED_HUMAN_DECISION_RECORD_SCOPE,
-    ALLOWED_CURRENT_HUMAN_DECISION_RECORD_STATES,
-    REQUIRED_PRIOR_MILESTONES,
-    REQUIRED_FUTURE_RECORDING_INPUTS,
-    ALLOWED_FUTURE_RECORDED_DECISION_VALUES,
-    REQUIRED_ALLOWED_RECORD_OUTPUTS,
-    REQUIRED_PROHIBITED_RECORD_OUTPUTS,
-    REQUIRED_DISABLED_FLAGS_FALSE,
-    FORBIDDEN_RECORD_FIELDS,
-    REQUIRED_NO_AUTHORITY_ASSERTIONS,
-    REQUIRED_RECORD_EFFECT_POLICY,
-    REQUIRED_STOP_CONDITIONS,
-    TRIGGER_TERMS_REQUIRING_FUTURE_PATCH,
-    SCHEMA_TALK_TERMS,
-)
 from kanda_reasoner_app.routing_signal_scorer._generator_candidate_human_decision_record_schema import (
     build_generator_candidate_human_decision_record_contract as _public_build_generator_candidate_human_decision_record_contract,
     classify_generator_candidate_human_decision_record_request as _public_classify_generator_candidate_human_decision_record_request,

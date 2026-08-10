@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    import kanda_reasoner_app.manage_architecture.large_file_refactor_planner.gui_warning_input_gate as _test_protection_gui_warning_input_gate
+    pass
 
 
 import py_compile

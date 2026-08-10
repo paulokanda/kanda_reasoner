@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import ast
 import py_compile
-import sys
 from pathlib import Path
 
 __all__: list[str] = []

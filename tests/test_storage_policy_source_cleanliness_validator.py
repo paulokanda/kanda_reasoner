@@ -9,7 +9,6 @@ import unittest
 from kanda_reasoner_app.storage_policy.source_cleanliness_validator import (
     SOURCE_CLEANLINESS_ACTION,
     SOURCE_CLEANLINESS_CATEGORY_FAILURE,
-    SOURCE_CLEANLINESS_CATEGORY_WARNING,
     SourceCleanlinessFinding,
     SourceCleanlinessReport,
     scan_source_cleanliness,

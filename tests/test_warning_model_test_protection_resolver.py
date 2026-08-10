@@ -6,24 +6,7 @@ import tempfile
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver_qt_controller import (
-        WarningHeuristicResolverController,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver_qt_worker import (
-        WarningHeuristicResolverWorker,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_model_resolver_sonar import (
-        start_warning_model_sonar,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_resolver_split_control import (
-        build_warning_resolver_split_control,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_model_test_protection_context import (
-        ModelTestSourceContext,
-    )
-    from kanda_reasoner_app.manage_architecture.warning_model_test_protection_formatting import (
-        format_model_test_protection_plan,
-    )
+    pass
 
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import WarningFinding
 from kanda_reasoner_app.manage_architecture.warning_model_test_protection_resolver import (

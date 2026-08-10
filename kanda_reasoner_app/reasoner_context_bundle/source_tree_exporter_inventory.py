@@ -13,7 +13,6 @@ from typing import Any, Iterable
 
 from .exclusion_provider import load_bundle_exclusion_rules
 from .generated_archive_policy import (
-    classify_generated_project_archive,
     enforce_large_root_archive_preflight,
 )
 from .hashing import sha256_file

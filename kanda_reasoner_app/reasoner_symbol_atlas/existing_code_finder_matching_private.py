@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from .output_policy import is_active_owner_candidate
 from .schemas import (
     ProjectSymbol,
     normalize_project_atlas_sequence,
@@ -39,34 +40,13 @@ def _choose_query_type(options: ProjectSymbolAtlasExistingCodeFinderOptions) -> 
     return "auto"
 
 
-def _matching_symbols(
+def _matching_symbol_candidates(
     symbols: tuple[ProjectSymbol, ...],
     symbol_name: str,
     exact: bool,
     include_private: bool,
-    max_matches: int,
 ) -> tuple[ProjectSymbol, ...]:
-    """Support matching symbols behavior.
-    
-    Parameters
-    ----------
-    symbols : tuple[ProjectSymbol, ...]
-        The symbols value.
-    symbol_name : str
-        The symbol name value.
-    exact : bool
-        The exact value.
-    include_private : bool
-        The include private value.
-    max_matches : int
-        The max matches value.
-    
-    Returns
-    -------
-    tuple[ProjectSymbol, ...]
-        The tuple of values.
-    """
-    
+    """Return all name-matching symbols before active-owner partitioning."""
     if not symbol_name:
         return ()
     needle = symbol_name.lower()
@@ -78,7 +58,51 @@ def _matching_symbols(
         if (exact and name == needle) or (not exact and needle in name):
             matches.append(symbol)
     matches.sort(key=lambda item: (item.name.lower(), item.path, item.line or 0))
-    return tuple(matches[: max(1, int(max_matches))])
+    return tuple(matches)
+
+
+def _matching_symbols(
+    symbols: tuple[ProjectSymbol, ...],
+    symbol_name: str,
+    exact: bool,
+    include_private: bool,
+    max_matches: int,
+) -> tuple[ProjectSymbol, ...]:
+    """Return active owner candidates before ranking or result truncation."""
+    candidates = _matching_symbol_candidates(
+        symbols,
+        symbol_name,
+        exact,
+        include_private,
+    )
+    active = tuple(
+        symbol
+        for symbol in candidates
+        if is_active_owner_candidate(symbol.path, symbol.owner_role)
+    )
+    return active[: max(1, int(max_matches))]
+
+
+def _matching_inactive_symbols(
+    symbols: tuple[ProjectSymbol, ...],
+    symbol_name: str,
+    exact: bool,
+    include_private: bool,
+    max_matches: int,
+) -> tuple[ProjectSymbol, ...]:
+    """Return matching symbols excluded from active owner competition."""
+    candidates = _matching_symbol_candidates(
+        symbols,
+        symbol_name,
+        exact,
+        include_private,
+    )
+    inactive = tuple(
+        symbol
+        for symbol in candidates
+        if not is_active_owner_candidate(symbol.path, symbol.owner_role)
+    )
+    return inactive[: max(1, int(max_matches))]
 
 
 def _matching_duplicate_symbols(
@@ -130,7 +154,18 @@ def _owner_paths(matches: tuple[ProjectSymbol, ...], facade_owner_path: str) -> 
     """
     
     paths = [symbol.path for symbol in matches if symbol.path]
-    if facade_owner_path:
+    if facade_owner_path and is_active_owner_candidate(facade_owner_path):
+        paths.append(facade_owner_path)
+    return _unique_strings(paths)
+
+
+def _inactive_owner_paths(
+    matches: tuple[ProjectSymbol, ...],
+    facade_owner_path: str = "",
+) -> tuple[str, ...]:
+    """Return non-active owner paths retained only as historical evidence."""
+    paths = [symbol.path for symbol in matches if symbol.path]
+    if facade_owner_path and not is_active_owner_candidate(facade_owner_path):
         paths.append(facade_owner_path)
     return _unique_strings(paths)
 
@@ -138,6 +173,7 @@ def _owner_paths(matches: tuple[ProjectSymbol, ...], facade_owner_path: str) -> 
 def _query_reasons(
     query_type: str,
     matches: tuple[ProjectSymbol, ...],
+    inactive_matches: tuple[ProjectSymbol, ...],
     duplicate_symbols: tuple[ProjectSymbol, ...],
 ) -> tuple[str, ...]:
     """Support query reasons behavior.
@@ -162,6 +198,11 @@ def _query_reasons(
         reasons.append("Symbol matches found: " + str(len(matches)))
     else:
         reasons.append("No live symbol matches found for query.")
+    if inactive_matches:
+        reasons.append(
+            "Inactive owner candidates excluded before ranking: "
+            + str(len(inactive_matches))
+        )
     if duplicate_symbols:
         reasons.append("Duplicate public symbol risk found for query.")
     return tuple(reasons)

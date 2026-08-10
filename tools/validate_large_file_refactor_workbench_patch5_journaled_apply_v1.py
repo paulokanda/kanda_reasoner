@@ -2,8 +2,8 @@
 """Adversarial validator for Patch 5 journaled apply, recovery, and rollback proof."""
 from __future__ import annotations
 
+from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_journaled_apply_models import build_journaled_apply_authorization
 import json
-import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,7 +22,6 @@ from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbenc
     execute_completion_transaction,
 )
 from kanda_reasoner_app.manage_architecture.large_file_refactor_planner.workbench_journaled_apply_executor import (
-    build_journaled_apply_authorization,
     execute_journaled_refactor_apply,
     finalize_journaled_refactor_transaction,
     resume_journaled_refactor_apply,
@@ -46,7 +45,6 @@ from patch5_transaction_fixture_support import (
     assert_payload_exact_on_disk,
     build_patch5_direct_context,
     build_patch5_fixture_context,
-    cleanup_fixture_siblings,
     mutation_lane_database,
     payload_hashes_by_destination,
     sha256_file,
@@ -300,7 +298,7 @@ def run_validation() -> None:
                 marker = root / "_hard_crash_marker.json"
                 if marker.exists():
                     marker.unlink()
-                for shadow in root.parent.glob(f"patch5_*_shadow"):
+                for shadow in root.parent.glob("patch5_*_shadow"):
                     shutil.rmtree(shadow, ignore_errors=True)
     _validate_changed_file_sizes()
     print("FINAL_BASIS_RECHECK: PASS")

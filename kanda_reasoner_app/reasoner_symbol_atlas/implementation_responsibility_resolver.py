@@ -6,21 +6,16 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .output_policy import is_active_atlas_path, is_active_test_command
 from .facade_owner_resolver import (
-    PROJECT_SYMBOL_ATLAS_FACADE_STATUS_NEEDS_OWNER_REVIEW,
-    PROJECT_SYMBOL_ATLAS_FACADE_STATUS_READY,
     ProjectSymbolAtlasFacadeOwnerOptions,
     resolve_reasoner_symbol_atlas_facade_owner,
 )
 from .logic_placement_advisor import (
-    PROJECT_SYMBOL_ATLAS_PLACEMENT_STATUS_READY,
     PROJECT_SYMBOL_ATLAS_PLACEMENT_STATUS_WRONG_TARGET,
     ProjectSymbolAtlasLogicPlacementOptions,
     advise_reasoner_symbol_atlas_logic_placement,
 )
 from .main_helper_mapper import (
-    PROJECT_SYMBOL_ATLAS_MAIN_HELPER_STATUS_READY,
     ProjectSymbolAtlasMainHelperOptions,
     map_reasoner_symbol_atlas_main_helpers,
 )

@@ -15,6 +15,14 @@ from __future__ import annotations
 import py_compile
 from pathlib import Path
 
+from kanda_reasoner_app.project_fire_shield import (
+    FireShieldPhase,
+    assert_fire_shield_payload_bytes_allowed,
+    assert_fire_shield_write_allowed,
+    build_current_fire_shield_context,
+    verify_tool_snapshot_unchanged,
+)
+
 from .review_support import (
     _backup_source_file,
     _manual_review_is_inside_project_root,
@@ -66,17 +74,31 @@ def _apply_one_file(owner: object, file_name: str, locations: list[dict]) -> str
         original = path.read_text(encoding="utf-8", errors="replace")
     except OSError as exc:
         return "SKIP read failed: " + file_name + " :: " + str(exc)
+    project_root = _project_root_for_owner(owner)
+    fire_shield = build_current_fire_shield_context(
+        project_root=project_root,
+        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
+        operation_id="manual-docstring-batch-apply",
+    )
     try:
         backup_path = _backup_source_file(owner, path)
         updated = _insert_docstrings(original, locations)
-        path.write_text(updated, encoding="utf-8", newline="\n")
+        payload = updated.encode("utf-8")
+        assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
+        assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
+        path.write_bytes(payload)
         py_compile.compile(str(path), doraise=True)
     except Exception as exc:
         try:
-            path.write_text(original, encoding="utf-8", newline="\n")
+            rollback = original.encode("utf-8")
+            assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
+            assert_fire_shield_payload_bytes_allowed(fire_shield, path, rollback)
+            path.write_bytes(rollback)
+            verify_tool_snapshot_unchanged(fire_shield)
         except OSError:
             pass
         return "ROLLBACK " + file_name + " :: " + str(exc)
+    verify_tool_snapshot_unchanged(fire_shield)
     return "APPLIED " + file_name + " :: backup=" + str(backup_path)
 
 

@@ -9,7 +9,6 @@ import dataclasses
 import hashlib
 import inspect
 import json
-import sys
 import zipfile
 from pathlib import Path
 from typing import Any

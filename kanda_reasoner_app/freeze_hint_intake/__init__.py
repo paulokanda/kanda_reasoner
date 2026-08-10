@@ -11,6 +11,7 @@ from .contract import (
     scan_and_save_latest_freeze_hint,
 )
 
+from .local_validation_cleanup import clean_stale_pending_text_after_local_validation
 __all__ = [
     "build_freeze_form_inputs_from_latest_hint",
     "merge_validation_evidence_into_latest_hint",
@@ -19,4 +20,5 @@ __all__ = [
     "read_freeze_hint_from_patch_zip",
     "resolve_freeze_hint_autofill_state",
     "scan_and_save_latest_freeze_hint",
+    "clean_stale_pending_text_after_local_validation",
 ]

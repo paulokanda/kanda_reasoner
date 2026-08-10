@@ -124,7 +124,6 @@ def _rr_RuntimeCollectorWindow_closeEvent_impl(self, event) -> None:
     _save_prefs(self.project_root_edit.text().strip(), self.output_json_edit.text().strip(), self.entry_script_edit.text().strip())
     super().closeEvent(event)
 import importlib as _pass_065f_importlib
-import sys as _pass_065f_sys
 import traceback as traceback
 from pathlib import Path as Path
 

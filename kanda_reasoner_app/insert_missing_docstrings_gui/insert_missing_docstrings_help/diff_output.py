@@ -13,7 +13,6 @@
 from __future__ import annotations
 
 import difflib
-from pathlib import Path
 
 __all__ = [
     "diff_text",

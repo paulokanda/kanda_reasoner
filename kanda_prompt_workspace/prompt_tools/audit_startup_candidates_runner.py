@@ -20,7 +20,6 @@ from .audit_startup_candidates_models import (
     AuditResult,
     SourceMapEntry,
     StartupCandidate,
-    read_json_file,
     read_text_utf8_strict,
     sha256_file,
     write_text_utf8,

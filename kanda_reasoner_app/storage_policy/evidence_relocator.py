@@ -19,7 +19,6 @@ import shutil
 from kanda_reasoner_app.storage_policy.evidence_relocation_dry_run import (
     EVIDENCE_RELOCATION_CATEGORY_JSON,
     EVIDENCE_RELOCATION_STATUS_ABSENT,
-    EVIDENCE_RELOCATION_STATUS_READY,
     EVIDENCE_RELOCATION_STATUS_REVIEW_REQUIRED,
     EvidenceRelocationItem,
     EvidenceRelocationPlan,

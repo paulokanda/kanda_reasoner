@@ -9,12 +9,15 @@ sample receive-ready block inside that prompt.
 
 from __future__ import annotations
 
+from .intake_normalization import (
+    ERROR_LESSON_JSON_BEGIN,
+    ERROR_LESSON_JSON_END,
+)
+
 import json
 from typing import Any
 
 ERROR_DRAFT_MARKER = "Current error/draft JSON for completion or correction:"
-ERROR_LESSON_JSON_BEGIN = "KANDA_ERROR_LESSON_JSON_BEGIN"
-ERROR_LESSON_JSON_END = "KANDA_ERROR_LESSON_JSON_END"
 
 
 def _first_json_object_text(text: str) -> str:
@@ -48,6 +51,24 @@ def _first_json_object_text(text: str) -> str:
                 return source[start : index + 1]
     return ""
 
+
+
+
+def _raw_error_text_from_json_text(text: str) -> str:
+    """Return raw_error_text from the first JSON object in *text*, when present."""
+    json_text = _first_json_object_text(text)
+    if not json_text:
+        return ""
+    try:
+        payload: Any = json.loads(json_text)
+    except json.JSONDecodeError:
+        return ""
+    if not isinstance(payload, dict):
+        return ""
+    raw_error_text = payload.get("raw_error_text")
+    if isinstance(raw_error_text, str) and raw_error_text.strip():
+        return raw_error_text.strip()
+    return ""
 
 def _last_receive_ready_block(text: str) -> str:
     """Return the last KANDA_ERROR_LESSON_JSON block in *text*, if present."""
@@ -116,6 +137,8 @@ def extract_error_editor_text_for_ai(text: str) -> str:
 
     receive_ready = _last_receive_ready_block(source)
     if receive_ready:
-        return receive_ready
+        raw_error_text = _raw_error_text_from_json_text(receive_ready)
+        return raw_error_text or receive_ready
 
-    return source
+    raw_error_text = _raw_error_text_from_json_text(source)
+    return raw_error_text or source

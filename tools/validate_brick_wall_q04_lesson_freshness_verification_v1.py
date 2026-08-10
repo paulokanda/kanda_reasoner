@@ -8,8 +8,9 @@ import importlib
 import json
 from pathlib import Path
 import sys
-import tempfile
 from typing import Iterable
+
+from brick_wall_q20_isolated_filesystem_fixture import isolated_registered_project_fixture
 
 FEATURE_ID = "brick-wall-q04-error-memory-lesson-freshness-verification-v1"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -45,10 +46,8 @@ ROUTER_META = (
 )
 EXPORTER = PROJECT_ROOT / "kanda_reasoner_app" / "error_memory" / "exporter.py"
 MODELS = PROJECT_ROOT / "kanda_reasoner_app" / "error_memory" / "models.py"
-Q03_VALIDATOR = (
-    PROJECT_ROOT
-    / "tools"
-    / "validate_brick_wall_q03_regression_obligation_matrix_v1.py"
+Q03_VALIDATOR = PROJECT_ROOT / "tools" / (
+    "validate_brick_wall_q03_regression_obligation_matrix_v1.py"
 )
 
 FRESHNESS_HEADING = "ERROR MEMORY LESSON FRESHNESS VERIFICATION"
@@ -322,13 +321,13 @@ def _validate_compact_lesson_inputs() -> None:
 
 def _validate_generated_export() -> None:
     module = _load_exporter_module()
-    with tempfile.TemporaryDirectory(prefix="kanda_q04_") as temp_dir:
-        fixture = Path(temp_dir)
-        project_root = fixture / "sample_project"
-        destination = fixture / "second_prompt_files"
-        project_root.mkdir()
+    with isolated_registered_project_fixture(
+        tool_source_root=PROJECT_ROOT,
+        prefix="kanda_q04_",
+    ) as layout:
+        destination = layout.transient_root / "second_prompt_files"
         result = module.write_error_memory_ai_send_files(
-            project_root,
+            layout.source_root,
             destination,
             max_lessons=10,
         )

@@ -12,7 +12,6 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
     ASK_AI_REQUESTS_FOLDER_NAME,
-    LABEL_HEURISTICS_CORRECT,
     PromptRouterReasonerReviewStore,
     PromptSnapshot,
     STATUS_PENDING,

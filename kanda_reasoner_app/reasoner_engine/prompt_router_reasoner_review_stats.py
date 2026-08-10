@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import math
 from typing import Any, Mapping, Sequence
 
-from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_store import (
+from kanda_reasoner_app.reasoner_engine.prompt_router_reasoner_review_models import (
     AGREEMENT_AGREE,
     AGREEMENT_DISAGREE,
     LABEL_BOTH_ACCEPTABLE_UNCLEAR,

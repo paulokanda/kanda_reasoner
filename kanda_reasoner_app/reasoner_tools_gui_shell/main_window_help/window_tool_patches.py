@@ -4,7 +4,7 @@ from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 import contextlib
 from pathlib import Path
-from PySide6.QtWidgets import QMessageBox, QWidget
+from PySide6.QtWidgets import QWidget
 from ..app_constants import _COLLECTOR_SUBTABS_TO_REMOVE
 from ..gui_support import _find_button_by_text, _prune_named_subtabs, _replace_exact_label_text, _safe_disconnect
 from ..tool_specs import ToolSpec

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-import sys
 
 FEATURE_ID = "release10-native-stderr-wrapper-repair-v1"
 UNSAFE_FRAGMENTS = (

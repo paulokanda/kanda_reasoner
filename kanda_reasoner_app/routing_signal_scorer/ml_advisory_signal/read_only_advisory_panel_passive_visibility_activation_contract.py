@@ -26,8 +26,6 @@ from enum import Enum
 from typing import Mapping, Tuple
 
 from .read_only_advisory_panel_runtime_app_host_visibility import (
-    ReadOnlyAdvisoryPanelRuntimeAppHostVisibilityDescriptor,
-    ReadOnlyPanelRuntimeAppHostVisibilityImplementationState,
     build_phase12_read_only_panel_runtime_app_host_visibility_implementation_probe,
 )
 from ._read_only_advisory_panel_passive_visibility_activation_contract_evaluation import (

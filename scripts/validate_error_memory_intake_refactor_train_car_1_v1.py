@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import inspect
 import json
 import sys
-import shutil
 import tempfile
 from pathlib import Path
 

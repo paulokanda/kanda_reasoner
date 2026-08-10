@@ -15,11 +15,9 @@ from startup_kernel.constants import (
     STARTUP_ARTIFACT_READ_ORDER_MARKER,
 )
 from startup_kernel.prompt_library_manifest import (
-    _load_prompt_metadata_entries,
     build_prompt_library_manifest,
 )
 from startup_kernel.prompt_library_payload import (
-    _is_prompt_library_payload_file,
     _prompt_library_relpath,
     iter_prompt_library_payload_files,
     prompt_library_source_fingerprint,

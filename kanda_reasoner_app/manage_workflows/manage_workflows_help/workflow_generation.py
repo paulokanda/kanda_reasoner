@@ -313,7 +313,7 @@ def generate_workflows_md(manifest: dict[str, Any]) -> str:
             "Supported placeholders:",
             "",
             "- `{root}` => selected project root",
-            "- `{python}` => current Python executable",
+            "- `{python}` => selected Active Project `.venv` Python interpreter",
             "",
             "## Recommended flow",
             "",

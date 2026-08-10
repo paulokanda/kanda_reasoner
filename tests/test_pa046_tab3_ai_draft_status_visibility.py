@@ -12,7 +12,6 @@ from kanda_reasoner_app.tab3_manual_review_runtime.inline_corrector_runtime impo
     generate_current_draft,
     refresh_inline_corrector_for_selection,
     refresh_review_draft_status,
-    wire_inline_corrector_events,
 )
 
 

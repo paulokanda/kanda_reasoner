@@ -7,7 +7,6 @@ __all__: list[str] = []
 
 import json
 from pathlib import Path
-import tempfile
 import sys
 
 FEATURE_ID = "brick-wall-q02-visible-error-memory-preflight-enforcement-v1"
@@ -17,6 +16,11 @@ if _ROOT_TEXT not in sys.path:
     sys.path.insert(0, _ROOT_TEXT)
 
 from kanda_reasoner_app.error_memory import write_error_memory_ai_send_files
+
+from brick_wall_q20_isolated_filesystem_fixture import (
+    isolated_registered_project_fixture,
+)
+
 
 BRICK_WALL = (
     PROJECT_ROOT
@@ -121,14 +125,13 @@ def _validate_prompt_sources() -> None:
 
 
 def _validate_generated_export() -> None:
-    with tempfile.TemporaryDirectory(prefix="kanda_q02_") as temp_dir:
-        fixture_root = Path(temp_dir)
-        project_root = fixture_root / "sample_project"
-        destination = fixture_root / "second_prompt_files"
-        project_root.mkdir()
-
+    with isolated_registered_project_fixture(
+        tool_source_root=PROJECT_ROOT,
+        prefix="kanda_q02_",
+    ) as layout:
+        destination = layout.transient_root / "second_prompt_files"
         result = write_error_memory_ai_send_files(
-            project_root,
+            layout.source_root,
             destination,
             max_lessons=10,
         )

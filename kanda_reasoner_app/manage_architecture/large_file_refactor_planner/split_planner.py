@@ -15,7 +15,6 @@ from .planner_responsibility_labels import ResponsibilityLabel, label_cluster_re
 from .planner_semantic_naming import semantic_helper_filename
 from .models import (
     FEATURE_ID,
-    MAX_PHYSICAL_LINES,
     MIN_HELPER_PHYSICAL_LINES,
     SCHEMA_VERSION,
     ModuleAnalysisReport,
