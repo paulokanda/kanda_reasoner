@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Gateway key counter</title><desc id="desc">A ticket counter where OpenRouter and Kilo keys open a shared gateway to approved free models.</desc>
+
+<style>
+.text{font-family:"Segoe Print","Comic Sans MS",cursive;fill:#0d0d1a}
+.label{font-family:"Segoe Print","Comic Sans MS",cursive;font-weight:800;letter-spacing:.4px}
+.ink{stroke:#0d0d1a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke:#0d0d1a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hatch{stroke:#64748b;stroke-width:2.4;stroke-linecap:round;opacity:.7}
+</style>
+
+<rect width="960" height="560" fill="#fffdf8"/>
+<path d="M36 505 C210 493 360 512 510 500 C650 490 790 510 926 500" fill="none" stroke="#0d0d1a" stroke-width="5" stroke-linecap="round"/>
+
+<rect x="50" y="48" width="860" height="404" rx="24" fill="#fff8e8" class="ink"/>
+<path d="M73 111 H887" stroke="#2563a8" stroke-width="10" stroke-linecap="round"/>
+<text x="480" y="94" text-anchor="middle" font-size="30" class="label" fill="#0f3460">THE GATEWAY TICKET COUNTER</text>
+<rect x="95" y="151" width="386" height="235" rx="18" fill="#dbeafe" class="ink"/>
+<rect x="130" y="180" width="138" height="62" rx="8" fill="#ffffff" class="ink"/><text x="199" y="219" text-anchor="middle" font-size="22" class="label" fill="#2563a8">OPENROUTER</text>
+<rect x="300" y="180" width="138" height="62" rx="8" fill="#ffffff" class="ink"/><text x="369" y="219" text-anchor="middle" font-size="22" class="label" fill="#d97706">KILO</text>
+<rect x="126" y="271" width="310" height="79" rx="12" fill="#ffffff" class="ink"/>
+<text x="281" y="298" text-anchor="middle" font-size="17" class="label" fill="#0f3460">KEY OR ANONYMOUS ROUTE</text>
+<path d="M157 324 h78" stroke="#22c55e" stroke-width="9" stroke-linecap="round"/><path d="M252 324 h58" stroke="#f59e0b" stroke-width="9" stroke-linecap="round"/><path d="M328 324 h76" stroke="#38bdf8" stroke-width="9" stroke-linecap="round"/>
+<!-- board -->
+<rect x="550" y="151" width="310" height="235" rx="18" fill="#0f3460" class="ink"/>
+<text x="705" y="184" text-anchor="middle" font-size="23" class="label" fill="#fef3c7">APPROVED MODEL BOARD</text>
+<path d="M586 215 H825 M586 260 H825 M586 305 H825 M586 350 H825" stroke="#94a3b8" stroke-width="2"/>
+<circle cx="603" cy="238" r="9" fill="#22c55e"/><text x="628" y="244" font-size="18" class="text" fill="#ffffff">[FREE] coding model</text>
+<circle cx="603" cy="283" r="9" fill="#22c55e"/><text x="628" y="289" font-size="18" class="text" fill="#ffffff">[FREE] coding model</text>
+<circle cx="603" cy="328" r="9" fill="#ea580c"/><text x="628" y="334" font-size="18" class="text" fill="#ffffff">paid route hidden</text>
+<!-- characters -->
+
+<circle cx="90" cy="349" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M62 341 C70 306,105 301,125 335 C107 324,88 327,62 341" fill="#3f2618" class="ink"/>
+<circle cx="80" cy="352" r="3.5" fill="#0d0d1a"/><circle cx="101" cy="352" r="3.5" fill="#0d0d1a"/>
+<path d="M82 366 Q92 374 104 365" fill="none" class="thin"/>
+<path d="M46 474 L51 421 Q56 392 90 391 Q124 392 129 421 L134 474 Z" fill="#2563a8" class="ink"/>
+<path d="M98 419 C142 404,160 379,182 369" fill="none" class="ink"/><circle cx="182" cy="369" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M82 419 C48 425,35 409,20 394" fill="none" class="ink"/><circle cx="20" cy="394" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M65 474 L59 541 M115 474 L124 541" fill="none" class="ink"/>
+<path d="M45 543 L75 543 M110 543 L144 543" fill="none" class="ink"/>
+
+
+<circle cx="870" cy="349" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M842 341 C850 306,885 301,905 335 C887 324,868 327,842 341" fill="#3f2618" class="ink"/>
+<circle cx="860" cy="352" r="3.5" fill="#0d0d1a"/><circle cx="881" cy="352" r="3.5" fill="#0d0d1a"/>
+<path d="M862 366 Q872 374 884 365" fill="none" class="thin"/>
+<path d="M826 474 L831 421 Q836 392 870 391 Q904 392 909 421 L914 474 Z" fill="#d97706" class="ink"/>
+<path d="M862 419 C818 404,800 379,778 369" fill="none" class="ink"/><circle cx="778" cy="369" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M878 419 C912 425,925 409,940 394" fill="none" class="ink"/><circle cx="940" cy="394" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M845 474 L839 541 M895 474 L904 541" fill="none" class="ink"/>
+<path d="M825 543 L855 543 M890 543 L924 543" fill="none" class="ink"/>
+
+<rect x="361" y="411" width="238" height="70" rx="13" fill="#ffffff" class="ink"/>
+<text x="480" y="438" text-anchor="middle" font-size="18" class="label" fill="#0f3460">1. LOAD KEY  2. REFRESH</text>
+<text x="480" y="463" text-anchor="middle" font-size="17" class="label" fill="#15803d">3. SELECT ONE [FREE] MODEL</text>
+<text x="480" y="531" text-anchor="middle" font-size="21" class="label" fill="#0f3460">One gateway can show several destinations — KANDA filters the board.</text>
+
+</svg>

@@ -1,0 +1,382 @@
+{
+  "archive_included_classifications": [
+    "CANONICAL_TOOL_SOURCE",
+    "PACKAGED_TOOL_RESOURCE",
+    "REGISTERED_SYNTHETIC_FIXTURE"
+  ],
+  "classifications": [
+    "CANONICAL_TOOL_SOURCE",
+    "PACKAGED_TOOL_RESOURCE",
+    "REGISTERED_SYNTHETIC_FIXTURE",
+    "GENERATED_TOOL_EVIDENCE",
+    "PROJECT_CAPTURE_FORBIDDEN",
+    "CACHE",
+    "TRANSIENT"
+  ],
+  "known_capture_records": [
+    {
+      "classification": "PROJECT_CAPTURE_FORBIDDEN",
+      "historical_owner_status": "external_project_capture_in_tool_source",
+      "path": "kanda_reasoner_app/outputs/real_project_static_context_smoke.json",
+      "sha256": "8c748d8688748b1df94df715e87bc6a0d82961d1e9f7defc231ceaa554ecfa3f",
+      "size_bytes": 71091908
+    }
+  ],
+  "root_hidden_metadata_policy": {
+    "classification": "GENERATED_TOOL_EVIDENCE",
+    "enabled": true,
+    "include_in_tool_archive": false,
+    "maximum_files_inspected": 4096,
+    "reason": "Root-level hidden editor, AI-assistant, and workspace metadata is local Tool state only when bounded content inspection finds no source-bearing files.",
+    "source_bearing_directory_names": [
+      ".github",
+      ".gitlab",
+      ".devcontainer"
+    ],
+    "source_bearing_file_names": [
+      "Dockerfile",
+      "Makefile",
+      "pyproject.toml",
+      "setup.py",
+      "setup.cfg",
+      "tox.ini",
+      "noxfile.py"
+    ],
+    "source_bearing_suffixes": [
+      ".py",
+      ".pyi",
+      ".spec",
+      ".ps1",
+      ".sh",
+      ".bash",
+      ".bat",
+      ".cmd",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".mjs",
+      ".cjs",
+      ".rs",
+      ".go",
+      ".java",
+      ".kt",
+      ".kts",
+      ".c",
+      ".cc",
+      ".cpp",
+      ".h",
+      ".hpp",
+      ".cs",
+      ".swift",
+      ".rb",
+      ".php"
+    ]
+  },
+  "rules": [
+    {
+      "classification": "PROJECT_CAPTURE_FORBIDDEN",
+      "path_prefix": "kanda_reasoner_app/outputs",
+      "reason": "Collector output is generated evidence and may contain real external Project source."
+    },
+    {
+      "classification": "REGISTERED_SYNTHETIC_FIXTURE",
+      "path_prefix": "kanda_reasoner_app/source_hygiene/fixtures",
+      "reason": "Fixtures are accepted only through the synthetic fixture manifest."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "path_prefix": ".project_reference",
+      "reason": "Established KANDA human/tooling/reference archive. It may contain historical Tool source examples, chats, prompts, handbooks, and legacy package snapshots, but it is noncanonical and must never enter Tool source archives or Portable packaging."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "path_prefix": "project_freeze_after_update",
+      "reason": "Freeze intake is generated support evidence, not Tool source."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "path_prefix": "error_memory_receive_blocks",
+      "reason": "Received Error Memory blocks are generated intake evidence."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "path_prefix": "prompt_router_reasoner_reviews",
+      "reason": "Prompt review output is generated evidence."
+    },
+    {
+      "classification": "TRANSIENT",
+      "glob": "tests/_tmp_*",
+      "reason": "Temporary test workspaces are disposable."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".cache",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".tox",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".nox",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".hypothesis",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".ipynb_checkpoints",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": ".eggs",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": "htmlcov",
+      "reason": "Local cache or generated coverage/build metadata is disposable and excluded from Tool archives."
+    },
+    {
+      "classification": "CACHE",
+      "exact": ".DS_Store",
+      "reason": "Operating-system metadata is not Tool source."
+    },
+    {
+      "classification": "CACHE",
+      "exact": "Thumbs.db",
+      "reason": "Operating-system thumbnail cache is not Tool source."
+    },
+    {
+      "classification": "CACHE",
+      "exact": "desktop.ini",
+      "reason": "Operating-system folder metadata is not Tool source."
+    },
+    {
+      "classification": "CACHE",
+      "exact": ".coverage",
+      "reason": "Coverage runtime data is not Tool source."
+    },
+    {
+      "classification": "CACHE",
+      "glob": ".coverage.*",
+      "reason": "Coverage runtime data is not Tool source."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "exact": "coverage.xml",
+      "reason": "Generated coverage evidence is not canonical Tool source."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "glob": "*.code-workspace",
+      "reason": "Local editor workspace state is not a packaged Tool resource."
+    },
+    {
+      "classification": "CACHE",
+      "glob": "*.egg-info",
+      "reason": "Generated packaging metadata is not canonical Tool source."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": "project_freeze_ledger/_patch_backups",
+      "reason": "Historical patch backups are not canonical Tool source or release input."
+    },
+    {
+      "classification": "CACHE",
+      "path_prefix": "project_freeze_ledger/freeze_tools/__pycache__",
+      "reason": "Compiled Freeze blueprint cache is disposable."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "exact": "project_freeze_ledger/manual_docstring_review_state.json",
+      "reason": "Mutable review state is generated Tool evidence, not blueprint source."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "project_freeze_ledger/freeze_tools",
+      "reason": "Reusable Freeze blueprint engine source owned by the KANDA Tool."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "project_freeze_ledger/README.md",
+      "reason": "Freeze blueprint documentation."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "exact": "project_freeze_ledger",
+      "reason": "Reusable Freeze blueprint box root; project-specific memory is forbidden here."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "path_prefix": "kanda_reasoner_app/reasoner_context_bundle/resources",
+      "reason": "Tool-owned runtime governance resources loaded through importlib.resources."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "kanda_reasoner_app",
+      "reason": "Primary KANDA Reasoner Tool package."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "portable",
+      "reason": "Governed Tool Portable release implementation."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "tools",
+      "reason": "Governed Tool validators and maintenance commands."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "tests",
+      "reason": "Tool test source."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "scripts",
+      "reason": "Tool maintenance source."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "path_prefix": "validation",
+      "reason": "Tool validation source and approved static contracts."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "path_prefix": "docs",
+      "reason": "Approved Tool documentation."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "path_prefix": "prompt_library",
+      "reason": "Approved Tool prompt resources."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "path_prefix": "kanda_prompt_workspace",
+      "reason": "Approved Tool prompt-workspace resources."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "ARCHITECTURE.md",
+      "reason": "Approved architecture documentation."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "WORKFLOWS.md",
+      "reason": "Approved workflow documentation."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "KANDA Reasoner Free-Use Proprietary License.md",
+      "reason": "Tool license."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "exact": "KandaReasonerWindows.spec",
+      "reason": "Governed Tool release specification."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "exact": "ruff.toml",
+      "reason": "Tool lint configuration."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "architecture_manifest.json",
+      "reason": "Approved Tool architecture manifest."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "bundle_manifest.json",
+      "reason": "Approved Tool bundle manifest."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "workflow_manifest.json",
+      "reason": "Approved Tool workflow manifest."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "workflow_review_revision_write_gate_v1_manifest.json",
+      "reason": "Approved Tool workflow gate manifest."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "exact": "d2511c576e38424fe70967780f3d84f61d0c28e5c59b2607c0129564fd58c09e",
+      "reason": "Generated marker, not Tool source."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "exact": "kanda_prompt_audit_wave3a_session_startup_kernel_v1",
+      "reason": "Generated audit marker."
+    },
+    {
+      "classification": "GENERATED_TOOL_EVIDENCE",
+      "exact": "prompt-audit-wave3a-session-startup-kernel-v1",
+      "reason": "Generated audit marker."
+    },
+    {
+      "classification": "CANONICAL_TOOL_SOURCE",
+      "glob": "*.py",
+      "reason": "Approved root-level Tool Python source."
+    }
+  ],
+  "schema_version": "1.0",
+  "suspicious_large_text_threshold_bytes": 8388608,
+  "suspicious_text_suffixes": [
+    ".json",
+    ".jsonl",
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".toml",
+    ".ini",
+    ".cfg",
+    ".log"
+  ],
+  "tool_slug": "kanda_reasoner",
+  "kilo_workspace_policy": {
+    "allowed_plan_suffixes": [
+      ".md"
+    ],
+    "allowed_top_level_entries": [
+      ".gitignore",
+      "node_modules",
+      "package.json",
+      "package-lock.json",
+      "plans"
+    ],
+    "cache_classification": "CACHE",
+    "dependency_name": "@kilocode/plugin",
+    "enabled": true,
+    "evidence_classification": "GENERATED_TOOL_EVIDENCE",
+    "include_in_tool_archive": false,
+    "lockfile_name": ".kilo",
+    "lockfile_version": 3,
+    "maximum_files_inspected": 4096,
+    "reason": "A verified Kilo Code workspace is local development state: node_modules is cache and plans/configuration are generated evidence, never Tool source.",
+    "required_gitignore_entries": [
+      ".gitignore",
+      "node_modules",
+      "package-lock.json",
+      "package.json"
+    ],
+    "required_top_level_entries": [
+      ".gitignore",
+      "node_modules",
+      "package.json",
+      "package-lock.json"
+    ],
+    "root_name": ".kilo"
+  }
+}

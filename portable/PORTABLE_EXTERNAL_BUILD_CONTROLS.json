@@ -1,0 +1,62 @@
+{
+  "artifact_type": "portable_external_build_control_manifest",
+  "builder_feature_id": "kanda-reasoner-portable-builder-install-v1r12",
+  "builder_version": "v1r12",
+  "contract_version": "exact_external_build_controls_v1",
+  "control_set_sha256": "094caa0d5f313913b7522443c6fdf2427613928cd0c721b23fc6ac0abaeb6224",
+  "feature_id": "kanda-reasoner-portable-external-build-control-hash-binding-v1r1",
+  "hardening_features": [
+    "registry-boundary-gate",
+    "packaged-gui-smoke-isolation",
+    "governed-root-exact-rollback",
+    "runtime-path-hash-allowlist",
+    "exact-builder-member-governance",
+    "external-build-control-hash-binding"
+  ],
+  "item_count": 7,
+  "items": [
+    {
+      "role": "pyinstaller_spec",
+      "sha256": "a2e90bf79bce1cde75bb0b74bd8f0ca3b90b84a3721101a8d609ccd43083da56",
+      "size_bytes": 4769,
+      "source_relative": "KandaReasonerWindows.spec"
+    },
+    {
+      "role": "application_package_initializer",
+      "sha256": "1e3129f2424667039e4e0a2262136602879df40b4d9c4f49663c0d1695bfd3f6",
+      "size_bytes": 12486,
+      "source_relative": "kanda_reasoner_app/__init__.py"
+    },
+    {
+      "role": "archive_policy_package_initializer",
+      "sha256": "c2e5dce60e198f1291ae1734084bc5ea24431db11370010b64df3924274d84db",
+      "size_bytes": 695,
+      "source_relative": "kanda_reasoner_app/source_hygiene/__init__.py"
+    },
+    {
+      "role": "archive_policy_owner",
+      "sha256": "644839265615187ef55fdb6bd38dd388687ebeee2b479e2748787f38db3b5ecb",
+      "size_bytes": 16259,
+      "source_relative": "kanda_reasoner_app/source_hygiene/tool_archive_policy.py"
+    },
+    {
+      "role": "archive_policy_dependency",
+      "sha256": "642317fd09c2138c722f88678c8cc731d6a3db18d71c9a707d945abe42c8452d",
+      "size_bytes": 5496,
+      "source_relative": "kanda_reasoner_app/source_hygiene/kilo_workspace_policy.py"
+    },
+    {
+      "role": "source_classification_manifest",
+      "sha256": "2a6609b8eac0ab5e67130f98e987684b484984fc67a9cab96427110a7aba80ef",
+      "size_bytes": 12002,
+      "source_relative": "kanda_reasoner_app/source_hygiene/TOOL_SOURCE_CLASSIFICATION.json"
+    },
+    {
+      "role": "synthetic_fixture_manifest",
+      "sha256": "134d843ae79ab50c2ab3f9cd060bf81a3af1454723a38d2a5150f5fcac194053",
+      "size_bytes": 555,
+      "source_relative": "kanda_reasoner_app/source_hygiene/SYNTHETIC_FIXTURE_MANIFEST.json"
+    }
+  ],
+  "schema_version": "1.0"
+}

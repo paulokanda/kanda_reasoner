@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Config AI use and safety bridge</title><desc id="desc">A bridge from global AI settings to a selected project conversation with a human approval gate.</desc>
+
+<style>
+.text{font-family:"Segoe Print","Comic Sans MS",cursive;fill:#0d0d1a}
+.label{font-family:"Segoe Print","Comic Sans MS",cursive;font-weight:800;letter-spacing:.4px}
+.ink{stroke:#0d0d1a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke:#0d0d1a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hatch{stroke:#64748b;stroke-width:2.4;stroke-linecap:round;opacity:.7}
+</style>
+
+<rect width="960" height="560" fill="#fffdf8"/>
+<path d="M36 505 C210 493 360 512 510 500 C650 490 790 510 926 500" fill="none" stroke="#0d0d1a" stroke-width="5" stroke-linecap="round"/>
+
+<rect x="47" y="44" width="866" height="410" rx="24" fill="#f1f5ff" class="ink"/>
+<text x="480" y="86" text-anchor="middle" font-size="29" class="label" fill="#0f3460">FROM GLOBAL SETTINGS TO ONE SAFE PROJECT REQUEST</text>
+<path d="M75 105 H885" stroke="#f59e0b" stroke-width="9" stroke-linecap="round"/>
+<!-- left control suitcase -->
+<rect x="85" y="160" width="225" height="212" rx="18" fill="#ffffff" class="ink"/>
+<rect x="143" y="131" width="108" height="40" rx="12" fill="#ffffff" class="ink"/>
+<text x="198" y="202" text-anchor="middle" font-size="20" class="label" fill="#0f3460">CONFIG AI</text>
+<path d="M124 235 h148 M124 272 h148 M124 309 h148" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+<circle cx="143" cy="235" r="9" fill="#2563a8"/><text x="162" y="242" font-size="15" class="text">provider</text>
+<circle cx="143" cy="272" r="9" fill="#f59e0b"/><text x="162" y="279" font-size="15" class="text">key ready</text>
+<circle cx="143" cy="309" r="9" fill="#16a34a"/><text x="162" y="316" font-size="15" class="text">model</text>
+<!-- bridge -->
+<path d="M310 315 C400 216 558 216 650 315" fill="none" stroke="#0f3460" stroke-width="20" stroke-linecap="round"/>
+<path d="M320 315 C410 235 548 235 640 315" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="12 12"/>
+<path d="M358 303 v54 M424 267 v90 M490 252 v105 M556 267 v90 M622 303 v54" stroke="#0f3460" stroke-width="5"/>
+<rect x="405" y="178" width="170" height="63" rx="10" fill="#fff7df" class="ink"/>
+<text x="490" y="204" text-anchor="middle" font-size="17" class="label" fill="#9a3412">HUMAN APPROVAL</text>
+<text x="490" y="226" text-anchor="middle" font-size="14" class="text">when required</text>
+<!-- project destination -->
+<rect x="650" y="160" width="225" height="212" rx="18" fill="#ecfdf5" class="ink"/>
+<path d="M689 220 h150 v114 h-150 z" fill="#ffffff" class="ink"/><path d="M690 220 l31-39 h56 l25 39" fill="#fef3c7" class="ink"/>
+<text x="764" y="258" text-anchor="middle" font-size="20" class="label" fill="#15803d">ACTIVE</text>
+<text x="764" y="286" text-anchor="middle" font-size="20" class="label" fill="#15803d">PROJECT</text>
+<path d="M718 315 h92" stroke="#2563a8" stroke-width="7" stroke-linecap="round"/>
+<!-- guards -->
+
+<circle cx="84" cy="370" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M56 362 C64 327,99 322,119 356 C101 345,82 348,56 362" fill="#3f2618" class="ink"/>
+<circle cx="74" cy="373" r="3.5" fill="#0d0d1a"/><circle cx="95" cy="373" r="3.5" fill="#0d0d1a"/>
+<path d="M76 387 Q86 395 98 386" fill="none" class="thin"/>
+<path d="M40 495 L45 442 Q50 413 84 412 Q118 413 123 442 L128 495 Z" fill="#2563a8" class="ink"/>
+<path d="M92 440 C136 425,154 400,176 390" fill="none" class="ink"/><circle cx="176" cy="390" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M76 440 C42 446,29 430,14 415" fill="none" class="ink"/><circle cx="14" cy="415" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M59 495 L53 562 M109 495 L118 562" fill="none" class="ink"/>
+<path d="M39 564 L69 564 M104 564 L138 564" fill="none" class="ink"/>
+
+
+<circle cx="876" cy="370" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M848 362 C856 327,891 322,911 356 C893 345,874 348,848 362" fill="#3f2618" class="ink"/>
+<circle cx="866" cy="373" r="3.5" fill="#0d0d1a"/><circle cx="887" cy="373" r="3.5" fill="#0d0d1a"/>
+<path d="M868 387 Q878 395 890 386" fill="none" class="thin"/>
+<path d="M832 495 L837 442 Q842 413 876 412 Q910 413 915 442 L920 495 Z" fill="#15803d" class="ink"/>
+<path d="M868 440 C824 425,806 400,784 390" fill="none" class="ink"/><circle cx="784" cy="390" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M884 440 C918 446,931 430,946 415" fill="none" class="ink"/><circle cx="946" cy="415" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M851 495 L845 562 M901 495 L910 562" fill="none" class="ink"/>
+<path d="M831 564 L861 564 M896 564 L930 564" fill="none" class="ink"/>
+
+<rect x="330" y="388" width="320" height="76" rx="14" fill="#ffffff" class="ink"/>
+<text x="490" y="415" text-anchor="middle" font-size="17" class="label" fill="#0f3460">CONFIG CHOOSES THE TRANSPORT</text>
+<text x="490" y="441" text-anchor="middle" font-size="16" class="label" fill="#ea580c">THE WORKFLOW CHOOSES THE PROJECT</text>
+<text x="480" y="529" text-anchor="middle" font-size="21" class="label" fill="#0f3460">A model setting is not permission to read, send, or write everything.</text>
+
+</svg>

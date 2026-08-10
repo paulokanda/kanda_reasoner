@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "fixtures": [
+    {
+      "fixture_id": "fixture-tool-static-context-smoke-minimal-v1",
+      "path": "kanda_reasoner_app/source_hygiene/fixtures/static_context_smoke_minimal.json",
+      "synthetic": true,
+      "source_owner": "TOOL",
+      "contains_real_project_data": false,
+      "purpose": "Exercise static-context schema checks without embedding any external Project capture.",
+      "maintainer": "KANDA Reasoner Tool",
+      "sha256": "23d826c1f98129d28a3029923cc3e6e12b17bf7483619be681c7809e158be121"
+    }
+  ]
+}

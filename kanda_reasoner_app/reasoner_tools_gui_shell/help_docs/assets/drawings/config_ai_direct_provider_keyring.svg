@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Direct provider keyring</title><desc id="desc">A key shop with four labeled provider doors and a safety meter for free access.</desc>
+
+<style>
+.text{font-family:"Segoe Print","Comic Sans MS",cursive;fill:#0d0d1a}
+.label{font-family:"Segoe Print","Comic Sans MS",cursive;font-weight:800;letter-spacing:.4px}
+.ink{stroke:#0d0d1a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke:#0d0d1a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hatch{stroke:#64748b;stroke-width:2.4;stroke-linecap:round;opacity:.7}
+</style>
+
+<rect width="960" height="560" fill="#fffdf8"/>
+<path d="M36 505 C210 493 360 512 510 500 C650 490 790 510 926 500" fill="none" stroke="#0d0d1a" stroke-width="5" stroke-linecap="round"/>
+
+<rect x="45" y="44" width="870" height="410" rx="24" fill="#eef7ff" class="ink"/>
+<text x="480" y="87" text-anchor="middle" font-size="30" class="label" fill="#0f3460">FOUR DOORS · FOUR KEYS · FOUR LIMITS</text>
+<path d="M76 105 H884" stroke="#ea580c" stroke-width="9" stroke-linecap="round"/>
+
+<rect x="90" y="145" width="150" height="236" rx="14" fill="#dbeafe" class="ink"/>
+<rect x="109" y="181" width="112" height="147" rx="7" fill="#ffffff" class="thin"/>
+<circle cx="203" cy="257" r="7" fill="#2563a8" class="thin"/>
+<text x="165" y="173" text-anchor="middle" font-size="20" class="label" fill="#2563a8">GEMINI</text>
+<circle cx="165" cy="236" r="32" fill="#2563a8" class="ink"/>
+<text x="165" y="247" text-anchor="middle" font-size="31" class="label" fill="#ffffff">G</text>
+<rect x="108" y="340" width="114" height="25" rx="7" fill="#ffffff" class="thin"/>
+<text x="165" y="358" text-anchor="middle" font-size="13" class="label" fill="#0d0d1a">FREE GUARD</text>
+
+<rect x="300" y="145" width="150" height="236" rx="14" fill="#fff3cd" class="ink"/>
+<rect x="319" y="181" width="112" height="147" rx="7" fill="#ffffff" class="thin"/>
+<circle cx="413" cy="257" r="7" fill="#d97706" class="thin"/>
+<text x="375" y="173" text-anchor="middle" font-size="20" class="label" fill="#d97706">MISTRAL</text>
+<circle cx="375" cy="236" r="32" fill="#d97706" class="ink"/>
+<text x="375" y="247" text-anchor="middle" font-size="31" class="label" fill="#ffffff">M</text>
+<rect x="318" y="340" width="114" height="25" rx="7" fill="#ffffff" class="thin"/>
+<text x="375" y="358" text-anchor="middle" font-size="13" class="label" fill="#0d0d1a">FREE GUARD</text>
+
+<rect x="510" y="145" width="150" height="236" rx="14" fill="#ecfdf5" class="ink"/>
+<rect x="529" y="181" width="112" height="147" rx="7" fill="#ffffff" class="thin"/>
+<circle cx="623" cy="257" r="7" fill="#15803d" class="thin"/>
+<text x="585" y="173" text-anchor="middle" font-size="20" class="label" fill="#15803d">QWEN</text>
+<circle cx="585" cy="236" r="32" fill="#15803d" class="ink"/>
+<text x="585" y="247" text-anchor="middle" font-size="31" class="label" fill="#ffffff">Q</text>
+<rect x="528" y="340" width="114" height="25" rx="7" fill="#ffffff" class="thin"/>
+<text x="585" y="358" text-anchor="middle" font-size="13" class="label" fill="#0d0d1a">FREE GUARD</text>
+
+<rect x="720" y="145" width="150" height="236" rx="14" fill="#f3e8ff" class="ink"/>
+<rect x="739" y="181" width="112" height="147" rx="7" fill="#ffffff" class="thin"/>
+<circle cx="833" cy="257" r="7" fill="#7e22ce" class="thin"/>
+<text x="795" y="173" text-anchor="middle" font-size="20" class="label" fill="#7e22ce">GROQ</text>
+<circle cx="795" cy="236" r="32" fill="#7e22ce" class="ink"/>
+<text x="795" y="247" text-anchor="middle" font-size="31" class="label" fill="#ffffff">R</text>
+<rect x="738" y="340" width="114" height="25" rx="7" fill="#ffffff" class="thin"/>
+<text x="795" y="358" text-anchor="middle" font-size="13" class="label" fill="#0d0d1a">FREE GUARD</text>
+
+<!-- key shop desk -->
+<rect x="224" y="402" width="512" height="77" rx="17" fill="#c78646" class="ink"/>
+<path d="M260 428 H700 M280 452 H680" class="hatch"/>
+<circle cx="480" cy="411" r="54" fill="#fffdf8" class="ink"/>
+<path d="M443 411 h72 l22 19 -17 16 -15-15 -15 15 -14-15 -33 0 z" fill="#f59e0b" class="ink"/>
+<circle cx="453" cy="411" r="11" fill="#fffdf8" class="thin"/>
+<text x="480" y="493" text-anchor="middle" font-size="17" class="label" fill="#9a3412">THE KEY DOES NOT CHANGE YOUR BILLING PLAN</text>
+
+<circle cx="120" cy="355" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M92 347 C100 312,135 307,155 341 C137 330,118 333,92 347" fill="#3f2618" class="ink"/>
+<circle cx="110" cy="358" r="3.5" fill="#0d0d1a"/><circle cx="131" cy="358" r="3.5" fill="#0d0d1a"/>
+<path d="M112 372 Q122 380 134 371" fill="none" class="thin"/>
+<path d="M76 480 L81 427 Q86 398 120 397 Q154 398 159 427 L164 480 Z" fill="#0f3460" class="ink"/>
+<path d="M128 425 C172 410,190 385,212 375" fill="none" class="ink"/><circle cx="212" cy="375" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M112 425 C78 431,65 415,50 400" fill="none" class="ink"/><circle cx="50" cy="400" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M95 480 L89 547 M145 480 L154 547" fill="none" class="ink"/>
+<path d="M75 549 L105 549 M140 549 L174 549" fill="none" class="ink"/>
+
+
+<circle cx="842" cy="355" r="31" fill="#ffd8b5" class="ink"/>
+<path d="M814 347 C822 312,857 307,877 341 C859 330,840 333,814 347" fill="#3f2618" class="ink"/>
+<circle cx="832" cy="358" r="3.5" fill="#0d0d1a"/><circle cx="853" cy="358" r="3.5" fill="#0d0d1a"/>
+<path d="M834 372 Q844 380 856 371" fill="none" class="thin"/>
+<path d="M798 480 L803 427 Q808 398 842 397 Q876 398 881 427 L886 480 Z" fill="#ea580c" class="ink"/>
+<path d="M834 425 C790 410,772 385,750 375" fill="none" class="ink"/><circle cx="750" cy="375" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M850 425 C884 431,897 415,912 400" fill="none" class="ink"/><circle cx="912" cy="400" r="9" fill="#ffd8b5" class="thin"/>
+<path d="M817 480 L811 547 M867 480 L876 547" fill="none" class="ink"/>
+<path d="M797 549 L827 549 M862 549 L896 549" fill="none" class="ink"/>
+
+<path d="M365 121 C390 105 420 105 444 122 M516 122 C540 105 570 105 595 121" fill="none" stroke="#94a3b8" stroke-width="3" stroke-dasharray="8 7"/>
+<text x="480" y="529" text-anchor="middle" font-size="21" class="label" fill="#0f3460">Select provider → load its key → confirm its real free mode → refresh.</text>
+
+</svg>

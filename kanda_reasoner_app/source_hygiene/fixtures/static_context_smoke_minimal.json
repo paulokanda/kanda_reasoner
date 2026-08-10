@@ -1,0 +1,23 @@
+{
+  "artifact_type": "synthetic_static_context_fixture",
+  "fixture_id": "fixture-tool-static-context-smoke-minimal-v1",
+  "synthetic": true,
+  "source_owner": "TOOL",
+  "contains_real_project_data": false,
+  "purpose": "Exercise static-context schema checks without embedding any external Project capture.",
+  "packaging_metadata": {
+    "project_name": "synthetic_project",
+    "declared_version": "0.0.0-test",
+    "build_backend": "synthetic",
+    "packaging_files_found": [],
+    "declared_dependencies": []
+  },
+  "documentation_intent": {
+    "project_purpose_summary": "Synthetic schema-only fixture owned by KANDA Reasoner Tool tests.",
+    "documentation_files_found": ["SYNTHETIC_README.md"],
+    "declared_workflows": [],
+    "run_instructions": [],
+    "named_features": [],
+    "external_integrations": []
+  }
+}

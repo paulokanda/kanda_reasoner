@@ -1,0 +1,2534 @@
+{
+  "builder_feature_id": "kanda-reasoner-portable-builder-install-v1r12",
+  "builder_version": "v1r12",
+  "contract": "committed_exact_source_archive_path_sha256_allowlist",
+  "feature_id": "kanda-reasoner-portable-runtime-path-hash-allowlist-v1r4",
+  "hardening_features": [
+    "registry-boundary-gate",
+    "packaged-gui-smoke-isolation",
+    "governed-root-exact-rollback",
+    "runtime-path-hash-allowlist",
+    "exact-builder-member-governance",
+    "external-build-control-hash-binding"
+  ],
+  "item_count": 358,
+  "items": [
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/manage_architecture/large_file_refactor_planner/grimp_graph_probe.py",
+      "role": "architecture_grimp_probe",
+      "sha256": "1a9ab1b0d86277093c5dc116174016015ce7d562b2d9164aa0186f07601b6309",
+      "size_bytes": 4880,
+      "source_relative": "kanda_reasoner_app/manage_architecture/large_file_refactor_planner/grimp_graph_probe.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/manage_architecture/manage_architecture.py",
+      "role": "architecture_worker",
+      "sha256": "83772158777d6b081e0dd5e1c9389d9b2e85789c1261e1f7ff42407525906f81",
+      "size_bytes": 1793,
+      "source_relative": "kanda_reasoner_app/manage_architecture/manage_architecture.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_1_private_impl.py",
+      "role": "collector_source_parts",
+      "sha256": "3cda9e63b20dd0becaf7ac268ab23f48cabee7bb32252effeef7ebb36dcc3aa8",
+      "size_bytes": 16363,
+      "source_relative": "kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_1_private_impl.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_2_private_impl.py",
+      "role": "collector_source_parts",
+      "sha256": "058d8b3fdb49c5f200b7066f9f583a0bc0bcbfaf0dd82a49c318b8bd06c5542e",
+      "size_bytes": 16363,
+      "source_relative": "kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_2_private_impl.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_3_private_impl.py",
+      "role": "collector_source_parts",
+      "sha256": "f4d4a89207f2ee03a1dc23145e1f3f817117c32ec5b5c78b455e1e9ba7a6c6b6",
+      "size_bytes": 16363,
+      "source_relative": "kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_3_private_impl.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_4_private_impl.py",
+      "role": "collector_source_parts",
+      "sha256": "b24853c69740f97341c74e9ddd18d64933eab0f25aa2bea724bcef0a553f331a",
+      "size_bytes": 16363,
+      "source_relative": "kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_4_private_impl.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_5_private_impl.py",
+      "role": "collector_source_parts",
+      "sha256": "edcf4b763e1331043b65a33a5bd089c2d67056bd782699154d72a86a2bdcfe17",
+      "size_bytes": 16361,
+      "source_relative": "kanda_reasoner_app/reasoner_context_collector/collector_main_help/collector_main_source_part_5_private_impl.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings.py",
+      "role": "docstrings_worker",
+      "sha256": "af6d781c22c162bbc94bc94f0733962c75f2b415ba2353485d96625974b3dffc",
+      "size_bytes": 6649,
+      "source_relative": "kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings.py"
+    },
+    {
+      "archive_relative": "_internal/project_freeze_ledger/freeze_tools/expose_freeze_memory.py",
+      "role": "freeze_blueprint_tools",
+      "sha256": "ffd3c942e106ecac8bd6c3c4aa57fa7fb955e2c183571fa5260c2224c1cea23e",
+      "size_bytes": 26363,
+      "source_relative": "project_freeze_ledger/freeze_tools/expose_freeze_memory.py"
+    },
+    {
+      "archive_relative": "_internal/project_freeze_ledger/freeze_tools/freeze_after_update_generator.py",
+      "role": "freeze_blueprint_tools",
+      "sha256": "3e02dc1dc8d3d1c4b655e35b0a8c505976e66a197592d4815c2a5584b421e9fc",
+      "size_bytes": 27700,
+      "source_relative": "project_freeze_ledger/freeze_tools/freeze_after_update_generator.py"
+    },
+    {
+      "archive_relative": "_internal/project_freeze_ledger/freeze_tools/local_freeze_writer.py",
+      "role": "freeze_blueprint_tools",
+      "sha256": "fa57e7fd1d99e7b733df269a796cbc62be5d1661066eda516035ae25490e58bb",
+      "size_bytes": 29480,
+      "source_relative": "project_freeze_ledger/freeze_tools/local_freeze_writer.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "b2f72c916dc97c859c7ff175c6dac2e7d1c7b3148c823302819121516ffa2b11",
+      "size_bytes": 3177,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md",
+      "role": "prompt_library",
+      "sha256": "6e56c70aa74ebb01c3e09f3342cf0f871bedb5281ad4d15e0431deaa7a870cc0",
+      "size_bytes": 1663,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
+      "role": "prompt_library",
+      "sha256": "39d34c223c9aaef04ddcc99b267a947d2f10d5a9e0bbaf97c7962a62d26c74e2",
+      "size_bytes": 9562,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
+      "role": "prompt_library",
+      "sha256": "fa461060f1cd08c0832838346890873b12577005d1bfe58f6702ab3e4c05544a",
+      "size_bytes": 5553,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_reasoner_startup_loader.md",
+      "role": "prompt_library",
+      "sha256": "1b4151678a00511de593f45379ed800de59aacaaa8b81e65723ee658eb114f7b",
+      "size_bytes": 795,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_reasoner_startup_loader.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_session_start_prompt.md",
+      "role": "prompt_library",
+      "sha256": "11f8ee2e073f3d50960cdb28590c75932c2367e336ec54301dc61e16c33a17bb",
+      "size_bytes": 732,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_session_start_prompt.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_startup_loader_template.md",
+      "role": "prompt_library",
+      "sha256": "943ab1210f02d3676b533853dd33d467ca60040e238b3bc406c11735b601f362",
+      "size_bytes": 1618,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_startup_loader_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md",
+      "role": "prompt_library",
+      "sha256": "4e84c15c20f98da8dd2f1d3235fc75025f5a129bd768e42f98aa66dcd3699e83",
+      "size_bytes": 5672,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/durable_document_artifact_routing_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
+      "role": "prompt_library",
+      "sha256": "3412df5558ffeffc1a262a2dce6dc427164e315f19407d5cb830301de3a282b1",
+      "size_bytes": 6302,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/general_prompt_stack_load_order.md",
+      "role": "prompt_library",
+      "sha256": "3b9d0d2d9216cf7d6c5d5258709959e89dbcc5eaae4524c08ec781884bf8ebb1",
+      "size_bytes": 775,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/general_prompt_stack_load_order.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/handoff_at_end_of_work.md",
+      "role": "prompt_library",
+      "sha256": "e0b46ee7695b25d60f50f1d57cae1a0a777ee44b140f11b06449f64b3c99e976",
+      "size_bytes": 4650,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/handoff_at_end_of_work.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md",
+      "role": "prompt_library",
+      "sha256": "db4b871225be10c42b78ccdae67f69d6e7750a7ad078d244a9f64718e2e298ad",
+      "size_bytes": 1862,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md",
+      "role": "prompt_library",
+      "sha256": "a7bb8a745f47f49dcc826c9089fa1d193b361892895435963c34d6165430d174",
+      "size_bytes": 2500,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/prompt_router_reasoner_startup_check.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/reasoner_startup_canon.md",
+      "role": "prompt_library",
+      "sha256": "91f856e03de8281581cfb55674f95259300239b3a46a6f46571ce3aa30241f02",
+      "size_bytes": 883,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/reasoner_startup_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
+      "role": "prompt_library",
+      "sha256": "5bef6fca6e8c84f1aafc760ebf6878f61d5bf0b94af360e0308166f0c499a6bb",
+      "size_bytes": 4028,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
+      "role": "prompt_library",
+      "sha256": "de986fcc4fb01cf68dc33e6cd74a9358c12abf352d8916dcce995b7dbca04bcc",
+      "size_bytes": 6738,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "8e14a50ae070a229717fa6fc1c4c6aef1b1388c1bc92adf74b396967a0d10ffb",
+      "size_bytes": 2113,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md",
+      "role": "prompt_library",
+      "sha256": "fbc045fc56cc21299cd329d8ca00f55ebfec9f1eb19e10d566267d2f921d7de0",
+      "size_bytes": 2933,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/chatgpt_kanda_routing_choice_output_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md",
+      "role": "prompt_library",
+      "sha256": "30a9c9fe5d35e1f3ef9c1f350aef59218832b28fbd07f5eb89d9f5ecafce45e3",
+      "size_bytes": 4677,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/kanda_routing_system_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/project_overlay_selector.md",
+      "role": "prompt_library",
+      "sha256": "2a236174dc06d8ca9174fc26b2f5d49c335c32168b279ef56fd9b97af585c593",
+      "size_bytes": 2642,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/project_overlay_selector.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
+      "role": "prompt_library",
+      "sha256": "05b9e24929f9aa337930095125b651bb45b9c9d5f0acb2b57b84fce1cbe394ba",
+      "size_bytes": 17695,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md",
+      "role": "prompt_library",
+      "sha256": "a8d560ac452a9f208990a008a61d57106e9f925fddb4209c62abf7c1db97748a",
+      "size_bytes": 1639,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_router.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_substitution_map.md",
+      "role": "prompt_library",
+      "sha256": "0bed8b8730bbea8d8c3bf51f317b2389e97d429eaf21280b57d2bbe408055910",
+      "size_bytes": 16240,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_substitution_map.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md",
+      "role": "prompt_library",
+      "sha256": "42d27fe26892ba07a280dd0d6b458842209b883e4ce978c8e8209e242d5591dd",
+      "size_bytes": 1547,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_lab_phase_entry_router_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md",
+      "role": "prompt_library",
+      "sha256": "6f7637e24b35dcc50ad30bc9530a08fe13d29a67e2255e5f8b81c88f0a077328",
+      "size_bytes": 1570,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_semantic_readiness_canon.md",
+      "role": "prompt_library",
+      "sha256": "397d1570f68c10e5aa51c34e65ef14c9149eab36720dd00adac11ea944ee8727",
+      "size_bytes": 3416,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/routing_signal_scorer_v3_semantic_readiness_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "1765cebc09f80286583ba353ece4f7902bd98c4f854475fbd76e45f157e2af05",
+      "size_bytes": 2227,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
+      "role": "prompt_library",
+      "sha256": "fcf5169a3b1fb032c12406391055f24035e8bcaf36ad473792dd85feeb895eb3",
+      "size_bytes": 57061,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
+      "role": "prompt_library",
+      "sha256": "fd46df30b136867975ae590ffa5cafddabf8089739afff96131db0bd3a45c5d1",
+      "size_bytes": 2962,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md",
+      "role": "prompt_library",
+      "sha256": "9bfdc6323ff38bab32f5f4865a2ff92d7b534e80aa21cc55897a4d00179dea49",
+      "size_bytes": 3618,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
+      "role": "prompt_library",
+      "sha256": "6a5520156c914ed2094035141f42f67a23df51e201d6277a5200cb9dc164c696",
+      "size_bytes": 4590,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/professional_engineering_governance_template.md",
+      "role": "prompt_library",
+      "sha256": "ebbba5ed082e314d8cd2ff3d4deac116c55b9ff0d6de39e7397aed6970b5c8a8",
+      "size_bytes": 2329,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/professional_engineering_governance_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md",
+      "role": "prompt_library",
+      "sha256": "a18df2197e1ea4d9128ce180baf57bda95723e58a5f9eb5c671ae8c0b6a35d19",
+      "size_bytes": 21346,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md",
+      "role": "prompt_library",
+      "sha256": "ffe4350ef7990cfa6fc90cacae3de4b869d1bb8d9c8ac69a94099a735751002e",
+      "size_bytes": 1983,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "9636d4c6b7c6f93562ac467849550ece0b2936bbe135ad3e053d01aa9d721bd9",
+      "size_bytes": 1865,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
+      "role": "prompt_library",
+      "sha256": "f3b03f539da13794dc1cf39a28ec8841ddcc548a845e41a8292df1a4eba7d884",
+      "size_bytes": 3582,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
+      "role": "prompt_library",
+      "sha256": "94b8cc0aa1df762674bc2e9e9ae40d2f8cdb264c09214a25c4bf5282e0c55572",
+      "size_bytes": 6403,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md",
+      "role": "prompt_library",
+      "sha256": "2b1e666b6630f9d4ce6fd3a0873b8c188809b6b65ee7705cdeb73d9bf846c34f",
+      "size_bytes": 1539,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/governed_architecture_companion_handoff.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
+      "role": "prompt_library",
+      "sha256": "8811543e3c24e8528ffd37867be1a539599cbb93a7a67b5a26ffd05b1bbdba5f",
+      "size_bytes": 4014,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md",
+      "role": "prompt_library",
+      "sha256": "a2182859397ba8f9e84aac6c0fdb0522bd0756af6b320ff98d2d2138ce4780de",
+      "size_bytes": 3823,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md",
+      "role": "prompt_library",
+      "sha256": "04ed28fc6eeff577e51e542e6252f81fcbb11ec9da15ddc821da0064a6a4a82f",
+      "size_bytes": 4060,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "d03b7d7ed9d6770bd48cc471594a7f03a36be125569f6ffb726cca807d3a9a77",
+      "size_bytes": 3210,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
+      "role": "prompt_library",
+      "sha256": "bcd46a41f89a109e9b5ad7c37c30ee1c3f6d636b39b59e601c3eca587fd08fc2",
+      "size_bytes": 5157,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md",
+      "role": "prompt_library",
+      "sha256": "863ef8f79e71317e1814b38d3f657c1cc095365ba61c4cb3d92d3b7a2f78aba5",
+      "size_bytes": 5519,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md",
+      "role": "prompt_library",
+      "sha256": "219b36ddf9f6db75977094109cc8821653492d84c7249643f8053859b2b7c85e",
+      "size_bytes": 3419,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
+      "role": "prompt_library",
+      "sha256": "e67e8164b583c54463faef271c45d356d29da3bdb7209a8a1439a82d6aeda85f",
+      "size_bytes": 8296,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
+      "role": "prompt_library",
+      "sha256": "f67cce917a22c6351d963672613a3d59fe6735bcebc6b43866d5a9bec658906b",
+      "size_bytes": 11253,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_governed_implementation.md",
+      "role": "prompt_library",
+      "sha256": "4df2993ef5bea99c42ab1b41ab075c8eae6c44d5ceae658452b8d435202a4e93",
+      "size_bytes": 56606,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_governed_implementation.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_patch_delivery_contract.md",
+      "role": "prompt_library",
+      "sha256": "deba647d806ab85732746999ab46087eb973d886b8eef1db7dca984d00eae3e9",
+      "size_bytes": 14121,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_patch_delivery_contract.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md",
+      "role": "prompt_library",
+      "sha256": "c037bb7fcffd7ee6e1427aa4b2979d22f040536bdcbd6af87e1f8d00f3832027",
+      "size_bytes": 4384,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/router_bridge_user_detected_correction.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md",
+      "role": "prompt_library",
+      "sha256": "624866ed2000cc6430a5a14ee294946cb53551f1d5a451b3ab209f4c7865f648",
+      "size_bytes": 27133,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md",
+      "role": "prompt_library",
+      "sha256": "d10b92cb0b08df52d79d569ad9b928fd2caae3e5961afd5986999d18c7aa0bb2",
+      "size_bytes": 4265,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/universal_delivery_protocol.md",
+      "role": "prompt_library",
+      "sha256": "f50de9d27a86fd60713c76064ead20bcf38c203a646f85806dc7273434df9e9f",
+      "size_bytes": 771,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/universal_delivery_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "cf983fb1c9299806fbc618867f4d9ae93296f3f72395fa9437d92454ad4d289b",
+      "size_bytes": 3529,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md",
+      "role": "prompt_library",
+      "sha256": "06ecd59454fbfce5c9fa2c84a5b259a6bb34ad633e47596c7f82e34b81e61013",
+      "size_bytes": 7330,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md",
+      "role": "prompt_library",
+      "sha256": "aa2a1535a451b842b3a99634edf160956520904634bc22baa8d6bb9b3a6e076c",
+      "size_bytes": 2402,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
+      "role": "prompt_library",
+      "sha256": "964c43ed666846afbc7be46a84d6bc812e94cb049d17204a6b813a200f6014c9",
+      "size_bytes": 10896,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
+      "role": "prompt_library",
+      "sha256": "103f85652d8a653b2a37e965861fbd18bc5c1d4af4eb8b948a97b0a03de1f4f3",
+      "size_bytes": 2760,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md",
+      "role": "prompt_library",
+      "sha256": "4a4f4ccd202a72f4b77247cd7da3b6c7833bf142dfc7469b375da9634ff7c46f",
+      "size_bytes": 6286,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md",
+      "role": "prompt_library",
+      "sha256": "84575822d0ab1a86f198acdc56cb4686abe0afb2325571c344398c17f9b9e83f",
+      "size_bytes": 7142,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_ast_split_risk_repair_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md",
+      "role": "prompt_library",
+      "sha256": "31df5397eae3666d618850e356ae3242a17fb9aad75591b9043efdcf190c8a13",
+      "size_bytes": 7045,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_large_module_refactor_exchange_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md",
+      "role": "prompt_library",
+      "sha256": "9ad6b1e3ff6d2d16b36fa6f930df0103cee067da299b92910bd8024e4f1a7d6d",
+      "size_bytes": 6468,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/web_ai_planning_response_bundle_blueprint.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "b3e8233d00d103ffe647d130b2699bc254f4a3a30c6b661523d1dbdb8d8c0265",
+      "size_bytes": 2686,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/project_specific_prompt_generalization.md",
+      "role": "prompt_library",
+      "sha256": "fe6eaa89703f01d1929ae9ed2eda488d8492c37bf4e0dabc1438723da9fc23a2",
+      "size_bytes": 4332,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/project_specific_prompt_generalization.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_audit_canon.md",
+      "role": "prompt_library",
+      "sha256": "58d122c33feeb3cf080644054afc679b9e0382c8d956961cd51eea13a54aa3ac",
+      "size_bytes": 5287,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_audit_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_canon_reconciliation_protocol.md",
+      "role": "prompt_library",
+      "sha256": "197407aecbf150909018acc7f07f1d8daa2d221b685bb0680cbee71f1373a48a",
+      "size_bytes": 4540,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_canon_reconciliation_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_identity_code_registry_canon.md",
+      "role": "prompt_library",
+      "sha256": "b3753164313250f7661bc8a6d0ed7d305a0be31a404644747d55ef78223c1d85",
+      "size_bytes": 5050,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_identity_code_registry_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md",
+      "role": "prompt_library",
+      "sha256": "226c5fe78ca31df0d850eebfcaf0f12fe6a89df365b8fb2220e49be9bc81f04f",
+      "size_bytes": 6040,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/07_prompt_authoring_and_audit/prompt_insertion_and_router_registration_protocol.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "aa21c960430c74e171ebca131b60ff5e5a6ad9cf99bcbc24ca769c8a4fd448db",
+      "size_bytes": 2531,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md",
+      "role": "prompt_library",
+      "sha256": "4b887d2ea5c8e3ac84c5695e36553be47adb29275626238b1f4a2ea3aa082831",
+      "size_bytes": 6139,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md",
+      "role": "prompt_library",
+      "sha256": "7a5bca499ab7982cdc3e7d9449ae6fcc3ffd0896d69c7e1de6d5520c32297ff6",
+      "size_bytes": 5956,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md",
+      "role": "prompt_library",
+      "sha256": "f696533548d5073dff4abe2401f0f4e877c032c7ed055b2a627f2f51e48ef4ea",
+      "size_bytes": 5900,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md",
+      "role": "prompt_library",
+      "sha256": "318ae8ab8d743ad39c97292e5c458ab6523a77009cb9ace91dd07e17693c2c65",
+      "size_bytes": 7909,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md",
+      "role": "prompt_library",
+      "sha256": "d9e9242f57c0620dbb08d3a9b02c54fd9e3f4779f94bb4a30fd6dcb16616b514",
+      "size_bytes": 8501,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md",
+      "role": "prompt_library",
+      "sha256": "51a4c39a7fe88cced4187c594186baee71e4493791c820a2c44d62d548f73a88",
+      "size_bytes": 8591,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md",
+      "role": "prompt_library",
+      "sha256": "11eee39605ea09fb404ab31c3aff35d7cac80aac2035237933fdcb7e78ddbef3",
+      "size_bytes": 8942,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md",
+      "role": "prompt_library",
+      "sha256": "c0055fcd65129db7172dd44bbe1b6fc1d339962c9a5ec732dda1da15aa094f5c",
+      "size_bytes": 4189,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md",
+      "role": "prompt_library",
+      "sha256": "8f82e1feb9c8c147d8a4c66a3bf274b6312a7b55bd6a0d3f9064f902dccf64c3",
+      "size_bytes": 3960,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md",
+      "role": "prompt_library",
+      "sha256": "451a0ce0919dae8661dd924e383037c72e1c8cfcdb0a4e395efb0ab008c79bc3",
+      "size_bytes": 4678,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "9926f8a73a7dbfe37d7d63e3f893d6f8bc72b96d96094dc518442b33c85b69c3",
+      "size_bytes": 3672,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md",
+      "role": "prompt_library",
+      "sha256": "537dbfcf556c893c8830fb72d819d908aa4a76ab75d4f82e549bbdf01b2d8b9a",
+      "size_bytes": 3929,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_short.md",
+      "role": "prompt_library",
+      "sha256": "fc4e8e3fe58790d0f45f67835391f2ce087fda592245530e46e77c8181b73504",
+      "size_bytes": 1524,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_short.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_full_group.md",
+      "role": "prompt_library",
+      "sha256": "f57ff0fff91317a31d6b77a5ec08cb4ef046b9a79a2df9528dc204aac3e90224",
+      "size_bytes": 1961,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_full_group.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md",
+      "role": "prompt_library",
+      "sha256": "e6e9f768182174a8408998e21ce3b8ec23f9797eac815840f892f0fd300eb45f",
+      "size_bytes": 4007,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_short.md",
+      "role": "prompt_library",
+      "sha256": "573687dc0cfee66b4f176159dfb692559d4212b6c717fdeed0a14f4102c4fef7",
+      "size_bytes": 1529,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_short.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md",
+      "role": "prompt_library",
+      "sha256": "15e253ef9e68f4305788a309f7ab08755c1e121e1f5c6afff82d24b84ddb6f68",
+      "size_bytes": 3865,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_protocol_short.md",
+      "role": "prompt_library",
+      "sha256": "2a2558c4d52640c865deabb5f90e1db56886a48fa2123dbaf446dd41c284c21a",
+      "size_bytes": 1499,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_protocol_short.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_short_group.md",
+      "role": "prompt_library",
+      "sha256": "6695966283d1496a4d59bdfbd2166d1441a4201c2bc5325f4d895ed135653d50",
+      "size_bytes": 1983,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_short_group.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md",
+      "role": "prompt_library",
+      "sha256": "2d82ac74c566a822c03015f58d3f28e768271037327f65eae5a8627d32915f25",
+      "size_bytes": 4068,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_short.md",
+      "role": "prompt_library",
+      "sha256": "ae518a5f992f3c028a8735518b23d2917b15e27d696ca46190734f6f59ce3a64",
+      "size_bytes": 1525,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_short.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_documentation_developer_experience.md",
+      "role": "prompt_library",
+      "sha256": "0a8c1c4aebd3618ce7f715b76d002108f8a4d12cd17f5aa9e12a4101f66605b0",
+      "size_bytes": 4035,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_documentation_developer_experience.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_observability_logging_metrics_tracing.md",
+      "role": "prompt_library",
+      "sha256": "eeb73876d24f65b2525b82ef14da8b82599b9c7262e28a32a3be8054a85c8775",
+      "size_bytes": 3927,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_observability_logging_metrics_tracing.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_resilience_error_handling.md",
+      "role": "prompt_library",
+      "sha256": "c8e52ebab702aa2b786c6a8622f348a9fc86814e803079bb25c5ee0c5d0137ac",
+      "size_bytes": 3976,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_resilience_error_handling.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_security_threat_prevention.md",
+      "role": "prompt_library",
+      "sha256": "6440ed4dd46c13062379d01bb838b166ae78221776d76cf3cdf910742657ca88",
+      "size_bytes": 4120,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_security_threat_prevention.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_testing_pytest.md",
+      "role": "prompt_library",
+      "sha256": "2a940492ddd8a294f5743d4ff0314851910f1ea0b67048935da63182108cf55f",
+      "size_bytes": 3967,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_testing_pytest.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_validation_serialisation_type_safety.md",
+      "role": "prompt_library",
+      "sha256": "47718b18fec154bd357004dc54432ad6f65fab36b56364f4b41ba60461010d5d",
+      "size_bytes": 3985,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_validation_serialisation_type_safety.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/tab4_docstring_quality_roadmap.md",
+      "role": "prompt_library",
+      "sha256": "ec09153ef39330b6ed418a11b83c62b2fef4ba3e3e85cc2a984dfc2406db1a61",
+      "size_bytes": 1381,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/tab4_docstring_quality_roadmap.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "516b5ea56839f15012ccf014509c7335b07957fb44d945f2b47b20638b907234",
+      "size_bytes": 1840,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_api_design.md",
+      "role": "prompt_library",
+      "sha256": "4991d46d3f9bef4d63bc22687044536bb668c82eb0ad8fe82ba90e13c5497de1",
+      "size_bytes": 4135,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_api_design.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_async_parallel_distributed.md",
+      "role": "prompt_library",
+      "sha256": "7e34319c0458a79b4d2384da276113cdbb076a73236bfe8bee2ddb73765c4984",
+      "size_bytes": 4222,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_async_parallel_distributed.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_configuration_feature_flags.md",
+      "role": "prompt_library",
+      "sha256": "c6887ec8c721e693c206265f116464267178397e36597e45dff66468629e155d",
+      "size_bytes": 4162,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_configuration_feature_flags.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_database_design_optimisation.md",
+      "role": "prompt_library",
+      "sha256": "5fb7ad3ad8a2a43089c4f52b29a6a4adca606124cba175c3feb6ec337485ba23",
+      "size_bytes": 4402,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_database_design_optimisation.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "b0f3b616be3a20cd9b9c4aae44bff1d141a961e992af3a5e76de7f8f610aae85",
+      "size_bytes": 1767,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md",
+      "role": "prompt_library",
+      "sha256": "b360b51833385cde3771c6246c46648ee0d95e99042f1379bf6a78eaf9315a8d",
+      "size_bytes": 4665,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/productization_readiness_roadmap.md",
+      "role": "prompt_library",
+      "sha256": "4f935c3961ae0b897187fdd784bb228556b8303f5aa1f4ebb9f3c01a49a8a74d",
+      "size_bytes": 1822,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/productization_readiness_roadmap.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md",
+      "role": "prompt_library",
+      "sha256": "74459f85078c1db32c3af3e63ff5f16b868bc213fcbc26be464103a284a6c00d",
+      "size_bytes": 3925,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_infrastructure_roadmap.md",
+      "role": "prompt_library",
+      "sha256": "5260d798053024f4d86e0d2670b3e93ec6c4e5f44a187df71de5f901623b9c22",
+      "size_bytes": 1825,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_infrastructure_roadmap.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_lifecycle_versioning_deprecation.md",
+      "role": "prompt_library",
+      "sha256": "0e168f26e7cccb568660119dca5582277a4d70c4f2b66a07a3f66cf461f40728",
+      "size_bytes": 4439,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_lifecycle_versioning_deprecation.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_site_reliability_engineering.md",
+      "role": "prompt_library",
+      "sha256": "ea9935c471477b1c6093aea6d5b258dca177ee62226ef2ed0140f428f7799eb8",
+      "size_bytes": 4419,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_site_reliability_engineering.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md",
+      "role": "prompt_library",
+      "sha256": "04ef1d50558799d3a31bc28cc51b8ca270bd418af792af06970e29f45105590e",
+      "size_bytes": 2684,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/_FOLDER_ASSIMILATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
+      "role": "prompt_library",
+      "sha256": "b86007ab35cdf13b1a2cbdc74774d9d5835ecda6cf77863fc2c5c202f5cb3302",
+      "size_bytes": 10634,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md",
+      "role": "prompt_library",
+      "sha256": "c11b2df451dc5b82f231b80955a451d7be7740d462793e50b0c4ca322b9ae8d6",
+      "size_bytes": 4081,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md",
+      "role": "prompt_library",
+      "sha256": "d9dd762b17ec5168edcb5831b7b2a6f397dc6a8984f116426d0f84e799987a34",
+      "size_bytes": 5310,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/desktop_help_document_layout_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md",
+      "role": "prompt_library",
+      "sha256": "fac99920caa7ee8aba4aa70ea7ffedca7e6594ea337981a8ddbf8455ef93cacc",
+      "size_bytes": 3939,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md",
+      "role": "prompt_library",
+      "sha256": "3a103e46eb511edf27634d6082fcc494348aed772b83805432824641ec63ccbe",
+      "size_bytes": 3063,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_correction_blueprint.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_json_template.md",
+      "role": "prompt_library",
+      "sha256": "3c205be7c4659c67cbf75254df5c6b1f1bae9ceaceb8b1b57946f6c5fbf25ff4",
+      "size_bytes": 1724,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_json_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md",
+      "role": "prompt_library",
+      "sha256": "3d760c84a1cffac6cf80b8471424f6fc6758ee915b07ccd8e4844f26026cdde9",
+      "size_bytes": 3225,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/kanda_desktop_help_exact_layout_blueprint.md",
+      "role": "prompt_library",
+      "sha256": "24982509f12a55f5d900bee43ff9f54055b59b2aeec36160892c01715273cbec",
+      "size_bytes": 13871,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/kanda_desktop_help_exact_layout_blueprint.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md",
+      "role": "prompt_library",
+      "sha256": "4e2390c5b0cc9d83e7234b408e7bc87084a5eb5644cbcf4758fc043c38b5d4bc",
+      "size_bytes": 7418,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md",
+      "role": "prompt_library",
+      "sha256": "8f120afb9270fbf0ba8c99a5aec96133d2b610b0c9e88aa89dc8975cfce80386",
+      "size_bytes": 4422,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/practical_field_handbook_template.md",
+      "role": "prompt_library",
+      "sha256": "f3dd353abf387c1e5ef59cd6635bb61eab9e3f837b23e0ea2d9ed08f5b8b7b20",
+      "size_bytes": 6016,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/practical_field_handbook_template.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
+      "role": "prompt_library",
+      "sha256": "6442cc9bd5b7e5d9e587489f06d9e5f04ed2cd1c51bf0b9bf9066489069d6e8b",
+      "size_bytes": 14778,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
+      "role": "prompt_library",
+      "sha256": "201d158e7367d0974a573f0b836362c419bb34687514be494965eb80c5cdd9cf",
+      "size_bytes": 8552,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md",
+      "role": "prompt_library",
+      "sha256": "4a57034dd44f0ba953d8d613aa51a814620bc54b8e673266d456825d36fde569",
+      "size_bytes": 4122,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md",
+      "role": "prompt_library",
+      "sha256": "704fc7698378ffc8b61ba01b366a0519351ef587579b2faa3a9ac0b19bf3f51d",
+      "size_bytes": 4081,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/FREEZE/CONTEXT_ROUTING_LAYER_STAGING_BASELINE_FREEZE.md",
+      "role": "prompt_library",
+      "sha256": "39bb3c9e8997db818fceafd8100df3aed2e1bcecec009b84ad7e19107d72c809",
+      "size_bytes": 1878,
+      "source_relative": "kanda_prompt_workspace/prompt_library/FREEZE/CONTEXT_ROUTING_LAYER_STAGING_BASELINE_FREEZE.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/FREEZE/context_routing_layer_staging_baseline_freeze.json",
+      "role": "prompt_library",
+      "sha256": "6cf887301a39841f41fd5bb4ad71bdacdb74da8f51dbf5a46b1c286d13868c68",
+      "size_bytes": 1418,
+      "source_relative": "kanda_prompt_workspace/prompt_library/FREEZE/context_routing_layer_staging_baseline_freeze.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/GROUPS/PROMPT_GROUPS_DRAFT.json",
+      "role": "prompt_library",
+      "sha256": "8f9847001daf03756c59bacdbf2908b979185db33c46a22a7657394ecc410ef2",
+      "size_bytes": 9929,
+      "source_relative": "kanda_prompt_workspace/prompt_library/GROUPS/PROMPT_GROUPS_DRAFT.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/HUMAN_APPENDIX/KANDA_HUMAN_AI_PROJECT_ACTION_APPENDIX.md",
+      "role": "prompt_library",
+      "sha256": "b33af52e3722c9d5d318eb8277c00de6d00523b3177623d7531b3f57db06009f",
+      "size_bytes": 13103,
+      "source_relative": "kanda_prompt_workspace/prompt_library/HUMAN_APPENDIX/KANDA_HUMAN_AI_PROJECT_ACTION_APPENDIX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/HUMAN_APPENDIX/KANDA_HUMAN_PROJECT_ACTION_MENU_APPENDIX.md",
+      "role": "prompt_library",
+      "sha256": "8c59fc38c1f17a1ab8fbab9a25b83513f48e6ed5e362c7aca961cd30b2f35b07",
+      "size_bytes": 12848,
+      "source_relative": "kanda_prompt_workspace/prompt_library/HUMAN_APPENDIX/KANDA_HUMAN_PROJECT_ACTION_MENU_APPENDIX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/KANDA_HUMAN_PROJECT_ACTION_MENU_APPENDIX.md",
+      "role": "prompt_library",
+      "sha256": "9cab3d4c515c8fabc54e9d4436387629d979411e8114a42a6c2405bd2eb80f0f",
+      "size_bytes": 6459,
+      "source_relative": "kanda_prompt_workspace/prompt_library/KANDA_HUMAN_PROJECT_ACTION_MENU_APPENDIX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/ai_human_partnership_session_start.meta.json",
+      "role": "prompt_library",
+      "sha256": "ab2726d33db0f7de628a2f80923f4d7a616357ce8883e44b954a8fa7b8be292f",
+      "size_bytes": 1485,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/ai_human_partnership_session_start.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/ai_prompt_request_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "101864c6fe143d543899ebf99fb558b1acdf6b2388eb489c526f8375964a1580",
+      "size_bytes": 1366,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/ai_prompt_request_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_full.meta.json",
+      "role": "prompt_library",
+      "sha256": "f52eed7f236dc098d915a088b8b7eefffa8320e283b36050fc5733e6c0dc15ba",
+      "size_bytes": 2077,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_full.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_short.meta.json",
+      "role": "prompt_library",
+      "sha256": "a6bb0048f1fed39a534e2280bfc4b39c5ab90b8905ea742cd749dcffc5adf81e",
+      "size_bytes": 1706,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_short.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_full_group.meta.json",
+      "role": "prompt_library",
+      "sha256": "412a61fb36d9ff7172c4a71e244c96933dd77f266f8d8c8fa93e401c33033c40",
+      "size_bytes": 1761,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_full_group.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_full.meta.json",
+      "role": "prompt_library",
+      "sha256": "72e1fc50a83625c72a9afd9cba8d192c8f95e7d3be3758bc654125d634a0946b",
+      "size_bytes": 2042,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_full.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_short.meta.json",
+      "role": "prompt_library",
+      "sha256": "edeadb42fe7ccb18af3a3a7c98e4cc840e9c36b85e4a98892e3f8111bbca71b2",
+      "size_bytes": 1706,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_short.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_master_protocol_full.meta.json",
+      "role": "prompt_library",
+      "sha256": "8a68aba9489ec2d3f139165b58d9a7ed114f5c8aa0631fd6ba186f10eee2eeef",
+      "size_bytes": 1977,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_master_protocol_full.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_protocol_short.meta.json",
+      "role": "prompt_library",
+      "sha256": "76d8e1ec34b32c8b60f5d3859ab58a1635c31cf2f495d2e25cb47ded2d392f4e",
+      "size_bytes": 1670,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_protocol_short.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_short_group.meta.json",
+      "role": "prompt_library",
+      "sha256": "1a491b4d2a16bd1f889f4e3e297ac511d839a223c181214d6145b7d2cb20509a",
+      "size_bytes": 1748,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_short_group.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_full.meta.json",
+      "role": "prompt_library",
+      "sha256": "fafb4cb17348816f81942387012eabb65af15ed0eb8cedf6024c96aa199bc307",
+      "size_bytes": 2050,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_full.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_short.meta.json",
+      "role": "prompt_library",
+      "sha256": "e09121a179b86691a0cc32d8cf0a6eed1084e0e584efcecb72a3476a8a18da22",
+      "size_bytes": 1703,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_short.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "88b9d6ec223ca9d88368df81c1a307e4eb533bfeb36121a37ee0d4a7f5788ddf",
+      "size_bytes": 1884,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "892cee94f1f193d08f8fbd125094db55144d3c7c1ed2da4af5252b911bf5a3c7",
+      "size_bytes": 1553,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_review_project_card_machine_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "a73473234acad0ebefe7f4905fb91879f9354db4bccf66bf39f6c40acc7f3412",
+      "size_bytes": 3175,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_review_project_card_machine_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/boundary_first_repair_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "8581610ff57959bd5516c2c24d1bf62fe859ea3b483280b7d19c6d5f0f318971",
+      "size_bytes": 1516,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/boundary_first_repair_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/box_architecture_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "8034a4915af5c26c7a81ca1826b8c252101122557e8a9cf8176b3a2a15b0ca17",
+      "size_bytes": 1523,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/box_architecture_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/brick_wall_comprehensive_quality_gate.meta.json",
+      "role": "prompt_library",
+      "sha256": "e68b285b8099271523394ff3ff501b0998c3beb2f872dccc62502421f59a3518",
+      "size_bytes": 20262,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/brick_wall_comprehensive_quality_gate.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/bundle_gated_development_workflow.meta.json",
+      "role": "prompt_library",
+      "sha256": "96077bc39bd3509398f535932ec2f7287bb6bb507e88f08ffc7c1947b406bd89",
+      "size_bytes": 1781,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/bundle_gated_development_workflow.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/chatgpt_kanda_routing_choice_output_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "f62145750f9a33730dc411cf6b973f0516d4a9724710bff286dc79da78020f9d",
+      "size_bytes": 1590,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/chatgpt_kanda_routing_choice_output_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/context_routing_expected_outputs.meta.json",
+      "role": "prompt_library",
+      "sha256": "02df06bb7a0bcf9497bffa04811c9a4d1f791690386fb61b6b466531a3520380",
+      "size_bytes": 393,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/context_routing_expected_outputs.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/context_routing_human_review.meta.json",
+      "role": "prompt_library",
+      "sha256": "03784222793419bb4b3f75b7a0e6a0ceefec3569f337f11288035dad3e183660",
+      "size_bytes": 388,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/context_routing_human_review.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/context_routing_layer_staging_baseline_freeze.meta.json",
+      "role": "prompt_library",
+      "sha256": "1b59d3eeba325ae7b955822777711cf9fc9ed4b298987752c96e46f80158e581",
+      "size_bytes": 496,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/context_routing_layer_staging_baseline_freeze.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/context_routing_test_cases.meta.json",
+      "role": "prompt_library",
+      "sha256": "8c74a485f3524f9fb070c1e983280a59fe1e66f75171cfe04d4fd1c7744a60e7",
+      "size_bytes": 379,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/context_routing_test_cases.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/context_routing_validation_summary.meta.json",
+      "role": "prompt_library",
+      "sha256": "daa3fbc6f7b24b4ed0a845dd35a0c83f141c93493789a925a532a50091168b08",
+      "size_bytes": 400,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/context_routing_validation_summary.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/cooperative_implementation_methodology.meta.json",
+      "role": "prompt_library",
+      "sha256": "5ec8b44cef69e61ee2c1b30b76306c75858b6169e999c8e848093f1a7655374f",
+      "size_bytes": 1359,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/cooperative_implementation_methodology.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/daily_patch_delivery_guardrails.meta.json",
+      "role": "prompt_library",
+      "sha256": "689c9a93b4983caf93ddcc190b975b8e8d2002d7daf6c17798e573a9220ed90f",
+      "size_bytes": 1226,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/daily_patch_delivery_guardrails.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/daily_reasoner_startup_loader.meta.json",
+      "role": "prompt_library",
+      "sha256": "264e0047739a8aa2cd68dd3e469dbebb3b054920ecd0bd7c2d285db1eba4508f",
+      "size_bytes": 1418,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/daily_reasoner_startup_loader.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/daily_session_start_prompt.meta.json",
+      "role": "prompt_library",
+      "sha256": "55d8ded927536ee4dd1b2f880d23a006e1f746c1515011e8582957ca17ceab4e",
+      "size_bytes": 1353,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/daily_session_start_prompt.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/daily_startup_loader_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "e78cb425113f242d0d7d59d385f05e260bb3f03e4490a16f55f53461134ac130",
+      "size_bytes": 1441,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/daily_startup_loader_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/data_transform_pipeline_invariants.meta.json",
+      "role": "prompt_library",
+      "sha256": "65cbd6f5bb86fd546a884a9efe089ff41c50b2cf7ab0f144d62451b012483140",
+      "size_bytes": 2043,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/data_transform_pipeline_invariants.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/desktop_help_document_layout_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "9ed6d241cffd20d2e50de120e2b5a52697126a0916c790f4b754191f0b617ed1",
+      "size_bytes": 2326,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/desktop_help_document_layout_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/domain_decision_table_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "6fb226d4f1e587343f4a65bcc30e9f447aad12860e03126c75561b73381a3038",
+      "size_bytes": 1967,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/domain_decision_table_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/durable_document_artifact_routing_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "ff2218f7fb7777527defeb8c4c0d9abbe36d8b61939efbf4839ad1ce063f0356",
+      "size_bytes": 1237,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/durable_document_artifact_routing_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_correction_blueprint.meta.json",
+      "role": "prompt_library",
+      "sha256": "4843e9e2f5d1106ced600e793e69cfaed4f3876480622fc1d00c1862ead75b43",
+      "size_bytes": 1899,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_correction_blueprint.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_json_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "a0917755b680aa9efb293adfc3741d09a6c78c83cd619efc83f74c4f6bd80a14",
+      "size_bytes": 1875,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/error_memory_active_ready_json_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/error_memory_ai_formulary_startup_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "1dd1c65fcb293cda1d66ad226cb73e28d95b39af153597ffcac5ca61475a767b",
+      "size_bytes": 1289,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/error_memory_ai_formulary_startup_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/error_memory_model_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "6022091d2418ad73c34048cfd73192f87e92ff351ea429ccb9529219114792b2",
+      "size_bytes": 1704,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/error_memory_model_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_01_session_start_and_navigation.meta.json",
+      "role": "prompt_library",
+      "sha256": "5da093816f538551463c40f5235ce677c517236019cd954dcb600f369a272cd0",
+      "size_bytes": 910,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_01_session_start_and_navigation.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_02_prompt_routing_and_indexing.meta.json",
+      "role": "prompt_library",
+      "sha256": "8b7c77f26004b2b8d674d0a2bc5c7b44e9fcf8a0729a3cf66ba6945968e3fe64",
+      "size_bytes": 1151,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_02_prompt_routing_and_indexing.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_03_governance_freeze_and_handoff.meta.json",
+      "role": "prompt_library",
+      "sha256": "9315f7b86f007bb009baa73e76f58a45323e0691a5e5444568146e7880750d7e",
+      "size_bytes": 900,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_03_governance_freeze_and_handoff.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_04_box_architecture_and_boundaries.meta.json",
+      "role": "prompt_library",
+      "sha256": "4222aa68315b9503ed240b7ed31c56d0486560c72521527f416c4aa196753c7a",
+      "size_bytes": 1146,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_04_box_architecture_and_boundaries.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_05_patch_delivery_and_validation.meta.json",
+      "role": "prompt_library",
+      "sha256": "27bd50efe4b0a6064b38e2992c1f2a4baeb4eb937a32381308c54e3d70bca48d",
+      "size_bytes": 919,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_05_patch_delivery_and_validation.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_06_refactor_and_architecture_hardening.meta.json",
+      "role": "prompt_library",
+      "sha256": "d8c8ae392d014ed8a62ad7cfb99053dacb3f1865fa639f66915d9c74876fe740",
+      "size_bytes": 933,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_06_refactor_and_architecture_hardening.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_07_prompt_authoring_and_audit.meta.json",
+      "role": "prompt_library",
+      "sha256": "a249a8e8511cc7738ad52345a0210c814f79b78c6ab659d078d2c06337a77a34",
+      "size_bytes": 1201,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_07_prompt_authoring_and_audit.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_08_python_engineering_core.meta.json",
+      "role": "prompt_library",
+      "sha256": "09b544e8a04d5f08ee7137f890eb4b4b0346f7c2f74632a93170951b4baa5900",
+      "size_bytes": 1046,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_08_python_engineering_core.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_09_python_quality_security_observability.meta.json",
+      "role": "prompt_library",
+      "sha256": "9f82198a863aaabf12f0ec0bbd096ceb2e60d7e7b9128c97f3e5cbd7f8b5319c",
+      "size_bytes": 1153,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_09_python_quality_security_observability.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_10_python_api_data_async_config.meta.json",
+      "role": "prompt_library",
+      "sha256": "48f839b06f19309e44538fc6f2205f9d72905dd2c8d0225be8bec3409ab0c88e",
+      "size_bytes": 1078,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_10_python_api_data_async_config.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_11_productization_and_release_readiness.meta.json",
+      "role": "prompt_library",
+      "sha256": "f60999fa5756bca1ad26b8d1312f218cd355223a4f49d71c7a89f84687a672e6",
+      "size_bytes": 1176,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_11_productization_and_release_readiness.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_12_generalized_project_canons.meta.json",
+      "role": "prompt_library",
+      "sha256": "b0539a5254a64f7f72fdad84b50288e0bfd73e21c8db168f59f978511a31ab30",
+      "size_bytes": 1327,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_assimilation_12_generalized_project_canons.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/folder_card_word_limit_repair.meta.json",
+      "role": "prompt_library",
+      "sha256": "77b2028b93a2875495bf4e03b86eed7ad2a1ece23846668f79f70a8d2f02ab44",
+      "size_bytes": 584,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/folder_card_word_limit_repair.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/freeze_code_intake_and_form_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "73d18e9ceef8756862a73a551d0ad00b2ec9d5fde6d72bc08f2375d65a5bb7b3",
+      "size_bytes": 1390,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/freeze_code_intake_and_form_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/general_prompt_stack_load_order.meta.json",
+      "role": "prompt_library",
+      "sha256": "d7c98bab89ffd2f0cdd2a6a75073e5ca0f9ed5c872ba8e3206bcc23391c94d0a",
+      "size_bytes": 1411,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/general_prompt_stack_load_order.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/governed_architecture_companion_handoff.meta.json",
+      "role": "prompt_library",
+      "sha256": "466f3c6a77f8e33e71667e70b40d7d4d205ec1fcebaafcdc0301667b8f38fdb5",
+      "size_bytes": 1245,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/governed_architecture_companion_handoff.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/group_assimilation_index.meta.json",
+      "role": "prompt_library",
+      "sha256": "fa4923e001b53064c49db3498f11044a6b0afe288c59e634b5516ab5460c3ac8",
+      "size_bytes": 689,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/group_assimilation_index.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/handoff_at_end_of_work.meta.json",
+      "role": "prompt_library",
+      "sha256": "07d07e590ae8a21e440c965cb7051bc1eece27c18bb291efc4f71177f9e3282a",
+      "size_bytes": 1156,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/handoff_at_end_of_work.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/implementation_and_delivery_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "6f69b61a097867c3e2f04fcf848487202365362dbcd701cd7c39e62d339c1b30",
+      "size_bytes": 1766,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/implementation_and_delivery_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/implementation_roadmap_builder.meta.json",
+      "role": "prompt_library",
+      "sha256": "3cb6a3bdf5b914294f805cf4f593456974623d60241805af68c36630146d6de8",
+      "size_bytes": 1647,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/implementation_roadmap_builder.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "3b7af1360975ca402975bbb40672ba7b306cbae3f8eb70b2ce95013df17d1364",
+      "size_bytes": 1369,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kanda_desktop_help_exact_layout_blueprint.meta.json",
+      "role": "prompt_library",
+      "sha256": "9d801431a630208b7e8bffae7314e636635407d05ca5ae75a076a51c6f9eb7cd",
+      "size_bytes": 2395,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kanda_desktop_help_exact_layout_blueprint.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "fc2048cb0dd2c631f6c4ace0a3326feb876f11343662273a917b97631dce3ea4",
+      "size_bytes": 2632,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kanda_routing_system_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kubernetes_deployment_operations.meta.json",
+      "role": "prompt_library",
+      "sha256": "f20c12db068b2f961c6d732f237d42b4c075b32504838fac3a34a0601d1b6fe3",
+      "size_bytes": 2037,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kubernetes_deployment_operations.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "0344ee9094b33f6be1155b5604fec2549b0db98a9864e5c69caa87a73e2026c4",
+      "size_bytes": 2799,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "bc5cb02ca38a0a574426aa3fd8969419ecc0a9c82580242e3ec491a5b76f9996",
+      "size_bytes": 1730,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/manual_route_review_matrix.meta.json",
+      "role": "prompt_library",
+      "sha256": "0b86caeff2fd5aa459818fb4100d134d69b0bf133e80df42802f9d26d2fbc49a",
+      "size_bytes": 371,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/manual_route_review_matrix.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/patch_install_delivery_error_register.meta.json",
+      "role": "prompt_library",
+      "sha256": "9739168dc164d4d69d9a4cda777722e8803eb473e486e075b50236be6a8574f4",
+      "size_bytes": 1323,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/patch_install_delivery_error_register.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/patch_validate_freeze_error_memory_routine_blueprint.meta.json",
+      "role": "prompt_library",
+      "sha256": "eeca0929b4ed1f0c3f9ce778e4cb628dcc956b89243d2a8b2468743e6fd85cf6",
+      "size_bytes": 4792,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/patch_validate_freeze_error_memory_routine_blueprint.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/peopleware_team_boundary.meta.json",
+      "role": "prompt_library",
+      "sha256": "f7f1c7ef97023527acb8a031c1fa64f0f78808627c320766a800dae9074d63c9",
+      "size_bytes": 1696,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/peopleware_team_boundary.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/plugin_package_import_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "828a4d1a5539f53ee1eaa7161cb1e953419cc7d794c60f2f578a139a8e34714a",
+      "size_bytes": 1976,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/plugin_package_import_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/practical_field_handbook_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "1bcf74ce274465161cfa7ecf2034cec48e1915a3489a1422dff5991034a79906",
+      "size_bytes": 1726,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/practical_field_handbook_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/pre_output_contract_gates.meta.json",
+      "role": "prompt_library",
+      "sha256": "b96af698716838e26f4c5994f8ed6de74f74d2be0c1863ef1ab14a6f46563bf4",
+      "size_bytes": 1268,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/pre_output_contract_gates.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/productization_readiness_roadmap.meta.json",
+      "role": "prompt_library",
+      "sha256": "3d94f05fd7e984f105fd42b20edb73f2196bce507c4d8304df8f0d90b4fb68ef",
+      "size_bytes": 1493,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/productization_readiness_roadmap.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/professional_ai_assisted_engineering_framework.meta.json",
+      "role": "prompt_library",
+      "sha256": "4f764dbcbd215b418f8124005dbce1722bf15909f7e58a424820c8fcd4712f0d",
+      "size_bytes": 2101,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/professional_ai_assisted_engineering_framework.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/professional_engineering_governance_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "20e968a0bae72240ced195ad7a37ca3e907cfc22646d5d69751eaf4e9a236b8a",
+      "size_bytes": 1430,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/professional_engineering_governance_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/professional_infrastructure_roadmap.meta.json",
+      "role": "prompt_library",
+      "sha256": "51d4a4bc6347bc894e4a5eeed12a8b56ff5820d87688e29b0cded259b1bc370a",
+      "size_bytes": 1516,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/professional_infrastructure_roadmap.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_folder_organization_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "c280d7599a55fb9b088489ff47f2261790b4e6c6c0a25ff5f42cbef459ba29cc",
+      "size_bytes": 1446,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_folder_organization_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_overlay_selector.meta.json",
+      "role": "prompt_library",
+      "sha256": "6778806fd699940187fc50e6f559b0d0bd8ff0cbac122539102d251c8ac527b6",
+      "size_bytes": 1196,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_overlay_selector.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_specific_prompt_generalization.meta.json",
+      "role": "prompt_library",
+      "sha256": "e64d52e4c7d1cccc53be6ab0339412c481a24d90f02ab81734fe2b68c3aeb6b2",
+      "size_bytes": 1332,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_specific_prompt_generalization.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_startup_canon_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "67ce3e0e275046c773213f5b6c3b8afa3ab6800652074286e56aa4ac86264905",
+      "size_bytes": 1463,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_startup_canon_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "64eb4c124053bf468de06819308f6357b5aed10af1c4c0df92f59b37b15d2ab0",
+      "size_bytes": 3322,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_startup_bridge.meta.json",
+      "role": "prompt_library",
+      "sha256": "7d93606b2a5800ef748dc6fbf1613b47d57708c9415014ef9702c9030d8b76cd",
+      "size_bytes": 2761,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_startup_bridge.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_audit_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "5c9d46f73b312b9d708b0dd0516bfdd6b7ae7eff1b6c172030aab27158aa8dc7",
+      "size_bytes": 1097,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_audit_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_canon_reconciliation_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "0086d5ef829a1cb31dcb48198d0091574cd7e55f19ffa32bb0b5dd58a408eb2e",
+      "size_bytes": 1306,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_canon_reconciliation_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_identity_code_registry_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "43fd556533f7091894252c0a870f31ca5f03d8e9a3d74e06aa12d9d613c218f9",
+      "size_bytes": 1222,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_identity_code_registry_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_insertion_and_router_registration_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "98b6302caf0e14134a95e6c6d47529319ae6d488171cec8c8eda001ee01e26fc",
+      "size_bytes": 1529,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_insertion_and_router_registration_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_navigation_index.meta.json",
+      "role": "prompt_library",
+      "sha256": "a37362f3cda6e1c24e10ac2ccc4349a8cc7226fa89b47d72781b6309daccf851",
+      "size_bytes": 1243,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_navigation_index.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_router.meta.json",
+      "role": "prompt_library",
+      "sha256": "96ebdb0de676afc143602cba8cb4e78a8db14853b5bac691779b90a95dff0dca",
+      "size_bytes": 1617,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_router.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_router_reasoner_startup_check.meta.json",
+      "role": "prompt_library",
+      "sha256": "5a28b04c3aaf4ae95d07ebde04528f85e0faf344362e79bdba9a9e9b74e8389b",
+      "size_bytes": 1442,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_router_reasoner_startup_check.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_substitution_map.meta.json",
+      "role": "prompt_library",
+      "sha256": "e9d7bed604d5c882428fc74fd2802c8b9599753b89f3882ed41a2a6d87112f2e",
+      "size_bytes": 1743,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_substitution_map.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_api_design.meta.json",
+      "role": "prompt_library",
+      "sha256": "a45206086e7f412aa5088a0802f60e4bed2f6245a8e1405c76562a538decb411",
+      "size_bytes": 1867,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_api_design.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_async_parallel_distributed.meta.json",
+      "role": "prompt_library",
+      "sha256": "3ed483190b799a66fccf6877c5ad73b17b09330282f9d314430a3e5f2db43b30",
+      "size_bytes": 2068,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_async_parallel_distributed.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_clean_architecture.meta.json",
+      "role": "prompt_library",
+      "sha256": "baec237edca73a1dd90373e01ecfb0f3d562d8e2cef024a7675186b2b9dee8fa",
+      "size_bytes": 1750,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_clean_architecture.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_clean_code.meta.json",
+      "role": "prompt_library",
+      "sha256": "d67b2d079b072f397e0994e28e827795579b0ae7cd379d78ee622ec8f3ed50ba",
+      "size_bytes": 1664,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_clean_code.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_configuration_feature_flags.meta.json",
+      "role": "prompt_library",
+      "sha256": "d1449f8d308aecbf629ac32ed593a0ffdffc2adcaec3a6b5c326802082099bea",
+      "size_bytes": 2009,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_configuration_feature_flags.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_database_design_optimisation.meta.json",
+      "role": "prompt_library",
+      "sha256": "4897640b33018bd1c9b143b1d32c713edaacb0c1a095e0d932426580a685db26",
+      "size_bytes": 1994,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_database_design_optimisation.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_design_patterns.meta.json",
+      "role": "prompt_library",
+      "sha256": "654c2a4c516ad6bdc942d1af52c02e71bff4d98c616f029959153ca2b209daa6",
+      "size_bytes": 1722,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_design_patterns.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_documentation_developer_experience.meta.json",
+      "role": "prompt_library",
+      "sha256": "e46292a1556b729c43ce5fb489388bcf69fa5af46ab01c45e1c69e849feee0e7",
+      "size_bytes": 2055,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_documentation_developer_experience.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_domain_driven_design.meta.json",
+      "role": "prompt_library",
+      "sha256": "61e897cc15c2325d4359476fbef34fd359bd3b7b682fbd3f7aaad066a2db7118",
+      "size_bytes": 1779,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_domain_driven_design.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_enterprise_architecture.meta.json",
+      "role": "prompt_library",
+      "sha256": "d2cb7f28a2a44c95ac21f6abca2aedaee20bd6dcc666b7661377bf49c0d04f2d",
+      "size_bytes": 2330,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_enterprise_architecture.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_high_performance.meta.json",
+      "role": "prompt_library",
+      "sha256": "94d0816e8d975c7d03879235d458ea32e7be99f2b681a815c98444066c537f0a",
+      "size_bytes": 2136,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_high_performance.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_legacy_code_workflow.meta.json",
+      "role": "prompt_library",
+      "sha256": "75c968cc1d5b28a3bc08a862bed68fe9bebc774ab839d3207b749ff4d2536806",
+      "size_bytes": 2241,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_legacy_code_workflow.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_lifecycle_versioning_deprecation.meta.json",
+      "role": "prompt_library",
+      "sha256": "dd3274571d9106cd121a3addb87a4ea26cd0077e1a1b5990c020b56e3446a58c",
+      "size_bytes": 2072,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_lifecycle_versioning_deprecation.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_observability_logging_metrics_tracing.meta.json",
+      "role": "prompt_library",
+      "sha256": "364c54d1d78d1a277b5652daa114869b787e09c9eef2adfeee081cc3267357eb",
+      "size_bytes": 1945,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_observability_logging_metrics_tracing.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_pragmatic_programmer.meta.json",
+      "role": "prompt_library",
+      "sha256": "80c65298502162cb269f172132e10da477fcb44c808c1d0601988551e2b15067",
+      "size_bytes": 1955,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_pragmatic_programmer.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_refactoring.meta.json",
+      "role": "prompt_library",
+      "sha256": "b9173297683b475f592b389fe2206d93b0b0a78b0e22a94654c9e36097adeba5",
+      "size_bytes": 1891,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_refactoring.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_resilience_error_handling.meta.json",
+      "role": "prompt_library",
+      "sha256": "fe2c59a832cfa83f8fe484d0d29ecd4dadbd926ea5545b91fc66902557d06e5d",
+      "size_bytes": 1954,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_resilience_error_handling.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_security_threat_prevention.meta.json",
+      "role": "prompt_library",
+      "sha256": "3cf414223aed4b19f23e70eed0797abc480e0a7420a4b999e5fb44b74775ca40",
+      "size_bytes": 1967,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_security_threat_prevention.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_site_reliability_engineering.meta.json",
+      "role": "prompt_library",
+      "sha256": "03e145e20bef6812c6fc521a2b58dc8cc35ac57c47f1a759ad65c080c068ed60",
+      "size_bytes": 2058,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_site_reliability_engineering.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_testing_pytest.meta.json",
+      "role": "prompt_library",
+      "sha256": "7cd521af19fc09ae454b741055892e95222147b5690beb99549a7a47270dc0c1",
+      "size_bytes": 1884,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_testing_pytest.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_validation_serialisation_type_safety.meta.json",
+      "role": "prompt_library",
+      "sha256": "61a2b7979bf9896ec5af25d097a405d11d306072eeedb576888e853e7a77adbe",
+      "size_bytes": 2015,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_validation_serialisation_type_safety.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/reasoner_startup_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "1fab619555fba762795ce40bab1172fd7e45138e37c33d50627b5c643446201f",
+      "size_bytes": 1404,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/reasoner_startup_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/router_bridge_governed_implementation.meta.json",
+      "role": "prompt_library",
+      "sha256": "807e9202af512f3d1ea34117e8c899d7122810709c2d22804532231e84598862",
+      "size_bytes": 20202,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/router_bridge_governed_implementation.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/router_bridge_patch_delivery_contract.meta.json",
+      "role": "prompt_library",
+      "sha256": "224a323f1aa82497a3a45103e9d257e3958b9c6230a0f6661beaed51012c1d1f",
+      "size_bytes": 1399,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/router_bridge_patch_delivery_contract.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/router_bridge_user_detected_correction.meta.json",
+      "role": "prompt_library",
+      "sha256": "3c39213caad86ed8f4772f310a8f7ea05d08600818b6d2fd4999457f07f5a02e",
+      "size_bytes": 1999,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/router_bridge_user_detected_correction.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_lab_phase_entry_router_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "01f389f5548fab16739c84567e0c41166e3cf8c80d4082fd8cfce9c5fcbcda49",
+      "size_bytes": 2963,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_lab_phase_entry_router_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "aca9c147f3e582ad1ba0fe3f29512119c7b8d69991200b40f87b1e64f4071bed",
+      "size_bytes": 2748,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_pilot_copilot_phase0_router_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_semantic_readiness_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "573272985956a2965a6d49f7ad467bfce7435af4a5ab9ff69e9c7136af6a714c",
+      "size_bytes": 3578,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/routing_signal_scorer_v3_semantic_readiness_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/safe_refactor_how_to.meta.json",
+      "role": "prompt_library",
+      "sha256": "864fd352b946c507ec126b1510af75ff406e3f66c6833965f1d95608c7b501ec",
+      "size_bytes": 3482,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/safe_refactor_how_to.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/self_contained_error_memory_lesson_intake_zip.meta.json",
+      "role": "prompt_library",
+      "sha256": "373cd46aae2822c8845cc4f3052c9c91c5c0d114a8a67909df8a953b5b272710",
+      "size_bytes": 2187,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/self_contained_error_memory_lesson_intake_zip.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/self_contained_freeze_entry_intake_zip.meta.json",
+      "role": "prompt_library",
+      "sha256": "2619740e071fbd85b8e6b034a2523b387770ec1d576b77e46cd724589cc12022",
+      "size_bytes": 1752,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/self_contained_freeze_entry_intake_zip.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/session_start_upload_checklist.meta.json",
+      "role": "prompt_library",
+      "sha256": "acab2e3c895da317a4f53e28acec8c6cecfdc6b271284d055fa27afef914bf6f",
+      "size_bytes": 1441,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/session_start_upload_checklist.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/shared_visual_render_engine_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "f0d0901e374b3010c5e716b67ba5f62690ac5220842cc81336859d805229b832",
+      "size_bytes": 1961,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/shared_visual_render_engine_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/software_engineering_books_master.meta.json",
+      "role": "prompt_library",
+      "sha256": "d25e987b467dec2c920b25f5fe147f7adc8bc5de2034419dc4e27c6dbffea9e0",
+      "size_bytes": 2002,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/software_engineering_books_master.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/start_of_day_master_stack.meta.json",
+      "role": "prompt_library",
+      "sha256": "a3195a062c9160069acf4197d9e85272b83ecedce63dde694b3e7208c4265cf7",
+      "size_bytes": 2731,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/start_of_day_master_stack.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/stateful_control_regression_canon.meta.json",
+      "role": "prompt_library",
+      "sha256": "ff3dfcac398292cb2840d3bb7114c129de97a56ba4fe66a115b6ea9fc3e79b74",
+      "size_bytes": 1395,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/stateful_control_regression_canon.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/tab4_docstring_quality_roadmap.meta.json",
+      "role": "prompt_library",
+      "sha256": "3659c962bbb64a3ec4ff1f68e9a904f0c329561e02fe905a257b0d8cf6553d0a",
+      "size_bytes": 1698,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/tab4_docstring_quality_roadmap.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/terminal_cleanup_contract.meta.json",
+      "role": "prompt_library",
+      "sha256": "2807e780e2945e1b9d66efcd254324d18fa4bce74384b83a81be2cb0d0d90113",
+      "size_bytes": 1588,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/terminal_cleanup_contract.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/transform_resolver_architecture_contract.meta.json",
+      "role": "prompt_library",
+      "sha256": "77ef82aa4249a991e447438e6c529580a30332a219d7d6a8ea0d0bb19ab0b200",
+      "size_bytes": 2021,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/transform_resolver_architecture_contract.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/universal_delivery_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "817d102c6a3406f4a973fc1c6b212afba5d1d1f018304a8cb0fa73638b7513b5",
+      "size_bytes": 966,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/universal_delivery_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/validate_context_routing_layer.meta.json",
+      "role": "prompt_library",
+      "sha256": "a583676479b20578dad6b77c81f6e57fd15dd662a531a597f90447171e0a7029",
+      "size_bytes": 461,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/validate_context_routing_layer.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/web_ai_ast_split_risk_repair_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "8b99f4fbdbcc7552ace782ebd9c32c62aa1207b837a38dca669d4066b17544c0",
+      "size_bytes": 2076,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/web_ai_ast_split_risk_repair_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/web_ai_large_module_refactor_exchange_protocol.meta.json",
+      "role": "prompt_library",
+      "sha256": "0e2b9886b59be518ca7c9e444677dda30cdd8b30fdad3c5af6f9d1975aa0c701",
+      "size_bytes": 1883,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/web_ai_large_module_refactor_exchange_protocol.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/web_ai_planning_response_bundle_blueprint.meta.json",
+      "role": "prompt_library",
+      "sha256": "52cc3a8f4c53988cbfb18cc5ad71cb1c3d521521b9f9e44ddc4fb073221d46b5",
+      "size_bytes": 1830,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/web_ai_planning_response_bundle_blueprint.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/workflow_handoff_template.meta.json",
+      "role": "prompt_library",
+      "sha256": "8e999a333bdc204e0531ef5d1173aabea7b66bd4170346bb52ce8bb1a2edf216",
+      "size_bytes": 1204,
+      "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/workflow_handoff_template.meta.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/README.md",
+      "role": "prompt_library",
+      "sha256": "2f9eb0b2ab5281bc33be8ac87344aee545bfd0e5dd6f1b6a077bea6f5eb9268c",
+      "size_bytes": 2049,
+      "source_relative": "kanda_prompt_workspace/prompt_library/README.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/CONTEXT_ROUTING_LAYER_HUMAN_REVIEW.md",
+      "role": "prompt_library",
+      "sha256": "6882845b0ee0bc42a7fa6e669fc903f10ecdf2eccba529a65cc0fba4116f5e5c",
+      "size_bytes": 2354,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/CONTEXT_ROUTING_LAYER_HUMAN_REVIEW.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/CONTEXT_ROUTING_LAYER_VALIDATION_SUMMARY.md",
+      "role": "prompt_library",
+      "sha256": "11be5191537cc93e04b58e7ed9c691a928417b26674cbd288d19062a063be7db",
+      "size_bytes": 1275,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/CONTEXT_ROUTING_LAYER_VALIDATION_SUMMARY.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/HUMAN_AI_APPENDIX_ADDITION_REPORT.md",
+      "role": "prompt_library",
+      "sha256": "5078fcefca5373579790c3bc0763e999b955025d24b11c5b89d5bc3906f30df7",
+      "size_bytes": 782,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/HUMAN_AI_APPENDIX_ADDITION_REPORT.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/INTUITIVE_RENAME_REPORT.md",
+      "role": "prompt_library",
+      "sha256": "a02dd7b6555a8bfbe410aa157be055c5cbc8c67edd36382ab100e32c5b3c523f",
+      "size_bytes": 11770,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/INTUITIVE_RENAME_REPORT.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/INTUITIVE_RENAME_TABLE.json",
+      "role": "prompt_library",
+      "sha256": "0cea1f143f80d620da7c62e34a915bb01fde87b28d658a8cf1fa676ea14f6bc2",
+      "size_bytes": 30805,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/INTUITIVE_RENAME_TABLE.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/NAVIGATION_INDEX_COVERAGE_REPORT.md",
+      "role": "prompt_library",
+      "sha256": "743dbcd7958db79def23645ff74504b15effb499d00b002ec0a753b707d4bc3a",
+      "size_bytes": 980,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/NAVIGATION_INDEX_COVERAGE_REPORT.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/PACKAGE_MANIFEST_V3_NAVIGATION.json",
+      "role": "prompt_library",
+      "sha256": "e57701318e8f319be8412c09039f13c496e4aa19ad66b929d38fbb6020cdc817",
+      "size_bytes": 438,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/PACKAGE_MANIFEST_V3_NAVIGATION.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/POST_GENERATION_SELF_CHECK_V3_NAVIGATION.md",
+      "role": "prompt_library",
+      "sha256": "ac2f03520a44e99a4b15b007ed9c0fd1f5c2b75c740e4ab2aabe3c38d67c085c",
+      "size_bytes": 261,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/POST_GENERATION_SELF_CHECK_V3_NAVIGATION.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/POST_RECONCILIATION_SELF_CHECK.md",
+      "role": "prompt_library",
+      "sha256": "bb49d04975a67c2792145568898494e81a1d36095f51ffd4b2208b492ce61ff5",
+      "size_bytes": 328,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/POST_RECONCILIATION_SELF_CHECK.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/SELF_CHECK.json",
+      "role": "prompt_library",
+      "sha256": "7540c5281487107471a9e197d6c8c735e9bc8d8405bd39fe947d90c3f9454550",
+      "size_bytes": 281,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/SELF_CHECK.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase1_validation_report.md",
+      "role": "prompt_library",
+      "sha256": "e7595934e5b7014cf052140463e7b993558d0d7f089bfbca690133a97989bbd5",
+      "size_bytes": 2195,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase1_validation_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase2_folder_cards_report.md",
+      "role": "prompt_library",
+      "sha256": "851ea50e11bd17b5762c9568fb49c2fc3d8e402a38b8f798a2a8a41e84665ede",
+      "size_bytes": 3968,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase2_folder_cards_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase3_tests_report.md",
+      "role": "prompt_library",
+      "sha256": "b6e8fbbba2b0ada54ad46eb5cec4724708941f9a472af8433d59f36b7c45793c",
+      "size_bytes": 1049,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase3_tests_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase4_validator_report.md",
+      "role": "prompt_library",
+      "sha256": "ec2110713016d5be57345cd947a3a4d29dac4176464d82669315313f06145302",
+      "size_bytes": 1518,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase4_validator_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase5_human_review_report.md",
+      "role": "prompt_library",
+      "sha256": "f8883e00a64c1638a703a80e2d1291ed09d179d3dc0ebe05cf895ca1659e18cd",
+      "size_bytes": 731,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase5_human_review_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase6_freeze_baseline_report.md",
+      "role": "prompt_library",
+      "sha256": "dc7d417becc3124eb73eef7a06015800750f8559426d31fe5cbc5bd81bc0da71",
+      "size_bytes": 966,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase6_freeze_baseline_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase6_repair_folder_card_word_limits_report.md",
+      "role": "prompt_library",
+      "sha256": "41c7e7a4bb79858a84be2dc092d3563c503084244c948718fa5fd3b337628f5a",
+      "size_bytes": 1116,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/context_routing_phase6_repair_folder_card_word_limits_report.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/project_tool_boundary_nested_support_root_startup_reconciliation_v1.md",
+      "role": "prompt_library",
+      "sha256": "c2cda6d80941748c75e44fccd82239694dd3df9ba3978c91c87ee28db92d2ee7",
+      "size_bytes": 2104,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/project_tool_boundary_nested_support_root_startup_reconciliation_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/project_tool_boundary_startup_bridge_split_v1.md",
+      "role": "prompt_library",
+      "sha256": "326ac22dfc8a2f93f92cdf0527268f413dc7f66f1fd98aa9f6c55c3d5a72ee00",
+      "size_bytes": 1133,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/project_tool_boundary_startup_bridge_split_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/transient_garbage_root_non_ownership_reconciliation_v1.md",
+      "role": "prompt_library",
+      "sha256": "a0aa9589363a6be8dc31bed16f82491dfd5d390b19afc1c959bc6fa1c978d98d",
+      "size_bytes": 3859,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/transient_garbage_root_non_ownership_reconciliation_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave2a_routing_owner_foundation_v1.md",
+      "role": "prompt_library",
+      "sha256": "f497ad5d7b1329321050b0eb3538de4bfb63813c1ce12bc722931c75f787e391",
+      "size_bytes": 945,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave2a_routing_owner_foundation_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave2b_legacy_routing_retirement_v1.md",
+      "role": "prompt_library",
+      "sha256": "6c0755981c572cecd430dd3c684e120b08f79196cdb2b8720a115c494463ffea",
+      "size_bytes": 1144,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave2b_legacy_routing_retirement_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave3a_session_startup_kernel_v1.md",
+      "role": "prompt_library",
+      "sha256": "f4bcaae89c19f23dd9524f5d2da9bf54957a861dcbefdfd5d355c7f5f61f8723",
+      "size_bytes": 1035,
+      "source_relative": "kanda_prompt_workspace/prompt_library/RECONCILIATION_REPORTS/wave3a_session_startup_kernel_v1.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/AI_PROMPT_REQUEST_CANON_ROUTING_ADDENDUM.md",
+      "role": "prompt_library",
+      "sha256": "253eb56c6b80a4238c2502c0e8156e6c195b328be5b14ba57a03e243b699b35a",
+      "size_bytes": 809,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/AI_PROMPT_REQUEST_CANON_ROUTING_ADDENDUM.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md",
+      "role": "prompt_library",
+      "sha256": "c3431e85835f48d5c57f24cef97ac3f2a784ad7667cf80ba546f5d3bc69114bd",
+      "size_bytes": 5062,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/FOLDER_ASSIMILATION_CARDS_INDEX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md",
+      "role": "prompt_library",
+      "sha256": "3ec4f696d12a44982be9d385f4bed984a0505a26c82a48f6829b03a7ada7f946",
+      "size_bytes": 38948,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/GROUP_ASSIMILATION_INDEX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md",
+      "role": "prompt_library",
+      "sha256": "bd5dc0b2545b24670d179be116d3e1e5a3df86ddbb3f5297c5ac386c5347ca18",
+      "size_bytes": 71281,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json",
+      "role": "prompt_library",
+      "sha256": "ea1ebd8c4a08062af17a677d8aeb7e62527902ec500f0d1d824c3ec7402bc3c9",
+      "size_bytes": 23286,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/folder_assimilation_cards_index.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json",
+      "role": "prompt_library",
+      "sha256": "00d29e14dab3d71ab05485602c88823b8f95e2b2088b217a34625237ff7d4611",
+      "size_bytes": 21932,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/group_assimilation_index.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json",
+      "role": "prompt_library",
+      "sha256": "34f45ddd006a4af27fa5406714ab5b2cc628b44cd39281c6dcf5ee7b7fb35cda",
+      "size_bytes": 139496,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index_draft.md",
+      "role": "prompt_library",
+      "sha256": "17d7e160227b04395feb93878232fa9b9c04b33aa5f17707d8f2dd918ab7e4bf",
+      "size_bytes": 9456,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index_draft.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/prompt_route_coverage_table.csv",
+      "role": "prompt_library",
+      "sha256": "eb8f093f634a3701abbfa89489bf27806eb47fb63d2ba2c3925361a5ae4542a5",
+      "size_bytes": 50916,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/prompt_route_coverage_table.csv"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING_TESTS/PHASE_2_PROMPT_CALL_ACCURACY/README.md",
+      "role": "prompt_library",
+      "sha256": "a1ad2b9eddec116531615f70a26e7329773ef4297f934e333124571da7cd448c",
+      "size_bytes": 3176,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING_TESTS/PHASE_2_PROMPT_CALL_ACCURACY/README.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING_TESTS/PHASE_2_PROMPT_CALL_ACCURACY/phase2_prompt_call_rubric.md",
+      "role": "prompt_library",
+      "sha256": "74cb6613a2c8f2cf187529eeca4f5d5eabe68fdc9b2729d50ecda98d4a2d1314",
+      "size_bytes": 14657,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING_TESTS/PHASE_2_PROMPT_CALL_ACCURACY/phase2_prompt_call_rubric.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING_TESTS/context_routing_expected_outputs.json",
+      "role": "prompt_library",
+      "sha256": "5cdc096001c4b51b9f9f19e867a647e8aab3b67bc9c5e3d2a83e86ae37e09d07",
+      "size_bytes": 8038,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING_TESTS/context_routing_expected_outputs.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING_TESTS/context_routing_test_cases.md",
+      "role": "prompt_library",
+      "sha256": "4af90b43adafa383c8ae50ebee13d40a4e81befb73de813353c4a8c2346b933e",
+      "size_bytes": 4908,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING_TESTS/context_routing_test_cases.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING_TESTS/manual_route_review_matrix.md",
+      "role": "prompt_library",
+      "sha256": "2f7c716f2899fa5c7ca16a495a035879eb72a65150ba4694232e99eba9c76718",
+      "size_bytes": 1578,
+      "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING_TESTS/manual_route_review_matrix.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/TOOLS/validate_context_routing_layer.py",
+      "role": "prompt_library",
+      "sha256": "f3c88a423b5c813e32b7276ab1dbe79abece2ed71062e2ad1334227ce1f97d45",
+      "size_bytes": 10293,
+      "source_relative": "kanda_prompt_workspace/prompt_library/TOOLS/validate_context_routing_layer.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/kanda_context_routing_layer_manual_use_tutorial.md",
+      "role": "prompt_library",
+      "sha256": "f05088b10fd3e3561db2b48c8ae0c5e6f655aa2a99201e9240256fc42b582077",
+      "size_bytes": 13369,
+      "source_relative": "kanda_prompt_workspace/prompt_library/kanda_context_routing_layer_manual_use_tutorial.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/README_kanda_startup_prompt_request_kernel_generator.md",
+      "role": "prompt_tools",
+      "sha256": "acb22ed6be07ea34b280e08bf1b9ebc0c6885635335c0fcf061d0816b38f2feb",
+      "size_bytes": 2604,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/README_kanda_startup_prompt_request_kernel_generator.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json",
+      "role": "prompt_tools",
+      "sha256": "4523d7e64c004bb615aa0f1c6d7881bdc409aec29e9084a1c76b14aa35ae5ca3",
+      "size_bytes": 5254,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES_UPDATE_CANDIDATE.md",
+      "role": "prompt_tools",
+      "sha256": "174e678cfddcb52be59174a48f47160d2c720e42de0d89442ad0d416fa9250c1",
+      "size_bytes": 1815,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES_UPDATE_CANDIDATE.md"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/__init__.py",
+      "role": "prompt_tools",
+      "sha256": "4bb5698388c7fd1362b6bd4689576e2c906a1b83159c987f5386451a9678a1d8",
+      "size_bytes": 64,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/__init__.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates.py",
+      "role": "prompt_tools",
+      "sha256": "e2761e5b01e14ecda1d0f6e5f71ad26ed4548bb272d287abe1acdd30adbe917e",
+      "size_bytes": 5649,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_models.py",
+      "role": "prompt_tools",
+      "sha256": "cabf4d9491f28e5c3ec7705974fc00776b9120e3d0a1688af14630b2d2ac4d42",
+      "size_bytes": 3172,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_models.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_paths.py",
+      "role": "prompt_tools",
+      "sha256": "62abe5cc894ca23b611fa66b7090c871096ea070741d08b76bb8517990183f1a",
+      "size_bytes": 1740,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_paths.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_report.py",
+      "role": "prompt_tools",
+      "sha256": "fd6ff59c175817cf86c37faa138c56c6ead65d4ac0ab88e9153f0e48c8f829d5",
+      "size_bytes": 7861,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_report.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_runner.py",
+      "role": "prompt_tools",
+      "sha256": "982ba4f99694af8c1f2980aa456dede21647deebe81438c452e5af3c522743c2",
+      "size_bytes": 8307,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_runner.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_sidecars.py",
+      "role": "prompt_tools",
+      "sha256": "509a5279d4f23199414f6d7a5202a06cdb8415b50e8dcb6c8275d9b5c279084c",
+      "size_bytes": 9426,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_sidecars.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_source_map.py",
+      "role": "prompt_tools",
+      "sha256": "b9d07325ef0bcd48c83f0ed54fea70c13ee7dc43f4bd27db3faae7f971f80623",
+      "size_bytes": 6408,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_source_map.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_freeze_context.py",
+      "role": "prompt_tools",
+      "sha256": "5bd3db1cb54d4dcf155d7b770e7116bf6195030560f372e4cf5862912e677bd7",
+      "size_bytes": 15768,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_freeze_context.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_freeze_entry_summary.py",
+      "role": "prompt_tools",
+      "sha256": "3936ea49d12ea4c9f22336c3a35b438317e0b3f6a29c012193b9b566cfdcb5c7",
+      "size_bytes": 9242,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_freeze_entry_summary.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/__init__.py",
+      "role": "prompt_tools",
+      "sha256": "948d9f52f4710d385704431114f90212e73cdc899a420c2c8ec4c50af51eb337",
+      "size_bytes": 264,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/__init__.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/boot_text.py",
+      "role": "prompt_tools",
+      "sha256": "7dcb32ca73f8d8ea041806dc8d7085a81219f598c2e72842dd86c681f0847c0c",
+      "size_bytes": 3775,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/boot_text.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/cli.py",
+      "role": "prompt_tools",
+      "sha256": "5c17c61c8bc9a8800b02941c07ca22cc95cab6a8bf081f108235f9849c066842",
+      "size_bytes": 4518,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/cli.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/cli_check.py",
+      "role": "prompt_tools",
+      "sha256": "d5ccf385e450d1c7e82e73e14325e5149ef81298e6e447e4066ff74304988537",
+      "size_bytes": 5305,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/cli_check.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/cli_sync.py",
+      "role": "prompt_tools",
+      "sha256": "aaf4ae54150968ef31a5cd9ed89354432485339c2e4541049b7819fc56deb737",
+      "size_bytes": 2947,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/cli_sync.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/constants.py",
+      "role": "prompt_tools",
+      "sha256": "abad99ae50fd6d71df7f12eedf50708191caedcf77236148c4e132df4c245c9c",
+      "size_bytes": 476,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/constants.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/core_helpers.py",
+      "role": "prompt_tools",
+      "sha256": "bc68a8f96ff2c3abb9fe62add279eaf1eb79cd8ab2d8f08d0364751d0600e64a",
+      "size_bytes": 5709,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/core_helpers.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/generic_helpers.py",
+      "role": "prompt_tools",
+      "sha256": "270cd9d275ec40faf2c7a6ed0cb1feb3117789d9794ee3b9b9bb7a83a6338e74",
+      "size_bytes": 1815,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/generic_helpers.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_body.py",
+      "role": "prompt_tools",
+      "sha256": "6a3ac354286198d980410f223577ca61d198c268407002cf2e8df6c9acf3d0f1",
+      "size_bytes": 7678,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_body.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_text.py",
+      "role": "prompt_tools",
+      "sha256": "eaa3edeb1cf67b9c13db4f754e82efaea9df314b68f11c383e83382086d7f8b8",
+      "size_bytes": 516,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_text.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/paste_after_uploading_body.py",
+      "role": "prompt_tools",
+      "sha256": "41c7968157ac62fc067a4668a981b27e5ebc64a65075141b90776b68a4043605",
+      "size_bytes": 9571,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/paste_after_uploading_body.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/paste_readme_text.py",
+      "role": "prompt_tools",
+      "sha256": "1c444daee96383096a0168143b4af214f6ab0364f1012cc7ec7b2c68de88b84a",
+      "size_bytes": 1399,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/paste_readme_text.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_manifest.py",
+      "role": "prompt_tools",
+      "sha256": "bad2fc99fc88047f995ba1659cbff1182f8a3a63226e23eed091ab4a5387aee1",
+      "size_bytes": 3137,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_manifest.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_payload.py",
+      "role": "prompt_tools",
+      "sha256": "0ee98bf47f5a601f8a158b3d1e7a5b4c41f4b0b2a11a310b0fb19bc2a386444b",
+      "size_bytes": 2413,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_payload.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_zip.py",
+      "role": "prompt_tools",
+      "sha256": "9ebb2da9721861c956f7a14b4fe538ecc50c73bc22e8870f5a71aa7df27831a9",
+      "size_bytes": 4485,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_zip.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/read_order.py",
+      "role": "prompt_tools",
+      "sha256": "45e62abb5defe45bb049614761801f47c1e50ac6e8e9b08bffbb35eb2deb53f4",
+      "size_bytes": 2487,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/read_order.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/readme_body.py",
+      "role": "prompt_tools",
+      "sha256": "d9f1ce7461f3463c25fd881145a5e4d086fa5eb60da8fb2f73d729d39e2264f2",
+      "size_bytes": 2788,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/readme_body.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/source_resolution.py",
+      "role": "prompt_tools",
+      "sha256": "885b8b9bffd4629db4b909e0e5bbc4c2064d0102bc6253dde92a03f8b0bc8c92",
+      "size_bytes": 3022,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/source_resolution.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_intro.py",
+      "role": "prompt_tools",
+      "sha256": "fb304681f389d91a8df6cd3025db689c5703f4bcf96afd12f85d2817cd438f72",
+      "size_bytes": 4590,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_intro.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_routing.py",
+      "role": "prompt_tools",
+      "sha256": "fe359d22d5a8c96fb3ed0f4009e32686e0e126b721e4617f4450d67fc5389f49",
+      "size_bytes": 7496,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_routing.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_lists.py",
+      "role": "prompt_tools",
+      "sha256": "bf35b827e68919c07ddb0a0e9cc7460ae0a1e05cda77d51d0470a529d5216952",
+      "size_bytes": 3904,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_lists.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_text.py",
+      "role": "prompt_tools",
+      "sha256": "e8da1444a9e8b803660c795a60052e9f1e427df8ca93a57c454d1e878ac09542",
+      "size_bytes": 2019,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_text.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/startup_literal_texts.py",
+      "role": "prompt_tools",
+      "sha256": "fcead4136b757d0f8410bf57d4f068ade483584c5ca152b1f0605b291bc066da",
+      "size_bytes": 25993,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/startup_literal_texts.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/startup_names.py",
+      "role": "prompt_tools",
+      "sha256": "2d3b9cceac0bc45c74f399cbd9c9973f6a68348608535db117ca3b719f875f51",
+      "size_bytes": 2757,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/startup_names.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/startup_source_map.py",
+      "role": "prompt_tools",
+      "sha256": "f026b958f665f6eb0e4077e6a5a1f90aa5ed138fdc9dbeaefe9262f93526818a",
+      "size_bytes": 4845,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/startup_source_map.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/zip_contract.py",
+      "role": "prompt_tools",
+      "sha256": "8d93daf25c355f7e63bfb8f0fa7455f745d1580431d9276454fc2a290b657366",
+      "size_bytes": 5394,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/zip_contract.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/zip_delivery.py",
+      "role": "prompt_tools",
+      "sha256": "0815fd65a9b7e9bc2235456ab6ec6bead55aebf96a8d3dbc98b0c66c91d27350",
+      "size_bytes": 9611,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/zip_delivery.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py",
+      "role": "prompt_tools",
+      "sha256": "f850b5b1db5ae1a6367d07553f3181c1fe5caff4de8dea72f599864dded0bb0b",
+      "size_bytes": 4319,
+      "source_relative": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py"
+    },
+    {
+      "archive_relative": "_internal/kanda_reasoner_app/manage_workflows/manage_workflows.py",
+      "role": "workflows_worker",
+      "sha256": "0f5db0ae0a5a54040e5b363858798ded6411799fce21f6077027ac83420c17c1",
+      "size_bytes": 5354,
+      "source_relative": "kanda_reasoner_app/manage_workflows/manage_workflows.py"
+    }
+  ],
+  "required_roles": [
+    "architecture_grimp_probe",
+    "architecture_worker",
+    "collector_source_parts",
+    "docstrings_worker",
+    "freeze_blueprint_tools",
+    "prompt_library",
+    "prompt_tools",
+    "workflows_worker"
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "project-reasoner-tab-help-error-catalog/v1",
+  "project": "KANDA Reasoner",
+  "tab": "Kanda Phrasebook",
+  "purpose": "Provide a read-only explained field guide of generalized mini-prompts for AI-assisted coding with KANDA Reasoner.",
+  "created_for": "Rich desktop help fallback catalog",
+  "display_lines": [
+    "Kanda Phrasebook contains 310 generalized mini-prompts for AI-assisted coding.",
+    "Every mini-prompt includes a plain-English explanation for non-programmer users.",
+    "The guide preserves Tool versus Project boundaries, Box Logic, NO_LEAK, Brick Wall, validation, Freeze, and Error Memory rules.",
+    "Use the smallest matching mini-prompt to restore the missing AI behavior.",
+    "The Phrasebook is read-only and does not edit prompts, source code, or project memory."
+  ]
+}

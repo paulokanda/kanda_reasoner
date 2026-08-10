@@ -1,0 +1,47 @@
+{
+  "aliases": [
+    "KPR-05-008",
+    "self_contained_error_memory_lesson_intake_zip",
+    "Send Zip Errors",
+    "send zip errors",
+    "self-contained Error Memory ZIP",
+    "Error Memory lesson intake loader"
+  ],
+  "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md",
+  "category": "05_patch_delivery_and_validation",
+  "description": "Generalized selected-Project contract for one self-contained Error Memory intake ZIP, bridged to the separate Freeze intake owner through KPR-05-005 while preserving independent ownership and human approval.",
+  "display_name": "Self-Contained Error Memory Lesson Intake ZIP",
+  "filename": "self_contained_error_memory_lesson_intake_zip.md",
+  "load_type": "on_request",
+  "optional_companion_prompts": [
+    "terminal_cleanup_contract",
+    "project_tool_boundary_canon",
+    "patch_install_delivery_error_register",
+    "patch_validate_freeze_error_memory_routine_blueprint",
+    "self_contained_freeze_entry_intake_zip"
+  ],
+  "owner_box": "05_patch_delivery_and_validation",
+  "priority": 18,
+  "prompt_code": "KPR-05-008",
+  "prompt_id": "self_contained_error_memory_lesson_intake_zip",
+  "required_companion_prompts": [
+    "error_memory_ai_formulary_startup_canon",
+    "bundle_gated_development_workflow",
+    "implementation_and_delivery_protocol",
+    "pre_output_contract_gates"
+  ],
+  "source_stage": "freeze-error-intake-bridge-v1",
+  "source_write_authorization": "NO",
+  "status": "active",
+  "trigger_phrases": [
+    "Send Zip Errors",
+    "create error lesson loader ZIP",
+    "self-contained Error Memory ZIP",
+    "stage Error Memory lessons for approval",
+    "pending error lesson intake"
+  ],
+  "updated_for": "self-contained-freeze-error-intake-bridge-v1",
+  "version": "1.2",
+  "when_not_to_load": "Do not load for a single pasted lesson JSON, direct canonical memorization, ordinary patch delivery, or when no reusable lesson candidate exists.",
+  "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for approval in the currently selected Project."
+}
