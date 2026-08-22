@@ -1,4 +1,4 @@
-﻿{
+{
   "exports": [
     "APP_DISPLAY_NAME",
     "APP_ICON_PATH",
@@ -50,6 +50,9 @@
         "TOOLS",
         "ToolSpec"
       ]
+    },
+    "top_level_geometry_guard.py": {
+      "exports": []
     }
   },
   "origin": "reasoner_tools_gui.py",
@@ -59,4 +62,3 @@
   "purpose": "Helper manifest for the refactored root Reasoner tools GUI shell.",
   "schema_version": "1.0"
 }
-

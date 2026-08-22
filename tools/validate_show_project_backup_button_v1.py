@@ -67,6 +67,11 @@ def _assert_static_contracts() -> None:
     assert '"backup_show_project_button"' in runner_text
     assert "QThread(window)" in qt_helper_text
     assert "worker.moveToThread(thread)" in qt_helper_text
+    assert "class _ShowProjectBackupUiBridge(QObject)" in qt_helper_text
+    assert "GreenSonarActivityMonitor" in qt_helper_text
+    assert "QMessageBox.information" not in qt_helper_text
+    assert "worker.completed.connect(lambda" not in qt_helper_text
+    assert "worker.failed.connect(lambda" not in qt_helper_text
     assert "create_show_project_backup" in service_text
     assert "project_analysis_evidence_root" in service_text
     assert "NamedTemporaryFile" in service_text
@@ -344,8 +349,9 @@ def _assert_real_qt_background_route(
     assert heartbeat["count"] > 0
     assert window.backup_show_project_button.isEnabled()
     assert window.backup_show_project_button.text() == "Backup Show Project"
-    assert information_calls
+    assert not information_calls
     assert not warning_calls
+    assert getattr(window, "_show_project_backup_sonar_monitor", None) is not None
     assert "Show Project backup created:" in window.first_prompt_status_label.text()
     assert window._show_project_backup_thread is None
     assert window._show_project_backup_worker is None

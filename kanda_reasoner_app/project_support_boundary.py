@@ -11,6 +11,7 @@ from pathlib import Path
 
 from kanda_reasoner_app.project_root_resolver import (
     find_reasoner_source_root,
+    is_reasoner_project_root,
     resolve_app_runtime_root,
 )
 from kanda_reasoner_app.portable_smoke_isolation import (
@@ -42,6 +43,7 @@ __all__ = [
 SHOW_PROJECT_TO_AI_SUFFIX = _SHOW_PROJECT_TO_AI_SUFFIX
 DELETE_AFTER_DAILY_WORK_SUFFIX = _DELETE_AFTER_DAILY_WORK_SUFFIX
 TOOL_PROJECT_SLUG = "kanda_reasoner"
+TOOL_RUNTIME_DATA_DIR_NAME = "kanda_tool_data"
 
 
 class ProjectSupportBoundaryError(RuntimeError):
@@ -155,15 +157,28 @@ def canonical_project_support_root(active_project_root: str | Path) -> Path:
 def canonical_tool_support_root(
     tool_source_root: str | Path | None = None,
 ) -> Path:
-    """Return durable Tool Support or a token-bound smoke override."""
-    if tool_source_root is None:
-        tool_root = find_reasoner_source_root() or resolve_app_runtime_root()
-    else:
-        tool_root = Path(tool_source_root)
+    """Return durable Tool Support without borrowing Project Support identity.
+
+    Source trees preserve the historical Tool support location. Compiled or
+    unpacked Portable runtimes always keep Tool-owned state below
+    ``kanda_tool_data``, even when callers pass the runtime root explicitly.
+    Project Support remains owned exclusively by
+    :func:`canonical_project_support_root`.
+    """
+    source_root = find_reasoner_source_root() if tool_source_root is None else None
+    tool_root = (
+        source_root or resolve_app_runtime_root()
+        if tool_source_root is None
+        else Path(tool_source_root)
+    )
     resolved = Path(tool_root).expanduser().resolve(strict=False)
     smoke = resolve_portable_smoke_isolation()
     if smoke is not None:
         return smoke.tool_support_root(resolved)
+    if tool_source_root is None and source_root is None:
+        return (resolved / TOOL_RUNTIME_DATA_DIR_NAME).resolve(strict=False)
+    if tool_source_root is not None and not is_reasoner_project_root(resolved):
+        return (resolved / TOOL_RUNTIME_DATA_DIR_NAME).resolve(strict=False)
     return canonical_project_support_root(resolved)
 
 

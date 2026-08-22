@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/reasoner_engine/project_web_ai_apply_receipts.py
-"""Store durable Project Web AI apply receipts and enforce handoff freshness."""
+"""Store durable Project Web AI terminal receipts and handoff freshness."""
 
 from __future__ import annotations
 
@@ -37,6 +37,7 @@ def apply_preview_caption(receipt: "ProjectWebAIApplyReceipt | None") -> str:
         return "View Shadow Preview"
     return {
         "APPLIED_SOURCE_VERIFIED": "View Applied Preview",
+        "PROPOSAL_ONLY": "View Recorded Proposal",
         "ROLLED_BACK": "View Rolled-Back Preview",
         "UNRESOLVED": "View Unresolved Preview",
     }.get(receipt.status, "View Terminal Preview")
@@ -67,7 +68,7 @@ def receipt_matches_fresh_project_context(
 
 @dataclass(frozen=True)
 class ProjectWebAIApplyReceipt:
-    """Describe one terminal source-write transaction."""
+    """Describe one terminal Project Web AI review outcome."""
 
     schema_version: str
     transaction_id: str

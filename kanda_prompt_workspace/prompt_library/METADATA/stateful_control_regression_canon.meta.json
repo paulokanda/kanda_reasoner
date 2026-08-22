@@ -18,7 +18,7 @@
   ],
   "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
   "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
-  "description": "GUI option-control semantic identity, persistence, hydration, restoration, fallback, caption, and sizing regression specialist.",
+  "description": "GUI option-control semantic identity, persistence, hydration, restoration, fallback, caption, and sizing regression specialist. Project-agnostic; host-specific governance is optional.",
   "priority": 4,
   "trigger_phrases": [
     "dropdown selection persistence",
@@ -28,9 +28,7 @@
     "GUI option state regression",
     "control sizing regression"
   ],
-  "required_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate"
-  ],
+  "required_companion_prompts": [],
   "optional_companion_prompts": [
     "boundary_first_repair_protocol"
   ],

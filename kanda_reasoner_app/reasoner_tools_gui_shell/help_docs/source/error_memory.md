@@ -12,14 +12,14 @@ Image note:
 
 ## What This Tab Does
 
-**In plain English:** Error Memory is a project-specific library of lessons learned from errors that actually happened. Each lesson records what went wrong, why it happened, how it was corrected, what must not be repeated, and how the correction should be checked in the future.
+**In plain English:** Error Memory is a reusable library of lessons learned from errors that actually happened. Each lesson records what went wrong, why it happened, how it was corrected, what must not be repeated, and how the correction should be checked in the future.
 
 The tab does not automatically decide that every error deserves a permanent lesson. You review the evidence and choose whether to save, activate, deprecate, supersede, or delete a lesson.
 
 ## Before You Start
 
-1. Confirm the correct **Project Root** at the top of the tab.
-2. Make sure the error belongs to that project.
+1. Identify the Tool or Project context in which the error was observed.
+2. Treat that context as evidence/provenance, not as Machine-Card/MCard ownership of the lesson.
 3. Gather the exact error message, relevant context, correction, and validation evidence.
 4. Avoid including passwords, API keys, private credentials, or unnecessary personal information.
 5. Use one lesson for one repeatable failure pattern.
@@ -37,11 +37,11 @@ The tab does not automatically decide that every error deserves a permanent less
 7. Use **Memorize Error** only after the lesson is complete and active-ready.
 8. Confirm the lesson appears correctly in the **Lessons** table.
 
-## Project and Folder Controls
+## Context and Folder Controls
 
-### Project Root
+### Active Project context
 
-This is the project whose Error Memory you are viewing. A wrong root can put a lesson in the wrong project library.
+A selected Project can help describe where an error was observed. It does not turn Error Memory into the Architecture Review Machine-Card/MCard lifecycle and does not make a lesson an inserted Project card.
 
 ### Open EM Folder
 
@@ -59,9 +59,9 @@ These buttons copy folder paths. They do not copy lesson content.
 
 Copies the canonical instructions for sending an error to AI. Use it when preparing a new error report outside the tab.
 
-### Send Zip Errors
+### Send Error Lesson
 
-Copies the generalized current-Project prompt that instructs AI to create one self-contained Error Memory lesson intake ZIP. The resulting loader stages lessons for review only; Memorize Error remains human-controlled.
+Copies the runtime-safe Error Memory delivery prompt. In source/IDE mode, a self-contained pending lesson ZIP may be used only when an independent external Tool Python executable is verified. In Portable/FROZEN mode, this action uses the native marker-wrapped Error Memory GUI intake path and does not require a standalone `python.exe` under `_internal`.
 
 ## AI-Assisted Error Lesson Intake
 
@@ -97,7 +97,7 @@ Use it only when:
 
 ### Import Error Lesson ZIP
 
-Loads an AI-created lesson package into the intake and editor. Importing is not the same as memorizing.
+Loads an AI-created lesson package into the intake and editor inside the already-running KANDA application. This passive import does not launch an external Python interpreter and does not depend on `_internal/python.exe`. Importing is not the same as memorizing.
 
 ### Check Against Lessons
 
@@ -137,11 +137,11 @@ Deletes the selected canonical lesson. Use Undo immediately if deletion was acci
 
 ### Export Errors
 
-Creates a portable folder containing valid lessons, including inactive lessons. Use it for controlled backup or transfer.
+Exports the Error Memory lesson library for controlled backup or transfer.
 
 ### Import Errors
 
-Merges unique validated lessons from a KANDA Error Memory export. Existing lessons are not intentionally replaced or deleted.
+Merges unique validated lessons from another KANDA Error Memory library export. Existing lessons are not intentionally replaced or deleted.
 
 ### Lessons to Clipboard
 
@@ -225,6 +225,16 @@ Suppose a validation command used the wrong Python interpreter.
 6. Keep it as draft until the validation evidence passes.
 7. Memorize or mark active only after the evidence is correct.
 
+
+## Machine-Card Boundary
+
+Error Memory is not the Architecture Review Machine-Card/MCard lifecycle.
+
+- MCard concerns KANDA Tool / selected-Project target lifecycle when its dedicated canon applies.
+- Error Memory concerns reusable prevention lessons.
+- KANDA self-hosting may make Tool and Project roots physically equal, but logical roles remain separate.
+- Historical implementation names such as `error_memory_card` or `_mcard_*` are compatibility names only and must not be used to infer Error Memory semantics.
+
 ## Final Safety Reminder
 
-Error Memory is valuable because it is selective, reviewed, project-specific, and evidence-based. More lessons are not always better. Clear ownership and accurate prevention rules matter more than volume.
+Error Memory is valuable because it is selective, reviewed, reusable, and evidence-based. More lessons are not always better. Clear ownership and accurate prevention rules matter more than volume.

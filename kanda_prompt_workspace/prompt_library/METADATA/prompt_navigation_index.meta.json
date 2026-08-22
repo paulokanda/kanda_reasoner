@@ -5,8 +5,8 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "fire-shield-ai-policy-enforcement-v1",
-  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, route owner relationships, and the Fire Shield policy route for consequential external-Project work.",
+  "source_stage": "external-project-spectator-scope-v1",
+  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, route owner relationships, and actor-scoped Fire Shield policy: KANDA-managed external-Project actions are gated while independent Project-owned development is KANDA-independent.",
   "priority": 7,
   "required_companion_prompts": [
     "ai_prompt_request_canon",
@@ -19,10 +19,10 @@
     "exact prompt path",
     "fire shield"
   ],
-  "version": "5.1",
+  "version": "5.2",
   "owner_box": "02_prompt_routing_and_indexing",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
-  "updated_for": "fire-shield-ai-policy-enforcement-v1",
+  "updated_for": "external-project-spectator-scope-v1",
   "prompt_code": "KPR-02-004",
   "title": "Prompt Navigation Index",
   "authority_boundary": {
@@ -32,6 +32,6 @@
     "may_authorize_freeze": false
   },
   "do_not_regress": [
-    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability."
   ]
 }

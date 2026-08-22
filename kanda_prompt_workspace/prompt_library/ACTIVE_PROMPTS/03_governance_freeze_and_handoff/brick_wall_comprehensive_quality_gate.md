@@ -2,7 +2,7 @@
 prompt_code: KPR-03-001
 prompt_id: brick_wall_comprehensive_quality_gate
 title: Brick Wall - Comprehensive Quality Gate
-version: 3.22
+version: 3.23
 status: active
 load_type: routed
 owner_group: 03_governance_freeze_and_handoff
@@ -14,8 +14,7 @@ Brick Wall is the mandatory evidence-tracked checkpoint for governed KANDA Reaso
 ## Invocation
 Load this prompt when the user says or clearly requests:
 ```text
-brick wall | show brick wall
-brick wall check | update brick wall
+brick wall | show brick wall | brick wall check | update brick wall
 where are we on brick wall
 run the quality wall
 ```
@@ -89,16 +88,16 @@ The ledger must be displayed every time Brick Wall is invoked.
 | ID | Requirement | Default status rule |
 |---|---|---|
 | Q01 | Verified-problem admission gate | Must prove a real inadequacy before new feature work |
-| Q02 | Visible Error Memory preflight | Mandatory before implementation planning or coding |
-| Q03 | Error Memory regression-obligation matrix | Every relevant lesson maps to a validator, new negative test, or justified non-applicability |
-| Q04 | Lesson freshness verification | Check current file, symbol, facade, owner, status, and supersession |
+| Q02 | Visible Error Memory preflight | Mandatory for KANDA Tool work; advisory/non-blocking for independent external Project work |
+| Q03 | Error Memory regression-obligation matrix | Required when Q02 is governing; external Project Tool-context may be advisory/N/A |
+| Q04 | Lesson freshness verification | Required when Q02 is governing; external Project Tool-context may be advisory/N/A |
 | Q05 | Exact-source baseline | Inspect current owner files, contracts, consumers, validators, and freshness basis |
 | Q06 | Tool/Project identity enforcement | Resolve reusable Tool and active project separately, including self-hosting |
 | Q07 | Visible Tool/Project and NO-LEAK classification | Classify Tool source, project source, durable support, evidence, daily-work, and blocked writes |
 | Q08 | Box Boundary Audit | One primary box, owner paths, public contract, private internals, dependencies, state owner |
 | Q09 | Public-contract-only communication | No private reach-in or accidental package-root ownership |
 | Q10 | Single mutable-state owner | Every mutable state has exactly one declared owner and mutation route |
-| Q11 | MCard lifecycle enforcement | Apply insert-read-plan-preview-validate-authorize-write-verify-receipt-eject when relevant |
+| Q11 | MCard observer lifecycle enforcement | Apply insert-read-observe-analyze-report-eject when relevant; no Project apply/rollback |
 | Q12 | Immutable operation identity | Audit or establish current Tool, project, target, hash, generation, operation, and transaction identity |
 | Q13 | Explicit write authorization | A path or boolean alone must not authorize mutation |
 | Q14 | Immediate pre-write freshness check | Recheck source, target, generation, transaction, Preview, and ownership immediately before write |
@@ -130,7 +129,7 @@ The ledger must be displayed every time Brick Wall is invoked.
 | Q40 | One-primary-box governed release | One primary box, declared supporting touches, exact ZIP contract, honest validation and freeze state |
 ## Detailed mandatory checks
 ### Startup and project readiness
-Startup/project readiness, active roots, compact Error Memory, handoff freshness, and source archive availability are known.
+Startup/project readiness and active roots are known. Tool Error Memory and KANDA source-archive availability are KANDA-work evidence, not prerequisites for independent external Project development.
 ### Verified problem
 Q01 is an admission decision, not a ceremonial checkbox. Before implementation
 planning or coding, return this complete record:
@@ -170,8 +169,12 @@ Completion rules:
   `ADMIT`, `REPAIR_EXISTING`, `CONSOLIDATE`, or evidence-backed `NO_CHANGE`.
 - Coding remains blocked until Q02-Q17 phase-relevant pre-code gates also pass.
 ### Error Memory first
-Before exact-source planning or coding, read the current compact Error Memory
-prompt, compact lesson export, and manifest, then return this visible record:
+For KANDA Reasoner Tool implementation, read the current compact Error Memory
+prompt, compact lesson export, and manifest before exact-source planning or coding.
+For independent external `PROJECT_ACTOR` work, Tool Error Memory is advisory: use it
+when available, but missing/stale Tool Error Memory does not block exact Project
+source inspection, coding, testing, validation, or release. Then return the record
+with an explicit governing/advisory scope:
 ```text
 ERROR MEMORY CHECK
 Project slug:
@@ -222,10 +225,7 @@ Next safe action:
 ```
 Every relevant lesson must have exactly one matrix block. Allowed dispositions are `EXISTING_VALIDATOR`, `NEW_FOCUSED_TEST`, `NOT_APPLICABLE`, and `CURRENT_SOURCE_REINTERPRETATION`. The lesson-ID set must match the relevant lesson-ID set exactly. A missing or duplicate row, unknown disposition, missing protection path, missing marker, or unsupported reason keeps Q03 blocked.
 Every relevant lesson must also have exactly one lesson-freshness verification block. The freshness lesson-key set must match `Relevant lesson IDs` exactly. Q04 remains blocked when file, symbol, facade, box, owner, source fingerprint, lesson status, supersession, or invalidation evidence is missing, contradictory, unresolved for a `CURRENT` decision, or marked `BLOCKED`. An explicit evidence-backed `N/A` is allowed only when that lesson does not reference the corresponding file, symbol, or public facade.
-If compact Error Memory is missing, stale, unread, or insufficient for a
-repeated-error task, `May proceed to exact-source inspection` must be `NO` until
-the required evidence is obtained or the full ZIP is reviewed. Coding remains
-`NO` until Q02, Q03, Q04, and the remaining phase-relevant pre-code gates pass.
+For KANDA Tool work, missing/stale/insufficient Error Memory blocks Q02-Q04 until resolved. For independent external Project work, Tool Error Memory may be marked advisory or `NOT_APPLICABLE_EXTERNAL_PROJECT_TOOL_CONTEXT`; Project progression must not be blocked solely because KANDA Error Memory is unavailable.
 ### Exact source
 Before Q05 can be complete, emit this record:
 ```text
@@ -308,7 +308,7 @@ Load `architecture_review_project_card_machine_canon` with `project_tool_boundar
 ```text
 MCARD APPLICABILITY AND LIFECYCLE RECORD
 MCard applicable YES/NO | trigger or not-applicable evidence | owner prompts loaded
-Applicable card: root/target/path/hash/generation | ownership | transition | async validity | Planner/Workbench/Preview/Shadow/transaction owners | locks | write/rollback/eject | Tool cleanup | Project retention | self-hosting | tests
+Applicable card: root/target/path/hash/generation | ownership | observer transition | async validity | Planner/Workbench/Preview/report owners | observer locks | cancel/eject | Tool cleanup | Project retention | source untouched | tests
 Decision: COMPLETE/NOT_APPLICABLE/BLOCKED | proceed to Q12 YES/NO | may begin coding NO
 ```
 Canonical rule: one edited file alone does not activate MCard; unresolved lifecycle evidence blocks Q11 and no parallel lifecycle authority is allowed.
@@ -321,7 +321,7 @@ Decision: COMPLETE/NOT_APPLICABLE/BLOCKED | proceed to Q13 YES/NO | may begin co
 ```
 Identity must precede downstream work. Any identity mismatch invalidates Q13 authority; no parallel runtime identity owner is allowed.
 ### Explicit write authorization (Q13)
-Brick Wall owns final authorization; reuse current operation, Preview, transaction, path, and human-confirmation owners.
+Brick Wall owns KANDA Tool write authorization. For an external Project, source writes belong only to the independent Project actor; KANDA never authorizes or performs those writes.
 ```text
 EXPLICIT WRITE AUTHORIZATION RECORD
 writes required YES/NO | Authorization ID | operation/feature IDs | Active Project | allowed relative paths | authorized write route | approved Preview required/ID/fingerprint | expected source fingerprints | lifecycle generation | transaction applicable/ID | owner/evidence | human authorization required/current | current matches | invalidation/expiry | blocked paths | tests
@@ -337,7 +337,7 @@ Per target: relative path | logical owner/classification | expected SHA-256 | cu
 Preview required/ID/expected/current exact-byte fingerprint | generation expected/current | transaction applicable/expected/current | public owner/facade/consumers | authorization/human authority current | no intervening identity change | stale evidence invalidated | blockers/tests
 Decision: COMPLETE/NOT_APPLICABLE/BLOCKED | proceed to Q15 canonical path-authority YES/NO | may begin coding NO | may write source NO
 ```
-Run immediately before write after all preparation. Any operation, project, target, exact-byte hash, Preview, generation, transaction, owner, authorization, or user-requirement change invalidates Q12-Q14 and blocks writing.
+Run immediately before a KANDA-authorized write after all preparation. External Project source writes are outside KANDA authority and use the Project-owned freshness contract. Any relevant KANDA identity change invalidates Q12-Q14.
 ### Canonical path authority (Q15)
 Reuse current public path owners; do not create a global super-resolver or independent formulas.
 ```text
@@ -486,7 +486,7 @@ Registration is valid only when tests prove:
 - startup-generated prompt navigation contains the Brick Wall bridge;
 - Q01 through Q40 are all present;
 - unrelated prompts are not changed;
-- the exact final patch ZIP passes contract validation;
+- a KANDA-owned final patch ZIP passes the KANDA ZIP contract; an external Project release uses its Project/release-owned contract;
 - freeze remains human-confirmed;
 - any Error Memory lesson is evidence-backed and active-ready.
 ## Do-not-regress rules
@@ -495,6 +495,6 @@ Registration is valid only when tests prove:
 - Every direct `brick wall` invocation displays the live status and Q01-Q40 ledger.
 - Evidence-sensitive ticks reset when current evidence is absent or stale.
 - Brick Wall coordinates but does not replace the owner or specialist owner canons.
-- Coding never precedes Error Memory and exact-source review.
+- KANDA Tool coding never precedes governed Error Memory and exact-source review; independent external Project coding is never blocked by missing Tool Error Memory.
 - Tool/Project, Box, shielding, NO-LEAK, MCard, validation, confirmation, and freeze protections remain hard gates.
 - No item is marked complete from assumption alone.

@@ -2,7 +2,6 @@
 # project-path: kanda_reasoner_app/reasoner_context_collector/collector_scope.py
 """Central scope helpers for Project Reasoner Tab 4 collection."""
 from __future__ import annotations
-import fnmatch
 import json
 import os
 from pathlib import Path
@@ -123,131 +122,6 @@ def _relative_posix(path: Path, root: Path) -> str:
         return path.relative_to(root).as_posix()
     except Exception:
         return str(path).replace("\\", "/")
-def should_exclude_path(path: Path | str, project_root: Path | str | None = None, rules: dict[str, list[str]] | None = None) -> bool:
-    """Support should exclude path behavior.
-    
-    Parameters
-    ----------
-    path : Path | str
-        The file or folder path.
-    project_root : Path | str | None, optional
-        The project root path.
-    rules : dict[str, list[str]] | None, optional
-        The optional rules value.
-    
-    Returns
-    -------
-    bool
-        True if the condition is met; otherwise, False.
-    """
-    
-    root = resolve_project_root(project_root)
-    resolved = _safe_resolve(path)
-    if not is_inside_project(resolved, root):
-        return True
-    parts_low = [part.lower() for part in resolved.parts]
-    if any(part in HARD_EXCLUDED_PARTS for part in parts_low):
-        return True
-    active_rules = rules if rules is not None else _load_rules()
-    rel = _relative_posix(resolved, root)
-    rel_low = rel.lower()
-    name_low = resolved.name.lower()
-    suffix_low = resolved.suffix.lower()
-    rel_parts = [part.lower() for part in Path(rel).parts]
-    for folder in active_rules.get("folders", []) or []:
-        f = str(folder).strip().lower().replace("\\", "/").strip("/")
-        if f and (f in rel_parts or fnmatch.fnmatch(rel_low, f) or fnmatch.fnmatch(rel_low, f + "/*")):
-            return True
-    for file_rule in active_rules.get("files", []) or []:
-        f = str(file_rule).strip().lower().replace("\\", "/")
-        if f and (fnmatch.fnmatch(name_low, f) or fnmatch.fnmatch(rel_low, f)):
-            return True
-    for ext in active_rules.get("extensions", []) or []:
-        e = str(ext).strip().lower()
-        if e and suffix_low == e:
-            return True
-    return False
-def iter_project_files(project_root: Path | str | None = None, suffixes: Iterable[str] | None = None) -> Iterator[Path]:
-    """Support iter project files behavior.
-    
-    Parameters
-    ----------
-    project_root : Path | str | None, optional
-        The project root path.
-    suffixes : Iterable[str] | None, optional
-        The optional suffixes value.
-    
-    Returns
-    -------
-    Iterator[Path]
-        The iterator result.
-    """
-    
-    root = resolve_project_root(project_root)
-    rules = _load_rules()
-    wanted = {s.lower() for s in suffixes} if suffixes is not None else None
-    def walk(current: Path) -> Iterator[Path]:
-        try:
-            entries = sorted(current.iterdir(), key=lambda p: (not p.is_dir(), p.name.lower()))
-        except OSError:
-            return
-        for entry in entries:
-            if should_exclude_path(entry, root, rules):
-                continue
-            if entry.is_dir():
-                if entry.is_symlink():
-                    continue
-                yield from walk(entry)
-            elif entry.is_file() and (wanted is None or entry.suffix.lower() in wanted):
-                yield entry
-    yield from walk(root)
-def iter_project_python_files(project_root: Path | str | None = None) -> Iterator[Path]:
-    """Support iter project python files behavior.
-    
-    Parameters
-    ----------
-    project_root : Path | str | None, optional
-        The project root path.
-    
-    Returns
-    -------
-    Iterator[Path]
-        The iterator result.
-    """
-    
-    yield from iter_project_files(project_root, {".py"})
-def iter_project_documentation_files(project_root: Path | str | None = None) -> Iterator[Path]:
-    """Support iter project documentation files behavior.
-    
-    Parameters
-    ----------
-    project_root : Path | str | None, optional
-        The project root path.
-    
-    Returns
-    -------
-    Iterator[Path]
-        The iterator result.
-    """
-    
-    yield from iter_project_files(project_root, DOC_SUFFIXES)
-def iter_project_packaging_files(project_root: Path | str | None = None) -> Iterator[Path]:
-    """Support iter project packaging files behavior.
-    
-    Parameters
-    ----------
-    project_root : Path | str | None, optional
-        The project root path.
-    
-    Returns
-    -------
-    Iterator[Path]
-        The iterator result.
-    """
-    
-    for path in iter_project_files(project_root, {".toml", ".py", ".cfg", ".txt", ".lock"}):
-        if path.name.lower() in PACKAGING_NAMES:
-            yield path
 def _contains_forbidden_text(value: str, project_root: Path | str | None = None) -> bool:
     """Support contains forbidden text behavior.
     

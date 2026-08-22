@@ -3,22 +3,9 @@
 from __future__ import annotations
 import ast
 from dataclasses import dataclass
-from datetime import datetime, timezone
 import hashlib
-import os
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
-
-from kanda_reasoner_app.project_support_boundary import (
-    canonical_transient_garbage_root,
-)
 import re
 from collections.abc import Callable, Iterable
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import (
@@ -83,6 +70,8 @@ class TestProtectionApplyResult:
     applied_count: int
     changed_files: tuple[str, ...]
     backup_root: str
+    proposal_only: bool = False
+    proposed_files: tuple[str, ...] = ()
 def _normalize_relative_path(value: str) -> str:
     return str(value).replace("\\", "/").strip().strip("/")
 def _module_name_from_path(path: str) -> str:
@@ -409,14 +398,10 @@ def _render_linked_test_text(test_text: str, module_name: str) -> str:
 def render_test_protection_link_text(test_text: str, module_name: str) -> str:
     """Render one guarded direct test-protection link without filesystem mutation."""
     return _render_linked_test_text(test_text, module_name)
-def _backup_root(project_root: Path) -> Path:
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    daily_work = canonical_transient_garbage_root(project_root)
-    return daily_work / "warning_heuristic_resolver" / "test_protection_gap" / timestamp
 def apply_test_protection_gap_plan(
     plan: TestProtectionGapPlan,
 ) -> TestProtectionApplyResult:
-    """Apply only source-fresh safe existing-test links from one plan."""
+    """Return source-fresh link proposals without mutating Project tests."""
     root = Path(plan.project_root).resolve()
     selected = [
         item for item in plan.decisions if item.action == ACTION_LINK_EXISTING_TEST
@@ -431,7 +416,8 @@ def apply_test_protection_gap_plan(
         current_hash = _sha256_text(current)
         if current_hash != decision.test_sha256_before:
             raise RuntimeError(
-                "TEST SOURCE FRESHNESS CONFLICT: " + decision.candidate_test_path
+                "TEST SOURCE FRESHNESS CONFLICT: "
+                + decision.candidate_test_path
             )
         original_by_path.setdefault(test_path, current)
         base_text = rendered_by_path.get(test_path, current)
@@ -439,32 +425,18 @@ def apply_test_protection_gap_plan(
             base_text,
             decision.module_name,
         )
-    backup_root = _backup_root(root)
-    for test_path, original in original_by_path.items():
-        relative = test_path.relative_to(root)
-        backup_path = backup_root / relative
-        backup_path.parent.mkdir(parents=True, exist_ok=True)
-        backup_path.write_text(original, encoding="utf-8", newline="")
-    changed: list[str] = []
-    fire_shield = build_current_fire_shield_context(
-        project_root=root,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="test-protection-gap-apply",
+    proposed = tuple(
+        path.relative_to(root).as_posix()
+        for path, rendered in sorted(
+            rendered_by_path.items(),
+            key=lambda item: str(item[0]),
+        )
+        if rendered != original_by_path[path]
     )
-    for test_path, rendered in sorted(rendered_by_path.items(), key=lambda item: str(item[0])):
-        original = original_by_path[test_path]
-        if rendered == original:
-            continue
-        payload = rendered.encode("utf-8")
-        assert_fire_shield_write_allowed(fire_shield, test_path, operation="REPLACE")
-        assert_fire_shield_payload_bytes_allowed(fire_shield, test_path, payload)
-        temporary = test_path.with_name(test_path.name + ".warning_resolver_tmp")
-        temporary.write_bytes(payload)
-        os.replace(temporary, test_path)
-        changed.append(test_path.relative_to(root).as_posix())
-    verify_tool_snapshot_unchanged(fire_shield)
     return TestProtectionApplyResult(
-        applied_count=len(selected),
-        changed_files=tuple(changed),
-        backup_root=str(backup_root),
+        applied_count=0,
+        changed_files=(),
+        backup_root="",
+        proposal_only=True,
+        proposed_files=proposed,
     )

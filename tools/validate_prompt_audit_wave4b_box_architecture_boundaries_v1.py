@@ -65,13 +65,19 @@ def validate_prompts(project_root: Path) -> None:
     box = read_text(class_root / "box_architecture_canon.md")
     require(
         all(token in box for token in (
-            "Brick Wall is the final governed implementation-authority coordinator",
+            "The active Project supplies its own implementation authorization and root/ownership model",
             "One primary responsibility owner per change",
             "atomic multi-owner contract migration",
             "BOX BOUNDARY AUDIT",
             "May begin coding from this audit: NO",
         )),
         "WAVE4B_BOX_ARCHITECTURE_SCOPE",
+    )
+    require(
+        "Brick Wall is the final governed implementation-authority coordinator" not in box
+        and "`project_tool_boundary_canon` owns Tool" not in box
+        and "Project-agnostic operating rule" in box,
+        "WAVE4B_BOX_ARCHITECTURE_AGNOSTIC_BOUNDARY",
     )
     boundary = read_text(class_root / "boundary_first_repair_protocol.md")
     require(
@@ -89,14 +95,14 @@ def validate_prompts(project_root: Path) -> None:
             "Shielding is risk-based, not milestone-automatic",
             "SHIELD APPLICABILITY DECISION",
             "Simpler existing-test strengthening sufficient",
-            "May freeze from this record: NO",
+            "May write snapshot/freeze state from this record: NO",
         )),
         "WAVE4B_SHIELDING_SCOPE",
     )
     folder = read_text(class_root / "project_folder_organization_canon.md")
     require(
         all(token in folder for token in (
-            "consumes root identities from `project_tool_boundary_canon`",
+            "consumes root identities from the active Project\'s declared root/ownership authority",
             "ARTIFACT PLACEMENT ASSESSMENT",
             "Generated / durable / transient status",
             "May write source from this assessment: NO",

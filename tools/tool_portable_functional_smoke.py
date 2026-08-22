@@ -5,15 +5,37 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 import zipfile
 from pathlib import Path
 from typing import Any
+
+_TOOL_ROOT = Path(__file__).resolve().parents[1]
+_TOOL_ROOT_TEXT = str(_TOOL_ROOT)
+_TOOL_ROOT_WAS_PRESENT = _TOOL_ROOT_TEXT in sys.path
+_PREVIOUS_DONT_WRITE_BYTECODE = sys.dont_write_bytecode
+if not _TOOL_ROOT_WAS_PRESENT:
+    sys.path.insert(0, _TOOL_ROOT_TEXT)
+sys.dont_write_bytecode = True
+try:
+    from portable.packaged_worker_runtime import validate_packaged_worker_runtime
+    from tool_portable_project_agnostic_smoke import (
+        smoke_project_agnostic_startup_generation,
+    )
+finally:
+    sys.dont_write_bytecode = _PREVIOUS_DONT_WRITE_BYTECODE
+    if not _TOOL_ROOT_WAS_PRESENT:
+        try:
+            sys.path.remove(_TOOL_ROOT_TEXT)
+        except ValueError:
+            pass
 
 __all__ = [
     "validate_runtime_report",
     "seed_external_smoke_registry",
     "smoke_no_project",
     "smoke_external_project",
+    "smoke_project_agnostic_startup_generation",
 ]
 
 SMOKE_REPORT_PATH_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT"
@@ -291,6 +313,19 @@ def _launch(executable: Path, environment: dict[str, str], message: str) -> None
         )
 
 
+
+def _validate_worker_reentry(
+    executable: Path,
+    environment: dict[str, str],
+) -> None:
+    validate_packaged_worker_runtime(
+        executable.parent,
+        executable,
+        environment=environment,
+    )
+    print("PACKAGED TOOL WORKER REENTRY: PASS")
+
+
 def smoke_no_project(zip_path: Path, run_root: Path) -> dict[str, Any]:
     root = run_root / "smoke_no_project"
     extract = root / "extract"
@@ -323,11 +358,12 @@ def smoke_no_project(zip_path: Path, run_root: Path) -> dict[str, Any]:
         token=hashlib.sha256(os.urandom(32)).hexdigest(),
     )
     environment.pop(PROJECT_ENV, None)
+    _validate_worker_reentry(executable, environment)
     _launch(
         executable,
         environment,
-        "FIRST GUI SMOKE: open Show Project to AI, Local AI, and Error Memory; "
-        "verify Project is NONE, then close the Tool normally.",
+        "FIRST GUI SMOKE: required tabs auto-load. Verify Project is NONE and "
+        "the GUI is responsive, then close the Tool normally.",
     )
     functional = validate_runtime_report(
         report_path,
@@ -382,11 +418,13 @@ def smoke_external_project(
         profile_root,
         token=report_token,
     )
+    _validate_worker_reentry(executable, environment)
     _launch(
         executable,
         environment,
-        "SECOND GUI SMOKE: open Show Project to AI, Local AI, Error Memory, and "
-        "Project Structure 3D; verify Project=EEG Kanda and real JSON, then close normally.",
+        "SECOND GUI SMOKE: required tabs auto-load. Verify the explicitly selected "
+        "external Project and real JSON; optionally inspect Project Structure 3D, "
+        "then close normally.",
     )
     functional = validate_runtime_report(
         report_path,
@@ -418,7 +456,7 @@ def smoke_external_project(
         )
     if str(record.get("selection_mode") or "") != "EXPLICIT_EXTERNAL_PROJECT":
         raise RuntimeError("EXTERNAL_SMOKE_SELECTION_MODE_MISMATCH")
-    print("PACKAGED TOOL EXTERNAL PROJECT EEG KANDA: PASS")
+    print("PACKAGED TOOL EXTERNAL PROJECT: PASS")
     print("PACKAGED TOOL EXTERNAL PROJECT STABLE ID REUSE: PASS")
     print("PACKAGED TOOL SECOND FUNCTIONAL TAB SMOKE: PASS")
     print("TOOL/PROJECT DISTINCTION: PASS")

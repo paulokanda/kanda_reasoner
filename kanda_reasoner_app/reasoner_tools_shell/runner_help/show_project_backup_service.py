@@ -1,4 +1,4 @@
-"""Verified ZIP backup service for a selected Project Support folder."""
+"""Verified atomic ZIP backup service for selected Project folders."""
 
 from __future__ import annotations
 
@@ -15,6 +15,13 @@ from kanda_reasoner_app.project_analysis_evidence_paths import (
 )
 
 __all__ = ["create_show_project_backup", "validate_backup_destination"]
+
+CancelCheck = Callable[[], bool]
+
+
+class BackupCancelled(RuntimeError):
+    """Raised when the user cancels a backup before atomic publication."""
+
 
 _ALREADY_COMPRESSED_SUFFIXES = {
     ".7z",
@@ -42,56 +49,106 @@ def create_show_project_backup(
     *,
     timestamp: datetime | None = None,
     progress: Callable[[str], None] | None = None,
+    cancel_requested: CancelCheck | None = None,
 ) -> dict[str, object]:
     """Create and verify an atomic ZIP of the selected Project Support root."""
-    selected_root = Path(project_root).expanduser().resolve(strict=False)
-    if not selected_root.is_dir():
-        raise FileNotFoundError(
-            "Selected project root is not a directory: " + str(selected_root)
-        )
+    selected_root = _require_project_root(project_root)
     support_root = project_analysis_evidence_root(selected_root).resolve(strict=False)
     if not support_root.is_dir():
         raise FileNotFoundError("Show Project folder does not exist: " + str(support_root))
-    destination = validate_backup_destination(selected_root, destination_dir)
+    return _create_verified_backup(
+        selected_root,
+        support_root,
+        destination_dir,
+        operation_label="Show Project",
+        timestamp=timestamp,
+        progress=progress,
+        cancel_requested=cancel_requested,
+    )
 
-    snapshot = _snapshot_support_root(support_root)
+
+def _create_project_backup(
+    project_root: str | Path,
+    destination_dir: str | Path,
+    *,
+    timestamp: datetime | None = None,
+    progress: Callable[[str], None] | None = None,
+    cancel_requested: CancelCheck | None = None,
+) -> dict[str, object]:
+    """Create and verify an atomic ZIP containing the complete Project root."""
+    selected_root = _require_project_root(project_root)
+    return _create_verified_backup(
+        selected_root,
+        selected_root,
+        destination_dir,
+        operation_label="Project",
+        timestamp=timestamp,
+        progress=progress,
+        cancel_requested=cancel_requested,
+    )
+
+
+def _create_verified_backup(
+    selected_root: Path,
+    source_root: Path,
+    destination_dir: str | Path,
+    *,
+    operation_label: str,
+    timestamp: datetime | None,
+    progress: Callable[[str], None] | None,
+    cancel_requested: CancelCheck | None,
+) -> dict[str, object]:
+    """Create one verified archive and publish it only after validation."""
+    destination = validate_backup_destination(selected_root, destination_dir)
+    _raise_if_cancelled(cancel_requested)
+    snapshot = _snapshot_support_root(
+        source_root,
+        operation_label=operation_label,
+        cancel_requested=cancel_requested,
+    )
     total_bytes = sum(item[2] for item in snapshot if item[0] == "file")
     if not snapshot:
-        raise ValueError("Show Project folder is empty: " + str(support_root))
+        raise ValueError(operation_label + " folder is empty: " + str(source_root))
     _require_free_space(destination, total_bytes)
 
     archive_path = _unique_archive_path(
         destination,
-        support_root.name,
+        source_root.name,
         timestamp or datetime.now(),
     )
     partial_path = _partial_archive_path(destination, archive_path.name)
     expected_files = {
-        support_root.name + "/" + relative.as_posix(): size
+        source_root.name + "/" + relative.as_posix(): size
         for kind, relative, size, _mtime_ns in snapshot
         if kind == "file"
     }
     expected_dirs = {
-        support_root.name + "/" + relative.as_posix().rstrip("/") + "/"
+        source_root.name + "/" + relative.as_posix().rstrip("/") + "/"
         for kind, relative, _size, _mtime_ns in snapshot
         if kind == "dir"
     }
 
     try:
+        _raise_if_cancelled(cancel_requested)
         _emit(progress, "Creating backup archive: " + archive_path.name)
         _write_backup_zip(
             partial_path,
-            support_root,
+            source_root,
             snapshot,
             progress,
+            operation_label=operation_label,
+            cancel_requested=cancel_requested,
         )
+        _raise_if_cancelled(cancel_requested)
         _emit(progress, "Validating backup ZIP integrity...")
         _validate_backup_zip(partial_path, expected_files, expected_dirs)
+        _raise_if_cancelled(cancel_requested)
         os.replace(partial_path, archive_path)
-        _emit(progress, "Show Project backup created successfully.")
+        _emit(progress, operation_label + " backup created successfully.")
         return {
             "archive_path": str(archive_path),
-            "source_root": str(support_root),
+            "source_root": str(source_root),
+            "backup_kind": "project" if source_root == selected_root else "show_project",
             "file_count": len(expected_files),
             "directory_count": len(expected_dirs) + 1,
             "source_bytes": total_bytes,
@@ -101,8 +158,10 @@ def create_show_project_backup(
         if partial_path.exists():
             try:
                 partial_path.unlink()
-            except OSError:
-                pass
+            except OSError as exc:
+                raise RuntimeError(
+                    "Backup partial cleanup failed: " + str(partial_path)
+                ) from exc
 
 
 def validate_backup_destination(
@@ -124,11 +183,25 @@ def validate_backup_destination(
     return destination
 
 
+def _require_project_root(project_root: str | Path) -> Path:
+    selected_root = Path(project_root).expanduser().resolve(strict=False)
+    if not selected_root.is_dir():
+        raise FileNotFoundError(
+            "Selected project root is not a directory: " + str(selected_root)
+        )
+    if not selected_root.name:
+        raise ValueError("Selected project root must not be a drive root.")
+    return selected_root
+
+
 def _write_backup_zip(
     partial_path: Path,
-    support_root: Path,
+    source_root: Path,
     snapshot: list[tuple[str, Path, int, int]],
     progress: Callable[[str], None] | None,
+    *,
+    operation_label: str,
+    cancel_requested: CancelCheck | None,
 ) -> None:
     with zipfile.ZipFile(
         partial_path,
@@ -136,51 +209,68 @@ def _write_backup_zip(
         allowZip64=True,
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=6,
+        strict_timestamps=False,
     ) as archive:
-        _write_directory_entry(archive, support_root.name + "/")
+        _write_directory_entry(archive, source_root.name + "/")
         for index, item in enumerate(snapshot, start=1):
+            _raise_if_cancelled(cancel_requested)
             kind, relative, size, mtime_ns = item
-            source_path = support_root / relative
-            archive_name = support_root.name + "/" + relative.as_posix()
+            source_path = source_root / relative
+            archive_name = source_root.name + "/" + relative.as_posix()
             if kind == "dir":
                 _write_directory_entry(archive, archive_name)
                 continue
-            _verify_source_identity(source_path, size, mtime_ns)
+            _verify_source_identity(source_path, size, mtime_ns, operation_label)
             archive.write(
                 source_path,
                 archive_name,
                 compress_type=_compression_for(source_path),
             )
-            _verify_source_identity(source_path, size, mtime_ns)
+            _verify_source_identity(source_path, size, mtime_ns, operation_label)
+            _raise_if_cancelled(cancel_requested)
             if index == 1 or index % 100 == 0 or index == len(snapshot):
                 _emit(
                     progress,
-                    "Backing up Show Project files: "
+                    "Backing up "
+                    + operation_label
+                    + " files: "
                     + str(index)
                     + "/"
                     + str(len(snapshot)),
                 )
 
 
-def _snapshot_support_root(root: Path) -> list[tuple[str, Path, int, int]]:
+def _snapshot_support_root(
+    root: Path,
+    *,
+    operation_label: str = "Show Project",
+    cancel_requested: CancelCheck | None = None,
+) -> list[tuple[str, Path, int, int]]:
     snapshot: list[tuple[str, Path, int, int]] = []
     for current_root, dir_names, file_names in os.walk(root, followlinks=False):
+        _raise_if_cancelled(cancel_requested)
         current_path = Path(current_root)
         relative_current = current_path.relative_to(root)
         for name in sorted(dir_names):
+            _raise_if_cancelled(cancel_requested)
             child = current_path / name
             if _is_link_like(child):
                 raise ValueError(
-                    "Symbolic links are not allowed in Show Project backup: "
+                    "Symbolic links are not allowed in "
+                    + operation_label
+                    + " backup: "
                     + str(child)
                 )
             relative = relative_current / name
             snapshot.append(("dir", relative, 0, child.stat().st_mtime_ns))
         for name in sorted(file_names):
+            _raise_if_cancelled(cancel_requested)
             child = current_path / name
             if _is_link_like(child):
                 raise ValueError(
-                    "Symbolic links are not allowed in Show Project backup: "
+                    "Symbolic links are not allowed in "
+                    + operation_label
+                    + " backup: "
                     + str(child)
                 )
             stat_result = child.stat()
@@ -200,10 +290,15 @@ def _is_link_like(path: Path) -> bool:
     return bool(callable(is_junction) and is_junction())
 
 
-def _verify_source_identity(path: Path, expected_size: int, expected_mtime_ns: int) -> None:
+def _verify_source_identity(
+    path: Path,
+    expected_size: int,
+    expected_mtime_ns: int,
+    operation_label: str = "Show Project",
+) -> None:
     stat_result = path.stat()
     if stat_result.st_size != expected_size or stat_result.st_mtime_ns != expected_mtime_ns:
-        raise RuntimeError("Show Project content changed during backup: " + str(path))
+        raise RuntimeError(operation_label + " content changed during backup: " + str(path))
 
 
 def _require_free_space(destination: Path, source_bytes: int) -> None:
@@ -290,6 +385,11 @@ def _is_within(path: Path, root: Path) -> bool:
         return True
     except ValueError:
         return False
+
+
+def _raise_if_cancelled(cancel_requested: CancelCheck | None) -> None:
+    if cancel_requested is not None and cancel_requested():
+        raise BackupCancelled("Backup cancelled by user; partial archive removed.")
 
 
 def _emit(progress: Callable[[str], None] | None, message: str) -> None:

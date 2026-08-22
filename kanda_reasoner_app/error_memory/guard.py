@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+
+from .backend import ErrorMemoryBackend, coerce_error_memory_backend
 from typing import Any
 
 from .fingerprint import build_fingerprint, extract_exception_info
@@ -157,7 +159,7 @@ def _score_lesson(
 
 
 def analyze_error_against_lessons(
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     raw_error_text: str,
     *,
     operation_phase: str = "unknown",
@@ -170,9 +172,10 @@ def analyze_error_against_lessons(
     The result is intentionally advisory-only: callers must not treat it as a
     hard gate.  It is meant for GUI review, AI preflight, and safer planning.
     """
-    root = Path(selected_project_root).expanduser().resolve(strict=False)
-    bootstrap_error_memory_store(root)
-    rebuild_index(root)
+    backend = coerce_error_memory_backend(selected_project_root)
+    root = backend.owner.source_root.expanduser().resolve(strict=False)
+    bootstrap_error_memory_store(backend)
+    rebuild_index(backend)
 
     scrubbed = scrub_text(raw_error_text or "")
     incoming_exception = extract_exception_info(
@@ -184,7 +187,7 @@ def analyze_error_against_lessons(
 
     candidates = [
         lesson
-        for lesson in list_lessons(root, include_inactive=True)
+        for lesson in list_lessons(backend, include_inactive=True)
         if _status_allowed(str(lesson.get("status", "")), include_drafts=include_drafts, include_deprecated=include_deprecated)
     ]
 
@@ -215,6 +218,8 @@ def analyze_error_against_lessons(
         "schema_version": "1.0",
         "guard_version": GUARD_VERSION,
         "project_root": str(root),
+        "owner_scope": backend.owner.owner_scope.value,
+        "owner_slug": backend.owner.owner_slug,
         "operation_phase": str(operation_phase or "unknown"),
         "hard_blocking": False,
         "disposition": disposition,

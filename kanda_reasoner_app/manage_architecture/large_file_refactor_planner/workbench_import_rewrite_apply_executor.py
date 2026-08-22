@@ -5,22 +5,15 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 import hashlib
 import json
-import shutil
 from pathlib import Path
 from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .models import SCHEMA_VERSION
 from .workbench_import_rewrite_apply_readiness import ImportRewriteApplyReadinessResult
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 
 __all__ = [
     "IMPORT_REWRITE_GUARDED_APPLY_FEATURE_ID",
@@ -113,23 +106,15 @@ def execute_guarded_import_rewrite_apply(
     safe_records, manual_records, record_blockers = _classify_records(data.get("rewrite_plan", []), project_root)
     blockers.extend(record_blockers)
     changed_files: list[str] = []
-    skipped_files: list[str] = []
+    skipped_files = sorted(
+        {str(Path(item.get("importer_file", "")).resolve()) for item in safe_records}
+    )
     rollback_entries: list[dict[str, str]] = []
-    if not blockers:
-        changed_files, skipped_files, rollback_entries, blockers = _apply_safe_records(
-            safe_records,
-            project_root,
-            preview_path,
-        )
-    status = "import_rewrite_apply_blocked" if blockers else "import_rewrite_apply_applied"
-    if not blockers and not changed_files:
-        status = "import_rewrite_apply_no_safe_rewrites"
-    validation_status = "not_run"
-    if not blockers:
-        validation_status = validate_import_rewrite_post_apply(
-            changed_files=changed_files,
-            preview_root=str(preview_path),
-        )["status"]
+    status = (
+        "import_rewrite_proposal_only" if not blockers
+        else "import_rewrite_apply_blocked"
+    )
+    validation_status = "not_run_proposal_only"
     result = ImportRewriteGuardedApplyResult(
         schema_version=SCHEMA_VERSION,
         feature_id=IMPORT_REWRITE_GUARDED_APPLY_FEATURE_ID,
@@ -146,7 +131,7 @@ def execute_guarded_import_rewrite_apply(
         skipped_files=skipped_files,
         manual_review_records=manual_records,
         blockers=sorted(set(blockers)),
-        warnings=_warnings(manual_records, skipped_files),
+        warnings=sorted(set(_warnings(manual_records, skipped_files) + [proposal_only_warning("import_rewrite_apply")])),
         validation_status=validation_status,
     )
     _write_execution_evidence(result, rollback_entries)
@@ -185,68 +170,13 @@ def _apply_safe_records(
     project_root: Path,
     preview_root: Path,
 ) -> tuple[list[str], list[str], list[dict[str, str]], list[str]]:
-    """Apply safe rewrite records and return changed/skipped/rollback/blockers."""
-    changed: list[str] = []
-    skipped: list[str] = []
-    rollback_entries: list[dict[str, str]] = []
-    blockers: list[str] = []
-    grouped: dict[str, list[dict[str, Any]]] = {}
-    for item in records:
-        grouped.setdefault(str(Path(item["importer_file"]).resolve()), []).append(item)
-    backup_root = preview_root / _BACKUP_DIR
-    backup_root.mkdir(parents=True, exist_ok=True)
-    fire_shield = build_current_fire_shield_context(
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="workbench-import-rewrite-apply",
+    """Compatibility helper: return review targets without modifying source."""
+    _ = project_root
+    _ = preview_root
+    proposed = sorted(
+        {str(Path(item.get("importer_file", "")).resolve()) for item in records}
     )
-    for filename, items in grouped.items():
-        path = Path(filename).resolve()
-        text = path.read_text(encoding="utf-8")
-        original_hash = _sha256_text(text)
-        new_text = text
-        for item in items:
-            original = str(item.get("original_import", ""))
-            suggested = str(item.get("suggested_import", ""))
-            if not original or not suggested or original == suggested:
-                skipped.append(str(path))
-                continue
-            count = new_text.count(original)
-            if count != 1:
-                blockers.append(f"IMPORT_REWRITE_NON_UNIQUE_MATCH:{path}")
-                continue
-            new_text = new_text.replace(original, suggested, 1)
-        if blockers or new_text == text:
-            continue
-        assert_fire_shield_write_allowed(
-            fire_shield,
-            path,
-            operation="REPLACE",
-        )
-        assert_fire_shield_payload_bytes_allowed(
-            fire_shield,
-            new_text.encode("utf-8"),
-            path.relative_to(project_root).as_posix(),
-        )
-        backup_file = backup_root / (_sha256_text(str(path))[:16] + ".bak")
-        backup_file.write_text(text, encoding="utf-8")
-        temp_file = path.with_suffix(path.suffix + ".kanda_import_rewrite_tmp")
-        temp_file.write_text(new_text, encoding="utf-8")
-        shutil.move(str(temp_file), str(path))
-        new_hash = _sha256_text(new_text)
-        changed.append(str(path))
-        rollback_entries.append({
-            "file": str(path),
-            "backup_file": str(backup_file.resolve()),
-            "before_hash": original_hash,
-            "after_hash": new_hash,
-        })
-        try:
-            path.relative_to(project_root)
-        except ValueError:
-            blockers.append(f"IMPORTER_OUTSIDE_PROJECT_AFTER_WRITE:{path}")
-    verify_tool_snapshot_unchanged(fire_shield)
-    return changed, skipped, rollback_entries, blockers
-
+    return [], proposed, [], []
 
 def _classify_records(records: list[dict[str, Any]], project_root: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]:
     """Split rewrite records into safe and manual-review groups."""

@@ -1,24 +1,16 @@
 # project-path: kanda_reasoner_app/reasoner_engine/project_web_ai_write_broker.py
-"""Execute one explicit Project Web AI source-write transaction with rollback.
-
-This deterministic local broker is the only Phase 3 owner allowed to mutate the
-selected active Project. The remote AI never receives or invokes this API.
-"""
+"""Record one reviewed Project Web AI proposal without Project source mutation."""
 
 from __future__ import annotations
 
 import re
-import stat
 from datetime import datetime, timezone
 from pathlib import Path
 
 from kanda_reasoner_app.project_fire_shield import (
-    FireShieldContext,
     FireShieldPhase,
     assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
     build_fire_shield_context_from_authority,
-    verify_tool_snapshot_unchanged,
 )
 from kanda_reasoner_app.project_operation_authority import (
     ProjectOperationAuthority,
@@ -46,14 +38,10 @@ from kanda_reasoner_app.reasoner_engine.project_web_ai_session import (
     ProjectWebAISessionIdentity,
 )
 from kanda_reasoner_app.reasoner_engine.project_web_ai_write_storage import (
-    atomic_replace_source,
     contained_project_file,
     contained_shadow_file,
-    exclusive_apply_lock,
-    require_distinct_apply_roots,
     project_web_ai_sha256_bytes,
-    write_source_backups,
-    write_transaction_state,
+    require_distinct_apply_roots,
 )
 from kanda_reasoner_app.web_ai_provider_contracts import ContextSnapshot
 
@@ -64,10 +52,11 @@ __all__ = [
 
 _MAX_TOUCHED_PYTHON_LINES = 500
 _HEX_ID_PATTERN = re.compile(r"^[0-9a-f]{32}$")
+_PROPOSAL_STATUS = "PROPOSAL_ONLY"
 
 
 class ProjectWebAIApplyError(RuntimeError):
-    """Raised when apply is rejected, rolled back, or unresolved."""
+    """Raised when proposal evidence cannot be validated or recorded."""
 
     def __init__(
         self,
@@ -89,178 +78,71 @@ def execute_project_web_ai_apply(
     session_identity: ProjectWebAISessionIdentity,
     context: ContextSnapshot,
 ) -> ProjectWebAIApplyReceipt:
-    """Apply one exact authorized Preview and return a durable receipt."""
+    """Validate one reviewed proposal and persist support-side evidence only."""
     started_at = _utc_now()
-    authority = _validate_authority(
+    read_authority, support_authority = _validate_proposal_authority(
         operation,
         preview,
         authorization,
         session_identity,
         context,
     )
-    fire_shield = build_fire_shield_context_from_authority(
-        authority,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-    )
-    boundary = authority.boundary
-    project_root = boundary.active_project_root.resolve(strict=True)
-    daily_root = boundary.active_project_daily_work_root.resolve(strict=False)
-    support_root = boundary.active_project_support_root.resolve(strict=False)
+    read_boundary = read_authority.boundary
+    support_boundary = support_authority.boundary
+    project_root = read_boundary.active_project_root.resolve(strict=True)
+    daily_root = read_boundary.active_project_daily_work_root.resolve(strict=False)
+    support_root = support_boundary.active_project_support_root.resolve(strict=False)
     require_distinct_apply_roots(project_root, daily_root, support_root)
+    _assert_matching_boundaries(read_authority, support_authority)
+
+    receipt_target = (
+        support_root
+        / "project_validation_evidence"
+        / "project_web_ai_apply_receipts"
+        / (authorization.transaction_id + ".json")
+    ).resolve(strict=False)
+    assert_authorized_project_target(support_authority, receipt_target)
     receipt_root = prepare_receipt_root(support_root)
     receipt_path = receipt_root / (authorization.transaction_id + ".json")
-
-    operation_class = (
-        "SELF_HOSTING_TOOL_CHANGE"
-        if boundary.self_hosting_mode
-        else "EXTERNAL_PROJECT_CHANGE"
-    )
-    transaction_root = (
-        daily_root
-        / "project_web_ai_apply_transactions"
-        / authorization.transaction_id
-    ).resolve(strict=False)
-    backup_root = (transaction_root / "backups").resolve(strict=False)
-    state_path = (transaction_root / "transaction_state.json").resolve(strict=False)
-    if receipt_path.exists() or transaction_root.exists():
+    if receipt_path.exists():
         raise ProjectWebAIApplyError("APPLY_AUTHORIZATION_ALREADY_CONSUMED")
-    lock_root = daily_root / "project_web_ai_apply_transactions" / "locks"
-    lock_path = lock_root / (operation.operation_id + ".lock")
-    source_before: dict[str, bytes] = {}
-    source_modes: dict[str, int] = {}
 
-    with exclusive_apply_lock(lock_path, authorization.transaction_id):
-        try:
-            transaction_root.mkdir(parents=True, exist_ok=False)
-            backup_root.mkdir(parents=True, exist_ok=False)
-            write_transaction_state(
-                state_path,
-                authorization,
-                status="APPLYING",
-                error="",
-                updated_at_utc=_utc_now(),
-            )
-            source_before, source_modes = _preflight_targets(
-                authority,
-                fire_shield,
-                project_root,
-                preview,
-                authorization,
-            )
-            write_source_backups(backup_root, source_before)
-            for item in preview.targets:
-                source_path = contained_project_file(
-                    project_root,
-                    item.relative_path,
-                )
-                assert_fire_shield_write_allowed(
-                    fire_shield,
-                    source_path,
-                    operation="REPLACE",
-                )
-                shadow_path = contained_shadow_file(
-                    preview,
-                    item.relative_path,
-                )
-                proposed = shadow_path.read_bytes()
-                atomic_replace_source(
-                    source_path,
-                    proposed,
-                    source_modes[item.relative_path],
-                    authorization.transaction_id,
-                )
-            markers = _validate_installed_source(
-                project_root,
-                preview,
-                authorization,
-                fire_shield,
-            )
-            receipt = _receipt(
-                operation=operation,
-                authorization=authorization,
-                status="APPLIED_SOURCE_VERIFIED",
-                operation_class=operation_class,
-                project_root=project_root,
-                backup_root=backup_root,
-                validation_markers=markers,
-                started_at=started_at,
-                error="",
-            )
-            receipt = write_apply_receipt(support_root, receipt)
-            try:
-                write_transaction_state(
-                    state_path,
-                    authorization,
-                    status=receipt.status,
-                    error="",
-                    updated_at_utc=_utc_now(),
-                    receipt_path=receipt.receipt_path,
-                )
-            except OSError:
-                pass
-            return receipt
-        except Exception as exc:
-            rollback_error = ""
-            try:
-                rollback_markers = _rollback(
-                    project_root,
-                    backup_root,
-                    source_before,
-                    source_modes,
-                )
-                status = "ROLLED_BACK"
-            except Exception as rollback_exc:
-                rollback_markers = ("PROJECT_WEB_AI_ROLLBACK_FAILED",)
-                rollback_error = str(rollback_exc)
-                status = "UNRESOLVED"
-            receipt = _receipt(
-                operation=operation,
-                authorization=authorization,
-                status=status,
-                operation_class=operation_class,
-                project_root=project_root,
-                backup_root=backup_root,
-                validation_markers=rollback_markers,
-                started_at=started_at,
-                error=str(exc) + (" | rollback: " + rollback_error if rollback_error else ""),
-            )
-            try:
-                receipt = write_apply_receipt(support_root, receipt)
-            except Exception:
-                write_transaction_state(
-                    state_path,
-                    authorization,
-                    status=status,
-                    error=receipt.error,
-                    updated_at_utc=_utc_now(),
-                )
-            else:
-                try:
-                    write_transaction_state(
-                        state_path,
-                        authorization,
-                        status=status,
-                        error=receipt.error,
-                        updated_at_utc=_utc_now(),
-                        receipt_path=receipt.receipt_path,
-                    )
-                except OSError:
-                    pass
-            raise ProjectWebAIApplyError(
-                "PROJECT_WEB_AI_APPLY_" + status + ":" + str(exc),
-                status=status,
-                receipt=receipt,
-            ) from exc
+    markers = _validate_proposal_targets(
+        read_authority,
+        project_root,
+        preview,
+        authorization,
+    )
+    operation_class = (
+        "SELF_HOSTING_TOOL_PROPOSAL"
+        if read_boundary.self_hosting_mode
+        else "EXTERNAL_PROJECT_PROPOSAL"
+    )
+    receipt = _proposal_receipt(
+        operation=operation,
+        authorization=authorization,
+        operation_class=operation_class,
+        project_root=project_root,
+        validation_markers=markers,
+        started_at=started_at,
+    )
+    try:
+        return write_apply_receipt(support_root, receipt)
+    except Exception as exc:
+        raise ProjectWebAIApplyError(
+            "PROJECT_WEB_AI_PROPOSAL_RECEIPT_FAILED:" + str(exc),
+            status="REJECTED",
+        ) from exc
 
 
-def _validate_authority(
+def _validate_proposal_authority(
     operation: ProjectWebAIChangeOperation,
     preview: ProjectWebAIShadowPreview,
     authorization: ProjectWebAIApplyAuthorization,
     session_identity: ProjectWebAISessionIdentity,
     context: ContextSnapshot,
-):
-    """Validate immutable operation, Preview, session, and boundary identity."""
+) -> tuple[ProjectOperationAuthority, ProjectOperationAuthority]:
+    """Validate immutable proposal identity and build read/support authority."""
     for label, value in (
         ("AUTHORIZATION", authorization.authorization_id),
         ("TRANSACTION", authorization.transaction_id),
@@ -290,17 +172,27 @@ def _validate_authority(
     )
     if actual != expected:
         raise ProjectWebAIApplyError("APPLY_AUTHORIZATION_IDENTITY_MISMATCH")
+    target_paths = tuple(item.relative_path for item in preview.targets)
+    if target_paths != authorization.target_paths:
+        raise ProjectWebAIApplyError("APPLY_AUTHORIZED_TARGET_SET_MISMATCH")
     try:
-        authority = build_project_operation_authority(
+        read_authority = build_project_operation_authority(
             operation.project_root,
-            operation_kind=ProjectOperationKind.PROJECT_SOURCE_WRITE,
-            operation_id=operation.operation_id,
+            operation_kind=ProjectOperationKind.PROJECT_SOURCE_READ,
+            operation_id=operation.operation_id + "-proposal-read",
+            project_epoch=identity.project_epoch,
+            source_snapshot_identity=identity.snapshot_id,
+        )
+        support_authority = build_project_operation_authority(
+            operation.project_root,
+            operation_kind=ProjectOperationKind.PROJECT_SUPPORT_WRITE,
+            operation_id=operation.operation_id + "-proposal-receipt",
             project_epoch=identity.project_epoch,
             source_snapshot_identity=identity.snapshot_id,
         )
     except ProjectOperationAuthorityError as exc:
         raise ProjectWebAIApplyError(str(exc)) from exc
-    boundary = authority.boundary
+    boundary = read_authority.boundary
     if boundary.active_project_id != identity.project_id:
         raise ProjectWebAIApplyError("APPLY_PROJECT_ID_STALE")
     if boundary.active_project_root_fingerprint != identity.project_root_fingerprint:
@@ -309,44 +201,48 @@ def _validate_authority(
         raise ProjectWebAIApplyError("APPLY_SUPPORT_ROOT_IDENTITY_MISMATCH")
     if str(boundary.active_project_daily_work_root) != operation.daily_work_root:
         raise ProjectWebAIApplyError("APPLY_DAILY_ROOT_IDENTITY_MISMATCH")
-    target_paths = tuple(item.relative_path for item in preview.targets)
-    if target_paths != authorization.target_paths:
-        raise ProjectWebAIApplyError("APPLY_AUTHORIZED_TARGET_SET_MISMATCH")
-    return authority
+    return read_authority, support_authority
 
 
-def _preflight_targets(
+def _assert_matching_boundaries(
+    read_authority: ProjectOperationAuthority,
+    support_authority: ProjectOperationAuthority,
+) -> None:
+    """Reject mismatched read and support authority identities."""
+    read = read_authority.boundary
+    support = support_authority.boundary
+    if (
+        read.active_project_id != support.active_project_id
+        or read.active_project_root_fingerprint
+        != support.active_project_root_fingerprint
+        or read.active_project_root != support.active_project_root
+    ):
+        raise ProjectWebAIApplyError("APPLY_PROPOSAL_AUTHORITY_BOUNDARY_MISMATCH")
+
+
+def _validate_proposal_targets(
     authority: ProjectOperationAuthority,
-    fire_shield: FireShieldContext,
     project_root: Path,
     preview: ProjectWebAIShadowPreview,
     authorization: ProjectWebAIApplyAuthorization,
-) -> tuple[dict[str, bytes], dict[str, int]]:
-    """Recheck exact disk bytes and Shadow payload immediately before write."""
-    source_before: dict[str, bytes] = {}
-    source_modes: dict[str, int] = {}
+) -> tuple[str, ...]:
+    """Validate exact source freshness and Shadow proposal bytes read-only."""
+    fire_shield = build_fire_shield_context_from_authority(
+        authority,
+        phase=FireShieldPhase.VALIDATE_READ_ONLY,
+    )
+    python_seen = False
     for index, item in enumerate(preview.targets):
         source_path = contained_project_file(project_root, item.relative_path)
         assert_authorized_project_target(authority, source_path)
-        assert_fire_shield_write_allowed(
-            fire_shield,
-            source_path,
-            operation="REPLACE",
-        )
         shadow_path = contained_shadow_file(preview, item.relative_path)
         source_raw = source_path.read_bytes()
         shadow_raw = shadow_path.read_bytes()
-        if (
-            project_web_ai_sha256_bytes(source_raw)
-            != authorization.source_sha256[index]
-        ):
+        if project_web_ai_sha256_bytes(source_raw) != authorization.source_sha256[index]:
             raise ProjectWebAIApplyError(
                 "APPLY_IMMEDIATE_SOURCE_FRESHNESS_MISMATCH:" + item.relative_path
             )
-        if (
-            project_web_ai_sha256_bytes(shadow_raw)
-            != authorization.proposed_sha256[index]
-        ):
+        if project_web_ai_sha256_bytes(shadow_raw) != authorization.proposed_sha256[index]:
             raise ProjectWebAIApplyError(
                 "APPLY_SHADOW_PAYLOAD_HASH_MISMATCH:" + item.relative_path
             )
@@ -355,109 +251,48 @@ def _preflight_targets(
             shadow_raw,
             item.relative_path,
         )
-        source_before[item.relative_path] = source_raw
-        source_modes[item.relative_path] = stat.S_IMODE(source_path.stat().st_mode)
-    return source_before, source_modes
-
-
-def _validate_installed_source(
-    project_root: Path,
-    preview: ProjectWebAIShadowPreview,
-    authorization: ProjectWebAIApplyAuthorization,
-    fire_shield: FireShieldContext,
-) -> tuple[str, ...]:
-    """Verify installed hashes, Python syntax, and module-size limits."""
-    markers = [
-        "PROJECT_WEB_AI_APPLY_TARGET_CONTAINMENT: PASS",
-        "PROJECT_WEB_AI_APPLY_INSTALLED_HASHES: PASS",
-    ]
-    python_seen = False
-    for index, item in enumerate(preview.targets):
-        path = contained_project_file(project_root, item.relative_path)
-        raw = path.read_bytes()
-        if (
-            project_web_ai_sha256_bytes(raw)
-            != authorization.proposed_sha256[index]
-        ):
-            raise ProjectWebAIApplyError(
-                "APPLY_INSTALLED_HASH_MISMATCH:" + item.relative_path
-            )
         if item.relative_path.lower().endswith(".py"):
             python_seen = True
-            text = raw.decode("utf-8-sig", errors="strict")
+            text = shadow_raw.decode("utf-8-sig", errors="strict")
             compile(text, item.relative_path, "exec")
             if len(text.splitlines()) > _MAX_TOUCHED_PYTHON_LINES:
                 raise ProjectWebAIApplyError(
                     "APPLY_TOUCHED_PYTHON_MODULE_OVER_500_LINES:"
                     + item.relative_path
                 )
+    markers = [
+        "PROJECT_WEB_AI_PROPOSAL_TARGET_CONTAINMENT: PASS",
+        "PROJECT_WEB_AI_SOURCE_FRESHNESS: PASS",
+        "PROJECT_WEB_AI_SHADOW_PAYLOAD_VALIDATED: PASS",
+        "PROJECT_WEB_AI_PROJECT_SOURCE_WRITE: ABSENT",
+        "PROJECT_WEB_AI_PROPOSAL_ONLY: PASS",
+    ]
     markers.append(
-        "PROJECT_WEB_AI_APPLY_PYTHON_SYNTAX: PASS"
+        "PROJECT_WEB_AI_PROPOSAL_PYTHON_SYNTAX: PASS"
         if python_seen
-        else "PROJECT_WEB_AI_APPLY_PYTHON_SYNTAX: NOT_APPLICABLE"
+        else "PROJECT_WEB_AI_PROPOSAL_PYTHON_SYNTAX: NOT_APPLICABLE"
     )
-    verify_tool_snapshot_unchanged(fire_shield)
     markers.extend(fire_shield.markers())
-    markers.extend(
-        (
-            "FIRE_SHIELD_TOOL_POST_STATE_UNCHANGED: PASS",
-            "FIRE_SHIELD_CROSS_PROJECT_CODE_TRANSFER: ZERO",
-            "PROJECT_WEB_AI_APPLY_SOURCE_VERIFICATION: PASS",
-            "PROJECT_WEB_AI_APPLY_RECEIPT_REQUIRED: PASS",
-        )
-    )
+    markers.append("FIRE_SHIELD_PROJECT_SOURCE_MUTATION_REQUEST: ABSENT")
     return tuple(markers)
 
 
-def _rollback(
-    project_root: Path,
-    backup_root: Path,
-    source_before: dict[str, bytes],
-    source_modes: dict[str, int],
-) -> tuple[str, ...]:
-    """Restore every original file and verify exact source hashes."""
-    for relative_path, original in reversed(tuple(source_before.items())):
-        backup = (backup_root / relative_path).resolve(strict=True)
-        if backup.read_bytes() != original:
-            raise ProjectWebAIApplyError("APPLY_ROLLBACK_BACKUP_HASH_MISMATCH")
-        target = contained_project_file(project_root, relative_path)
-        atomic_replace_source(
-            target,
-            original,
-            source_modes[relative_path],
-            "rollback",
-        )
-    for relative_path, original in source_before.items():
-        target = contained_project_file(project_root, relative_path)
-        if target.read_bytes() != original:
-            raise ProjectWebAIApplyError(
-                "APPLY_ROLLBACK_SOURCE_HASH_MISMATCH:" + relative_path
-            )
-    return (
-        "PROJECT_WEB_AI_APPLY_ROLLBACK_COMPLETED: PASS",
-        "PROJECT_WEB_AI_APPLY_ORIGINAL_HASHES_RESTORED: PASS",
-    )
-
-
-def _receipt(
+def _proposal_receipt(
     *,
     operation: ProjectWebAIChangeOperation,
     authorization: ProjectWebAIApplyAuthorization,
-    status: str,
     operation_class: str,
     project_root: Path,
-    backup_root: Path,
     validation_markers: tuple[str, ...],
     started_at: str,
-    error: str,
 ) -> ProjectWebAIApplyReceipt:
-    """Build one terminal receipt from exact transaction identity."""
+    """Build one durable proposal-only receipt using the legacy receipt schema."""
     return ProjectWebAIApplyReceipt(
-        schema_version="1.0",
+        schema_version="1.1-proposal-only",
         transaction_id=authorization.transaction_id,
         authorization_id=authorization.authorization_id,
         operation_id=authorization.operation_id,
-        status=status,
+        status=_PROPOSAL_STATUS,
         operation_class=operation_class,
         project_id=authorization.project_id,
         project_root=str(project_root),
@@ -467,12 +302,12 @@ def _receipt(
         preview_fingerprint=authorization.preview_fingerprint,
         changed_files=authorization.target_paths,
         source_sha256=authorization.source_sha256,
-        installed_sha256=authorization.proposed_sha256,
-        backup_root=str(backup_root),
+        installed_sha256=authorization.source_sha256,
+        backup_root="",
         validation_markers=validation_markers,
         started_at_utc=started_at,
         completed_at_utc=_utc_now(),
-        error=error,
+        error="",
     )
 
 

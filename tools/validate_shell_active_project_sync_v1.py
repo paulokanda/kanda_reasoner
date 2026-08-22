@@ -52,7 +52,7 @@ def validate_static(root: Path) -> None:
 
     require(
         "self._loaded_tools_by_tab_id: dict[str, QWidget] = {}" in main
-        and "self._project_switch_epoch = 0" in main,
+        and "self._project_switch_ticket = 0" in main,
         "main shell does not own canonical loaded-tab Project state",
     )
     print("CANONICAL_ACTIVE_PROJECT_OWNER: PASS")
@@ -188,15 +188,31 @@ def validate_real_qt(root: Path) -> bool:
 
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     sys.path.insert(0, str(root))
-    from kanda_reasoner_app.reasoner_tools_gui_shell.main_window import (
-        ReasonerToolsWindow,
+    from kanda_reasoner_app.project_selection_registry import (
+        ProjectSelectionRegistry,
+    )
+    from kanda_reasoner_app.reasoner_tools_gui_shell.main_window_help.window_state import (
+        _WindowStateMixin,
     )
     from kanda_reasoner_app.reasoner_tools_gui_shell.tool_specs import ToolSpec
 
+    main_window_module = importlib.import_module(
+        "kanda_reasoner_app.reasoner_tools_gui_shell.main_window"
+    )
+    real_window_type = main_window_module.ReasonerToolsWindow
+    live_registry_path = ProjectSelectionRegistry(
+        tool_source_root=root
+    ).registry_path
+    live_prefs_path = _WindowStateMixin._prefs_path()
+    live_registry_before = (
+        live_registry_path.read_bytes() if live_registry_path.is_file() else None
+    )
+    live_prefs_before = (
+        live_prefs_path.read_bytes() if live_prefs_path.is_file() else None
+    )
+
     app = QApplication.instance() or QApplication([])
-    window = ReasonerToolsWindow()
     warning_reasons: list[str] = []
-    window._show_project_switch_block = warning_reasons.append
 
     class ProjectTab(QWidget):
         def __init__(self) -> None:
@@ -217,100 +233,148 @@ def validate_real_qt(root: Path) -> bool:
             super().__init__()
             self.notes = QPlainTextEdit()
 
-    with tempfile.TemporaryDirectory(prefix="kanda-project-a-") as a_dir:
-        with tempfile.TemporaryDirectory(prefix="kanda-project-b-") as b_dir:
-            project_a = Path(a_dir).resolve()
-            project_b = Path(b_dir).resolve()
-            tab_a = ProjectTab()
-            tab_b = ProjectTab()
-            global_tab = GlobalTab()
-            tab_a.output.setPlainText("old architecture log")
-            tab_a.items.addItem("old architecture evidence")
-            tab_b.output.setPlainText("old local AI answer")
-            tab_b.items.addItem("old local AI memory")
-            global_tab.notes.setPlainText("global configuration survives")
+    with tempfile.TemporaryDirectory(prefix="kanda-shell-state-isolation-") as state_dir:
+        state_root = Path(state_dir).resolve()
+        isolated_registry_path = (
+            state_root / "tool_support" / "tool_project_registry" / "projects.json"
+        )
+        isolated_prefs_path = state_root / "tool_support" / "reasoner_tools_gui_prefs.json"
+        original_registry_factory = main_window_module.ProjectSelectionRegistry
 
-            window.current_project_root = project_a
-            window._loaded_tools_by_tab_id = {
-                "architecture_review": tab_a,
-                "project_qa": tab_b,
-                "config_web_ai": global_tab,
-            }
-            window._patch_common_project_root_fields(tab_a)
-            window._patch_common_project_root_fields(tab_b)
-            require(
-                tab_a.project_root_edit.text() == str(project_a)
-                and tab_b.project_root_edit.text() == str(project_a),
-                "initial canonical root did not reach loaded tabs",
+        def isolated_registry_factory(*_args, **_kwargs):
+            return ProjectSelectionRegistry(
+                tool_source_root=root,
+                registry_path=isolated_registry_path,
             )
 
-            previous_epoch = window._project_switch_epoch
-            tab_a.project_root_edit.setText(str(project_b))
-            app.processEvents()
+        class IsolatedReasonerToolsWindow(real_window_type):
+            @staticmethod
+            def _legacy_prefs_path() -> Path:
+                return state_root / "legacy_reasoner_tools_gui_prefs.json"
 
-            require(window.current_project_root == project_b, "canonical root did not switch")
-            require(
-                tab_a.project_root_edit.text() == str(project_b)
-                and tab_b.project_root_edit.text() == str(project_b),
-                "root fields are not synchronized across loaded tabs",
-            )
-            require(
-                not tab_a.output.toPlainText()
-                and not tab_b.output.toPlainText()
-                and tab_a.items.count() == 0
-                and tab_b.items.count() == 0,
-                "old Project text or collection state survived the switch",
-            )
-            require(
-                global_tab.notes.toPlainText() == "global configuration survives",
-                "global configuration state was cleared",
-            )
-            require(
-                window._project_switch_epoch == previous_epoch + 1,
-                "canonical Project epoch did not advance exactly once",
-            )
-            print("REAL_QT_ANY_TAB_ROOT_CHANGE_SYNCS_ALL_TABS: PASS")
-            print("REAL_QT_OLD_PROJECT_TRANSIENT_STATE_CLEARED: PASS")
-            print("REAL_QT_DIRECT_OWNED_SURFACES_CLEARED: PASS")
-            print("REAL_QT_GLOBAL_CONFIGURATION_PRESERVED: PASS")
+            @staticmethod
+            def _prefs_path() -> Path:
+                return isolated_prefs_path
 
-            lazy_tab = ProjectTab()
-            spec = ToolSpec(
-                step_title="Lazy fixture",
-                source_hint="fixture/lazy.py",
-                tab_id="docstring_assistant",
-            )
-            window._on_tool_loaded(spec, lazy_tab)
-            require(
-                lazy_tab.project_root_edit.text() == str(project_b)
-                and lazy_tab.applied_roots[-1] == str(project_b),
-                "newly loaded tab did not inherit canonical Project root",
-            )
-            print("REAL_QT_LAZY_TAB_INHERITS_CANONICAL_PROJECT: PASS")
+        main_window_module.ProjectSelectionRegistry = isolated_registry_factory
+        window = None
+        try:
+            window = IsolatedReasonerToolsWindow()
+            window._show_project_switch_block = warning_reasons.append
+            with tempfile.TemporaryDirectory(prefix="kanda-project-a-") as a_dir:
+                with tempfile.TemporaryDirectory(prefix="kanda-project-b-") as b_dir:
+                    project_a = Path(a_dir).resolve()
+                    project_b = Path(b_dir).resolve()
+                    tab_a = ProjectTab()
+                    tab_b = ProjectTab()
+                    global_tab = GlobalTab()
+                    tab_a.output.setPlainText("old architecture log")
+                    tab_a.items.addItem("old architecture evidence")
+                    tab_b.output.setPlainText("old local AI answer")
+                    tab_b.items.addItem("old local AI memory")
+                    global_tab.notes.setPlainText("global configuration survives")
 
-            class RunningThread:
-                def isRunning(self) -> bool:
-                    return True
+                    window.current_project_root = project_a
+                    window._loaded_tools_by_tab_id = {
+                        "architecture_review": tab_a,
+                        "project_qa": tab_b,
+                        "config_web_ai": global_tab,
+                    }
+                    window._patch_common_project_root_fields(tab_a)
+                    window._patch_common_project_root_fields(tab_b)
+                    require(
+                        tab_a.project_root_edit.text() == str(project_a)
+                        and tab_b.project_root_edit.text() == str(project_a),
+                        "initial canonical root did not reach loaded tabs",
+                    )
 
-            tab_b._worker_thread = RunningThread()
-            tab_a.output.setPlainText("must remain because switch is blocked")
-            tab_a.project_root_edit.setText(str(project_a))
-            app.processEvents()
-            require(window.current_project_root == project_b, "blocked switch changed root")
-            require(
-                tab_a.project_root_edit.text() == str(project_b)
-                and tab_b.project_root_edit.text() == str(project_b),
-                "blocked switch did not restore canonical fields",
-            )
-            require(
-                tab_a.output.toPlainText() == "must remain because switch is blocked",
-                "blocked switch cleared state before admission",
-            )
-            require(warning_reasons, "blocked switch did not expose its reason")
-            print("REAL_QT_ACTIVE_JOB_SWITCH_FAILS_CLOSED: PASS")
+                    previous_ticket = window._project_switch_ticket
+                    tab_a.project_root_edit.setText(str(project_b))
+                    app.processEvents()
 
-    window.close()
-    app.processEvents()
+                    require(window.current_project_root == project_b, "canonical root did not switch")
+                    require(
+                        tab_a.project_root_edit.text() == str(project_b)
+                        and tab_b.project_root_edit.text() == str(project_b),
+                        "root fields are not synchronized across loaded tabs",
+                    )
+                    require(
+                        not tab_a.output.toPlainText()
+                        and not tab_b.output.toPlainText()
+                        and tab_a.items.count() == 0
+                        and tab_b.items.count() == 0,
+                        "old Project text or collection state survived the switch",
+                    )
+                    require(
+                        global_tab.notes.toPlainText() == "global configuration survives",
+                        "global configuration state was cleared",
+                    )
+                    require(
+                        window._project_switch_ticket == previous_ticket + 1,
+                        "canonical Project selection ticket did not advance exactly once",
+                    )
+                    print("REAL_QT_ANY_TAB_ROOT_CHANGE_SYNCS_ALL_TABS: PASS")
+                    print("REAL_QT_OLD_PROJECT_TRANSIENT_STATE_CLEARED: PASS")
+                    print("REAL_QT_DIRECT_OWNED_SURFACES_CLEARED: PASS")
+                    print("REAL_QT_GLOBAL_CONFIGURATION_PRESERVED: PASS")
+
+                    lazy_tab = ProjectTab()
+                    spec = ToolSpec(
+                        step_title="Lazy fixture",
+                        source_hint="fixture/lazy.py",
+                        tab_id="docstring_assistant",
+                    )
+                    window._on_tool_loaded(spec, lazy_tab)
+                    require(
+                        lazy_tab.project_root_edit.text() == str(project_b)
+                        and lazy_tab.applied_roots[-1] == str(project_b),
+                        "newly loaded tab did not inherit canonical Project root",
+                    )
+                    print("REAL_QT_LAZY_TAB_INHERITS_CANONICAL_PROJECT: PASS")
+
+                    class RunningThread:
+                        def isRunning(self) -> bool:
+                            return True
+
+                    tab_b._worker_thread = RunningThread()
+                    tab_a.output.setPlainText("must remain because switch is blocked")
+                    tab_a.project_root_edit.setText(str(project_a))
+                    app.processEvents()
+                    require(window.current_project_root == project_b, "blocked switch changed root")
+                    require(
+                        tab_a.project_root_edit.text() == str(project_b)
+                        and tab_b.project_root_edit.text() == str(project_b),
+                        "blocked switch did not restore canonical fields",
+                    )
+                    require(
+                        tab_a.output.toPlainText() == "must remain because switch is blocked",
+                        "blocked switch cleared state before admission",
+                    )
+                    require(warning_reasons, "blocked switch did not expose its reason")
+                    print("REAL_QT_ACTIVE_JOB_SWITCH_FAILS_CLOSED: PASS")
+        finally:
+            if window is not None:
+                window.close()
+                app.processEvents()
+            main_window_module.ProjectSelectionRegistry = original_registry_factory
+
+    live_registry_after = (
+        live_registry_path.read_bytes() if live_registry_path.is_file() else None
+    )
+    live_prefs_after = (
+        live_prefs_path.read_bytes() if live_prefs_path.is_file() else None
+    )
+    require(
+        live_registry_after == live_registry_before,
+        "real-Qt validator mutated the live Tool ProjectSelectionRegistry",
+    )
+    require(
+        live_prefs_after == live_prefs_before,
+        "real-Qt validator mutated live Tool shell preferences",
+    )
+    print("LIVE_TOOL_PROJECT_REGISTRY_UNCHANGED: PASS")
+    print("LIVE_TOOL_SHELL_PREFS_UNCHANGED: PASS")
+    print("REAL_QT_VALIDATION_DURABLE_TOOL_STATE_ISOLATED: PASS")
     print("REAL_QT_ACTIVE_PROJECT_SYNC: PASS")
     return True
 

@@ -57,7 +57,7 @@
       "generated_filename": "07_daily_patch_delivery_guardrails.md",
       "prompt_id": "daily_patch_delivery_guardrails",
       "load_mode": "always_startup",
-      "role": "Compact always-startup patch-delivery bridge that routes detailed release behavior and active regressions to Class 05."
+      "role": "Compact always-startup transient-artifact delivery/staging bridge that enforces root-first verified staging and routes detailed release behavior and active regressions to Class 05."
     },
     {
       "load_order": 8,

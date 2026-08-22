@@ -20,6 +20,7 @@ from kanda_reasoner_app.error_memory.store import list_lessons
 from kanda_reasoner_app.error_memory_gui._lesson_status_summary import (
     normalized_lesson_status,
     render_lesson_status_summary,
+    status_matches_summary_priority,
 )
 
 __all__ = [
@@ -60,7 +61,12 @@ def _ordered_lesson_rows(
         index += 1
     preferred = normalized_lesson_status(priority_status)
     if preferred:
-        rows.sort(key=lambda item: (0 if item[3] == preferred else 1, item[2]))
+        rows.sort(
+            key=lambda item: (
+                0 if status_matches_summary_priority(item[3], preferred) else 1,
+                item[2],
+            )
+        )
     return [(kind, payload) for kind, payload, _index, _status in rows]
 
 def formatted_lesson_block(lesson: dict[str, Any]) -> str:
@@ -84,7 +90,22 @@ def reload_table(tab: Any, *, row_kind_role: int, pending_path_role: int) -> Non
     from PySide6.QtCore import Qt
     from PySide6.QtWidgets import QTableWidgetItem
 
-    lessons = list_lessons(tab._project_root, include_inactive=True)
+    provider = getattr(tab, "_canonical_error_memory_lessons", None)
+    if callable(provider):
+        try:
+            lessons = list(provider())
+        except Exception:
+            lessons = []
+    else:
+        try:
+            project_root = tab._current_project_root()
+            lessons = (
+                list_lessons(project_root, include_inactive=True)
+                if project_root is not None
+                else []
+            )
+        except Exception:
+            lessons = []
     pending_rows = tab._pending_lesson_rows_for_table()
     render_lesson_status_summary(tab, lessons, pending_rows)
     priority_status = getattr(tab, "_lesson_status_priority_status", "")
@@ -201,7 +222,11 @@ def load_selected_lesson_into_preview(tab: Any) -> None:
     if not lesson_id:
         return
     try:
-        lessons = list_lessons(tab._current_project_root(), include_inactive=True)
+        provider = getattr(tab, "_canonical_error_memory_lessons", None)
+        if callable(provider):
+            lessons = list(provider())
+        else:
+            lessons = list_lessons(tab._current_project_root(), include_inactive=True)
         lesson = next((item for item in lessons if item.get('lesson_id') == lesson_id), None)
         if lesson is None:
             return

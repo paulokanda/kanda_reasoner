@@ -7,6 +7,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from kanda_reasoner_app.project_artifact_staging import (
+    build_project_artifact_staging_contract,
+)
+
 from .handoff_boundary_contract import build_handoff_trust_envelope
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
@@ -23,7 +27,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "routing_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.routing_manifest_builder"
-GENERATOR_VERSION = "1.3.0"
+GENERATOR_VERSION = "1.4.0"
 
 
 def _utc_now() -> str:
@@ -134,6 +138,7 @@ def build_routing_manifest_payload(project: str | Path | ProjectContext) -> dict
         },
         "generated_at_utc": _utc_now(),
         "handoff_trust": build_handoff_trust_envelope(context),
+        "artifact_staging": build_project_artifact_staging_contract(context.root),
         "project": {
             "project_slug": context.project_slug,
             "active_project_id": context.active_project_id,

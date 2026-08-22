@@ -1,4 +1,4 @@
-"""Static and focused functional validator for Portable builder v1r12."""
+"""Validate Portable Tool/Project-decoupled build v1r26."""
 from __future__ import annotations
 import argparse
 import ast
@@ -8,16 +8,18 @@ import os
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 __all__ = [
     "main",
 ]
 
-EXPECTED_FEATURE_ID = 'kanda-reasoner-portable-builder-install-v1r12'
-EXPECTED_VERSION = 'v1r12'
-EXPECTED_HARDENING_FEATURES = ('registry-boundary-gate', 'packaged-gui-smoke-isolation', 'governed-root-exact-rollback', 'runtime-path-hash-allowlist', 'exact-builder-member-governance', 'external-build-control-hash-binding')
-EXPECTED_HARDENING_STAGE = 'registry-boundary-plus-smoke-isolation-plus-governed-root-rollback-plus-runtime-path-hash-allowlist-plus-exact-builder-member-governance-plus-external-build-control-hash-binding'
+EXPECTED_FEATURE_ID = 'kanda-reasoner-portable-timestamped-publication-name-v1r32'
+EXPECTED_VERSION = 'v1r32'
+EXPECTED_HARDENING_FEATURES = ('registry-boundary-gate', 'packaged-gui-smoke-isolation', 'governed-root-exact-rollback', 'runtime-path-hash-allowlist', 'exact-builder-member-governance', 'external-build-control-hash-binding', 'self-host-venv-build-interpreter', 'production-portable-authorization', 'spec-audit-policy-reconciliation', 'posix-zip-member-writer', 'packaged-gui-runtime-report-preservation', 'pyinstaller-submodule-import-preflight', 'selected-owner-fire-shield-isolation', 'packaged-worker-reentry-dispatch', 'clean-start-gui-regression-reset', 'tool-project-decoupled-portable-build', 'timestamped-publication-name')
+EXPECTED_HARDENING_STAGE = 'registry-boundary-plus-smoke-isolation-plus-governed-root-rollback-plus-runtime-path-hash-allowlist-plus-exact-builder-member-governance-plus-external-build-control-hash-binding-plus-self-host-venv-build-interpreter-plus-production-portable-authorization-plus-spec-audit-policy-reconciliation-plus-posix-zip-member-writer-plus-packaged-gui-runtime-report-preservation-plus-pyinstaller-submodule-import-preflight-plus-selected-owner-fire-shield-isolation-plus-packaged-worker-reentry-dispatch-plus-clean-start-gui-regression-reset-plus-tool-project-decoupled-portable-build-plus-timestamped-publication-name'
 FORBIDDEN_IMPORT_PREFIXES = ('kanda_reasoner_app.reasoner_context_bundle', 'reasoner_context_bundle', 'handoff_zip_exporter', 'collector_main')
+WORKER_VALIDATOR_RELATIVE = Path('..') / 'tools' / 'validate_portable_tool_project_decoupled_build_v1r26.py'
 
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -115,6 +117,136 @@ def _validate_policy_and_cleanup(root: Path) -> None:
         else:
             raise RuntimeError('Generated external freeze-intake fixture was accepted.')
 
+
+def _validate_governed_root_zip_timestamp_compatibility(root: Path) -> None:
+    sys.path.insert(0, str(root.parent))
+    from portable.governed_root_rollback import RootViewPolicy, _write_archive
+    from portable.models import ProtectedRoot
+
+    source = (root / "governed_root_rollback.py").read_text(encoding="ascii")
+    if "strict_timestamps=False" not in source:
+        raise RuntimeError(
+            "Governed-root backup ZIP must disable strict filesystem timestamps."
+        )
+    print("PORTABLE GOVERNED ROOT ZIP STRICT TIMESTAMPS DISABLED: PASS")
+
+    with tempfile.TemporaryDirectory() as temp:
+        temp_root = Path(temp)
+        legacy_root = temp_root / "legacy_root"
+        legacy_root.mkdir()
+        legacy_file = legacy_root / "legacy.txt"
+        payload = b"KANDA_PRE_1980_ROLLBACK_FIXTURE"
+        legacy_file.write_bytes(payload)
+        old_epoch = 157766400.0
+        os.utime(legacy_file, (old_epoch, old_epoch))
+
+        policy = RootViewPolicy(
+            protected_root=ProtectedRoot(
+                label="pre-1980 rollback fixture",
+                owner_id="fixture",
+                owner_slug="fixture",
+                root_kind="PROJECT_ROOT",
+                path=legacy_root,
+            ),
+            ignored_names=frozenset(),
+            excluded_top_level=frozenset(),
+        )
+        archive_path = temp_root / "legacy_root.zip"
+        _write_archive(policy, archive_path)
+
+        with zipfile.ZipFile(archive_path, "r") as archive:
+            info = archive.getinfo("legacy.txt")
+            if info.date_time[0] != 1980:
+                raise RuntimeError(
+                    "Pre-1980 rollback member was not clamped to ZIP epoch."
+                )
+            if archive.read("legacy.txt") != payload:
+                raise RuntimeError(
+                    "Pre-1980 rollback fixture content changed in archive."
+                )
+
+    print("PORTABLE GOVERNED ROOT PRE-1980 BACKUP FIXTURE: PASS")
+    print("PORTABLE GOVERNED ROOT PRE-1980 CONTENT PRESERVED: PASS")
+
+
+def _validate_zip_member_writer(root: Path, package_only: bool) -> None:
+    helper = root / 'create_windows_zip.ps1'
+    source = helper.read_text(encoding='ascii')
+    assembly_lines = [
+        line.strip()
+        for line in source.splitlines()
+        if line.strip().startswith('-AssemblyName ')
+    ]
+    expected_assemblies = [
+        '-AssemblyName System.IO.Compression',
+        '-AssemblyName System.IO.Compression.FileSystem',
+    ]
+    if assembly_lines[:2] != expected_assemblies:
+        raise RuntimeError(
+            'ZIP compression assemblies are not preloaded in the required order: '
+            + repr(assembly_lines[:2])
+        )
+    print('PORTABLE ZIP COMPRESSION ASSEMBLY PRELOAD STATIC: PASS')
+    required = (
+        'ZipArchiveMode]::Create',
+        '.CreateEntry(',
+        'Replace([char]92, [char]47)',
+        'ZIP_COMPRESSION_ASSEMBLY_PRELOAD=PASS',
+        'ZIP_MEMBER_SEPARATOR_CONTRACT=PASS',
+    )
+    missing = [token for token in required if token not in source]
+    if missing:
+        raise RuntimeError(f'POSIX ZIP writer is missing contracts: {missing}')
+    if 'CreateFromDirectory(' in source:
+        raise RuntimeError('CreateFromDirectory returned to the ZIP writer.')
+    print('PORTABLE ZIP POSIX MEMBER WRITER STATIC: PASS')
+    if package_only:
+        print('PORTABLE ZIP COMPRESSION ASSEMBLY PRELOAD LIVE: DEFERRED_PACKAGE_ONLY')
+        print('PORTABLE ZIP POSIX MEMBER WRITER LIVE FIXTURE: DEFERRED_PACKAGE_ONLY')
+        return
+    with tempfile.TemporaryDirectory() as temp:
+        temp_root = Path(temp)
+        app_root = temp_root / 'kanda_reasoner'
+        nested = app_root / '_internal' / 'fixture.txt'
+        nested.parent.mkdir(parents=True)
+        (app_root / 'kanda_reasoner.exe').write_bytes(b'MZ')
+        nested.write_text('fixture\n', encoding='ascii')
+        destination = temp_root / 'fixture.zip'
+        result = subprocess.run(
+            [
+                'powershell.exe', '-NoProfile', '-ExecutionPolicy', 'Bypass',
+                '-File', str(helper), '-SourceDirectory', str(app_root),
+                '-DestinationZip', str(destination),
+            ],
+            cwd=str(root.parent), capture_output=True, text=True, check=False,
+        )
+        if result.returncode != 0:
+            details = '\n'.join(
+                part for part in (result.stdout.strip(), result.stderr.strip()) if part
+            )
+            raise RuntimeError(
+                'POSIX ZIP writer fixture failed with exit code '
+                + str(result.returncode)
+                + ': '
+                + details
+            )
+        if 'ZIP_COMPRESSION_ASSEMBLY_PRELOAD=PASS' not in result.stdout:
+            raise RuntimeError('ZIP helper did not report assembly-preload PASS.')
+        print('PORTABLE ZIP COMPRESSION ASSEMBLY PRELOAD LIVE: PASS')
+        if 'ZIP_MEMBER_SEPARATOR_CONTRACT=PASS' not in result.stdout:
+            raise RuntimeError('ZIP helper did not report separator-contract PASS.')
+        with zipfile.ZipFile(destination, 'r') as archive_file:
+            names = [item.filename for item in archive_file.infolist()]
+        if any('\\' in name for name in names):
+            raise RuntimeError(f'Backslash ZIP member survived writer fixture: {names}')
+        expected = {
+            'kanda_reasoner/kanda_reasoner.exe',
+            'kanda_reasoner/_internal/fixture.txt',
+        }
+        if set(names) != expected:
+            raise RuntimeError(f'Unexpected ZIP writer fixture members: {names}')
+    print('PORTABLE ZIP POSIX MEMBER WRITER LIVE FIXTURE: PASS')
+
 def _validate_identity_json(root: Path) -> None:
     facade = root / 'create_kanda_reasoner_portable.py'
     environment = os.environ.copy()
@@ -126,12 +258,29 @@ def _validate_identity_json(root: Path) -> None:
     if len(lines) != 1:
         raise RuntimeError(f'Identity JSON must be one line; found {len(lines)}.')
     identity = json.loads(lines[0])
-    if identity != {'schema_version': '1.0', 'builder_member_feature_id': 'kanda-reasoner-portable-exact-builder-member-governance-v1', 'builder_version': EXPECTED_VERSION, 'external_control_feature_id': 'kanda-reasoner-portable-external-build-control-hash-binding-v1r1', 'feature_id': EXPECTED_FEATURE_ID, 'hardening_features': list(EXPECTED_HARDENING_FEATURES), 'hardening_stage': EXPECTED_HARDENING_STAGE, 'production_portable_enabled': False}:
+    if identity != {'schema_version': '1.0', 'builder_member_feature_id': 'kanda-reasoner-portable-exact-builder-member-governance-v1', 'builder_version': EXPECTED_VERSION, 'external_control_feature_id': 'kanda-reasoner-portable-external-build-control-hash-binding-v1r2', 'feature_id': EXPECTED_FEATURE_ID, 'hardening_features': list(EXPECTED_HARDENING_FEATURES), 'hardening_stage': EXPECTED_HARDENING_STAGE, 'production_portable_enabled': True}:
         raise RuntimeError(f'Identity JSON mismatch: {identity}')
+
+def _validate_worker_validator_non_mutation_contract(root: Path) -> None:
+    validator = (root / WORKER_VALIDATOR_RELATIVE).resolve(strict=True)
+    source = validator.read_text(encoding="utf-8", errors="strict")
+    if "import importlib.util" in source:
+        raise RuntimeError("PORTABLE_WORKER_VALIDATOR_IMPORTLIB_MUTATION_RISK")
+    for needle in (
+        "types.ModuleType",
+        "compile(source, str(path), \"exec\", dont_inherit=True)",
+        "PORTABLE_WORKER_VALIDATOR_CANONICAL_CACHE_MUTATION_ABSENT",
+    ):
+        if needle not in source:
+            raise RuntimeError(
+                "PORTABLE_WORKER_VALIDATOR_NON_MUTATION_CONTRACT_MISSING:" + needle
+            )
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--portable-root', required=True)
+    parser.add_argument('--package-only', action='store_true')
     args = parser.parse_args()
     root = Path(args.portable_root).resolve()
     if root.name.casefold() != 'portable':
@@ -155,28 +304,100 @@ def main() -> int:
     sys.dont_write_bytecode = True
     sys.path.insert(0, str(root.parent))
     from portable.builder_members import validate_exact_builder_members
+    _validate_worker_validator_non_mutation_contract(root)
     member_inventory = validate_exact_builder_members(root, manifest)
     from portable.external_controls import validate_external_build_controls
     external_controls = validate_external_build_controls(root.parent, root)
+    from portable.physical_runtime import validate_runtime_allowlist_sources
+    if args.package_only:
+        print('PORTABLE RUNTIME LIVE SOURCE HASHES: DEFERRED_PACKAGE_ONLY')
+    else:
+        runtime_allowlist = validate_runtime_allowlist_sources(root.parent)
+        print(
+            'PORTABLE RUNTIME LIVE SOURCE HASHES: PASS - '
+            + str(runtime_allowlist['item_count'])
+        )
     for path in sorted(root.glob('*.py')):
         _validate_python(path)
-    _validate_policy_and_cleanup(root)
+    if args.package_only:
+        print('PORTABLE FUNCTIONAL RUNTIME FIXTURES: DEFERRED_PACKAGE_ONLY')
+    else:
+        _validate_policy_and_cleanup(root)
+    from types import SimpleNamespace
+    from portable.environment import audit_spec_contract
+    spec_path = root.parent / "KandaReasonerWindows.spec"
+    if not spec_path.is_file():
+        raise RuntimeError("Canonical PyInstaller specification is missing.")
+    spec_source = spec_path.read_text(encoding="utf-8")
+    if "collect_data_files" in spec_source:
+        raise RuntimeError("Package-wide collect_data_files returned to canonical spec.")
+    if "iter_packaged_resource_files" not in spec_source:
+        raise RuntimeError("Tool-owned data allowlist owner is missing from canonical spec.")
+    if "PORTABLE PYINSTALLER SUBMODULE IMPORT PREFLIGHT: PASS" not in spec_source:
+        raise RuntimeError("PyInstaller submodule import preflight is missing.")
+    app_contract = (
+        root.parent
+        / "kanda_reasoner_app"
+        / "routing_signal_scorer"
+        / "ml_advisory_signal"
+        / "read_only_advisory_panel_runtime_app_host_visibility_contract.py"
+    )
+    app_contract_source = app_contract.read_text(encoding="utf-8")
+    for marker in (
+        "FORBIDDEN_RUNTIME_APP_HOST_VISIBILITY_CAPABILITIES",
+        "REQUIRED_RUNTIME_APP_HOST_VISIBILITY_CONTRACT_LABELS",
+    ):
+        if marker not in app_contract_source:
+            raise RuntimeError(
+                "ML advisory facade re-export contract is missing: " + marker
+            )
+    tab_patch = (
+        root.parent
+        / "kanda_reasoner_app"
+        / "reasoner_tools_gui_shell"
+        / "main_window_help"
+        / "window_tool_patches.py"
+    ).read_text(encoding="utf-8")
+    if "lazy_tab_activation" not in tab_patch or "ACTIVATING" not in tab_patch:
+        raise RuntimeError("Pre-load lazy-tab activation evidence is missing.")
+    audit_spec_contract(SimpleNamespace(spec_path=spec_path))
+    print("PORTABLE SPEC AUDIT POLICY RECONCILIATION: PASS")
+    _validate_governed_root_zip_timestamp_compatibility(root)
+    _validate_zip_member_writer(root, args.package_only)
     _validate_identity_json(root)
     from portable.constants import BUILDER_MEMBER_FEATURE_ID, BUILDER_VERSION, EXTERNAL_CONTROL_FEATURE_ID, FEATURE_ID, FIRST_SMOKE_CONFIRMATION, PORTABLE_HARDENING_FEATURES, PORTABLE_HARDENING_STAGE, PRODUCTION_PORTABLE_ENABLED, SMOKE_CONFIRMATION
-    if BUILDER_MEMBER_FEATURE_ID != 'kanda-reasoner-portable-exact-builder-member-governance-v1' or EXTERNAL_CONTROL_FEATURE_ID != 'kanda-reasoner-portable-external-build-control-hash-binding-v1r1' or BUILDER_VERSION != EXPECTED_VERSION or (FEATURE_ID != EXPECTED_FEATURE_ID) or (tuple(PORTABLE_HARDENING_FEATURES) != EXPECTED_HARDENING_FEATURES) or (PORTABLE_HARDENING_STAGE != EXPECTED_HARDENING_STAGE):
+    if BUILDER_MEMBER_FEATURE_ID != 'kanda-reasoner-portable-exact-builder-member-governance-v1' or EXTERNAL_CONTROL_FEATURE_ID != 'kanda-reasoner-portable-external-build-control-hash-binding-v1r2' or BUILDER_VERSION != EXPECTED_VERSION or (FEATURE_ID != EXPECTED_FEATURE_ID) or (tuple(PORTABLE_HARDENING_FEATURES) != EXPECTED_HARDENING_FEATURES) or (PORTABLE_HARDENING_STAGE != EXPECTED_HARDENING_STAGE):
         raise RuntimeError('Runtime builder identity contract mismatch.')
-    if PRODUCTION_PORTABLE_ENABLED is not False:
-        raise RuntimeError('Production Portable gate must remain closed.')
+    if PRODUCTION_PORTABLE_ENABLED is not True:
+        raise RuntimeError('Production Portable authorization gate must be open.')
     if FIRST_SMOKE_CONFIRMATION != 'FIRST PASS CLOSED':
         raise RuntimeError('First natural-close confirmation mismatch.')
     if SMOKE_CONFIRMATION != 'PORTABLE TESTS PASS CLOSED':
         raise RuntimeError('Final natural-close confirmation mismatch.')
-    required_text = {'cli.py': ('"--identity-json"', '"--result-json"', 'json.dumps'), 'workflow.py': ('_write_result', '"status": "portable_ready"', 'project_snapshot_after_publication', 'support_snapshot_after_publication', 'PRODUCTION_PORTABLE_ENABLED', 'load_registry_boundary', 'prepare_governed_root_rollback', 'PORTABLE FAILURE GOVERNED ROOT EXACT ROLLBACK'), 'environment.py': ('PORTABLE CANONICAL SPECIFICATION: PASS', 'PORTABLE SPEC MACHINE-SPECIFIC PATHS: ABSENT', 'validate_external_build_controls', 'PORTABLE EXTERNAL BUILD CONTROL PREFLIGHT: PASS'), 'build.py': ('validate_external_build_controls', 'PORTABLE EXTERNAL CONTROLS UNCHANGED THROUGH PYINSTALLER: PASS', '_remove_non_runtime_debris', 'hydrate_physical_runtime', 'validate_physical_runtime', 'PORTABLE QT WEBENGINE PROCESS: PASS', 'PORTABLE QT WINDOWS PLATFORM PLUGIN: PASS'), 'physical_runtime.py': ('PORTABLE_RUNTIME_ALLOWLIST.json', 'load_runtime_allowlist', 'validate_runtime_allowlist_sources', 'committed_exact_source_archive_path_sha256_allowlist', 'Runtime allowlist source SHA-256 mismatch', 'physical_runtime_manifest.json'), 'archive.py': ('_launch_and_require_natural_close', 'PORTABLE CLEAN SHUTDOWN: PASS'), 'destination.py': ('askdirectory', 'mustexist=True', 'validate_publication_directory', 'assert_registry_unchanged'), 'publish.py': ('shutil.copyfile', 'os.replace'), 'paths.py': ('%Y%m%d_%H%M%S_%f', 'uuid4().hex[:8]', 'registry_boundary'), 'registry_boundary.py': ('EXPLICIT_SELF_HOSTING', 'protected_roots', 'assert_registry_unchanged', 'validate_result_path'), 'snapshots.py': ('_update_file_content', 'content_snapshot'), 'governed_root_rollback.py': ('prepare_governed_root_rollback', 'registered_projects_snapshot', 'restore_if_changed', 'PORTABLE GOVERNED ROOT EXACT ROLLBACK: PASS', 'PORTABLE FAILURE-PATH GOVERNED ROOT ROLLBACK: PASS'), 'external_controls.py': ('validate_external_build_controls', 'EXTERNAL_CONTROL_ORDER_OR_PATH_MISMATCH', 'EXTERNAL_CONTROL_SHA256_MISMATCH'), 'builder_members.py': ('validate_exact_builder_members', 'BUILDER_FILE_SET_MISMATCH', 'BUILDER_DIRECTORY_SET_MISMATCH', 'BUILDER_LINK_OR_REPARSE_MEMBER')}
+    required_text = {'cli.py': ('"--identity-json"', '"--result-json"', 'json.dumps'), 'workflow.py': ('_write_result', '"status": "portable_ready"', 'project_snapshot_after_publication', 'support_snapshot_after_publication', 'PRODUCTION_PORTABLE_ENABLED', 'load_registry_boundary', 'prepare_governed_root_rollback', 'PORTABLE FAILURE TOOL OWNER ROOT EXACT ROLLBACK', '"active_project_identity_used_for_build": False', '"tool_build_authority": "BUILDER_LOCATION"'), 'environment.py': ('PORTABLE CANONICAL SPECIFICATION: PASS', 'PORTABLE SPEC MACHINE-SPECIFIC PATHS: ABSENT', 'PORTABLE SPEC TOOL DATA ALLOWLIST OWNER: PASS', 'PORTABLE SPEC PACKAGE-WIDE DATA COLLECTION: ABSENT', 'iter_packaged_resource_files', '_PROHIBITED_SPEC_PACKAGING_TOKENS', 'validate_external_build_controls', 'PORTABLE EXTERNAL BUILD CONTROL PREFLIGHT: PASS', 'PORTABLE TOOL VENV PYTHON: PASS', 'VENV_PYTHON_RELATIVE'), 'build.py': ('validate_external_build_controls', 'PORTABLE EXTERNAL CONTROLS UNCHANGED THROUGH PYINSTALLER: PASS', '_remove_non_runtime_debris', 'hydrate_physical_runtime', 'validate_physical_runtime', 'validate_packaged_worker_runtime', 'PORTABLE QT WEBENGINE PROCESS: PASS', 'PORTABLE QT WINDOWS PLATFORM PLUGIN: PASS'), 'physical_runtime.py': ('PORTABLE_RUNTIME_ALLOWLIST.json', 'load_runtime_allowlist', 'validate_runtime_allowlist_sources', 'committed_exact_source_archive_path_sha256_allowlist', 'Runtime allowlist source SHA-256 mismatch', 'physical_runtime_manifest.json'), 'archive.py': ('_launch_and_require_natural_close', 'PORTABLE CLEAN SHUTDOWN: PASS', 'validate_archive_members', 'validate_packaged_worker_runtime', 'PORTABLE ZIP POSIX MEMBER WRITER: PASS', 'PORTABLE PACKAGED PROCESS EXIT DURING TAB SMOKE', 'PORTABLE SMOKE RUNTIME REPORT: PASS', 'PORTABLE SMOKE REQUIRED LAZY TABS: PASS', 'verify_no_project_registry', 'selected_project_environment'), 'smoke_isolation.py': ('KANDA_PORTABLE_SMOKE_RUNTIME_REPORT', 'packaged_gui_smoke_runtime_evidence', 'PORTABLE SMOKE RUNTIME REPORT: ENABLED', 'PORTABLE SMOKE FIRST LAUNCH PROJECT NONE: PASS', 'selected_project_environment'), 'create_windows_zip.ps1': ('System.IO.Compression', 'System.IO.Compression.FileSystem', 'ZipArchiveMode]::Create', '.CreateEntry(', 'Replace([char]92, [char]47)', 'ZIP_COMPRESSION_ASSEMBLY_PRELOAD=PASS', 'ZIP_MEMBER_SEPARATOR_CONTRACT=PASS'), 'destination.py': ('askdirectory', 'mustexist=True', 'validate_publication_directory', 'assert_registry_unchanged'), 'publish.py': ('shutil.copyfile', 'os.replace'), 'paths.py': ('%Y%m%d_%H%M%S_%f', '%Y%m%d_%H%M%S', 'build_publication_zip_name', 'publication_zip_name', '-Windows-Portable.zip', 'uuid4().hex[:8]', 'registry_boundary', 'VENV_PYTHON_RELATIVE'), 'registry_boundary.py': ('protected_roots', 'tool_owner_roots', 'assert_registry_unchanged', 'validate_result_path', 'Resolve Tool authority independently of active Project identity'), 'snapshots.py': ('_update_file_content', 'content_snapshot'), 'governed_root_rollback.py': ('prepare_governed_root_rollback', 'tool_owner_roots', 'rollback_scope', 'TOOL_OWNER_ONLY', 'restore_if_changed', 'strict_timestamps=False', 'PORTABLE TOOL OWNER ROOT EXACT BACKUPS: PASS', 'PORTABLE FAILURE-PATH GOVERNED ROOT ROLLBACK: PASS'), 'external_controls.py': ('validate_external_build_controls', 'EXTERNAL_CONTROL_ORDER_OR_PATH_MISMATCH', 'EXTERNAL_CONTROL_SHA256_MISMATCH'), 'builder_members.py': ('validate_exact_builder_members', 'BUILDER_FILE_SET_MISMATCH', 'BUILDER_DIRECTORY_SET_MISMATCH', 'BUILDER_LINK_OR_REPARSE_MEMBER'), 'packaged_worker_runtime.py': ('build_worker_runtime_binaries', 'build_worker_runtime_hooks', 'validate_packaged_worker_runtime', 'PORTABLE WORKER REENTRY HEADLESS DISPATCH: PASS'), 'pyinstaller_worker_dispatch_hook.py': ('KANDA_PORTABLE_WORKER_REPORT_TOKEN', 'headless_worker_dispatch', 'KANDA_PORTABLE_WORKER_REENTRY_REJECTED', 'kanda_reasoner_app.safety_suite_cli', 'sync_startup_routing_kernel_pack.py')}
     for name, tokens in required_text.items():
         source = (root / name).read_text(encoding='utf-8')
         missing = [token for token in tokens if token not in source]
         if missing:
             raise RuntimeError(f'{name} is missing contracts: {missing}')
+    environment_source = (root / 'environment.py').read_text(encoding='ascii')
+    paths_source = (root / 'paths.py').read_text(encoding='ascii')
+    registry_source = (root / 'registry_boundary.py').read_text(encoding='ascii')
+    if 'LOCALAPPDATA' in environment_source or 'Programs\" / \"Python' in environment_source:
+        raise RuntimeError('Portable builder still binds a user-local base Python path.')
+    if 'VENV_PYTHON_RELATIVE' not in environment_source or 'VENV_PYTHON_RELATIVE' not in paths_source:
+        raise RuntimeError('Tool .venv Python contract is missing.')
+    forbidden_registry_tokens = (
+        'Portable creation requires the KANDA Reasoner Tool to be the active Project',
+        'Portable creation requires explicit self-hosting authority',
+    )
+    if any(token in registry_source for token in forbidden_registry_tokens):
+        raise RuntimeError('Active Project still authorizes or blocks Tool Portable creation.')
+    if 'tool_owner_roots' not in registry_source or 'active Project identity' not in registry_source:
+        raise RuntimeError('Tool/Project-decoupled registry boundary is missing.')
+    print('PORTABLE TOOL VENV PYTHON CONTRACT: PASS')
+    print('PORTABLE FIXED KANDA DRIVE WORDING: ABSENT')
+    print('PORTABLE ACTIVE PROJECT BUILD AUTHORITY: ABSENT')
     print('PORTABLE BUILDER PAYLOAD HASHES: PASS')
     print('PORTABLE BUILDER MANIFESTED SOURCE SET: PASS')
     print('PORTABLE BUILDER EXACT MEMBER CONTRACT: PASS')
@@ -188,19 +409,24 @@ def main() -> int:
     print('PORTABLE SHOW PROJECT IMPLEMENTATION IMPORTS: ABSENT')
     print('PORTABLE IDENTITY JSON RUNTIME: PASS')
     print('PORTABLE RESULT JSON CONTRACT: PASS')
-    print('PORTABLE STAGING CLEANUP FUNCTIONAL FIXTURE: PASS')
-    print('PORTABLE RUNTIME MODULE PRESERVATION: PASS')
-    print('PORTABLE BACKUP DEBRIS REMOVAL: PASS')
-    print('PORTABLE RUNTIME FREEZE HINT PACKAGE CLASSIFIER: PASS')
-    print('PORTABLE RUNTIME FREEZE HINT PACKAGE PRESERVATION: PASS')
-    print('PORTABLE EXTERNAL FREEZE HINT INTAKE EXCLUSION: PASS')
-    print('PORTABLE LOOSE PYTHON RUNTIME DEPENDENCY FIXTURE: PASS')
-    print('PORTABLE PHYSICAL WORKER AND HELPER MANIFEST FIXTURE: PASS')
+    if not args.package_only:
+        print('PORTABLE STAGING CLEANUP FUNCTIONAL FIXTURE: PASS')
+        print('PORTABLE RUNTIME MODULE PRESERVATION: PASS')
+        print('PORTABLE BACKUP DEBRIS REMOVAL: PASS')
+        print('PORTABLE RUNTIME FREEZE HINT PACKAGE CLASSIFIER: PASS')
+        print('PORTABLE RUNTIME FREEZE HINT PACKAGE PRESERVATION: PASS')
+        print('PORTABLE EXTERNAL FREEZE HINT INTAKE EXCLUSION: PASS')
+        print('PORTABLE LOOSE PYTHON RUNTIME DEPENDENCY FIXTURE: PASS')
+        print('PORTABLE PHYSICAL WORKER AND HELPER MANIFEST FIXTURE: PASS')
     print('PORTABLE RUNTIME EXACT PATH-HASH ALLOWLIST: PASS')
     print('PORTABLE RUNTIME RECURSIVE DISCOVERY: ABSENT')
+    print('PORTABLE PYINSTALLER SUBMODULE IMPORT PREFLIGHT CONTRACT: PASS')
+    print('PORTABLE SMOKE RUNTIME REPORT RETENTION CONTRACT: PASS')
+    print('PORTABLE PRELOAD TAB ACTIVATION EVIDENCE CONTRACT: PASS')
     print('PORTABLE NATURAL CLOSE CONTRACT: PASS')
     print('PORTABLE CONTENT HASH IMMUTABILITY CONTRACT: PASS')
     print('PORTABLE UNIQUE RUN ID CONTRACT: PASS')
+    print('PORTABLE TIMESTAMPED PUBLICATION NAME CONTRACT: PASS')
     print('PORTABLE REGISTRY BOUNDARY MODULE: PASS')
     print('PORTABLE GOVERNED ROOT ROLLBACK MODULE: PASS')
     print('PORTABLE EXACT BUILDER MEMBER GOVERNANCE CAPABILITY: PASS')
@@ -208,7 +434,20 @@ def main() -> int:
     print(f"PORTABLE EXTERNAL BUILD CONTROL ITEM COUNT: {external_controls['item_count']}")
     print('PORTABLE EXTERNAL BUILD CONTROL EXACT SHA-256: PASS')
     print('PORTABLE EXTERNAL BUILD CONTROL HASH BINDING CAPABILITY: PASS')
-    print('PORTABLE PRODUCTION BUILD GATE CLOSED: PASS')
+    print('PORTABLE ZIP BACKSLASH MEMBER REJECTION PRESERVED: PASS')
+    print('PORTABLE WORKER VALIDATOR NON-MUTATION CONTRACT: PASS')
+    print('PORTABLE PACKAGED WORKER REENTRY DISPATCH CONTRACT: PASS')
+    print('PORTABLE CLEAN START PROJECT NONE CONTRACT: PASS')
+    print('PORTABLE GUI LAYOUT REGRESSION RESET CONTRACT: PASS')
+    print('PORTABLE PRODUCTION BUILD AUTHORIZATION: PASS')
+    print('PORTABLE ALL REGISTERED ROOTS DESTINATION FIREWALL CONTRACT: PASS')
+    print('PORTABLE TOOL OWNER MUTATION SCOPE CONTRACT: PASS')
+    print('PORTABLE CROSS PROJECT MUTATION NON-INTERFERENCE CONTRACT: PASS')
+    print('PORTABLE TOOL/PROJECT DECOUPLED BUILD CONTRACT: PASS')
+    if args.package_only:
+        print('PORTABLE_V1R18_PRE1980_ZIP_TIMESTAMP_REPAIRED: DEFERRED_PACKAGE_ONLY')
+    else:
+        print('PORTABLE_V1R18_PRE1980_ZIP_TIMESTAMP_REPAIRED: PASS')
     print(f'VALIDATION OK: {EXPECTED_FEATURE_ID}')
     return 0
 if __name__ == '__main__':

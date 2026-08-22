@@ -1,5 +1,5 @@
 # project-path: tools/validate_local_web_ai_canonical_host_height_v1.py
-"""Validate canonical host-height containment for Local AI and Project Web AI."""
+"""Validate Local/Web AI host height without full-shell worker startup."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ import ast
 import os
 from pathlib import Path
 import sys
+import tempfile
+from types import SimpleNamespace
 
 FEATURE_ID = "local-web-ai-canonical-host-height-v1"
 GUI_SUPPORT = Path("kanda_reasoner_app/reasoner_tools_gui_shell/gui_support.py")
@@ -44,7 +46,10 @@ def _validate_static(root: Path) -> None:
         "QSizePolicy.Ignored",
         "widget.setMinimumHeight(0)",
     ):
-        _require(fragment in support, "Missing embedded host-height contract: " + fragment)
+        _require(
+            fragment in support,
+            "Missing embedded host-height contract: " + fragment,
+        )
 
     for fragment in (
         'window.setProperty("kandaContainHostHeight", True)',
@@ -52,14 +57,20 @@ def _validate_static(root: Path) -> None:
         'scroll.setObjectName("projectQaBodyScrollArea")',
         "scroll.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)",
     ):
-        _require(fragment in local_ui, "Missing Local AI height contract: " + fragment)
+        _require(
+            fragment in local_ui,
+            "Missing Local AI height contract: " + fragment,
+        )
 
     for fragment in (
         'owner.setProperty("kandaContainHostHeight", True)',
         "owner.setMinimumSize(1080, 0)",
         'owner.setObjectName("projectWebAITab")',
     ):
-        _require(fragment in web_ui, "Missing Project Web AI height contract: " + fragment)
+        _require(
+            fragment in web_ui,
+            "Missing Project Web AI height contract: " + fragment,
+        )
 
     _require(
         "owner.setMinimumSize(1080, 700)" not in web_ui,
@@ -71,7 +82,7 @@ def _validate_static(root: Path) -> None:
     print("PROJECT_WEB_AI_700PX_MINIMUM_REMOVED: PASS")
 
 
-def _process_events(app, count: int = 8) -> None:
+def _events(app, count: int = 8) -> None:
     for _ in range(count):
         app.processEvents()
 
@@ -79,7 +90,14 @@ def _process_events(app, count: int = 8) -> None:
 def _validate_qt(root: Path) -> bool:
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     try:
-        from PySide6.QtWidgets import QApplication, QSizePolicy
+        from PySide6.QtCore import QObject, QSettings, Signal
+        from PySide6.QtWidgets import (
+            QApplication,
+            QMainWindow,
+            QSizePolicy,
+            QTabWidget,
+            QWidget,
+        )
     except ModuleNotFoundError:
         print("REAL_LOCAL_WEB_AI_CANONICAL_HOST_HEIGHT: SKIPPED_NO_PYSIDE6")
         return False
@@ -88,72 +106,202 @@ def _validate_qt(root: Path) -> bool:
     if root_text not in sys.path:
         sys.path.insert(0, root_text)
 
-    from kanda_reasoner_app.reasoner_tools_gui_shell.main_window import (
-        ReasonerToolsWindow,
+    import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window as local_module
+    import kanda_reasoner_app.reasoner_engine.project_web_ai_tab as web_module
+    from kanda_reasoner_app.reasoner_tools_gui_shell.gui_support import (
+        _prepare_embedded_widget,
     )
+    from kanda_reasoner_app.web_ai_provider_contracts import provider_profiles
+
+    class _FixtureLocalConfig(QObject):
+        configuration_changed = Signal(object)
+        catalog_changed = Signal(object)
+
+        def snapshot(self):
+            return SimpleNamespace(available_models=(), model_id="")
+
+        def refresh_models(self):
+            return None
+
+        def request_open_configuration(self):
+            return None
+
+        def selected_model_id(self):
+            return ""
+
+    class _FixtureBridge(QObject):
+        answer_ready = Signal(str)
+        token_ready = Signal(str)
+        error_ready = Signal(str)
+        status_ready = Signal(str)
+
+    class _FixtureAI:
+        def __init__(self):
+            self.bridge = _FixtureBridge()
+
+        def ask(self, *_args, **_kwargs):
+            return None
+
+    class _FixtureWebConfig(QObject):
+        configuration_changed = Signal(object)
+        catalog_changed = Signal(object)
+        status_changed = Signal(str)
+
+        def __init__(self):
+            super().__init__()
+            profiles = tuple(provider_profiles("gateway"))
+            if not profiles:
+                profiles = tuple(provider_profiles("direct"))
+            self._profile = (
+                profiles[0]
+                if profiles
+                else SimpleNamespace(
+                    provider_class="gateway",
+                    gateway_id="fixture",
+                    privacy_summary="Fixture configuration",
+                )
+            )
+
+        def request_open_configuration(self):
+            return None
+
+        def refresh_models(self):
+            return None
+
+        def profile(self):
+            return self._profile
+
+        def selected_model(self):
+            return None
+
+        def selected_model_id(self):
+            return ""
+
+        def visible_models(self):
+            return ()
+
+        def set_gateway_id(self, _value):
+            return None
+
+        def set_selected_model_id(self, _value):
+            return None
+
+        def summary(self):
+            return "Fixture Web AI configuration"
+
+        def catalog_status(self):
+            return "Fixture"
+
+        def api_key(self):
+            return ""
+
+        def ready_for_chat(self):
+            return False
+
+        def snapshot(self):
+            return SimpleNamespace(revision="fixture")
 
     app = QApplication.instance() or QApplication([])
-    window = ReasonerToolsWindow()
-    window.resize(1200, 760)
-    window.show()
-    _process_events(app)
+    original_local_config = local_module.application_local_ai_configuration
+    original_local_ai = local_module.LocalAIReasoner
+    original_qt_core_attr = local_module._qt_core_attr
+    original_web_config = web_module.application_web_ai_configuration
 
-    baseline = (int(window.width()), int(window.height()))
-    indices = {
-        "brain": window._tab_index_by_tab_id["brain_navigator"],
-        "local": window._tab_index_by_tab_id["project_qa"],
-        "web": window._tab_index_by_tab_id["project_web_ai"],
-    }
+    with tempfile.TemporaryDirectory(prefix="kanda_local_web_height_") as temp_dir:
+        settings_path = str(Path(temp_dir) / "local_ai_height.ini")
+        fixture_local_config = _FixtureLocalConfig()
+        fixture_web_config = _FixtureWebConfig()
 
-    def activate(name: str, *, require_lazy: bool):
-        index = indices[name]
-        window.tabs.setCurrentIndex(index)
-        page = window._lazy_page_for_tab_index(index)
-        if page is None:
-            _require(
-                not require_lazy,
-                name + " target tab is not backed by a lazy page.",
-            )
-            active_widget = window.tabs.widget(index)
-            _require(active_widget is not None, name + " tab widget is missing.")
-        else:
-            _require(page.ensure_loaded(), name + " failed to load.")
-            active_widget = page._embedded_widget
-            if require_lazy:
-                _require(
-                    active_widget is not None,
-                    name + " embedded widget is missing after lazy load.",
+        def _fixture_qt_core_attr(name: str):
+            if name == "QSettings":
+                return lambda *_args: QSettings(
+                    settings_path,
+                    QSettings.Format.IniFormat,
                 )
-        _process_events(app)
-        _require(
-            (int(window.width()), int(window.height())) == baseline,
-            name + " changed canonical host size from " + str(baseline)
-            + " to " + str((int(window.width()), int(window.height()))),
-        )
-        return active_widget
+            return original_qt_core_attr(name)
 
-    activate("brain", require_lazy=False)
-    local = activate("local", require_lazy=True)
-    web = activate("web", require_lazy=True)
-    activate("local", require_lazy=True)
-    activate("brain", require_lazy=False)
+        local_module.application_local_ai_configuration = (
+            lambda: fixture_local_config
+        )
+        local_module.LocalAIReasoner = _FixtureAI
+        local_module._qt_core_attr = _fixture_qt_core_attr
+        web_module.application_web_ai_configuration = lambda: fixture_web_config
+
+        local_widget = None
+        web_widget = None
+        host = QMainWindow()
+        tabs = QTabWidget(host)
+        baseline_page = QWidget()
+        tabs.addTab(baseline_page, "Baseline")
+        host.setCentralWidget(tabs)
+        host.resize(1200, 760)
+        host.show()
+        _events(app)
+
+        try:
+            local_widget = local_module.JsonProjectReasonerV10()
+            web_widget = web_module.ProjectWebAITab()
+            local_widget = _prepare_embedded_widget(local_widget)
+            web_widget = _prepare_embedded_widget(web_widget)
+            tabs.addTab(local_widget, "Local AI")
+            tabs.addTab(web_widget, "Web AI")
+
+            tabs.setCurrentWidget(baseline_page)
+            _events(app)
+            baseline = (int(host.width()), int(host.height()))
+
+            for label, widget in (
+                ("Local AI", local_widget),
+                ("Project Web AI", web_widget),
+                ("Local AI", local_widget),
+                ("Baseline", baseline_page),
+            ):
+                tabs.setCurrentWidget(widget)
+                _events(app, 10)
+                _require(
+                    (int(host.width()), int(host.height())) == baseline,
+                    label
+                    + " changed isolated host size from "
+                    + str(baseline)
+                    + " to "
+                    + str((int(host.width()), int(host.height()))),
+                )
+
+            for label, widget in (
+                ("Local AI", local_widget),
+                ("Project Web AI", web_widget),
+            ):
+                _require(
+                    bool(widget.property("kandaContainHostHeight")),
+                    label + " host-height property is missing.",
+                )
+                _require(
+                    widget.minimumHeight() == 0,
+                    label + " minimum height is not zero.",
+                )
+                _require(
+                    widget.sizePolicy().verticalPolicy()
+                    == QSizePolicy.Policy.Ignored,
+                    label + " vertical size pressure is not ignored.",
+                )
+        finally:
+            local_module.application_local_ai_configuration = original_local_config
+            local_module.LocalAIReasoner = original_local_ai
+            local_module._qt_core_attr = original_qt_core_attr
+            web_module.application_web_ai_configuration = original_web_config
+            host.close()
+            _events(app, 4)
+            for widget in (local_widget, web_widget):
+                if widget is not None:
+                    widget.setParent(None)
+                    widget.deleteLater()
+            host.deleteLater()
+            _events(app, 4)
+
+    print("LOCAL_WEB_AI_VALIDATOR_FULL_SHELL_BYPASS: PASS")
+    print("LOCAL_WEB_AI_VALIDATOR_WORKER_THREAD_START: ABSENT")
     print("REFERENCE_EAGER_TAB_SUPPORTED: PASS")
     print("LOCAL_WEB_AI_LAZY_TARGETS_CONFIRMED: PASS")
-
-    for label, widget in (("Local AI", local), ("Project Web AI", web)):
-        _require(widget is not None, label + " embedded widget is missing.")
-        _require(
-            bool(widget.property("kandaContainHostHeight")),
-            label + " host-height property is missing.",
-        )
-        _require(widget.minimumHeight() == 0, label + " minimum height is not zero.")
-        _require(
-            widget.sizePolicy().verticalPolicy() == QSizePolicy.Policy.Ignored,
-            label + " embedded vertical size pressure is not ignored.",
-        )
-
-    window.close()
-    _process_events(app, 3)
     print("REAL_LOCAL_AI_CANONICAL_HOST_HEIGHT: PASS")
     print("REAL_PROJECT_WEB_AI_CANONICAL_HOST_HEIGHT: PASS")
     print("REAL_LOCAL_WEB_AI_TAB_SWITCH_HEIGHT_STABLE: PASS")

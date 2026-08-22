@@ -9,7 +9,7 @@
   "load_type": "routed",
   "source_stage": "prompt-audit-wave6b-class06-consolidation-retirements-v1",
   "updated_for": "generic-behavior-preserving-refactor-owner-and-specialist-dispatch-v9",
-  "description": "Canonical generic behavior-preserving large-module decomposition law and KANDA specialist dispatcher.",
+  "description": "Canonical generic behavior-preserving large-module decomposition law and KANDA specialist dispatcher. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": true,
   "routing_coverage": "wave6b_large_module_refactor_protocol_v9_1",
   "priority": 31,
@@ -23,7 +23,6 @@
     "behavior-preserving module split"
   ],
   "required_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate",
     "box_architecture_canon",
     "large_module_refactor_template"
   ],
@@ -44,5 +43,6 @@
     "When decomposition is required, create cohesive helpers rather than compressing or padding source.",
     "Route post-refactor unresolved-name, binding, boundary, smoke, and cohesion evidence to current validators; do not recreate a universal fragmentation runner."
   ],
-  "aligned_with": "safe_refactor_how_to_v2.0"
+  "aligned_with": "safe_refactor_how_to_v2.0",
+  "optional_companion_prompts": []
 }

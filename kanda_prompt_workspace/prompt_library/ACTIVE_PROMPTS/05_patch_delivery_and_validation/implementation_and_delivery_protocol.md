@@ -2,7 +2,7 @@
 prompt_id: implementation_and_delivery_protocol
 prompt_code: KPR-05-003
 title: Implementation and Delivery Protocol
-version: 2.0
+version: 2.1
 status: active
 load_type: routed
 owner_box: 05_patch_delivery_and_validation
@@ -28,6 +28,15 @@ an installable release as applicable.
 
 Do not use for analysis-only work, speculative roadmap writing, or direct source
 mutation without a governed release.
+
+## Release-owner boundary
+
+For `KANDA_TOOL_RELEASE`, this protocol may define the KANDA patch payload,
+installer, rollback, and installed-hash checks. For `EXTERNAL_PROJECT_RELEASE`,
+KANDA Reasoner is observer-only: the payload, installer, validator, release
+contract, rollback, and interpreter belong to the Project or release itself. Do
+not import KANDA Tool validators into the Project, do not request KANDA Tool
+source archives, and do not make KANDA runtime availability a release condition.
 
 ## Required inputs
 
@@ -65,7 +74,7 @@ Separate installable project payload from root-level release metadata.
 - Every changed file maps to at least one focused validator or an explicit
   evidence-based non-applicability record.
 
-The exact final ZIP must pass the current canonical ZIP contract before release.
+For a KANDA Tool release, the exact final ZIP must pass the KANDA canonical ZIP contract. For an external Project release, the exact final ZIP must pass the Project/release-owned contract; KANDA `scripts/validate_patch_zip.py` is not a fallback.
 
 ## Archive-member safety
 
@@ -144,6 +153,7 @@ evidence permit it.
 
 ## Version history
 
+- 2.1: scoped KANDA patch construction to KANDA Tool releases and made external Project delivery Project-owned and KANDA-independent.
 - 2.0: narrowed to surgical patch construction, exact baseline admission,
   archive safety, staging, transaction, and rollback; delegated all final gates.
 - 1.x: historical end-to-end implementation and delivery mega-protocol.

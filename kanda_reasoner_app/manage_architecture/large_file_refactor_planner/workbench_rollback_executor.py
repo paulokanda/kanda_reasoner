@@ -10,15 +10,10 @@ from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .models import SCHEMA_VERSION
+from .workbench_spectator_proposal_boundary import proposal_only_blocker
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 from .workbench_guarded_source_apply import GuardedSourceApplyResult
 from .workbench_source_payload_builder import SourceApplyPayloadReadinessResult
 
@@ -149,32 +144,7 @@ def execute_workbench_rollback(
         )
         _write_report(result)
         return result
-    removed: list[str] = []
-    fire_shield = build_current_fire_shield_context(
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="workbench-source-rollback",
-    )
-    backup_raw = backup.read_bytes()
-    assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
-    assert_fire_shield_payload_bytes_allowed(
-        fire_shield,
-        backup_raw,
-        target.relative_to(project_root).as_posix(),
-    )
-    target.write_bytes(backup_raw)
-    for path in generated:
-        if path.exists():
-            assert_fire_shield_write_allowed(
-                fire_shield,
-                path,
-                operation="DELETE",
-            )
-            path.unlink()
-            removed.append(str(path))
-    verify_tool_snapshot_unchanged(fire_shield)
-    final_hash = _sha256_file(target)
-    restored = final_hash == before_hash
-    final_blockers = [] if restored else ["TARGET_HASH_NOT_RESTORED_TO_BEFORE_APPLY"]
+    proposal_blocker = proposal_only_blocker("workbench_source_rollback")
     result = _result(
         apply_result=apply_result,
         project_root=project_root,
@@ -183,17 +153,17 @@ def execute_workbench_rollback(
         report_path=report_path,
         expected=expected,
         confirmation=confirmation_token,
-        status="rollback_completed" if not final_blockers else "blocked",
+        status="rollback_proposal_only",
         before_hash=before_hash,
         after_hash=after_hash,
         current_hash=current_hash,
-        final_hash=final_hash,
+        final_hash=current_hash,
         backup=str(backup),
         backup_verified=backup_verified,
-        restored=restored,
-        removed=removed,
-        retained=retained,
-        blockers=final_blockers,
+        restored=False,
+        removed=[],
+        retained=retained + [proposal_only_warning("workbench_source_rollback")],
+        blockers=[proposal_blocker],
     )
     _write_report(result)
     return result

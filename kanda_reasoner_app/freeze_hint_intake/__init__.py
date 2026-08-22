@@ -3,6 +3,7 @@
 
 from .contract import (
     build_freeze_form_inputs_from_latest_hint,
+    discard_latest_freeze_hint_candidate,
     merge_validation_evidence_into_latest_hint,
     load_latest_freeze_hint_record,
     mark_latest_freeze_hint_used,
@@ -14,6 +15,7 @@ from .contract import (
 from .local_validation_cleanup import clean_stale_pending_text_after_local_validation
 __all__ = [
     "build_freeze_form_inputs_from_latest_hint",
+    "discard_latest_freeze_hint_candidate",
     "merge_validation_evidence_into_latest_hint",
     "load_latest_freeze_hint_record",
     "mark_latest_freeze_hint_used",

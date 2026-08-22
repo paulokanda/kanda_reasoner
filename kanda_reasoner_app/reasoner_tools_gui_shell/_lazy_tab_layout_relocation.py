@@ -5,7 +5,16 @@ from __future__ import annotations
 
 import contextlib
 
-from PySide6.QtWidgets import QGroupBox, QLabel, QLineEdit, QPushButton, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont
+from PySide6.QtWidgets import (
+    QGroupBox,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QSizePolicy,
+    QWidget,
+)
 
 from ._lazy_tab_shell_chrome import (
     _ACTIVE_PROJECT_BUTTON_ONLY_SOURCES,
@@ -58,6 +67,7 @@ class LazyTabLayoutRelocationMixin:
             widget.move_project_root_controls_to_layout(self.tab_header_template.project_root_layout)
         except (AttributeError, TypeError):
             return
+        self.tab_header_template.activate_project_root_slot()
 
     def _move_tab2_ai_review_controls_to_header_row(self, widget: QWidget) -> None:
         """Move Tab 2 AI review controls into the header template."""
@@ -82,6 +92,7 @@ class LazyTabLayoutRelocationMixin:
             label=getattr(widget, "_root_path_label", None),
             path_widget=getattr(widget, "_root_path_edit", None),
             browse_button=getattr(widget, "_browse_root_button", None),
+            path_minimum_width=180,
         )
 
     def _move_tab3_safe_mode_radio_to_header_row(self, widget) -> None:
@@ -107,6 +118,7 @@ class LazyTabLayoutRelocationMixin:
             label=getattr(widget, "project_root_label", None),
             path_widget=getattr(widget, "project_root_edit", None),
             browse_button=getattr(widget, "browse_project_button", None),
+            path_minimum_width=180,
         )
 
     def _move_error_memory_project_root_controls_to_header_row(self, widget: QWidget) -> None:
@@ -144,6 +156,7 @@ class LazyTabLayoutRelocationMixin:
             widget.move_project_root_controls_to_layout(self.tab_header_template.project_root_layout)
         except (AttributeError, TypeError):
             return
+        self.tab_header_template.activate_project_root_slot()
 
     def _move_freeze_after_update_project_root_controls_to_header_row(self, widget: QWidget) -> None:
         """Move Freeze Feature After Update Project Root controls into the header."""
@@ -176,7 +189,10 @@ class LazyTabLayoutRelocationMixin:
             label = None
         if label is None:
             label = QLabel("Project Root:")
-            label.setStyleSheet("color: #0B3D91; font-weight: bold; padding-left: 4px;")
+            label_font = QFont(label.font())
+            label_font.setBold(True)
+            label.setFont(label_font)
+            label.setStyleSheet("padding-left: 4px;")
             widget._header_project_root_label = label
 
         browse_button = self._find_refactor_report_project_root_button(widget)
@@ -197,6 +213,7 @@ class LazyTabLayoutRelocationMixin:
             )
             offset += 1
 
+        self.tab_header_template.activate_project_root_slot()
         self._hide_refactor_report_mode_a_group(widget)
 
     def _move_project_qa_project_root_controls_to_header_row(self, widget: QWidget) -> None:
@@ -224,6 +241,34 @@ class LazyTabLayoutRelocationMixin:
         except (AttributeError, TypeError):
             return
 
+    @staticmethod
+    def _style_active_project_label(label: QLabel) -> None:
+        """Apply the canonical compact Active Project label appearance."""
+        label.setText("Active Project:")
+        label_font = QFont(label.font())
+        label_font.setBold(True)
+        label.setFont(label_font)
+        label.setStyleSheet(
+            "color: #0B3D91; "
+            "font-weight: 700; "
+            "padding: 0px;"
+        )
+        label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        label.setMinimumWidth(0)
+        label.setMargin(0)
+        label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+
+    @staticmethod
+    def _style_active_project_path(path_widget: QWidget) -> None:
+        """Apply the canonical strong-green Active Project path appearance."""
+        path_font = QFont(path_widget.font())
+        path_font.setBold(True)
+        path_widget.setFont(path_font)
+        path_widget.setStyleSheet(
+            "color: #166534; "
+            "font-weight: 700;"
+        )
+
     def _install_title_active_project_buttons(self) -> None:
         """Install the full Active Project surface for Web AI and Config AI."""
         if self.spec.source_hint not in _ACTIVE_PROJECT_BUTTON_ONLY_SOURCES:
@@ -247,22 +292,22 @@ class LazyTabLayoutRelocationMixin:
         label.setObjectName(
             f"{self.spec.tab_id or 'tool'}_active_project_label"
         )
-        label.setStyleSheet(
-            "color: #0B3D91; font-weight: bold; padding-left: 4px;"
-        )
+        self._style_active_project_label(label)
 
         path_edit = QLineEdit()
         path_edit.setObjectName(
             f"{self.spec.tab_id or 'tool'}_active_project_path_edit"
         )
         path_edit.setReadOnly(True)
-        path_edit.setMinimumWidth(280)
-        path_edit.setMaximumWidth(460)
-        path_edit.setStyleSheet("color: #166534; font-weight: bold;")
+        path_edit.setMinimumWidth(0)
+        path_edit.setMaximumWidth(360)
+        path_edit.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         path_edit.setToolTip("Shell-owned Active Project source root.")
+        self._style_active_project_path(path_edit)
 
         destination_layout.insertWidget(destination_layout.count(), label, 0)
         destination_layout.insertWidget(destination_layout.count(), path_edit, 0)
+        self.tab_header_template.activate_project_root_slot()
         self.active_project_label = label
         self.active_project_path_edit = path_edit
         self.refresh_active_project_controls()
@@ -273,18 +318,35 @@ class LazyTabLayoutRelocationMixin:
         label: QWidget | None,
         path_widget: QWidget | None,
         browse_button: QWidget | None,
+        path_minimum_width: int = 0,
     ) -> None:
         """Install one tab-local command surface for shell Project authority."""
         if not isinstance(label, QLabel) or not isinstance(path_widget, QWidget):
             return
 
-        label.setText("Active Project:")
-        label.setStyleSheet(
-            "color: #0B3D91; font-weight: bold; padding-left: 4px;"
+        self._style_active_project_label(label)
+        minimum_width = max(0, int(path_minimum_width))
+        path_widget.setMinimumWidth(minimum_width)
+        path_widget.setMaximumWidth(360)
+        horizontal_policy = (
+            QSizePolicy.Preferred
+            if minimum_width > 0
+            else QSizePolicy.Ignored
         )
-        path_widget.setStyleSheet("color: #166534; font-weight: bold;")
+        path_widget.setSizePolicy(
+            horizontal_policy,
+            QSizePolicy.Preferred,
+        )
+        self._style_active_project_path(path_widget)
 
         destination_layout = self.tab_header_template.project_root_layout
+        label_index = destination_layout.indexOf(label)
+        path_index = destination_layout.indexOf(path_widget)
+        if label_index >= 0 and path_index != label_index + 1:
+            with contextlib.suppress(Exception):
+                destination_layout.removeWidget(path_widget)
+            destination_layout.insertWidget(label_index + 1, path_widget, 0)
+        self.tab_header_template.activate_project_root_slot()
         if isinstance(browse_button, QWidget):
             with contextlib.suppress(Exception):
                 destination_layout.removeWidget(browse_button)

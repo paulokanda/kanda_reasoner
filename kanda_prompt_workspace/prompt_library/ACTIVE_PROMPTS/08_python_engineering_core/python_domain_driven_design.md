@@ -23,6 +23,22 @@ The governing objective is to model the domain accurately enough that important
 rules and language remain explicit, while avoiding DDD ceremony for simple CRUD,
 small utilities, or low-complexity workflows.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## Ownership boundary
 
 This prompt owns:
@@ -39,11 +55,11 @@ This prompt does not own:
 
 - generic dependency direction, ports, framework isolation, or composition-root
   design; use KPR-08-001;
-- KANDA box paths or shielding; use the current Box Architecture owner;
+- host-specific box paths or shielding implementation; use the current Project Box Architecture owner;
 - Repository, Unit of Work, transaction, session, persistence, or application
   service implementation; use the current enterprise/application owner;
 - API, messaging, async/distributed delivery, testing, source mutation, package,
-  validation evidence, Error Memory, or freeze authority.
+  validation evidence, lesson/error memory, or snapshot/freeze authority.
 
 ## Applicability gate
 
@@ -86,7 +102,7 @@ an organizational structure from a conceptual model.
 
 A Bounded Context defines where a model and language are internally consistent.
 Do not equate a context automatically with a package, service, database, team,
-or KANDA box.
+or host-specific box.
 
 For each relationship, record the actual dependency, translation, ownership,
 and change risk. Use Context Map patterns only when they clarify a real
@@ -192,4 +208,4 @@ Do not always generate a complete domain model or runnable implementation.
 
 This prompt may analyze and model domain concepts. It does not authorize source
 changes, architecture-path changes, persistence or messaging implementation,
-validation claims, package delivery, Error Memory insertion, or freeze.
+validation claims, package delivery, lesson/error-memory insertion, or snapshot/freeze writes.

@@ -12,7 +12,7 @@
   "classification": "proportional_observability_telemetry_specialist",
   "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
   "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
-  "description": "Select proportional logging, metrics, tracing, and diagnostic context for the actual runtime, failure modes, privacy model, and operational budget.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "description": "Select proportional logging, metrics, tracing, and diagnostic context for the actual runtime, failure modes, privacy model, and operational budget.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 45,
   "trigger_phrases": [

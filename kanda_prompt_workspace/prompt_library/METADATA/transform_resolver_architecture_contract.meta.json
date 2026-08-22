@@ -12,7 +12,7 @@
   "classification": "pure_versioned_transform_resolution_contract",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Resolve a versioned base identity and ordered transform plan against capabilities and policy into a structured operation result without performing the operation. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Resolve a versioned base identity and ordered transform plan against capabilities and policy into a structured operation result without performing the operation. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 40,
   "trigger_phrases": [

@@ -185,6 +185,10 @@ class ErrorMemoryProjectPathsMixin:
             table.clearContents()
             table.setRowCount(0)
         self._set_project_controls_enabled(False)
+        try:
+            self._reload_table()
+        except Exception:
+            pass
         refresh = getattr(self, '_refresh_heuristic_correction_button_state', None)
         if callable(refresh):
             refresh()
@@ -198,9 +202,14 @@ class ErrorMemoryProjectPathsMixin:
     def _show_project_error_state(self, exc: Exception) -> None:
         """Keep the tab usable and show an actionable load failure message."""
         self._set_project_controls_enabled(False)
+        try:
+            self._reload_table()
+        except Exception:
+            pass
         self._set_project_status(
-            "Error Memory could not load the selected Project. Reselect the Project "
-            "in Show Project to AI and retry. Details: "
+            "Project Error Memory could not load. Tool Error Memory remains isolated "
+            "from Active Project authority. Reselect the Project only if you need "
+            "Project-owned Error Memory. Details: "
             + type(exc).__name__
             + ": "
             + str(exc),
@@ -210,6 +219,23 @@ class ErrorMemoryProjectPathsMixin:
             status="FAIL",
             kind="error_memory_state",
             source="selected_project",
+            message=type(exc).__name__ + ": " + str(exc),
+        )
+
+    def _show_internal_error_state(self, exc: Exception) -> None:
+        """Show an internal GUI failure without blaming Active Project selection."""
+        self._set_project_status(
+            "Error Memory internal load failure. Active Project was not changed, "
+            "and Tool Error Memory did not borrow Project authority. Details: "
+            + type(exc).__name__
+            + ": "
+            + str(exc),
+            error=True,
+        )
+        record_portable_smoke_event(
+            status="FAIL",
+            kind="error_memory_state",
+            source="internal_error",
             message=type(exc).__name__ + ": " + str(exc),
         )
 
@@ -238,7 +264,7 @@ class ErrorMemoryProjectPathsMixin:
             self._show_project_error_state(exc)
             return
         except Exception as exc:
-            self._show_project_error_state(exc)
+            self._show_internal_error_state(exc)
             return
         label = getattr(self, 'project_selection_status_label', None)
         if label is not None:

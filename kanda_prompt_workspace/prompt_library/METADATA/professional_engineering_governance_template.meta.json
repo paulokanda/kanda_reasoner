@@ -17,17 +17,12 @@
   ],
   "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
   "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "description": "Drafts a Project-specific engineering governance profile that references current global canons without becoming a parallel authority.",
+  "description": "Drafts a Project-specific engineering governance profile that references current global canons without becoming a parallel authority. Project-agnostic; host-specific governance is optional.",
   "trigger_phrases": [
     "governance profile template",
     "draft project engineering governance",
     "new project governance profile"
   ],
-  "required_companion_prompts": [
-    "prompt_insertion_and_router_registration_protocol"
-  ],
-  "recommended_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate",
-    "project_tool_boundary_canon"
-  ]
+  "required_companion_prompts": [],
+  "recommended_companion_prompts": []
 }

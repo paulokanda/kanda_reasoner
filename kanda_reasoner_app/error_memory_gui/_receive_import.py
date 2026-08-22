@@ -8,13 +8,16 @@ origin facade upward.
 """
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
 from kanda_reasoner_app.error_memory import (
     ERROR_LESSON_JSON_BEGIN,
     ERROR_LESSON_JSON_END,
+)
+from kanda_reasoner_app.error_memory_gui._draft_intake_lifecycle import (
+    persist_incoming_draft_in_lesson_library,
+    render_incoming_draft_in_work_windows,
 )
 
 __all__ = [
@@ -24,14 +27,17 @@ __all__ = [
 ]
 
 
-def load_formatted_lesson_into_tab(tab: Any, formatted_text: str, lesson: dict[str, Any]) -> None:
-    """Load one parsed lesson into intake/editor surfaces without saving it."""
-    tab._selected_lesson_id = str(lesson.get('lesson_id', ''))
-    tab._last_received_lesson = lesson
-    tab._loaded_pending_intake_file = ''
-    tab._loaded_pending_intake_lesson_id = ''
-    tab.raw_error_edit.setPlainText(formatted_text)
-    tab.received_preview_edit.setPlainText(json.dumps(lesson, indent=2, sort_keys=True, ensure_ascii=False))
+def load_formatted_lesson_into_tab(
+    tab: Any,
+    formatted_text: str,
+    lesson: dict[str, Any],
+) -> None:
+    """Admit one parsed direct intake candidate as a persisted draft lesson."""
+    del formatted_text
+    tab._loaded_pending_intake_file = ""
+    tab._loaded_pending_intake_lesson_id = ""
+    persisted, _path = persist_incoming_draft_in_lesson_library(tab, lesson)
+    tab._selected_lesson_id = str(persisted.get("lesson_id") or "")
 
 
 def receive_formulary_from_ai(tab: Any) -> None:
@@ -43,7 +49,7 @@ def receive_formulary_from_ai(tab: Any) -> None:
     receive_dialog.setWindowTitle('Paste formatted Error Memory lesson from AI')
     receive_dialog.resize(860, 640)
     layout = QVBoxLayout(receive_dialog)
-    help_label = QLabel(f'Paste the AI answer here. Required format is one JSON object between {ERROR_LESSON_JSON_BEGIN} and {ERROR_LESSON_JSON_END}, or one valid Error Memory lesson JSON object. Applying loads it into the AI-assisted intake window and Error Editor. It is not saved until Memorize Error. Short plain-text lesson notes are also accepted as draft lessons, but formatted JSON is preferred.')
+    help_label = QLabel(f'Paste the AI answer here. Required format is one JSON object between {ERROR_LESSON_JSON_BEGIN} and {ERROR_LESSON_JSON_END}, or one valid Error Memory lesson JSON object. Applying admits it into Lessons immediately as Draft, then loads that persisted Draft into the AI-assisted intake window and Error Editor. Short plain-text lesson notes are also accepted as draft lessons, but formatted JSON is preferred.')
     help_label.setWordWrap(True)
     layout.addWidget(help_label)
     response_edit = QPlainTextEdit()
@@ -67,8 +73,19 @@ def receive_formulary_from_ai(tab: Any) -> None:
         except Exception as exc:
             show_error_copy_close_window(receive_dialog, title='Could not load formatted AI lesson', message=f'The AI answer could not be parsed. Ask AI to return exactly one valid JSON object between {ERROR_LESSON_JSON_BEGIN} and {ERROR_LESSON_JSON_END}, with no markdown and no prose.\n\nError: {exc}')
             return
-        load_formatted_lesson_into_tab(tab, formatted_text, lesson)
-        show_auto_close_action_window(receive_dialog, title='Error Memory', message='Loaded formatted AI lesson into the intake window and Error Editor.', detail_text='Review or edit it, then click Memorize Error to save it into Lessons.', on_close=receive_dialog.close)
+        try:
+            load_formatted_lesson_into_tab(tab, formatted_text, lesson)
+        except Exception as exc:
+            show_error_copy_close_window(
+                receive_dialog,
+                title='Error Memory draft admission failed',
+                message=(
+                    'The lesson could not be admitted into Lessons as Draft. The editors were not changed by this failed admission.\n\n'
+                    + str(exc)
+                ),
+            )
+            return
+        show_auto_close_action_window(receive_dialog, title='Error Memory', message='Imported formatted AI lesson as Draft in Lessons and loaded it into the intake window and Error Editor.', detail_text='Review or edit the saved draft, then click Memorize Error. If it is active-ready, Memorize Error promotes that same draft to active.', on_close=receive_dialog.close)
 
     apply_button.clicked.connect(apply_ai_lesson)
     cancel_button.clicked.connect(receive_dialog.close)
@@ -98,5 +115,16 @@ def import_error_lesson_zip(tab: Any) -> None:
     except Exception as exc:
         show_error_copy_close_window(tab, title='Error Memory import failed', message=str(exc))
         return
-    load_formatted_lesson_into_tab(tab, formatted_text, lesson)
-    tab._show_action_done('Error Memory import', 'Loaded formatted Error Memory lesson into the AI-assisted intake and Error Editor.', 'It was not saved yet. Review or edit it, then click Memorize Error to save it into Lessons.')
+    try:
+        load_formatted_lesson_into_tab(tab, formatted_text, lesson)
+    except Exception as exc:
+        show_error_copy_close_window(
+            tab,
+            title='Error Memory draft admission failed',
+            message=(
+                'The lesson could not be admitted into Lessons as Draft. The editors were not changed by this failed admission.\n\n'
+                + str(exc)
+            ),
+        )
+        return
+    tab._show_action_done('Error Memory import', 'Imported formatted Error Memory lesson as Draft in Lessons and loaded both work windows.', 'Review or edit the saved draft, then click Memorize Error. If it is active-ready, Memorize Error promotes that same draft to active.')

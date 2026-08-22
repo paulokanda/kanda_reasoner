@@ -14,6 +14,7 @@ from kanda_reasoner_app.templates.press_depth_button_theme import (
 
 from .app_constants import APP_DISPLAY_NAME, APP_ICON_PATH
 from .main_window import ReasonerToolsWindow
+from .top_level_geometry_guard import install_top_level_geometry_guard
 
 __all__: list[str] = []
 
@@ -56,6 +57,7 @@ def main() -> int:
     app = QApplication.instance() or QApplication(sys.argv)
     _configure_application_identity(app)
     apply_color_preserving_press_depth_theme(app)
+    install_top_level_geometry_guard(app)
     window = ReasonerToolsWindow()
     window.show()
     return app.exec()

@@ -12,7 +12,7 @@
   "classification": "portable_package_plugin_trust_transaction_lifecycle_canon",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Define safe inspection, trust assessment, import planning, transactional installation, enablement, update, rollback, disablement, and removal for user-importable packages or plugins. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Define safe inspection, trust assessment, import planning, transactional installation, enablement, update, rollback, disablement, and removal for user-importable packages or plugins. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 40,
   "trigger_phrases": [

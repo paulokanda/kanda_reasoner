@@ -1,11 +1,14 @@
-"""Validate Project Q&A host-height containment in the shared KANDA GUI."""
+# project-path: tools/validate_project_qa_host_height_stability_v1.py
+"""Validate Project Q&A host-height containment without full-shell workers."""
 from __future__ import annotations
 
 import argparse
 import ast
-import os
 from pathlib import Path
+import os
 import sys
+import tempfile
+from types import SimpleNamespace
 
 FEATURE_ID = "project-qa-host-height-stability-v1"
 UI_BUILDER_RELATIVE = Path(
@@ -16,16 +19,13 @@ MAX_PHYSICAL_LINES = 500
 
 
 def _require(condition: bool, message: str) -> None:
-    """Raise an assertion when a validation condition is false."""
     if not condition:
         raise AssertionError(message)
 
 
 def _validate_static_contract(project_root: Path) -> None:
-    """Validate Project Q&A vertical containment and module-size contracts."""
     source_path = project_root / UI_BUILDER_RELATIVE
     _require(source_path.is_file(), "Project Q&A ui_builder.py is missing.")
-
     source = source_path.read_text(encoding="utf-8", errors="strict")
     compile(source, str(source_path), "exec")
     ast.parse(source, filename=str(source_path))
@@ -50,13 +50,12 @@ def _validate_static_contract(project_root: Path) -> None:
             "Missing Project Q&A height-containment fragment: " + fragment,
         )
 
-    forbidden_fragments = (
+    for fragment in (
         "setFixedHeight(1080",
         "setMinimumHeight(1080",
         "setFixedHeight(900",
         "setMinimumHeight(900",
-    )
-    for fragment in forbidden_fragments:
+    ):
         _require(
             fragment not in source,
             "Forbidden Project Q&A host-height lock fragment: " + fragment,
@@ -66,18 +65,27 @@ def _validate_static_contract(project_root: Path) -> None:
         len(source.splitlines()) <= MAX_PHYSICAL_LINES,
         "Project Q&A ui_builder.py exceeds 500 physical lines.",
     )
-
     print("PROJECT_QA_SCROLL_CONTAINMENT: PRESENT")
     print("VERTICAL_SIZE_PRESSURE: IGNORED")
     print("MODULE_SIZE_GATE: PASS")
 
 
+def _events(app, count: int = 8) -> None:
+    for _ in range(count):
+        app.processEvents()
+
+
 def _validate_qt_runtime(project_root: Path) -> bool:
-    """Compare shared host height before and after loading Project Q&A."""
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     try:
-        from PySide6.QtCore import Qt
-        from PySide6.QtWidgets import QApplication, QSizePolicy
+        from PySide6.QtCore import QObject, QSettings, Signal, Qt
+        from PySide6.QtWidgets import (
+            QApplication,
+            QMainWindow,
+            QSizePolicy,
+            QTabWidget,
+            QWidget,
+        )
     except ModuleNotFoundError:
         print("GUI HOST HEIGHT CHECK: SKIPPED_NO_PYSIDE6")
         return False
@@ -86,62 +94,134 @@ def _validate_qt_runtime(project_root: Path) -> bool:
     if project_text not in sys.path:
         sys.path.insert(0, project_text)
 
-    from kanda_reasoner_app.reasoner_tools_gui_shell.main_window import (
-        ReasonerToolsWindow,
+    import kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window as qa_module
+    from kanda_reasoner_app.reasoner_tools_gui_shell.gui_support import (
+        _prepare_embedded_widget,
     )
+
+    class _FixtureLocalConfig(QObject):
+        configuration_changed = Signal(object)
+        catalog_changed = Signal(object)
+
+        def snapshot(self):
+            return SimpleNamespace(available_models=(), model_id="")
+
+        def refresh_models(self):
+            return None
+
+        def request_open_configuration(self):
+            return None
+
+        def selected_model_id(self):
+            return ""
+
+    class _FixtureBridge(QObject):
+        answer_ready = Signal(str)
+        token_ready = Signal(str)
+        error_ready = Signal(str)
+        status_ready = Signal(str)
+
+    class _FixtureAI:
+        def __init__(self):
+            self.bridge = _FixtureBridge()
+
+        def ask(self, *_args, **_kwargs):
+            return None
 
     app = QApplication.instance() or QApplication([])
-    window = ReasonerToolsWindow()
-    window.resize(1200, 760)
-    window.show()
-    app.processEvents()
+    original_config_owner = qa_module.application_local_ai_configuration
+    original_ai = qa_module.LocalAIReasoner
+    original_qt_core_attr = qa_module._qt_core_attr
 
-    brain_index = window._tab_index_by_tab_id["brain_navigator"]
-    project_qa_index = window._tab_index_by_tab_id["project_qa"]
+    with tempfile.TemporaryDirectory(prefix="kanda_project_qa_height_") as temp_dir:
+        settings_path = str(Path(temp_dir) / "project_qa_height.ini")
+        fixture_config = _FixtureLocalConfig()
 
-    window.tabs.setCurrentIndex(brain_index)
-    for _ in range(3):
-        app.processEvents()
-    baseline_height = int(window.height())
+        def _fixture_qt_core_attr(name: str):
+            if name == "QSettings":
+                return lambda *_args: QSettings(
+                    settings_path,
+                    QSettings.Format.IniFormat,
+                )
+            return original_qt_core_attr(name)
 
-    window.tabs.setCurrentIndex(project_qa_index)
-    page = window._lazy_page_for_tab_index(project_qa_index)
-    _require(page is not None, "Project Q&A lazy page is missing.")
-    _require(page.ensure_loaded(), "Project Q&A failed to load.")
-    for _ in range(8):
-        app.processEvents()
+        qa_module.application_local_ai_configuration = lambda: fixture_config
+        qa_module.LocalAIReasoner = _FixtureAI
+        qa_module._qt_core_attr = _fixture_qt_core_attr
 
-    project_qa_height = int(window.height())
-    _require(
-        project_qa_height == baseline_height,
-        "Project Q&A changed host height from "
-        + str(baseline_height)
-        + " to "
-        + str(project_qa_height),
-    )
+        project_widget = None
+        host = QMainWindow()
+        tabs = QTabWidget(host)
+        baseline_page = QWidget()
+        tabs.addTab(baseline_page, "Baseline")
+        host.setCentralWidget(tabs)
+        host.resize(1200, 760)
+        host.show()
+        _events(app)
 
-    embedded = page._embedded_widget
-    _require(embedded is not None, "Project Q&A embedded widget is missing.")
-    scroll = getattr(embedded, "_project_qa_body_scroll_area", None)
-    _require(scroll is not None, "Project Q&A body scroll area is missing.")
-    _require(
-        scroll.sizePolicy().verticalPolicy() == QSizePolicy.Policy.Ignored,
-        "Project Q&A scroll area must ignore vertical size pressure.",
-    )
-    _require(
-        scroll.verticalScrollBarPolicy()
-        == Qt.ScrollBarPolicy.ScrollBarAsNeeded,
-        "Project Q&A must expose internal vertical scrolling as needed.",
-    )
+        try:
+            project_widget = qa_module.JsonProjectReasonerV10()
+            project_widget = _prepare_embedded_widget(project_widget)
+            tabs.addTab(project_widget, "Project Q&A")
 
-    window.close()
-    app.processEvents()
+            tabs.setCurrentWidget(baseline_page)
+            _events(app)
+            baseline_height = int(host.height())
+
+            tabs.setCurrentWidget(project_widget)
+            _events(app, 12)
+
+            project_qa_height = int(host.height())
+            _require(
+                project_qa_height == baseline_height,
+                "Project Q&A changed isolated host height from "
+                + str(baseline_height)
+                + " to "
+                + str(project_qa_height),
+            )
+
+            scroll = getattr(
+                project_widget,
+                "_project_qa_body_scroll_area",
+                None,
+            )
+            _require(scroll is not None, "Project Q&A body scroll area is missing.")
+            _require(
+                scroll.sizePolicy().verticalPolicy()
+                == QSizePolicy.Policy.Ignored,
+                "Project Q&A scroll area must ignore vertical size pressure.",
+            )
+            _require(
+                scroll.verticalScrollBarPolicy()
+                == Qt.ScrollBarPolicy.ScrollBarAsNeeded,
+                "Project Q&A must expose internal vertical scrolling as needed.",
+            )
+
+            tabs.setCurrentWidget(baseline_page)
+            _events(app)
+            _require(
+                int(host.height()) == baseline_height,
+                "Returning to baseline changed isolated host height.",
+            )
+        finally:
+            qa_module.application_local_ai_configuration = original_config_owner
+            qa_module.LocalAIReasoner = original_ai
+            qa_module._qt_core_attr = original_qt_core_attr
+            host.close()
+            _events(app, 4)
+            if project_widget is not None:
+                project_widget.setParent(None)
+                project_widget.deleteLater()
+            host.deleteLater()
+            _events(app, 4)
+
+    print("PROJECT_QA_VALIDATOR_FULL_SHELL_BYPASS: PASS")
+    print("PROJECT_QA_VALIDATOR_WORKER_THREAD_START: ABSENT")
     print("GUI HOST HEIGHT CHECK: PASS")
     return True
 
 
 def validate(project_root: Path) -> None:
-    """Run focused Project Q&A height-stability checks."""
     root = project_root.expanduser().resolve()
     _require(root.is_dir(), "Project root is not a directory: " + str(root))
     _validate_static_contract(root)
@@ -151,7 +231,6 @@ def validate(project_root: Path) -> None:
 
 
 def main() -> int:
-    """CLI entry point."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", required=True)
     args = parser.parse_args()

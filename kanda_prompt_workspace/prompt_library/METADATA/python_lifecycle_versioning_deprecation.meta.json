@@ -12,7 +12,7 @@
   "classification": "python_release_compatibility_deprecation_eol_specialist",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Define public compatibility surfaces, version policy, support windows, deprecation, migration, maintenance, and end-of-life for Python products and libraries. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Define public compatibility surfaces, version policy, support windows, deprecation, migration, maintenance, and end-of-life for Python products and libraries. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [

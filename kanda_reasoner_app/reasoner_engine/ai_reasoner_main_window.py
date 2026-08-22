@@ -12,6 +12,10 @@ import sys
 import contextlib
 
 from importlib import import_module as _qtcore_import_module
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from PySide6.QtCore import QProcess
 
 
 def _qt_core_attr(name: str):

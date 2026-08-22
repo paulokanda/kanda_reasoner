@@ -4,7 +4,7 @@
   "display_name": "Implementation and Delivery Protocol",
   "filename": "implementation_and_delivery_protocol.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "2.0",
+  "version": "2.1",
   "status": "active",
   "load_type": "routed",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,8 +16,8 @@
     "surgical patch construction",
     "installer preparation"
   ],
-  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
-  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "source_stage": "external-project-observer-independence-v1",
+  "updated_for": "external-project-observer-independence-v1",
   "description": "Surgical payload, exact predecessor admission, archive safety, project-linked staging, backup, install transaction, and rollback protocol for an authorized release.",
   "priority": 16,
   "trigger_phrases": [

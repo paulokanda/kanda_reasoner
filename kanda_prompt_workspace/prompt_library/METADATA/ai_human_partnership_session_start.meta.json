@@ -6,7 +6,7 @@
   "status": "active",
   "load_type": "on_request",
   "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
-  "description": "Optional communication overlay defining human and AI roles without duplicating operational canons.",
+  "description": "Optional communication overlay defining human and AI roles without duplicating operational canons. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": true,
   "renamed_in_clean_reconciliation_v2": true,
   "routing_coverage": "complete_v3",

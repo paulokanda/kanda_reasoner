@@ -19,7 +19,7 @@
   ],
   "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
   "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
-  "description": "Canonical bounded-responsibility ownership, public/private contract, authoritative state, dependency, lifecycle, and Box Boundary Audit laws.",
+  "description": "Canonical bounded-responsibility ownership, public/private contract, authoritative state, dependency, lifecycle, and Box Boundary Audit laws. Project-agnostic; host-specific governance is optional.",
   "priority": 3,
   "trigger_phrases": [
     "box architecture",
@@ -32,11 +32,8 @@
     "god box",
     "leaking registry"
   ],
-  "required_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate"
-  ],
+  "required_companion_prompts": [],
   "optional_companion_prompts": [
-    "project_tool_boundary_canon",
     "boundary_first_repair_protocol",
     "kanda_box_shielding_canon"
   ],

@@ -355,6 +355,21 @@ def create_tab2_ai_review_window_class(base_class: type[Any]) -> type[Any]:
     class Tab2AIReviewWorkflowManagerWindow(base_class):  # type: ignore[misc]
         """Workflow manager window with read-only Tab 2 AI review controls."""
 
+        def project_scope_switch_block_reason(self) -> str:
+            """Return a public Project-switch block for active Workflow work."""
+            worker_thread = getattr(self, "_worker_thread", None)
+            if worker_thread is not None and worker_thread.isRunning():
+                return "Workflow Review worker is still running"
+            ai_thread = getattr(self, "_tab2_ai_review_thread", None)
+            if ai_thread is not None and ai_thread.isRunning():
+                return "Workflow Review AI review is still running"
+            return ""
+
+        def request_project_scope_settlement(self) -> None:
+            """Request cooperative settlement of Workflow Review async work."""
+            if self.project_scope_switch_block_reason():
+                self.cancel_running_operation()
+
         def _build_ui(self) -> None:  # type: ignore[override]
             """Support build ui behavior.
             """

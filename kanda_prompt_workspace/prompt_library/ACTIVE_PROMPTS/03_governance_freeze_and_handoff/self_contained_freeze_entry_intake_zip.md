@@ -691,9 +691,9 @@ Also report exactly one companion state:
 * `ERROR MEMORY COMPANION DISPOSITION: NOT_REQUIRED`
 * `ERROR MEMORY COMPANION DISPOSITION: BLOCKED`
 
-When a verified, reusable failure lesson is justified and Error Memory intake is not complete, the next exact owner is `KPR-05-008`. Pass the same selected-Project identity, Tool root, feature identity, exact patch identity, focused validator, current validation evidence, and demonstrated failure evidence. Do not make the user re-enter those values.
+When a verified, reusable failure lesson is justified and Error Memory intake is not complete, the next exact owner is `KPR-05-008`. Pass Tool root, feature identity, exact patch identity, focused validator, current validation evidence, demonstrated failure evidence, and selected-Project relevance context only when it is directly useful evidence. Selected Project identity is context, not Error Memory ownership, and must not determine reusable lesson storage. Do not make the user re-enter evidence already available.
 
-Do not merge the Freeze ZIP and Error Memory ZIP. They remain separate artifacts, separate pending intakes, separate owner Boxes, and separate human approval actions.
+Do not merge the Freeze ZIP and Error Memory ZIP. They remain separate artifacts, separate pending/transport intakes, separate owner Boxes, and separate human approval actions. Error Memory admission into its review surface normalizes to `draft`; human `Memorize Error` is the only draft-to-active promotion gate.
 
 FINAL ZIP VALIDATION BEFORE DELIVERY
 

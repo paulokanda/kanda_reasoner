@@ -3,17 +3,11 @@
 
 from __future__ import annotations
 
-import py_compile
-import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
+from kanda_reasoner_app.project_source_proposal_boundary import (
+    PROJECT_REPAIR_PROPOSAL_ONLY_MARKER,
 )
 
 from ._active_scope import _build_active_source_scope
@@ -58,6 +52,7 @@ class FacadeFixResult:
     dry_run: bool
     backup_path: str = ""
     error: str = ""
+    proposal_only: bool = False
 
     def to_finding(self) -> SourceHygieneFinding:
         """Represent this fix result as a source hygiene finding."""
@@ -74,6 +69,7 @@ class FacadeFixResult:
                 "changed": self.changed,
                 "dry_run": self.dry_run,
                 "backup_path": self.backup_path,
+                "proposal_only": self.proposal_only,
             },
             suggested_action="Review the fix result and validate the project gates.",
         )
@@ -151,56 +147,47 @@ def apply_safe_package_marker_fix(
     dry_run: bool = True,
     backup_dir: str | Path | None = None,
 ) -> FacadeFixResult:
-    """Apply the safe empty-__init__ package marker fix when explicitly requested."""
+    """Return a package-marker proposal without mutating Project source."""
+    del backup_dir
     root = Path(project_root).resolve()
     candidate = Path(path).resolve()
     if not _is_inside(candidate, root):
-        return _failed(candidate, dry_run, "Refusing to edit a file outside the project root.")
+        return _failed(
+            candidate,
+            dry_run,
+            "Refusing to edit a file outside the project root.",
+        )
     if candidate.name != "__init__.py":
-        return _failed(candidate, dry_run, "Only __init__.py package marker files are supported.")
+        return _failed(
+            candidate,
+            dry_run,
+            "Only __init__.py package marker files are supported.",
+        )
     if not _is_empty_init_file(candidate):
-        return _failed(candidate, dry_run, "File is not empty; no mechanical package-marker fix was applied.")
+        return _failed(
+            candidate,
+            dry_run,
+            "File is not empty; no mechanical package-marker fix was applied.",
+        )
     new_text = _package_marker_text(candidate)
+    compile(new_text, str(candidate), "exec")
     if dry_run:
         return FacadeFixResult(
             path=str(candidate),
-            action="Would write explicit package marker and __all__ = [].",
+            action="Would propose explicit package marker and __all__ = [].",
             changed=False,
             dry_run=True,
+            proposal_only=True,
         )
-    backup_path = _create_backup(candidate, root, backup_dir)
-    original = candidate.read_bytes()
-    fire_shield = build_current_fire_shield_context(
-        project_root=root,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="source-hygiene-shadow-fix",
-    )
-    proposed = new_text.encode("utf-8")
-    assert_fire_shield_write_allowed(fire_shield, candidate, operation="REPLACE")
-    assert_fire_shield_payload_bytes_allowed(fire_shield, candidate, proposed)
-    candidate.write_bytes(proposed)
-    try:
-        py_compile.compile(str(candidate), doraise=True)
-    except Exception as exc:
-        assert_fire_shield_write_allowed(fire_shield, candidate, operation="REPLACE")
-        assert_fire_shield_payload_bytes_allowed(fire_shield, candidate, original)
-        candidate.write_bytes(original)
-        verify_tool_snapshot_unchanged(fire_shield)
-        return FacadeFixResult(
-            path=str(candidate),
-            action="Rolled back package-marker fix after validation failure.",
-            changed=False,
-            dry_run=False,
-            backup_path=str(backup_path),
-            error="py_compile failed after package-marker fix: " + str(exc),
-        )
-    verify_tool_snapshot_unchanged(fire_shield)
     return FacadeFixResult(
         path=str(candidate),
-        action="Wrote explicit package marker and __all__ = [].",
-        changed=True,
+        action=(
+            PROJECT_REPAIR_PROPOSAL_ONLY_MARKER
+            + ":SAFE_PACKAGE_MARKER"
+        ),
+        changed=False,
         dry_run=False,
-        backup_path=str(backup_path),
+        proposal_only=True,
     )
 
 
@@ -272,35 +259,6 @@ def _package_marker_text(path: Path) -> str:
     
     package_name = path.parent.name or "package"
     return '\"\"\"Package marker for ' + package_name + '.\"\"\"\n\n__all__ = []\n'
-
-
-def _create_backup(path: Path, root: Path, backup_dir: str | Path | None) -> Path:
-    """Support create backup behavior.
-    
-    Parameters
-    ----------
-    path : Path
-        The file or folder path.
-    root : Path
-        The root path.
-    backup_dir : str | Path | None
-        The backup dir value.
-    
-    Returns
-    -------
-    Path
-        The resolved path.
-    """
-    
-    if backup_dir is None:
-        target_root = root / "workbench" / "source_hygiene_backups" / "safe_facade_fix"
-    else:
-        target_root = Path(backup_dir).resolve()
-    relative = path.relative_to(root)
-    backup_path = target_root / relative.with_suffix(relative.suffix + ".bak")
-    backup_path.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(path, backup_path)
-    return backup_path
 
 
 def _failed(path: Path, dry_run: bool, error: str) -> FacadeFixResult:

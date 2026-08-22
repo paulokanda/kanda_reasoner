@@ -12,7 +12,7 @@
   "classification": "current_external_evidence_disconfirmation_specialist",
   "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
   "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
-  "description": "Verify time-sensitive external claims with current primary sources and deliberately search for evidence that could disprove or narrow the proposed decision.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "description": "Verify time-sensitive external claims with current primary sources and deliberately search for evidence that could disprove or narrow the proposed decision.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [

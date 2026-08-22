@@ -27,10 +27,10 @@
 <article class="control-card"><h4><code>Engineering Safety</code></h4><p>Runs broader engineering, quality, source-hygiene, test-protection, and safety checks. It has its own detailed Help page.</p></article>
 <article class="control-card"><h4><code>Workflow Review</code></h4><p>Checks whether a feature or process has complete steps, correct connections, outputs, and validation. It has its own detailed Help page.</p></article>
 </div></section>
-<section><h2>Architecture Review: Four Steps From Audit To WorkBench</h2>
+<section><h2>Architecture Review: Five Steps From Audit To WorkBench</h2>
 <figure class="technical-diagram"><img src="../assets/diagrams/architecture_review_pipeline.svg" alt="Audit Project pipeline from project inspection to evidence, planning, review, and controlled next steps"><figcaption>The child tabs form a progression. Start at the left and move only when the previous evidence exists.</figcaption></figure>
-<ol class="route-steps"><li><code>Check Update Architecture</code>: inspect the whole project.</li><li><code>Large Module AST Split Audit</code>: study one oversized Python file.</li><li><code>Large File Refactor Planner</code>: create and compare plans.</li><li><code>Large File Refactor WorkBench</code>: generate and validate controlled previews in stages.</li></ol></section>
-<section><h2>1. Check Update Architecture</h2>
+<ol class="route-steps"><li><code>Check Update Architecture</code>: inspect grouped active findings and raw audit evidence.</li><li><code>Dismissed Findings</code>: restore or permanently suppress Project-specific accepted findings.</li><li><code>Large Module AST Split Audit</code>: study one oversized Python file.</li><li><code>Large File Refactor Planner</code>: create and compare plans.</li><li><code>Large File Refactor WorkBench</code>: generate and validate controlled previews in stages.</li></ol></section>
+<section><h2>1. Check Update Architecture</h2><p>Validate output is shown first as grouped findings. Errors are listed before warnings, and findings are grouped by audit code. Each group and finding has a checkbox. Use <code>Dismiss Selected</code> only after deciding the finding is accepted, deferred, or a false positive for the selected Project.</p><p><code>Raw Audit</code> preserves complete validator output, original counts, and exit status. Project dispositions never convert a failing validator into a pass.</p>
 <figure class="section-drawing"><img src="../assets/drawings/architecture_review_workflow_cafe.png" alt="Cartoon cafe workflow where an inspection ticket is checked before work is served"><figcaption>The audit report is the order ticket. Read it before choosing a repair.</figcaption></figure>
 <div class="control-list">
 <article class="control-card"><h4><code>Validate Project</code></h4><p><strong>Use:</strong> Runs the selected mode. In <code>validate</code>, it checks the project and reports findings.</p><p><strong>Beginner advice:</strong> Use this first.</p></article>
@@ -49,7 +49,7 @@
 <article class="control-card"><h4><code>Large Module Creation/Refactor Protocol</code></h4><p>Copies the governed large-module rules. Paste them with the audit evidence when an AI will create or refactor Python modules.</p></article>
 <article class="control-card"><h4><code>Project Audit Results</code></h4><p>The main read-only output area. It shows progress, issue codes, evidence paths, warnings, and completion status.</p></article>
 </div></section>
-<section><h2>2. Large Module AST Split Audit</h2>
+<section><h2>2. Dismissed Findings</h2><p>This Project-owned state lives under <code>&lt;drive&gt;/&lt;project&gt;_show_project_to_AI/project_architecture_review/</code>. <code>Restore Selected</code> returns a finding to active review. <code>Delete Selected Permanently</code> removes it from the visible bin but keeps a suppression tombstone so later scans do not resurrect it. Dismissing an error never changes the validator exit status or raw audit evidence.</p></section><section><h2>3. Large Module AST Split Audit</h2>
 <figure class="section-drawing"><img src="../assets/drawings/architecture_review_issue_catalog_library.png" alt="Cartoon library where mixed and duplicated books represent responsibilities inside a large file"><figcaption>The AST audit sorts one large file into understandable responsibility groups.</figcaption></figure>
 <p>Use this after the Project Audit names an oversized Python file. It studies structure without refactoring the source.</p>
 <div class="control-list">
@@ -61,7 +61,7 @@
 <article class="control-card"><h4><code>Copy Split Handoff for AI</code></h4><p>Copies a structured report for AI review after the AST audit finishes.</p></article>
 <article class="control-card"><h4><code>Safety classifier: AST heuristic</code></h4><p>Explains whether proposed groups appear more or less independent. It is guidance, not permission to refactor.</p></article>
 </div></section>
-<section><h2>3. Large File Refactor Planner</h2><p>The Planner turns one selected large file and its audit evidence into a proposed facade-and-helper plan. It does not change source code.</p>
+<section><h2>4. Large File Refactor Planner</h2><p>The Planner turns one selected large file and its audit evidence into a proposed facade-and-helper plan. It does not change source code.</p>
 <div class="control-list">
 <article class="control-card"><h4>Settings: <code>Ideal</code>, <code>Max</code>, <code>Min helper</code></h4><p>Planning boundaries for module and helper sizes. They do not justify compressed formatting or duplicated code.</p></article>
 <article class="control-card"><h4><code>Analysis evidence panel</code></h4><p>Shows symbols, responsibilities, imports, and dependency evidence.</p></article>
@@ -75,7 +75,7 @@
 <article class="control-card"><h4><code>Review Imported Web AI Version</code></h4><p>Checks a pasted or imported Web AI proposal before it can be adopted.</p></article>
 <article class="control-card"><h4><code>Show Planning Summary</code></h4><p>Shows which planning stages and versions are ready.</p></article>
 </div></section>
-<section><h2>4. Large File Refactor WorkBench</h2><p>The WorkBench is advanced and staged. Buttons unlock in order because each later stage depends on earlier evidence.</p>
+<section><h2>5. Large File Refactor WorkBench</h2><p>The WorkBench is advanced and staged. Buttons unlock in order because each later stage depends on earlier evidence.</p>
 <div class="control-list">
 <article class="control-card"><h4><code>Load Latest Planner Plan</code></h4><p>Transfers the latest accepted plan into WorkBench ownership.</p></article>
 <article class="control-card"><h4><code>Recheck Source Hash</code></h4><p>Confirms the source file has not changed since planning. A mismatch means the plan is stale.</p></article>

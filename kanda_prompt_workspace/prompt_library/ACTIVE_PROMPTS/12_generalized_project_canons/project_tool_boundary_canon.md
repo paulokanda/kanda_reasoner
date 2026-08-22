@@ -1,6 +1,6 @@
 # Project Tool Boundary Canon
 
-Version: 2.3
+Version: 2.5
 Status: Active prompt-library canon
 Prompt ID: project_tool_boundary_canon
 Prompt code: KPR-12-001
@@ -105,7 +105,7 @@ The selected Project owns its source and authorized generated source results. A 
 
 ### Project Support
 
-KANDA-managed durable support is external to Project source. It may contain handoff data, Error Memory, Freeze Memory, durable validation evidence, and other project-specific support artifacts.
+KANDA-managed durable support is external to Project source. It may contain handoff data, Error Memory exports or intake evidence, Freeze Memory, durable validation evidence, and other project-specific support artifacts. Reusable Error Memory lessons remain Tool-owned.
 
 The default sibling/drive-root naming profile is valid only after collision checks and canonical resolution. A rename, move, drive change, or workspace reassignment must not silently orphan, merge, or overwrite support state. Migration requires source and destination identity checks, conflict detection, explicit provenance, and verified completion.
 
@@ -199,40 +199,91 @@ The hard prohibition is undeclared or unauthorized cross-project mutation, not e
 
 ## Fire Shield programmatic authority
 
-The frozen Tool feature `kanda-reasoner-fire-shield-cross-project-immutability-v1`
-is the application-level, fail-closed programmatic authority for governed
-operations when the verified Active Project is external to KANDA Reasoner.
-Prompt compliance coordinates intent; it is not a security boundary and never
-substitutes for Fire Shield execution.
+The frozen Tool Fire Shield remains a fail-closed boundary for KANDA-managed
+Project reads and KANDA-owned writes to Project Support or transient evidence. It
+never grants KANDA Reasoner authority to mutate external Project source.
 
-For consequential external-Project work:
+### Actor-scope gate
 
-1. Resolve the current selected-Project boundary and operation through the
-   existing public identity/operation owners.
-2. Use `kanda_reasoner_app.project_fire_shield` or an existing public workflow
-   already integrated with that module. Never reach into `_project_fire_shield_*`.
-3. Build the current Fire Shield context for the exact lifecycle phase and
-   operation ID before mutation, extraction, packaging, restore, move, rename,
-   delete, or Project Python/import-isolation work.
-4. Preflight source transfer, payload bytes, and archives before any destination
-   write or extraction. Recheck current identity immediately before mutation.
-5. If Fire Shield is missing, stale, ambiguous, unavailable, or returns BLOCKED,
-   stop the consequential action. Do not fall back to direct filesystem writes,
-   prompt-only approval, private imports, or an alternate unguarded path.
-6. Project execution must use the selected Project interpreter or its canonical
-   resolver and must not inject the KANDA Tool root into external Project
-   `sys.path` or resolve private Tool implementation as a Project dependency.
-7. Tool reads and governance remain allowed, but Tool source must remain
-   unchanged for an external Project operation unless a separate Tool defect is
-   independently proven and authorized.
-8. KANDA self-hosting is exempt from external-Project mode only after current
-   registry identity proves the reserved KANDA Project identity and canonical
-   owner-root equality. Path-string equality alone is never sufficient.
+Classify every external-Project task before applying Tool governance:
 
-Fire Shield is an application-level guard, not an operating-system sandbox, ACL,
-or process-isolation boundary. Do not claim protection outside its validated
-programmatic scope.
+```text
+KANDA_OBSERVER_ACTOR
+    KANDA Reasoner reads Project source or writes only KANDA-owned support or
+    transient evidence. Project source mutation is unsupported.
 
+PROJECT_ACTOR
+    The Project is edited, installed, tested, executed, validated, released, or
+    rolled back through its own IDE, terminal, interpreter, CI, installer, or
+    Project-owned delivery package.
+```
+
+For `PROJECT_ACTOR` work:
+
+- KANDA Reasoner selection state, registry, portable runtime, Fire Shield, Tool
+  interpreter, GUI, validators, Error Memory export, source archive, or
+  availability is not an execution prerequisite;
+- never request KANDA Tool source or `kanda_reasoner__source_archive_partXX_of_YY.zip`
+  to implement, install, validate, release, or roll back an external Project;
+- use Project-owned source, safeguards, interpreter, validators, release contract,
+  rollback, and human authorization;
+- KANDA may observe the resulting source and evidence afterward, but that
+  observation neither grants nor revokes Project mutation authority.
+
+For `KANDA_OBSERVER_ACTOR` work:
+
+1. Resolve the current selected-Project identity through public owners.
+2. Use `kanda_reasoner_app.project_operation_authority` and Fire Shield only for
+   supported read, Project Support, or transient-evidence operations.
+3. `PROJECT_SOURCE_WRITE` remains unsupported and must fail with the spectator
+   boundary instead of escalating to another KANDA mutation path.
+4. KANDA may package read-only handoff/source-copy evidence into Project Support,
+   but generated copies never become source or release authority.
+5. Tool maintenance is a separate explicit Tool operation and is never inferred
+   from a selected external Project defect.
+
+### External Project release independence
+
+For an external Project release, the validation and release authority belongs to
+the Project:
+
+```text
+Project-owned release validator present
+    -> use that Project validator
+
+Release carries a self-contained Project validator
+    -> use that release-local validator
+
+No Project validator yet
+    -> characterize the missing Project-side validation and, when authorized,
+       create a Project-local validator
+
+Never
+    -> fall back to KANDA Reasoner scripts/validate_patch_zip.py
+    -> require KANDA Reasoner source, runtime, interpreter, or source archives
+```
+
+`scripts/validate_patch_zip.py` is the canonical KANDA Tool patch validator for
+KANDA-owned release units. It is not a universal validator for selected Projects.
+
+### Source archive provider rule
+
+If exact source for Project `P` is needed, inspect current Project source or request
+only `P`'s source archive. Never switch the source provider to KANDA Reasoner
+because a Tool prompt, validator, Freeze feature, or Error Memory lesson refers to
+Tool code. The only exception is when KANDA Reasoner itself is the Project being
+repaired.
+
+### Tool Error Memory scope
+
+Tool Error Memory is mandatory prevention context for governed KANDA Reasoner Tool
+repairs. For independent external `PROJECT_ACTOR` development it is advisory when
+available; missing Tool Error Memory must not block Project coding, validation, or
+release.
+
+Fire Shield is application-level protection for the observer boundary and
+KANDA-owned support operations, not an operating-system sandbox or universal gate
+over independent Project development.
 
 ## Portable-distribution ownership
 
@@ -293,10 +344,11 @@ Validation must prove, as applicable:
 - KANDA-managed support stays external to Project source;
 - nested support writes fail closed;
 - cross-project access is typed and unauthorized mutation is rejected;
-- external-Project consequential operations require the public Fire Shield authority and fail closed when it is unavailable or blocked;
-- prompt policy cannot weaken, replace, or bypass Fire Shield programmatic enforcement;
+- KANDA-managed external-Project source mutation is unsupported; Fire Shield protects only supported observer reads and KANDA-owned support/transient writes;
+- independent Project-actor development does not depend on KANDA selection, registry, portable runtime, Fire Shield, Tool validators, Tool Error Memory, Tool source, or KANDA source archives;
+- prompt policy cannot weaken, replace, or bypass Fire Shield programmatic enforcement inside KANDA-managed actor scope;
 - generated evidence authority is structured;
-- mixed write sets and rollback owners are complete;
+- any mixed governance keeps Project source writes Project-actor-owned and Tool writes Tool-owned;
 - session/operation conflict protection is declared;
 - current resolved containment is rechecked before write;
 - startup delivery is regenerated and in sync after bridge changes.
@@ -320,17 +372,20 @@ May begin coding: NO
 - Never duplicate MCard, Workbench, delivery, or durable-document owner contracts in this canon.
 - Never silently merge support state after project rename, move, or collision.
 - Never allow undeclared or unauthorized cross-project mutation.
-- Never treat prompt compliance, user wording, or routing approval as a substitute for Fire Shield on an external Project consequential operation.
-- Never bypass a missing, stale, unavailable, or BLOCKED Fire Shield with direct filesystem mutation, private Fire Shield imports, or an unguarded alternate path.
+- Never treat Fire Shield as authorization for KANDA Reasoner to mutate external Project source.
+- Never require KANDA Reasoner selection, registry, portable runtime, or Fire Shield merely because independent Project-owned IDE/terminal work changes an external Project.
+- Never bypass the spectator source-write denial with another KANDA-managed mutation path.
 - Never write KANDA Tool-owned code into an external Project source tree.
 - Never write external Project-owned code into KANDA Tool source.
 - Treat `<project_name>_show_project_to_AI` as support/evidence only, never as source or an install target.
-- Permit same-tree physical writes only when the selected Project is KANDA Reasoner itself and canonical Tool/Project root identity is proven.
+- KANDA Reasoner Tool maintenance may write Tool source only through explicit Tool-maintenance authority; selected-Project identity never grants Project-source write authority, including self-hosting observation.
 - Never create or refresh `<project>-Windows-Portable.zip` from Show Project to AI; require a separate explicit user request and productization/release workflow.
 
 ## Version history
 
-- 2.3: bound external-Project consequential operations to the frozen Fire Shield public authority, made missing or BLOCKED Fire Shield fail closed, and prohibited prompt-only or private-reach-in bypasses.
+- 2.5: made external Projects observer-only end to end: KANDA source writes are unsupported, Project release validation is Project-owned, Tool Error Memory is advisory for external Project work, and KANDA Tool source archives are never Project-development prerequisites.
+- 2.4: added the actor-scope gate: Fire Shield is mandatory for KANDA-managed external-Project operations but never a prerequisite for independent Project-owned IDE, terminal, CI, install, or validation work; KANDA may observe and refresh afterward.
+- 2.3: bound KANDA-managed external-Project consequential operations to the frozen Fire Shield public authority, made missing or BLOCKED Fire Shield fail closed, and prohibited prompt-only or private-reach-in bypasses.
 - 2.2: made Show Project and Portable Distribution separate Box owners with no
   shared trigger, output owner, folder, lifecycle, or implicit call; portable
   identity is excluded wherever misplaced under Project source.

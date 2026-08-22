@@ -4,7 +4,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from .complete_json_adapter import ProjectSymbolAtlasCompleteJsonSummary
 
 from .schemas import (
     ProjectModuleRecord,

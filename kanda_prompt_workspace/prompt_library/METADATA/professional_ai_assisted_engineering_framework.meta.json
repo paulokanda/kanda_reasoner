@@ -12,7 +12,7 @@
   "classification": "thin_non_authoritative_human_ai_operating_model_overview",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Provide a concise map of human responsibility, AI responsibility, work states, evidence discipline, and dispatch to current specialist owners. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Provide a concise map of human responsibility, AI responsibility, work states, evidence discipline, and dispatch to current specialist owners. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [

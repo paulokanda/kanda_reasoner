@@ -12,7 +12,7 @@
   "classification": "threat_model_trust_boundary_secure_default_specialist",
   "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
   "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
-  "description": "Identify assets, trust boundaries, attackers, abuse cases, and proportionate secure defaults for Python code and data flows.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "description": "Identify assets, trust boundaries, attackers, abuse cases, and proportionate secure defaults for Python code and data flows.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 45,
   "trigger_phrases": [

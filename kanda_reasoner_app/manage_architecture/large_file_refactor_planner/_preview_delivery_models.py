@@ -45,7 +45,7 @@ class _PreviewBundle:
     libcst_available: bool
     public_api_before: list[str]
     public_api_after_expected: list[str]
-    files: list[PreviewFileDraft]
+    files: list[_PreviewFileDraft]
     validation_blockers: list[str]
     risk_flags: list[str]
     status: str
@@ -118,7 +118,7 @@ class _ImportMigrationPreview:
     target_file: str
     source_content_hash: str
     rewrite_enabled: bool
-    records: list[ImportMigrationRecord]
+    records: list[_ImportMigrationRecord]
     blockers: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     status: str = "preview_only"

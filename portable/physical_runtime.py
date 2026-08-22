@@ -38,7 +38,7 @@ RUNTIME_MANIFEST_RELATIVE = (
     / "physical_runtime_manifest.json"
 )
 RUNTIME_ALLOWLIST_FEATURE_ID = (
-    "kanda-reasoner-portable-runtime-path-hash-allowlist-v1r4"
+    "kanda-reasoner-portable-runtime-path-hash-allowlist-v1r5"
 )
 REQUIRED_RUNTIME_ROLES = frozenset(
     {

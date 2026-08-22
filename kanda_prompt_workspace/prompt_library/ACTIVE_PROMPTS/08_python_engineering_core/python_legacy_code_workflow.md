@@ -25,6 +25,22 @@ seam, and records residual uncertainty.
 This specialist is informed by legacy-code techniques. It is not a persona and
 does not define legacy code only as code without tests.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## When to load
 
 Load this prompt when the target has material uncertainty, weak regression
@@ -41,11 +57,11 @@ own:
 - detailed pytest framework doctrine;
 - general behavior-preserving refactoring after stabilization;
 - oversized-module decomposition;
-- architecture ownership or KANDA Box decisions;
-- patch, validation-evidence, terminal, or freeze mechanics;
+- architecture ownership or host-specific Box decisions;
+- patch, validation-evidence, terminal, or snapshot/freeze mechanics;
 - source-write authorization.
 
-Use the current testing, refactoring, large-module, architecture, Brick Wall,
+Use the current testing, refactoring, large-module, architecture, Project implementation-authority,
 and delivery owners as applicable.
 
 ## Task modes
@@ -61,7 +77,7 @@ Choose one:
 ## Immediate source and history identity
 
 Record the current project root, target paths, source fingerprints, operation
-identity, relevant validation state, and applicable Error Memory lessons. Do not
+identity, relevant validation state, and applicable Project error/lesson records when available. Do not
 characterize an unknown or stale source snapshot as current behavior.
 
 ## Legacy-risk classification
@@ -194,7 +210,7 @@ verified enough to meet the current risk.
 Once behavior and dependencies are sufficiently controlled, hand general
 behavior-preserving transformations to the Python refactoring specialist.
 Separate the stabilization evidence from the later refactor plan, while allowing
-a single governed release when Brick Wall explicitly approves both scopes and
+a single governed release when the active Project's declared implementation authority explicitly approves both scopes and
 the validator map distinguishes them.
 
 ## Rollback obligations
@@ -212,7 +228,7 @@ Require current evidence for:
 - side-effect containment;
 - public contracts and callers;
 - rollback or recovery;
-- relevant Error Memory regressions;
+- relevant Project error/lesson regressions, when available;
 - current-source fingerprints.
 
 Do not claim a test or validation passed unless it was executed against the
@@ -223,7 +239,7 @@ current source and the result is available.
 Return a `LEGACY CODE STABILIZATION RECORD` containing:
 
 - task mode;
-- source identity and Error Memory inputs;
+- source identity and optional Project error/lesson inputs;
 - legacy-risk classification;
 - change points and test points;
 - behavior classification;
@@ -235,7 +251,7 @@ Return a `LEGACY CODE STABILIZATION RECORD` containing:
 - refactoring or specialist handoffs;
 - validation obligations;
 - residual risk;
-- source-write authorization: `NO` unless separately granted by Brick Wall.
+- source-write authorization: `NO`; any implementation authorization belongs to the active Project's declared authority.
 
 ## Version history
 

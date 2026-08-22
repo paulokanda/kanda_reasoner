@@ -118,7 +118,7 @@ BEGINNING_OF_DAY_RUNTIME_EVIDENCE_ESCALATION_BRIDGE_V1_END
 Normal startup has two separate checkpoints:
 
 - `STARTUP PACK LOAD CHECK`: startup pack loaded; wait for second upload.
-- `PROJECT READY CHECK`: second-upload handoff and compact Error Memory loaded; may end with `WAIT_FOR_TASK`.
+- `PROJECT READY CHECK`: selected Project handoff loaded and Tool Error Memory context status reported; may end with `WAIT_FOR_TASK`.
 
 Neither checkpoint authorizes coding. Brick Wall and task-specific evidence determine authorization.
 

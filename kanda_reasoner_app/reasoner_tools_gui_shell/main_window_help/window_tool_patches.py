@@ -2,6 +2,9 @@
 """Private mixin helpers extracted from reasoner_tools_gui_shell.main_window."""
 from __future__ import annotations
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
+from kanda_reasoner_app.portable_smoke_runtime_report import (
+    record_portable_smoke_event,
+)
 import contextlib
 from pathlib import Path
 from PySide6.QtWidgets import QWidget
@@ -45,26 +48,84 @@ class _WindowToolPatchesMixin:
         return None
 
     def _load_initial_tab(self) -> None:
-        """Support load initial tab behavior.
-        """
-        
+        """Load the initial tab without changing canonical shell geometry."""
         index = self.tabs.currentIndex()
         page = self._lazy_page_for_tab_index(index)
-        if page is not None:
-            page.ensure_loaded()
+        if page is None:
+            return
+
+        self._record_lazy_tab_activation(page)
+        try:
+            before_size = self.size()
+            was_maximized = self.isMaximized()
+        except Exception:
+            before_size = None
+            was_maximized = False
+
+        page.ensure_loaded()
+        if before_size is None or was_maximized:
+            return
+
+        try:
+            from PySide6.QtCore import QTimer
+
+            QTimer.singleShot(
+                0,
+                lambda size=before_size: self._restore_tab_switch_size(size),
+            )
+        except Exception:
+            self._restore_tab_switch_size(before_size)
+
+    @staticmethod
+    def _record_lazy_tab_activation(page: QWidget) -> None:
+        """Record the tab boundary before packaged lazy construction begins."""
+        spec = getattr(page, "spec", None)
+        source = str(getattr(spec, "source_hint", "") or "")
+        record_portable_smoke_event(
+            status="PASS",
+            kind="lazy_tab_activation",
+            source=source,
+            message="ACTIVATING",
+        )
 
     def _on_tab_changed(self, index: int) -> None:
-        """Support on tab changed behavior.
-        
-        Parameters
-        ----------
-        index : int
-            The index value.
-        """
-        
+        """Keep the user's current shell size stable across tab loading."""
         page = self._lazy_page_for_tab_index(index)
+        try:
+            before_size = self.size()
+            was_maximized = self.isMaximized()
+        except Exception:
+            before_size = None
+            was_maximized = False
+
         if page is not None:
+            self._record_lazy_tab_activation(page)
             page.ensure_loaded()
+
+        if before_size is None or was_maximized:
+            return
+
+        try:
+            from PySide6.QtCore import QTimer
+
+            QTimer.singleShot(
+                0,
+                lambda size=before_size: self._restore_tab_switch_size(size),
+            )
+        except Exception:
+            self._restore_tab_switch_size(before_size)
+
+    def _restore_tab_switch_size(self, size) -> None:
+        """Restore the exact pre-switch size after lazy tab loading."""
+        try:
+            if bool(self.property("kandaMainWindowFixedSize")):
+                return
+            if self.isMaximized():
+                return
+            self.setMinimumSize(0, 0)
+            self.resize(size)
+        except Exception:
+            return
 
     def _patch_collector_widget(self, widget: QWidget) -> None:
         """Support patch collector widget behavior.
@@ -81,6 +142,9 @@ class _WindowToolPatchesMixin:
             'project_root_label',
             'project_root_edit',
             'backup_show_project_button',
+            'backup_project_button',
+            'backup_both_button',
+            'cancel_backup_button',
         ):
             control = getattr(widget, control_name, None)
             if isinstance(control, QWidget):
@@ -202,7 +266,7 @@ class _WindowToolPatchesMixin:
         explicit_selection: bool = False,
         boundary=None,
     ) -> bool:
-        """Switch the canonical active Project through strict Tool authority."""
+        """Switch the canonical observed Project through explicit selection."""
         if self._is_propagating_project_root:
             return False
 
@@ -232,7 +296,7 @@ class _WindowToolPatchesMixin:
         try:
             if changed:
                 self._reset_loaded_project_scopes()
-                self._project_switch_epoch += 1
+                self._project_switch_ticket += 1
                 self._remember_project_boundary(next_boundary)
 
             for widget in self._iter_loaded_tool_widgets():

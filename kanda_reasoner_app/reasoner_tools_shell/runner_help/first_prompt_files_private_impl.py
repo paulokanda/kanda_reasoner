@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
-import os
 import shutil
 import subprocess
 import sys
+from kanda_reasoner_app.tool_process_environment import build_tool_child_environment
 from pathlib import Path
 from typing import Any
 
@@ -135,28 +135,46 @@ def clear_first_prompt_files_dir(output_dir: str | Path) -> int:
     return removed
 
 
-def _find_workspace_root(project_root: Path) -> Path:
-    """Return the kanda_prompt_workspace that owns the startup sync script."""
-    direct = project_root / "kanda_prompt_workspace"
-    direct_script = direct / "prompt_tools" / "sync_startup_routing_kernel_pack.py"
-    if direct_script.is_file():
-        return direct
+def _tool_runtime_roots() -> tuple[Path, ...]:
+    """Return ordered Tool-owned roots that may contain runtime resources."""
+    candidates: list[Path] = []
 
-    for script in project_root.rglob("sync_startup_routing_kernel_pack.py"):
-        if script.parent.name == "prompt_tools" and script.parent.parent.name == "kanda_prompt_workspace":
-            return script.parent.parent
+    def add(candidate: Path) -> None:
+        resolved = candidate.expanduser().resolve(strict=False)
+        if resolved not in candidates:
+            candidates.append(resolved)
 
-    # Last-resort app-root lookup keeps installed KANDA Reasoner usable when the
-    # selected project root is the package root resolved through a symlink/alias.
-    app_root = Path(__file__).resolve().parents[3]
-    fallback = app_root / "kanda_prompt_workspace"
-    fallback_script = fallback / "prompt_tools" / "sync_startup_routing_kernel_pack.py"
-    if fallback_script.is_file():
-        return fallback
+    add(Path(__file__).resolve().parents[3])
+
+    frozen_root = getattr(sys, "_MEIPASS", None)
+    if frozen_root:
+        add(Path(str(frozen_root)))
+
+    executable_parent = Path(sys.executable).expanduser().resolve(strict=False).parent
+    add(executable_parent / "_internal")
+    add(executable_parent)
+    return tuple(candidates)
+
+
+def _find_tool_workspace_root() -> Path:
+    """Return the Tool-owned prompt workspace in source or Portable runtime."""
+    relative_script = (
+        Path("kanda_prompt_workspace")
+        / "prompt_tools"
+        / "sync_startup_routing_kernel_pack.py"
+    )
+    checked: list[str] = []
+    for tool_root in _tool_runtime_roots():
+        script = tool_root / relative_script
+        workspace = tool_root / "kanda_prompt_workspace"
+        checked.append(str(tool_root))
+        if script.is_file() and (workspace / "prompt_library").is_dir():
+            return workspace
 
     raise FileNotFoundError(
-        "Could not find kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py "
-        "inside selected project root: " + str(project_root)
+        "Could not find Tool-owned "
+        "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py "
+        "in KANDA Tool runtime roots: " + "; ".join(checked)
     )
 
 
@@ -212,7 +230,7 @@ def run_create_first_prompt_files(window: Any) -> None:
         if not _same_path(output_dir, expected_output_dir):
             raise ValueError("Resolved first_prompt_files path drifted unexpectedly.")
 
-        workspace_root = _find_workspace_root(project_root)
+        workspace_root = _find_tool_workspace_root()
         script = workspace_root / "prompt_tools" / "sync_startup_routing_kernel_pack.py"
         removed_count = clear_first_prompt_files_dir(output_dir)
 
@@ -223,9 +241,7 @@ def run_create_first_prompt_files(window: Any) -> None:
         _append_log(window, "  cleared existing first_prompt_files items: " + str(removed_count))
         _set_status(window, "Creating first prompt files...")
 
-        env = os.environ.copy()
-        project_root_text = str(Path(__file__).resolve().parents[3])
-        env["PYTHONPATH"] = project_root_text + os.pathsep + env.get("PYTHONPATH", "")
+        env = build_tool_child_environment()
         completed = subprocess.run(
             [
                 sys.executable,

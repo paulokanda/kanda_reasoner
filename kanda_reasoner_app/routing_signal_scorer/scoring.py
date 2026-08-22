@@ -6,7 +6,7 @@ __all__: list[str] = []
 
 
 import re
-from typing import Mapping, Sequence
+from typing import Iterable, Mapping, Sequence
 
 from .models import (
     AUTHORITY,

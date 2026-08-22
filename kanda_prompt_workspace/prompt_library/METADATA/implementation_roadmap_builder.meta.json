@@ -18,7 +18,7 @@
   ],
   "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
   "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
-  "description": "Explicit draft-only adaptive roadmap and optional human tracker template with no implementation or validation authority.",
+  "description": "Explicit draft-only adaptive roadmap and optional human tracker template with no implementation or validation authority. Project-agnostic; host-specific governance is optional.",
   "priority": 8,
   "trigger_phrases": [
     "draft an implementation roadmap",
@@ -28,7 +28,6 @@
   ],
   "required_companion_prompts": [],
   "optional_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate",
     "cooperative_implementation_methodology",
     "workflow_handoff_template"
   ],

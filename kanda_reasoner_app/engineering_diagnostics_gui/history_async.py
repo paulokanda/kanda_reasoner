@@ -6,7 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
 
-from PySide6.QtCore import QCoreApplication, QObject, QThread, QTimer, Slot
+from PySide6.QtCore import QCoreApplication, QObject, QThread, QTimer, Signal, Slot
 
 from .history_qt_worker import (
     EngineeringDiagnosticsHistoryOutcome,
@@ -33,12 +33,15 @@ class EngineeringDiagnosticsHistoryActions:
     render_run: Callable[[str], None]
     refresh_history: Callable[[str], None]
     cancel: Callable[[], None]
-    close: Callable[[], None]
+    close: Callable[[], bool]
+    shutdown_ready: Callable[[], bool]
     runtime: object
 
 
 class _EngineeringDiagnosticsHistoryRuntime(QObject):
     """Own one serialized QThread history lane with stale-result rejection."""
+
+    settled = Signal()
 
     def __init__(
         self,
@@ -58,6 +61,7 @@ class _EngineeringDiagnosticsHistoryRuntime(QObject):
         self._active_job: dict[str, object] | None = None
         self._pending: _HistoryRequest | None = None
         self._closed = False
+        self._delete_requested = False
 
     def load(self, project_root: str, run_id: str) -> None:
         """Queue the newest run view while allowing at most one heavy worker."""
@@ -98,14 +102,31 @@ class _EngineeringDiagnosticsHistoryRuntime(QObject):
         if isinstance(watchdog, QTimer):
             watchdog.stop()
 
-    def close(self) -> None:
-        """Detach the panel while retaining any live QThread until settlement."""
-        if self._closed:
+    def shutdown_ready(self) -> bool:
+        """Return whether no Engineering Diagnostics history QThread remains."""
+        return self._active_job is None
+
+    def _request_delete_once(self) -> None:
+        """Schedule QObject deletion at most once, including late hooks."""
+        if self._delete_requested:
             return
-        self._closed = True
-        self.cancel()
-        if self._active_job is None:
+        self._delete_requested = True
+        try:
             self.deleteLater()
+        except RuntimeError:
+            return
+
+    def close(self) -> bool:
+        """Reject late results and remain safe when cleanup is requested twice."""
+        if self._delete_requested:
+            return True
+        if not self._closed:
+            self._closed = True
+            self.cancel()
+        if self._active_job is None:
+            self._request_delete_once()
+            return True
+        return False
 
     def _start_pending(self) -> None:
         request = self._pending
@@ -114,6 +135,7 @@ class _EngineeringDiagnosticsHistoryRuntime(QObject):
         self._pending = None
 
         thread = QThread()
+        thread.setObjectName("engineering_diagnostics_history")
         worker = EngineeringDiagnosticsHistoryWorker(
             controller=self._controller,
             project_root=request.project_root,
@@ -216,7 +238,8 @@ class _EngineeringDiagnosticsHistoryRuntime(QObject):
 
         self._active_job = None
         if self._closed:
-            self.deleteLater()
+            self.settled.emit()
+            self._request_delete_once()
             return
         self._start_pending()
 
@@ -305,5 +328,6 @@ def bind_async_history(
         refresh_history=refresh_history,
         cancel=runtime.cancel,
         close=runtime.close,
+        shutdown_ready=runtime.shutdown_ready,
         runtime=runtime,
     )

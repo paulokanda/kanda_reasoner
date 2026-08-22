@@ -21,6 +21,9 @@ from kanda_reasoner_app.error_memory_gui._memorize_duplicate_guard import (
     resolve_duplicate_lesson_copies,
 )
 from kanda_reasoner_app.error_memory_gui._window_sync import clear_error_memory_work_windows
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    backend_for_current_work_item,
+)
 
 __all__ = [
     "candidate_text_for_memorize",
@@ -102,7 +105,7 @@ def save_active_ready_lesson(tab: Any, lesson: dict[str, Any], success_prefix: s
         return None
     lesson['updated_at_utc'] = utc_now_iso()
     try:
-        path = save_lesson(tab._current_project_root(), lesson)
+        path = save_lesson(backend_for_current_work_item(tab), lesson)
     except Exception as exc:
         _show_error(tab, title='Error Memory save failed', message=str(exc))
         return None
@@ -161,11 +164,11 @@ def resolve_duplicate_memorize_candidate(
     records, consumes pending candidates, clears both work windows, and stops
     Memorize Error from inserting another copy.
     """
-    project_root = tab._current_project_root()
+    target_backend = backend_for_current_work_item(tab)
     had_pending = bool(str(getattr(tab, "_loaded_pending_intake_file", "") or "").strip())
     selected_id = str(getattr(tab, "_selected_lesson_id", "") or lesson.get("lesson_id", "")).strip()
     match = resolve_duplicate_lesson_copies(
-        project_root,
+        target_backend,
         lesson,
         candidate_has_pending_source=had_pending,
         delete_candidate_lesson_id=selected_id,
@@ -292,8 +295,22 @@ def clear_ai_assisted_intake_after_memorize(tab: Any, lesson: dict[str, Any]) ->
     clear_error_memory_work_windows(tab)
 
 
+def _pending_intended_status_for_memorize(
+    lesson: dict[str, Any],
+) -> str | None:
+    """Return a validated intended status for one pending transport candidate."""
+    if str(lesson.get("status") or "").strip().lower() != "pending":
+        return None
+    intended_status = str(lesson.get("intended_status") or "").strip().lower()
+    if intended_status not in {"active", "draft"}:
+        raise ValueError(
+            "Pending Error Memory lesson intended_status must be active or draft."
+        )
+    return intended_status
+
+
 def memorize_error_from_text_window(tab: Any) -> None:
-    """Promote the current formatted lesson into active Error Memory."""
+    """Promote the current formatted lesson through the human Error Memory gate."""
     QMessageBox = _message_box()
     text, source_label = tab._candidate_text_for_memorize()
     if not text:
@@ -301,13 +318,25 @@ def memorize_error_from_text_window(tab: Any) -> None:
         return
     try:
         lesson = tab._lesson_from_formatted_text(text)
+        pending_intended_status = _pending_intended_status_for_memorize(lesson)
     except Exception as exc:
         _show_error(tab, title='Error Memory', message='Could not parse formatted lesson:\n' + str(exc))
         return
+    if pending_intended_status is not None:
+        lesson = dict(lesson)
+        lesson['status'] = pending_intended_status
+        lesson.pop('intended_status', None)
     selected_draft_id = selected_saved_draft_id_for_memorize(tab)
     if selected_draft_id:
         lesson['lesson_id'] = selected_draft_id
     if tab._resolve_duplicate_memorize_candidate(dict(lesson)) is not None:
+        return
+    if pending_intended_status == 'draft':
+        tab._save_draft_lesson_from_partial(
+            dict(lesson),
+            source_text=text,
+            success_prefix='Memorized Error lesson as draft',
+        )
         return
     if not active_ready(dict(lesson)):
         if selected_draft_id:

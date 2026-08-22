@@ -2,7 +2,7 @@
 prompt_id: patch_validate_freeze_error_memory_routine_blueprint
 prompt_code: KPR-05-005
 title: Answer Validate Freeze Memorize Error Routine Blueprint
-version: 3.3
+version: 3.5
 status: active
 load_type: on_request
 owner_box: 05_patch_delivery_and_validation
@@ -44,20 +44,18 @@ Generated archives remain evidence until current source and receiver ownership
 are verified. Compact context cannot bypass source, Box, delivery, validation,
 Freeze, or Error Memory gates.
 ## Hard Tool-versus-Project boundary
-- The selected Project owns payload, install, live validation, Project Support,
-  Freeze memory, and Error Memory.
+- The selected Project owns payload, install, execution, live validation, release, rollback, Project Support, and Project Freeze memory. Reusable Error Memory remains Tool-owned prevention context.
 - KANDA Reasoner owns this prompt and governance UI.
 - Do not patch KANDA Reasoner for an external Project failure unless a separate
   Tool defect is proven and authorized.
 - If Tool and Project share one physical root, keep logical roles separate.
 - Generated handoffs are evidence, not editing authority.
-- For a verified external Project, consequential mutation, extraction, package
-  preflight, install, restore, move, rename, delete, and Project Python/import
-  isolation must pass the Tool-owned public Fire Shield authority or an existing
-  public workflow already integrated with it.
-- Missing, stale, unavailable, ambiguous, or BLOCKED Fire Shield stops the
-  consequential phase. Never substitute prompt approval, direct filesystem
-  mutation, or private `_project_fire_shield_*` reach-in.
+- KANDA Reasoner is observer-only for external Project source. Its public authority may protect read/support/transient operations, but `PROJECT_SOURCE_WRITE`, Project patch installation, Project release validation, and rollback are Project-actor responsibilities.
+- When the Project is changed through its own IDE, terminal, interpreter, CI, or
+  a Project-owned delivery package, KANDA Reasoner is spectator-only and is not
+  an authorization or execution dependency. Use Project-owned root, fingerprint,
+  write-set, validation, rollback, and interpreter contracts.
+- Missing KANDA observer context may stop only the KANDA observation/support action. It must not block independent Project implementation, validation, release, or rollback, and must never trigger KANDA source-archive fallback.
 ## Routine classification and identity
 Select one class:
 - `ROUTINE_POST_IMPLEMENTATION_COMPLETION`;
@@ -81,6 +79,11 @@ Canonical prompt source:
 Selected routine class:
 Feature ID:
 Patch ZIP identity:
+Release owner classification: KANDA_TOOL_RELEASE / EXTERNAL_PROJECT_RELEASE
+Release validator owner:
+KANDA Tool validator required: YES / NO
+KANDA Tool source/archive required: YES / NO
+Tool Error Memory governing or advisory:
 Project interpreter or interpreter-resolution owner:
 Current source fingerprint:
 Last reliable marker:
@@ -94,7 +97,7 @@ Blank, stale, ambiguous, or conflicting identity blocks output.
 Use only the smallest needed owner set:
 - identity and Fire Shield policy: `project_tool_boundary_canon`;
 - admission: Brick Wall and the exact Box owner;
-- release: `bundle_gated_development_workflow`;
+- release: `bundle_gated_development_workflow`, with release-owner classification before any KANDA-specific ZIP gate;
 - payload/install/rollback: `implementation_and_delivery_protocol`;
 - output gate: `pre_output_contract_gates`;
 - regressions: `patch_install_delivery_error_register`;
@@ -225,7 +228,7 @@ answer from current source and compact update
 -> human review and Memorize Error
 ```
 ## Release, Freeze, and Error Memory rules
-No ZIP link may be emitted alone. Freezeable feature ZIPs require one root-level
+For KANDA Tool releases, no ZIP link may be emitted alone and freezeable feature ZIPs require one root-level
 `KANDA_FREEZE_HINT.json` that is not installed as source. Transient artifacts
 belong under `<project_drive>/<project_name>_delete_after_daily_work`. Do not use
 Downloads/Desktop fallback or generic Python when a governed interpreter exists.
@@ -260,7 +263,9 @@ GUI source or make an external Project prompt authority.
 This wrapper does not itself authorize implementation, release, validation
 claims, Freeze writes, or Error Memory persistence.
 ## Version history
-- 3.3: required the frozen Fire Shield public authority for consequential external-Project phases and prohibited prompt-only, direct-filesystem, or private-reach-in fallback.
+- 3.5: made external Project implementation/release observer-independent: KANDA validator, Tool Error Memory, Tool runtime/source, and KANDA source archives cannot be Project prerequisites; Project-owned release validation remains authoritative.
+- 3.4: scoped Fire Shield to KANDA-managed external-Project actor phases and made independent Project-owned IDE, terminal, CI, install, test, and validation work explicitly KANDA-independent.
+- 3.3: required the frozen Fire Shield public authority for KANDA-managed consequential external-Project phases and prohibited prompt-only or private-reach-in fallback.
 - 3.2: one primary update ZIP; separate install, validation, Freeze, and Error
   Memory terminal phases; compact intake; no orphan reports.
 - 3.1: paste-safe PowerShell and Windows PowerShell 5.1 gates.

@@ -2,7 +2,7 @@
 prompt_id: patch_install_delivery_error_register
 prompt_code: KPR-05-001
 title: Patch Install Delivery Active Regression Index
-version: 2.0
+version: 2.2
 status: active
 load_type: conditional_required
 owner_box: 05_patch_delivery_and_validation
@@ -134,12 +134,20 @@ index.
 
 - Status: active
 - Regression category: EXACT_FINAL_ZIP_CONTRACT
-- Blocking predicate: The exact final archive has not passed the canonical ZIP
-  member and manifest contract.
+- KANDA scope: `scripts/validate_patch_zip.py` is mandatory for KANDA Tool-owned
+  patch ZIPs only.
+- External Project scope: the exact archive must use the Project-owned or
+  release-local ZIP contract; KANDA's validator is never a fallback authority.
+- Blocking predicate: the exact final archive has not passed the validator owned
+  by its release owner.
 - Current owner prompt: `bundle_gated_development_workflow`
-- Focused validator: `scripts/validate_patch_zip.py`
-- Expected rejection marker: `ZIP CONTRACT ERROR`
-- Expected success marker: `ZIP CONTRACT: PASS`
+- Focused validator: KANDA Tool release -> `scripts/validate_patch_zip.py`; external
+  Project release -> Project/release-owned validator.
+- Expected rejection marker: release-owner-specific contract failure
+- Expected success marker: release-owner-specific PASS marker
+- Hard prevention rule: missing Project validation must never trigger a request
+  for KANDA Reasoner source, runtime, validator dependencies, Tool Error Memory,
+  or `kanda_reasoner__source_archive_partXX_of_YY.zip`.
 
 ### PIR-009 - Freeze sidecar is delivery metadata
 
@@ -173,6 +181,19 @@ index.
 - Focused validator: `tools/validate_prompt_audit_wave3b_specialist_startup_bridges_v1.py`
 - Expected rejection marker: `ERROR_MEMORY_INTAKE_BLOCKED`
 - Expected success marker: `WAVE3B_ERROR_MEMORY_ADMISSION_CANON: PASS`
+
+### PIR-012 - Root artifact must be staged programmatically
+
+- Status: active
+- Regression category: ROOT_ARTIFACT_PREPLACEMENT_ASSUMPTION
+- Blocking predicate: Delivery assumes a helper, patch, validator, freeze input, or
+  other transient artifact already exists inside a Project daily-work folder, or
+  removes the drive-root source before an exact integrity check.
+- Current owner prompt: `daily_patch_delivery_guardrails`
+- Focused validator: `tools/validate_generated_artifact_staging_commands_v1.py`
+- Expected rejection marker: `ARTIFACT_STAGING_COMMAND_POLICY: FAIL`
+- Expected success marker: `ARTIFACT_STAGING_COMMAND_POLICY: PASS`
+
 
 ## Update rule
 

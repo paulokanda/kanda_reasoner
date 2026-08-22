@@ -38,6 +38,7 @@ def _write_zip(
         "mode": "w",
         "compression": compression,
         "allowZip64": True,
+        "strict_timestamps": False,
     }
     if compresslevel is not None:
         kwargs["compresslevel"] = compresslevel

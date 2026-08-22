@@ -93,12 +93,13 @@ Second-upload project handoff rule:
 After STARTUP PACK LOAD CHECK is COMPLETE and Next action is {FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}, the user should send the second upload group from second_prompt_files before any real project task. When the second group arrives, read in this order:
 1. _RUN_COLLECTOR_STATUS.txt, if present, to confirm generation status.
 2. <project_slug>__ai_handoff_upload_readme.txt.
-3. Compact Error Memory files when present: <project_slug>__error_memory_ai_prompt.md, <project_slug>__error_lessons_compact.json, and <project_slug>__error_memory_manifest.json.
-4. <project_slug>__ai_handoff_upload*.zip, in numeric order if split. Treat this as the zipped JSON handoff package. Inside it, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files.
-5. <project_slug>__error_memory_full.zip only when compact Error Memory says full context is needed, repeated-error debugging is the task, the user asks for Error Memory audit, compact lessons are insufficient, or the current plan conflicts with a prior lesson.
-6. <project_slug>__source_archive_partXX_of_YY.zip only if exact source inspection or reconstruction is needed. Use source_archive_manifest to choose the needed part files.
-7. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets.
-8. <project_slug>__ai_handoff_all_in_one*.zip is convenience/archive only; do not prefer it over the upload ZIP unless the upload ZIP is missing.
+3. <project_slug>__ai_handoff_upload*.zip, in numeric order if split. Treat this as the zipped Project JSON handoff package. Inside it, read UPLOAD_README.txt first, then ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, and validation_state.
+4. <project_slug>__source_archive_partXX_of_YY.zip only if exact source inspection or reconstruction is needed. Use source_archive_manifest to choose the needed part files.
+5. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets.
+6. <project_slug>__ai_handoff_all_in_one*.zip is convenience/archive only; do not prefer it over the upload ZIP unless the upload ZIP is missing.
+
+Error Memory ownership rule:
+Reusable Error Lessons are owned by the KANDA Reasoner Tool Error Memory library, including the Portable Error Memory tab. A lesson may name the active Project as its origin without becoming Project-owned Error Memory. Do not expect or require <project_slug>__error_memory_* files in second_prompt_files. If this external AI chat needs Error Memory context, request or use a Tool-owned Error Memory export supplied separately from the Error Memory workflow.
 
 After reading the second upload group, return `{PROJECT_READY_CHECK_TITLE}` and include these fields exactly:
 
@@ -108,7 +109,7 @@ Project slug:
 Active project root:
 KANDA tool root:
 Same physical root: YES / NO
-Compact Error Memory loaded:
+Tool Error Memory context loaded:
 Second-upload handoff loaded:
 Tier-1 gates active:
 Next action:
@@ -127,7 +128,7 @@ Derive `<ACTIVE PROJECT DISPLAY NAME>` from the selected active Project name or 
 4. The AI must read this file before opening ZIP contents, then open the startup ZIP and wait to open prompt_library.zip until a specific prompt is needed.
 5. Wait for `STARTUP PACK LOAD CHECK`.
 6. Confirm that every required startup file is reported as loaded and that Next action is `{FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION}`.
-7. Upload all available project files from `second_prompt_files`, including `_RUN_COLLECTOR_STATUS.txt`, `<project_slug>__ai_handoff_upload_readme.txt`, compact Error Memory files, the zipped JSON handoff package `<project_slug>__ai_handoff_upload*.zip`, and source archive ZIP parts when exact source inspection may be needed.
+7. Upload all available Project handoff files from `second_prompt_files`, including `_RUN_COLLECTOR_STATUS.txt`, `<project_slug>__ai_handoff_upload_readme.txt`, the zipped JSON handoff package `<project_slug>__ai_handoff_upload*.zip`, and source archive ZIP parts when exact source inspection may be needed. Tool-owned Error Memory context is supplied separately when required.
 8. Wait for the AI to return `{PROJECT_READY_CHECK_TITLE}` with `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>` immediately before `{SECOND_UPLOAD_READY_ACTION}`.
 9. Only after that exact readiness tail is present, send the real project task.
 
@@ -138,13 +139,12 @@ When the user sends the second upload group, the AI should read it in this order
 ```text
 1. _RUN_COLLECTOR_STATUS.txt, if present
 2. <project_slug>__ai_handoff_upload_readme.txt
-3. Compact Error Memory files when present: <project_slug>__error_memory_ai_prompt.md, <project_slug>__error_lessons_compact.json, and <project_slug>__error_memory_manifest.json
-4. <project_slug>__ai_handoff_upload*.zip, in numeric order if split
-5. Inside the JSON handoff ZIP: UPLOAD_README.txt, ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, validation_state, and compact Error Memory files
-6. <project_slug>__error_memory_full.zip only when compact Error Memory says full context is needed, repeated-error debugging is the task, the user asks for Error Memory audit, compact lessons are insufficient, or the current plan conflicts with a prior lesson
-7. <project_slug>__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed
-8. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets
-9. <project_slug>__ai_handoff_all_in_one*.zip only as convenience/archive fallback
+3. <project_slug>__ai_handoff_upload*.zip, in numeric order if split
+4. Inside the JSON handoff ZIP: UPLOAD_README.txt, ai_briefing, routing_manifest, bundle_manifest, patch_safety_routes, file_manifest, source_archive_manifest, and validation_state
+5. <project_slug>__source_archive_partXX_of_YY.zip only when exact source inspection or reconstruction is needed
+6. <project_slug>__png_assets_partXX_of_YY.zip when exact reconstruction needs PNG assets
+7. <project_slug>__ai_handoff_all_in_one*.zip only as convenience/archive fallback
+8. Tool-owned Error Memory context only when needed; it is supplied separately from the KANDA Reasoner Error Memory workflow and is not a Project second_prompt_files package family
 ```
 
 The JSON handoff should be consumed from the ZIP package, not by relying on loose JSON uploads. Source archive ZIP parts are independent project-source packages and should be opened only when the routing/source manifests indicate they are needed. After this second-upload read is complete, the AI should return `{PROJECT_READY_CHECK_TITLE}` and end with `Next action:`, then `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>`, then `{SECOND_UPLOAD_READY_ACTION}`.

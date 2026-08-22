@@ -2,7 +2,7 @@
 prompt_id: ai_prompt_request_canon
 prompt_code: KPR-01-014
 title: AI Prompt Request Canon
-version: 3.2
+version: 3.3
 status: active
 load_type: always_startup
 owner_box: 01_session_start_and_navigation
@@ -96,7 +96,7 @@ Required when its trigger condition is true. A true condition must never be down
 - Freeze preparation or freeze-ready output -> `freeze_code_intake_and_form_protocol` and `pre_output_contract_gates`.
 - Box or cross-box risk -> `box_architecture_canon` and applicable No-Leak owner.
 - Tool/Project identity or root ownership risk -> `KPR-12-001 project_tool_boundary_canon`.
-- External selected-Project consequential mutation, extraction, packaging, install, restore, move, rename, delete, or Project Python/import-isolation work -> `KPR-12-001` plus the Tool-owned public Fire Shield authority. If Fire Shield is missing, stale, ambiguous, unavailable, or BLOCKED, classify the next consequential action as `HARD STOP`; prompt-only compliance is not a fallback.
+- KANDA-managed consequential work against an external selected Project -> `KPR-12-001` plus the Tool-owned public Fire Shield authority. If KANDA is the actor and Fire Shield is missing, stale, ambiguous, unavailable, or BLOCKED, classify that KANDA-managed action as `HARD STOP`. Independent Project-owned IDE, terminal, CI, install, test, or validation work does not require KANDA selection, registry, portable runtime, Fire Shield, or Tool availability.
 - Architecture Review target lifecycle or stale async state -> `KPR-12-005 architecture_review_project_card_machine_canon`.
 - Runtime-only behavior needed for the requested conclusion -> apply the Runtime Evidence Escalation contract below.
 
@@ -225,6 +225,7 @@ Current exact source and current canonical metadata outrank old conversation tex
 
 ## Version history
 
-- 3.2: classified external-Project Fire Shield absence or BLOCKED state as a HARD STOP for consequential work and prohibited prompt-only fallback.
+- 3.3: scoped the Fire Shield hard stop to KANDA-managed external-Project actions and explicitly excluded independent Project-owned IDE, terminal, CI, install, test, and validation work from KANDA execution authority.
+- 3.2: classified KANDA-managed external-Project Fire Shield absence or BLOCKED state as a HARD STOP and prohibited prompt-only fallback.
 - 3.1: added the bounded Runtime Evidence Escalation contract for runtime-only questions.
 - 3.0: consolidated to request admission, missing-context classification, compact owner bridges, and Brick Wall integration.

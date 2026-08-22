@@ -7,7 +7,7 @@
   "status": "active",
   "load_type": "routed",
   "source_stage": "prompt-audit-wave6b-class06-consolidation-retirements-v1",
-  "description": "User-facing KANDA safe-refactor refresher and bounded specialist dispatcher; it interprets current evidence and support artifacts without owning implementation, delivery, validation, or freeze.",
+  "description": "User-facing project-agnostic safe-refactor refresher and bounded specialist dispatcher; it interprets current evidence and optional host support artifacts without owning implementation, delivery, validation, or snapshot/freeze writes.",
   "box_logic_required": true,
   "routing_coverage": "wave6b_safe_refactor_dispatcher_v2",
   "priority": 39,
@@ -20,8 +20,6 @@
   ],
   "required_companion_prompts": [
     "large_module_refactor_protocol",
-    "web_ai_ast_split_risk_repair_protocol",
-    "brick_wall_comprehensive_quality_gate",
     "box_architecture_canon"
   ],
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md",
@@ -46,11 +44,11 @@
   ],
   "do_not_regress": [
     "Keep this prompt a bounded user-facing refresher and specialist dispatcher, not a second governing refactor protocol.",
-    "Keep the Safe Refactor How To button bundle at three support artifacts with the worked report explicitly non-authoritative.",
+    "When a host provides a Safe Refactor How To support-artifact bundle, keep the declared bundle bounded and keep worked examples explicitly non-authoritative.",
     "Require exact current target evidence and never substitute historical examples for current source or audit truth.",
-    "Keep the 400-line ideal and 500-line hard maximum after normal readable formatting; do not restore a universal 101-line minimum.",
-    "Delegate implementation admission to Brick Wall, generic decomposition to KPR-06-007, target-specific AST work to KPR-06-003, and delivery/freeze mechanics to current owners.",
-    "Do not mutate Planner, Workbench, AQR, Freeze, or target queues from the refresher button."
+    "Respect the active Project's module-size policy; when this prompt library's default is explicitly selected, keep the 400-line ideal and 500-line hard maximum and do not restore a universal 101-line minimum.",
+    "Delegate implementation admission to the active Project's declared authority, generic decomposition to KPR-06-007 when this library is present, and delivery/snapshot/freeze mechanics to current Project or host-specific owners.",
+    "Do not mutate host-specific planner, workbench, analysis queues, snapshot/freeze state, or target queues from the refresher itself."
   ],
   "version": "2.0.0",
   "dependency_freshness": {
@@ -59,5 +57,8 @@
     "ast_evidence": "current_when_target_specific",
     "support_artifacts": "current_canonical_bundle",
     "historical_example": "non_authoritative"
-  }
+  },
+  "optional_companion_prompts": [
+    "architecture_hardening_triage_protocol"
+  ]
 }

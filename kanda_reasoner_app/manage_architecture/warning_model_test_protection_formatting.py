@@ -102,7 +102,14 @@ def format_model_test_protection_apply_result(
         "Backup root: " + (result.backup_root or "none"),
         "Changed files:",
     ]
-    if not result.changed_files:
+    if result.proposal_only:
+        lines.append("Mode: PROPOSAL_ONLY:SPECTATOR")
+        lines.append("Proposed files:")
+        if result.proposed_files:
+            lines.extend("- " + path for path in result.proposed_files)
+        else:
+            lines.append("- none")
+    elif not result.changed_files:
         lines.append("- none")
     else:
         lines.extend("- " + path for path in result.changed_files)

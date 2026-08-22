@@ -15,8 +15,24 @@ source_stage: prompt-audit-wave5a-patch-lifecycle-core-v1
 
 Create a non-authoritative roadmap draft when the human explicitly asks for a
 roadmap, checklist, or progress-tracking template. This prompt does not own the
-KANDA implementation plan, Brick Wall status, durable handoff, release
+Project implementation plan, implementation-authority status, durable handoff, release
 lifecycle, validation evidence, or source-write authorization.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Use when
 
@@ -25,7 +41,7 @@ lifecycle, validation evidence, or source-write authorization.
 - an already authorized release needs a presentation-oriented task list;
 - the user wants an optional human-managed tracker.
 
-Do not auto-load for normal implementation. Do not use when Brick Wall, a
+Do not auto-load for normal implementation. Do not use when the active Project's implementation authority, a
 specialist plan, or a current handoff already provides the required state.
 
 ## Evidence first
@@ -80,12 +96,12 @@ model, branch, production merge, fixed item count, or two-step response limit.
 
 A tracker is a human convenience, not execution truth. Checkboxes, percentages,
 and self-reported completion do not prove source changes, tests, validation, or
-freeze. Bind the tracker to a source fingerprint or evidence date and mark it
+snapshot/freeze state. Bind the tracker to a source fingerprint or evidence date and mark it
 stale when project, source, operation, validator, or requirements change.
 
 ## Boundaries
 
-- Brick Wall owns current implementation authority and gate status.
+- The active Project's declared implementation owner owns current implementation authority and gate status.
 - Cooperative Implementation Methodology owns consequential option comparison.
 - Specialist prompts own technical plans.
 - Current handoff owners own durable continuation state.
@@ -98,10 +114,10 @@ records in a roadmap.
 ## Non-authorization statement
 
 This template cannot authorize source writes, release delivery, validation
-claims, or freeze.
+claims, or snapshot/freeze writes.
 
 ## Version history
 
 - 2.0: reclassified as an explicit draft-only template with adaptive structure
   and freshness-bound optional tracking.
-- 1.x: historical prescriptive KANDA implementation tracker.
+- 1.x: historical prescriptive implementation tracker.

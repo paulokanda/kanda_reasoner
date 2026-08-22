@@ -2,11 +2,11 @@
 prompt_id: terminal_cleanup_contract
 prompt_code: KPR-05-007
 title: Terminal Cleanup Contract
-version: 2.1
+version: 2.3
 status: active
 load_type: always_startup
 owner_box: 05_patch_delivery_and_validation
-source_stage: powershell-paste-safe-operational-output-v1
+source_stage: project-garbage-root-semantics-v1
 ---
 
 # Terminal Cleanup Contract
@@ -14,8 +14,24 @@ source_stage: powershell-paste-safe-operational-output-v1
 ## Purpose
 
 Own the user-facing Windows PowerShell entry and cleanup behavior for install,
-validation, freeze, diagnostic, recovery, and error blocks. This prompt does not
-own command semantics, patch staging, validation logic, or freeze authorization.
+validation, snapshot/freeze, diagnostic, recovery, and error blocks. This prompt does not
+own command semantics, patch staging, validation logic, or snapshot/freeze authorization.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Clean-prompt entry guard
 
@@ -93,7 +109,7 @@ if (-not $InstallFailed) {
 
 ## Non-install-success cleanup
 
-For interactive validation, freeze, diagnostics, recovery, and every error path,
+For interactive validation, snapshot/freeze, diagnostics, recovery, and every error path,
 preserve all relevant output, ask for Enter twice, run one final `Clear-Host`, and
 keep the terminal open.
 
@@ -128,9 +144,14 @@ failed.
 - Do not use `finally` for terminal clearing.
 - User-facing and packaged PowerShell must not use `else` or `elseif`.
 - Validate every critical path before passing it to `-LiteralPath`.
-- Do not use inline `python -c` for KANDA operational helpers; create a temporary
-  UTF-8 `.py` file under project-linked `_delete_after_daily_work`.
-- Do not clear error, validation, freeze, diagnostic, or recovery output before
+- Do not use inline `python -c` for operational helpers when the workflow requires a temporary
+  UTF-8 `.py` file. Place the helper under the active Project's declared transient workspace.
+- The standard Project transient/garbage convention may be `<project>_delete_after_daily_work`.
+  This name is Project-derived, not KANDA-specific. Everything placed there is disposable and
+  may be deleted after the workday. It must never contain the only copy of Project source,
+  durable validation evidence, release/freeze/error-memory authority, reconstruction-critical
+  state, or any artifact whose deletion would break normal future Project work.
+- Do not clear error, validation, snapshot/freeze, diagnostic, or recovery output before
   the second Enter.
 
 ## Output-time audit

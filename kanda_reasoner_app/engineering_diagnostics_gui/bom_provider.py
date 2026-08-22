@@ -4,13 +4,14 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 import subprocess
 import sys
 from threading import Event
 from time import sleep
 from typing import Mapping, Protocol
+
+from kanda_reasoner_app.tool_process_environment import build_tool_child_environment
 
 from .models import EngineeringDiagnosticsGuiCancelled
 
@@ -50,13 +51,7 @@ class SafetySuiteBomReportProvider:
             "--format",
             "json",
         ]
-        environment = dict(os.environ)
-        prior = environment.get("PYTHONPATH", "")
-        environment["PYTHONPATH"] = (
-            str(self._tool_root)
-            if not prior
-            else str(self._tool_root) + os.pathsep + prior
-        )
+        environment = build_tool_child_environment()
         process = subprocess.Popen(
             command,
             cwd=str(self._tool_root),

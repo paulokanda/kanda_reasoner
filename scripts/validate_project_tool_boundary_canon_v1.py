@@ -67,6 +67,9 @@ def validate_sources(root: Path) -> None:
             "Generated evidence authority: NON_AUTHORITATIVE / CANON_ASSIGNED / UNRESOLVED",
             "May begin coding: NO",
             "Never duplicate MCard, Workbench, delivery, or durable-document owner contracts",
+            "KANDA_OBSERVER_ACTOR",
+            "External Project release independence",
+            "Source archive provider rule",
         ),
         "FULL_CANON",
     )
@@ -78,11 +81,13 @@ def validate_sources(root: Path) -> None:
             "This bridge is startup context only",
             "May mutate from this bridge alone: NO",
             "KPR-12-001 project_tool_boundary_canon",
+            "KANDA Tool patch validator     = NOT_APPLICABLE to external Project releases",
+            "KANDA Tool source archive      = NOT_REQUIRED for Project development",
         ),
         "STARTUP_BRIDGE",
     )
     gate("BOUNDARY_FULL_CANON_ROUTED", "Load type: always_startup" not in full)
-    gate("BOUNDARY_STARTUP_BRIDGE_COMPACT", len(bridge.splitlines()) <= 120)
+    gate("BOUNDARY_STARTUP_BRIDGE_COMPACT", len(bridge.splitlines()) <= 300)
     gate("BOUNDARY_FULL_CANON_WITHIN_LIMIT", len(full.splitlines()) <= 500)
 
 

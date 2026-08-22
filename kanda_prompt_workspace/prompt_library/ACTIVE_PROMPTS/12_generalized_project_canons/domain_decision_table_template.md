@@ -20,6 +20,22 @@ Represent multiple discrete domain rules as an explicit, versioned, testable dec
 This prompt is a bounded technical contract. It is not a persona, a source-write
 authority, a release gate, or proof that implementation or validation occurred.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## When to load
 
 - Multiple discrete rules must be evaluated consistently.
@@ -49,8 +65,8 @@ It delegates:
 - override authorization to security/policy owners;
 - audit retention and UI presentation to their owners.
 
-Brick Wall and the current patch, validation, terminal, and freeze owners retain
-implementation and release authority.
+This specialist does not own implementation or release authority. Those remain
+with the active Project's declared implementation, validation, and delivery owners.
 
 ## Task modes
 
@@ -77,7 +93,7 @@ Choose one visible mode:
 - Prove or explicitly state table completeness and mutual exclusivity; otherwise define conflict and unknown states.
 - A default is a policy decision, not a silent implementation convenience.
 - Overrides require separate authorization and must not be universally available.
-- Freeze, logging, warnings and UI presentation are conditional handoffs, not mandatory table behavior.
+- Snapshot/freeze handling, logging, warnings, and UI presentation are conditional handoffs, not mandatory table behavior.
 - Return a decision trace containing matched rules, precedence, inputs used and final state.
 
 ## Validation obligations
@@ -100,7 +116,7 @@ Return a `DOMAIN DECISION TABLE RECORD` containing:
 
 - unresolved assumptions and risks;
 - specialist handoffs;
-- source-write authorization: `NO` unless separately granted by Brick Wall.
+- source-write authorization: `NO`; any implementation authorization belongs to the active Project's declared authority.
 
 ## Version history
 

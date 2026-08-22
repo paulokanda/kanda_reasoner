@@ -3,17 +3,14 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import py_compile
 from dataclasses import dataclass
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
+from kanda_reasoner_app.project_source_proposal_boundary import (
+    PROJECT_REPAIR_PROPOSAL_ONLY_MARKER,
 )
 
 from .bom_scanner import UTF8_BOM_BYTES, iter_bom_scan_files, scan_file_for_bom
@@ -43,10 +40,16 @@ class BomFixResult:
     success: bool
     backup_path: str = ""
     message: str = ""
+    proposal_only: bool = False
+    proposed_sha256: str = ""
 
     def to_finding(self) -> SourceHygieneFinding:
         """Convert the fix result into a source hygiene finding."""
-        if self.changed and self.success:
+        if self.proposal_only and self.success:
+            code = "UTF8_BOM_PROPOSAL_ONLY"
+            severity = "info"
+            action = "Review the proposed BOM-free payload outside Project source."
+        elif self.changed and self.success:
             code = "UTF8_BOM_REMOVED"
             severity = "info"
             action = "No further action required."
@@ -64,7 +67,12 @@ class BomFixResult:
             message=self.message,
             severity=severity,
             confidence="high",
-            evidence={"backup_path": self.backup_path, "changed": self.changed},
+            evidence={
+                "backup_path": self.backup_path,
+                "changed": self.changed,
+                "proposal_only": self.proposal_only,
+                "proposed_sha256": self.proposed_sha256,
+            },
             suggested_action=action,
         )
 
@@ -75,11 +83,15 @@ def remove_utf8_bom_from_file(
     backup_root: str | Path | None = None,
     validate: bool = True,
 ) -> BomFixResult:
-    """Remove a UTF-8 BOM from one file with backup and rollback."""
+    """Return a BOM-removal proposal without mutating Project source."""
+    del backup_root
     file_path = Path(path).resolve()
-    root = Path(project_root).resolve() if project_root is not None else file_path.parent
+    root = (
+        Path(project_root).resolve()
+        if project_root is not None
+        else file_path.parent
+    )
     display_path = _display_path(file_path, root)
-
     try:
         payload = file_path.read_bytes()
     except OSError as exc:
@@ -87,9 +99,8 @@ def remove_utf8_bom_from_file(
             path=display_path,
             changed=False,
             success=False,
-            message="Could not read file before BOM fix: " + str(exc),
+            message="Could not read file before BOM proposal: " + str(exc),
         )
-
     if not payload.startswith(UTF8_BOM_BYTES):
         return BomFixResult(
             path=display_path,
@@ -97,57 +108,34 @@ def remove_utf8_bom_from_file(
             success=True,
             message="File does not start with a UTF-8 BOM.",
         )
-
-    backup_path = _make_backup_path(file_path, root, backup_root)
-    backup_path.parent.mkdir(parents=True, exist_ok=True)
-    fire_shield = None
-    if project_root is not None:
-        fire_shield = build_current_fire_shield_context(
-            project_root=root,
-            phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-            operation_id="source-hygiene-bom-fix",
-        )
     proposed = payload[len(UTF8_BOM_BYTES) :]
-
-    try:
-        backup_path.write_bytes(payload)
-        if fire_shield is not None:
-            assert_fire_shield_write_allowed(fire_shield, file_path, operation="REPLACE")
-            assert_fire_shield_payload_bytes_allowed(fire_shield, file_path, proposed)
-        file_path.write_bytes(proposed)
-        if validate:
-            validate_text_file_after_bom_fix(file_path)
-    except Exception as exc:
-        try:
-            if backup_path.exists():
-                rollback = backup_path.read_bytes()
-                if fire_shield is not None:
-                    assert_fire_shield_write_allowed(
-                        fire_shield, file_path, operation="REPLACE"
-                    )
-                    assert_fire_shield_payload_bytes_allowed(
-                        fire_shield, file_path, rollback
-                    )
-                file_path.write_bytes(rollback)
-        except OSError:
-            pass
-        return BomFixResult(
-            path=display_path,
-            changed=True,
-            success=False,
-            backup_path=str(backup_path),
-            message="BOM fix failed and rollback was attempted: " + str(exc),
-        )
-
-    if fire_shield is not None:
-        verify_tool_snapshot_unchanged(fire_shield)
+    if validate:
+        _validate_proposed_text_after_bom_fix(file_path, proposed)
     return BomFixResult(
         path=display_path,
-        changed=True,
+        changed=False,
         success=True,
-        backup_path=str(backup_path),
-        message="UTF-8 BOM removed with backup and validation.",
+        message=PROJECT_REPAIR_PROPOSAL_ONLY_MARKER + ":UTF8_BOM",
+        proposal_only=True,
+        proposed_sha256=hashlib.sha256(proposed).hexdigest(),
     )
+
+
+def _validate_proposed_text_after_bom_fix(
+    file_path: Path,
+    proposed: bytes,
+) -> None:
+    """Validate proposed BOM-free bytes without writing them to source."""
+    text = proposed.decode("utf-8")
+    suffix = file_path.suffix.lower()
+    if suffix in PYTHON_SUFFIXES:
+        compile(text, str(file_path), "exec")
+    elif suffix in JSON_SUFFIXES:
+        json.loads(text)
+    elif suffix in JSONL_SUFFIXES:
+        for line in text.splitlines():
+            if line.strip():
+                json.loads(line)
 
 
 def fix_project_utf8_bom(
@@ -178,13 +166,16 @@ def fix_project_utf8_bom(
         )
 
     changed_count = sum(1 for result in results if result.changed and result.success)
+    proposal_count = sum(1 for result in results if result.proposal_only)
     failed_count = sum(1 for result in results if not result.success)
     summary = (
-        "BOM fix completed. "
+        "BOM proposal scan completed. "
         + "files_with_bom="
         + str(len(results))
         + "; changed="
         + str(changed_count)
+        + "; proposal_only="
+        + str(proposal_count)
         + "; failed="
         + str(failed_count)
         + "."

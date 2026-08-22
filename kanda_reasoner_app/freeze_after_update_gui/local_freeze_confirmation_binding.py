@@ -17,6 +17,7 @@ __all__ = [
     "apply_freeze_form_inputs",
     "bind_freeze_confirmation_invalidation",
     "build_freeze_confirmation_binding",
+    "clear_freeze_form_inputs",
     "collect_freeze_form_inputs",
     "freeze_confirmation_binding_matches",
     "render_freeze_findings",
@@ -67,9 +68,9 @@ class FreezeActionStateController:
         if can_ignore:
             self._ignore_button.setStyleSheet(self._ignore_enabled_style)
             self._ignore_button.setToolTip(
-                "Discard this current writable freeze draft and mark the "
-                "current freeze hint as ignored/used. No freeze entry is "
-                "written."
+                "Delete and forget the current unfrozen freeze candidate, "
+                "retain only durable human-Ignore authority so that exact source "
+                "cannot return, and clear this window. Frozen memory is untouched."
             )
         else:
             self._ignore_button.setStyleSheet(self._disabled_style)
@@ -177,6 +178,22 @@ def freeze_confirmation_binding_matches(
             return False, "The Freeze owner changed after Preview: " + key
     return True, ""
 
+
+
+def clear_freeze_form_inputs(widgets: Any) -> None:
+    """Clear every editable Freeze candidate field without inserting defaults."""
+
+    widgets.feature_title_edit.clear()
+    widgets.primary_box_edit.clear()
+    widgets.box_type_edit.clear()
+    widgets.validated_files_edit.clear()
+    widgets.generated_files_edit.clear()
+    widgets.protected_paths_edit.clear()
+    widgets.do_not_regress_edit.clear()
+    widgets.validation_evidence_edit.clear()
+    widgets.known_warnings_edit.clear()
+    widgets.planned_next_step_edit.clear()
+    widgets.notes_edit.clear()
 
 def collect_freeze_form_inputs(widgets: Any) -> dict[str, str]:
     """Read the exact freeze form values from the dialog widgets."""

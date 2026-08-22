@@ -127,7 +127,7 @@ Read-only. It shows exactly what would be written, including identity, validated
 The only writing step. Use it only after the preview is correct. Explicit human confirmation is required.
 
 ### Ignore this Freeze
-Closes or records the decision not to freeze without writing governed frozen memory.
+Deletes and forgets the currently displayed unfrozen Freeze candidate, removes its exact transient staged source when it is still safely inside `<project>_delete_after_daily_work`, clears the form and Preview, and keeps the New Local Freeze Entry window open. A minimal `ignored-by-human` consumption tombstone is retained so that the exact ignored source cannot be re-imported; genuinely different newer repair sources remain eligible. It never deletes or changes already frozen memory.
 
 ### Cancel
 Closes the dialog without writing.

@@ -4,7 +4,7 @@
   "display_name": "Terminal Cleanup Contract",
   "filename": "terminal_cleanup_contract.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "2.1",
+  "version": "2.3",
   "status": "active",
   "load_type": "always_startup",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,9 +16,9 @@
     "PowerShell cleanup",
     "clean PowerShell prompt"
   ],
-  "source_stage": "powershell-paste-safe-operational-output-v1",
-  "updated_for": "powershell-paste-safe-operational-output-v1",
-  "description": "Canonical clean-prompt, paste-unit, runtime-compatibility, error-provenance, and terminal-cleanup contract for user-facing PowerShell.",
+  "source_stage": "project-garbage-root-semantics-v1",
+  "updated_for": "project-garbage-root-semantics-v1",
+  "description": "Canonical clean-prompt, paste-unit, runtime-compatibility, error-provenance, and terminal-cleanup contract for user-facing PowerShell. Project-agnostic; <project>_delete_after_daily_work is an allowed Project-derived disposal-only garbage convention, never durable authority.",
   "priority": 12,
   "trigger_phrases": [
     "terminal cleanup",

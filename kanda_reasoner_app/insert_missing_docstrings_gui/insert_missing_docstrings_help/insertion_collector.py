@@ -12,6 +12,11 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..ai_docstring_generator import AIDocstringGenerator
+
 import logging
 
 import ast

@@ -22,8 +22,10 @@ _DAILY_REFACTOR_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/daily_rfctr_report/dail
 _PROJECT_QA_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/ai_reasoner_main_window.py"
 _CONFIG_AI_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/config_ai_tab.py"
 _WEB_AI_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/reasoner_engine/project_web_ai_tab.py"
+_PROJECT_STRUCTURE_3D_GUI_SOURCE = f"{_CANONICAL_PACKAGE_NAME}/project_structure_visualizer/project_structure_3d_tab.py"
 _ACTIVE_PROJECT_BUTTON_ONLY_SOURCES = {
     _CONFIG_AI_GUI_SOURCE,
+    _PROJECT_STRUCTURE_3D_GUI_SOURCE,
     _WEB_AI_GUI_SOURCE,
 }
 _HEADER_TEMPLATE_ONLY_SOURCES = {

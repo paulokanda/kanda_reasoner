@@ -8,6 +8,10 @@ __all__ = []
 import os
 import runpy
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QApplication
 
 from kanda_reasoner_app.project_analysis_evidence_paths import (
     primary_evidence_json_path,

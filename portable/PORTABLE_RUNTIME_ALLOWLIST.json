@@ -1,15 +1,26 @@
 {
-  "builder_feature_id": "kanda-reasoner-portable-builder-install-v1r12",
-  "builder_version": "v1r12",
+  "builder_feature_id": "kanda-reasoner-portable-timestamped-publication-name-v1r32",
+  "builder_version": "v1r32",
   "contract": "committed_exact_source_archive_path_sha256_allowlist",
-  "feature_id": "kanda-reasoner-portable-runtime-path-hash-allowlist-v1r4",
+  "feature_id": "kanda-reasoner-portable-runtime-path-hash-allowlist-v1r5",
   "hardening_features": [
     "registry-boundary-gate",
     "packaged-gui-smoke-isolation",
     "governed-root-exact-rollback",
     "runtime-path-hash-allowlist",
     "exact-builder-member-governance",
-    "external-build-control-hash-binding"
+    "external-build-control-hash-binding",
+    "self-host-venv-build-interpreter",
+    "production-portable-authorization",
+    "spec-audit-policy-reconciliation",
+    "posix-zip-member-writer",
+    "packaged-gui-runtime-report-preservation",
+    "pyinstaller-submodule-import-preflight",
+    "selected-owner-fire-shield-isolation",
+    "packaged-worker-reentry-dispatch",
+    "clean-start-gui-regression-reset",
+    "tool-project-decoupled-portable-build",
+    "timestamped-publication-name"
   ],
   "item_count": 358,
   "items": [
@@ -100,22 +111,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md",
       "role": "prompt_library",
-      "sha256": "6e56c70aa74ebb01c3e09f3342cf0f871bedb5281ad4d15e0431deaa7a870cc0",
-      "size_bytes": 1663,
+      "sha256": "b87138fd13ab7264b67332b211af1a618ae4cf294f401a72033fbabaaab855e0",
+      "size_bytes": 2626,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_human_partnership_session_start.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
       "role": "prompt_library",
-      "sha256": "39d34c223c9aaef04ddcc99b267a947d2f10d5a9e0bbaf97c7962a62d26c74e2",
-      "size_bytes": 9562,
+      "sha256": "f2b5e5f90667746921a635edc1f7ddcaa83b897b3339f29f0d77efe565640854",
+      "size_bytes": 10396,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md",
       "role": "prompt_library",
-      "sha256": "fa461060f1cd08c0832838346890873b12577005d1bfe58f6702ab3e4c05544a",
-      "size_bytes": 5553,
+      "sha256": "54d9cba787a2f028de0f2df63da90b147bca116c527469d1f895ae6f0de78edd",
+      "size_bytes": 6619,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/daily_patch_delivery_guardrails.md"
     },
     {
@@ -149,8 +160,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
       "role": "prompt_library",
-      "sha256": "3412df5558ffeffc1a262a2dce6dc427164e315f19407d5cb830301de3a282b1",
-      "size_bytes": 6302,
+      "sha256": "82f820fd97f80e58ea012ab854669414ac312cbb0312f363cf0bca45e948aefd",
+      "size_bytes": 12550,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md"
     },
     {
@@ -170,8 +181,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md",
       "role": "prompt_library",
-      "sha256": "db4b871225be10c42b78ccdae67f69d6e7750a7ad078d244a9f64718e2e298ad",
-      "size_bytes": 1862,
+      "sha256": "83797e4d3c04b4e6db02582ae4f089c09d45d54fc8c463499805742336a44cc2",
+      "size_bytes": 2844,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/project_startup_canon_template.md"
     },
     {
@@ -191,15 +202,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md",
       "role": "prompt_library",
-      "sha256": "5bef6fca6e8c84f1aafc760ebf6878f61d5bf0b94af360e0308166f0c499a6bb",
-      "size_bytes": 4028,
+      "sha256": "5f129ad1319b98afe91aba0d9145e6d1693de773fa41c06a92ca30c9505cf396",
+      "size_bytes": 4114,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/session_start_upload_checklist.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
       "role": "prompt_library",
-      "sha256": "de986fcc4fb01cf68dc33e6cd74a9358c12abf352d8916dcce995b7dbca04bcc",
-      "size_bytes": 6738,
+      "sha256": "035be51d6c8439d8660d40d745f9e0112fc2da38e6d9d0d818e2428f0ccaf243",
+      "size_bytes": 6762,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md"
     },
     {
@@ -233,8 +244,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
       "role": "prompt_library",
-      "sha256": "05b9e24929f9aa337930095125b651bb45b9c9d5f0acb2b57b84fce1cbe394ba",
-      "size_bytes": 17695,
+      "sha256": "024581147e277b153a868f32d9897f375f0f629435d6dea80db4431489260268",
+      "size_bytes": 18178,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md"
     },
     {
@@ -282,15 +293,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
       "role": "prompt_library",
-      "sha256": "fcf5169a3b1fb032c12406391055f24035e8bcaf36ad473792dd85feeb895eb3",
-      "size_bytes": 57061,
+      "sha256": "1b12ec3b3b01d51ed64770a60e474bd6d15bf012cd17e936876756245d4712a6",
+      "size_bytes": 58928,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md",
       "role": "prompt_library",
-      "sha256": "fd46df30b136867975ae590ffa5cafddabf8089739afff96131db0bd3a45c5d1",
-      "size_bytes": 2962,
+      "sha256": "ab6aa1d113a7659601c60c0019ad124e5d1c8400397b9c103de9f5be1977ded1",
+      "size_bytes": 3946,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/cooperative_implementation_methodology.md"
     },
     {
@@ -303,29 +314,29 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md",
       "role": "prompt_library",
-      "sha256": "6a5520156c914ed2094035141f42f67a23df51e201d6277a5200cb9dc164c696",
-      "size_bytes": 4590,
+      "sha256": "4a368374e2fcbf4b71b81900c654754ba852ea0c86154550324e4fc4fbdce1ca",
+      "size_bytes": 5292,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/pre_output_contract_gates.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/professional_engineering_governance_template.md",
       "role": "prompt_library",
-      "sha256": "ebbba5ed082e314d8cd2ff3d4deac116c55b9ff0d6de39e7397aed6970b5c8a8",
-      "size_bytes": 2329,
+      "sha256": "c82f24099e9a8f153f2dab3c3aadaba2d04547a113a927097b3b933d488decb6",
+      "size_bytes": 3332,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/professional_engineering_governance_template.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md",
       "role": "prompt_library",
-      "sha256": "a18df2197e1ea4d9128ce180baf57bda95723e58a5f9eb5c671ae8c0b6a35d19",
-      "size_bytes": 21346,
+      "sha256": "1ed3faf591aff96c2fc23404a8537f51df42b9d14e77d6d0747b3b4f3c1c5652",
+      "size_bytes": 21662,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md",
       "role": "prompt_library",
-      "sha256": "ffe4350ef7990cfa6fc90cacae3de4b869d1bb8d9c8ac69a94099a735751002e",
-      "size_bytes": 1983,
+      "sha256": "7b2b264a11ea0aa405f558f5367e7871791af5e8b222e0158694521c7013c1a6",
+      "size_bytes": 2916,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/workflow_handoff_template.md"
     },
     {
@@ -338,15 +349,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md",
       "role": "prompt_library",
-      "sha256": "f3b03f539da13794dc1cf39a28ec8841ddcc548a845e41a8292df1a4eba7d884",
-      "size_bytes": 3582,
+      "sha256": "74355ce79e88199d9d5377a588ed8aa7e001446f74116e2d4cdd8cc78ee6356f",
+      "size_bytes": 4601,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/boundary_first_repair_protocol.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md",
       "role": "prompt_library",
-      "sha256": "94b8cc0aa1df762674bc2e9e9ae40d2f8cdb264c09214a25c4bf5282e0c55572",
-      "size_bytes": 6403,
+      "sha256": "ce2b37d017b31d48b2d902de499dddc04d66c45c1a6dea6a415674aefe7871d6",
+      "size_bytes": 7625,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/box_architecture_canon.md"
     },
     {
@@ -359,64 +370,64 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md",
       "role": "prompt_library",
-      "sha256": "8811543e3c24e8528ffd37867be1a539599cbb93a7a67b5a26ffd05b1bbdba5f",
-      "size_bytes": 4014,
+      "sha256": "56b10c1d57f3340781b32ac5b141720b6f293943bb38b0bfa77902f2dffd54d5",
+      "size_bytes": 5341,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/kanda_box_shielding_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md",
       "role": "prompt_library",
-      "sha256": "a2182859397ba8f9e84aac6c0fdb0522bd0756af6b320ff98d2d2138ce4780de",
-      "size_bytes": 3823,
+      "sha256": "20bccd0a82159ca6a7905084f4021daa4fd806c13bffe689d098877438499af9",
+      "size_bytes": 4979,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/project_folder_organization_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md",
       "role": "prompt_library",
-      "sha256": "04ed28fc6eeff577e51e542e6252f81fcbb11ec9da15ddc821da0064a6a4a82f",
-      "size_bytes": 4060,
+      "sha256": "9f0de449d4e7d25f0d46f5de0737f27b9b8b82fff84f592b887473f6f6a9846c",
+      "size_bytes": 5033,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/04_box_architecture_and_boundaries/stateful_control_regression_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md",
       "role": "prompt_library",
-      "sha256": "d03b7d7ed9d6770bd48cc471594a7f03a36be125569f6ffb726cca807d3a9a77",
-      "size_bytes": 3210,
+      "sha256": "e8ee40f66dbeb988b3213f231355963fa26974c609aaf18d6b598c016ad71106",
+      "size_bytes": 3292,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md",
       "role": "prompt_library",
-      "sha256": "bcd46a41f89a109e9b5ad7c37c30ee1c3f6d636b39b59e601c3eca587fd08fc2",
-      "size_bytes": 5157,
+      "sha256": "b0879cc7b75087c5480ef8d2846818348e56aad140dee3641afd73b3c063a835",
+      "size_bytes": 6120,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/bundle_gated_development_workflow.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md",
       "role": "prompt_library",
-      "sha256": "863ef8f79e71317e1814b38d3f657c1cc095365ba61c4cb3d92d3b7a2f78aba5",
-      "size_bytes": 5519,
+      "sha256": "139ba45b05a40f8f5e5870b36cae9bc0ccfbf414ca57619fc070f58c3fdea560",
+      "size_bytes": 6316,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_and_delivery_protocol.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md",
       "role": "prompt_library",
-      "sha256": "219b36ddf9f6db75977094109cc8821653492d84c7249643f8053859b2b7c85e",
-      "size_bytes": 3419,
+      "sha256": "132c488c532760a3afecee74379be1ce18da10c81f86be2f1a7ac5ea8b94bf26",
+      "size_bytes": 4419,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/implementation_roadmap_builder.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
       "role": "prompt_library",
-      "sha256": "e67e8164b583c54463faef271c45d356d29da3bdb7209a8a1439a82d6aeda85f",
-      "size_bytes": 8296,
+      "sha256": "264c6f1ec7f90439e37bce3e6ac693b3fcd2ffebb32f504a4badd74dbad03bc3",
+      "size_bytes": 9524,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md",
       "role": "prompt_library",
-      "sha256": "f67cce917a22c6351d963672613a3d59fe6735bcebc6b43866d5a9bec658906b",
-      "size_bytes": 11253,
+      "sha256": "7212c8f8cfd0c65dd253021db9802035c1903248462c0cdf88119d83d6003e2e",
+      "size_bytes": 13149,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md"
     },
     {
@@ -443,15 +454,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md",
       "role": "prompt_library",
-      "sha256": "624866ed2000cc6430a5a14ee294946cb53551f1d5a451b3ab209f4c7865f648",
-      "size_bytes": 27133,
+      "sha256": "263abba6e5f96946aeed26b1d85e5f1f77971b10905ecb1b38d16614b256146f",
+      "size_bytes": 15959,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md",
       "role": "prompt_library",
-      "sha256": "d10b92cb0b08df52d79d569ad9b928fd2caae3e5961afd5986999d18c7aa0bb2",
-      "size_bytes": 4265,
+      "sha256": "4cb774341731cc7c9001f6dc3b7f799d2f160ce49232036a5f7c6ba0043b0103",
+      "size_bytes": 5669,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/terminal_cleanup_contract.md"
     },
     {
@@ -471,36 +482,36 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md",
       "role": "prompt_library",
-      "sha256": "06ecd59454fbfce5c9fa2c84a5b259a6bb34ad633e47596c7f82e34b81e61013",
-      "size_bytes": 7330,
+      "sha256": "fc8ad3ea22e80c76853b9d270e55ea90f7b5426fd81f952df71b206f22d24c8c",
+      "size_bytes": 8521,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_protocol.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md",
       "role": "prompt_library",
-      "sha256": "aa2a1535a451b842b3a99634edf160956520904634bc22baa8d6bb9b3a6e076c",
-      "size_bytes": 2402,
+      "sha256": "abe6773bb80260e61f8f008f7bc861ffefc8d03beadb6961de78cfb9b5dc01bf",
+      "size_bytes": 3398,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/architecture_hardening_triage_template.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md",
       "role": "prompt_library",
-      "sha256": "964c43ed666846afbc7be46a84d6bc812e94cb049d17204a6b813a200f6014c9",
-      "size_bytes": 10896,
+      "sha256": "30a9252c3c3029b14ce33160e462ee1c4d172d8e44e082c84daf0b248bf6ec2c",
+      "size_bytes": 12255,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_protocol.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md",
       "role": "prompt_library",
-      "sha256": "103f85652d8a653b2a37e965861fbd18bc5c1d4af4eb8b948a97b0a03de1f4f3",
-      "size_bytes": 2760,
+      "sha256": "ce78d3ca3e7d6494cd9ef2d8d8f5d5c522c3842e8532111fccd33eb61fd6d82a",
+      "size_bytes": 3739,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/large_module_refactor_template.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md",
       "role": "prompt_library",
-      "sha256": "4a4f4ccd202a72f4b77247cd7da3b6c7833bf142dfc7469b375da9634ff7c46f",
-      "size_bytes": 6286,
+      "sha256": "0071c25b4404cc7dec87c9940170af6918543160d69db1d1ab8f0e4329688d9f",
+      "size_bytes": 7788,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/06_refactor_and_architecture_hardening/safe_refactor_how_to.md"
     },
     {
@@ -576,71 +587,71 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md",
       "role": "prompt_library",
-      "sha256": "4b887d2ea5c8e3ac84c5695e36553be47adb29275626238b1f4a2ea3aa082831",
-      "size_bytes": 6139,
+      "sha256": "4c3764c6d8327752a65fa441c7b09ff8cd8bf0996f495a207668550c18a5ed6f",
+      "size_bytes": 7085,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_architecture.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md",
       "role": "prompt_library",
-      "sha256": "7a5bca499ab7982cdc3e7d9449ae6fcc3ffd0896d69c7e1de6d5520c32297ff6",
-      "size_bytes": 5956,
+      "sha256": "a59602e69817862ae6b5953181e52a6b1d6f7f57b164020c1ab61cc561c6e2e4",
+      "size_bytes": 6879,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_clean_code.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md",
       "role": "prompt_library",
-      "sha256": "f696533548d5073dff4abe2401f0f4e877c032c7ed055b2a627f2f51e48ef4ea",
-      "size_bytes": 5900,
+      "sha256": "7bab2ab93f2154db7d69dc648cfc466b407a848c4138c53eacae6808e19ea325",
+      "size_bytes": 6823,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_design_patterns.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md",
       "role": "prompt_library",
-      "sha256": "318ae8ab8d743ad39c97292e5c458ab6523a77009cb9ace91dd07e17693c2c65",
-      "size_bytes": 7909,
+      "sha256": "50cfa99961329f97d12dc57111c4a25fb96ea42f05193bc61658d0aa71ce61f3",
+      "size_bytes": 8871,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_domain_driven_design.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md",
       "role": "prompt_library",
-      "sha256": "d9e9242f57c0620dbb08d3a9b02c54fd9e3f4779f94bb4a30fd6dcb16616b514",
-      "size_bytes": 8501,
+      "sha256": "ce160e6b243d939c2574ace3e16d36f4bffb208b6f649b622cbf3e7dbc510da5",
+      "size_bytes": 9483,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_enterprise_architecture.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md",
       "role": "prompt_library",
-      "sha256": "51a4c39a7fe88cced4187c594186baee71e4493791c820a2c44d62d548f73a88",
-      "size_bytes": 8591,
+      "sha256": "f9711b325d7a28c98862e49e5fca9820f4c87e663f2316fbd01fbc21b3fa94be",
+      "size_bytes": 9583,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_high_performance.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md",
       "role": "prompt_library",
-      "sha256": "11eee39605ea09fb404ab31c3aff35d7cac80aac2035237933fdcb7e78ddbef3",
-      "size_bytes": 8942,
+      "sha256": "6504a29badd289b0202472aa0a91bd12b0e9c6bb50b2f439711312490122a971",
+      "size_bytes": 10018,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_legacy_code_workflow.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md",
       "role": "prompt_library",
-      "sha256": "c0055fcd65129db7172dd44bbe1b6fc1d339962c9a5ec732dda1da15aa094f5c",
-      "size_bytes": 4189,
+      "sha256": "bd0173e04d9395577970ceb9142ae540830d8a5823f5dccb214fb85f1d2b597c",
+      "size_bytes": 5207,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_pragmatic_programmer.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md",
       "role": "prompt_library",
-      "sha256": "8f82e1feb9c8c147d8a4c66a3bf274b6312a7b55bd6a0d3f9064f902dccf64c3",
-      "size_bytes": 3960,
+      "sha256": "1afcc064e565a9179d3cd50b08824e150ebfd78f847bde3f5cd9b23348d21520",
+      "size_bytes": 4934,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/python_refactoring.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md",
       "role": "prompt_library",
-      "sha256": "451a0ce0919dae8661dd924e383037c72e1c8cfcdb0a4e395efb0ab008c79bc3",
-      "size_bytes": 4678,
+      "sha256": "2a460ce170ed849540d5784e60e698391922913c12a75cc878d501eb225594da",
+      "size_bytes": 5686,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/08_python_engineering_core/software_engineering_books_master.md"
     },
     {
@@ -653,8 +664,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md",
       "role": "prompt_library",
-      "sha256": "537dbfcf556c893c8830fb72d819d908aa4a76ab75d4f82e549bbdf01b2d8b9a",
-      "size_bytes": 3929,
+      "sha256": "9dbfc27d3a8ab2f65f79e240cbf4cb50682f10bd9242ba9ae7a3e7617ba128fb",
+      "size_bytes": 4938,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_book_literature_audit_full.md"
     },
     {
@@ -674,8 +685,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md",
       "role": "prompt_library",
-      "sha256": "e6e9f768182174a8408998e21ce3b8ec23f9797eac815840f892f0fd300eb45f",
-      "size_bytes": 4007,
+      "sha256": "50ecf44025fb4fd41c614122d9fb14ef73d4e57e522b09ac7ffd6aa1cbb33aa7",
+      "size_bytes": 5025,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_independent_ai_audit_full.md"
     },
     {
@@ -688,8 +699,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md",
       "role": "prompt_library",
-      "sha256": "15e253ef9e68f4305788a309f7ab08755c1e121e1f5c6afff82d24b84ddb6f68",
-      "size_bytes": 3865,
+      "sha256": "258ab357cff73c7365d95bb13507466c63b599fe0fe17ae88f3a9fa5810c7458",
+      "size_bytes": 4918,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_master_protocol_full.md"
     },
     {
@@ -709,8 +720,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md",
       "role": "prompt_library",
-      "sha256": "2d82ac74c566a822c03015f58d3f28e768271037327f65eae5a8627d32915f25",
-      "size_bytes": 4068,
+      "sha256": "03df43e69bc8ce0a91a3517205edaf56627e1d2a9178b7419511988c06fea110",
+      "size_bytes": 5042,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/anti_hallucination_web_evidence_audit_full.md"
     },
     {
@@ -723,43 +734,43 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_documentation_developer_experience.md",
       "role": "prompt_library",
-      "sha256": "0a8c1c4aebd3618ce7f715b76d002108f8a4d12cd17f5aa9e12a4101f66605b0",
-      "size_bytes": 4035,
+      "sha256": "34aa7bbab1cf02d5b5aabeb1ecc0cdce7f9e63ab6eea61eef2232fcd9faaf0b8",
+      "size_bytes": 5009,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_documentation_developer_experience.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_observability_logging_metrics_tracing.md",
       "role": "prompt_library",
-      "sha256": "eeb73876d24f65b2525b82ef14da8b82599b9c7262e28a32a3be8054a85c8775",
-      "size_bytes": 3927,
+      "sha256": "cafd0e033a1098f5ca3646dcdf516f8360cd8a54f8f94c311d2c26c8acbb4606",
+      "size_bytes": 4901,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_observability_logging_metrics_tracing.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_resilience_error_handling.md",
       "role": "prompt_library",
-      "sha256": "c8e52ebab702aa2b786c6a8622f348a9fc86814e803079bb25c5ee0c5d0137ac",
-      "size_bytes": 3976,
+      "sha256": "f2c5a7f2069d93a2b8982cb72b454570270f162e95bfebfa56ae906aa1252181",
+      "size_bytes": 4950,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_resilience_error_handling.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_security_threat_prevention.md",
       "role": "prompt_library",
-      "sha256": "6440ed4dd46c13062379d01bb838b166ae78221776d76cf3cdf910742657ca88",
-      "size_bytes": 4120,
+      "sha256": "d0da7f11af6997e58917584b380e1e88ba3f80304a7d8628ba86fe2b60ece61d",
+      "size_bytes": 5094,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_security_threat_prevention.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_testing_pytest.md",
       "role": "prompt_library",
-      "sha256": "2a940492ddd8a294f5743d4ff0314851910f1ea0b67048935da63182108cf55f",
-      "size_bytes": 3967,
+      "sha256": "819040a2c4dee30d2f10089e572b22fff5a814aedd29618779fe79e2a19b337e",
+      "size_bytes": 4985,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_testing_pytest.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_validation_serialisation_type_safety.md",
       "role": "prompt_library",
-      "sha256": "47718b18fec154bd357004dc54432ad6f65fab36b56364f4b41ba60461010d5d",
-      "size_bytes": 3985,
+      "sha256": "1c453d81a2ed971c7fe0526ae633a0aa74b6b21a41d6ada143956988dd28d190",
+      "size_bytes": 4959,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/09_python_quality_security_observability/python_validation_serialisation_type_safety.md"
     },
     {
@@ -779,29 +790,29 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_api_design.md",
       "role": "prompt_library",
-      "sha256": "4991d46d3f9bef4d63bc22687044536bb668c82eb0ad8fe82ba90e13c5497de1",
-      "size_bytes": 4135,
+      "sha256": "9ba6e41efd6b446dc7d314234612de2d4c7c76f978d6c1e54361689b012137b1",
+      "size_bytes": 5109,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_api_design.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_async_parallel_distributed.md",
       "role": "prompt_library",
-      "sha256": "7e34319c0458a79b4d2384da276113cdbb076a73236bfe8bee2ddb73765c4984",
-      "size_bytes": 4222,
+      "sha256": "41d34025ae38fde361ad0c0e9a47e433bd120f9ea1006c32073504c41bb8bbec",
+      "size_bytes": 5196,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_async_parallel_distributed.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_configuration_feature_flags.md",
       "role": "prompt_library",
-      "sha256": "c6887ec8c721e693c206265f116464267178397e36597e45dff66468629e155d",
-      "size_bytes": 4162,
+      "sha256": "ab77cc6332a8c4f6cb853a768b85adcc53babae1702d5b6ebce1b092cfc1bed8",
+      "size_bytes": 5136,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_configuration_feature_flags.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_database_design_optimisation.md",
       "role": "prompt_library",
-      "sha256": "5fb7ad3ad8a2a43089c4f52b29a6a4adca606124cba175c3feb6ec337485ba23",
-      "size_bytes": 4402,
+      "sha256": "4da96a4c533f6353ff29a978279d6291ff2585b96ca91fd1961986b6c3c6f069",
+      "size_bytes": 5376,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/10_python_api_data_async_config/python_database_design_optimisation.md"
     },
     {
@@ -814,8 +825,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md",
       "role": "prompt_library",
-      "sha256": "b360b51833385cde3771c6246c46648ee0d95e99042f1379bf6a78eaf9315a8d",
-      "size_bytes": 4665,
+      "sha256": "14b8986edb77ce8469b938cde34570d657cc412961eb96ba6aba8e41da517e61",
+      "size_bytes": 5638,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/kubernetes_deployment_operations.md"
     },
     {
@@ -828,8 +839,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md",
       "role": "prompt_library",
-      "sha256": "74459f85078c1db32c3af3e63ff5f16b868bc213fcbc26be464103a284a6c00d",
-      "size_bytes": 3925,
+      "sha256": "be57cd06efd58c27e119e799545e5bbc82d7569345ccf8b1bf6d89c3a0220c8b",
+      "size_bytes": 5035,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/professional_ai_assisted_engineering_framework.md"
     },
     {
@@ -842,15 +853,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_lifecycle_versioning_deprecation.md",
       "role": "prompt_library",
-      "sha256": "0e168f26e7cccb568660119dca5582277a4d70c4f2b66a07a3f66cf461f40728",
-      "size_bytes": 4439,
+      "sha256": "bfdc53ee6392cb61f23ed98b2e24dce7b94564de868b4e63c5bb90da0dc7b5fb",
+      "size_bytes": 5412,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_lifecycle_versioning_deprecation.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_site_reliability_engineering.md",
       "role": "prompt_library",
-      "sha256": "ea9935c471477b1c6093aea6d5b258dca177ee62226ef2ed0140f428f7799eb8",
-      "size_bytes": 4419,
+      "sha256": "dce21f2d47cf61cdb954d062d8ae04d98b2cc2ae364d0c63b356e36336682947",
+      "size_bytes": 5392,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/11_productization_and_release_readiness/python_site_reliability_engineering.md"
     },
     {
@@ -863,15 +874,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
       "role": "prompt_library",
-      "sha256": "b86007ab35cdf13b1a2cbdc74774d9d5835ecda6cf77863fc2c5c202f5cb3302",
-      "size_bytes": 10634,
+      "sha256": "e0991e78592cfefcf8a4f7b140791da674dcf510bea02b3d5804a2af8bd064c3",
+      "size_bytes": 8709,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md",
       "role": "prompt_library",
-      "sha256": "c11b2df451dc5b82f231b80955a451d7be7740d462793e50b0c4ca322b9ae8d6",
-      "size_bytes": 4081,
+      "sha256": "7a39b99dda2da1c37824f309620479a8e60ed5d101d10544f822418a667134a8",
+      "size_bytes": 5054,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/data_transform_pipeline_invariants.md"
     },
     {
@@ -884,8 +895,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md",
       "role": "prompt_library",
-      "sha256": "fac99920caa7ee8aba4aa70ea7ffedca7e6594ea337981a8ddbf8455ef93cacc",
-      "size_bytes": 3939,
+      "sha256": "590574dd84dda169d0fcd3c4a7108b2f400228a89519f647e84517127871dedb",
+      "size_bytes": 4931,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/domain_decision_table_template.md"
     },
     {
@@ -905,8 +916,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md",
       "role": "prompt_library",
-      "sha256": "3d760c84a1cffac6cf80b8471424f6fc6758ee915b07ccd8e4844f26026cdde9",
-      "size_bytes": 3225,
+      "sha256": "fbb843ee9f22d5eb22ddc7fb3365d1d447aa455fcc09c779015f44f347ef364f",
+      "size_bytes": 3189,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_model_template.md"
     },
     {
@@ -919,15 +930,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md",
       "role": "prompt_library",
-      "sha256": "4e2390c5b0cc9d83e7234b408e7bc87084a5eb5644cbcf4758fc043c38b5d4bc",
-      "size_bytes": 7418,
+      "sha256": "5644c297f9ddc8de792387e87464f2da68c4f75e75967efed4812ca07c30d495",
+      "size_bytes": 8328,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md",
       "role": "prompt_library",
-      "sha256": "8f120afb9270fbf0ba8c99a5aec96133d2b610b0c9e88aa89dc8975cfce80386",
-      "size_bytes": 4422,
+      "sha256": "ff0290de60cbfec7e6d332064960ef9be34e480e3ff5a593cb29218399a05088",
+      "size_bytes": 5395,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/plugin_package_import_canon.md"
     },
     {
@@ -940,29 +951,29 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
       "role": "prompt_library",
-      "sha256": "6442cc9bd5b7e5d9e587489f06d9e5f04ed2cd1c51bf0b9bf9066489069d6e8b",
-      "size_bytes": 14778,
+      "sha256": "082778a6f65b1bf2ae682db0d0117b7ec9b66ed05115542a8f035f04185a0497",
+      "size_bytes": 20252,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md",
       "role": "prompt_library",
-      "sha256": "201d158e7367d0974a573f0b836362c419bb34687514be494965eb80c5cdd9cf",
-      "size_bytes": 8552,
+      "sha256": "a459f65ff6d7a8a9a3a7289ab3d9968f8001cc63bf9a2911ae5f113696fd2fac",
+      "size_bytes": 13957,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_startup_bridge.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md",
       "role": "prompt_library",
-      "sha256": "4a57034dd44f0ba953d8d613aa51a814620bc54b8e673266d456825d36fde569",
-      "size_bytes": 4122,
+      "sha256": "05ebddbd980b4bb1539c1834a0b8a5807014d46b496c1c7910c442fbc81f06ec",
+      "size_bytes": 5095,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/shared_visual_render_engine_canon.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md",
       "role": "prompt_library",
-      "sha256": "704fc7698378ffc8b61ba01b366a0519351ef587579b2faa3a9ac0b19bf3f51d",
-      "size_bytes": 4081,
+      "sha256": "79802cbebc001e7ac2ea9d72dec2ba9af4ca3f2b2daa39aaa8146234023cc712",
+      "size_bytes": 5054,
       "source_relative": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/transform_resolver_architecture_contract.md"
     },
     {
@@ -1010,22 +1021,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/ai_human_partnership_session_start.meta.json",
       "role": "prompt_library",
-      "sha256": "ab2726d33db0f7de628a2f80923f4d7a616357ce8883e44b954a8fa7b8be292f",
-      "size_bytes": 1485,
+      "sha256": "597fb65af799e050236bb34a3090b5e869e9f8df84666df74fb464db72fd57e7",
+      "size_bytes": 1541,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/ai_human_partnership_session_start.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/ai_prompt_request_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "101864c6fe143d543899ebf99fb558b1acdf6b2388eb489c526f8375964a1580",
-      "size_bytes": 1366,
+      "sha256": "d7ff5d467859b0a5ab5fed1dd231a4da17ef6360c95ed4dd1c1b64df03c54d45",
+      "size_bytes": 1803,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/ai_prompt_request_canon.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_full.meta.json",
       "role": "prompt_library",
-      "sha256": "f52eed7f236dc098d915a088b8b7eefffa8320e283b36050fc5733e6c0dc15ba",
-      "size_bytes": 2077,
+      "sha256": "969569c36044aa9a3afea197f45fd7470a94758130397c915b76908f73c9402a",
+      "size_bytes": 2133,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_book_literature_audit_full.meta.json"
     },
     {
@@ -1045,8 +1056,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_full.meta.json",
       "role": "prompt_library",
-      "sha256": "72e1fc50a83625c72a9afd9cba8d192c8f95e7d3be3758bc654125d634a0946b",
-      "size_bytes": 2042,
+      "sha256": "50453ceb0aa4c4ee27cb2a6be4618818820efbf51e79e055b652d6b986c4c544",
+      "size_bytes": 2098,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_independent_ai_audit_full.meta.json"
     },
     {
@@ -1059,8 +1070,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_master_protocol_full.meta.json",
       "role": "prompt_library",
-      "sha256": "8a68aba9489ec2d3f139165b58d9a7ed114f5c8aa0631fd6ba186f10eee2eeef",
-      "size_bytes": 1977,
+      "sha256": "9163d1683f2854efd9b44889c3d6988e46642e3c956cb28261262527c6736fc6",
+      "size_bytes": 2033,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_master_protocol_full.meta.json"
     },
     {
@@ -1080,8 +1091,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_full.meta.json",
       "role": "prompt_library",
-      "sha256": "fafb4cb17348816f81942387012eabb65af15ed0eb8cedf6024c96aa199bc307",
-      "size_bytes": 2050,
+      "sha256": "0401cf1c067eadd43bda077ea927137659485ba72c58a486dfa96f49467fe6fa",
+      "size_bytes": 2106,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/anti_hallucination_web_evidence_audit_full.meta.json"
     },
     {
@@ -1094,50 +1105,50 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_protocol.meta.json",
       "role": "prompt_library",
-      "sha256": "88b9d6ec223ca9d88368df81c1a307e4eb533bfeb36121a37ee0d4a7f5788ddf",
-      "size_bytes": 1884,
+      "sha256": "022cdaa45c5f51654b0eb25bff7a10d672fad71e5d6b127c3ea0e8303cff3596",
+      "size_bytes": 1953,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_protocol.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_template.meta.json",
       "role": "prompt_library",
-      "sha256": "892cee94f1f193d08f8fbd125094db55144d3c7c1ed2da4af5252b911bf5a3c7",
-      "size_bytes": 1553,
+      "sha256": "2290ee8b521af93cc837b78d5e6218f2e1c279b36d811e5f1e408dad98bea8e1",
+      "size_bytes": 1609,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_hardening_triage_template.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/architecture_review_project_card_machine_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "a73473234acad0ebefe7f4905fb91879f9354db4bccf66bf39f6c40acc7f3412",
-      "size_bytes": 3175,
+      "sha256": "1c277f2483e7933fac137a0672658082df49074d2fae720bc59439edade41a0d",
+      "size_bytes": 2891,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/architecture_review_project_card_machine_canon.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/boundary_first_repair_protocol.meta.json",
       "role": "prompt_library",
-      "sha256": "8581610ff57959bd5516c2c24d1bf62fe859ea3b483280b7d19c6d5f0f318971",
-      "size_bytes": 1516,
+      "sha256": "0f16561bc1859825fb115290d98a5f10b186fe02458ac33cc6cd58097608e97b",
+      "size_bytes": 1492,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/boundary_first_repair_protocol.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/box_architecture_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "8034a4915af5c26c7a81ca1826b8c252101122557e8a9cf8176b3a2a15b0ca17",
-      "size_bytes": 1523,
+      "sha256": "08b8c39a96d514e2945856185a698b88c5a15fcc1c71dda078166607187e0e0d",
+      "size_bytes": 1497,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/box_architecture_canon.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/brick_wall_comprehensive_quality_gate.meta.json",
       "role": "prompt_library",
-      "sha256": "e68b285b8099271523394ff3ff501b0998c3beb2f872dccc62502421f59a3518",
-      "size_bytes": 20262,
+      "sha256": "5c196cd4e6225e2205489a2b22051b47dadb6c8d274c1e6a067b252b319c39a1",
+      "size_bytes": 20300,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/brick_wall_comprehensive_quality_gate.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/bundle_gated_development_workflow.meta.json",
       "role": "prompt_library",
-      "sha256": "96077bc39bd3509398f535932ec2f7287bb6bb507e88f08ffc7c1947b406bd89",
-      "size_bytes": 1781,
+      "sha256": "fd22b0ea92d10baba64922ab828933e65523beb2ed9ce715c2047c554d0a4db2",
+      "size_bytes": 1777,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/bundle_gated_development_workflow.meta.json"
     },
     {
@@ -1185,15 +1196,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/cooperative_implementation_methodology.meta.json",
       "role": "prompt_library",
-      "sha256": "5ec8b44cef69e61ee2c1b30b76306c75858b6169e999c8e848093f1a7655374f",
-      "size_bytes": 1359,
+      "sha256": "79caf9b18b1e060ca1f68fbbc745198908f3327a980738da0283995eb97f7ea2",
+      "size_bytes": 1404,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/cooperative_implementation_methodology.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/daily_patch_delivery_guardrails.meta.json",
       "role": "prompt_library",
-      "sha256": "689c9a93b4983caf93ddcc190b975b8e8d2002d7daf6c17798e573a9220ed90f",
-      "size_bytes": 1226,
+      "sha256": "2ab30dec4deb1801852eea65af1221dc3b69dec42c571bc5a25bf2b129feb1f5",
+      "size_bytes": 1256,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/daily_patch_delivery_guardrails.meta.json"
     },
     {
@@ -1220,8 +1231,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/data_transform_pipeline_invariants.meta.json",
       "role": "prompt_library",
-      "sha256": "65cbd6f5bb86fd546a884a9efe089ff41c50b2cf7ab0f144d62451b012483140",
-      "size_bytes": 2043,
+      "sha256": "54c1fd58b1998f1158788573fefc8cda8fbe72e5f03f6ff5fde2baf6dfef9f1b",
+      "size_bytes": 2099,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/data_transform_pipeline_invariants.meta.json"
     },
     {
@@ -1234,8 +1245,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/domain_decision_table_template.meta.json",
       "role": "prompt_library",
-      "sha256": "6fb226d4f1e587343f4a65bcc30e9f447aad12860e03126c75561b73381a3038",
-      "size_bytes": 1967,
+      "sha256": "fb22bfb68ad189a6e25dd527c8891c79cbd5f5b0036e8e3d9658e6469fe8817d",
+      "size_bytes": 2023,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/domain_decision_table_template.meta.json"
     },
     {
@@ -1262,8 +1273,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/error_memory_ai_formulary_startup_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "1dd1c65fcb293cda1d66ad226cb73e28d95b39af153597ffcac5ca61475a767b",
-      "size_bytes": 1289,
+      "sha256": "b35b76238da0dc7525c60f3dccdf43af20efef72ea2660f76ee9853837d3245c",
+      "size_bytes": 1327,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/error_memory_ai_formulary_startup_canon.meta.json"
     },
     {
@@ -1402,22 +1413,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/implementation_and_delivery_protocol.meta.json",
       "role": "prompt_library",
-      "sha256": "6f69b61a097867c3e2f04fcf848487202365362dbcd701cd7c39e62d339c1b30",
-      "size_bytes": 1766,
+      "sha256": "de5d9ff1407e37e6bcfe0411142367ba2e79db3489f0ff7f40ebc13ca18ff471",
+      "size_bytes": 1762,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/implementation_and_delivery_protocol.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/implementation_roadmap_builder.meta.json",
       "role": "prompt_library",
-      "sha256": "3cb6a3bdf5b914294f805cf4f593456974623d60241805af68c36630146d6de8",
-      "size_bytes": 1647,
+      "sha256": "4b654b85d90e35c5097e600c936b3c3f88ec47d5beda9bb2ee4257f8de5fef02",
+      "size_bytes": 1658,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/implementation_roadmap_builder.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "3b7af1360975ca402975bbb40672ba7b306cbae3f8eb70b2ce95013df17d1364",
-      "size_bytes": 1369,
+      "sha256": "54997a4d700dfddea46264d7679fe890320587a86ec690cf59d5cf6eaf032af5",
+      "size_bytes": 1380,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kanda_box_shielding_canon.meta.json"
     },
     {
@@ -1437,22 +1448,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/kubernetes_deployment_operations.meta.json",
       "role": "prompt_library",
-      "sha256": "f20c12db068b2f961c6d732f237d42b4c075b32504838fac3a34a0601d1b6fe3",
-      "size_bytes": 2037,
+      "sha256": "b62e1247e97adf63e24094a83bbf0abd62869f08c31d8d10668d592c736f9f5f",
+      "size_bytes": 2093,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/kubernetes_deployment_operations.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_protocol.meta.json",
       "role": "prompt_library",
-      "sha256": "0344ee9094b33f6be1155b5604fec2549b0db98a9864e5c69caa87a73e2026c4",
-      "size_bytes": 2799,
+      "sha256": "a9c2fe00305dd1464974f59bd7b9504fd130e67d394c2b4e3aa672b800468944",
+      "size_bytes": 2846,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_protocol.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_template.meta.json",
       "role": "prompt_library",
-      "sha256": "bc5cb02ca38a0a574426aa3fd8969419ecc0a9c82580242e3ec491a5b76f9996",
-      "size_bytes": 1730,
+      "sha256": "918b330f566e790bf97c5571ce3616e662c67e537450324b6a97b43a7572e54c",
+      "size_bytes": 1786,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/large_module_refactor_template.meta.json"
     },
     {
@@ -1465,29 +1476,29 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/patch_install_delivery_error_register.meta.json",
       "role": "prompt_library",
-      "sha256": "9739168dc164d4d69d9a4cda777722e8803eb473e486e075b50236be6a8574f4",
-      "size_bytes": 1323,
+      "sha256": "79300a7af83355703a1dc49d1d4224017e271dcf3d5987622d3d6057fd323568",
+      "size_bytes": 1320,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/patch_install_delivery_error_register.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/patch_validate_freeze_error_memory_routine_blueprint.meta.json",
       "role": "prompt_library",
-      "sha256": "eeca0929b4ed1f0c3f9ce778e4cb628dcc956b89243d2a8b2468743e6fd85cf6",
-      "size_bytes": 4792,
+      "sha256": "bcecd1b35dc1438c76c6440140134dbf40211055176b7f7817850d2094fa1dd1",
+      "size_bytes": 5147,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/patch_validate_freeze_error_memory_routine_blueprint.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/peopleware_team_boundary.meta.json",
       "role": "prompt_library",
-      "sha256": "f7f1c7ef97023527acb8a031c1fa64f0f78808627c320766a800dae9074d63c9",
-      "size_bytes": 1696,
+      "sha256": "fa958ef709316d82cf02166ed01ecaadc058c109839eb2c07bb8de6c8fda2296",
+      "size_bytes": 1776,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/peopleware_team_boundary.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/plugin_package_import_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "828a4d1a5539f53ee1eaa7161cb1e953419cc7d794c60f2f578a139a8e34714a",
-      "size_bytes": 1976,
+      "sha256": "8077e144986d5113aa19544bb17b19882082f9758976d62119c9dc2d2ec1e3ca",
+      "size_bytes": 2032,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/plugin_package_import_canon.meta.json"
     },
     {
@@ -1500,8 +1511,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/pre_output_contract_gates.meta.json",
       "role": "prompt_library",
-      "sha256": "b96af698716838e26f4c5994f8ed6de74f74d2be0c1863ef1ab14a6f46563bf4",
-      "size_bytes": 1268,
+      "sha256": "aebcd49208d539033b1d5ea19df476294920fedcfd7296478f232cb8e0f7d747",
+      "size_bytes": 1264,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/pre_output_contract_gates.meta.json"
     },
     {
@@ -1514,15 +1525,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/professional_ai_assisted_engineering_framework.meta.json",
       "role": "prompt_library",
-      "sha256": "4f764dbcbd215b418f8124005dbce1722bf15909f7e58a424820c8fcd4712f0d",
-      "size_bytes": 2101,
+      "sha256": "a48eef63faa85a9c12a9c35b8449f4c1178d0039912edf614cdf9a7d7e86c95d",
+      "size_bytes": 2157,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/professional_ai_assisted_engineering_framework.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/professional_engineering_governance_template.meta.json",
       "role": "prompt_library",
-      "sha256": "20e968a0bae72240ced195ad7a37ca3e907cfc22646d5d69751eaf4e9a236b8a",
-      "size_bytes": 1430,
+      "sha256": "b00a4956230eb98f794f57b26f8026cc13ae2b8a0d177ee6560d85f437f62f7e",
+      "size_bytes": 1345,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/professional_engineering_governance_template.meta.json"
     },
     {
@@ -1535,8 +1546,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_folder_organization_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "c280d7599a55fb9b088489ff47f2261790b4e6c6c0a25ff5f42cbef459ba29cc",
-      "size_bytes": 1446,
+      "sha256": "13856144b12fb83f5b683f80182a72fc01decb970f33cd3f108b5bc8bc84c3a6",
+      "size_bytes": 1403,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_folder_organization_canon.meta.json"
     },
     {
@@ -1556,22 +1567,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_startup_canon_template.meta.json",
       "role": "prompt_library",
-      "sha256": "67ce3e0e275046c773213f5b6c3b8afa3ab6800652074286e56aa4ac86264905",
-      "size_bytes": 1463,
+      "sha256": "0e5c6f176b0d66917706c33874db2bd6796ff57af71dc798606dc0879031fd4e",
+      "size_bytes": 1519,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_startup_canon_template.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "64eb4c124053bf468de06819308f6357b5aed10af1c4c0df92f59b37b15d2ab0",
-      "size_bytes": 3322,
+      "sha256": "6a8acd31a0218ecbdf314797d354b09904eae2a74e38578b0bf1257e2c0edd89",
+      "size_bytes": 3617,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_canon.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_startup_bridge.meta.json",
       "role": "prompt_library",
-      "sha256": "7d93606b2a5800ef748dc6fbf1613b47d57708c9415014ef9702c9030d8b76cd",
-      "size_bytes": 2761,
+      "sha256": "e0180808ad967efe6ec03d485ea419541cd937a4410dad24fd7d36a2484c5fea",
+      "size_bytes": 2286,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/project_tool_boundary_startup_bridge.meta.json"
     },
     {
@@ -1605,8 +1616,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/prompt_navigation_index.meta.json",
       "role": "prompt_library",
-      "sha256": "a37362f3cda6e1c24e10ac2ccc4349a8cc7226fa89b47d72781b6309daccf851",
-      "size_bytes": 1243,
+      "sha256": "2b61b6c2186bb7c04c6f7d73a353fd09a473191cd20320608c3a38d29b3d4aef",
+      "size_bytes": 1666,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/prompt_navigation_index.meta.json"
     },
     {
@@ -1633,148 +1644,148 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_api_design.meta.json",
       "role": "prompt_library",
-      "sha256": "a45206086e7f412aa5088a0802f60e4bed2f6245a8e1405c76562a538decb411",
-      "size_bytes": 1867,
+      "sha256": "40e6976c4c4fcd39d4addc5d078f4e0005ad1c89565009fb53377a7e7b91ad3c",
+      "size_bytes": 1923,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_api_design.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_async_parallel_distributed.meta.json",
       "role": "prompt_library",
-      "sha256": "3ed483190b799a66fccf6877c5ad73b17b09330282f9d314430a3e5f2db43b30",
-      "size_bytes": 2068,
+      "sha256": "68f9ab18cbbfa22dab031e852746daa16b4ed070e81319e06b9ab011f22384dc",
+      "size_bytes": 2124,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_async_parallel_distributed.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_clean_architecture.meta.json",
       "role": "prompt_library",
-      "sha256": "baec237edca73a1dd90373e01ecfb0f3d562d8e2cef024a7675186b2b9dee8fa",
-      "size_bytes": 1750,
+      "sha256": "dadd48a29856353a5be1222f5e190eae98c9c6dbbe0ad82fcb0ce7afd58d53d8",
+      "size_bytes": 1806,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_clean_architecture.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_clean_code.meta.json",
       "role": "prompt_library",
-      "sha256": "d67b2d079b072f397e0994e28e827795579b0ae7cd379d78ee622ec8f3ed50ba",
-      "size_bytes": 1664,
+      "sha256": "c64f3394349cf6d751b0648d6a320bb61401b75551dda6579409e060425a2ee8",
+      "size_bytes": 1720,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_clean_code.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_configuration_feature_flags.meta.json",
       "role": "prompt_library",
-      "sha256": "d1449f8d308aecbf629ac32ed593a0ffdffc2adcaec3a6b5c326802082099bea",
-      "size_bytes": 2009,
+      "sha256": "7cd64d298b1d5e2faa4212448357b0f43e9e5adbaeebdaaec362d51982d199b4",
+      "size_bytes": 2065,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_configuration_feature_flags.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_database_design_optimisation.meta.json",
       "role": "prompt_library",
-      "sha256": "4897640b33018bd1c9b143b1d32c713edaacb0c1a095e0d932426580a685db26",
-      "size_bytes": 1994,
+      "sha256": "f6ca1c2a1e5e1cbfdf4699fa19c7aa3a93a363b888053863d3585c7a9a6dbd08",
+      "size_bytes": 2050,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_database_design_optimisation.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_design_patterns.meta.json",
       "role": "prompt_library",
-      "sha256": "654c2a4c516ad6bdc942d1af52c02e71bff4d98c616f029959153ca2b209daa6",
-      "size_bytes": 1722,
+      "sha256": "df38a4b3e97cf2f578d0b79de8e48993e38f2be523b9d8304f8191ba6f092693",
+      "size_bytes": 1778,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_design_patterns.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_documentation_developer_experience.meta.json",
       "role": "prompt_library",
-      "sha256": "e46292a1556b729c43ce5fb489388bcf69fa5af46ab01c45e1c69e849feee0e7",
-      "size_bytes": 2055,
+      "sha256": "a2f0231103de122bdf48a872db2e55e7003882cbbb65bba670c78829e61962bd",
+      "size_bytes": 2111,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_documentation_developer_experience.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_domain_driven_design.meta.json",
       "role": "prompt_library",
-      "sha256": "61e897cc15c2325d4359476fbef34fd359bd3b7b682fbd3f7aaad066a2db7118",
-      "size_bytes": 1779,
+      "sha256": "6eff816452ec0d6b7c194b1555e7fe2843d692771ba96ab6bcd1d1e46728bf48",
+      "size_bytes": 1835,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_domain_driven_design.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_enterprise_architecture.meta.json",
       "role": "prompt_library",
-      "sha256": "d2cb7f28a2a44c95ac21f6abca2aedaee20bd6dcc666b7661377bf49c0d04f2d",
-      "size_bytes": 2330,
+      "sha256": "65ebd068da9be2aab3c38ae928f9203f77dc8cbf9540942ea99661c7e5d6474b",
+      "size_bytes": 2386,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_enterprise_architecture.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_high_performance.meta.json",
       "role": "prompt_library",
-      "sha256": "94d0816e8d975c7d03879235d458ea32e7be99f2b681a815c98444066c537f0a",
-      "size_bytes": 2136,
+      "sha256": "bbc6fefcf03e05a0fe6ae093909cf3456112ca7c778d3f80eef8c926c3e6467b",
+      "size_bytes": 2192,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_high_performance.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_legacy_code_workflow.meta.json",
       "role": "prompt_library",
-      "sha256": "75c968cc1d5b28a3bc08a862bed68fe9bebc774ab839d3207b749ff4d2536806",
-      "size_bytes": 2241,
+      "sha256": "3b3156ce61829841863d1d62034aef9fc79fa8ef27a58213b91fcbd38cc5a9e0",
+      "size_bytes": 2297,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_legacy_code_workflow.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_lifecycle_versioning_deprecation.meta.json",
       "role": "prompt_library",
-      "sha256": "dd3274571d9106cd121a3addb87a4ea26cd0077e1a1b5990c020b56e3446a58c",
-      "size_bytes": 2072,
+      "sha256": "a9969a10aa1593c991c8f15541c5a723b60425337f780fe969c10ec857d9ea0c",
+      "size_bytes": 2128,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_lifecycle_versioning_deprecation.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_observability_logging_metrics_tracing.meta.json",
       "role": "prompt_library",
-      "sha256": "364c54d1d78d1a277b5652daa114869b787e09c9eef2adfeee081cc3267357eb",
-      "size_bytes": 1945,
+      "sha256": "57f4257684db4783ac05e1ef9f5c25715c8fcf920101101cc4f90c0f1a4fe536",
+      "size_bytes": 2001,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_observability_logging_metrics_tracing.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_pragmatic_programmer.meta.json",
       "role": "prompt_library",
-      "sha256": "80c65298502162cb269f172132e10da477fcb44c808c1d0601988551e2b15067",
-      "size_bytes": 1955,
+      "sha256": "df5742f82fb23cd38babcb1b1d5c409158caffc1f22a10b5f0e7ae520bc37059",
+      "size_bytes": 2011,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_pragmatic_programmer.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_refactoring.meta.json",
       "role": "prompt_library",
-      "sha256": "b9173297683b475f592b389fe2206d93b0b0a78b0e22a94654c9e36097adeba5",
-      "size_bytes": 1891,
+      "sha256": "2585c7f928d5cec347918b3e9a81458673f15fd407a68a59e9f4902b65d9823a",
+      "size_bytes": 1947,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_refactoring.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_resilience_error_handling.meta.json",
       "role": "prompt_library",
-      "sha256": "fe2c59a832cfa83f8fe484d0d29ecd4dadbd926ea5545b91fc66902557d06e5d",
-      "size_bytes": 1954,
+      "sha256": "dd96dad6e380a519b24f5786feb3cb2a147cb18f3e3ca4b58fba7f8b4df6ba4f",
+      "size_bytes": 2010,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_resilience_error_handling.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_security_threat_prevention.meta.json",
       "role": "prompt_library",
-      "sha256": "3cf414223aed4b19f23e70eed0797abc480e0a7420a4b999e5fb44b74775ca40",
-      "size_bytes": 1967,
+      "sha256": "89de05ea0740ee3f8c1ffdf0007b87749692dbc47e66d224fab611a22845f3d7",
+      "size_bytes": 2023,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_security_threat_prevention.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_site_reliability_engineering.meta.json",
       "role": "prompt_library",
-      "sha256": "03e145e20bef6812c6fc521a2b58dc8cc35ac57c47f1a759ad65c080c068ed60",
-      "size_bytes": 2058,
+      "sha256": "a13eb162b6ada9ba9628e7471aaf03fabc6d9836129dd68a685a4ebe546502e0",
+      "size_bytes": 2114,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_site_reliability_engineering.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_testing_pytest.meta.json",
       "role": "prompt_library",
-      "sha256": "7cd521af19fc09ae454b741055892e95222147b5690beb99549a7a47270dc0c1",
-      "size_bytes": 1884,
+      "sha256": "9d44882f05891e27023fe8afc4cb953cea32e566fe5b628c7541fcedb5472967",
+      "size_bytes": 1940,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_testing_pytest.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/python_validation_serialisation_type_safety.meta.json",
       "role": "prompt_library",
-      "sha256": "61a2b7979bf9896ec5af25d097a405d11d306072eeedb576888e853e7a77adbe",
-      "size_bytes": 2015,
+      "sha256": "b538dd162bfd83b5962ec69a5eb452931738781c8b775bdaab4c41bd84b3910c",
+      "size_bytes": 2071,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/python_validation_serialisation_type_safety.meta.json"
     },
     {
@@ -1829,15 +1840,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/safe_refactor_how_to.meta.json",
       "role": "prompt_library",
-      "sha256": "864fd352b946c507ec126b1510af75ff406e3f66c6833965f1d95608c7b501ec",
-      "size_bytes": 3482,
+      "sha256": "1affae83727a3ee837ba8e3d22acf545c776dd0b2230c923a1941494a4e88929",
+      "size_bytes": 3721,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/safe_refactor_how_to.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/self_contained_error_memory_lesson_intake_zip.meta.json",
       "role": "prompt_library",
-      "sha256": "373cd46aae2822c8845cc4f3052c9c91c5c0d114a8a67909df8a953b5b272710",
-      "size_bytes": 2187,
+      "sha256": "c11fa7f628b535f5a2775e2f287929832335cc9332112984e37b31a806b661f7",
+      "size_bytes": 2289,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/self_contained_error_memory_lesson_intake_zip.meta.json"
     },
     {
@@ -1857,15 +1868,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/shared_visual_render_engine_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "f0d0901e374b3010c5e716b67ba5f62690ac5220842cc81336859d805229b832",
-      "size_bytes": 1961,
+      "sha256": "60d60c62bf6a28f5ca43119d330f99d0c4d6b24144699300b29b01d0c7dab9c6",
+      "size_bytes": 2017,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/shared_visual_render_engine_canon.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/software_engineering_books_master.meta.json",
       "role": "prompt_library",
-      "sha256": "d25e987b467dec2c920b25f5fe147f7adc8bc5de2034419dc4e27c6dbffea9e0",
-      "size_bytes": 2002,
+      "sha256": "17cee4a4f6a4be9057378016707dccd2e53f196f66251633df7ed3b2f6232d46",
+      "size_bytes": 2058,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/software_engineering_books_master.meta.json"
     },
     {
@@ -1878,8 +1889,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/stateful_control_regression_canon.meta.json",
       "role": "prompt_library",
-      "sha256": "ff3dfcac398292cb2840d3bb7114c129de97a56ba4fe66a115b6ea9fc3e79b74",
-      "size_bytes": 1395,
+      "sha256": "f9a67a62b58f6e4ca40f92fcb5c4774c8998c78a1a69facd2b2ca0c9dc223840",
+      "size_bytes": 1404,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/stateful_control_regression_canon.meta.json"
     },
     {
@@ -1892,15 +1903,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/terminal_cleanup_contract.meta.json",
       "role": "prompt_library",
-      "sha256": "2807e780e2945e1b9d66efcd254324d18fa4bce74384b83a81be2cb0d0d90113",
-      "size_bytes": 1588,
+      "sha256": "03d52b960071f1fd533581cf193cd2e5a8996c699eb233d752f7fafcc3b21010",
+      "size_bytes": 1709,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/terminal_cleanup_contract.meta.json"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/transform_resolver_architecture_contract.meta.json",
       "role": "prompt_library",
-      "sha256": "77ef82aa4249a991e447438e6c529580a30332a219d7d6a8ea0d0bb19ab0b200",
-      "size_bytes": 2021,
+      "sha256": "a7c6e67f6892695090027c3041e1fe4a8ec7b9a61eaf1726b4c3c60e25d62818",
+      "size_bytes": 2077,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/transform_resolver_architecture_contract.meta.json"
     },
     {
@@ -1941,8 +1952,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/METADATA/workflow_handoff_template.meta.json",
       "role": "prompt_library",
-      "sha256": "8e999a333bdc204e0531ef5d1173aabea7b66bd4170346bb52ce8bb1a2edf216",
-      "size_bytes": 1204,
+      "sha256": "c01bc5d230d4b96dead25f44cf73c663d680f60a543dbb3c47f57f0c70f7c7da",
+      "size_bytes": 1260,
       "source_relative": "kanda_prompt_workspace/prompt_library/METADATA/workflow_handoff_template.meta.json"
     },
     {
@@ -2137,8 +2148,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md",
       "role": "prompt_library",
-      "sha256": "bd5dc0b2545b24670d179be116d3e1e5a3df86ddbb3f5297c5ac386c5347ca18",
-      "size_bytes": 71281,
+      "sha256": "c0651588271886c069b04f9ccd3105d39f238bc94b2f7a8c180ba376e06cd965",
+      "size_bytes": 72571,
       "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/PROMPT_NAVIGATION_INDEX.md"
     },
     {
@@ -2158,8 +2169,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json",
       "role": "prompt_library",
-      "sha256": "34f45ddd006a4af27fa5406714ab5b2cc628b44cd39281c6dcf5ee7b7fb35cda",
-      "size_bytes": 139496,
+      "sha256": "13b199243fde3f955babc6c9b2b44b1dfbc1b9ba0d4f955861af9ae51f42fe0c",
+      "size_bytes": 139696,
       "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/prompt_navigation_index.json"
     },
     {
@@ -2172,8 +2183,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/ROUTING/prompt_route_coverage_table.csv",
       "role": "prompt_library",
-      "sha256": "eb8f093f634a3701abbfa89489bf27806eb47fb63d2ba2c3925361a5ae4542a5",
-      "size_bytes": 50916,
+      "sha256": "320b3bef77a6d2241e5daebc7428dd03492f17a125dc6098017f9151183b9aff",
+      "size_bytes": 50241,
       "source_relative": "kanda_prompt_workspace/prompt_library/ROUTING/prompt_route_coverage_table.csv"
     },
     {
@@ -2214,8 +2225,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_library/TOOLS/validate_context_routing_layer.py",
       "role": "prompt_library",
-      "sha256": "f3c88a423b5c813e32b7276ab1dbe79abece2ed71062e2ad1334227ce1f97d45",
-      "size_bytes": 10293,
+      "sha256": "02cfbf759000b9b600a18f47fe7f500de3d682ee0fe1339e7fc27c488b717127",
+      "size_bytes": 10287,
       "source_relative": "kanda_prompt_workspace/prompt_library/TOOLS/validate_context_routing_layer.py"
     },
     {
@@ -2228,15 +2239,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/README_kanda_startup_prompt_request_kernel_generator.md",
       "role": "prompt_tools",
-      "sha256": "acb22ed6be07ea34b280e08bf1b9ebc0c6885635335c0fcf061d0816b38f2feb",
-      "size_bytes": 2604,
+      "sha256": "9ddc5d69e2ea344381e98582328eb6e038535141b9cc48e0a38690eba927570d",
+      "size_bytes": 2631,
       "source_relative": "kanda_prompt_workspace/prompt_tools/README_kanda_startup_prompt_request_kernel_generator.md"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json",
       "role": "prompt_tools",
-      "sha256": "4523d7e64c004bb615aa0f1c6d7881bdc409aec29e9084a1c76b14aa35ae5ca3",
-      "size_bytes": 5254,
+      "sha256": "9754e5487286a41afc804f778fd3e09901be412de7c485937a68c42d9cf5b94d",
+      "size_bytes": 5316,
       "source_relative": "kanda_prompt_workspace/prompt_tools/STARTUP_ROUTING_KERNEL_SOURCES.json"
     },
     {
@@ -2263,8 +2274,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_models.py",
       "role": "prompt_tools",
-      "sha256": "cabf4d9491f28e5c3ec7705974fc00776b9120e3d0a1688af14630b2d2ac4d42",
-      "size_bytes": 3172,
+      "sha256": "2ef5ac0eedca00770b8addfa914f31ee74470907a708fa90806770a42c3141a8",
+      "size_bytes": 2974,
       "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_models.py"
     },
     {
@@ -2284,8 +2295,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/audit_startup_candidates_runner.py",
       "role": "prompt_tools",
-      "sha256": "982ba4f99694af8c1f2980aa456dede21647deebe81438c452e5af3c522743c2",
-      "size_bytes": 8307,
+      "sha256": "d7353a03428a82492be88f733f260eb159df8a1c4d92b298990aa8134c2f5756",
+      "size_bytes": 8287,
       "source_relative": "kanda_prompt_workspace/prompt_tools/audit_startup_candidates_runner.py"
     },
     {
@@ -2305,8 +2316,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_freeze_context.py",
       "role": "prompt_tools",
-      "sha256": "5bd3db1cb54d4dcf155d7b770e7116bf6195030560f372e4cf5862912e677bd7",
-      "size_bytes": 15768,
+      "sha256": "c7f6bde41434e7dbf14477ea66052c13ce3b92a74ae0fccd1e4e51b389437f13",
+      "size_bytes": 15756,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_freeze_context.py"
     },
     {
@@ -2326,7 +2337,7 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/boot_text.py",
       "role": "prompt_tools",
-      "sha256": "7dcb32ca73f8d8ea041806dc8d7085a81219f598c2e72842dd86c681f0847c0c",
+      "sha256": "2017deb32cc355883638fe94c08e5608ea2e37fa90e30880adae42cb7f1f8ccc",
       "size_bytes": 3775,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/boot_text.py"
     },
@@ -2340,8 +2351,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/cli_check.py",
       "role": "prompt_tools",
-      "sha256": "d5ccf385e450d1c7e82e73e14325e5149ef81298e6e447e4066ff74304988537",
-      "size_bytes": 5305,
+      "sha256": "c77fb485ebc732e9a952f433cf7667e54c3c26589e6eb05350b5212ac7df15ba",
+      "size_bytes": 5340,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/cli_check.py"
     },
     {
@@ -2375,8 +2386,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_body.py",
       "role": "prompt_tools",
-      "sha256": "6a3ac354286198d980410f223577ca61d198c268407002cf2e8df6c9acf3d0f1",
-      "size_bytes": 7678,
+      "sha256": "44040f35d86d9af5e7583436f8368fc446dd302e0ee38ca12f6eb19dea69947b",
+      "size_bytes": 7535,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/maintenance_body.py"
     },
     {
@@ -2389,8 +2400,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/paste_after_uploading_body.py",
       "role": "prompt_tools",
-      "sha256": "41c7968157ac62fc067a4668a981b27e5ebc64a65075141b90776b68a4043605",
-      "size_bytes": 9571,
+      "sha256": "8d657e4b6991a5c38769321e43b79a68bb8d574ba190fb4f5c4f64c42c7195ad",
+      "size_bytes": 9330,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/paste_after_uploading_body.py"
     },
     {
@@ -2417,15 +2428,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_zip.py",
       "role": "prompt_tools",
-      "sha256": "9ebb2da9721861c956f7a14b4fe538ecc50c73bc22e8870f5a71aa7df27831a9",
-      "size_bytes": 4485,
+      "sha256": "cddda3e5ebc30c299a1ba062c2b0891b15b94b6e3e30bf5df5ce98f92c12377a",
+      "size_bytes": 4413,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/prompt_library_zip.py"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/read_order.py",
       "role": "prompt_tools",
-      "sha256": "45e62abb5defe45bb049614761801f47c1e50ac6e8e9b08bffbb35eb2deb53f4",
-      "size_bytes": 2487,
+      "sha256": "dec205bd6121d96d69163893406e8cf356f51ba556992bbad82f7c98bfbf6d18",
+      "size_bytes": 2440,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/read_order.py"
     },
     {
@@ -2445,8 +2456,8 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_intro.py",
       "role": "prompt_tools",
-      "sha256": "fb304681f389d91a8df6cd3025db689c5703f4bcf96afd12f85d2817cd438f72",
-      "size_bytes": 4590,
+      "sha256": "0246bcaea43b95340e98a43601770365551ae19a73315c537794f3ef1303da00",
+      "size_bytes": 4595,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/start_here_body_intro.py"
     },
     {
@@ -2473,15 +2484,15 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/startup_literal_texts.py",
       "role": "prompt_tools",
-      "sha256": "fcead4136b757d0f8410bf57d4f068ade483584c5ca152b1f0605b291bc066da",
-      "size_bytes": 25993,
+      "sha256": "3ba285af5320deda44d4d90c87699106dd3b52228dc33bc382928e2123fc4d31",
+      "size_bytes": 26790,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/startup_literal_texts.py"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/startup_names.py",
       "role": "prompt_tools",
-      "sha256": "2d3b9cceac0bc45c74f399cbd9c9973f6a68348608535db117ca3b719f875f51",
-      "size_bytes": 2757,
+      "sha256": "96891effbbf096f8e383d0d8ef2c5094d50786950a5a07f1ce240fbb392981ec",
+      "size_bytes": 2762,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/startup_names.py"
     },
     {
@@ -2501,22 +2512,22 @@
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/startup_kernel/zip_delivery.py",
       "role": "prompt_tools",
-      "sha256": "0815fd65a9b7e9bc2235456ab6ec6bead55aebf96a8d3dbc98b0c66c91d27350",
-      "size_bytes": 9611,
+      "sha256": "87db3d2cc658557ced11563ce76cd19625d1e047807638681643b317f44a2eaf",
+      "size_bytes": 9473,
       "source_relative": "kanda_prompt_workspace/prompt_tools/startup_kernel/zip_delivery.py"
     },
     {
       "archive_relative": "_internal/kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py",
       "role": "prompt_tools",
-      "sha256": "f850b5b1db5ae1a6367d07553f3181c1fe5caff4de8dea72f599864dded0bb0b",
-      "size_bytes": 4319,
+      "sha256": "e1d489568a72114382ee364f1811f6da6b0b4d57adb3751b5812adbf8fabb6d4",
+      "size_bytes": 4215,
       "source_relative": "kanda_prompt_workspace/prompt_tools/sync_startup_routing_kernel_pack.py"
     },
     {
       "archive_relative": "_internal/kanda_reasoner_app/manage_workflows/manage_workflows.py",
       "role": "workflows_worker",
-      "sha256": "0f5db0ae0a5a54040e5b363858798ded6411799fce21f6077027ac83420c17c1",
-      "size_bytes": 5354,
+      "sha256": "eb2ea0611f13d7a98ea8bc7ec2ab44baf3a9c03d3bf37e2c8738f1a6050d87fd",
+      "size_bytes": 4444,
       "source_relative": "kanda_reasoner_app/manage_workflows/manage_workflows.py"
     }
   ],

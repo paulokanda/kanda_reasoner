@@ -9,19 +9,35 @@ Owner box: `06_refactor_and_architecture_hardening`
 
 ## Purpose
 
-Use this prompt as the user-facing KANDA safe-refactor refresher and specialist
+Use this prompt as a user-facing safe-refactor refresher and specialist
 dispatcher. It helps an AI interpret current source and appended support
 artifacts, select the smallest current owner set, and identify the next safe
 action for a behavior-preserving refactor.
 
 This prompt does not own implementation authorization, target-specific AST
 repair, generic large-module law, patch delivery, terminal behavior, validation
-evidence, or freeze writes.
+evidence, or snapshot/freeze writes.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## When to use
 
 Load only when the user explicitly invokes Safe Refactor How To or asks for the
-KANDA-specific safe-refactor process before a consequential module refactor.
+safe-refactor process before a consequential module refactor.
 
 Do not load for a small local edit, a generic Python explanation, or as a
 replacement for exact current target evidence.
@@ -29,8 +45,8 @@ replacement for exact current target evidence.
 ## Current authority order
 
 1. current target source bytes and source identity;
-2. current frozen feature memory applicable to the target;
-3. current Error Memory lessons applicable to the operation;
+2. current protected/frozen behavior applicable to the target, when such memory exists;
+3. current Project error/lesson records applicable to the operation, when available;
 4. current Box, shielding, public-contract, and consumer evidence;
 5. current behavior characterization and executable validators;
 6. current AST and architecture findings;
@@ -43,10 +59,9 @@ source or current validation truth.
 
 ## Specialist dispatch
 
-- `KPR-03-001 brick_wall_comprehensive_quality_gate`: current implementation
-  admission and blockers.
-- `KPR-04-001 box_architecture_canon`: owner Box and allowed boundaries.
-- `KPR-04-002 kanda_box_shielding_canon`: justified shielding.
+- the active Project's declared implementation authority: implementation admission and blockers.
+- `KPR-04-001 box_architecture_canon` when this prompt library is present, or the Project-equivalent Box owner: owner Box and allowed boundaries.
+- the current Project invariant-protection owner, when available: justified shielding.
 - `KPR-04-006 boundary_first_repair_protocol`: symptom-owner divergence.
 - `KPR-06-003 web_ai_ast_split_risk_repair_protocol`: exact target-specific AST
   exchange and repair evidence.
@@ -54,9 +69,8 @@ source or current validation truth.
   risk and protection-gap triage.
 - `KPR-06-007 large_module_refactor_protocol`: generic behavior-preserving
   decomposition, public-contract, cohesion, and module-size law.
-- current Class 05 owners: installable package, validation evidence, terminal,
-  and freeze preparation.
-- current freeze owners: read-only Preview and explicit human Confirm and Write.
+- the active Project delivery owners: installable package, validation evidence, and terminal behavior.
+- optional Project or host-specific snapshot/freeze owners: preparation, preview, and explicit confirmation when such a lifecycle exists.
 
 Load only the smallest owner set required by the verified problem.
 
@@ -69,7 +83,7 @@ Load only the smallest owner set required by the verified problem.
    separate feature change is explicitly authorized.
 3. Split by cohesive responsibility and one-way dependency direction, never by
    arbitrary line ranges or formatting compression.
-4. Keep the KANDA ideal at 400 physical lines or fewer and the hard maximum at 500 physical lines or fewer after normal readable formatting. There is no universal 101-line minimum.
+4. Apply the active Project's supplied module-size policy. When this prompt library's default policy is explicitly selected, use an ideal of 400 physical lines or fewer and a hard maximum of 500 physical lines after normal readable formatting. There is no universal 101-line minimum.
 5. Require semantic behavior comparison plus current focused and regression
    validators for the complete touched source family.
 6. Stop on source mismatch, unresolved owner conflict, stale target evidence,
@@ -79,13 +93,13 @@ Load only the smallest owner set required by the verified problem.
 
 ```text
 1. bind exact source and owner
-2. inspect consumers, public contracts, frozen behavior, and Error Memory
+2. inspect consumers, public contracts, protected/frozen behavior, and Project error/lesson records when available
 3. verify the real size, cohesion, dependency, or AST problem
 4. compare the smallest plausible architectures
-5. obtain separate Brick Wall implementation admission
+5. obtain separate authorization from the active Project's declared implementation authority
 6. construct one reversible behavior-preserving candidate
 7. run semantic comparison and current touched-family validation
-8. hand delivery, terminal, evidence, and freeze preparation to current owners
+8. hand delivery, terminal, evidence, and optional snapshot/freeze preparation to current Project owners
 ```
 
 This sequence is guidance, not source-write authority.
@@ -128,7 +142,7 @@ adequately cover.
 The Safe Refactor How To button may append exactly three support artifacts:
 
 1. `AST_SAFE_REFACTOR_ROUTINE.md`: current process support;
-2. `kanda_ast_safe_refactor_routine.py`: current read-only helper support;
+2. a host-specific read-only AST-safe-refactor helper, if supplied (for KANDA-hosted sessions this may be `kanda_ast_safe_refactor_routine.py`);
 3. `runtime_activation_refactor_routine_report_example.json`: explicitly
    non-authoritative historical evidence-shape example.
 
@@ -154,17 +168,17 @@ Current implementation authority:
 Selected specialist owners:
 Public contracts and consumers:
 Relevant frozen behavior:
-Relevant Error Memory:
+Relevant Project error/lesson records, if available:
 Evidence gaps:
 Smallest next safe action:
 Required validators:
 May begin coding: YES / NO
 ```
 
-`May begin coding` is `YES` only when Brick Wall separately authorizes it.
+`May begin coding` is `YES` only when the active Project's declared implementation authority separately authorizes it.
 
 ## Non-authorization statement
 
 This refresher cannot authorize source mutation, package installation,
 validation claims, or frozen-memory writes. Preview remains read-only and final
-freeze requires explicit human Confirm and Write.
+any snapshot/freeze write requires the explicit confirmation contract of the active Project or host, when such a lifecycle exists.

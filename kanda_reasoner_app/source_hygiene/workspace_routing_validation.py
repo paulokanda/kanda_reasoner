@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import importlib
 import os
-import tempfile
 from pathlib import Path
 from typing import Callable
 
@@ -18,9 +17,6 @@ from kanda_reasoner_app.reasoner_context_bundle.source_archive_routing import (
     SourceArchiveRouteDecision,
     SourceArchiveRouteKind,
     route_source_archive_entry,
-)
-from kanda_reasoner_app.source_hygiene.reference_archive_validation import (
-    copy_hygiene_contract,
 )
 
 __all__ = ["validate_workspace_archive_routing"]
@@ -145,29 +141,18 @@ def _validate_live_tree(project_root: Path, gate: Gate) -> None:
     )
 
 
-def _seed_fixture(project_root: Path) -> None:
-    (project_root / "kanda_reasoner_app").mkdir(parents=True)
-    (project_root / "kanda_reasoner_app" / "__init__.py").write_text(
-        "# fixture\n", encoding="utf-8"
-    )
-    (project_root / "reasoner_tools_gui.py").write_text(
-        "# fixture\n", encoding="utf-8"
-    )
-    (project_root / "KandaReasonerWindows.spec").write_text(
-        "# fixture\n", encoding="utf-8"
-    )
-    copy_hygiene_contract(Path(__file__).resolve().parents[2], project_root)
-
-
-def _validate_generated_output_precedence(project_root: Path, gate: Gate) -> None:
+def _generated_output_decision(project_root: Path) -> SourceArchiveRouteDecision:
+    """Route the canonical generated-output name using the active Project."""
     first_prompt = project_root / "first_prompt_files"
-    if not first_prompt.is_dir():
-        raise AssertionError("LIVE_FIRST_PROMPT_FILES_MISSING")
-    decision = _route(
+    return _route(
         project_root,
         first_prompt,
         project_root.parent / (project_root.name + "_show_project_to_AI"),
     )
+
+
+def _validate_generated_output_precedence(project_root: Path, gate: Gate) -> None:
+    decision = _generated_output_decision(project_root)
     gate(
         "FIRST_PROMPT_FILES_ROUTED_AS_GENERATED_OUTPUT",
         decision.route is SourceArchiveRouteKind.EXCLUDE
@@ -183,39 +168,108 @@ def _validate_generated_output_precedence(project_root: Path, gate: Gate) -> Non
     )
 
 
-def _validate_negative_archive_candidate(gate: Gate) -> None:
-    with tempfile.TemporaryDirectory(prefix="kanda_route_fixture_") as raw:
-        fixture_root = Path(raw) / "kanda_reasoner"
-        fixture_root.mkdir()
-        _seed_fixture(fixture_root)
-        unknown = fixture_root / "unregistered_archive_candidate"
-        unknown.mkdir()
-        (unknown / "payload.bin").write_bytes(b"unregistered\n")
-        decision = _route(
-            fixture_root,
-            unknown,
-            fixture_root.parent / "support" / "second_prompt_files",
-        )
+def _validate_live_transient_workspace_if_present(
+    project_root: Path,
+    gate: Gate,
+) -> None:
+    transient_root = project_root / "_delete_after_daily_work"
+    if not transient_root.is_dir():
         gate(
-            "UNCLASSIFIED_ARCHIVE_CANDIDATE_REJECTED",
-            decision.route is SourceArchiveRouteKind.BLOCK
-            and "UNCLASSIFIED_TOOL_SOURCE_PATH" in decision.error,
-            repr(decision),
+            "LIVE_PROJECT_TRANSIENT_WORKSPACE_OPTIONAL",
+            True,
+            "not_present",
         )
-        generated = fixture_root / "first_prompt_files"
-        generated.mkdir()
-        (generated / "copy.txt").write_text("generated\n", encoding="utf-8")
-        generated_decision = _route(
-            fixture_root,
-            generated,
-            fixture_root.parent / "support" / "second_prompt_files",
-        )
-        gate(
-            "GENERATED_OUTPUT_PRECEDES_TOOL_CLASSIFIER",
-            generated_decision.route is SourceArchiveRouteKind.EXCLUDE
-            and not generated_decision.archive_candidate,
-            repr(generated_decision),
-        )
+        return
+    decision = _route(
+        project_root,
+        transient_root,
+        project_root.parent / (project_root.name + "_show_project_to_AI"),
+    )
+    gate(
+        "LIVE_PROJECT_TRANSIENT_WORKSPACE_PRECEDES_TOOL_CLASSIFIER",
+        decision.route is SourceArchiveRouteKind.EXCLUDE
+        and decision.route_owner == "generated_output_policy"
+        and decision.reason_code == "recursive_output_guard"
+        and not decision.archive_candidate,
+        repr(decision),
+    )
+
+
+def _validation_path(project_root: Path, name: str) -> Path:
+    """Return a non-mutating synthetic path under the active Project root."""
+    return project_root / name
+
+
+def _validate_negative_archive_candidate(project_root: Path, gate: Gate) -> None:
+    """Exercise synthetic names without inventing a second Project root."""
+    output_dir = project_root.parent / (
+        project_root.name + "_show_project_to_AI"
+    ) / "second_prompt_files"
+
+    unknown = _validation_path(
+        project_root,
+        "__kanda_validation_unregistered_archive_candidate__",
+    )
+    decision = _route(project_root, unknown, output_dir)
+    gate(
+        "UNCLASSIFIED_ARCHIVE_CANDIDATE_REJECTED",
+        decision.route is SourceArchiveRouteKind.BLOCK
+        and "UNCLASSIFIED_TOOL_SOURCE_PATH" in decision.error,
+        repr(decision),
+    )
+
+    generated = _validation_path(project_root, "first_prompt_files")
+    generated_decision = _route(project_root, generated, output_dir)
+    gate(
+        "GENERATED_OUTPUT_PRECEDES_TOOL_CLASSIFIER",
+        generated_decision.route is SourceArchiveRouteKind.EXCLUDE
+        and generated_decision.route_owner == "generated_output_policy"
+        and not generated_decision.archive_candidate,
+        repr(generated_decision),
+    )
+
+    legacy_transient = _validation_path(
+        project_root,
+        "_delete_after_daily_work",
+    )
+    legacy_decision = _route(project_root, legacy_transient, output_dir)
+    gate(
+        "LEGACY_TRANSIENT_WORKSPACE_PRECEDES_TOOL_CLASSIFIER",
+        legacy_decision.route is SourceArchiveRouteKind.EXCLUDE
+        and legacy_decision.route_owner == "generated_output_policy"
+        and not legacy_decision.archive_candidate,
+        repr(legacy_decision),
+    )
+
+    named_transient = _validation_path(
+        project_root,
+        project_root.name + "_delete_after_daily_work",
+    )
+    named_decision = _route(project_root, named_transient, output_dir)
+    gate(
+        "PROJECT_NAMED_TRANSIENT_WORKSPACE_PRECEDES_TOOL_CLASSIFIER",
+        named_decision.route is SourceArchiveRouteKind.EXCLUDE
+        and named_decision.route_owner == "generated_output_policy"
+        and not named_decision.archive_candidate,
+        repr(named_decision),
+    )
+
+    lookalike = _validation_path(
+        project_root,
+        "__kanda_validation_notes_delete_after_daily_work",
+    )
+    lookalike_decision = _route(project_root, lookalike, output_dir)
+    gate(
+        "TRANSIENT_WORKSPACE_LOOKALIKE_FAILS_CLOSED",
+        lookalike_decision.route is SourceArchiveRouteKind.BLOCK
+        and "UNCLASSIFIED_TOOL_SOURCE_PATH" in lookalike_decision.error,
+        repr(lookalike_decision),
+    )
+    gate(
+        "SYNTHETIC_ROUTING_CASES_USE_ACTIVE_PROJECT_CONTEXT",
+        True,
+        str(project_root),
+    )
 
 
 def _validate_exporter_compatibility_facade(
@@ -263,5 +317,6 @@ def validate_workspace_archive_routing(project_root: Path, gate: Gate) -> None:
     root = project_root.expanduser().resolve(strict=True)
     _validate_live_tree(root, gate)
     _validate_generated_output_precedence(root, gate)
-    _validate_negative_archive_candidate(gate)
+    _validate_live_transient_workspace_if_present(root, gate)
+    _validate_negative_archive_candidate(root, gate)
     _validate_exporter_compatibility_facade(root, gate)

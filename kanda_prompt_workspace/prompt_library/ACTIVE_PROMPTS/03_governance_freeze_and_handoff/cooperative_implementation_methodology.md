@@ -16,7 +16,23 @@ source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
 Use this prompt when the human and AI must compare consequential implementation
 choices before a governed plan is admitted. It owns the collaboration method,
 not implementation authorization, architecture rules, delivery commands,
-validation claims, freeze writes, or handoff generation.
+validation claims, snapshot/freeze writes, or handoff generation.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Activate when
 
@@ -43,7 +59,7 @@ Evidence or specialist review required:
 Human preference or constraint:
 Recommended bounded direction:
 Disconfirming condition:
-Brick Wall admission still required: YES
+Separate Project implementation authorization still required: YES
 May begin coding from this prompt: NO
 ```
 
@@ -58,7 +74,7 @@ May begin coding from this prompt: NO
 6. State what evidence would invalidate the recommendation.
 7. Ask the human to select or redirect only when the decision genuinely belongs
    to the human.
-8. Route the selected direction to Brick Wall and the exact specialist owners.
+8. Route the selected direction to the active Project's declared implementation authority and the exact specialist owners.
 
 ## Evidence escalation
 
@@ -75,7 +91,7 @@ This prompt may recommend a direction. It cannot:
 - substitute for exact-source inspection;
 - claim validation or installation success;
 - emit a patch as release-ready;
-- write freeze memory or Error Memory;
+- write snapshot/freeze memory or lesson/error-memory state;
 - replace the current handoff owner.
 
 ## Completion

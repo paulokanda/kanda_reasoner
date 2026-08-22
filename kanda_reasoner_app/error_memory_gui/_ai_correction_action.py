@@ -280,10 +280,11 @@ class _AICorrectionReceiver(QObject):
             apply_corrected_lesson_to_work_windows(tab, lesson_block)
             message = str(getattr(result, "message", "AI correction completed."))
             message += (
-                "\n\nThe corrected lesson was loaded as a preview only. "
+                "\n\nThe corrected lesson was loaded as a Draft preview only. "
                 "Correct with AI did not save, delete, activate, supersede, or memorize any lesson. "
-                "Review the result and use an explicit "
-                "save/status action when appropriate."
+                "Review the draft and press Memorize Error when it is "
+                "active-ready. Memorize Error is the explicit draft-to-active "
+                "commit action."
             )
             _show_success(tab, "Error Memory AI correction", message)
         except Exception as exc:

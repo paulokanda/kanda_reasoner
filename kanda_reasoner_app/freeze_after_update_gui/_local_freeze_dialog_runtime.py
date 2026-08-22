@@ -6,7 +6,7 @@ from __future__ import annotations
 from typing import Any, Mapping
 
 from PySide6.QtWidgets import (
-    QDialog,
+    QApplication, QDialog,
     QHBoxLayout,
     QLabel,
     QPushButton,
@@ -51,7 +51,10 @@ from kanda_reasoner_app.freeze_after_update_gui.local_freeze_preview_log import 
 from kanda_reasoner_app.freeze_after_update_gui._local_freeze_preview_presentation import (
     render_local_freeze_preview,
 )
-from kanda_reasoner_app.freeze_hint_intake import mark_latest_freeze_hint_used
+from kanda_reasoner_app.freeze_hint_intake import (
+    discard_latest_freeze_hint_candidate,
+    mark_latest_freeze_hint_used,
+)
 from kanda_reasoner_app.templates.floating_windows import (
     show_auto_close_action_window,
     show_error_copy_close_window,
@@ -94,6 +97,12 @@ class FreezeLocalEntryRuntimeMixin:
         def collect_inputs() -> dict[str, str]:
             return collect_freeze_form_inputs(widgets)
 
+        starter_inputs = build_local_freeze_fallback_inputs()
+
+        def displayed_candidate_present() -> bool:
+            title = widgets.feature_title_edit.text().strip()
+            return bool(title) and title != starter_inputs["feature_title"]
+
         def apply_inputs(inputs: Mapping[str, Any]) -> None:
             nonlocal applying_inputs
             applying_inputs = True
@@ -121,9 +130,12 @@ class FreezeLocalEntryRuntimeMixin:
                         )
                     except Exception as exc:
                         self._local_freeze_preview = None
-                        action_state.disable(
+                        action_state.set_state(
+                            False,
+                            displayed_candidate_present(),
                             "Active Project authority is unavailable. Select the "
-                            "Project again, then rebuild Preview."
+                            "Project again, then rebuild Preview. The displayed "
+                            "candidate may still be ignored."
                         )
                         rendered = (
                             "ERRORS:\n- Active Project authority is unavailable: "
@@ -148,16 +160,20 @@ class FreezeLocalEntryRuntimeMixin:
                         )
                 else:
                     self._local_freeze_preview = None
-                    action_state.disable(
-                        "Freeze preview validation blocked writing. Fix errors before confirming."
+                    action_state.set_state(
+                        False,
+                        True,
+                        "Freeze preview validation blocked writing. You may still delete this candidate.",
                     )
                     rendered = render_local_freeze_preview(preview, validation)
                     self._append_log(
                         "Local freeze preview was generated but validation blocked writing."
                     )
             else:
-                action_state.disable(
-                    "No writable freeze entry is available. Fix required fields or validation evidence."
+                action_state.set_state(
+                    False,
+                    displayed_candidate_present(),
+                    "No writable freeze entry is available. You may delete the displayed candidate or fix it.",
                 )
                 self._append_log("Local freeze preview is not writable.")
             widgets.preview_text_edit.setPlainText(rendered)
@@ -168,7 +184,7 @@ class FreezeLocalEntryRuntimeMixin:
                 )
             )
 
-        def preview_local_freeze() -> None:
+        def preview_local_freeze(*, copy_candidate_to_clipboard: bool = False) -> None:
             self._local_freeze_preview = None
             action_state.disable("Preview is being rebuilt.")
             inputs = collect_inputs()
@@ -177,6 +193,7 @@ class FreezeLocalEntryRuntimeMixin:
             if result.get("ok") and result.get("is_writable"):
                 validation_result = validate_freeze_entry_preview(project_root, result)
             apply_preview_result(inputs, result, validation_result)
+            if copy_candidate_to_clipboard: QApplication.clipboard().setText(widgets.preview_text_edit.toPlainText())
 
         ai_runtime = FreezeFormularyAIController(
             owner=self,
@@ -197,8 +214,12 @@ class FreezeLocalEntryRuntimeMixin:
                 self._local_freeze_preview = None
                 confirmation_binding = None
                 widgets.preview_text_edit.clear()
-                action_state.disable(
-                    "The form or selected project changed after Preview. Preview again."
+                action_state.set_state(
+                    False,
+                    displayed_candidate_present(),
+                    "The form or selected project changed after Preview. Preview "
+                    "again to confirm, or Ignore this Freeze to discard the "
+                    "displayed candidate."
                 )
             ai_runtime.invalidate(
                 "The Project or form changed; pending AI result discarded."
@@ -283,21 +304,47 @@ class FreezeLocalEntryRuntimeMixin:
             receive_dialog.show()
 
         def ignore_this_freeze() -> None:
-            self._local_freeze_preview = None
-            widgets.preview_text_edit.clear()
-            action_state.disable("Freeze draft was ignored by the human.")
-            intake_used = mark_latest_freeze_hint_used(
-                project_root, freeze_id="ignored-by-human"
+            nonlocal confirmation_binding
+            displayed_title = widgets.feature_title_edit.text().strip()
+            discarded = discard_latest_freeze_hint_candidate(
+                project_root, expected_feature_title=displayed_title
             )
+            if not discarded.get("ok"):
+                self.status_label.setText(
+                    "Freeze candidate changed; nothing was deleted. Review the log."
+                )
+                for error in discarded.get("errors") or []:
+                    self._append_log("IGNORE THIS FREEZE BLOCKED: " + str(error))
+                return
+            ai_runtime.invalidate("Current Freeze candidate was deleted by the human.")
+            self._local_freeze_preview = None
+            confirmation_binding = None
+            apply_inputs(starter_inputs)
+            preview_local_freeze()
+            action_state.disable("The safe starter placeholder is not a Freeze candidate.")
             self.status_label.setText(
-                "Local freeze draft ignored. No freeze entry was written."
+                "Current Freeze candidate deleted. Safe starter placeholder restored."
             )
             self._append_log(
-                "IGNORE THIS FREEZE selected. No frozen memory entry was written."
+                "IGNORE THIS FREEZE: CURRENT CANDIDATE DELETED AND FORGOTTEN. "
+                "Safe starter placeholder restored; no frozen memory entry was written."
             )
-            for warning in intake_used.get("warnings") or intake_used.get("errors") or []:
-                self._append_log("- " + str(warning))
-            dialog.close()
+            if discarded.get("candidate_found"):
+                authority = "PASS" if discarded.get(
+                    "explicit_human_ignore_recorded"
+                ) else "NOT RECORDED"
+                self._append_log(
+                    "EXPLICIT HUMAN IGNORE AUTHORITY: " + authority
+                )
+            else:
+                self._append_log(
+                    "IGNORE THIS FREEZE: no persisted intake candidate was "
+                    "present; the displayed draft was cleared only."
+                )
+            for path in discarded.get("deleted_paths") or []:
+                self._append_log("- DELETED: " + str(path))
+            for warning in discarded.get("warnings") or []:
+                self._append_log("- WARNING: " + str(warning))
 
         def confirm_and_write_local_freeze() -> None:
             preview = self._local_freeze_preview
@@ -354,7 +401,7 @@ class FreezeLocalEntryRuntimeMixin:
 
         widgets.copy_to_ai_button.clicked.connect(copy_formulary_to_ai)
         widgets.receive_from_ai_button.clicked.connect(receive_formulary_from_ai)
-        widgets.preview_button.clicked.connect(preview_local_freeze)
+        widgets.preview_button.clicked.connect(lambda _checked=False: preview_local_freeze(copy_candidate_to_clipboard=True))
         widgets.confirm_write_button.clicked.connect(confirm_and_write_local_freeze)
         widgets.ignore_freeze_button.clicked.connect(ignore_this_freeze)
         widgets.cancel_button.clicked.connect(dialog.close)

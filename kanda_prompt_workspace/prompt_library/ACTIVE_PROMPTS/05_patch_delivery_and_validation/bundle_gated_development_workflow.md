@@ -2,7 +2,7 @@
 prompt_id: bundle_gated_development_workflow
 prompt_code: KPR-05-002
 title: Bundle-Gated Development Workflow
-version: 2.0
+version: 2.1
 status: active
 load_type: routed
 owner_box: 05_patch_delivery_and_validation
@@ -30,13 +30,29 @@ keep the public contract coherent.
 Do not load for explanation-only work, read-only audit, a local edit that will
 not be packaged, or routine use of an already installed feature.
 
+## Release owner classification
+
+Classify the release before applying KANDA-specific delivery gates:
+
+```text
+KANDA_TOOL_RELEASE
+EXTERNAL_PROJECT_RELEASE
+```
+
+`KANDA_TOOL_RELEASE` uses KANDA patch governance, KANDA `validate_patch_zip.py`,
+and KANDA release metadata. `EXTERNAL_PROJECT_RELEASE` uses the Project-owned or
+release-local installer/validator contract. KANDA may observe its evidence but
+must not require KANDA runtime, validators, Tool Error Memory, Tool source, or
+KANDA source archives. Absence of a Project validator is a Project-side gap, not
+a reason to fall back to KANDA's validator.
+
 ## Required prior evidence
 
 Before release work advances beyond `DRAFT`, obtain current evidence for:
 
 - Brick Wall admission and task-specific implementation authorization;
 - exact source and current metadata fingerprints;
-- relevant Error Memory and active PIR regression classes;
+- relevant Error Memory and active PIR regression classes for KANDA Tool releases; external Project Tool Error Memory is advisory only;
 - one primary box and bounded supporting touches;
 - artifact, receiver, installer, validation, and terminal owners;
 - current Tool, Active Project, Project Support, and transient-root identity.
@@ -60,6 +76,8 @@ Release unit:
 Primary box:
 Supporting owners:
 Release type:
+Release owner classification:
+Canonical release validator owner:
 Installable artifact required: YES / NO
 Brick Wall authorization:
 Exact source verified:
@@ -112,8 +130,7 @@ success. Validation success is not human freeze confirmation.
 - Class 04 owners: primary box, supporting touches, placement, and boundaries.
 - `implementation_and_delivery_protocol`: surgical payload, baseline policy,
   backup, install transaction, and rollback.
-- Patch governance and receiver contracts: exact ZIP membership, extraction,
-  intake, and destination proof.
+- KANDA patch governance and receiver contracts: exact ZIP membership and receiver proof for KANDA Tool releases only. External Project releases use Project/release-owned contracts.
 - `pre_output_contract_gates`: final outgoing artifact authorization.
 - `terminal_cleanup_contract`: PowerShell prompt and cleanup behavior.
 - Validation owners: exact commands, expected markers, and evidence provenance.
@@ -134,6 +151,7 @@ specialist owners.
 
 ## Version history
 
+- 2.1: added explicit KANDA Tool versus external Project release ownership and prohibited KANDA validator/source fallback for Project releases.
 - 2.0: reduced to release lifecycle and specialist dispatch; reconciled the
   duplicate application identity and current governance boundaries.
 - 1.x: historical bundle methodology with embedded installer, terminal, freeze,

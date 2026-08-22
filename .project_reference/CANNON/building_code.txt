@@ -1,0 +1,76 @@
+$PROJECT_ROOT = (Resolve-Path ".").Path
+$DRIVE_ROOT = [System.IO.Path]::GetPathRoot($PROJECT_ROOT)
+$REGISTRY = Join-Path $DRIVE_ROOT "kanda_reasoner_show_project_to_AI\tool_project_registry\projects.json"
+$PYTHON = Join-Path $PROJECT_ROOT ".venv\Scripts\python.exe"
+$BUILDER = Join-Path $PROJECT_ROOT "portable\create_kanda_reasoner_portable.py"
+
+try {
+    if (-not (Test-Path -LiteralPath $REGISTRY -PathType Leaf)) {
+        throw "PROJECT REGISTRY MISSING: $REGISTRY"
+    }
+
+    $STATE = Get-Content -LiteralPath $REGISTRY -Raw | ConvertFrom-Json
+    $CURRENT_ID = [string]$STATE.current_project_id
+    $CURRENT = $STATE.projects.$CURRENT_ID
+
+    if ($null -eq $CURRENT) {
+        throw "ACTIVE PROJECT RECORD MISSING: $CURRENT_ID"
+    }
+
+    $ACTIVE_ROOT = [System.IO.Path]::GetFullPath(
+        [string]$CURRENT.project_root
+    ).TrimEnd("\")
+    $EXPECTED_ROOT = [System.IO.Path]::GetFullPath(
+        $PROJECT_ROOT
+    ).TrimEnd("\")
+    $MODE = [string]$CURRENT.selection_mode
+
+    Write-Host ""
+    Write-Host "PORTABLE BUILD PREFLIGHT"
+    Write-Host ("Tool root:       " + $EXPECTED_ROOT)
+    Write-Host ("Active root:     " + $ACTIVE_ROOT)
+    Write-Host ("Selection mode:  " + $MODE)
+    Write-Host ""
+
+    if ($ACTIVE_ROOT -ne $EXPECTED_ROOT) {
+        throw "ACTIVE PROJECT IS NOT KANDA REASONER"
+    }
+
+    if ($MODE -ne "EXPLICIT_SELF_HOSTING") {
+        throw "SELECTION MODE IS NOT EXPLICIT_SELF_HOSTING"
+    }
+
+    if (-not (Test-Path -LiteralPath $PYTHON -PathType Leaf)) {
+        throw "PROJECT PYTHON MISSING: $PYTHON"
+    }
+
+    if (-not (Test-Path -LiteralPath $BUILDER -PathType Leaf)) {
+        throw "PORTABLE BUILDER MISSING: $BUILDER"
+    }
+
+    Write-Host "PORTABLE BUILD PREFLIGHT: PASS"
+    Write-Host ""
+    Write-Host "Starting fresh Portable build..."
+    Write-Host ""
+
+    & $PYTHON $BUILDER --yes
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "PORTABLE BUILD FAILED WITH EXIT CODE $LASTEXITCODE"
+    }
+
+    Write-Host ""
+    Write-Host "PORTABLE BUILD COMMAND: PASS"
+    Start-Sleep -Seconds 2
+    Clear-Host
+}
+catch {
+    Write-Host ""
+    Write-Host "PORTABLE BUILD ERROR"
+    Write-Host ("ERROR TYPE: " + $_.Exception.GetType().FullName)
+    Write-Host ("ERROR MESSAGE: " + $_.Exception.Message)
+    Write-Host ""
+    Read-Host "Press Enter to clear terminal"
+    Read-Host "Press Enter again to clear"
+    Clear-Host
+}

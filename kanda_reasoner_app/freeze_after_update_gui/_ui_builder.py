@@ -9,6 +9,8 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QPushButton,
+    QScrollArea,
+    QSizePolicy,
     QTextEdit,
     QVBoxLayout,
     QWidget,
@@ -24,9 +26,24 @@ class FreezeUiBuilderMixin:
         """Support build ui behavior.
         """
         
+        self.setMinimumSize(0, 0)
+        self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         root_layout = QVBoxLayout(self)
-        root_layout.setContentsMargins(12, 12, 12, 12)
-        root_layout.setSpacing(10)
+        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.setSpacing(0)
+
+        self.freeze_screen_scroll = QScrollArea(self)
+        self.freeze_screen_scroll.setObjectName("freeze_after_update_screen_scroll")
+        self.freeze_screen_scroll.setWidgetResizable(True)
+        self.freeze_screen_scroll.setMinimumSize(0, 0)
+
+        scroll_body = QWidget(self.freeze_screen_scroll)
+        scroll_body.setObjectName("freeze_after_update_screen_scroll_body")
+        content_layout = QVBoxLayout(scroll_body)
+        content_layout.setContentsMargins(12, 12, 12, 12)
+        content_layout.setSpacing(10)
+        self.freeze_screen_scroll.setWidget(scroll_body)
+        root_layout.addWidget(self.freeze_screen_scroll, 1)
         self.help_button = QPushButton("Help")
         self.help_button.setToolTip("Open practical help for the Freeze Feature After Update tab")
         self.get_last_freeze_button = QPushButton("Get Last Freeze")
@@ -52,12 +69,22 @@ class FreezeUiBuilderMixin:
         self.send_zip_freeze_button.setStyleSheet("color: #FF8C00; font-weight: bold;")
         columns_layout = QHBoxLayout()
         columns_layout.setSpacing(12)
-        root_layout.addLayout(columns_layout, 1)
+        content_layout.addLayout(columns_layout, 1)
         left_column_widget = QWidget()
+        left_column_widget.setMinimumSize(0, 0)
+        left_column_widget.setSizePolicy(
+            QSizePolicy.Ignored,
+            QSizePolicy.Expanding,
+        )
         left_column = QVBoxLayout(left_column_widget)
         left_column.setContentsMargins(0, 0, 0, 0)
         left_column.setSpacing(10)
         right_column_widget = QWidget()
+        right_column_widget.setMinimumSize(0, 0)
+        right_column_widget.setSizePolicy(
+            QSizePolicy.Ignored,
+            QSizePolicy.Expanding,
+        )
         right_column = QVBoxLayout(right_column_widget)
         right_column.setContentsMargins(0, 0, 0, 0)
         right_column.setSpacing(10)
@@ -70,16 +97,21 @@ class FreezeUiBuilderMixin:
         )
         intro.setWordWrap(True)
         left_column.addWidget(intro)
-        freeze_copy_row = QHBoxLayout()
-        freeze_copy_row.setContentsMargins(0, 0, 0, 0)
-        freeze_copy_row.setSpacing(8)
-        freeze_copy_row.addWidget(self.get_last_freeze_button, 0)
-        freeze_copy_row.addWidget(self.get_all_frozen_button, 0)
-        freeze_copy_row.addWidget(self.get_blueprint_freeze_button, 0)
-        freeze_copy_row.addWidget(self.list_frozen_button, 0)
-        freeze_copy_row.addWidget(self.send_zip_freeze_button, 0)
-        freeze_copy_row.addStretch(1)
-        left_column.addLayout(freeze_copy_row)
+        freeze_copy_grid = QGridLayout()
+        freeze_copy_grid.setContentsMargins(0, 0, 0, 0)
+        freeze_copy_grid.setHorizontalSpacing(8)
+        freeze_copy_grid.setVerticalSpacing(6)
+        freeze_copy_grid.addWidget(self.get_last_freeze_button, 0, 0)
+        freeze_copy_grid.addWidget(self.get_all_frozen_button, 0, 1)
+        freeze_copy_grid.addWidget(self.get_blueprint_freeze_button, 0, 2)
+        self.list_frozen_button.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        self.send_zip_freeze_button.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        freeze_copy_grid.addWidget(self.list_frozen_button, 0, 3)
+        freeze_copy_grid.addWidget(self.send_zip_freeze_button, 0, 4)
+        freeze_copy_grid.setColumnStretch(0, 1)
+        freeze_copy_grid.setColumnStretch(1, 1)
+        freeze_copy_grid.setColumnStretch(2, 1)
+        left_column.addLayout(freeze_copy_grid)
         self.project_root_header_label = QLabel("Project Root:")
         self.project_root_header_label.setStyleSheet("color: #0B3D91; font-weight: bold; padding-left: 4px;")
         self.project_root_edit = QLineEdit()

@@ -1,0 +1,22 @@
+Copyright (c) 2026 [Your Name or Project Name]
+
+TERMS AND CONDITIONS FOR USE, COPYING, AND CONTRIBUTION
+
+1. PERMITTED USE
+You are permitted to use, copy, and modify this software strictly for personal, 
+educational, and NON-COMMERCIAL purposes. 
+
+2. CONTRIBUTIONS AND MODIFICATIONS
+You are welcome to participate in this project. However, any modifications, 
+bug fixes, or feature additions must be submitted back to this original project 
+via Pull Requests on this GitHub repository. You may not distribute modified 
+versions of this software independently outside of this GitHub project.
+
+3. COMMERCIAL RESTRICTIONS
+You CANNOT sell, monetize, lease, or use this software (or any modified version 
+of it) for any commercial purpose. This includes incorporating ads or paid features.
+
+4. ATTRIBUTION
+The original copyright notice must be kept intact in all copies of the code.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.

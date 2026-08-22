@@ -149,6 +149,7 @@ def run_bounded_process(
     start = time.monotonic()
     _emit(progress_callback, request, start, "STAGE_START", "Launching analyzer process.")
     environment = os.environ.copy()
+    environment.pop("PYTHONPATH", None)
     environment.update(dict(request.environment_overrides))
     popen_kwargs = process_tree_spawn_kwargs()
     process = subprocess.Popen(

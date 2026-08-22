@@ -2,7 +2,7 @@
 prompt_id: pre_output_contract_gates
 prompt_code: KPR-03-004
 title: Pre-Output Artifact Contract Gate
-version: 2.1
+version: 2.2
 status: active
 load_type: on_request
 owner_box: 03_governance_freeze_and_handoff
@@ -19,6 +19,16 @@ current owner contract, and blocks output when ownership, syntax, provenance, or
 validation state is unresolved.
 
 It does not duplicate each artifact's implementation rules.
+
+## Release-owner classification first
+
+Before any patch ZIP, installer, validation command, Freeze-ready metadata, or
+release claim, classify the owner as `KANDA_TOOL_RELEASE` or
+`EXTERNAL_PROJECT_RELEASE`. Apply KANDA patch governance only to
+`KANDA_TOOL_RELEASE`. For an external Project, use Project/release-owned commands,
+validators, and metadata. Never block an external Project release because KANDA
+source, KANDA `validate_patch_zip.py`, Tool Error Memory, KANDA runtime, or KANDA
+source archives are unavailable.
 
 ## Apply before emitting
 
@@ -39,6 +49,7 @@ full gate.
 ```text
 PRE-OUTPUT ARTIFACT CONTRACT
 Artifact class:
+Release owner classification: KANDA_TOOL_RELEASE / EXTERNAL_PROJECT_RELEASE / NOT_APPLICABLE
 Human-visible purpose:
 Canonical owner prompt or schema:
 Active Project:
@@ -59,7 +70,7 @@ Blocking reason:
 Route to the smallest current owner:
 
 - terminal commands -> `terminal_cleanup_contract` and the task's command owner;
-- patch ZIP or installer -> current Class 05 delivery owner;
+- KANDA Tool patch ZIP or installer -> current Class 05 KANDA delivery owner; external Project release -> Project/release-owned delivery contract;
 - freeze hint or form -> `freeze_code_intake_and_form_protocol`;
 - Error Memory -> `error_memory_ai_formulary_startup_canon`;
 - durable documentary artifact -> `durable_document_artifact_routing_canon`;

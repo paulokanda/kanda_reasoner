@@ -70,6 +70,44 @@ def _remember_consumed_hint(
     consumed["updated_at_utc"] = used_at
     _atomic_write_json(paths.consumed_hints, consumed)
 
+def _remember_explicit_human_ignore(
+    paths: FreezeHintIntakePaths,
+    *,
+    source_signature: Mapping[str, Any],
+    hint: Mapping[str, Any],
+) -> None:
+    """Persist explicit human Ignore as authoritative consumed state.
+
+    The visible candidate record/source may be deleted after this tombstone is
+    written, but the exact ignored source must remain blocked on later rescans.
+    This preserves the established Freeze consumption authority contract while
+    still allowing a genuinely different newer repair source to remain eligible.
+    """
+
+    consumed = _load_consumed(paths.consumed_hints)
+    ignored_at = _utc_now()
+    ignored_item = {
+        "consumed_at_utc": ignored_at,
+        "used_freeze_id": "ignored-by-human",
+        "source": _coerce_mapping(source_signature),
+        "feature_id": str(hint.get("feature_id") or "").strip(),
+        "feature_title": str(hint.get("feature_title") or "").strip(),
+    }
+
+    items = [
+        item
+        for item in consumed.get("items", [])
+        if not (
+            isinstance(item, Mapping)
+            and _same_consumed_source(item, ignored_item)
+        )
+    ]
+    items.append(ignored_item)
+    consumed["items"] = items
+    consumed["updated_at_utc"] = ignored_at
+    _atomic_write_json(paths.consumed_hints, consumed)
+
+
 def _is_consumed(
     consumed: Mapping[str, Any],
     signature: Mapping[str, Any],

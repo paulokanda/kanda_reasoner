@@ -150,7 +150,7 @@ Project slug:
 Active project root:
 KANDA tool root:
 Same physical root: YES / NO
-Compact Error Memory loaded:
+Tool Error Memory context loaded:
 Second-upload handoff loaded:
 Tier-1 gates active:
 Next action:

@@ -3,10 +3,10 @@
   "box_name": "Freeze Hint Intake",
   "box_type": "domain_state_bridge",
   "box_size": "small",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "contract_version": "1.3",
   "health_state": "draft",
-  "responsibility": "Read KANDA_FREEZE_HINT.json sidecars from staged patch ZIPs, normalize both flat and nested patch-boundary metadata into complete freeze-form inputs, repair legacy saved form records from the raw hint when needed, merge post-validation evidence after local validation passes, safely remove stale LOCAL VALIDATION PENDING wording once real local validation markers exist, and provide mandatory-field-safe freeze-form inputs to the Freeze Feature After Update tab before heuristic fallback.",
+  "responsibility": "Read KANDA_FREEZE_HINT.json sidecars from staged patch ZIPs, normalize both flat and nested patch-boundary metadata into complete freeze-form inputs, repair legacy saved form records from the raw hint when needed, merge post-validation evidence after local validation passes, safely remove stale LOCAL VALIDATION PENDING wording once real local validation markers exist, and provide mandatory-field-safe freeze-form inputs to the Freeze Feature After Update tab before heuristic fallback, and delete the current unfrozen intake candidate on explicit human Ignore while preserving a minimal authoritative ignored-source tombstone and never touching frozen memory.",
   "owner_paths": [
     "kanda_reasoner_app/freeze_hint_intake/"
   ],
@@ -18,7 +18,8 @@
       "load_latest_freeze_hint_record",
       "build_freeze_form_inputs_from_latest_hint",
       "merge_validation_evidence_into_latest_hint",
-      "mark_latest_freeze_hint_used"
+      "mark_latest_freeze_hint_used",
+      "discard_latest_freeze_hint_candidate"
     ]
   },
   "state_owner": "The selected project's <project>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake folder",
@@ -39,6 +40,11 @@
     "confirm_write_enabled_requires_mandatory_non_placeholder_fields",
     "sandbox_only_validation_with_local_pending_keeps_confirm_write_disabled",
     "local_validation_merge_removes_stale_pending_warnings",
-    "legacy_mixed_local_evidence_is_cleaned_during_autofill"
+    "legacy_mixed_local_evidence_is_cleaned_during_autofill",
+    "ignore_current_candidate_deletes_latest_and_matching_history",
+    "ignore_current_candidate_deletes_only_exact_transient_staged_source",
+    "ignore_current_candidate_never_touches_frozen_memory",
+    "ignore_current_candidate_records_durable_human_ignore_authority",
+    "ignore_current_candidate_keeps_distinct_newer_repairs_eligible"
   ]
 }

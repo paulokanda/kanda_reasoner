@@ -2,6 +2,7 @@
 """Private window methods private impl helpers for reasoner_tools_shell.runner."""
 
 from __future__ import annotations
+# ruff: noqa: F821
 
 
 def _bind_globals(namespace):
@@ -57,6 +58,22 @@ def _build_ui(self) -> None:
         "Create a verified ZIP backup of the selected Project Support folder."
     )
     project_root_row.addWidget(self.backup_show_project_button)
+    self.backup_project_button = QPushButton("Backup Project")
+    self.backup_project_button.setToolTip(
+        "Create a verified ZIP backup of everything inside the Active Project folder."
+    )
+    project_root_row.addWidget(self.backup_project_button)
+    self.backup_both_button = QPushButton("Backup both")
+    self.backup_both_button.setToolTip(
+        "Create one verified ZIP containing the Project and Show Project folders as separate top-level folders."
+    )
+    project_root_row.addWidget(self.backup_both_button)
+    self.cancel_backup_button = QPushButton("Cancel Backup")
+    self.cancel_backup_button.setToolTip(
+        "Cancel the active Show Project or Project backup and remove its partial ZIP."
+    )
+    self.cancel_backup_button.setEnabled(False)
+    project_root_row.addWidget(self.cancel_backup_button)
     project_root_row.addStretch(1)
     self.copy_patch_validate_freeze_routine_button = QPushButton(
         "Answer, Validate, Freeze, Memorize Error"
@@ -170,6 +187,9 @@ def _build_ui(self) -> None:
             self.project_root_edit,
             self.browse_project_button,
             self.backup_show_project_button,
+            self.backup_project_button,
+            self.backup_both_button,
+            self.cancel_backup_button,
         )
         for widget in widgets:
             parent = widget.parentWidget()
@@ -183,6 +203,9 @@ def _build_ui(self) -> None:
             destination_layout.addWidget(self.project_root_edit, 0)
             destination_layout.addWidget(self.browse_project_button, 0)
             destination_layout.addWidget(self.backup_show_project_button, 0)
+            destination_layout.addWidget(self.backup_project_button, 0)
+            destination_layout.addWidget(self.backup_both_button, 0)
+            destination_layout.addWidget(self.cancel_backup_button, 0)
         else:
             destination_layout.insertSpacing(insert_index, 12)
             destination_layout.insertWidget(insert_index + 1, self.project_root_label, 0)
@@ -191,6 +214,9 @@ def _build_ui(self) -> None:
             destination_layout.insertWidget(
                 insert_index + 4, self.backup_show_project_button, 0
             )
+            destination_layout.insertWidget(insert_index + 5, self.backup_project_button, 0)
+            destination_layout.insertWidget(insert_index + 6, self.backup_both_button, 0)
+            destination_layout.insertWidget(insert_index + 7, self.cancel_backup_button, 0)
         self._project_root_controls_moved_to_host = True
 
     self.move_project_root_controls_to_layout = _move_project_root_controls_to_layout

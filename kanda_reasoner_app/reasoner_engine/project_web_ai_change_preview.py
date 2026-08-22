@@ -110,10 +110,10 @@ class ProjectWebAIChangePreviewDialog(QDialog):
         delete_button.clicked.connect(self._delete_preview)
         action_row.addWidget(delete_button)
         if self._apply_callback is not None:
-            apply_button = QPushButton("Authorize Project Update")
+            apply_button = QPushButton("Record Reviewed Proposal")
             apply_button.setObjectName("projectWebAIAuthorizeApplyButton")
             apply_button.setToolTip(
-                "Require exact human confirmation, backups, rollback, and receipt."
+                "Require exact human confirmation and record support-side proposal evidence only."
             )
             apply_button.clicked.connect(self._authorize_apply)
             action_row.addWidget(apply_button)
@@ -150,7 +150,7 @@ class ProjectWebAIChangePreviewDialog(QDialog):
 
 
     def _authorize_apply(self) -> None:
-        """Delegate explicit local authorization to the owning workflow."""
+        """Delegate explicit proposal recording to the owning workflow."""
         if self._apply_callback is not None:
             self._apply_callback()
 

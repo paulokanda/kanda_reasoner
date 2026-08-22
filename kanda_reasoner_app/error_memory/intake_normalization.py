@@ -44,7 +44,6 @@ _REQUIRED_ACTIVE_AI_KEYS = (
     "schema_version",
     "lesson_id",
     "status",
-    "project_slug",
     "operation_phase",
     "created_at_utc",
     "updated_at_utc",

@@ -17,6 +17,12 @@ from kanda_reasoner_app.error_memory.heuristic_normalizer import (
     classify_and_normalize_error_lesson_text,
 )
 from kanda_reasoner_app.error_memory.models import active_ready, active_ready_missing_reasons
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    backend_for_current_work_item,
+)
+from kanda_reasoner_app.error_memory_gui._draft_intake_lifecycle import (
+    normalize_incoming_lesson_to_draft,
+)
 from kanda_reasoner_app.error_memory_gui._correction_duplicate_guard import (
     consume_duplicate_correction_candidate,
 )
@@ -87,7 +93,7 @@ def heuristic_correction_result_for_editor(tab: Any):
         )
     return classify_and_normalize_error_lesson_text(
         tab.received_preview_edit.toPlainText(),
-        project_slug=root.name,
+        project_slug=backend_for_current_work_item(tab).owner.owner_slug,
     )
 
 
@@ -115,7 +121,7 @@ def apply_heuristic_correction_to_error_editor(tab: Any) -> None:
         QMessageBox.warning(tab, 'Need AI to Correct', 'This lesson cannot be corrected deterministically. AI correction or manual review is required.\n\n' + result.reason)
         tab._refresh_heuristic_correction_button_state()
         return
-    lesson = dict(result.lesson)
+    lesson = normalize_incoming_lesson_to_draft(dict(result.lesson))
     if consume_duplicate_correction_candidate(
         tab,
         lesson,
@@ -128,16 +134,16 @@ def apply_heuristic_correction_to_error_editor(tab: Any) -> None:
         tab.received_preview_edit.setPlainText(json.dumps(lesson, indent=2, sort_keys=True, ensure_ascii=False))
         tab.raw_error_edit.setPlainText(tab._formatted_lesson_block(lesson))
         tab._refresh_heuristic_correction_button_state()
-        QMessageBox.warning(tab, 'Need AI to Correct', result.reason + '\n\nUse Mark Draft only if you want to keep this draft. Use AI correction or manually complete the missing fields before Mark Active or Memorize Error.')
+        QMessageBox.warning(tab, 'Need AI to Correct', result.reason + '\n\nThe lesson remains Draft. Use AI correction or manually complete the missing fields, then press Memorize Error again. Mark Draft is optional and only needed when you intentionally want to persist or return a saved lesson to draft.')
         return
     lesson['promotion_status'] = 'active_ready'
-    lesson['status'] = 'active'
+    lesson['status'] = 'draft'
     tab._selected_lesson_id = str(lesson.get('lesson_id', ''))
     tab._last_received_lesson = lesson
     tab.raw_error_edit.setPlainText(tab._formatted_lesson_block(lesson))
     tab.received_preview_edit.setPlainText(json.dumps(lesson, indent=2, sort_keys=True, ensure_ascii=False))
     tab._refresh_heuristic_correction_button_state()
-    tab._show_action_done('Heuristic Correction', 'Deterministic correction produced an active-ready lesson and set status to active.', 'Review it, then click Memorize Error to save it as active, or Mark Active after review.')
+    tab._show_action_done('Heuristic Correction', 'Deterministic correction produced an active-ready Draft.', 'Review it, then click Memorize Error to perform the explicit draft-to-active promotion and save.')
 
 
 def operation_phase_for_guard(tab: Any, raw_text: str) -> str:
@@ -175,7 +181,7 @@ def check_against_lessons(tab: Any) -> None:
         return
     try:
         report = analyze_error_against_lessons(
-            tab._current_project_root(),
+            backend_for_current_work_item(tab),
             raw_text,
             operation_phase=tab._operation_phase_for_guard(raw_text),
             include_drafts=True,

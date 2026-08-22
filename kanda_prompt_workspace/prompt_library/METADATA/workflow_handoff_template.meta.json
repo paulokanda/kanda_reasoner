@@ -17,7 +17,7 @@
   ],
   "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
   "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "description": "Drafts a generic factual handoff profile only when a Project lacks a current generated handoff owner.",
+  "description": "Drafts a generic factual handoff profile only when a Project lacks a current generated handoff owner. Project-agnostic; host-specific governance is optional.",
   "trigger_phrases": [
     "generic workflow handoff template",
     "draft handoff profile",

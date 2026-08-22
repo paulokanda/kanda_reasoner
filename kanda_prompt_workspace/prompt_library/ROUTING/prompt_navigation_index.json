@@ -61,7 +61,7 @@
         "ai prompt request canon",
         "request admission"
       ],
-      "when_to_load": "Classifies Fast Path versus Routed Work Path, requests the smallest current context package, and hard-stops consequential external-Project work when Fire Shield authority is unavailable or blocked.",
+      "when_to_load": "Classifies Fast Path versus Routed Work Path, requests the smallest current context package, and hard-stops unavailable Fire Shield only when KANDA Reasoner is the actor on an external Project; independent Project-owned development is KANDA-independent.",
       "when_not_to_load": "Do not use as a specialist implementation, delivery, validation, or freeze owner.",
       "required_companion_prompts": [
         "prompt_navigation_index",
@@ -176,24 +176,23 @@
         "error memory",
         "memorize error",
         "repeat error prevention",
-        "active-ready lesson"
+        "retire lesson",
+        "pending error lesson",
+        "error lesson library"
       ],
       "user_intent_examples": [
-        "Decide whether a corrected error should become or update Error Memory."
+        "Decide whether a corrected failure should become a pending, draft, active, retired, duplicate, or blocked Error Memory lesson without invoking Machine-Card/MCard semantics."
       ],
       "aliases": [
         "KPR-01-012",
         "error_memory_ai_formulary_startup_canon",
         "Error Memory admission canon"
       ],
-      "when_to_load": "Always at startup and whenever an error may have durable prevention value.",
-      "when_not_to_load": "Do not use as the complete lesson schema or direct Lessons writer.",
-      "required_companion_prompts": [
-        "error_memory_model_template",
-        "error_memory_active_ready_json_template"
-      ],
+      "when_to_load": "Always at startup and whenever an error may have durable prevention value in the Error Memory lesson library.",
+      "when_not_to_load": "Do not use as Architecture Review Machine-Card/MCard lifecycle authority or as a direct automatic active-lesson writer.",
+      "required_companion_prompts": [],
       "status": "active",
-      "version": "2.0",
+      "version": "4.0",
       "owner_box": "01_session_start_and_navigation"
     },
     {
@@ -249,7 +248,6 @@
       "when_to_load": "On request to draft a stable Project-specific startup profile.",
       "when_not_to_load": "Do not load to execute startup or write Project state.",
       "required_companion_prompts": [
-        "project_overlay_selector",
         "ai_prompt_request_canon",
         "prompt_navigation_index"
       ],
@@ -617,9 +615,7 @@
       ],
       "when_to_load": "Compare consequential implementation options before governed admission.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
+      "required_companion_prompts": [],
       "prompt_code": "KPR-03-002",
       "status": "active",
       "version": "2.0",
@@ -648,9 +644,7 @@
       ],
       "when_to_load": "Compare consequential implementation options before governed admission.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
+      "required_companion_prompts": [],
       "prompt_code": "KPR-03-002",
       "status": "active",
       "version": "2.0",
@@ -826,9 +820,7 @@
       ],
       "when_to_load": "Draft a Project-specific governance profile without creating a parallel authority.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
-      "required_companion_prompts": [
-        "prompt_insertion_and_router_registration_protocol"
-      ],
+      "required_companion_prompts": [],
       "prompt_code": "KPR-03-005",
       "status": "draft_template",
       "version": "2.0",
@@ -964,8 +956,7 @@
       "when_to_load": "When the visible symptom may not belong to the true repair owner.",
       "when_not_to_load": "Do not load for a proven purely local defect with no ownership ambiguity.",
       "required_companion_prompts": [
-        "box_architecture_canon",
-        "brick_wall_comprehensive_quality_gate"
+        "box_architecture_canon"
       ],
       "status": "active",
       "version": "2.0",
@@ -1003,9 +994,7 @@
       ],
       "when_to_load": "When consequential work has ownership, public-contract, cross-box, authoritative-state, or lifecycle-boundary risk.",
       "when_not_to_load": "Do not load for pure explanation or text editing with no architecture consequence.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
+      "required_companion_prompts": [],
       "status": "active",
       "version": "2.0",
       "owner_box": "04_box_architecture_and_boundaries"
@@ -1039,8 +1028,7 @@
       "when_to_load": "When current evidence proves a meaningful invariant-protection gap for one bounded context.",
       "when_not_to_load": "Do not create a shield automatically for every milestone or routine edit.",
       "required_companion_prompts": [
-        "box_architecture_canon",
-        "brick_wall_comprehensive_quality_gate"
+        "box_architecture_canon"
       ],
       "status": "active",
       "version": "2.0",
@@ -1074,9 +1062,7 @@
       ],
       "when_to_load": "When artifact classification, root ownership, folder migration, or source-tree cleanliness is materially involved.",
       "when_not_to_load": "Do not load for code logic changes that do not affect artifact placement or roots.",
-      "required_companion_prompts": [
-        "project_tool_boundary_canon"
-      ],
+      "required_companion_prompts": [],
       "status": "active",
       "version": "4.0",
       "owner_box": "04_box_architecture_and_boundaries"
@@ -1109,9 +1095,7 @@
       ],
       "when_to_load": "When GUI option identity, persisted selection, hydration, fallback, caption, or sizing behavior can regress.",
       "when_not_to_load": "Do not load for generic backend state or non-interactive logic.",
-      "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate"
-      ],
+      "required_companion_prompts": [],
       "status": "active",
       "version": "2.0",
       "owner_box": "04_box_architecture_and_boundaries"
@@ -1232,7 +1216,8 @@
       ],
       "status": "active",
       "load_type": "on_request",
-      "owner_box": "05_patch_delivery_and_validation"
+      "owner_box": "05_patch_delivery_and_validation",
+      "version": "2.0"
     },
     {
       "prompt_id": "patch_install_delivery_error_register",
@@ -1293,7 +1278,7 @@
         "Answer Validate Freeze Memorize Error",
         "recovery routine owner dispatch"
       ],
-      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases, with Fire Shield gating for consequential external-Project operations.",
+      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases, with Fire Shield gating only for KANDA-managed external-Project actions.",
       "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
       "required_companion_prompts": [
         "project_tool_boundary_canon",
@@ -1395,7 +1380,8 @@
         "patch_install_delivery_error_register"
       ],
       "status": "active",
-      "load_type": "always_startup"
+      "load_type": "always_startup",
+      "version": "2.1"
     },
     {
       "prompt_id": "self_contained_error_memory_lesson_intake_zip",
@@ -1413,7 +1399,7 @@
         "pending error lesson intake"
       ],
       "user_intent_examples": [
-        "Create one ZIP that puts these validated error lessons into the current Project Error Memory tab for approval."
+        "Create one self-contained ZIP that stages validated Error Memory lessons as pending entries for human review."
       ],
       "aliases": [
         "KPR-05-008",
@@ -1423,8 +1409,8 @@
         "self-contained Error Memory ZIP",
         "Error Memory lesson intake loader"
       ],
-      "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for approval in the currently selected Project.",
-      "when_not_to_load": "Do not load for a single pasted lesson JSON, direct canonical memorization, ordinary patch delivery, or when no reusable lesson candidate exists.",
+      "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for human review.",
+      "when_not_to_load": "Do not load for Architecture Review Machine-Card/MCard lifecycle or direct automatic active memorization.",
       "required_companion_prompts": [
         "error_memory_ai_formulary_startup_canon",
         "bundle_gated_development_workflow",
@@ -1433,14 +1419,13 @@
       ],
       "optional_companion_prompts": [
         "terminal_cleanup_contract",
-        "project_tool_boundary_canon",
         "patch_install_delivery_error_register",
         "patch_validate_freeze_error_memory_routine_blueprint",
         "self_contained_freeze_entry_intake_zip"
       ],
       "status": "active",
       "load_type": "on_request",
-      "version": "1.2"
+      "version": "3.0"
     },
     {
       "prompt_id": "architecture_hardening_triage_protocol",
@@ -1469,13 +1454,12 @@
       "when_to_load": "When current evidence demonstrates an architecture risk requiring owner and protection-gap triage.",
       "when_not_to_load": "Do not load for broad cleanup ideas, isolated local edits, or as implementation authorization.",
       "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
         "box_architecture_canon",
         "boundary_first_repair_protocol",
-        "kanda_box_shielding_canon",
-        "project_tool_boundary_canon"
+        "kanda_box_shielding_canon"
       ],
-      "prompt_code": "KPR-06-005"
+      "prompt_code": "KPR-06-005",
+      "version": "2.1.0"
     },
     {
       "prompt_id": "architecture_hardening_triage_template",
@@ -1504,7 +1488,8 @@
       ],
       "prompt_code": "KPR-06-006",
       "status": "draft_template",
-      "load_type": "explicit_on_request"
+      "load_type": "explicit_on_request",
+      "version": "2.0.0"
     },
     {
       "prompt_id": "large_module_refactor_protocol",
@@ -1535,11 +1520,11 @@
       "when_to_load": "When a new or touched module exceeds or would exceed 500 physical lines, or current evidence proves a material cohesion or dependency problem.",
       "when_not_to_load": "Do not load for a small local edit that remains within the size and cohesion contract.",
       "required_companion_prompts": [
-        "brick_wall_comprehensive_quality_gate",
         "box_architecture_canon",
         "large_module_refactor_template"
       ],
-      "prompt_code": "KPR-06-007"
+      "prompt_code": "KPR-06-007",
+      "version": "9.1.0"
     },
     {
       "prompt_id": "large_module_refactor_template",
@@ -1568,7 +1553,8 @@
       ],
       "prompt_code": "KPR-06-008",
       "status": "draft_template",
-      "load_type": "explicit_on_request"
+      "load_type": "explicit_on_request",
+      "version": "4.0.0"
     },
     {
       "prompt_id": "web_ai_ast_split_risk_repair_protocol",
@@ -1838,7 +1824,8 @@
         "python_domain_driven_design",
         "python_enterprise_architecture",
         "python_testing_pytest"
-      ]
+      ],
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_clean_code",
@@ -1875,7 +1862,8 @@
       ],
       "historical_aliases": [
         "clean_code_python"
-      ]
+      ],
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_design_patterns",
@@ -1909,7 +1897,8 @@
         "python_domain_driven_design",
         "python_enterprise_architecture",
         "python_async_parallel_distributed"
-      ]
+      ],
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_domain_driven_design",
@@ -1946,7 +1935,8 @@
       ],
       "historical_aliases": [
         "A023"
-      ]
+      ],
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_enterprise_architecture",
@@ -1976,7 +1966,8 @@
       "when_to_load": "When enterprise persistence patterns, application services, transactions, object identity, or concurrency-control patterns are the central concern.",
       "when_not_to_load": "Do not load for small scripts, simple CRUD, generic dependency architecture, DDD modeling, database tuning, or unmeasured performance work.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-08-005"
+      "prompt_code": "KPR-08-005",
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_high_performance",
@@ -2006,7 +1997,8 @@
       "when_to_load": "When runtime, latency, throughput, memory, I/O, profiling, or benchmark evidence is a primary requirement.",
       "when_not_to_load": "Do not load when no named performance objective or suspected material bottleneck exists.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-08-006"
+      "prompt_code": "KPR-08-006",
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_legacy_code_workflow",
@@ -2036,7 +2028,8 @@
       "when_to_load": "When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.",
       "when_not_to_load": "Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.",
       "required_companion_prompts": [],
-      "prompt_code": "KPR-08-007"
+      "prompt_code": "KPR-08-007",
+      "version": "2.0.0"
     },
     {
       "prompt_id": "python_pragmatic_programmer",
@@ -3131,11 +3124,9 @@
       ],
       "when_to_load": "When a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.",
       "when_not_to_load": "Do not load for solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.",
-      "required_companion_prompts": [
-        "prompt_navigation_index",
-        "project_tool_boundary_canon"
-      ],
-      "prompt_code": "KPR-12-007"
+      "required_companion_prompts": [],
+      "prompt_code": "KPR-12-007",
+      "version": null
     },
     {
       "prompt_id": "plugin_package_import_canon",
@@ -3267,7 +3258,7 @@
         "project tool boundary bridge",
         "project_tool_boundary_startup_bridge"
       ],
-      "when_to_load": "Always at startup as a compact invariant, including the Fire Shield hard-stop bridge for consequential external-Project work; route consequential work to KPR-12-001.",
+      "when_to_load": "Always at startup as a compact invariant, including actor-scoped Fire Shield: KANDA-managed external-Project actions fail closed while independent Project-owned development treats KANDA Reasoner as spectator-only; route ownership questions to KPR-12-001.",
       "when_not_to_load": "It remains startup context but never replaces the full routed canon.",
       "required_companion_prompts": [
         "project_tool_boundary_canon"

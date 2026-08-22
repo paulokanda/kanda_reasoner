@@ -22,6 +22,22 @@ clarity, or class cohesion is the central concern.
 This prompt owns local code communication. It does not turn every recommendation
 associated with “Clean Code” into a universal metric or architecture rule.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## Ownership boundary
 
 This prompt owns:
@@ -41,8 +57,8 @@ This prompt does not own:
 - test strategy or coverage policy;
 - strict typing, validation, serialization, security, observability, or
   operational resilience policy;
-- source mutation, package delivery, validation evidence, Error Memory, or
-  freeze authority.
+- source mutation, package delivery, validation evidence, lesson/error memory, or
+  snapshot/freeze authority.
 
 ## Project-style inputs
 
@@ -155,4 +171,4 @@ all that was requested.
 
 This prompt may review local readability and maintainability. It does not
 authorize source changes, architecture changes, validation claims, package
-delivery, Error Memory insertion, or freeze.
+delivery, lesson/error-memory insertion, or snapshot/freeze writes.

@@ -14,12 +14,28 @@ hard maximum, or when current evidence shows that a module has materially mixed
 responsibilities, unsafe dependency direction, or unmaintainable complexity.
 
 The protocol owns generic behavior-preserving decomposition law and specialist
-dispatch. It does not own KANDA Planner, Workbench, AST-audit implementation,
-patch delivery, terminal behavior, validation evidence, or freeze writes.
+dispatch. It does not own any host-specific planner/workbench, AST-audit implementation,
+patch delivery, terminal behavior, validation evidence, or snapshot/freeze writes.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Module-size and complexity law
 
-For KANDA Reasoner code/source modules:
+Apply the active Project's supplied module-size policy. When this prompt library's default policy is explicitly selected, use:
 
 - ideal size: 400 physical lines or fewer;
 - absolute hard maximum: 500 physical lines or fewer;
@@ -52,16 +68,16 @@ This prompt owns:
 - characterization and semantic-equivalence requirements;
 - touched-family source-size and architecture obligations;
 - refactor veto and rollback requirements;
-- dispatch to current KANDA specialists.
+- dispatch to current Project or host-provided specialists.
 
 ## Does not own
 
 Delegate these responsibilities:
 
-- implementation authorization: `KPR-03-001` Brick Wall;
-- Box ownership: `KPR-04-001` Box Architecture;
-- boundary diagnosis: `KPR-04-006` Boundary-First Repair;
-- shielding: `KPR-04-002` KANDA Box Shielding;
+- implementation authorization: the active Project's declared implementation authority;
+- Box ownership: `KPR-04-001` Box Architecture when this prompt library is present, or the Project-equivalent owner;
+- boundary diagnosis: `KPR-04-006` Boundary-First Repair when available;
+- shielding: the Project's current invariant-protection owner when available;
 - target-specific AST risk repair: `KPR-06-003`;
 - reusable safe-refactor runbook: `KPR-06-004 safe_refactor_how_to`;
 - architecture-hardening triage when the primary problem is structural risk rather than module decomposition: `KPR-06-005`;
@@ -70,9 +86,8 @@ Delegate these responsibilities:
 - optional large-module planning record: `KPR-06-008`;
 - external architecture exchange: `KPR-06-001`;
 - imported planning bundle profile: `KPR-06-002`;
-- patch construction, installation, validation evidence, terminal cleanup, and
-  freeze preparation: current Class 05 owners;
-- Preview and Confirm and Write: current freeze owners.
+- patch construction, installation, validation evidence, and terminal cleanup: the active Project delivery owners;
+- snapshot/freeze preparation and confirmation: optional Project or host-specific owners when such a lifecycle exists.
 
 ## When to load
 
@@ -93,8 +108,8 @@ contract.
 Use this order:
 
 1. current target source bytes and source identity;
-2. current frozen behavior and do-not-regress rules;
-3. current Error Memory lessons;
+2. current protected/frozen behavior and do-not-regress rules, when applicable;
+3. current Project error/lesson records, when available;
 4. current Box, public-contract, and consumer evidence;
 5. current behavior characterization and tests;
 6. current AST and architecture evidence;
@@ -115,7 +130,7 @@ Before choosing a split, inspect or record:
 - side effects, CLI entry points, GUI signals, and lifecycle hooks;
 - current tests and characterization gaps;
 - dependency direction and private boundaries;
-- relevant frozen behavior and Error Memory;
+- relevant protected/frozen behavior and Project error/lesson records, when available;
 - current architecture and AST findings;
 - plausible disconfirming evidence.
 
@@ -238,7 +253,7 @@ helpers, and supporting source changes. Require:
 
 Hand the exact changed-file set and validator obligations to current Class 05
 owners. Do not embed or recreate delivery, terminal, validation-evidence, or
-freeze workflows here.
+snapshot/freeze workflows here.
 
 ## Post-refactor verification ownership
 
@@ -314,7 +329,7 @@ May begin coding: YES / NO
 Next safe action:
 ```
 
-`May begin coding` requires separate Brick Wall authorization.
+`May begin coding` requires separate authorization from the active Project's declared implementation authority.
 
 ## Final rule
 

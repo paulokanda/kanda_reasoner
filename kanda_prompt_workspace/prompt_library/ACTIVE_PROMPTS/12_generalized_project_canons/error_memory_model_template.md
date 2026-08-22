@@ -27,7 +27,6 @@ Use KPR-12-002 for readiness and KPR-12-003 for the exact output envelope.
 KANDA_ERROR_LESSON_JSON_BEGIN
 {
   "schema_version": "<current_schema_version>",
-  "project_slug": "<project_slug>",
   "lesson_id": "lesson-<stable-error-slug>-v1",
   "status": "<draft_or_active_after_validation>",
   "superseded_by": "",

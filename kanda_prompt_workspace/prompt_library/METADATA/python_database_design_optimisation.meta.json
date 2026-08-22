@@ -12,7 +12,7 @@
   "classification": "database_schema_query_migration_transaction_specialist",
   "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
   "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
-  "description": "Design and review database schemas, constraints, indexes, query behavior, migrations, engine-specific transactions, and recovery evidence.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "description": "Design and review database schemas, constraints, indexes, query behavior, migrations, engine-specific transactions, and recovery evidence.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [

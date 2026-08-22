@@ -8,7 +8,7 @@
   "status": "draft_template",
   "load_type": "explicit_on_request",
   "source_stage": "prompt-audit-wave6a-core-architecture-refactor-owners-v1",
-  "description": "Draft-only record shape for one source-grounded architecture-hardening triage.",
+  "description": "Draft-only record shape for one source-grounded architecture-hardening triage. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": true,
   "routing_coverage": "wave6a_architecture_hardening_record_template_v2",
   "priority": 52,

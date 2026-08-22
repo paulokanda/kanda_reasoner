@@ -1,13 +1,14 @@
 # project-path: kanda_reasoner_app/reasoner_tools_shell/runner_help/window_process_private_impl.py
 """Private window process private impl helpers for reasoner_tools_shell.runner."""
 from __future__ import annotations
+# ruff: noqa: F821
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 from PySide6.QtCore import QProcess, QProcessEnvironment
 from kanda_reasoner_app.project_analysis_evidence_paths import SHOW_PROJECT_TO_AI_JSON_COMPLETE_DIR_ENV, analysis_json_building_dir, analysis_json_complete_dir
 import json
-import os
 import sys
 from pathlib import Path
+from kanda_reasoner_app.tool_process_environment import build_tool_child_environment
 __all__ = ()
 CANONICAL_PACKAGE_NAME = 'kanda_reasoner_app'
 LEGACY_PACKAGE_NAME = '_'.join(('ask', 'ai', 'project', 'reasoner'))
@@ -108,7 +109,7 @@ def _tab4_resolve_project_root(raw_root: object) -> Path:
     except Exception:
         candidate = Path(raw).expanduser().absolute()
     if _tab4_is_drive_root(candidate):
-        tool_root = project_root if _has_reasoner_package(project_root) else _tab4_tool_root()
+        tool_root = _tab4_tool_root()
         try:
             if tool_root.drive.lower() == candidate.drive.lower():
                 return tool_root
@@ -208,10 +209,7 @@ def _tab4_build_child_env(project_root: Path) -> dict:
         The mapped values.
     """
     
-    env = os.environ.copy()
-    tool_root = project_root if _has_reasoner_package(project_root) else _tab4_tool_root()
-    existing = env.get('PYTHONPATH', '')
-    env['PYTHONPATH'] = str(tool_root) + (os.pathsep + existing if existing else '')
+    env = build_tool_child_environment()
     env['PROJECT_REASONER_PROJECT_ROOT'] = str(project_root)
     env['PROJECT_REASONER_SCAN_ROOT'] = str(project_root)
     env['KANDA_RUNTIME_PROJECT_ROOT'] = str(project_root)

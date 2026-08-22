@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import os
 import sys
 
 from PySide6.QtCore import QProcess, QProcessEnvironment, Slot
+from kanda_reasoner_app.tool_process_environment import build_tool_child_environment
 from PySide6.QtWidgets import QMessageBox
 
 from kanda_reasoner_app.templates.green_sonar_monitor import (
@@ -27,6 +27,20 @@ class ProjectStructureJsonControlsMixin:
         self._complete_json_stderr: list[str] = []
         self._complete_json_mode = ""
         self._complete_json_sonar: GreenSonarActivityMonitor | None = None
+
+    def project_scope_switch_block_reason(self) -> str:
+        """Return a public Project-switch block for complete-JSON work."""
+        process = self._complete_json_process
+        if process is not None and process.state() != QProcess.NotRunning:
+            return "Project Structure 3D JSON process is still running"
+        return ""
+
+    def request_project_scope_settlement(self) -> None:
+        """Request cooperative settlement of the complete-JSON process."""
+        process = self._complete_json_process
+        if process is None or process.state() == QProcess.NotRunning:
+            return
+        process.terminate()
 
     def _json_sonar(self) -> GreenSonarActivityMonitor:
         monitor = self._complete_json_sonar
@@ -129,13 +143,9 @@ class ProjectStructureJsonControlsMixin:
         process = QProcess(self)
         process.setProcessChannelMode(QProcess.SeparateChannels)
         environment = QProcessEnvironment.systemEnvironment()
-        existing_pythonpath = environment.value("PYTHONPATH")
         project_text = str(self._project_root)
-        environment.insert(
-            "PYTHONPATH",
-            project_text
-            + (os.pathsep + existing_pythonpath if existing_pythonpath else ""),
-        )
+        for key, value in build_tool_child_environment().items():
+            environment.insert(key, value)
         process.setProcessEnvironment(environment)
         process.setWorkingDirectory(project_text)
         process.readyReadStandardOutput.connect(self._read_complete_json_stdout)

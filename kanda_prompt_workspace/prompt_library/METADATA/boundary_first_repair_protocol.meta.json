@@ -18,7 +18,7 @@
   ],
   "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
   "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
-  "description": "Diagnoses symptom-owner divergence and identifies the earliest causally sufficient proven ownership violation without authorizing source writes.",
+  "description": "Diagnoses symptom-owner divergence and identifies the earliest causally sufficient proven ownership violation without authorizing source writes. Project-agnostic; host-specific governance is optional.",
   "priority": 2,
   "trigger_phrases": [
     "symptom owner divergence",
@@ -29,12 +29,10 @@
     "persistence owner mismatch"
   ],
   "required_companion_prompts": [
-    "box_architecture_canon",
-    "brick_wall_comprehensive_quality_gate"
+    "box_architecture_canon"
   ],
   "optional_companion_prompts": [
     "kanda_box_shielding_canon",
-    "project_tool_boundary_canon",
     "stateful_control_regression_canon"
   ],
   "source_write_authorization": "NO"

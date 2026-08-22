@@ -30,10 +30,10 @@ from .workbench_refactor_transaction import WorkbenchRefactorTransaction, reserv
 from .workbench_sealed_payload import WorkbenchSealedPayload
 from .workbench_source_mutation_primitives import (
     SourceMutationOperation,
-    apply_source_mutation_operation,
     current_file_hash,
     verify_source_mutation_operation,
 )
+from .workbench_spectator_proposal_boundary import proposal_only_blocker
 from .workbench_source_payload_builder import SourceApplyPayloadReadinessResult
 from .workbench_transaction_store import WorkbenchTransactionStore
 
@@ -68,6 +68,7 @@ def execute_journaled_refactor_apply(
         source_payload=source_payload,
         preflight_backup=preflight_backup,
     )
+    blockers.append(proposal_only_blocker("journaled_refactor_apply"))
     if blockers:
         return build_blocked_apply_result(
             transaction_id=transaction.transaction_id,
@@ -118,34 +119,23 @@ def resume_journaled_refactor_apply(
     tx = transaction_store.get_transaction(transaction_id)
     if tx is None:
         raise KeyError("WORKBENCH_TRANSACTION_NOT_FOUND")
-    operations, metadata = load_persisted_operation_plan(
+    _operations, metadata = load_persisted_operation_plan(
         transaction_id=transaction_id,
         transaction_store=transaction_store,
     )
     request_id = str(tx["mutation_request_id"])
     request = mutation_lane_store.get_request(request_id)
-    if request is None:
-        raise RuntimeError("MUTATION_REQUEST_NOT_FOUND")
-    state = str(request["state"])
-    if state == "RECOVERY_PENDING":
-        mutation_lane_store.transition(request_id, "EXECUTING", reason="RESUME_JOURNALED_APPLY")
-    elif state not in {"EXECUTING", "VALIDATING"}:
-        raise RuntimeError("MUTATION_REQUEST_NOT_RESUMABLE:" + state)
-    transaction_store.transition_transaction(
-        transaction_id,
-        "EXECUTING",
-        recovery_state="RESUME_IN_PROGRESS",
-    )
-    return _execute_operation_sequence(
+    lane_state = str(request["state"]) if request is not None else "UNKNOWN"
+    return build_blocked_apply_result(
         transaction_id=transaction_id,
-        mutation_request_id=request_id,
         target_file=str(metadata.get("target_file", "")),
         source_hash_before=str(metadata.get("source_hash_before", "")),
         preview_root=str(metadata.get("preview_root", "")),
-        operations=operations,
-        transaction_store=transaction_store,
-        mutation_lane_store=mutation_lane_store,
-        failure_injection=failure_injection,
+        transaction_root=str(tx["transaction_root"]),
+        lane_state=lane_state,
+        transaction_state=str(tx["transaction_state"]),
+        blockers=[proposal_only_blocker("resume_journaled_refactor_apply")],
+        checked_rules=checked_rules(),
     )
 
 
@@ -220,7 +210,7 @@ def _execute_operation_sequence(
                 if current == operation.payload_hash:
                     transaction_store.record_operation_applied(operation_id)
                 elif _precondition_still_holds(operation):
-                    apply_source_mutation_operation(operation, operation_id=operation_id)
+                    raise RuntimeError(proposal_only_blocker("journaled_operation_sequence"))
                     _inject_failure(failure_injection, "after_write", operation.sequence_no)
                     transaction_store.record_operation_applied(operation_id)
                 else:

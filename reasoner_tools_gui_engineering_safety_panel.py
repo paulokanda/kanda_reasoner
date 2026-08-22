@@ -8,6 +8,7 @@ safety_suite_cli facade during the staged package migration.
 """
 
 from __future__ import annotations
+import traceback
 import _reasoner_tools_gui_engineering_safety_panel_commands as _panel_commands
 from _reasoner_tools_gui_engineering_safety_panel_catalog import (
     _build_engineering_safety_panel_catalog,

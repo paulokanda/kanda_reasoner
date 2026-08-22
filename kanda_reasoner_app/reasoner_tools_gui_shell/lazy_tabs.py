@@ -7,19 +7,38 @@ from collections.abc import Callable
 import traceback
 
 from PySide6.QtCore import Qt, QBasicTimer, QMetaObject, Slot
-from PySide6.QtWidgets import QApplication, QFrame, QLabel, QLineEdit, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QApplication,
+    QFrame,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QPushButton,
+    QSizePolicy,
+    QVBoxLayout,
+    QWidget,
+)
 
 from kanda_reasoner_app.portable_smoke_runtime_report import (
     record_portable_smoke_event,
 )
+from kanda_reasoner_app.templates.floating_windows import (
+    attach_floating_window,
+)
 
 from .error_panels import ToolLoadErrorPanel
-from .gui_support import _first_existing_attr, _first_imported_module, _prepare_embedded_widget
+from .gui_support import (
+    _first_existing_attr,
+    _first_imported_module,
+    _prepare_embedded_widget,
+)
 from .tab_header_template import TabHeaderTemplate
 from .tool_specs import ToolSpec
 from ._lazy_tab_shell_chrome import (
     LazyTabShellChromeMixin,
     _CANONICAL_PACKAGE_NAME,
+    _CONTEXT_COLLECTOR_GUI_SOURCE,
     _DAILY_REFACTOR_GUI_SOURCE,
     _DOCSTRINGS_GUI_SOURCE,
     _ENGINEERING_SAFETY_GUI_SOURCE,
@@ -65,8 +84,19 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
         """
         
         super().__init__()
+        # QTabWidget uses a stacked layout that aggregates page size hints.
+        # A newly loaded tool must not export horizontal or vertical size
+        # pressure to the shared main window. Ignore this wrapper's size hints
+        # at the host boundary while leaving top-level user resizing unlocked.
+        self.setMinimumWidth(0)
+        self.setMinimumHeight(0)
+        self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.setProperty("kandaLazyHostHeightContained", True)
+        self.setProperty("kandaLazyHostSizeContained", True)
+
         self.spec = spec
         self._loaded = False
+        self._loading = False
         self._embedded_widget: QWidget | None = None
         self._on_loaded = on_loaded
         self._select_project_handler = select_project_handler
@@ -93,6 +123,12 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
             help_handler=help_handler,
         )
         self.header_row = self.tab_header_template.layout
+        if spec.source_hint == _CONTEXT_COLLECTOR_GUI_SOURCE:
+            title_index = self.header_row.indexOf(
+                self.tab_header_template.title_label
+            )
+            if title_index >= 0:
+                self.header_row.setStretch(title_index, 0)
         self._header_controls_insert_index = self.header_row.indexOf(
             self.tab_header_template.project_root_host
         )
@@ -122,9 +158,13 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
 
         status_source_row = QHBoxLayout()
         self.status_source_row = status_source_row
-        self._show_status_source_row = spec.source_hint not in _HEADER_TEMPLATE_ONLY_SOURCES
+        self._show_status_source_row = (
+            spec.source_hint not in _HEADER_TEMPLATE_ONLY_SOURCES
+        )
 
-        self.status_label = QLabel("Tool not loaded yet. It will load when this tab is opened.")
+        self.status_label = QLabel(
+            "Tool not loaded yet. It will load when this tab is opened."
+        )
         self.status_label.setWordWrap(False)
 
         self.source_label: QLabel | None = QLabel(f"Source: {spec.source_hint}")
@@ -164,11 +204,17 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
             self.source_label.hide()
 
 
-        self.load_button = QPushButton("Load this tool now")
+        self.load_button = QPushButton("Wait Tab is Loading")
         self.load_button.setObjectName("lazy_tool_load_button")
         outer.addWidget(self.load_button)
 
         self.content_host = QWidget()
+        self.content_host.setMinimumWidth(0)
+        self.content_host.setMinimumHeight(0)
+        self.content_host.setSizePolicy(
+            QSizePolicy.Ignored,
+            QSizePolicy.Ignored,
+        )
         self.content_layout = QVBoxLayout(self.content_host)
         self.content_layout.setContentsMargins(0, 0, 0, 0)
         self.content_layout.setSpacing(0)
@@ -252,12 +298,15 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
         
         if self._loaded:
             return True
+        if self._loading:
+            return False
 
+        self._loading = True
         self.status_label.setText("Loading tool...")
         self.status_label.setStyleSheet("")
-        QApplication.processEvents()
 
         try:
+            QApplication.processEvents()
             module = _first_imported_module(self.spec.module_candidates)
             widget_class = _first_existing_attr(module, self.spec.class_candidates)
             widget = widget_class()
@@ -278,7 +327,11 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
             self._move_refactor_report_project_root_controls_to_header_row(widget)
             self._move_project_qa_project_root_controls_to_header_row(widget)
             self._move_project_qa_ai_controls_to_header_row(widget)
+            if self.content_layout.count() != 0:
+                raise RuntimeError("LAZY_TAB_CONTENT_ALREADY_PRESENT")
             self.content_layout.addWidget(widget)
+            if self.content_layout.count() != 1:
+                raise RuntimeError("LAZY_TAB_CONTENT_DUPLICATION")
             self._embedded_widget = widget
 
             self.status_label.setText("LOADED")
@@ -323,12 +376,15 @@ class LazyToolTab(LazyTabShellChromeMixin, LazyTabLayoutRelocationMixin, QWidget
                 error_text=error_text,
             )
 
-            self.content_layout.addWidget(error_panel)
+            if self.content_layout.count() == 0:
+                self.content_layout.addWidget(error_panel)
             self.status_label.setText("FAILED TO LOAD")
             self.status_label.setStyleSheet("color: #B00020; font-weight: bold;")
             self.load_button.setText("Retry loading")
             self._loaded = True
             return False
+        finally:
+            self._loading = False
 
     def ensure_loaded(self) -> bool:
         """Support ensure loaded behavior.

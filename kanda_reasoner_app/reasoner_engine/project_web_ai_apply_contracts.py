@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/reasoner_engine/project_web_ai_apply_contracts.py
-"""Define one-use authorization contracts for Project Web AI source apply.
+"""Define one-use review contracts for Project Web AI proposal evidence.
 
 The Web AI provider never creates or holds these authorizations. They are built
 locally only after a validated Shadow Preview and explicit human confirmation.
@@ -39,7 +39,7 @@ class ProjectWebAIApplyContractError(RuntimeError):
 
 @dataclass(frozen=True)
 class ProjectWebAIApplyAuthorization:
-    """Bind one human approval to one exact immutable source transaction."""
+    """Bind one human approval to one exact immutable proposal receipt."""
 
     authorization_id: str
     transaction_id: str
@@ -61,7 +61,7 @@ def required_confirmation_phrase(
 ) -> str:
     """Return the exact human phrase required for this Preview."""
     return (
-        "APPLY "
+        "ACCEPT PROPOSAL "
         + operation.operation_id[:8].upper()
         + " TO "
         + str(len(preview.targets))
@@ -103,7 +103,7 @@ def build_apply_authorization(
     context: ContextSnapshot,
     typed_phrase: str,
 ) -> ProjectWebAIApplyAuthorization:
-    """Create one local one-use authorization after exact human confirmation."""
+    """Create one local one-use proposal authorization after confirmation."""
     if preview.operation_id != operation.operation_id:
         raise ProjectWebAIApplyContractError("APPLY_PREVIEW_OPERATION_MISMATCH")
     if not session_identity.accepts_request(operation.request_identity, context):

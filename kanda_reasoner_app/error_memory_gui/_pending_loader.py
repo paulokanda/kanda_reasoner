@@ -13,6 +13,15 @@ from pathlib import Path
 from typing import Any
 
 from kanda_reasoner_app.error_memory.store import list_lessons
+from kanda_reasoner_app.error_memory_gui._draft_intake_lifecycle import (
+    formatted_draft_lesson_block,
+    normalize_incoming_lesson_to_draft,
+    persist_incoming_draft_in_lesson_library,
+)
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    backend_for_current_work_item,
+)
+from kanda_reasoner_app.error_memory.tool_intake import is_tool_pending_intake_path
 
 __all__ = [
     "delete_pending_file_quietly",
@@ -51,7 +60,7 @@ def load_pending_ai_assisted_error_lesson_intake(tab: Any, *, mirror_loaded_json
     """
     del mirror_loaded_json_to_error_editor
     for row in tab._pending_lesson_rows_for_table():
-        if row.get('kind') != 'pending_review':
+        if row.get('kind') not in {'pending_review', 'pending_tool_review'}:
             continue
         candidate = Path(str(row.get('pending_path', ''))).expanduser().resolve(strict=False)
         marker = str(candidate)
@@ -83,7 +92,10 @@ def lesson_id_exists_in_lessons(tab: Any, lesson_id: str) -> bool:
     try:
         return any(
             str(item.get('lesson_id', '')).strip() == target
-            for item in list_lessons(tab._current_project_root(), include_inactive=True)
+            for item in list_lessons(
+                backend_for_current_work_item(tab),
+                include_inactive=True,
+            )
         )
     except Exception:
         return False
@@ -114,24 +126,44 @@ def load_pending_intake_row_into_editor(tab: Any, pending_file: Path, row_kind: 
     if tab._text_is_formatted_error_lesson_payload(text):
         try:
             lesson = tab._lesson_from_formatted_text(text)
-        except Exception as exc:
-            QMessageBox.warning(tab, 'Pending Error Memory lesson could not be parsed', str(exc) + '\n\nRaw pending text was loaded into AI-assisted intake for manual repair.')
+        except Exception:
             lesson = tab._draft_lesson_from_pending_raw_text(candidate, text)
-        lesson_id = str(lesson.get('lesson_id', '')).strip()
-        tab._set_ai_assisted_intake_and_error_editor_from_pending_text(text, lesson)
-        # Duplicate lesson candidates are intentionally allowed to load.
-        # Memorize Error owns duplicate cleanup so the user is not interrupted
-        # by the old duplicate warning when selecting a pending row.
+        lesson = normalize_incoming_lesson_to_draft(lesson)
     else:
-        lesson = tab._draft_lesson_from_pending_raw_text(candidate, text)
-        lesson_id = str(lesson.get('lesson_id', '')).strip()
-        tab.raw_error_edit.setPlainText(text)
-        tab.received_preview_edit.setPlainText(json.dumps(lesson, indent=2, sort_keys=True, ensure_ascii=False))
-        tab._refresh_heuristic_correction_button_state()
+        lesson = normalize_incoming_lesson_to_draft(
+            tab._draft_lesson_from_pending_raw_text(candidate, text)
+        )
+    lesson_id = str(lesson.get("lesson_id", "")).strip()
+
     tab._loaded_pending_intake_file = marker
     tab._loaded_pending_intake_lesson_id = lesson_id
-    tab._selected_lesson_id = lesson_id
-    tab._last_received_lesson = lesson
+    try:
+        persisted, _path = persist_incoming_draft_in_lesson_library(
+            tab,
+            lesson,
+            pending_path=candidate if is_tool_pending_intake_path(candidate) else None,
+        )
+    except Exception as exc:
+        tab._loaded_pending_intake_file = ''
+        tab._loaded_pending_intake_lesson_id = ''
+        QMessageBox.warning(
+            tab,
+            'Pending Error Memory draft admission failed',
+            (
+                'The candidate was not admitted into Lessons, so the work windows '
+                'were left unchanged. The pending source was preserved.\n\n'
+                + str(exc)
+            ),
+        )
+        return False
+
+    tab._loaded_pending_intake_file = ''
+    tab._loaded_pending_intake_lesson_id = ''
+    tab._selected_lesson_id = str(persisted.get('lesson_id') or lesson_id)
+    tab._last_received_lesson = dict(persisted)
+    memorize = getattr(tab, "memorize_error_button", None)
+    if memorize is not None:
+        memorize.setEnabled(True)
     return True
 
 

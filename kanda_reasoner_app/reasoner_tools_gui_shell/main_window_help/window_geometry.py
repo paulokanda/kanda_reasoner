@@ -6,7 +6,12 @@ from __future__ import annotations
 __all__ = [
     "calculate_safe_startup_size",
     "calculate_screen_fraction_size",
+    "calculate_canonical_shell_width",
+    "freeze_canonical_shell_width_for_tabs",
     "resize_window_for_primary_screen",
+    "widen_window_to_screen_width_floor",
+    "calculate_restored_window_size",
+    "restore_window_size_from_prefs",
     "set_widget_size_pressure_limit",
     "release_widget_size_pressure_limit",
     "resize_window_to_screen_fraction_unlocked",
@@ -66,6 +71,96 @@ def calculate_safe_startup_size(
     height = min(height, safe_available_height)
 
     return width, height
+
+
+
+def calculate_canonical_shell_width(
+    current_width: int,
+    tab_bar_width: int,
+    available_width: int,
+    preferred_width: int = 1900,
+    tab_margin: int = 56,
+) -> int:
+    """Return the current shell width clamped to the active monitor.
+
+    ``tab_bar_width``, ``preferred_width``, and ``tab_margin`` remain in the
+    signature for compatibility with existing callers. They must never grow
+    the host window. Long tab rows use QTabBar scroll buttons instead.
+    """
+    del tab_bar_width, preferred_width, tab_margin
+    safe_available = max(1, int(available_width))
+    safe_current = max(1, int(current_width))
+    return min(safe_current, safe_available)
+
+
+def freeze_canonical_shell_width_for_tabs(
+    window,
+    tab_widget,
+    preferred_width: int = 1900,
+) -> int:
+    """Remember the current screen-safe shell width without enlarging it.
+
+    The legacy helper name is retained for compatibility. The tab row no
+    longer owns top-level geometry; overflow is handled by tab-bar scrolling.
+    """
+    available = _screen_available_geometry(window)
+    available_width = 1900
+    if available is not None:
+        try:
+            available_width = int(available.width())
+        except Exception:
+            available_width = 1900
+
+    current_width = preferred_width
+    try:
+        current_width = int(window.width())
+    except Exception:
+        current_width = preferred_width
+
+    canonical_width = calculate_canonical_shell_width(
+        current_width,
+        0,
+        available_width,
+        preferred_width=preferred_width,
+    )
+    setattr(window, "_canonical_shell_width", canonical_width)
+
+    try:
+        if window.isMaximized():
+            return canonical_width
+    except Exception:
+        pass
+
+    try:
+        window.resize(canonical_width, window.height())
+    except Exception:
+        pass
+    return canonical_width
+
+def widen_window_to_screen_width_floor(
+    window,
+    width_ratio: float = 0.92,
+) -> int:
+    """Widen the main shell to a screen-safe comfort floor.
+
+    This is applied before the main-window fixed-size lock. It never shrinks
+    an already wider shell and never exceeds the active monitor width.
+    """
+    available = _screen_available_geometry(window)
+    if available is None:
+        return int(window.width())
+
+    available_width = max(1, int(available.width()))
+    target_width = min(
+        available_width,
+        max(1, int(available_width * float(width_ratio))),
+    )
+    current_width = max(1, int(window.width()))
+    final_width = max(current_width, target_width)
+    final_width = min(final_width, available_width)
+    if final_width != current_width:
+        window.resize(final_width, window.height())
+    return final_width
 
 
 def calculate_screen_fraction_size(
@@ -135,6 +230,59 @@ def resize_window_for_primary_screen(
     window.resize(width, height)
     return width, height
 
+
+
+def calculate_restored_window_size(
+    saved_width: int,
+    saved_height: int,
+    available_width: int,
+    available_height: int,
+    minimum_width: int = 640,
+    minimum_height: int = 480,
+) -> tuple[int, int] | None:
+    """Return a persisted shell size clamped to the current monitor.
+
+    Invalid or implausibly small persisted values are rejected so startup can
+    fall back to the normal screen-aware default. Valid user sizes are kept
+    exactly when they still fit the current monitor.
+    """
+    try:
+        width = int(saved_width)
+        height = int(saved_height)
+        screen_width = max(1, int(available_width))
+        screen_height = max(1, int(available_height))
+    except (TypeError, ValueError):
+        return None
+
+    if width < minimum_width or height < minimum_height:
+        return None
+
+    return min(width, screen_width), min(height, screen_height)
+
+
+def restore_window_size_from_prefs(window, prefs: dict) -> bool:
+    """Restore the user's last normal shell size when it remains screen-safe."""
+    if not isinstance(prefs, dict):
+        return False
+
+    available = _screen_available_geometry(window)
+    if available is None:
+        return False
+
+    restored = calculate_restored_window_size(
+        prefs.get("shell_width", 0),
+        prefs.get("shell_height", 0),
+        available.width(),
+        available.height(),
+    )
+    if restored is None:
+        return False
+
+    try:
+        window.resize(*restored)
+    except Exception:
+        return False
+    return True
 
 def _screen_available_geometry(window):
     """Return the best available geometry object for a Qt window."""

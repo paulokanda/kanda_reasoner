@@ -9,20 +9,14 @@ from typing import Any
 
 from kanda_reasoner_app.engineering_safety.project_mutation_lane import ProjectMutationLaneStore
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .models import SCHEMA_VERSION
 from .workbench_journaled_apply_support import load_persisted_operation_plan
 from .workbench_source_mutation_primitives import (
     SourceMutationOperation,
-    apply_source_mutation_operation,
     current_file_hash,
 )
+from .workbench_spectator_proposal_boundary import proposal_only_blocker
 from .workbench_transaction_store import WorkbenchTransactionStore
 
 __all__ = [
@@ -73,113 +67,18 @@ def rollback_journaled_refactor_transaction(
         raise KeyError("WORKBENCH_TRANSACTION_NOT_FOUND")
     request_id = str(tx["mutation_request_id"])
     request = mutation_lane_store.get_request(request_id)
-    if request is None:
-        raise RuntimeError("MUTATION_REQUEST_NOT_FOUND")
-    if request["state"] not in {"EXECUTING", "VALIDATING", "RECOVERY_PENDING", "ROLLBACK_PENDING"}:
-        raise RuntimeError("TRANSACTION_NOT_ROLLBACKABLE_FROM_LANE_STATE:" + str(request["state"]))
-    if request["state"] != "ROLLBACK_PENDING":
-        mutation_lane_store.transition(request_id, "ROLLBACK_PENDING", reason="ROLLBACK_REQUESTED")
-    transaction_store.transition_transaction(
-        transaction_id,
-        "ROLLBACK_PENDING",
-        recovery_state="ROLLBACK_IN_PROGRESS",
-        rollback_state="ROLLBACK_IN_PROGRESS",
-    )
-    operations, _metadata = load_persisted_operation_plan(
-        transaction_id=transaction_id,
-        transaction_store=transaction_store,
-    )
-    rows = {item["sequence_no"]: item for item in transaction_store.list_operations(transaction_id)}
-    conflicts = _detect_conflicts(operations, rows)
-    if conflicts:
-        return _conflict_result(
-            transaction_id=transaction_id,
-            request_id=request_id,
-            conflicts=conflicts,
-            transaction_store=transaction_store,
-            mutation_lane_store=mutation_lane_store,
-        )
-    restored: list[str] = []
-    removed: list[str] = []
-    already: list[str] = []
-    fire_shield = build_current_fire_shield_context(
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="journaled-rollback-" + transaction_id,
-    )
-    for operation in sorted(operations, key=lambda item: item.sequence_no, reverse=True):
-        row = rows[operation.sequence_no]
-        destination = Path(operation.destination_path).resolve()
-        current = current_file_hash(destination)
-        if operation.operation_type == "CREATE_FILE":
-            if not destination.exists():
-                already.append(str(destination))
-                continue
-            assert_fire_shield_write_allowed(
-                fire_shield,
-                destination,
-                operation="DELETE",
-            )
-            destination.unlink()
-            if destination.exists():
-                raise RuntimeError("ROLLBACK_CREATE_DELETE_FAILED:" + str(destination))
-            removed.append(str(destination))
-            continue
-        backup_path = Path(str(row["backup_path"])).resolve()
-        if current == operation.precondition_hash:
-            already.append(str(destination))
-            continue
-        restore_operation = SourceMutationOperation(
-            schema_version=operation.schema_version,
-            feature_id=operation.feature_id,
-            sequence_no=operation.sequence_no,
-            operation_type="REPLACE_FILE",
-            relative_path=operation.relative_path,
-            payload_path=str(backup_path),
-            destination_path=str(destination),
-            payload_hash=operation.precondition_hash,
-            precondition_hash=operation.payload_hash,
-            destination_existed=True,
-            byte_size=backup_path.stat().st_size,
-        )
-        apply_source_mutation_operation(
-            restore_operation,
-            operation_id=f"{transaction_id}-rollback-{operation.sequence_no:04d}",
-        )
-        if current_file_hash(destination) != operation.precondition_hash:
-            raise RuntimeError("ROLLBACK_RESTORE_HASH_MISMATCH:" + str(destination))
-        restored.append(str(destination))
-    verify_tool_snapshot_unchanged(fire_shield)
-    final_blockers = _verify_original_state(operations)
-    if final_blockers:
-        return _conflict_result(
-            transaction_id=transaction_id,
-            request_id=request_id,
-            conflicts=final_blockers,
-            transaction_store=transaction_store,
-            mutation_lane_store=mutation_lane_store,
-            restored=restored,
-            removed=removed,
-            already=already,
-        )
-    transaction_store.transition_transaction(
-        transaction_id,
-        "ROLLBACK_VERIFIED",
-        recovery_state="NONE",
-        rollback_state="ROLLBACK_VERIFIED",
-    )
-    mutation_lane_store.transition(request_id, "ROLLED_BACK", reason="ROLLBACK_VERIFIED")
+    lane_state = str(request["state"]) if request is not None else "UNKNOWN"
     result = JournaledRollbackResult(
         schema_version=SCHEMA_VERSION,
         feature_id=TRANSACTION_ROLLBACK_FEATURE_ID,
-        status="rollback_verified",
+        status="rollback_proposal_only",
         transaction_id=transaction_id,
-        transaction_state="ROLLBACK_VERIFIED",
-        lane_state="ROLLED_BACK",
-        restored_files=tuple(sorted(restored)),
-        removed_files=tuple(sorted(removed)),
-        already_restored=tuple(sorted(already)),
-        blockers=(),
-        warnings=(),
+        transaction_state=str(tx["transaction_state"]),
+        lane_state=lane_state,
+        blockers=(proposal_only_blocker("journaled_transaction_rollback"),),
+        warnings=(
+            "HISTORICAL_SOURCE_RECOVERY_REQUIRES_PROJECT_ACTOR_OR_EXPLICIT_TOOL_MAINTENANCE",
+        ),
     )
     _persist_result(result, transaction_store)
     return result

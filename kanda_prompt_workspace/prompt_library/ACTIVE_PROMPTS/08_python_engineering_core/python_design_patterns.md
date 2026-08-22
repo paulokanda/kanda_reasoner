@@ -22,6 +22,22 @@ The default outcome may be no named pattern. Prefer the simplest Python
 mechanism that solves the demonstrated problem while preserving current
 contracts and ownership.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## Ownership boundary
 
 This prompt owns:
@@ -40,7 +56,7 @@ This prompt does not own:
 - Repository, Unit of Work, service layer, transaction, identity-map, or
   session-state design; use the current enterprise owner;
 - GUI event/widget lifecycle, async/distributed behavior, detailed testing,
-  implementation, package, terminal, validation evidence, or freeze.
+  implementation, package, terminal, validation evidence, or snapshot/freeze writes.
 
 ## Applicability evidence
 
@@ -148,4 +164,4 @@ testing, delivery, and validation owners.
 
 This prompt may select or reject a pattern and describe its trade-offs. It does
 not authorize source mutation, implementation, tests, package delivery,
-validation claims, Error Memory insertion, or freeze.
+validation claims, lesson/error-memory insertion, or snapshot/freeze writes.

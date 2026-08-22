@@ -47,7 +47,7 @@ Generated filename 09 is now a migrated conditional Class 05 slot and is not gen
 3. Read numbered members in source-map order.
 4. Keep `prompt_library.zip` available for exact-path retrieval only.
 5. Return `STARTUP PACK LOAD CHECK` and wait for the second upload group.
-6. Return `PROJECT READY CHECK` ending with `Next action:`, `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>`, and `WAIT_FOR_TASK` only after the selected Project handoff and compact Error Memory are loaded. Derive the display name from the selected active Project, not the KANDA Tool; replace underscores with spaces and convert it to uppercase.
+6. Return `PROJECT READY CHECK` ending with `Next action:`, `PROJECT IN USE: <ACTIVE PROJECT DISPLAY NAME>`, and `WAIT_FOR_TASK` only after the selected Project handoff is loaded and the Tool Error Memory context status is reported. Derive the display name from the selected active Project, not the KANDA Tool; replace underscores with spaces and convert it to uppercase.
 
 ## Validation
 

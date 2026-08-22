@@ -78,6 +78,8 @@ _GENERATED_OUTPUT_NAMES = {
     "json_splitted",
 }
 
+_TRANSIENT_WORKSPACE_SUFFIX = "_delete_after_daily_work"
+
 def _context(project: str | Path | ProjectContext) -> ProjectContext:
     if isinstance(project, ProjectContext):
         return project
@@ -131,7 +133,29 @@ def _is_path_same_or_inside(path: Path, parent: Path) -> bool:
     except ValueError:
         return False
 
-def _is_generated_output_path(path: Path, context: ProjectContext, output_dir: Path) -> bool:
+def _is_project_transient_workspace_name(
+    name: str,
+    context: ProjectContext,
+) -> bool:
+    """Return True for canonical or legacy project-linked transient roots."""
+    candidates = {
+        _TRANSIENT_WORKSPACE_SUFFIX,
+        context.root.name + _TRANSIENT_WORKSPACE_SUFFIX,
+        context.project_slug + _TRANSIENT_WORKSPACE_SUFFIX,
+    }
+    folded = name.casefold()
+    return folded in {
+        candidate.casefold()
+        for candidate in candidates
+        if candidate
+    }
+
+
+def _is_generated_output_path(
+    path: Path,
+    context: ProjectContext,
+    output_dir: Path,
+) -> bool:
     """Return True for active/generated output roots that must not be re-archived."""
     if _is_path_same_or_inside(path, output_dir):
         return True
@@ -140,7 +164,10 @@ def _is_generated_output_path(path: Path, context: ProjectContext, output_dir: P
     except ValueError:
         return False
     first = rel.split("/", 1)[0]
-    return first in _GENERATED_OUTPUT_NAMES
+    return (
+        first in _GENERATED_OUTPUT_NAMES
+        or _is_project_transient_workspace_name(first, context)
+    )
 
 def _is_generated_project_archive(path: Path, context: ProjectContext) -> bool:
     """Return True when the canonical archive policy excludes this ZIP."""

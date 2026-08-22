@@ -17,18 +17,17 @@
   ],
   "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
   "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "description": "Structures consequential human-AI option comparison and routes the selected direction to governed specialist owners without authorizing coding.",
+  "description": "Structures consequential human-AI option comparison and routes the selected direction to governed specialist owners without authorizing coding. Project-agnostic; host-specific governance is optional.",
   "trigger_phrases": [
     "cooperative implementation",
     "proposal before code",
     "compare implementation options",
     "partnership methodology"
   ],
-  "required_companion_prompts": [
-    "brick_wall_comprehensive_quality_gate"
-  ],
+  "required_companion_prompts": [],
   "recommended_companion_prompts": [
     "box_architecture_canon",
     "workflow_handoff_template"
-  ]
+  ],
+  "optional_companion_prompts": []
 }

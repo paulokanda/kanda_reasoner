@@ -14,8 +14,10 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QRadioButton,
+    QScrollArea,
     QTextEdit,
     QVBoxLayout,
+    QWidget,
 )
 
 from kanda_reasoner_app.freeze_hint_intake import build_freeze_form_inputs_from_latest_hint
@@ -153,7 +155,25 @@ def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: 
     dialog = QDialog(parent)
     dialog.setWindowTitle("New Local Freeze Entry")
     dialog.resize(980, 820)
-    layout = QVBoxLayout(dialog)
+    dialog.setMinimumSize(0, 0)
+
+    outer_layout = QVBoxLayout(dialog)
+    outer_layout.setContentsMargins(8, 8, 8, 8)
+    outer_layout.setSpacing(8)
+
+    screen_scroll = QScrollArea(dialog)
+    screen_scroll.setObjectName("local_freeze_screen_scroll")
+    screen_scroll.setWidgetResizable(True)
+    screen_scroll.setMinimumSize(0, 0)
+
+    scroll_body = QWidget(screen_scroll)
+    scroll_body.setObjectName("local_freeze_screen_scroll_body")
+    layout = QVBoxLayout(scroll_body)
+    layout.setContentsMargins(4, 4, 4, 4)
+    layout.setSpacing(8)
+    screen_scroll.setWidget(scroll_body)
+    outer_layout.addWidget(screen_scroll, 1)
+
     intro = QLabel(
         "Local freeze entry workflow: choose Heuristic, Local AI, or Web AI. Heuristic is the deterministic "
         "default. Local and Web AI may improve only the draft and must pass quality gates. Preview is read-only; "
@@ -292,7 +312,7 @@ def build_local_freeze_dialog_widgets(parent: object, *, disabled_action_style: 
     button_row.addWidget(ignore_freeze_button)
     button_row.addStretch(1)
     button_row.addWidget(cancel_button)
-    layout.addLayout(button_row)
+    outer_layout.addLayout(button_row)
     return LocalFreezeDialogWidgets(
         dialog=dialog,
         heuristic_radio=heuristic_radio,

@@ -40,7 +40,7 @@ def install_docstring_header_surface(shell: object, outer_layout: QVBoxLayout) -
         title_index = 0
     header_row.setStretch(title_index, 0)
     header_row.insertWidget(title_index + 1, badge, 0, Qt.AlignVCenter)
-    header_row.insertStretch(title_index + 2, 1)
+    header_row.insertSpacing(title_index + 2, 6)
     outer_layout.addLayout(header_row)
 
     effect = QGraphicsOpacityEffect(badge)

@@ -9,7 +9,7 @@
   "load_type": "routed",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
   "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/brick_wall_comprehensive_quality_gate.md",
-  "source_stage": "brick-wall-q37-reconcile-repair-shield-extract-sequence-v1",
+  "source_stage": "external-project-observer-independence-v1",
   "description": "Displays the evidence-backed Q01-Q40 checkpoint and enforces Q01 admission, Q02 Error Memory preflight, Q03 regression obligations, Q04 lesson freshness, Q05 exact source, Q06 Tool/Project identity, Q07 NO-LEAK, Q08 Box Boundary Audit, Q09 public-contract-only communication, Q10 single mutable-state ownership, Q11 MCard applicability/lifecycle, Q12 immutable operation identity, Q13 explicit write authorization, Q14 immediate pre-write freshness, Q15 canonical path authority, Q16 resolved-path containment, Q17 Preview, Shadow, and final-source authority separation, Q18 stale asynchronous-result rejection, and Q19 real Qt/QSignalSpy validation decisions before final governed coding authorization and Q20 shared isolated filesystem fixture governance and Q21 parametrized negative boundary matrix governance and Q22 public-facade/contract-drift test governance and Q23 deterministic MCard transition test governance and Q24 property-based MCard pilot decision governance and Q25 mutation-testing pilot decision governance and Q26 ZIP containment and collision hardening governance and Q27 control-byte and encoding guard governance and Q28 structured exception provenance governance and Q29 NO-LEAK runtime trace pilot decision governance and Q30 human confirmation and freeze protection governance and Q31 changed-file-to-validator coverage map governance and Q32 validation and evidence provenance governance and Q33 pinned local-model provenance governance and Q34 profile-before-optimization governance and Q35 focused performance-baseline governance and Q36 module-size/cohesion governance and Q37 canonical ownership reconciliation plus reconcile-repair-validate-shield-freeze-extract-adopt sequencing governance and Q38 handoff freshness/provenance governance and Q39 task-specific context admission governance and Q40 one-primary-box governed-release enforcement.",
   "box_logic_required": true,
   "routing_coverage": "brick-wall-comprehensive-quality-gate-prompt-registration-v1",
@@ -99,6 +99,6 @@
     "Q40 must require exactly one primary box, bounded supporting touches, exact changed files and source baselines, complete regression obligations and validation coverage, an exact final ZIP contract, freeze evidence, and explicit human-local validation state.",
     "Q40 must not create a release registry or coordination super-system, treat generated or transient artifacts as durable source authority, automate frozen-memory writes, or store project-specific freeze memory in project_freeze_ledger."
   ],
-  "version": "3.22",
-  "updated_for": "brick-wall-q37-reconcile-repair-shield-extract-sequence-v1"
+  "version": "3.23",
+  "updated_for": "external-project-observer-independence-v1"
 }

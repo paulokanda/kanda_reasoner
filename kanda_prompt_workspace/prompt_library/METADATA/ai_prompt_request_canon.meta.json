@@ -5,8 +5,8 @@
   "category": "01_session_start_and_navigation",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "fire-shield-ai-policy-enforcement-v1",
-  "description": "Classifies Fast Path versus Routed Work Path, requests the smallest current context, escalates runtime-only conclusions, and treats unavailable or BLOCKED Fire Shield as a hard stop for consequential external-Project work.",
+  "source_stage": "external-project-spectator-scope-v1",
+  "description": "Classifies Fast Path versus Routed Work Path, requests the smallest current context, escalates runtime-only conclusions, and hard-stops unavailable Fire Shield only for KANDA-managed external-Project actions while leaving independent Project-owned development KANDA-independent.",
   "priority": 6,
   "required_companion_prompts": [
     "prompt_navigation_index",
@@ -26,10 +26,10 @@
   ],
   "prompt_code": "KPR-01-014",
   "title": "AI Prompt Request Canon",
-  "version": "3.2",
+  "version": "3.3",
   "owner_box": "01_session_start_and_navigation",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/ai_prompt_request_canon.md",
-  "updated_for": "fire-shield-ai-policy-enforcement-v1",
+  "updated_for": "external-project-spectator-scope-v1",
   "authority_boundary": {
     "may_route_or_select_context": true,
     "may_mutate_source": false,
@@ -37,6 +37,6 @@
     "may_authorize_freeze": false
   },
   "do_not_regress": [
-    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability."
   ]
 }

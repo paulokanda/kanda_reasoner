@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from ._packaging_metadata_result_helpers import _dedupe_keep_order
 
 __all__: list[str] = []
 

@@ -121,7 +121,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-03-002`; `cooperative_implementation_methodology`; `cooperative_implementation_methodology.md`; `cooperative implementation methodology`
 - **When to load:** Compare consequential implementation options before governed admission.
 - **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
-- **Required companion prompts:** `brick_wall_comprehensive_quality_gate`
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `freeze_code_intake_and_form_protocol` - Freeze Hint and Form Intake Protocol
 
@@ -157,7 +157,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-03-005`; `professional_engineering_governance_template`; `professional_engineering_governance_template.md`; `professional engineering governance profile template`
 - **When to load:** Draft a Project-specific governance profile without creating a parallel authority.
 - **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
-- **Required companion prompts:** `prompt_insertion_and_router_registration_protocol`
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `workflow_handoff_template` - Generic Workflow Handoff Profile Template
 
@@ -169,7 +169,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-03-006`; `workflow_handoff_template`; `workflow_handoff_template.md`; `generic workflow handoff profile template`
 - **When to load:** Draft a generic factual handoff only when no current generated owner exists.
 - **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
-- **Required companion prompts:** none
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ## Class 04 - Box Architecture and Boundaries
 
@@ -218,7 +218,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Triggers:** `Send zip freeze`; `create freeze loader ZIP`; `load current feature into New Local Freeze Entry`; `self-contained freeze intake ZIP`; `prepare freeze entry ZIP`
 - **Aliases:** `KPR-03-007`; `self_contained_freeze_entry_intake_zip`; `Send zip freeze`; `send zip freeze`; `self-contained freeze loader ZIP`; `New Local Freeze Entry ZIP`
 - **Required companion prompts:** `freeze_code_intake_and_form_protocol`; `pre_output_contract_gates`; `implementation_and_delivery_protocol`
-- **Optional companion prompts:** `terminal_cleanup_contract`; `project_tool_boundary_canon`; `patch_install_delivery_error_register`
+- **Optional companion prompts:** `terminal_cleanup_contract`; `patch_install_delivery_error_register`
 
 ### `bundle_gated_development_workflow` - Bundle-Gated Development Workflow
 
@@ -253,7 +253,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When not to load:** Do not auto-load for normal KANDA implementation or treat the tracker as execution evidence.
 - **Triggers:** `draft an implementation roadmap`; `roadmap template`; `make a progress tracker`; `conceptual implementation plan`
 - **Aliases:** `KPR-05-004`; `implementation_roadmap_builder`; `implementation roadmap draft`; `roadmap template`; `progress tracker template`
-- **Required companion prompts:** None
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 - **Optional companion prompts:** `brick_wall_comprehensive_quality_gate`; `cooperative_implementation_methodology`; `workflow_handoff_template`
 
 ### `patch_validate_freeze_error_memory_routine_blueprint` - Answer Validate Freeze Memorize Error Routine Blueprint
@@ -290,7 +290,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When not to load:** Do not load the full prompt for tasks with no terminal output.
 - **Triggers:** `terminal cleanup`; `Clear-Host`; `install success footer`; `PowerShell block`; `Press Enter to clear terminal`; `PowerShell shows >>`
 - **Aliases:** `KPR-05-007`; `terminal_cleanup_contract`; `terminal cleanup contract`; `PowerShell cleanup`; `clean PowerShell prompt`
-- **Required companion prompts:** None
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 - **Optional companion prompts:** `pre_output_contract_gates`; `implementation_and_delivery_protocol`; `patch_install_delivery_error_register`
 
 ### `self_contained_error_memory_lesson_intake_zip` - Self-Contained Error Memory Lesson Intake ZIP
@@ -298,12 +298,12 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Code:** `KPR-05-008`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md`
 - **Status / load:** `active` / `on_request`
-- **When to load:** When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for approval in the currently selected Project.
-- **When not to load:** Do not load for a single pasted lesson JSON, direct canonical memorization, ordinary patch delivery, or when no reusable lesson candidate exists.
+- **When to load:** When the user requests one self-contained ZIP that stages one or more validated lessons as pending entries in the Error Memory lesson library.
+- **When not to load:** Do not load for direct active memorization, ordinary patch delivery, or when no reusable lesson candidate exists.
 - **Triggers:** `Send Zip Errors`; `create error lesson loader ZIP`; `self-contained Error Memory ZIP`; `stage Error Memory lessons for approval`; `pending error lesson intake`
 - **Aliases:** `KPR-05-008`; `self_contained_error_memory_lesson_intake_zip`; `Send Zip Errors`; `send zip errors`; `self-contained Error Memory ZIP`; `Error Memory lesson intake loader`
 - **Required companion prompts:** `error_memory_ai_formulary_startup_canon`; `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`
-- **Optional companion prompts:** `terminal_cleanup_contract`; `project_tool_boundary_canon`; `patch_install_delivery_error_register`
+- **Optional companion prompts:** `terminal_cleanup_contract`; `patch_install_delivery_error_register`
 
 ### `router_bridge_user_detected_correction` - User-Detected Correction Incident Dispatcher
 
@@ -327,7 +327,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Load type:** `routed`
 - **When to load:** Current evidence demonstrates an architecture risk requiring owner and protection-gap triage.
 - **When not to load:** Broad cleanup ideas, isolated local edits, or implementation authorization.
-- **Required companions:** `brick_wall_comprehensive_quality_gate`; `box_architecture_canon`; `boundary_first_repair_protocol`; `kanda_box_shielding_canon`; `project_tool_boundary_canon`
+- **Required companion prompts:** `box_architecture_canon`; `boundary_first_repair_protocol`; `kanda_box_shielding_canon`
 
 ### `architecture_hardening_triage_template` — Architecture Hardening Triage Record Template
 
@@ -337,7 +337,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Load type:** `explicit_on_request`
 - **When to load:** A fillable architecture-hardening triage record is explicitly requested.
 - **When not to load:** Actual hardening triage or any mutation authorization.
-- **Required companion:** `architecture_hardening_triage_protocol`
+- **Required companion prompts:** `architecture_hardening_triage_protocol`
 
 ### `large_module_refactor_protocol` — Large Module Creation and Refactor Protocol
 
@@ -347,7 +347,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Load type:** `routed`
 - **When to load:** A new or touched module exceeds or would exceed 500 physical lines, or current evidence proves material cohesion or dependency problems.
 - **When not to load:** Small local edits that remain within the size and cohesion contract.
-- **Required companions:** `brick_wall_comprehensive_quality_gate`; `box_architecture_canon`; `large_module_refactor_template`
+- **Required companion prompts:** `box_architecture_canon`; `large_module_refactor_template`
 
 ### `large_module_refactor_template` — Large Module Refactor Planning Record Template
 
@@ -357,7 +357,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Load type:** `explicit_on_request`
 - **When to load:** A fillable large-module assessment or planning record is explicitly requested.
 - **When not to load:** Actual refactoring or any mutation authorization.
-- **Required companion:** `large_module_refactor_protocol`
+- **Required companion prompts:** `large_module_refactor_protocol`
 
 ### `prompt_insertion_and_router_registration_protocol` - Prompt Insertion and Router Registration Protocol
 
@@ -415,7 +415,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-08-001`; `python clean architecture`; `python dependency direction`; `python_clean_architecture`
 - **When to load:** When dependency direction, framework isolation, ports/adapters, or a composition boundary is materially involved.
 - **When not to load:** Do not load for local readability, simple scripts, KANDA box ownership, or generic architecture discussion without Python dependency evidence.
-- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_clean_code` — Python Clean Code
 
@@ -427,7 +427,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-08-002`; `python clean code`; `clean_code_python`; `python_clean_code`
 - **When to load:** When local naming, readability, documentation, function clarity, or class cohesion is central.
 - **When not to load:** Do not load as architecture, refactoring, testing, typing, security, or resilience authority.
-- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_design_patterns` — Python Design Patterns
 
@@ -439,7 +439,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-08-003`; `python design patterns`; `python pattern selection`; `python_design_patterns`
 - **When to load:** When a demonstrated structural or behavioral variation requires an explicit pattern-selection decision.
 - **When not to load:** Do not load for simple direct code, DDD, enterprise persistence patterns, GUI lifecycle, or async/distributed design owned elsewhere.
-- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_domain_driven_design` — Python Domain-Driven Design
 
@@ -451,7 +451,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Aliases:** `KPR-08-004`; `python domain driven design`; `python DDD`; `python_domain_driven_design`
 - **When to load:** When domain language, invariants, subdomains, or bounded contexts materially drive the design.
 - **When not to load:** Do not load for simple CRUD, utility scripts, generic dependency direction, persistence implementation, or messaging delivery mechanics.
-- **Required companion prompts:** none; dispatch supporting owners only when current evidence requires them.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_enterprise_architecture` - Python Enterprise Application Patterns
 
@@ -462,7 +462,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When enterprise persistence patterns, application services, transactions, object identity, or concurrency-control patterns are the central concern.
 - **When not to load:** Do not load for small scripts, simple CRUD, generic dependency architecture, DDD modeling, database tuning, or unmeasured performance work.
 - **Aliases:** `KPR-08-005`; `python enterprise application patterns`; `python enterprise architecture`; `python_enterprise_architecture`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_high_performance` - Python Performance Evidence and Optimization
 
@@ -473,7 +473,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When runtime, latency, throughput, memory, I/O, profiling, or benchmark evidence is a primary requirement.
 - **When not to load:** Do not load when no named performance objective or suspected material bottleneck exists.
 - **Aliases:** `KPR-08-006`; `python performance evidence`; `python high performance`; `python_high_performance`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_legacy_code_workflow` - Python Legacy Code Stabilization Workflow
 
@@ -484,7 +484,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When existing Python code is risky, poorly understood, weakly protected, side-effectful, or historically brittle.
 - **When not to load:** Do not load for a well-understood greenfield module or as a substitute for the refactoring or testing owners.
 - **Aliases:** `KPR-08-007`; `A022`; `python legacy code stabilization`; `python legacy code workflow`; `python_legacy_code_workflow`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_pragmatic_programmer` - Python Pragmatic Trade-off and Reversible Progress
 
@@ -496,7 +496,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When pragmatic trade-off, reversibility, or proportional automation is the central concern.
 - **When not to load:** Do not load as a replacement for a technical specialist.
 - **Aliases:** `KPR-08-008`; `pragmatic trade-off`; `python_pragmatic_programmer`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_refactoring` - Python Behavior-Preserving Refactoring
 
@@ -508,7 +508,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When bounded Python structure must improve without intended behavior change.
 - **When not to load:** Do not load for legacy stabilization, large-module decomposition, or feature behavior changes.
 - **Aliases:** `KPR-08-009`; `python refactoring`; `python_refactoring`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `software_engineering_books_master` - Software Engineering Books Synthesis Map
 
@@ -520,7 +520,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When an explicit cross-book principle comparison or educational specialist map is needed.
 - **When not to load:** Do not load as a master governance or implementation prompt.
 - **Aliases:** `KPR-08-010`; `software engineering books synthesis`; `software_engineering_books_master`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_documentation_developer_experience` - Python Documentation and Developer Experience
 
@@ -532,7 +532,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When documentation architecture, onboarding, examples, docstrings, or DX is central.
 - **When not to load:** Do not load for local naming only or project-specific help styling.
 - **Aliases:** `KPR-09-011`; `python documentation`; `python_documentation_developer_experience`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_observability_logging_metrics_tracing` - Python Observability: Logging, Metrics, and Tracing
 
@@ -544,7 +544,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When runtime telemetry and diagnosis are central.
 - **When not to load:** Do not load when no telemetry change is needed.
 - **Aliases:** `KPR-09-012`; `python observability`; `python_observability_logging_metrics_tracing`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_resilience_error_handling` - Python Failure Semantics and Resilience
 
@@ -556,7 +556,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When failure, deadline, retry, idempotency, degradation, or recovery semantics are central.
 - **When not to load:** Do not load for exception formatting alone.
 - **Aliases:** `KPR-09-013`; `python resilience`; `python_resilience_error_handling`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_security_threat_prevention` - Python Security and Threat Prevention
 
@@ -568,7 +568,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When trust boundaries, threats, authorization, secrets, archives, or hostile input are central.
 - **When not to load:** Do not load as a generic quality checklist.
 - **Aliases:** `KPR-09-014`; `python security`; `python_security_threat_prevention`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_testing_pytest` - Python Testing and Pytest Strategy
 
@@ -580,7 +580,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When testing strategy, pytest, regression protection, or result interpretation is central.
 - **When not to load:** Do not impose universal coverage or mutation quotas.
 - **Aliases:** `KPR-09-015`; `python testing`; `python_testing_pytest`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_validation_serialisation_type_safety` - Python Boundary Validation, Serialization, and Type Safety
 
@@ -592,7 +592,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When invalid or ambiguous data crossing a boundary is the principal risk.
 - **When not to load:** Do not use for domain authorization or API protocol semantics.
 - **Aliases:** `KPR-09-016`; `python validation`; `python_validation_serialisation_type_safety`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `tab4_docstring_quality_roadmap` - Tab 4 Docstring Quality Roadmap - Deprecated Global Route
 
@@ -616,7 +616,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When an API or external interface contract is central.
 - **When not to load:** Do not load for internal function structure or persistence implementation.
 - **Aliases:** `KPR-10-001`; `python API design`; `python_api_design`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_async_parallel_distributed` - Python Concurrency, Parallel, and Distributed Execution
 
@@ -628,7 +628,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When concurrency model, task lifecycle, cancellation, backpressure, or distributed execution is central.
 - **When not to load:** Do not load for simple synchronous work or unmeasured performance assumptions.
 - **Aliases:** `KPR-10-002`; `python concurrency`; `python_async_parallel_distributed`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_configuration_feature_flags` - Python Configuration and Feature-Flag Lifecycle
 
@@ -640,7 +640,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When configuration schema, precedence, secret references, reload, or flag lifecycle is central.
 - **When not to load:** Do not load for constants, entitlements, or deployment injection alone.
 - **Aliases:** `KPR-10-003`; `python configuration`; `python_configuration_feature_flags`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_database_design_optimisation` - Python Database Design, Queries, and Migrations
 
@@ -652,7 +652,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When database schema, queries, migrations, transactions, or engine behavior is central.
 - **When not to load:** Do not load for application Repository design or work with no persistence.
 - **Aliases:** `KPR-10-004`; `python database design`; `python_database_design_optimisation`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `kubernetes_deployment_operations` - Kubernetes Deployment and Operations
 
@@ -664,7 +664,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When an actual container or Kubernetes workload needs deployment and operational design.
 - **When not to load:** Do not load for speculative Kubernetes adoption or as a universal production checklist.
 - **Aliases:** `KPR-11-001`; `kubernetes deployment`; `kubernetes_deployment_operations`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `productization_readiness_roadmap` - Productization Readiness Roadmap
 
@@ -688,7 +688,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When a concise non-authoritative human/AI role and work-state overview is needed.
 - **When not to load:** Do not load as a master implementation, validation, or freeze authority.
 - **Aliases:** `KPR-11-003`; `AI-assisted engineering operating model`; `professional_ai_assisted_engineering_framework`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `professional_infrastructure_roadmap` - Professional Infrastructure Roadmap
 
@@ -712,7 +712,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When version policy, compatibility, deprecation, support or EOL is central.
 - **When not to load:** Do not load for legacy refactoring, database migration mechanics or packaging installation.
 - **Aliases:** `KPR-11-005`; `python lifecycle versioning`; `python_lifecycle_versioning_deprecation`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `python_site_reliability_engineering` - Python Service Reliability Engineering
 
@@ -724,7 +724,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When an operationally owned production service needs SLI/SLO, incident, toil or capacity governance.
 - **When not to load:** Do not load for local tools or as a universal Google SRE checklist.
 - **Aliases:** `KPR-11-006`; `python SRE`; `python_site_reliability_engineering`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `error_memory_active_ready_correction_blueprint` - Error Memory Active-Ready Correction Blueprint
 
@@ -761,7 +761,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When source-to-derived lineage, transform provenance or rebuild correctness is central.
 - **When not to load:** Do not load for transform selection resolution without pipeline lineage concerns.
 - **Aliases:** `KPR-12-009`; `data transform pipeline invariants`; `data_transform_pipeline_invariants`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `desktop_help_document_layout_canon` - KANDA Desktop Help Document Layout Profile
 
@@ -785,7 +785,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When multiple discrete domain rules need a versioned, testable matrix.
 - **When not to load:** Do not load for continuous/probabilistic decisions or undefined domain policy.
 - **Aliases:** `KPR-12-011`; `domain decision table`; `domain_decision_table_template`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `plugin_package_import_canon` - Plugin Package Import and Trust Canon
 
@@ -797,7 +797,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When user-importable package trust, permissions and lifecycle are central.
 - **When not to load:** Do not load for ordinary patch ZIPs or to invent a universal plugin engine.
 - **Aliases:** `KPR-12-012`; `plugin package import`; `plugin_package_import_canon`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `shared_visual_render_engine_canon` - Shared Visual Semantic Contract
 
@@ -809,7 +809,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When multiple consumers represent the same conceptual visual object or scene.
 - **When not to load:** Do not load for static editorial artwork or generic UI styling.
 - **Aliases:** `KPR-12-013`; `shared visual semantics`; `shared_visual_render_engine_canon`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `transform_resolver_architecture_contract` - Transform Resolver Architecture Contract
 
@@ -821,7 +821,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When stable identities and selectable transforms must resolve into controlled operations.
 - **When not to load:** Do not load for pipeline lineage/rebuild or direct operation execution.
 - **Aliases:** `KPR-12-014`; `transform resolver contract`; `transform_resolver_architecture_contract`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `web_ai_large_module_refactor_exchange_protocol`
 
@@ -852,7 +852,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **File:** `ACTIVE_PROMPTS/12_generalized_project_canons/peopleware_team_boundary.md`
 - **Load when:** a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.
 - **Do not load for:** solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.
-- **Companions:** `prompt_navigation_index`; `project_tool_boundary_canon` when project identity matters.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `practical_field_handbook_template` — Practical Field Handbook Template
 
@@ -872,7 +872,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When a consequential plan needs adversarial review and claim/assumption separation.
 - **When not to load:** Do not label same-context self-review as independent.
 - **Aliases:** `KPR-09-003`; `independent adversarial audit`; `anti_hallucination_independent_ai_audit_full`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `anti_hallucination_web_evidence_audit_full` - Current Web Evidence and Disconfirmation Audit - Full
 
@@ -884,7 +884,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When time-sensitive external claims require current primary-source verification.
 - **When not to load:** Do not expose private project data or fabricate web access.
 - **Aliases:** `KPR-09-004`; `web evidence audit`; `anti_hallucination_web_evidence_audit_full`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `anti_hallucination_book_literature_audit_full` - Verified Literature Architecture Audit - Full
 
@@ -896,7 +896,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** When inspected literature can resolve a material architecture uncertainty.
 - **When not to load:** Do not attribute claims to uninspected books or force a source count.
 - **Aliases:** `KPR-09-005`; `verified literature audit`; `anti_hallucination_book_literature_audit_full`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `anti_hallucination_master_protocol_full` - Evidence Synthesis and Truthful Status Protocol - Full
 
@@ -908,7 +908,7 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When to load:** As the final synthesis stage after evidence records exist.
 - **When not to load:** Do not load as a mega-canon or implementation authority.
 - **Aliases:** `KPR-09-006`; `evidence synthesis`; `anti_hallucination_master_protocol_full`
-- **Required companions:** none; dispatch supporting concerns to current owners.
+- **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
 ### `anti_hallucination_independent_ai_audit_short` - Independent Adversarial Audit - Short
 

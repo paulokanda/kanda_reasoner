@@ -18,7 +18,7 @@
   ],
   "source_stage": "prompt-audit-wave4b-box-architecture-boundaries-v1",
   "updated_for": "prompt-audit-wave4b-box-architecture-boundaries-v1",
-  "description": "Artifact-classification and canonical placement dispatcher that consumes current Tool/Project root ownership.",
+  "description": "Artifact-classification and canonical placement dispatcher that consumes current Tool/Project root ownership. Project-agnostic; host-specific governance is optional.",
   "priority": 4,
   "trigger_phrases": [
     "project folder structure",
@@ -28,12 +28,9 @@
     "generated artifact placement",
     "source tree contamination"
   ],
-  "required_companion_prompts": [
-    "project_tool_boundary_canon"
-  ],
+  "required_companion_prompts": [],
   "optional_companion_prompts": [
-    "durable_document_artifact_routing_canon",
-    "brick_wall_comprehensive_quality_gate"
+    "box_architecture_canon"
   ],
   "source_write_authorization": "NO"
 }

@@ -11,6 +11,8 @@ source_stage: prompt-audit-wave4b-box-architecture-boundaries-v1
 
 # KANDA Box Shielding Canon
 
+The stable prompt ID and title are retained for routing compatibility. The shielding doctrine below is project-agnostic and does not require KANDA Reasoner or any other host tool.
+
 ## Purpose
 
 Define a risk-based method for converting important architectural invariants of
@@ -18,11 +20,26 @@ one bounded context into executable regression fitness functions. A shield is
 not feature expansion, routine unit testing, a style refactor, a delivery
 workflow, or an automatic milestone ceremony.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## Relationship to other owners
 
 Box Architecture identifies the box and public contract. Boundary-First Repair
-locates a suspected ownership defect. Brick Wall decides whether shield work is
-admitted and authorized. Class 05 owns packaging and freeze preparation.
+locates a suspected ownership defect. The active Project's declared implementation authority decides whether shield work is admitted and authorized. Packaging and snapshot/freeze preparation remain with the active Project or host-specific delivery owners.
 
 ## Shield applicability decision
 
@@ -47,7 +64,7 @@ Existing validators and gaps:
 Unique shield value:
 Simpler existing-test strengthening sufficient: YES / NO
 Decision: REQUIRED / STRENGTHEN_EXISTING / NOT_APPLICABLE / BLOCKED
-Brick Wall authorization still required: YES
+Separate Project implementation authorization still required: YES
 May begin coding: NO
 ```
 
@@ -69,10 +86,10 @@ A bounded shield records:
 1. Prove applicability and inventory current tests.
 2. State the invariant in public-contract language.
 3. Add a failing focused regression or equivalent characterization when safe.
-4. Implement only the smallest contract hardening admitted by Brick Wall.
+4. Implement only the smallest contract hardening admitted by the active Project's declared implementation authority.
 5. Run focused, boundary, negative, and consumer regressions.
 6. Record limitations and unprotected risks.
-7. Return evidence to the validation and freeze owners.
+7. Return evidence to the active Project validation owner and any optional snapshot/freeze owner.
 
 ## Shield evidence record
 
@@ -95,14 +112,14 @@ Durable evidence path:
 Limitations:
 Shield status: COMPLETE / PARTIAL / BLOCKED / NOT_APPLICABLE
 May begin coding from this record: NO
-May freeze from this record: NO
+May write snapshot/freeze state from this record: NO
 ```
 
 ## Scope exclusions
 
 A generic shield does not define product-specific advisory states, model output
 language, dependency blacklists, security profiles, routing authority, patch ZIP
-membership, Project Support paths, or freeze-write procedure. Those belong to
+membership, support-artifact paths, or snapshot/freeze-write procedure. Those belong to
 the owning box and current specialist canons.
 
 ## Do-not-regress rules
@@ -111,4 +128,4 @@ the owning box and current specialist canons.
 - A shield protects a bounded public contract and cannot invade another box.
 - Advisory output never becomes authority without its canonical owner.
 - No new cross-project shield registry or runtime coordination service.
-- Completion never authorizes source writes or human freeze confirmation.
+- Completion never authorizes source writes or any host-specific snapshot/freeze confirmation.

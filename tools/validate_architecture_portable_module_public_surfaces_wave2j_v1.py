@@ -378,7 +378,7 @@ def validate_inherited_contracts(root: Path) -> None:
             "PORTABLE BUILDER EXACT MEMBER CONTRACT: PASS",
             "PORTABLE IDENTITY JSON RUNTIME: PASS",
             "PORTABLE PRODUCTION BUILD GATE CLOSED: PASS",
-            "VALIDATION OK: kanda-reasoner-portable-builder-install-v1r12",
+            "VALIDATION OK: kanda-reasoner-portable-timestamped-publication-name-v1r32",
         ),
         "PORTABLE_INSTALLED_BUILDER_VALIDATION",
     )

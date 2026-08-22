@@ -8,16 +8,10 @@ import json
 from pathlib import Path
 import zipfile
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
 from .models import FEATURE_ID, SCHEMA_VERSION
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 from .source_apply_preflight_backup_contract import SourceApplyPreflightBackupContractResult
 
 __all__ = [
@@ -115,10 +109,10 @@ def build_guarded_source_apply_execution(
         targets,
         token_valid,
     )
-    status = "guarded_source_apply_ready" if not blockers else "blocked"
-    source_after = preflight.source_content_hash if status == "guarded_source_apply_ready" else ""
+    status = "project_source_change_proposal_only" if not blockers else "blocked"
+    source_after = preflight.source_content_hash if not blockers else ""
     warnings = [
-        "GUARDED_SOURCE_APPLY_MUTATES_SELECTED_PROJECT_SOURCE_ONLY_WHEN_READY",
+        proposal_only_warning("guarded_source_apply_executor"),
         "BACKUP_SNAPSHOT_MUST_BE_VERIFIED_BEFORE_WRITE",
         "LOOSE_PREVIEW_ARTIFACTS_ARE_NOT_USED_AS_SOURCE_OF_TRUTH",
         "IMPORT_REWRITE_APPLICATION_NOT_IMPLEMENTED_IN_THIS_TRAIN",
@@ -140,9 +134,9 @@ def build_guarded_source_apply_execution(
         confirmation_token_required=GUARDED_SOURCE_APPLY_EXECUTOR_TOKEN,
         execution_confirmation_present=bool(execution_confirmation.strip()),
         execution_confirmation_valid=token_valid,
-        apply_enabled=status == "guarded_source_apply_ready",
+        apply_enabled=False,
         rewrite_enabled=False,
-        source_mutation_enabled=status == "guarded_source_apply_ready",
+        source_mutation_enabled=False,
         backup_snapshot_verified="BACKUP_SNAPSHOT_HASH_MISMATCH" not in blockers and "BACKUP_SNAPSHOT_MISSING" not in blockers,
         source_hash_verified_before_write="SELECTED_SOURCE_HASH_CHANGED" not in blockers and "TARGET_FILE_MISSING" not in blockers,
         payload_manifest_verified="PAYLOAD_MANIFEST_UNREADABLE_OR_MISSING" not in blockers,
@@ -165,18 +159,14 @@ def write_guarded_source_apply_execution_manifest(result: GuardedSourceApplyExec
     _raise_if_protected(manifest, "execution manifest")
     manifest.parent.mkdir(parents=True, exist_ok=True)
     payload = result.to_dict()
-    if result.status == "guarded_source_apply_ready":
-        written = _apply_payload_files(result, target.parent)
-        payload["written_files"] = written
-        payload["written_file_count"] = len(written)
-        payload["source_content_hash_after"] = hashlib.sha256(target.read_bytes()).hexdigest()
-    else:
-        payload["written_files"] = []
-        payload["written_file_count"] = 0
+    payload["written_files"] = []
+    payload["written_file_count"] = 0
+    payload["source_mutation_enabled"] = False
+    payload["apply_enabled"] = False
     manifest.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     saved = json.loads(manifest.read_text(encoding="utf-8"))
-    if result.status == "guarded_source_apply_ready" and saved.get("written_file_count", 0) <= 0:
-        raise RuntimeError("Guarded source apply ready state did not record written files.")
+    if saved.get("written_file_count", 0) != 0:
+        raise RuntimeError("Proposal-only guarded source apply recorded source writes.")
     if saved.get("rewrite_enabled") is not False:
         raise RuntimeError("Guarded source apply executor must not rewrite imports in this train.")
     return manifest
@@ -234,38 +224,14 @@ def _execution_blockers(
     return blockers
 
 
-def _apply_payload_files(result: GuardedSourceApplyExecutionResult, destination_root: Path) -> list[str]:
-    """Copy safe payload entries from the reviewed payload ZIP into project source."""
-    fire_shield = build_current_fire_shield_context(
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="guarded-source-apply-" + hashlib.sha256(
-            result.payload_zip_path.encode("utf-8")
-        ).hexdigest()[:24],
-    )
-    target = Path(result.target_file).resolve()
-    if hashlib.sha256(target.read_bytes()).hexdigest() != result.source_content_hash_before:
-        raise RuntimeError("Selected source hash changed immediately before guarded write.")
-    written: list[str] = []
-    with zipfile.ZipFile(result.payload_zip_path, "r") as archive:
-        for relative in result.planned_write_targets:
-            destination = (destination_root / relative).resolve()
-            data = archive.read(relative)
-            assert_fire_shield_write_allowed(
-                fire_shield,
-                destination,
-                operation="REPLACE" if destination.exists() else "CREATE",
-            )
-            assert_fire_shield_payload_bytes_allowed(
-                fire_shield,
-                data,
-                relative,
-            )
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_bytes(data)
-            written.append(str(destination))
-    verify_tool_snapshot_unchanged(fire_shield)
-    return sorted(written)
-
+def _apply_payload_files(
+    result: GuardedSourceApplyExecutionResult,
+    destination_root: Path,
+) -> list[str]:
+    """Retained compatibility helper; physical source apply is unavailable."""
+    _ = result
+    _ = destination_root
+    return []
 
 def _payload_manifest_blockers(payload: dict[str, object] | None, source_hash: str) -> list[str]:
     """Return blockers from governed payload manifest safety fields."""

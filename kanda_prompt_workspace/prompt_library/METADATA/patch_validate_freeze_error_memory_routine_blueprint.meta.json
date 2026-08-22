@@ -4,7 +4,7 @@
   "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
   "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "3.3",
+  "version": "3.5",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,9 +16,9 @@
     "Answer Validate Freeze Memorize Error",
     "recovery routine owner dispatch"
   ],
-  "source_stage": "fire-shield-ai-policy-enforcement-v1",
-  "updated_for": "fire-shield-ai-policy-enforcement-v1",
-  "description": "Cross-project continuation wrapper with one primary update ZIP, separate install/validation/Freeze/Error Memory phases, and mandatory Fire Shield public-authority gating for consequential external-Project work.",
+  "source_stage": "external-project-observer-independence-v1",
+  "updated_for": "external-project-observer-independence-v1",
+  "description": "Cross-project continuation wrapper with one primary update ZIP, separate install/validation/Freeze/Error Memory phases, actor-scoped Fire Shield gating for KANDA-managed external-Project work, and explicit KANDA-independent Project-owned development.",
   "priority": 17,
   "trigger_phrases": [
     "Answer, Validate, Freeze, Memorize Error",
@@ -73,6 +73,6 @@
     "Never let one terminal block execute more than one lifecycle phase.",
     "Create Error Memory lessons only after actual reusable failure evidence and duplicate checks; otherwise report NOT_REQUIRED.",
     "Keep the Show Project to AI button dynamically linked to the canonical prompt path.",
-    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability."
   ]
 }

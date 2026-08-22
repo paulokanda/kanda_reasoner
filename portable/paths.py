@@ -1,14 +1,18 @@
-"""Dynamic path resolution and registry-governed Box-boundary checks."""
+"""Dynamic Tool path resolution and registry-assisted destination checks."""
 
 from __future__ import annotations
 
 import os
-import sys
 from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 
-from portable.constants import FINAL_ZIP_NAME, PROJECT_FOLDER_NAME, SPEC_NAME
+from portable.constants import (
+    FINAL_ZIP_NAME,
+    PROJECT_FOLDER_NAME,
+    SPEC_NAME,
+    VENV_PYTHON_RELATIVE,
+)
 from portable.errors import PortableBuildError
 from portable.models import BuildPaths, RegistryBoundary
 from portable.registry_boundary import assert_outside_protected_roots
@@ -24,12 +28,25 @@ def is_within(path: Path, parent: Path) -> bool:
     return True
 
 
+def build_publication_zip_name(build_time: datetime) -> str:
+    """Return a traceable Portable filename with local build date and time."""
+
+    timestamp = build_time.strftime("%Y%m%d_%H%M%S")
+    suffix = "-Windows-Portable.zip"
+    if not FINAL_ZIP_NAME.endswith(suffix):
+        raise PortableBuildError(
+            "Portable final ZIP template lost the canonical Windows suffix."
+        )
+    prefix = FINAL_ZIP_NAME[: -len(suffix)]
+    return f"{prefix}-{timestamp}{suffix}"
+
+
 def resolve_paths(
     project_root: Path,
     output_directory: Path,
     boundary: RegistryBoundary,
 ) -> BuildPaths:
-    """Resolve build paths only after registry authority is established."""
+    """Resolve build paths from Tool source identity, not active Project identity."""
 
     project = project_root.resolve()
     if os.name != "nt" or not project.anchor:
@@ -38,24 +55,26 @@ def resolve_paths(
         )
     if project.name.casefold() != PROJECT_FOLDER_NAME.casefold():
         raise PortableBuildError(
-            "This builder is owned by the kanda_reasoner project only: "
+            "This builder is owned by the kanda_reasoner Tool source only: "
             f"{project}"
         )
     if project != boundary.tool_root:
         raise PortableBuildError(
-            "Portable project root does not match Tool-owned registry authority."
+            "Portable Tool root does not match builder-location authority."
         )
 
     drive = Path(project.anchor).resolve()
     support = boundary.tool_support_root
     transient = boundary.tool_transient_root
+    build_time = datetime.now()
     run_id = (
-        datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        build_time.strftime("%Y%m%d_%H%M%S_%f")
         + "_"
         + uuid4().hex[:8]
     )
     run_root = (transient / "portable_build" / run_id).resolve()
-    final_zip = output_directory.resolve() / FINAL_ZIP_NAME
+    publication_zip_name = build_publication_zip_name(build_time)
+    final_zip = output_directory.resolve() / publication_zip_name
 
     paths = BuildPaths(
         project_root=project,
@@ -68,11 +87,11 @@ def resolve_paths(
         pyinstaller_config=run_root / "pyinstaller_config",
         temporary_root=run_root / "temp",
         stage_parent=run_root / "release_stage",
-        candidate_zip=run_root / FINAL_ZIP_NAME,
+        candidate_zip=run_root / publication_zip_name,
         clean_extract_root=run_root / "clean_zip_extraction",
         final_zip=final_zip,
         spec_path=project / SPEC_NAME,
-        governed_python=Path(sys.executable).resolve(),
+        governed_python=(project / VENV_PYTHON_RELATIVE).resolve(),
         zip_helper=project / "portable" / "create_windows_zip.ps1",
         registry_boundary=boundary,
     )
@@ -111,7 +130,7 @@ def validate_boundaries(paths: BuildPaths) -> None:
 
 
 def print_identity(paths: BuildPaths) -> None:
-    """Print Tool, self-hosting authority, and independent Box identities."""
+    """Print Tool authority and Project-independent build identities."""
 
     boundary = paths.registry_boundary
     if boundary is None:
@@ -119,17 +138,24 @@ def print_identity(paths: BuildPaths) -> None:
             "Registry boundary is missing from resolved build paths."
         )
     print("PORTABLE BUILD IDENTITY")
-    print(f"Selected Tool/self-hosting Project: {paths.project_root}")
+    print(f"Tool source root: {paths.project_root}")
     print(f"Tool Support: {paths.project_support_root}")
     print(f"Transient staging: {paths.run_root}")
     print(f"Selected destination folder: {paths.final_zip.parent}")
     print(f"Final Portable output: {paths.final_zip}")
     print(f"Governed Python: {paths.governed_python}")
-    print(f"Tool-owned Project registry: {boundary.registry_path}")
-    print(f"Registry SHA-256: {boundary.registry_sha256}")
-    print(f"Active registry Project ID: {boundary.current_project_id}")
-    print(f"Selection mode: {boundary.selection_mode}")
-    print(f"Protected registered roots: {len(boundary.protected_roots)}")
-    print("PORTABLE EXPLICIT SELF-HOSTING AUTHORITY: PASS")
-    print("PORTABLE ALL REGISTERED OWNER ROOTS PROTECTED: PASS")
+    print(f"Optional Project registry: {boundary.registry_path}")
+    print(f"Registry SHA-256: {boundary.registry_sha256 or '<absent>'}")
+    print(f"Observed active Project ID: {boundary.current_project_id or '<none>'}")
+    print(f"Observed selection mode: {boundary.selection_mode}")
+    print(
+        f"Destination-protected registered roots: {len(boundary.protected_roots)}"
+    )
+    print(
+        f"Tool-owner immutability roots: {len(boundary.tool_owner_roots)}"
+    )
+    print("PORTABLE TOOL ROOT AUTHORITY FROM BUILDER LOCATION: PASS")
+    print("PORTABLE ACTIVE PROJECT IDENTITY NOT REQUIRED: PASS")
+    print("PORTABLE ALL KNOWN ROOTS DESTINATION-PROTECTED: PASS")
+    print("PORTABLE TOOL OWNER ROOTS IMMUTABILITY-PROTECTED: PASS")
     print("Show Project workflow invoked: NO")

@@ -26,6 +26,7 @@ __all__ = [
     "is_reasoner_project_root",
     "normalize_project_root_text",
     "resolve_active_project_root",
+    "resolve_observed_project_root",
     "resolve_selected_project_root",
     "resolve_app_runtime_root",
 ]
@@ -170,22 +171,17 @@ def normalize_project_root_text(text: str | Path | None) -> Path | None:
 
 
 
-def resolve_selected_project_root(
+def resolve_observed_project_root(
     project_root: str | Path | None = None,
     *,
     persisted_root: str | Path | None = None,
 ) -> Path | None:
-    """Resolve only explicitly configured Project authority.
+    """Resolve explicit Project observation without Tool/runtime fallback.
 
-    Unlike :func:`resolve_active_project_root`, this strict selector never falls
-    back to the Tool source tree, runtime folder, or current working directory.
-    It is the required entry point for mutation-capable Tool shells.
-
-    Priority:
-    1. Explicit project_root argument.
-    2. Canonical or legacy environment variable.
-    3. Existing persisted Project root.
-    4. No active Project.
+    Project observation may come from an explicit path, a configured Project
+    environment path, or a persisted Project path. When none is usable, the
+    result is ``None``. Tool source, runtime executable location, and current
+    working directory are never substituted as Project observation identity.
     """
     explicit = normalize_project_root_text(project_root)
     if explicit is not None and explicit.exists() and explicit.is_dir():
@@ -200,6 +196,18 @@ def resolve_selected_project_root(
         return persisted
 
     return None
+
+
+def resolve_selected_project_root(
+    project_root: str | Path | None = None,
+    *,
+    persisted_root: str | Path | None = None,
+) -> Path | None:
+    """Compatibility facade for strict observed-Project root resolution."""
+    return resolve_observed_project_root(
+        project_root,
+        persisted_root=persisted_root,
+    )
 
 def resolve_active_project_root(
     project_root: str | Path | None = None,

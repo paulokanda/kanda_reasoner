@@ -6,6 +6,9 @@ from pathlib import Path
 
 from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
 
+from kanda_reasoner_app.manage_architecture.architecture_finding_dispositions import (
+    active_audit_text,
+)
 from kanda_reasoner_app.manage_architecture.large_module_split_audit import (
     run_large_module_split_audit,
 )
@@ -58,7 +61,7 @@ class LargeModuleSplitAuditGuiMixin:
 
     def _refresh_large_module_targets_from_audit_results(self) -> None:
         """Populate the AST target selector from MODULE_TOO_LARGE findings."""
-        targets = parse_module_too_large_findings(self._output.toPlainText())
+        targets = parse_module_too_large_findings(active_audit_text(self))
         self._large_module_audit_target_signature = _target_signature(targets)
         self._large_module_targets = targets
         self._large_module_target_source = "audit" if targets else "none"
@@ -92,7 +95,7 @@ class LargeModuleSplitAuditGuiMixin:
         after the same result set was loaded remains authoritative until a new
         run resets the result signature.
         """
-        targets = parse_module_too_large_findings(self._output.toPlainText())
+        targets = parse_module_too_large_findings(active_audit_text(self))
         if not targets:
             return False
         signature = _target_signature(targets)

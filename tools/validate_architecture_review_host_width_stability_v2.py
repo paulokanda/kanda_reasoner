@@ -103,6 +103,7 @@ def _validate_static_contract(project_root: Path) -> None:
         '"Architecture Review"',
         '"Engineering Safety"',
         '"Check Update Architecture"',
+        '"Dismissed Findings"',
         '"Large Module AST Split Audit"',
         '"Large File Refactor Planner"',
         '"Large File Refactor WorkBench"',
@@ -291,6 +292,7 @@ def _validate_qt_runtime(project_root: Path) -> bool:
     )
     expected_child_tabs = (
         "Check Update Architecture",
+        "Dismissed Findings",
         "Large Module AST Split Audit",
         "Large File Refactor Planner",
         "Large File Refactor WorkBench",

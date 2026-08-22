@@ -10,6 +10,13 @@ from pathlib import Path
 from typing import Any
 
 from kanda_reasoner_app.error_memory.paths import resolve_project_error_memory_root
+from kanda_reasoner_app.error_memory.tool_intake import (
+    is_tool_pending_intake_path,
+    resolve_tool_pending_intake_dir,
+)
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    owner_slug_for_current_work_item,
+)
 from kanda_reasoner_app.error_memory_gui._clipboard_export import (
     copy_ai_assisted_intake_error_draft_to_clipboard,
     copy_error_lesson_intake_blueprint_to_clipboard,
@@ -86,7 +93,6 @@ class ErrorMemoryIntakeActionsMixin:
 
     def _show_action_done(self, title: str, message: str, detail_text: str='') -> None:
         """Support show action done behavior.
-        
         Parameters
         ----------
         title : str
@@ -96,7 +102,6 @@ class ErrorMemoryIntakeActionsMixin:
         detail_text : str, optional
             The optional detail text value.
         """
-        
         show_action_done(self, title, message, detail_text)
 
     def _pending_ai_assisted_error_lesson_intake_dir(self) -> Path:
@@ -119,23 +124,19 @@ class ErrorMemoryIntakeActionsMixin:
 
     def load_pending_ai_assisted_error_lesson_intake_now(self, project_root: str | Path | None=None) -> bool:
         """Load the pending ai assisted error lesson intake now.
-        
         Parameters
         ----------
         project_root : str | Path | None, optional
             The project root path.
-        
         Returns
         -------
         bool
             True if the condition is met; otherwise, False.
         """
-        
         return load_pending_ai_assisted_error_lesson_intake_now_impl(self, project_root)
 
     def _load_pending_ai_assisted_error_lesson_intake(self, *, mirror_loaded_json_to_error_editor: bool=False) -> bool:
         """Support load pending ai assisted error lesson intake behavior.
-        
         Parameters
         ----------
         mirror_loaded_json_to_error_editor : bool, optional
@@ -267,7 +268,7 @@ class ErrorMemoryIntakeActionsMixin:
         return draft_lesson_from_pending_raw_text(
             pending_file,
             raw_text,
-            project_slug=self._require_project_root().name,
+            project_slug=owner_slug_for_current_work_item(self),
         )
 
     def _delete_pending_file_quietly(self, path: Path) -> bool:
@@ -337,12 +338,26 @@ class ErrorMemoryIntakeActionsMixin:
         """Return lesson_id from wrapped or raw JSON without active-ready checks."""
         return lesson_id_from_text_lenient(text)
 
-    def _pending_intake_files_for_all_candidate_dirs(self) -> list[Path]:
-        """Return all pending intake files visible to the loader."""
+    def _pending_intake_files_for_project_lane(self) -> list[Path]:
+        """Return pending intake files owned by the selected Project lane."""
         return pending_intake_files_for_candidate_dirs(
             self._candidate_pending_ai_assisted_intake_dirs(),
             allowed_suffixes=PENDING_AI_ASSISTED_INTAKE_SUFFIXES,
         )
+
+    def _pending_intake_files_for_tool_lane(self) -> list[Path]:
+        """Return pending intake files owned by the Tool lane."""
+        return pending_intake_files_for_candidate_dirs(
+            [resolve_tool_pending_intake_dir()],
+            allowed_suffixes=PENDING_AI_ASSISTED_INTAKE_SUFFIXES,
+        )
+
+    def _pending_intake_files_for_all_candidate_dirs(self) -> list[Path]:
+        """Return pending files only from the current work item's owner lane."""
+        marker = str(self._loaded_pending_intake_file or "").strip()
+        if marker and is_tool_pending_intake_path(marker):
+            return self._pending_intake_files_for_tool_lane()
+        return self._pending_intake_files_for_project_lane()
 
     def _pending_file_matches_draft_identity(self, path: Path, lesson_ids: set[str], visible_texts: list[str], explicit_paths: list[str]) -> bool:
         """Return whether one pending source belongs to the draft being deleted."""

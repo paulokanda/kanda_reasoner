@@ -48,7 +48,7 @@ class TabHeaderTemplate:
         title_font.setBold(True)
         title_font.setPointSize(12)
         self.title_label.setFont(title_font)
-        self.title_label.setWordWrap(True)
+        self.title_label.setWordWrap(False)
         self.layout.addWidget(self.title_label, 1)
 
         self.project_root_host, self.project_root_layout = self._new_slot()
@@ -72,11 +72,19 @@ class TabHeaderTemplate:
     def _new_slot() -> tuple[QWidget, QHBoxLayout]:
         """Return a compact host widget with a zero-margin horizontal layout."""
         host = QWidget()
-        host.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        host.setMinimumWidth(0)
+        host.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         layout = QHBoxLayout(host)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(6)
         return host, layout
+
+    def activate_project_root_slot(self) -> None:
+        """Give a populated Project slot explicit layout weight without size pressure."""
+        self.project_root_layout.setSpacing(4)
+        index = self.layout.indexOf(self.project_root_host)
+        if index >= 0:
+            self.layout.setStretch(index, 2)
 
     def add_widget_before_help(self, widget: QWidget, *, spacing_after: int = 0) -> None:
         """Add a non-template widget before the trailing Help action."""

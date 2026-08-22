@@ -39,7 +39,11 @@ from kanda_reasoner_app.error_memory_gui._lesson_payloads import (
 )
 from kanda_reasoner_app.error_memory_gui._memorize_flow import select_saved_active_lesson_row
 from kanda_reasoner_app.error_memory_gui._pending_loader import load_pending_intake_row_into_editor
-from kanda_reasoner_app.error_memory_gui._pending_rows import pending_lesson_rows_for_table
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    backend_for_current_work_item,
+    owner_slug_for_current_work_item,
+    pending_rows_for_tab,
+)
 from kanda_reasoner_app.error_memory_gui._receive_import import (
     import_error_lesson_zip,
     receive_formulary_from_ai,
@@ -166,22 +170,8 @@ class ErrorMemoryTableDraftMixin:
         show_active_ready_failure_copy_window(self, source_label=source_label, lesson=lesson)
 
     def _pending_lesson_rows_for_table(self) -> list[dict[str, str]]:
-        """Return virtual Lessons rows for pending intake files waiting for edition."""
-        try:
-            existing_lesson_ids = {
-                str(item.get('lesson_id', '')).strip()
-                for item in list_lessons(self._current_project_root(), include_inactive=True)
-                if isinstance(item, dict) and str(item.get('lesson_id', '')).strip()
-            }
-        except Exception:
-            existing_lesson_ids = set()
-        return pending_lesson_rows_for_table(
-            self._pending_intake_files_for_all_candidate_dirs(),
-            self._dismissed_pending_intake_files,
-            existing_lesson_ids,
-            is_formatted_lesson_payload=self._text_is_formatted_error_lesson_payload,
-            lesson_from_formatted_text=self._lesson_from_formatted_text,
-        )
+        """Return isolated Project and Tool virtual pending lesson rows."""
+        return pending_rows_for_tab(self)
 
     def _load_pending_intake_row_into_editor(self, pending_file: Path, row_kind: str, *, show_duplicate_warning: bool=True) -> bool:
         """Support load pending intake row into editor behavior.
@@ -325,19 +315,25 @@ class ErrorMemoryTableDraftMixin:
 
     def _lesson_from_formatted_text(self, text: str) -> dict[str, Any]:
         """Build a lesson from either canonical lesson JSON or AI formulary JSON."""
-        return lesson_from_formatted_text(text, selected_project_root=self._current_project_root())
+        return lesson_from_formatted_text(
+            text,
+            selected_project_root=backend_for_current_work_item(self),
+        )
 
     def _canonical_draft_lesson_from_partial(self, lesson: dict[str, Any], *, source_text: str='') -> dict[str, Any]:
         """Return a schema-saveable draft lesson without inventing semantics."""
         return canonical_draft_lesson_from_partial(
             lesson,
-            project_slug=self._require_project_root().name,
+            project_slug=owner_slug_for_current_work_item(self),
             source_text=source_text,
         )
 
     def _text_is_formatted_error_lesson_payload(self, text: str) -> bool:
         """Return whether text is a formatted Error Memory lesson, not just any JSON."""
-        return text_is_formatted_error_lesson_payload(text, selected_project_root=self._current_project_root())
+        return text_is_formatted_error_lesson_payload(
+            text,
+            selected_project_root=backend_for_current_work_item(self),
+        )
 
     def _select_saved_active_lesson_row(self, lesson_id: str) -> bool:
         """Support select saved active lesson row behavior.

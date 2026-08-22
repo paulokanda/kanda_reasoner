@@ -6,6 +6,13 @@ import logging
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.project_artifact_staging import (
+    build_project_artifact_staging_contract,
+)
+from kanda_reasoner_app.project_support_boundary import (
+    canonical_project_support_root,
+)
+
 __all__ = [
     "build_answer_validate_freeze_memorize_wrapper",
     "copy_answer_validate_freeze_memorize_to_clipboard",
@@ -40,8 +47,9 @@ def build_answer_validate_freeze_memorize_wrapper(
         raise FileNotFoundError("Canonical routine prompt not found: " + str(prompt_path))
 
     project_slug = project_root.name
-    support_root = project_root.parent / (project_slug + "_show_project_to_AI")
-    transient_root = project_root.parent / (project_slug + "_delete_after_daily_work")
+    support_root = canonical_project_support_root(project_root)
+    staging = build_project_artifact_staging_contract(project_root)
+    transient_root = Path(str(staging["transient_root"]))
     same_physical = _same_physical_root(project_root, resolved_tool_root)
     prompt_text = prompt_path.read_text(encoding="utf-8-sig").rstrip()
 
@@ -53,6 +61,10 @@ def build_answer_validate_freeze_memorize_wrapper(
         "Same physical root: " + ("YES" if same_physical else "NO"),
         "Selected Project Support root: " + str(support_root),
         "Selected project-linked transient root: " + str(transient_root),
+        "Artifact root inbox: " + str(staging["root_inbox"]),
+        "Artifact staging required before use: YES",
+        "Artifact staging integrity: copy, SHA-256 verify, then remove root source",
+        "Project-switch rule: re-derive paths and recheck selection_ticket before root-source deletion",
         "Canonical prompt source: " + str(prompt_path),
         "Project interpreter: resolve from current Project handoff or validator owner; do not default to plain python.",
         "Hard boundary: selected Project owns payload, install, live validation, Freeze memory, and Error Memory.",

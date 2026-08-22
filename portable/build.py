@@ -22,6 +22,7 @@ from portable.physical_runtime import (
     hydrate_physical_runtime,
     validate_physical_runtime,
 )
+from portable.packaged_worker_runtime import validate_packaged_worker_runtime
 from portable.policy import (
     is_generated_handoff_or_release_path,
     is_forbidden_tool_capture_path,
@@ -210,6 +211,10 @@ def build_application(paths: BuildPaths) -> BuiltApplication:
 
     application = _detect_built_application(paths)
     _validate_packaged_runtime(application)
+    validate_packaged_worker_runtime(
+        application.app_root,
+        application.executable,
+    )
     _report_pyinstaller_warnings(paths)
     print(f"PORTABLE PACKAGED APP ROOT: {application.app_root}")
     print(f"PORTABLE PACKAGED EXECUTABLE: {application.executable}")

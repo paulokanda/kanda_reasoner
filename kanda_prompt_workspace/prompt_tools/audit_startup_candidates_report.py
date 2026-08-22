@@ -6,6 +6,7 @@ __all__: list[str] = []
 
 import json
 from pathlib import Path
+from typing import Any
 
 from .audit_startup_candidates_models import AuditResult, SourceMapEntry, StartupCandidate, utc_now_iso
 from .audit_startup_candidates_paths import normalize_rel_path

@@ -14,6 +14,9 @@ from typing import Any
 from kanda_reasoner_app.error_memory.models import active_ready, active_ready_missing_reasons, utc_now_iso
 from kanda_reasoner_app.error_memory.store import delete_lesson, list_lessons, save_lesson
 from kanda_reasoner_app.error_memory_gui._window_sync import clear_error_memory_work_windows
+from kanda_reasoner_app.error_memory_gui._owner_lane import (
+    backend_for_current_work_item,
+)
 
 __all__ = [
     "delete_selected_lesson",
@@ -81,7 +84,7 @@ def save_preview_lesson(tab: Any) -> None:
         _show_error(tab, title='Error Memory', message='Error Editor JSON is missing lesson_id.')
         return
     try:
-        path = save_lesson(tab._current_project_root(), payload)
+        path = save_lesson(backend_for_current_work_item(tab), payload)
     except Exception as exc:
         _show_error(tab, title='Error Memory save failed', message=str(exc))
         return
@@ -137,7 +140,7 @@ def save_draft_lesson_from_partial(tab: Any, lesson: dict[str, Any], *, source_t
     draft['status'] = 'draft'
     draft['updated_at_utc'] = utc_now_iso()
     try:
-        path = save_lesson(tab._current_project_root(), draft)
+        path = save_lesson(backend_for_current_work_item(tab), draft)
     except Exception as exc:
         _show_error(tab, title='Error Memory draft save failed', message=str(exc))
         return None
@@ -177,7 +180,45 @@ def set_selected_lesson_status(tab: Any, status: str) -> None:
             return
     if status == 'active':
         lesson['status'] = 'active'
-        tab._save_active_ready_lesson(lesson, 'Updated lesson status to active')
+
+        # A loaded pending intake candidate has not crossed the human
+        # Memorize Error commit boundary yet.  Mark Active is therefore a
+        # preview/status action for that candidate, not a second save path.
+        pending_path = str(
+            getattr(tab, '_loaded_pending_intake_file', '') or ''
+        ).strip()
+        if pending_path:
+            lesson.pop('intended_status', None)
+            tab._selected_lesson_id = str(lesson.get('lesson_id', ''))
+            tab._last_received_lesson = dict(lesson)
+            tab.received_preview_edit.setPlainText(
+                json.dumps(
+                    lesson,
+                    indent=2,
+                    sort_keys=True,
+                    ensure_ascii=False,
+                )
+            )
+            tab.raw_error_edit.setPlainText(
+                tab._formatted_lesson_block(lesson)
+            )
+            tab._refresh_heuristic_correction_button_state()
+            tab._show_action_done(
+                'Error Memory',
+                'Marked pending lesson active in preview.',
+                (
+                    'Nothing was saved or consumed. Review the corrected '
+                    'active lesson, then press Memorize Error to perform the '
+                    'single human-controlled canonical write.'
+                ),
+            )
+            return
+
+        # Existing saved lessons keep their status-update behavior.
+        tab._save_active_ready_lesson(
+            lesson,
+            'Updated lesson status to active',
+        )
         return
     if status == 'draft':
         source_text = tab.received_preview_edit.toPlainText().strip() or tab.raw_error_edit.toPlainText().strip()
@@ -186,7 +227,7 @@ def set_selected_lesson_status(tab: Any, status: str) -> None:
     lesson['status'] = status
     lesson['updated_at_utc'] = utc_now_iso()
     try:
-        path = save_lesson(tab._current_project_root(), lesson)
+        path = save_lesson(backend_for_current_work_item(tab), lesson)
     except Exception as exc:
         _show_error(tab, title='Error Memory status update failed', message=str(exc))
         return
@@ -218,7 +259,7 @@ def supersede_selected_lesson(tab: Any) -> None:
     lesson['superseded_by'] = replacement_id
     lesson['updated_at_utc'] = utc_now_iso()
     try:
-        path = save_lesson(tab._current_project_root(), lesson)
+        path = save_lesson(backend_for_current_work_item(tab), lesson)
     except Exception as exc:
         _show_error(tab, title='Error Memory supersede failed', message=str(exc))
         return

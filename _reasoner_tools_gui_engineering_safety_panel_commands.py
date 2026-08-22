@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import contextlib as _contextlib
 import io as _io
-import os as _os
 import subprocess as _subprocess
 import sys as _sys
 from dataclasses import dataclass as _dataclass
@@ -33,6 +32,12 @@ _resolve_active_project_root = getattr(
 )
 if not callable(_resolve_active_project_root):
     raise RuntimeError("TOOL_PROJECT_ROOT_RESOLVER_PUBLIC_CONTRACT_MISSING")
+_tool_process_environment_module = _import_tool_module(
+    "kanda_reasoner_app.tool_process_environment", "tool_process_environment"
+)
+_build_tool_child_environment = getattr(
+    _tool_process_environment_module, "build_tool_child_environment"
+)
 _CLI_MODULE_PATH = "kanda_reasoner_app.safety_suite_cli.commands"
 _PROJECT_CONTEXT_UNAVAILABLE = "PROJECT_CONTEXT_UNAVAILABLE"
 
@@ -262,11 +267,7 @@ def _run_cli_subprocess(args: list[str]) -> _PanelCommandResult:
     """Run the safety-suite CLI as a fallback subprocess."""
     command = [_sys.executable, "-m", _CLI_MODULE_PATH, *args]
     try:
-        env = _os.environ.copy()
-        existing_pythonpath = env.get("PYTHONPATH", "")
-        env["PYTHONPATH"] = str(_tool_root()) + (
-            _os.pathsep + existing_pythonpath if existing_pythonpath else ""
-        )
+        env = _build_tool_child_environment()
         completed = _subprocess.run(
             command, capture_output=True, text=True, check=False,
             cwd=str(_tool_root()), env=env,

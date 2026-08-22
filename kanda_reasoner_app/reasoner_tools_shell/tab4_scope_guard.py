@@ -24,6 +24,10 @@ import json
 import os
 from pathlib import Path
 
+from kanda_reasoner_app.tool_process_environment import (
+    build_tool_child_environment,
+)
+
 CANONICAL_PACKAGE_NAME = "kanda_reasoner_app"
 LEGACY_PACKAGE_NAME = "_".join(("ask", "ai", "project", "reasoner"))
 
@@ -314,12 +318,7 @@ def apply_tab4_scope_environment(env: dict[str, str], project_root: object) -> d
     """Return an environment constrained to the dynamic Tab 4 project root."""
     root = resolve_tab4_project_root(project_root)
     root_text = str(root)
-    env = dict(env)
-    current_pythonpath = env.get("PYTHONPATH", "")
-    path_parts = [part for part in current_pythonpath.split(os.pathsep) if part]
-    if root_text not in path_parts:
-        path_parts.insert(0, root_text)
-    env["PYTHONPATH"] = os.pathsep.join(path_parts)
+    env = build_tool_child_environment(env)
     rules_json = tab8_rules_to_env_json(root)
     env["PROJECT_REASONER_PROJECT_ROOT"] = root_text
     env["KANDA_RUNTIME_PROJECT_ROOT"] = root_text

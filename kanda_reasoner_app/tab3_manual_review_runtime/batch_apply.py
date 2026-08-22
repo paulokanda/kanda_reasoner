@@ -3,44 +3,40 @@
 # MODULE ORIGIN : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui.py
 # MANIFEST      : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help.json
 # HELP FOLDER   : kanda_reasoner_app/insert_missing_docstrings_gui/insert_missing_docstrings_gui_help/
-# PURPOSE       : Apply approved manual docstring review drafts in guarded batches.
+# PURPOSE       : Render approved manual docstring review drafts as proposals.
 # EXPORTS       : _apply_approved_review_batch
 # DEPENDS ON    : manual_docstring_review_support.py
 # REFACTOR DATE : 2026-06-01
 # ------------------------------------------------------
-"""Apply approved manual docstring review drafts in guarded batches."""
+"""Render approved manual docstring review drafts without Project mutation."""
 
 from __future__ import annotations
 
-import py_compile
+import hashlib
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
+from kanda_reasoner_app.project_source_proposal_boundary import (
+    proposal_only_message,
 )
 
 from .review_support import (
-    _backup_source_file,
     _manual_review_is_inside_project_root,
     _manual_review_safe_int,
     _project_root_for_owner,
 )
 
 
-
 def _apply_approved_review_batch(owner: object, locations: list[dict]) -> str:
-    """Apply approved drafts with backup, py_compile, and rollback."""
+    """Render approved drafts as proposal-only evidence."""
     approved = _approved_locations(locations)
     if not approved:
-        return "Approved batch apply: no approved locations with draft text."
+        return "Approved batch proposal: no approved locations with draft text."
     by_file = _group_by_file(approved)
-    reports: list[str] = ["Approved batch apply: " + str(len(approved)) + " location(s)."]
+    reports: list[str] = [
+        "Approved batch proposal-only: " + str(len(approved)) + " location(s)."
+    ]
     for file_name, file_locations in by_file.items():
-        reports.append(_apply_one_file(owner, file_name, file_locations))
+        reports.append(_propose_one_file(owner, file_name, file_locations))
     return "\n".join(reports)
 
 
@@ -65,8 +61,8 @@ def _group_by_file(locations: list[dict]) -> dict[str, list[dict]]:
     return grouped
 
 
-def _apply_one_file(owner: object, file_name: str, locations: list[dict]) -> str:
-    """Apply approved drafts to one source file with rollback on failure."""
+def _propose_one_file(owner: object, file_name: str, locations: list[dict]) -> str:
+    """Validate one in-memory proposal without writing Project source."""
     path = _resolve_source_path(owner, file_name)
     if not _manual_review_is_inside_project_root(owner, path):
         return "SKIP outside project root: " + file_name
@@ -74,32 +70,24 @@ def _apply_one_file(owner: object, file_name: str, locations: list[dict]) -> str
         original = path.read_text(encoding="utf-8", errors="replace")
     except OSError as exc:
         return "SKIP read failed: " + file_name + " :: " + str(exc)
-    project_root = _project_root_for_owner(owner)
-    fire_shield = build_current_fire_shield_context(
-        project_root=project_root,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="manual-docstring-batch-apply",
-    )
+    updated = _insert_docstrings(original, locations)
     try:
-        backup_path = _backup_source_file(owner, path)
-        updated = _insert_docstrings(original, locations)
-        payload = updated.encode("utf-8")
-        assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
-        assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
-        path.write_bytes(payload)
-        py_compile.compile(str(path), doraise=True)
-    except Exception as exc:
-        try:
-            rollback = original.encode("utf-8")
-            assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
-            assert_fire_shield_payload_bytes_allowed(fire_shield, path, rollback)
-            path.write_bytes(rollback)
-            verify_tool_snapshot_unchanged(fire_shield)
-        except OSError:
-            pass
-        return "ROLLBACK " + file_name + " :: " + str(exc)
-    verify_tool_snapshot_unchanged(fire_shield)
-    return "APPLIED " + file_name + " :: backup=" + str(backup_path)
+        compile(updated, str(path), "exec")
+    except (SyntaxError, ValueError) as exc:
+        return "PROPOSAL_INVALID " + file_name + " :: " + str(exc)
+    original_hash = _sha256_text(original)
+    proposed_hash = _sha256_text(updated)
+    marker = proposal_only_message("manual-docstring-batch")
+    return (
+        "PROPOSAL_ONLY "
+        + file_name
+        + " :: original_sha256="
+        + original_hash
+        + " proposed_sha256="
+        + proposed_hash
+        + " :: "
+        + marker
+    )
 
 
 def _resolve_source_path(owner: object, file_name: str) -> Path:
@@ -111,9 +99,13 @@ def _resolve_source_path(owner: object, file_name: str) -> Path:
 
 
 def _insert_docstrings(source_text: str, locations: list[dict]) -> str:
-    """Insert approved docstrings by descending line number."""
+    """Insert approved docstrings by descending line number in memory."""
     lines = source_text.splitlines()
-    for location in sorted(locations, key=lambda item: _manual_review_safe_int(item.get("line", 0)), reverse=True):
+    for location in sorted(
+        locations,
+        key=lambda item: _manual_review_safe_int(item.get("line", 0)),
+        reverse=True,
+    ):
         line_number = max(1, _manual_review_safe_int(location.get("line", 1)))
         index = min(max(line_number - 1, 0), len(lines))
         draft = _normal_docstring(str(location.get("draft_docstring", "")))
@@ -127,7 +119,11 @@ def _normal_docstring(text: str) -> str:
     """Return text as a triple-quoted docstring block."""
     draft = text.strip()
     if not draft.startswith((chr(34) * 3, chr(39) * 3)):
-        draft = (chr(34) * 3) + draft.strip(chr(34) + chr(39) + "\n ") + (chr(34) * 3)
+        draft = (
+            (chr(34) * 3)
+            + draft.strip(chr(34) + chr(39) + "\n ")
+            + (chr(34) * 3)
+        )
     return draft
 
 
@@ -137,3 +133,8 @@ def _insertion_indent(line_text: str) -> str:
     if line_text.lstrip().startswith(("def ", "async def ", "class ")):
         indent += "    "
     return indent
+
+
+def _sha256_text(text: str) -> str:
+    """Return the SHA-256 digest of UTF-8 proposal text."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from kanda_reasoner_app.tool_runtime_identity import (
+    current_tool_runtime_identity,
+)
+
 ERROR_MEMORY_TEMPLATE_RELATIVE_DIR = Path(
     "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons"
 )
@@ -35,21 +39,16 @@ __all__ = [
 
 
 def error_memory_ai_formulary_canon_path(
-    project_root: Path,
+    project_root: Path | None,
     *,
     module_file: str,
 ) -> Path:
-    """Return the canonical Error Memory AI formulary startup prompt path."""
-    root = Path(project_root).expanduser().resolve(strict=False)
-    candidates = [
-        root / ERROR_MEMORY_AI_FORMULARY_CANON_RELATIVE_PATH,
+    """Return the Tool-owned Error Memory startup canon independent of Project."""
+    del project_root
+    return (
         Path(module_file).resolve(strict=False).parents[2]
-        / ERROR_MEMORY_AI_FORMULARY_CANON_RELATIVE_PATH,
-    ]
-    for candidate in candidates:
-        if candidate.exists() and candidate.is_file():
-            return candidate
-    return candidates[0]
+        / ERROR_MEMORY_AI_FORMULARY_CANON_RELATIVE_PATH
+    )
 
 
 def read_error_memory_ai_formulary_canon(
@@ -69,22 +68,33 @@ def read_error_memory_ai_formulary_canon(
     return path.read_text(encoding="utf-8")
 
 
-def send_zip_errors_prompt_path(project_root: Path, *, module_file: str) -> Path:
-    """Return the canonical generalized Send Zip Errors prompt path."""
-    root = Path(project_root).expanduser().resolve(strict=False)
-    candidates = [
-        root / SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH,
+def send_zip_errors_prompt_path(
+    project_root: Path | None,
+    *,
+    module_file: str,
+) -> Path:
+    """Return the Tool-owned Error Memory lesson ZIP prompt."""
+    del project_root
+    return (
         Path(module_file).resolve(strict=False).parents[2]
-        / SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH,
-    ]
-    for candidate in candidates:
-        if candidate.exists() and candidate.is_file():
-            return candidate
-    return candidates[0]
+        / SEND_ZIP_ERRORS_PROMPT_RELATIVE_PATH
+    )
+
+
+def _source_zip_error_intake_available() -> bool:
+    """Return whether executable Error Memory ZIP intake is source-safe."""
+    mode = str(current_tool_runtime_identity().runtime_mode).strip().upper()
+    return mode == "SOURCE"
 
 
 def read_send_zip_errors_prompt(project_root: Path, *, module_file: str) -> str:
-    """Read the canonical generalized Send Zip Errors prompt."""
+    """Read the runtime-safe Error Memory delivery prompt."""
+    if not _source_zip_error_intake_available():
+        return error_lesson_intake_blueprint_clipboard_text(
+            project_root,
+            context_text="",
+            module_file=module_file,
+        )
     path = send_zip_errors_prompt_path(project_root, module_file=module_file)
     if not path.exists() or not path.is_file():
         raise FileNotFoundError("Send Zip Errors prompt not found: " + str(path))

@@ -10,6 +10,9 @@ from kanda_reasoner_app.manage_architecture.architecture_audit_actions_gui impor
 from kanda_reasoner_app.manage_architecture.architecture_review_subtabs import build_architecture_review_ui
 from kanda_reasoner_app.manage_architecture.large_module_split_audit_gui import LargeModuleSplitAuditGuiMixin
 from kanda_reasoner_app.manage_architecture.large_module_target_queue import LargeModuleTarget
+from kanda_reasoner_app.manage_architecture.engineering_diagnostics_shutdown import (
+    EngineeringDiagnosticsShutdownMixin,
+)
 def _install_deleted_legacy_root_importlib_aliases():
     """Install in-process aliases for deleted legacy payload imports."""
     import importlib
@@ -126,6 +129,7 @@ class ArchitectureRunWorker(QObject):
         return module
 
 class ArchitectureManagerWindow(
+    EngineeringDiagnosticsShutdownMixin,
     ArchitectureAuditActionsMixin,
     LargeModuleSplitAuditGuiMixin,
     QMainWindow,

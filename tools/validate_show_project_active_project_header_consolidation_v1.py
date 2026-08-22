@@ -1,5 +1,5 @@
 # project-path: tools/validate_show_project_active_project_header_consolidation_v1.py
-"""Validate the consolidated Active Project controls in Show Project to AI."""
+"""Validate the current Show Project Active Project header integration."""
 
 from __future__ import annotations
 
@@ -12,6 +12,10 @@ from pathlib import Path
 FEATURE_ID = "show-project-active-project-header-consolidation-v1"
 MAIN_WINDOW = Path(
     "kanda_reasoner_app/reasoner_tools_gui_shell/main_window.py"
+)
+LAYOUT_RELOCATION = Path(
+    "kanda_reasoner_app/reasoner_tools_gui_shell/"
+    "_lazy_tab_layout_relocation.py"
 )
 WINDOW_PATCHES = Path(
     "kanda_reasoner_app/reasoner_tools_gui_shell/main_window_help/"
@@ -36,13 +40,15 @@ def read_text(root: Path, relative_path: Path) -> str:
 
 
 def validate_static(root: Path) -> None:
-    """Validate source ownership, captions, layout, and module size."""
+    """Validate current header ownership, styling, and shell commands."""
     main_text = read_text(root, MAIN_WINDOW)
+    relocation_text = read_text(root, LAYOUT_RELOCATION)
     patches_text = read_text(root, WINDOW_PATCHES)
     safe_eject_text = read_text(root, SAFE_EJECT_VALIDATOR)
 
     for relative_path, source_text in (
         (MAIN_WINDOW, main_text),
+        (LAYOUT_RELOCATION, relocation_text),
         (WINDOW_PATCHES, patches_text),
         (SAFE_EJECT_VALIDATOR, safe_eject_text),
     ):
@@ -76,21 +82,33 @@ def validate_static(root: Path) -> None:
         require(marker in main_text, "Shell Project command marker missing: " + marker)
     print("SHELL_PROJECT_COMMANDS_PRESERVED: PASS")
 
-    required_patches = (
-        'project_label.setText("Active Project:")',
-        '"color: #0B3D91; font-weight: bold; padding-left: 4px;"',
-        'project_edit.setStyleSheet("color: #9DC08B; font-weight: bold;")',
-        'browse_button.hide()',
-        "for control in (self.select_project_button, self.eject_project_button):",
-        "header_layout.insertWidget(insert_index, control, 0)",
-        "control.show()",
+    required_relocation = (
+        "def _move_show_project_project_root_controls_to_header_row",
+        'label=getattr(widget, "project_root_label", None)',
+        'path_widget=getattr(widget, "project_root_edit", None)',
+        'browse_button=getattr(widget, "browse_project_button", None)',
+        'label.setText("Active Project:")',
+        '"color: #0B3D91; "',
+        '"color: #166534; "',
+        "browse_button.hide()",
+        "destination_layout.insertWidget(insert_index, select_button, 0)",
+        "destination_layout.insertWidget(insert_index + 1, eject_button, 0)",
     )
-    for marker in required_patches:
-        require(marker in patches_text, "Header integration marker missing: " + marker)
+    for marker in required_relocation:
+        require(
+            marker in relocation_text,
+            "Current header integration marker missing: " + marker,
+        )
+    require(
+        "project_label.setText(\"Active Project:\")" not in patches_text,
+        "Legacy Show Project header styling still owned by window_tool_patches",
+    )
     require(
         "'backup_show_project_button'" in patches_text,
-        "Backup Show Project control was not preserved",
+        "Backup Show Project visibility preservation is missing",
     )
+    print("SHOW_PROJECT_ACTIVE_HEADER_CURRENT_OWNER: PASS")
+    print("SHOW_PROJECT_ACTIVE_HEADER_STRONG_GREEN_STYLE: PASS")
     print("SHOW_PROJECT_ACTIVE_PROJECT_HEADER_CONTRACT: PASS")
 
     require(
@@ -116,17 +134,10 @@ def configure_qt() -> None:
 
 
 def validate_real_qt(root: Path) -> None:
-    """Exercise the actual collector-header relocation helper with Qt widgets."""
+    """Exercise the current LazyToolTab Show Project relocation path."""
     configure_qt()
     try:
-        from PySide6.QtWidgets import (
-            QApplication,
-            QHBoxLayout,
-            QLabel,
-            QLineEdit,
-            QPushButton,
-            QWidget,
-        )
+        from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
     except ImportError:
         print("SHOW_PROJECT_ACTIVE_HEADER_REAL_QT: NOT_APPLICABLE")
         return
@@ -134,80 +145,93 @@ def validate_real_qt(root: Path) -> None:
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
-    from kanda_reasoner_app.reasoner_tools_gui_shell.main_window_help.window_tool_patches import (
-        _WindowToolPatchesMixin,
+    from kanda_reasoner_app.reasoner_tools_gui_shell._lazy_tab_shell_chrome import (
+        _CONTEXT_COLLECTOR_GUI_SOURCE,
     )
+    from kanda_reasoner_app.reasoner_tools_gui_shell.lazy_tabs import LazyToolTab
+    from kanda_reasoner_app.reasoner_tools_gui_shell.tool_specs import ToolSpec
 
     app = QApplication.instance() or QApplication([])
+    select_calls: list[str] = []
+    eject_calls: list[str] = []
 
-    class CollectorWidget(QWidget):
+    class CollectorFixture(QWidget):
         def __init__(self) -> None:
             super().__init__()
-            self.header_host = QWidget(self)
-            self.header_layout = QHBoxLayout(self.header_host)
             self.project_root_label = QLabel("Project Root:")
-            self.project_root_edit = QLineEdit()
+            self.project_root_edit = QLineEdit("")
             self.browse_project_button = QPushButton("Browse...")
             self.backup_show_project_button = QPushButton("Backup Show Project")
-            for control in (
+            self._fixture_controls = (
                 self.project_root_label,
                 self.project_root_edit,
                 self.browse_project_button,
                 self.backup_show_project_button,
-            ):
-                self.header_layout.addWidget(control)
+            )
 
-    class Harness(_WindowToolPatchesMixin):
-        def __init__(self) -> None:
-            self.current_project_root = None
-            self.select_project_button = QPushButton("Select Active Project")
-            self.eject_project_button = QPushButton("Eject Active Project")
-            self.eject_project_button.setEnabled(False)
+        def move_project_root_controls_to_layout(self, layout) -> None:
+            for control in self._fixture_controls:
+                layout.addWidget(control, 0)
 
-        @staticmethod
-        def _normalize_project_root(_text: str):
-            return None
-
-        @staticmethod
-        def _bind_project_root_field(_field) -> None:
-            return None
-
-    widget = CollectorWidget()
-    harness = Harness()
-    harness._patch_collector_widget(widget)
+    spec = ToolSpec(
+        step_title="Show Project to AI",
+        source_hint=_CONTEXT_COLLECTOR_GUI_SOURCE,
+        tab_id="show_project",
+    )
+    tab = LazyToolTab(
+        spec,
+        lambda *_args: None,
+        select_project_handler=lambda: select_calls.append("select"),
+        eject_project_handler=lambda: eject_calls.append("eject"),
+        active_project_provider=lambda: None,
+    )
+    widget = CollectorFixture()
+    tab._move_show_project_project_root_controls_to_header_row(widget)
     app.processEvents()
 
-    layout = widget.header_layout
-    edit_index = layout.indexOf(widget.project_root_edit)
-    select_index = layout.indexOf(harness.select_project_button)
-    eject_index = layout.indexOf(harness.eject_project_button)
-    backup_index = layout.indexOf(widget.backup_show_project_button)
+    layout = tab.tab_header_template.project_root_layout
+    select_button = tab.active_project_select_button
+    eject_button = tab.active_project_eject_button
 
     require(widget.project_root_label.text() == "Active Project:", "Label mismatch")
     require("#0B3D91" in widget.project_root_label.styleSheet(), "Blue label missing")
-    require("font-weight: bold" in widget.project_root_label.styleSheet(), "Bold label missing")
-    require("#9DC08B" in widget.project_root_edit.styleSheet(), "Green path missing")
-    require("font-weight: bold" in widget.project_root_edit.styleSheet(), "Bold path missing")
+    require("font-weight: 700" in widget.project_root_label.styleSheet(), "Bold label missing")
+    require("#166534" in widget.project_root_edit.styleSheet(), "Strong-green path missing")
+    require("font-weight: 700" in widget.project_root_edit.styleSheet(), "Bold path missing")
     require(widget.project_root_edit.text() == "", "No-Project path must stay blank")
-    require(layout.indexOf(widget.browse_project_button) == -1, "Browse remains in header")
     require(widget.browse_project_button.isHidden(), "Browse is not hidden")
-    require(select_index == edit_index + 1, "Select button is not after the path")
-    require(eject_index == select_index + 1, "Eject button is not after Select")
-    require(backup_index == eject_index + 1, "Backup button order changed")
-    require(not harness.select_project_button.isHidden(), "Select button is hidden")
-    require(not harness.eject_project_button.isHidden(), "Eject button is hidden")
-    require(not harness.eject_project_button.isEnabled(), "Eject must stay disabled for NONE")
+    require(select_button is not None, "Select button missing")
+    require(eject_button is not None, "Eject button missing")
+    require(
+        layout.indexOf(select_button) == layout.indexOf(widget.project_root_edit) + 1,
+        "Select button is not after the path",
+    )
+    require(
+        layout.indexOf(eject_button) == layout.indexOf(select_button) + 1,
+        "Eject button is not after Select",
+    )
+    require(
+        layout.indexOf(widget.backup_show_project_button) == layout.indexOf(eject_button) + 1,
+        "Backup button order changed",
+    )
+    require(not select_button.isHidden(), "Select button is hidden")
+    require(not eject_button.isHidden(), "Eject button is hidden")
+    require(not eject_button.isEnabled(), "Eject must stay disabled for NONE")
+
+    select_button.click()
+    require(select_calls == ["select"], "Select callback did not reach shell authority")
+    require(eject_calls == [], "Disabled Eject unexpectedly invoked shell authority")
 
     widget.close()
+    tab.close()
     widget.deleteLater()
-    harness.select_project_button.deleteLater()
-    harness.eject_project_button.deleteLater()
+    tab.deleteLater()
     app.processEvents()
     print("SHOW_PROJECT_ACTIVE_HEADER_REAL_QT: PASS")
 
 
 def main() -> int:
-    """Run the focused consolidation regression."""
+    """Run the current header-consolidation regression."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True)
     args = parser.parse_args()

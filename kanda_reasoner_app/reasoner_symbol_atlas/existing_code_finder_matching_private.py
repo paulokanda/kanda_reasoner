@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from .existing_code_finder import ProjectSymbolAtlasExistingCodeFinderOptions
+
 from .output_policy import is_active_owner_candidate
 from .schemas import (
     ProjectSymbol,

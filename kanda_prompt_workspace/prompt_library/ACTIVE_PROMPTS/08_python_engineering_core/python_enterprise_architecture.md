@@ -23,6 +23,22 @@ cost.
 This specialist is informed by enterprise application-pattern literature. It is
 not a persona and does not claim personal experience.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## When to load
 
 Load this prompt when the main question involves one or more of:
@@ -51,7 +67,7 @@ reasoning. It does not own:
 - benchmark design or runtime optimization; use KPR-08-006;
 - detailed testing strategy; use the current testing specialist;
 - retry, idempotency, or distributed recovery policy; use the resilience owner;
-- source-write, delivery, validation, or freeze authorization; use Brick Wall
+- source-write, delivery, validation, or snapshot/freeze authorization; use the active Project's declared implementation authority
   and the current delivery owners.
 
 ## Task modes
@@ -204,7 +220,7 @@ Return an `ENTERPRISE APPLICATION PATTERN RECORD` containing:
 - supporting owner handoffs;
 - validation obligations;
 - unresolved risks;
-- source-write authorization: `NO` unless separately granted by Brick Wall.
+- source-write authorization: `NO`; any implementation authorization belongs to the active Project's declared authority.
 
 ## Version history
 

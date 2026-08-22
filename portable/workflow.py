@@ -109,13 +109,14 @@ def _print_result(
 ) -> None:
     print("PORTABLE ATOMIC PUBLICATION: PASS")
     print("PORTABLE OWNER SEPARATION: PASS")
-    print("PORTABLE EXPLICIT SELF-HOSTING AUTHORITY: PASS")
-    print("PORTABLE ALL REGISTERED OWNER ROOTS PROTECTED: PASS")
+    print("PORTABLE TOOL ROOT AUTHORITY FROM BUILDER LOCATION: PASS")
+    print("PORTABLE ALL KNOWN ROOTS DESTINATION-PROTECTED: PASS")
+    print("PORTABLE TOOL OWNER ROOTS IMMUTABILITY-PROTECTED: PASS")
     print("PORTABLE DESTINATION PROBE AFTER BOUNDARY CHECK: PASS")
     print("PORTABLE OUTPUT USER-SELECTED FOLDER: PASS")
-    print("PORTABLE OUTPUT OUTSIDE PROJECT ROOT: PASS")
-    print("PORTABLE OUTPUT OUTSIDE PROJECT SUPPORT: PASS")
-    print("PORTABLE BUILD RESULTS NOT MERGED INTO PROJECT: PASS")
+    print("PORTABLE OUTPUT OUTSIDE TOOL ROOT: PASS")
+    print("PORTABLE OUTPUT OUTSIDE TOOL SUPPORT: PASS")
+    print("PORTABLE BUILD RESULTS NOT MERGED INTO TOOL SOURCE: PASS")
     print("SHOW PROJECT WORKFLOW NOT INVOKED: PASS")
     print("SHOW PROJECT SUPPORT UNCHANGED BY PORTABLE BUILD: PASS")
     print(f"PORTABLE OUTPUT: {paths.final_zip}")
@@ -149,8 +150,10 @@ def run(*, project_root: Path, args: Namespace) -> int:
         boundary = load_registry_boundary(project_root)
         print_builder_identity()
         print(f"PORTABLE HARDENING STAGE: {PORTABLE_HARDENING_STAGE}")
-        print("PORTABLE EXPLICIT SELF-HOSTING AUTHORITY: PASS")
-        print("PORTABLE ALL REGISTERED OWNER ROOTS LOADED: PASS")
+        print("PORTABLE TOOL ROOT AUTHORITY FROM BUILDER LOCATION: PASS")
+        print("PORTABLE ACTIVE PROJECT IDENTITY NOT REQUIRED: PASS")
+        print("PORTABLE OPTIONAL REGISTRY DESTINATION FIREWALL LOADED: PASS")
+        print("PORTABLE TOOL OWNER MUTATION SCOPE RESOLVED: PASS")
         if not PRODUCTION_PORTABLE_ENABLED:
             raise PortableBuildError(
                 "Production Portable creation remains intentionally blocked until "
@@ -183,7 +186,7 @@ def run(*, project_root: Path, args: Namespace) -> int:
         governed_guard = prepare_governed_root_rollback(paths)
         governed_checkpoints.append(
             governed_guard.checkpoint(
-                "PORTABLE GOVERNED ROOTS UNCHANGED BEFORE BUILD"
+                "PORTABLE TOOL OWNER ROOTS UNCHANGED BEFORE BUILD"
             )
         )
 
@@ -193,13 +196,13 @@ def run(*, project_root: Path, args: Namespace) -> int:
         candidate_evidence = validate_zip(paths.candidate_zip)
         governed_checkpoints.append(
             governed_guard.checkpoint(
-                "PORTABLE GOVERNED ROOTS UNCHANGED AFTER BUILD"
+                "PORTABLE TOOL OWNER ROOTS UNCHANGED AFTER BUILD"
             )
         )
         smoke_evidence = extract_and_smoke(paths, candidate_evidence)
         governed_checkpoints.append(
             governed_guard.checkpoint(
-                "PORTABLE GOVERNED ROOTS UNCHANGED AFTER SMOKE"
+                "PORTABLE TOOL OWNER ROOTS UNCHANGED AFTER SMOKE"
             )
         )
 
@@ -226,7 +229,7 @@ def run(*, project_root: Path, args: Namespace) -> int:
         )
         governed_checkpoints.append(
             governed_guard.checkpoint(
-                "PORTABLE GOVERNED ROOTS UNCHANGED AFTER PUBLICATION"
+                "PORTABLE TOOL OWNER ROOTS UNCHANGED AFTER PUBLICATION"
             )
         )
 
@@ -263,14 +266,22 @@ def run(*, project_root: Path, args: Namespace) -> int:
             "registry_sha256": (
                 paths.registry_boundary.registry_sha256
             ),
-            "active_project_id": (
-                paths.registry_boundary.current_project_id
+            "observed_active_project_id": (
+                paths.registry_boundary.current_project_id or None
             ),
-            "selection_mode": (
+            "observed_selection_mode": (
                 paths.registry_boundary.selection_mode
             ),
+            "active_project_identity_used_for_build": False,
+            "tool_build_authority": "BUILDER_LOCATION",
             "protected_registered_root_count": len(
                 paths.registry_boundary.protected_roots
+            ),
+            "destination_protected_registered_root_count": len(
+                paths.registry_boundary.protected_roots
+            ),
+            "tool_owner_immutability_root_count": len(
+                paths.registry_boundary.tool_owner_roots
             ),
             "governed_root_rollback": governed_guard.evidence(),
             "external_build_controls": external_control_evidence,
@@ -324,7 +335,7 @@ def run(*, project_root: Path, args: Namespace) -> int:
         if governed_guard is not None:
             try:
                 governed_failure_rollback = governed_guard.restore_if_changed(
-                    "PORTABLE FAILURE GOVERNED ROOT EXACT ROLLBACK"
+                    "PORTABLE FAILURE TOOL OWNER ROOT EXACT ROLLBACK"
                 )
             except Exception as rollback_exc:
                 governed_failure_rollback = {
@@ -357,11 +368,18 @@ def run(*, project_root: Path, args: Namespace) -> int:
                 if boundary is not None
                 else None
             ),
-            "selection_mode": (
+            "observed_active_project_id": (
+                boundary.current_project_id
+                if boundary is not None and boundary.current_project_id
+                else None
+            ),
+            "observed_selection_mode": (
                 boundary.selection_mode
                 if boundary is not None
                 else None
             ),
+            "active_project_identity_used_for_build": False,
+            "tool_build_authority": "BUILDER_LOCATION",
             "external_build_controls": external_control_evidence,
             "diagnostic_root": (
                 str(paths.run_root)

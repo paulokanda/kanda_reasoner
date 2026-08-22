@@ -2,7 +2,7 @@
 prompt_id: daily_patch_delivery_guardrails
 prompt_code: KPR-01-007
 title: Daily Patch Delivery Guardrails
-version: 3.0
+version: 3.2
 status: active
 load_type: always_startup
 owner_box: 01_session_start_and_navigation
@@ -57,10 +57,15 @@ specific task:
 3. Unknown source states, unknown hashes, or ambiguous ownership fail closed.
 4. Generated startup ZIPs, extracted bundles, and validation outputs are not
    canonical source authority.
-5. The root-drive ZIP is staged into the project-derived transient daily-work
-   root before extraction. The detailed command belongs to Class 05.
-6. `<project>_delete_after_daily_work` is transient garbage and never the sole
-   owner of durable evidence.
+5. Every externally delivered transient work artifact first arrives at the
+   root of the active Project's drive. That drive-root copy is an inbox source,
+   not the working copy.
+6. Before use, derive the current Project drive, Project name, and transient
+   root from the active Project root; copy the artifact into
+   `<project>_delete_after_daily_work`, verify exact SHA-256 equality, and only
+   then remove the drive-root source. Work proceeds from the verified staged
+   copy. Everything remaining under `_delete_after_daily_work` is disposable at
+   end of work/day, so durable evidence must be promoted first.
 7. Durable evidence is routed by `durable_document_artifact_routing_canon`.
 8. Installation, validation, and freeze are separate authorization states.
 9. Validation success must be supported by local evidence; terminal text alone
@@ -101,12 +106,15 @@ If any required field is unresolved, do not show a ZIP link or claim readiness.
 The stable summary is:
 
 ```text
-<drive>:\<project>.zip or another governed drive-root delivery location
-    -> verified staging
-<drive>:\<project>_delete_after_daily_work\
-    -> transient extraction, helpers, and operational copies
+<drive>:\ARTIFACT_NAME
+    -> initial transient inbox only; do not use as the working copy
+<drive>:\<project>_delete_after_daily_work\ARTIFACT_NAME
+    -> verified staged working copy for transient delivery, extraction,
+       helpers, validation, and execution
 <drive>:\<project>_show_project_to_AI\
     -> durable project-support artifacts and evidence
+<drive>:\<project>_delete_after_daily_work\
+    -> disposable at end of work/day after durable evidence is promoted
 ```
 
 The active `project_tool_boundary_canon` owns the actual Tool, Project, Project
@@ -144,6 +152,13 @@ This prompt does not define:
 
 - Keep this file compact and always-startup.
 - Keep detailed patch behavior in Class 05.
+- Never ask the user to pre-place a delivered artifact directly inside
+  `_delete_after_daily_work`; the incoming source begins at the active Project
+  drive root and KANDA derives the staging destination programmatically.
+- Re-derive the drive root, Project name, and transient root whenever the
+  selected Project changes. Never cache another Project's transient path.
+- Use copy -> SHA-256 verify -> root-source delete. A failed verification must
+  preserve the drive-root source and must not accept a partial staged copy.
 - Keep terminal behavior with `terminal_cleanup_contract`.
 - Keep durable evidence out of transient-only storage.
 - Keep exact-source, validation, and human-freeze gates fail closed.

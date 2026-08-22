@@ -12,7 +12,7 @@
   "classification": "concurrency_task_lifecycle_distributed_execution_specialist",
   "source_stage": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
   "updated_for": "prompt-audit-wave9a-python-specialist-stack-reconciliation-v1",
-  "description": "Select and govern async, thread, process, queue, or distributed execution through explicit task ownership, bounded concurrency, cancellation, cleanup, and delivery semantics.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred.",
+  "description": "Select and govern async, thread, process, queue, or distributed execution through explicit task ownership, bounded concurrency, cancellation, cleanup, and delivery semantics.  This prompt is a technical operating contract, not a persona. It does not claim personal experience, hidden execution, current source access, or validation that has not actually occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [

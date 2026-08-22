@@ -26,9 +26,9 @@ from pathlib import Path
 import re
 from typing import Any
 
-from kanda_reasoner_app.error_memory.backend import project_error_memory_backend
-from kanda_reasoner_app.error_memory.cross_owner_reference import (
-    create_cross_owner_reference_from_identity,
+from kanda_reasoner_app.error_memory.backend import (
+    OwnerMetadataPolicy,
+    project_error_memory_backend,
 )
 from kanda_reasoner_app.error_memory.paths import resolve_error_memory_lessons_dir
 from kanda_reasoner_app.error_memory.schema import validate_lesson_shape
@@ -38,8 +38,16 @@ from kanda_reasoner_app.error_memory.store import (
     rebuild_index,
     save_lesson,
 )
-from kanda_reasoner_app.error_memory_gui._memorize_duplicate_guard import (
-    lesson_matches_candidate_error,
+from kanda_reasoner_app.error_memory_gui._portable_foreign_owner_plugin import (
+    FOREIGN_OWNER_ADOPTION_EXCEPTION_ID,
+    FOREIGN_OWNER_MODE_ADOPT,
+    FOREIGN_OWNER_MODE_CANCEL,
+    FOREIGN_OWNER_MODE_REFERENCE,
+    ForeignOwnerAdoptionAuthorization,
+    choose_foreign_owner_import_mode,
+    commit_foreign_owner_import,
+    duplicate_reason,
+    import_errors_into_tab_plugin,
 )
 from kanda_reasoner_app.error_memory_gui._portable_owner_contract import (
     owner_manifest_fields,
@@ -235,42 +243,18 @@ def _resolve_export_root(selected_folder: str | Path) -> tuple[Path, dict[str, A
     )
 
 
-def _fingerprint_hash(lesson: dict[str, Any]) -> str:
-    """Return a lesson fingerprint hash when available."""
-    fingerprint = lesson.get("fingerprint")
-    if not isinstance(fingerprint, dict):
-        return ""
-    return str(fingerprint.get("fingerprint_hash") or "").strip()
-
-
-def _duplicate_reason(
-    candidate: dict[str, Any],
-    stored_lessons: list[dict[str, Any]],
-) -> tuple[str, str]:
-    """Return canonical duplicate reason and stored lesson id, if any."""
-    candidate_id = str(candidate.get("lesson_id") or "").strip()
-    candidate_hash = _fingerprint_hash(candidate)
-    for stored in stored_lessons:
-        stored_id = str(stored.get("lesson_id") or "").strip()
-        if candidate_id and stored_id == candidate_id:
-            return "same lesson_id", stored_id
-        stored_hash = _fingerprint_hash(stored)
-        if candidate_hash and stored_hash and candidate_hash == stored_hash:
-            return "same fingerprint.fingerprint_hash", stored_id
-        if lesson_matches_candidate_error(candidate, stored):
-            return "canonical duplicate-family match", stored_id
-    return "", ""
-
-
 def import_error_lessons_folder(
     selected_project_root: str | Path,
     selected_export_folder: str | Path,
+    *,
+    foreign_owner_mode: str = FOREIGN_OWNER_MODE_REFERENCE,
+    adoption_authorization: ForeignOwnerAdoptionAuthorization | None = None,
 ) -> dict[str, Any]:
-    """Restore same-owner lessons or create foreign-owner references.
+    """Merge Error Memory data while preserving the foreign-owner brick wall.
 
-    A portable export from the same canonical owner may restore unique lesson
-    files. A foreign-owner export never becomes local canonical history; each
-    accepted item becomes a read-only cross-owner reference instead.
+    Same-owner exports restore unique canonical lessons. Foreign-owner exports
+    remain reference-only unless the caller supplies the explicit adoption mode
+    plus an authorization bound to the exact source and current Project owners.
     """
     root = Path(selected_project_root).expanduser().resolve(strict=True)
     target_backend = project_error_memory_backend(root)
@@ -302,7 +286,7 @@ def import_error_lessons_folder(
     stored_lessons = list_lessons(target_backend, include_inactive=True)
     same_owner = source_owner.owner_id == target_backend.owner.owner_id
     accepted: list[dict[str, Any]] = []
-    reference_candidates: list[dict[str, Any]] = []
+    foreign_candidates: list[dict[str, Any]] = []
     duplicates: list[dict[str, str]] = []
     invalid: list[dict[str, str]] = []
 
@@ -333,7 +317,7 @@ def import_error_lessons_folder(
             continue
 
         if same_owner:
-            reason, stored_id = _duplicate_reason(lesson, stored_lessons + accepted)
+            reason, stored_id = duplicate_reason(lesson, stored_lessons + accepted)
             if reason:
                 duplicates.append(
                     {
@@ -345,10 +329,12 @@ def import_error_lessons_folder(
                 continue
             accepted.append(lesson)
         else:
-            reference_candidates.append(lesson)
+            foreign_candidates.append(lesson)
 
     created_paths: list[Path] = []
     created_reference_paths: list[Path] = []
+    adopted_lessons: list[dict[str, Any]] = []
+    selected_foreign_mode = FOREIGN_OWNER_MODE_REFERENCE
     try:
         if same_owner:
             for lesson in accepted:
@@ -366,15 +352,24 @@ def import_error_lessons_folder(
                     )
                 created_paths.append(saved)
         else:
-            for lesson in reference_candidates:
-                created_reference_paths.append(
-                    create_cross_owner_reference_from_identity(
-                        target_backend,
-                        source_owner_scope=source_owner.owner_scope,
-                        source_owner_id=source_owner.owner_id,
-                        lesson_id=str(lesson.get("lesson_id") or ""),
-                    )
-                )
+            manifest_sha = _sha256_bytes(
+                (export_root / ERROR_MEMORY_EXPORT_MANIFEST).read_bytes()
+            )
+            foreign_result = commit_foreign_owner_import(
+                target_backend,
+                source_owner,
+                foreign_candidates,
+                stored_lessons,
+                mode=foreign_owner_mode,
+                authorization=adoption_authorization,
+                export_manifest=manifest,
+                export_manifest_sha256=manifest_sha,
+            )
+            selected_foreign_mode = str(foreign_result["mode"])
+            adopted_lessons = list(foreign_result["imported_lessons"])
+            created_paths.extend(foreign_result["imported_paths"])
+            created_reference_paths.extend(foreign_result["reference_paths"])
+            duplicates.extend(foreign_result["duplicates"])
         rebuild_index(target_backend)
         for path, original_bytes in existing_files.items():
             if not path.is_file() or path.read_bytes() != original_bytes:
@@ -393,25 +388,38 @@ def import_error_lessons_folder(
         rebuild_index(target_backend)
         raise
 
+    imported = accepted if same_owner else adopted_lessons
     return {
         "ok": True,
         "source_export_folder": str(export_root),
-        "imported_count": len(accepted) if same_owner else 0,
+        "source_owner_slug": source_owner.owner_slug,
+        "target_owner_slug": target_backend.owner.owner_slug,
+        "imported_count": len(imported),
         "referenced_count": len(created_reference_paths),
         "duplicate_count": len(duplicates),
         "invalid_count": len(invalid),
-        "imported_lesson_ids": [
-            str(item.get("lesson_id") or "") for item in accepted
-        ],
+        "imported_lesson_ids": [str(item.get("lesson_id") or "") for item in imported],
         "referenced_lesson_ids": [
-            str(item.get("lesson_id") or "")
-            for item in reference_candidates
+            str(item.get("lesson_id") or "") for item in foreign_candidates
+            if selected_foreign_mode == FOREIGN_OWNER_MODE_REFERENCE
         ],
         "duplicates": duplicates,
         "invalid": invalid,
         "merge_only": True,
         "same_owner_restore": same_owner,
-        "foreign_owner_reference_only": not same_owner,
+        "foreign_owner_reference_only": (
+            not same_owner and selected_foreign_mode == FOREIGN_OWNER_MODE_REFERENCE
+        ),
+        "explicit_foreign_owner_adoption": (
+            not same_owner and selected_foreign_mode == FOREIGN_OWNER_MODE_ADOPT
+        ),
+        "exception_catalog_id": (
+            FOREIGN_OWNER_ADOPTION_EXCEPTION_ID
+            if not same_owner and selected_foreign_mode == FOREIGN_OWNER_MODE_ADOPT
+            else ""
+        ),
+        "isolated_data_plugin": not same_owner,
+        "all_other_shields_enforced": True,
         "current_lessons_deleted": 0,
         "current_lessons_replaced": 0,
     }
@@ -465,36 +473,5 @@ def export_errors_from_tab(tab: Any) -> None:
 
 
 def import_errors_into_tab(tab: Any) -> None:
-    """Choose a portable export folder and merge only unique lessons."""
-    from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
-
-    root = tab._current_project_root()
-    selected = _choose_directory(
-        tab,
-        title="Select exported Error Memory folder",
-        start_folder=_dialog_start_folder(root),
-    )
-    if not selected:
-        return
-    try:
-        result = import_error_lessons_folder(root, selected)
-    except Exception as exc:
-        show_error_copy_close_window(tab, title="Import Errors failed", message=str(exc))
-        return
-    tab._reload_table()
-    detail_lines = [
-        "Canonical lessons imported: " + str(result["imported_count"])
-        + " | Foreign-owner references: " + str(result["referenced_count"]),
-        "Duplicate lessons skipped: " + str(result["duplicate_count"]),
-        "Invalid lessons skipped: " + str(result["invalid_count"]),
-        "Current lessons deleted: 0",
-        "Current lessons replaced: 0",
-        "",
-        "Source export folder:",
-        str(result["source_export_folder"]),
-    ]
-    tab._show_action_done(
-        "Import Errors",
-        "Exported Error Memory lessons were merged into the current project.",
-        "\n".join(detail_lines),
-    )
+    """Run the isolated Error Memory data-plugin import workflow."""
+    import_errors_into_tab_plugin(tab)

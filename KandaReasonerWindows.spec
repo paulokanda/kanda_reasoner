@@ -10,8 +10,14 @@ unregistered file beneath the package eligible for Portable distribution.
 from __future__ import annotations
 
 from pathlib import Path
+import importlib
 
 from PyInstaller.utils.hooks import collect_submodules
+
+from portable.packaged_worker_runtime import (
+    build_worker_runtime_binaries,
+    build_worker_runtime_hooks,
+)
 
 from kanda_reasoner_app.source_hygiene.tool_archive_policy import (
     ToolArchivePolicyError,
@@ -102,8 +108,26 @@ def _validate_allowlisted_datas(
     return validated
 
 
+def _validate_submodule_import_preflight() -> None:
+    """Fail before collection if the known ML advisory facade is broken."""
+    module = importlib.import_module(
+        "kanda_reasoner_app.routing_signal_scorer.ml_advisory_signal"
+    )
+    required = (
+        "FORBIDDEN_RUNTIME_APP_HOST_VISIBILITY_CAPABILITIES",
+        "REQUIRED_RUNTIME_APP_HOST_VISIBILITY_CONTRACT_LABELS",
+    )
+    missing = [name for name in required if not hasattr(module, name)]
+    if missing:
+        raise RuntimeError(
+            "PYINSTALLER_SUBMODULE_IMPORT_PREFLIGHT_MISSING:" + ",".join(missing)
+        )
+    print("PORTABLE PYINSTALLER SUBMODULE IMPORT PREFLIGHT: PASS")
+
+
 def _build_hidden_imports() -> list[str]:
     """Return stable explicit and package-discovered Python imports."""
+    _validate_submodule_import_preflight()
     discovered = collect_submodules("kanda_reasoner_app")
     return sorted(set(_BASE_HIDDEN_IMPORTS + discovered), key=str.casefold)
 
@@ -112,15 +136,19 @@ datas = _validate_allowlisted_datas(_build_allowlisted_datas())
 hiddenimports = _build_hidden_imports()
 
 
+worker_runtime_binaries = build_worker_runtime_binaries(TOOL_ROOT)
+worker_runtime_hooks = build_worker_runtime_hooks(TOOL_ROOT)
+
+
 a = Analysis(
     [ENTRYPOINT],
     pathex=[str(TOOL_ROOT)],
-    binaries=[],
+    binaries=worker_runtime_binaries,
     datas=datas,
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
-    runtime_hooks=[],
+    runtime_hooks=worker_runtime_hooks,
     excludes=[],
     noarchive=False,
     optimize=0,

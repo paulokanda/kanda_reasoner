@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Iterable
 
@@ -18,6 +19,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QMainWindow,
     QPushButton,
+    QSizePolicy,
     QTabWidget,
     QVBoxLayout,
     QHBoxLayout,
@@ -35,7 +37,7 @@ from .brain_navigator.contract import create_brain_navigator_tab
 from .tab_navigation_controller import create_tab_navigation_controller
 from kanda_reasoner_app.prompt_library_gui.prompt_library_tab import PromptLibraryTab
 from .tool_specs import TOOLS, ToolSpec
-from kanda_reasoner_app.project_root_resolver import resolve_selected_project_root
+from kanda_reasoner_app.project_root_resolver import resolve_observed_project_root
 from kanda_reasoner_app.project_selection_registry import (
     ProjectSelectionRegistry,
     ProjectSelectionRegistryError,
@@ -52,18 +54,41 @@ from kanda_reasoner_app.web_ai_configuration import (
     WebAIConfigurationController,
     install_application_web_ai_configuration,
 )
+from kanda_reasoner_app.portable_smoke_runtime_report import (
+    PORTABLE_SMOKE_REPORT_PATH_ENV,
+    PORTABLE_SMOKE_REPORT_ROOT_ENV,
+    PORTABLE_SMOKE_REPORT_TOKEN_ENV,
+    record_portable_smoke_event,
+)
 
 __all__ = [
     "ReasonerToolsWindow",
 ]
+
+_PORTABLE_SMOKE_REQUIRED_TAB_IDS = (
+    "project_structure_map",
+    "project_qa",
+    "error_memory",
+)
 from .main_window_help.window_help import _WindowHelpMixin
 from .main_window_help.window_output_paths import _WindowOutputPathsMixin
 from .main_window_help.window_project_root import _WindowProjectRootMixin
 from .main_window_help.window_state import _WindowStateMixin
 from .main_window_help.window_tool_patches import _WindowToolPatchesMixin
-from .main_window_help.window_geometry import resize_window_for_primary_screen
+from .main_window_help.window_geometry import (
+    resize_window_for_primary_screen,
+    restore_window_size_from_prefs,
+    widen_window_to_screen_width_floor,
+)
 
-class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOutputPathsMixin, _WindowToolPatchesMixin, _WindowHelpMixin, QMainWindow):
+class ReasonerToolsWindow(
+    _WindowStateMixin,
+    _WindowProjectRootMixin,
+    _WindowOutputPathsMixin,
+    _WindowToolPatchesMixin,
+    _WindowHelpMixin,
+    QMainWindow,
+):
     """Represent reasoner tools window."""
     
     def __init__(self) -> None:
@@ -74,17 +99,27 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         self.setWindowTitle(APP_DISPLAY_NAME)
         if APP_ICON_PATH.exists():
             self.setWindowIcon(QIcon(str(APP_ICON_PATH)))
-        resize_window_for_primary_screen(self)
-
+        self.setProperty("kandaGeometryGuardExempt", True)
+        self.setProperty("kandaMainWindowFixedSize", True)
         self._prefs = self._load_prefs()
+        if not restore_window_size_from_prefs(self, self._prefs):
+            resize_window_for_primary_screen(self)
+        widen_window_to_screen_width_floor(self)
+        self.setFixedSize(self.size())
+
+        self._project_switch_ticket = 0
         self._project_selection_registry = ProjectSelectionRegistry()
         try:
+            observation = self._project_selection_registry.load_current_observation(
+                selection_ticket=self._project_switch_ticket
+            )
             boundary = self._project_selection_registry.resolve_current_boundary()
         except ProjectSelectionRegistryError:
+            observation = None
             boundary = None
 
-        if boundary is None:
-            legacy_root = resolve_selected_project_root(
+        if observation is None:
+            legacy_root = resolve_observed_project_root(
                 persisted_root=self._normalize_project_root(
                     self._prefs.get("last_project_root", "")
                 )
@@ -94,10 +129,16 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
                     self._project_selection_registry
                     .register_legacy_external_root(legacy_root)
                 )
+                observation = (
+                    self._project_selection_registry.load_current_observation(
+                        selection_ticket=self._project_switch_ticket
+                    )
+                )
 
+        self.current_project_observation = observation
         self.current_project_boundary = boundary
         self.current_project_root: Path | None = (
-            boundary.active_project_root if boundary is not None else None
+            observation.project_root if observation is not None else None
         )
         self._web_ai_configuration = WebAIConfigurationController(self)
         install_application_web_ai_configuration(self._web_ai_configuration)
@@ -112,7 +153,6 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         self._loaded_tools_by_tab_id: dict[str, QWidget] = {}
         self._help_dialog: QMainWindow | None = None
         self._is_propagating_project_root = False
-        self._project_switch_epoch = 0
         self._project_root_field_names = (
             "project_root_edit",
             "_project_root_edit",
@@ -148,7 +188,10 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         title_font.setBold(True)
         title_font.setPointSize(16)
         title.setFont(title_font)
-        title.setAlignment(_qt_core_attr("Qt").AlignRight | _qt_core_attr("Qt").AlignVCenter)
+        title.setAlignment(
+            _qt_core_attr("Qt").AlignRight
+            | _qt_core_attr("Qt").AlignVCenter
+        )
         title_row.addWidget(title, 0)
 
         title_detail = QLabel(" - " + APP_TITLE_DETAIL)
@@ -156,7 +199,10 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         title_detail_font.setPointSize(11)
         title_detail.setFont(title_detail_font)
         title_detail.setStyleSheet("color: #555555; font-weight: 600;")
-        title_detail.setAlignment(_qt_core_attr("Qt").AlignLeft | _qt_core_attr("Qt").AlignVCenter)
+        title_detail.setAlignment(
+            _qt_core_attr("Qt").AlignLeft
+            | _qt_core_attr("Qt").AlignVCenter
+        )
         title_row.addWidget(title_detail, 0)
 
         root.addWidget(title_row_widget)
@@ -179,8 +225,11 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
         self._refresh_active_project_controls()
 
         self.tabs = QTabWidget()
+        self.tabs.setMinimumSize(0, 0)
+        self.tabs.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.tabs.setDocumentMode(True)
         self.tabs.setMovable(True)
+        self.tabs.tabBar().setUsesScrollButtons(True)
         self.tabs.currentChanged.connect(self._on_tab_changed)
         self.tabs.tabBar().tabMoved.connect(self._on_tab_moved)
         root.addWidget(self.tabs, 1)
@@ -207,7 +256,33 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
 
         self._refresh_tab_indexes_from_widgets()
         self.tabs.setCurrentIndex(0)
-        _qt_core_attr("QTimer").singleShot(0, self._load_initial_tab)
+        timer = _qt_core_attr("QTimer")
+        timer.singleShot(0, self._load_initial_tab)
+        if self._portable_smoke_runtime_reporting_enabled():
+            timer.singleShot(1, self._preload_portable_smoke_tabs)
+
+    @staticmethod
+    def _portable_smoke_runtime_reporting_enabled() -> bool:
+        """Return whether token-bound Portable runtime smoke reporting is active."""
+        required = (
+            PORTABLE_SMOKE_REPORT_PATH_ENV,
+            PORTABLE_SMOKE_REPORT_ROOT_ENV,
+            PORTABLE_SMOKE_REPORT_TOKEN_ENV,
+        )
+        return all(str(os.environ.get(name, "") or "").strip() for name in required)
+
+    def _preload_portable_smoke_tabs(self) -> None:
+        """Activate required lazy tabs automatically during Portable smoke only."""
+        for tab_id in _PORTABLE_SMOKE_REQUIRED_TAB_IDS:
+            result = self._tab_navigation_controller.open_tab_by_id(tab_id)
+            if result.success:
+                continue
+            record_portable_smoke_event(
+                status="FAIL",
+                kind="smoke_tab_preload",
+                source=tab_id,
+                message=result.reason,
+            )
 
     def _ordered_tool_specs(self, specs: Iterable[ToolSpec]) -> tuple[ToolSpec, ...]:
         """Return visible tool specs in the persisted user tab order.
@@ -317,7 +392,11 @@ class ReasonerToolsWindow(_WindowStateMixin, _WindowProjectRootMixin, _WindowOut
             return
 
         if spec.tab_kind == "builtin_ignore_rules":
-            self.ignore_rules_tab = IgnoreRulesTab(self._prefs_path())
+            self.ignore_rules_tab = IgnoreRulesTab(
+                self._prefs_path(),
+                select_project_handler=self._select_active_project,
+                eject_project_handler=self._eject_active_project,
+            )
             self.ignore_rules_tab.set_project_root(self.current_project_root)
             self._apply_project_widget_enabled_state(
                 "exclusion_rules",

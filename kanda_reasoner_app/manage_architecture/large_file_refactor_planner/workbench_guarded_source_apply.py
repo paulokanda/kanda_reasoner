@@ -14,10 +14,9 @@ from .workbench_project_support_paths import preview_root_blockers as project_pr
 from .models import SCHEMA_VERSION
 from .workbench_preflight_backup_readiness import WorkbenchPreflightBackupReadinessResult
 from .workbench_source_payload_builder import SourceApplyPayloadReadinessResult
-from .workbench_source_mutation_primitives import (
-    apply_source_mutation_operation,
-    build_source_mutation_operations,
-)
+from .workbench_source_mutation_primitives import build_source_mutation_operations
+from .workbench_spectator_proposal_boundary import proposal_only_blocker
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 
 __all__ = [
     "GUARDED_SOURCE_APPLY_FEATURE_ID",
@@ -119,48 +118,31 @@ def execute_guarded_source_apply(
         result = _result(source_payload, expected, confirmation_token, "blocked", blockers, [], [])
         _write_json(execution_manifest, result.to_dict(), preview_root)
         return result
-    records = [
-        {"destination": Path(operation.destination_path), "hash": operation.payload_hash}
-        for operation in operations
-    ]
-    _write_rollback_manifest(source_payload, preflight_backup, records, rollback_manifest, preview_root)
-    written: list[Path] = []
-    restored = False
-    try:
-        for operation in operations:
-            apply_source_mutation_operation(
-                operation,
-                operation_id=f"legacy-{operation.sequence_no:04d}",
-            )
-            written.append(Path(operation.destination_path))
-    except Exception:
-        restored = _restore_after_failed_apply(target, preflight_backup, written, records)
-        raise
-    after_hash = _sha256_file(target)
-    result = GuardedSourceApplyResult(
-        schema_version=SCHEMA_VERSION,
-        feature_id=GUARDED_SOURCE_APPLY_FEATURE_ID,
-        status="applied",
-        target_file=str(target),
-        source_content_hash_before=source_payload.source_content_hash,
-        source_content_hash_after=after_hash,
-        preview_root=str(preview_root),
-        payload_manifest_path=source_payload.payload_manifest_path,
-        rollback_manifest_path=str(rollback_manifest),
-        execution_manifest_path=str(execution_manifest),
-        expected_confirmation_token=expected,
-        confirmation_token_present=bool(confirmation_token.strip()),
-        confirmation_token_valid=True,
-        source_mutation_enabled=True,
-        import_rewrite_enabled=False,
-        written_files=[str(path) for path in written],
-        generated_files=[str(Path(item.destination_path)) for item in operations if Path(item.destination_path) != target],
-        restored_after_failure=restored,
-        blockers=[],
-        warnings=_warnings(),
-        checked_rules=_checked_rules(),
+    proposal_targets = [str(Path(item.destination_path)) for item in operations]
+    result = _result(
+        source_payload,
+        expected,
+        confirmation_token,
+        "project_source_change_proposal_only",
+        [proposal_only_blocker("guarded_source_apply")],
+        [],
+        proposal_targets,
     )
-    _write_json(execution_manifest, result.to_dict(), preview_root)
+    proposal_payload = result.to_dict()
+    proposal_payload["proposal_targets"] = proposal_targets
+    proposal_payload["proposal_warning"] = proposal_only_warning(
+        "guarded_source_apply"
+    )
+    _write_json(execution_manifest, proposal_payload, preview_root)
+    _write_json(
+        rollback_manifest,
+        {
+            "schema_version": SCHEMA_VERSION,
+            "status": "rollback_not_applicable_proposal_only",
+            "source_mutation_occurred": False,
+        },
+        preview_root,
+    )
     return result
 
 

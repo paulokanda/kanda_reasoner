@@ -128,6 +128,9 @@ def _run_apply(args: argparse.Namespace) -> int:
     _print_json(receipt.to_dict())
     print("\nRUFF CORRECTION APPLY STATUS: " + receipt.status)
     print("Receipt: " + receipt.receipt_path)
+    if receipt.status == "PROPOSAL_ONLY":
+        print("Project source was not mutated.")
+        return 0
     return 0 if receipt.status == "APPLIED" else 2
 
 

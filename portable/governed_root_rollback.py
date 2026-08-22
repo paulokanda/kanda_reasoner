@@ -1,4 +1,4 @@
-"""Exact backup, mutation detection, and rollback for governed owner roots."""
+"""Exact backup and rollback limited to KANDA Tool-owned build roots."""
 
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ class RootBackupEvidence:
 
 @dataclass
 class GovernedRootRollbackGuard:
-    """Verified exact backups for every registered governed root view."""
+    """Verified exact backups for Tool-owned governed root views."""
 
     paths: BuildPaths
     backups: tuple[RootBackupEvidence, ...]
@@ -102,6 +102,10 @@ class GovernedRootRollbackGuard:
             "manifest_path": str(self.manifest_path),
             "manifest_sha256": _sha256_file(self.manifest_path),
             "registered_projects_snapshot": True,
+            "rollback_scope": "TOOL_OWNER_ONLY",
+            "destination_protected_root_count": len(
+                self.paths.registry_boundary.protected_roots
+            ),
             "protected_root_count": len(self.backups),
             "roots": [
                 {
@@ -254,6 +258,7 @@ def _write_archive(policy: RootViewPolicy, destination: Path) -> str:
         mode="w",
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=9,
+        strict_timestamps=False,
     ) as archive:
         for record in _records(policy):
             relative = record["path"]
@@ -368,7 +373,7 @@ def _restore_backup(backup: RootBackupEvidence) -> None:
 
 
 def prepare_governed_root_rollback(paths: BuildPaths) -> GovernedRootRollbackGuard:
-    """Back up all registered_projects governed views and prove exact restoration data."""
+    """Back up only Tool-owned governed views and prove exact restoration data."""
 
     boundary = paths.registry_boundary
     if boundary is None:
@@ -380,7 +385,7 @@ def prepare_governed_root_rollback(paths: BuildPaths) -> GovernedRootRollbackGua
 
     backups: list[RootBackupEvidence] = []
     manifest_roots: list[dict[str, Any]] = []
-    for index, protected_root in enumerate(boundary.protected_roots, start=1):
+    for index, protected_root in enumerate(boundary.tool_owner_roots, start=1):
         policy = _policy(paths, protected_root)
         before = _inventory(policy)
         archive_path: Path | None = None
@@ -435,6 +440,8 @@ def prepare_governed_root_rollback(paths: BuildPaths) -> GovernedRootRollbackGua
                 "registry_path": str(boundary.registry_path),
                 "registry_sha256": boundary.registry_sha256,
                 "registered_projects_snapshot": True,
+                "rollback_scope": "TOOL_OWNER_ONLY",
+                "destination_protected_root_count": len(boundary.protected_roots),
                 "protected_root_count": len(backups),
                 "roots": manifest_roots,
             },
@@ -448,10 +455,10 @@ def prepare_governed_root_rollback(paths: BuildPaths) -> GovernedRootRollbackGua
     )
     json.loads(manifest_path.read_text(encoding="utf-8"))
     assert_registry_unchanged(boundary)
-    print("PORTABLE GOVERNED ROOT BASELINE SNAPSHOTS: PASS")
-    print("PORTABLE GOVERNED ROOT EXACT BACKUPS: PASS")
-    print("PORTABLE GOVERNED ROOT BACKUP RESTORE PROOF: PASS")
-    print("PORTABLE TOOL TRANSIENT BUILD LANE EXCLUSION: PASS")
+    print("PORTABLE TOOL OWNER ROOT BASELINE SNAPSHOTS: PASS")
+    print("PORTABLE TOOL OWNER ROOT EXACT BACKUPS: PASS")
+    print("PORTABLE TOOL OWNER ROOT BACKUP RESTORE PROOF: PASS")
+    print("PORTABLE TOOL OWNER TRANSIENT BUILD LANE EXCLUSION: PASS")
     return GovernedRootRollbackGuard(
         paths=paths,
         backups=tuple(backups),

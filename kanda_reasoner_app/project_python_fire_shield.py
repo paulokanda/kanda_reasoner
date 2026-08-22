@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import subprocess
-import sys
 import uuid
 from pathlib import Path
 from collections.abc import Callable
@@ -26,6 +25,18 @@ __all__ = [
 PROJECT_PYTHON_FIRE_SHIELD_FEATURE_ID = (
     "kanda-reasoner-fire-shield-cross-surface-project-python-execution-v2e"
 )
+
+
+def _selected_project_python(root: Path) -> Path:
+    """Resolve the observed Project interpreter without Tool fallback."""
+    candidates = (
+        root / ".venv" / "Scripts" / "python.exe",
+        root / ".venv" / "bin" / "python",
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate.resolve()
+    raise RuntimeError("PROJECT_PYTHON_INTERPRETER_NOT_FOUND")
 
 
 def _completed_from_isolated(result) -> subprocess.CompletedProcess[str]:
@@ -89,8 +100,10 @@ def run_project_python_governed(
             )
         return _completed_from_isolated(result)
 
-    python = Path(self_host_python or sys.executable).expanduser().resolve(
-        strict=False
+    python = (
+        Path(self_host_python).expanduser().resolve(strict=False)
+        if self_host_python is not None
+        else _selected_project_python(root)
     )
     runner = self_host_runner or subprocess.run
     return runner(

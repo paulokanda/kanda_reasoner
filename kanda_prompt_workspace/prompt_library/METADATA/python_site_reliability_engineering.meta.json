@@ -12,7 +12,7 @@
   "classification": "production_service_reliability_slo_incident_governance_specialist",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Govern reliability objectives, SLIs, SLOs, error budgets, incidents, toil, capacity, launch readiness, and operational ownership for production services. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Govern reliability objectives, SLIs, SLOs, error budgets, incidents, toil, capacity, launch readiness, and operational ownership for production services. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+import ast
 import importlib.metadata
-import os
+import re
 import struct
 import sys
 from pathlib import Path
@@ -14,6 +15,7 @@ from portable.constants import (
     EXPECTED_PYTHON,
     FEATURE_ID,
     FINAL_ZIP_NAME,
+    VENV_PYTHON_RELATIVE,
 )
 from portable.errors import PortableBuildError
 from portable.external_controls import (
@@ -25,20 +27,40 @@ from portable.models import BuildPaths
 
 _REQUIRED_SPEC_TOKENS = (
     "reasoner_tools_gui.py",
-    "collect_data_files",
     "collect_submodules",
+    "iter_packaged_resource_files",
+    "validate_registered_synthetic_fixtures",
     "PySide6.QtWebEngineCore",
     "PySide6.QtWebEngineWidgets",
     "PySide6.QtWebChannel",
-    "collector_main_help",
+    "build_worker_runtime_binaries",
+    "build_worker_runtime_hooks",
 )
 
 _FORBIDDEN_SPEC_TOKENS = (
-    "E:\\kanda_reasoner",
-    "C:\\Users\\paulo",
     "PyCharm",
     ".venv",
 )
+
+_PROHIBITED_SPEC_PACKAGING_TOKENS = (
+    "collect_data_files",
+)
+_WINDOWS_ABSOLUTE_PATH_RE = re.compile(
+    r"(?i)(?:^|[\s(])(?:[a-z]:[\\/]|\\\\[a-z0-9_.-]+[\\/])"
+)
+
+
+def _machine_specific_windows_literals(source: str) -> list[str]:
+    """Return decoded string literals containing absolute Windows paths."""
+
+    tree = ast.parse(source, filename="KandaReasonerWindows.spec")
+    matches: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Constant) or not isinstance(node.value, str):
+            continue
+        if _WINDOWS_ABSOLUTE_PATH_RE.search(node.value):
+            matches.append(node.value)
+    return matches
 
 
 def print_builder_identity() -> None:
@@ -69,21 +91,18 @@ def confirm_explicit_request(skip_confirmation: bool) -> None:
     print("PORTABLE EXPLICIT USER REQUEST: PASS")
 
 
-def _audited_governed_python() -> Path:
-    """Resolve the explicit governed KANDA Python 3.12 owner."""
+def _audited_governed_python(project_root: Path) -> Path:
+    """Resolve the Tool-owned virtual-environment Python."""
 
-    local_app_data = os.environ.get("LOCALAPPDATA", "").strip()
-    if not local_app_data:
+    project = project_root.resolve()
+    governed = (project / VENV_PYTHON_RELATIVE).resolve()
+    try:
+        governed.relative_to(project)
+    except ValueError as exc:
         raise PortableBuildError(
-            "LOCALAPPDATA is unavailable; governed Python cannot be resolved."
-        )
-    return (
-        Path(local_app_data)
-        / "Programs"
-        / "Python"
-        / "Python312"
-        / "python.exe"
-    ).resolve()
+            "Governed Tool virtual-environment Python escaped Tool root."
+        ) from exc
+    return governed
 
 
 def audit_spec_contract(paths: BuildPaths) -> None:
@@ -105,11 +124,24 @@ def audit_spec_contract(paths: BuildPaths) -> None:
             f"contracts: {missing}"
         )
 
+    prohibited = [
+        token
+        for token in _PROHIBITED_SPEC_PACKAGING_TOKENS
+        if token in source
+    ]
+    if prohibited:
+        raise PortableBuildError(
+            "Canonical PyInstaller specification contains prohibited "
+            f"package-wide data collection: {prohibited}"
+        )
+
     forbidden = [
         token
         for token in _FORBIDDEN_SPEC_TOKENS
         if token.casefold() in source.casefold()
     ]
+    if _machine_specific_windows_literals(source):
+        forbidden.append("absolute_windows_path_literal")
     if forbidden:
         raise PortableBuildError(
             "Canonical PyInstaller specification contains machine-specific "
@@ -119,13 +151,14 @@ def audit_spec_contract(paths: BuildPaths) -> None:
     print("PORTABLE CANONICAL SPECIFICATION: PASS")
     print("PORTABLE SPEC MACHINE-SPECIFIC PATHS: ABSENT")
     print("PORTABLE QT WEBENGINE SPEC CONTRACT: PASS")
-    print("PORTABLE PHYSICAL HELP DATA CONTRACT: PASS")
+    print("PORTABLE SPEC TOOL DATA ALLOWLIST OWNER: PASS")
+    print("PORTABLE SPEC PACKAGE-WIDE DATA COLLECTION: ABSENT")
 
 
 def require_environment(paths: BuildPaths) -> dict[str, object]:
     """Require the audited governed Python and PyInstaller."""
 
-    governed = _audited_governed_python()
+    governed = _audited_governed_python(paths.project_root)
     current = Path(sys.executable).resolve()
 
     if not governed.is_file():
@@ -178,7 +211,7 @@ def require_environment(paths: BuildPaths) -> dict[str, object]:
         version = importlib.metadata.version("pyinstaller")
     except importlib.metadata.PackageNotFoundError as exc:
         raise PortableBuildError(
-            "PyInstaller is not installed in governed Python 3.12."
+            "PyInstaller is not installed in the KANDA Tool .venv Python."
         ) from exc
 
     if version != EXPECTED_PYINSTALLER:
@@ -188,6 +221,7 @@ def require_environment(paths: BuildPaths) -> dict[str, object]:
 
     audit_spec_contract(paths)
     print(f"GOVERNED PYTHON PATH: {governed}")
+    print("PORTABLE TOOL VENV PYTHON: PASS")
     print(f"PORTABLE PYTHON: {sys.version.split()[0]} 64-bit")
     print(f"PORTABLE PYINSTALLER: {version}")
     print("PORTABLE GOVERNED PYTHON IDENTITY: PASS")

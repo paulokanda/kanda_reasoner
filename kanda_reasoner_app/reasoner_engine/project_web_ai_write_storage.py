@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/reasoner_engine/project_web_ai_write_storage.py
-"""Own contained filesystem primitives for Project Web AI apply transactions."""
+"""Own contained filesystem helpers for Project Web AI proposal evidence."""
 
 from __future__ import annotations
 
@@ -28,9 +28,13 @@ __all__ = [
     "write_transaction_state",
 ]
 
+PROJECT_WEB_AI_SOURCE_MUTATION_PROPOSAL_ONLY_MARKER = (
+    "PROJECT_WEB_AI_SOURCE_MUTATION_PROPOSAL_ONLY:SPECTATOR"
+)
+
 
 def write_source_backups(backup_root: Path, source_before: dict[str, bytes]) -> None:
-    """Write exact immutable source backups below the transient root."""
+    """Write exact source snapshots below a transient evidence root."""
     for relative_path, raw in source_before.items():
         target = (backup_root / relative_path).resolve(strict=False)
         try:
@@ -50,25 +54,9 @@ def atomic_replace_source(
     mode: int,
     transaction_id: str,
 ) -> None:
-    """Replace one existing source file using a verified temporary sibling."""
-    temp = target.with_name(
-        "." + target.name + ".kanda-web-ai-" + transaction_id[:12] + ".tmp"
-    )
-    temp.unlink(missing_ok=True)
-    try:
-        with temp.open("xb") as handle:
-            handle.write(raw)
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.chmod(temp, mode)
-        if (
-            project_web_ai_sha256_bytes(temp.read_bytes())
-            != project_web_ai_sha256_bytes(raw)
-        ):
-            raise RuntimeError("APPLY_TEMP_FILE_HASH_MISMATCH")
-        os.replace(temp, target)
-    finally:
-        temp.unlink(missing_ok=True)
+    """Reject legacy Project Web AI source replacement."""
+    del target, raw, mode, transaction_id
+    raise RuntimeError(PROJECT_WEB_AI_SOURCE_MUTATION_PROPOSAL_ONLY_MARKER)
 
 
 def contained_project_file(root: Path, relative_path: str) -> Path:
@@ -129,7 +117,7 @@ def exclusive_apply_lock(
     lock_path: Path,
     transaction_id: str,
 ) -> Iterator[None]:
-    """Hold one operation lock using exclusive file creation."""
+    """Hold one support/transient evidence lock using exclusive creation."""
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
         descriptor = os.open(str(lock_path), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
@@ -154,7 +142,7 @@ def write_transaction_state(
     updated_at_utc: str,
     receipt_path: str = "",
 ) -> None:
-    """Write transient transaction state for recovery diagnostics."""
+    """Write transient proposal state for recovery diagnostics."""
     payload = {
         "transaction_id": authorization.transaction_id,
         "authorization_id": authorization.authorization_id,

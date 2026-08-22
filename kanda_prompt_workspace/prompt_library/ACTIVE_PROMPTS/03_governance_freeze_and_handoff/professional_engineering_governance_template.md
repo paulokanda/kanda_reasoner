@@ -15,8 +15,23 @@ source_stage: prompt-audit-wave4a-governance-freeze-handoff-v1
 
 Use this draft-only template to design a Project-specific engineering governance
 profile when no current profile exists. It records Project choices and routes to
-existing global canons. It does not create a parallel Brick Wall, Box canon,
-Tool/Project canon, delivery protocol, or freeze system.
+existing engineering canons. It does not create a parallel implementation-quality gate, Box canon, root/ownership model, delivery protocol, or snapshot/freeze system.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Draft profile
 
@@ -48,14 +63,14 @@ Profile status: DRAFT / REVIEWED / ACTIVE_BY_GOVERNED_INSERTION
 5. Define measurable validation evidence for every Project-specific hard rule.
 6. Preserve unknowns instead of inventing policy.
 7. Route insertion and registration through Class 07 governance.
-8. Require Brick Wall admission before any profile-driven implementation.
+8. Require the active Project's declared implementation authorization before any profile-driven implementation.
 
 ## Prohibited content
 
 Do not embed:
 
 - a second Q01-Q40 checklist;
-- generic Box, NO_LEAK, Tool/Project, MCard, patch, terminal, or freeze rules;
+- generic Box, NO_LEAK, host/Project ownership, observed-target lifecycle, patch, terminal, or snapshot/freeze rules;
 - machine path formulas owned elsewhere;
 - claims that the profile authorizes coding;
 - application-specific secrets or personal data.
@@ -63,6 +78,6 @@ Do not embed:
 ## Output boundary
 
 This prompt produces a draft profile only. The draft has no source mutation,
-implementation, validation, delivery, or freeze authority. A governed insertion
+implementation, validation, delivery, or snapshot/freeze authority. A governed insertion
 release must assign its final identity, metadata, location, routes, validators,
 and lifecycle status.

@@ -6,7 +6,7 @@
   "status": "active",
   "load_type": "on_request",
   "source_stage": "prompt-audit-wave8a-human-handbook-reclassification-v1",
-  "description": "Classifies software-team human/process risk and recommends privacy-preserving, non-clinical interventions without surveillance authority.",
+  "description": "Classifies software-team human/process risk and recommends privacy-preserving, non-clinical interventions without surveillance authority. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 67,
   "trigger_phrases": [
@@ -17,10 +17,7 @@
     "psychological safety",
     "burnout risk at work"
   ],
-  "required_companion_prompts": [
-    "prompt_navigation_index",
-    "project_tool_boundary_canon"
-  ],
+  "required_companion_prompts": [],
   "prompt_code": "KPR-12-007",
   "when_to_load": "When a software-delivery problem may be primarily human, organizational, workload, communication, or collaboration related.",
   "when_not_to_load": "Do not load for solo code mechanics, medical diagnosis, covert monitoring, personnel ranking, or implementation authorization.",
@@ -30,6 +27,7 @@
     "Do not recommend covert or individual-level productivity surveillance.",
     "Keep optional automation consent-based, transparent, minimal, reversible, and privacy-preserving.",
     "Do not present unsupported productivity ratios or fixed team/process numbers as universal facts.",
-    "Delegate technical implementation, validation evidence, terminal, Error Memory, and freeze authority."
-  ]
+    "Delegate technical implementation, validation evidence, terminal, lesson-memory, and snapshot/freeze authority to the active Project or host-specific owners."
+  ],
+  "optional_companion_prompts": []
 }

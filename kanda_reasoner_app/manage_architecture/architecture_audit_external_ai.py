@@ -8,6 +8,9 @@ from typing import Any
 
 from PySide6.QtWidgets import QApplication, QMessageBox
 
+from kanda_reasoner_app.manage_architecture.architecture_finding_dispositions import (
+    active_audit_text,
+)
 from kanda_reasoner_app.external_ai_workflow import (
     ExternalAIWorkflowResult,
     handoff_to_selected_external_ai,
@@ -29,7 +32,7 @@ __all__ = [
 
 def build_audit_results_text(window: Any) -> str:
     """Build the exact read-only audit evidence selected by the user."""
-    audit_text = str(window._output.toPlainText() or "")
+    audit_text = active_audit_text(window)
     include_refactor = bool(window._include_refactor_report_checkbox.isChecked())
     if not include_refactor:
         return audit_text

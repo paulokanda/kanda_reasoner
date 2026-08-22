@@ -7,8 +7,10 @@ __all__ = [
 ]
 
 import json
+from typing import Any
 
 from ..context_builder import AttributeInfo, ParameterInfo, SymbolContext
+from ..docstring_policy import DocstringPolicy
 
 
 def _build_system_prompt(policy: DocstringPolicy, structured: bool) -> str:

@@ -6,26 +6,24 @@
   "category": "01_session_start_and_navigation",
   "status": "active",
   "load_type": "always_startup",
-  "version": "2.0",
+  "version": "4.3",
   "owner_box": "01_session_start_and_navigation",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
-  "source_stage": "prompt-audit-wave3b-specialist-startup-bridges-v1",
-  "updated_for": "prompt-audit-wave3b-specialist-startup-bridges-v1",
-  "description": "Single Error Memory admission and workflow owner that routes exact schemas to Class 12 and preserves human Memorize Error control.",
+  "source_stage": "error-memory-portable-native-intake-fallback-v1",
+  "updated_for": "error-memory-portable-native-intake-fallback-v1",
+  "description": "Single Tool-owned Error Memory admission/workflow canon; native marker-wrapped application intake is the Portable/FROZEN default, while executable intake ZIP automation is source/IDE-only after external Tool Python verification.",
   "priority": 12,
   "trigger_phrases": [
     "error memory",
     "memorize error",
     "repeat error prevention",
-    "update lesson",
-    "active-ready lesson"
+    "retire lesson",
+    "pending error lesson",
+    "error lesson library"
   ],
-  "required_companion_prompts": [
-    "error_memory_model_template",
-    "error_memory_active_ready_json_template"
-  ],
+  "required_companion_prompts": [],
   "recommended_companion_prompts": [
-    "error_memory_active_ready_correction_blueprint",
+    "self_contained_error_memory_lesson_intake_zip",
     "pre_output_contract_gates",
     "patch_install_delivery_error_register"
   ]

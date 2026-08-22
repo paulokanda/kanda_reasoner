@@ -3,14 +3,13 @@
 
 from __future__ import annotations
 # PASS_068A_OVERLAP_CONSTANT_BINDINGS_START
-# Runtime bindings restored after helper extraction.
-globals().update({
-    'GENERIC_TOKENS': set(['ui', 'widget', 'button', 'dialog', 'window', 'tab', 'panel', 'bar', 'menu', 'layout', 'tool', 'tools', 'template', 'templates', 'base', 'common', 'utils', 'util', 'helper', 'helpers', 'core', 'main', 'app', 'manager', 'controller', 'service', 'data', 'file', 'files', 'module', 'modules', 'test', 'tests', 'view', 'builder', 'handler']),
-    'GENERIC_CALL_ROOTS': set(['connect', 'emit', 'show', 'hide', 'update', 'refresh', 'clear', 'reset', 'close', 'open', 'load', 'save', 'append', 'remove', 'settext', 'setvalue', 'setenabled', 'setvisible', 'addwidget', 'addlayout', 'addtab', 'setlayout', 'setcentralwidget', 'resize', 'move', 'exec', 'exec_', 'start', 'stop', 'plot', 'render', 'draw']),
-    'GENERIC_ROLE_TOKENS': set(['ui', 'service', 'controller', 'domain', 'general', 'visualization']),
-    'MIN_OVERLAP_SCORE': 1.55,
-    'MIN_HOTSPOT_SCORE': 1.95,
-})
+# Explicit module-level bindings preserve the helper-extraction runtime values
+# while remaining statically visible to Ruff and other source analyzers.
+GENERIC_TOKENS = set(['ui', 'widget', 'button', 'dialog', 'window', 'tab', 'panel', 'bar', 'menu', 'layout', 'tool', 'tools', 'template', 'templates', 'base', 'common', 'utils', 'util', 'helper', 'helpers', 'core', 'main', 'app', 'manager', 'controller', 'service', 'data', 'file', 'files', 'module', 'modules', 'test', 'tests', 'view', 'builder', 'handler'])
+GENERIC_CALL_ROOTS = set(['connect', 'emit', 'show', 'hide', 'update', 'refresh', 'clear', 'reset', 'close', 'open', 'load', 'save', 'append', 'remove', 'settext', 'setvalue', 'setenabled', 'setvisible', 'addwidget', 'addlayout', 'addtab', 'setlayout', 'setcentralwidget', 'resize', 'move', 'exec', 'exec_', 'start', 'stop', 'plot', 'render', 'draw'])
+GENERIC_ROLE_TOKENS = set(['ui', 'service', 'controller', 'domain', 'general', 'visualization'])
+MIN_OVERLAP_SCORE = 1.55
+MIN_HOTSPOT_SCORE = 1.95
 # PASS_068A_OVERLAP_CONSTANT_BINDINGS_END
 
 

@@ -77,15 +77,8 @@ def _prepare_embedded_widget(widget: QWidget) -> QWidget:
     widget.setParent(None)
     widget.setWindowFlags(Qt.Widget)
     widget.setAttribute(Qt.WA_DeleteOnClose, False)
-    contain_host_height = bool(widget.property("kandaContainHostHeight"))
-    vertical_policy = (
-        QSizePolicy.Ignored
-        if contain_host_height
-        else QSizePolicy.Expanding
-    )
-    widget.setSizePolicy(QSizePolicy.Expanding, vertical_policy)
-    if contain_host_height:
-        widget.setMinimumHeight(0)
+    widget.setMinimumSize(0, 0)
+    widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
     return widget
 
 

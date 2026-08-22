@@ -39,16 +39,13 @@ Read in this order:
 
 1. `_RUN_COLLECTOR_STATUS.txt`, when present.
 2. `<project_slug>__ai_handoff_upload_readme.txt`.
-3. Compact Error Memory files:
-   - `<project_slug>__error_memory_ai_prompt.md`;
-   - `<project_slug>__error_lessons_compact.json`;
-   - `<project_slug>__error_memory_manifest.json`.
-4. `<project_slug>__ai_handoff_upload*.zip` in numeric order.
-5. Inside the handoff ZIP: `UPLOAD_README.txt`, AI briefing, routing manifest, bundle manifest, patch-safety routes, file manifest, source-archive manifest, validation state, and compact Error Memory.
-6. Full Error Memory ZIP only when the compact memory, repeated-error debugging, an audit request, insufficiency, or a conflict requires it.
-7. Source archive parts only when exact source inspection or reconstruction is required.
-8. PNG asset parts only when exact reconstruction requires those assets.
-9. All-in-one handoff only as fallback when the primary handoff ZIP is unavailable.
+3. `<project_slug>__ai_handoff_upload*.zip` in numeric order.
+4. Inside the handoff ZIP: `UPLOAD_README.txt`, AI briefing, routing manifest, bundle manifest, patch-safety routes, file manifest, source-archive manifest, and validation state.
+5. Source archive parts only when exact source inspection or reconstruction is required.
+6. PNG asset parts only when exact reconstruction requires those assets.
+7. All-in-one handoff only as fallback when the primary handoff ZIP is unavailable.
+
+Reusable Error Lessons are Tool-owned by KANDA Reasoner Error Memory, including the Portable Error Memory tab. A lesson may record the selected Project as its origin without becoming Project-owned Error Memory. Do not require project-specific Error Memory files in `second_prompt_files`. When an external AI chat needs Error Memory context, supply the Tool-owned Error Memory export separately from the Error Memory workflow.
 
 Generated source archives and handoffs are evidence, not canonical source authority.
 
@@ -64,7 +61,7 @@ Include:
 - Active Project root;
 - KANDA Tool root;
 - whether they are the same physical root;
-- compact Error Memory status;
+- Tool Error Memory context status;
 - second-upload handoff status;
 - Tier-1 gate status;
 - next action;

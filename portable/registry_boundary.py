@@ -1,4 +1,4 @@
-"""Tool-owned registry authority for Portable direct-write boundaries."""
+"""Tool-owned Portable build boundary with optional Project registry firewall."""
 
 from __future__ import annotations
 
@@ -23,6 +23,8 @@ __all__ = [
 ]
 
 EXPLICIT_SELF_HOSTING = "EXPLICIT_SELF_HOSTING"
+_TOOL_OWNER_ID = "__KANDA_REASONER_TOOL__"
+_UNSELECTED = "UNSELECTED"
 
 
 def _sha256(path: Path) -> str:
@@ -56,10 +58,7 @@ def _is_reparse_point(path: Path) -> bool:
         attributes = os.lstat(path).st_file_attributes
     except (AttributeError, OSError):
         return False
-    return bool(
-        attributes
-        & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
-    )
+    return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400))
 
 
 def assert_no_reparse_ancestor(path: Path, *, purpose: str) -> None:
@@ -129,7 +128,7 @@ def _append_root(
     owner_slug: str,
     root_kind: str,
     path: Path,
-) -> None:
+) -> ProtectedRoot:
     canonical = _canonical(path)
     key = _path_key(canonical)
     existing = seen.get(key)
@@ -140,7 +139,7 @@ def _append_root(
                 f"{canonical}: {existing.owner_id}/{existing.root_kind} and "
                 f"{owner_id}/{root_kind}"
             )
-        return
+        return existing
     protected = ProtectedRoot(
         label=label,
         owner_id=owner_id,
@@ -150,81 +149,62 @@ def _append_root(
     )
     roots.append(protected)
     seen[key] = protected
+    return protected
 
 
-def load_registry_boundary(
-    project_root: Path,
-    *,
-    registry_path: Path | None = None,
-) -> RegistryBoundary:
-    """Require explicit self-hosting and collect every registered owner root."""
+def _append_tool_roots(
+    roots: list[ProtectedRoot],
+    seen: dict[str, ProtectedRoot],
+    tool_root: Path,
+    tool_support: Path,
+    tool_transient: Path,
+) -> tuple[ProtectedRoot, ...]:
+    """Create Tool mutation authority without consulting Project selection."""
 
-    tool_root = _canonical(project_root)
-    if os.name != "nt" or not tool_root.anchor:
-        raise PortableBuildError(
-            "Portable registry-boundary validation requires Windows."
-        )
-
-    drive = Path(tool_root.anchor).resolve()
-    tool_support = (drive / f"{tool_root.name}_show_project_to_AI").resolve()
-    tool_transient = (
-        drive / f"{tool_root.name}_delete_after_daily_work"
-    ).resolve()
-    registry = (
-        registry_path.resolve()
-        if registry_path is not None
-        else tool_support / "tool_project_registry" / "projects.json"
+    return (
+        _append_root(
+            roots,
+            seen,
+            label="KANDA Reasoner Tool source",
+            owner_id=_TOOL_OWNER_ID,
+            owner_slug=tool_root.name,
+            root_kind="PROJECT_ROOT",
+            path=tool_root,
+        ),
+        _append_root(
+            roots,
+            seen,
+            label="KANDA Reasoner Tool Support",
+            owner_id=_TOOL_OWNER_ID,
+            owner_slug=tool_root.name,
+            root_kind="PROJECT_SUPPORT_ROOT",
+            path=tool_support,
+        ),
+        _append_root(
+            roots,
+            seen,
+            label="KANDA Reasoner Tool transient",
+            owner_id=_TOOL_OWNER_ID,
+            owner_slug=tool_root.name,
+            root_kind="PROJECT_TRANSIENT_ROOT",
+            path=tool_transient,
+        ),
     )
-    if not registry.is_file():
-        raise PortableBuildError(
-            f"Tool-owned Project registry is missing: {registry}"
-        )
 
-    payload = _read_registry(registry)
-    current_id = str(payload.get("current_project_id") or "").strip()
-    projects = payload.get("projects")
-    if not current_id or not isinstance(projects, dict):
-        raise PortableBuildError(
-            "Tool-owned registry has no valid current_project_id/projects map."
-        )
 
-    current = projects.get(current_id)
-    if not isinstance(current, dict):
-        raise PortableBuildError(
-            f"Active registry record is missing: {current_id}"
-        )
-
-    active_root = _record_path(
-        current,
-        "project_root",
-        tool_root,
-        record_id=current_id,
-        required=True,
-    )
-    active_mode = str(current.get("selection_mode") or "").strip()
-    if active_root != tool_root:
-        raise PortableBuildError(
-            "Portable creation requires the KANDA Reasoner Tool to be the "
-            "active Project. Select E:\\kanda_reasoner in the global "
-            f"Project Root widget; active root is {active_root}."
-        )
-    if active_mode != EXPLICIT_SELF_HOSTING:
-        raise PortableBuildError(
-            "Portable creation requires explicit self-hosting authority; "
-            f"selection_mode is {active_mode or '<missing>'}."
-        )
-
-    roots: list[ProtectedRoot] = []
-    seen: dict[str, ProtectedRoot] = {}
+def _append_registered_project_roots(
+    roots: list[ProtectedRoot],
+    seen: dict[str, ProtectedRoot],
+    projects: dict[str, Any],
+    tool_root: Path,
+) -> None:
+    """Use registry history only as a destination firewall for external Projects."""
 
     for record_id, raw_record in sorted(projects.items(), key=lambda item: str(item[0])):
         if not isinstance(raw_record, dict):
             raise PortableBuildError(
                 f"Registry Project record is not an object: {record_id}"
             )
-        owner_id = str(
-            raw_record.get("stable_project_id") or record_id
-        ).strip()
         project_path = _record_path(
             raw_record,
             "project_root",
@@ -232,9 +212,11 @@ def load_registry_boundary(
             record_id=str(record_id),
             required=True,
         )
-        owner_slug = str(
-            raw_record.get("owner_slug") or project_path.name
-        ).strip() or project_path.name
+        if project_path == tool_root:
+            continue
+        owner_id = str(raw_record.get("stable_project_id") or record_id).strip()
+        owner_slug = str(raw_record.get("owner_slug") or project_path.name).strip()
+        owner_slug = owner_slug or project_path.name
         record_drive = Path(project_path.anchor).resolve()
         support_path = _record_path(
             raw_record,
@@ -248,48 +230,76 @@ def load_registry_boundary(
             record_drive / f"{project_path.name}_delete_after_daily_work",
             record_id=str(record_id),
         )
+        for label, kind, path in (
+            (f"{owner_slug} Project source", "PROJECT_ROOT", project_path),
+            (f"{owner_slug} Project Support", "PROJECT_SUPPORT_ROOT", support_path),
+            (f"{owner_slug} transient root", "PROJECT_TRANSIENT_ROOT", transient_path),
+        ):
+            _append_root(
+                roots,
+                seen,
+                label=label,
+                owner_id=owner_id,
+                owner_slug=owner_slug,
+                root_kind=kind,
+                path=path,
+            )
 
-        _append_root(
-            roots,
-            seen,
-            label=f"{owner_slug} Project source",
-            owner_id=owner_id,
-            owner_slug=owner_slug,
-            root_kind="PROJECT_ROOT",
-            path=project_path,
-        )
-        _append_root(
-            roots,
-            seen,
-            label=f"{owner_slug} Project Support",
-            owner_id=owner_id,
-            owner_slug=owner_slug,
-            root_kind="PROJECT_SUPPORT_ROOT",
-            path=support_path,
-        )
-        _append_root(
-            roots,
-            seen,
-            label=f"{owner_slug} transient root",
-            owner_id=owner_id,
-            owner_slug=owner_slug,
-            root_kind="PROJECT_TRANSIENT_ROOT",
-            path=transient_path,
-        )
 
-    required_keys = {
-        _path_key(tool_root),
-        _path_key(tool_support),
-        _path_key(tool_transient),
-    }
-    if not required_keys.issubset(seen):
+def load_registry_boundary(
+    project_root: Path,
+    *,
+    registry_path: Path | None = None,
+) -> RegistryBoundary:
+    """Resolve Tool authority independently of active Project identity."""
+
+    tool_root = _canonical(project_root)
+    if os.name != "nt" or not tool_root.anchor:
         raise PortableBuildError(
-            "Active self-hosting registry record does not resolve all Tool roots."
+            "Portable registry-boundary validation requires Windows."
         )
+
+    drive = Path(tool_root.anchor).resolve()
+    tool_support = (drive / f"{tool_root.name}_show_project_to_AI").resolve()
+    tool_transient = (drive / f"{tool_root.name}_delete_after_daily_work").resolve()
+    registry = (
+        registry_path.resolve()
+        if registry_path is not None
+        else tool_support / "tool_project_registry" / "projects.json"
+    )
+
+    payload: dict[str, Any] = {"current_project_id": "", "projects": {}}
+    registry_sha = ""
+    if registry.is_file():
+        payload = _read_registry(registry)
+        registry_sha = _sha256(registry)
+
+    projects = payload.get("projects", {})
+    if not isinstance(projects, dict):
+        raise PortableBuildError("Tool-owned registry projects must be a JSON object.")
+
+    current_id = str(payload.get("current_project_id") or "").strip()
+    active_mode = _UNSELECTED
+    if current_id:
+        current = projects.get(current_id)
+        if not isinstance(current, dict):
+            raise PortableBuildError(f"Active registry record is missing: {current_id}")
+        active_mode = str(current.get("selection_mode") or "").strip() or "UNKNOWN"
+
+    roots: list[ProtectedRoot] = []
+    seen: dict[str, ProtectedRoot] = {}
+    tool_owner_roots = _append_tool_roots(
+        roots,
+        seen,
+        tool_root,
+        tool_support,
+        tool_transient,
+    )
+    _append_registered_project_roots(roots, seen, projects, tool_root)
 
     return RegistryBoundary(
         registry_path=registry,
-        registry_sha256=_sha256(registry),
+        registry_sha256=registry_sha,
         current_project_id=current_id,
         selection_mode=active_mode,
         tool_root=tool_root,
@@ -298,13 +308,20 @@ def load_registry_boundary(
         protected_roots=tuple(
             sorted(roots, key=lambda item: (_path_key(item.path), item.root_kind))
         ),
+        tool_owner_roots=tool_owner_roots,
     )
 
 
-
 def assert_registry_unchanged(boundary: RegistryBoundary) -> None:
-    """Fail closed when registry authority changes after boundary loading."""
+    """Fail closed if the optional registry changes after boundary loading."""
 
+    if not boundary.registry_sha256:
+        if boundary.registry_path.exists():
+            raise PortableBuildError(
+                "Tool-owned Project registry appeared during Portable boundary "
+                "validation; restart the operation."
+            )
+        return
     if not boundary.registry_path.is_file():
         raise PortableBuildError(
             f"Tool-owned Project registry disappeared: {boundary.registry_path}"
@@ -315,6 +332,7 @@ def assert_registry_unchanged(boundary: RegistryBoundary) -> None:
             "Tool-owned Project registry changed during Portable boundary "
             "validation; restart the operation."
         )
+
 
 def assert_outside_protected_roots(
     path: Path,
@@ -343,10 +361,7 @@ def validate_publication_directory(
 
     assert_registry_unchanged(boundary)
     selected = _canonical(directory)
-    assert_no_reparse_ancestor(
-        selected,
-        purpose="Portable destination",
-    )
+    assert_no_reparse_ancestor(selected, purpose="Portable destination")
     assert_outside_protected_roots(
         selected / final_zip_name,
         boundary,
@@ -355,10 +370,7 @@ def validate_publication_directory(
     return selected
 
 
-def validate_result_path(
-    path: Path,
-    boundary: RegistryBoundary,
-) -> Path:
+def validate_result_path(path: Path, boundary: RegistryBoundary) -> Path:
     """Validate result JSON before parent creation or temporary writes."""
 
     assert_registry_unchanged(boundary)

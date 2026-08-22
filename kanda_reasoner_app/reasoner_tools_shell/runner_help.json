@@ -152,6 +152,76 @@
         "project_analysis_evidence_paths.py"
       ]
     },
+    "show_project_backup_both_service.py": {
+      "purpose": "Combined Project and Show Project backup service.",
+      "reason": "Active public backup helper consumed by the Show Project backup controller.",
+      "stability": "stable",
+      "exports": [
+        "create_backup_both"
+      ],
+      "depends_on": [
+        "show_project_backup_service.py"
+      ],
+      "consumed_by": [
+        "show_project_backup_private_impl.py"
+      ]
+    },
+    "pre_backup_cleanup_support.py": {
+      "purpose": "Low-level fail-closed helpers for pre-backup orphan cleanup.",
+      "reason": "Canonical cleanup support surface consumed by the pre-backup cleanup service.",
+      "stability": "stable",
+      "exports": [
+        "CleanupUnit",
+        "apply_error_memory_guard",
+        "apply_transaction_terminal_gate",
+        "candidate_dependency_graph",
+        "delete_unit_contents",
+        "external_reference_roots",
+        "metadata_tokens",
+        "prune_empty_directories",
+        "resolve_inside",
+        "token_map",
+        "valid_error_memory_json",
+        "validate_no_reparse_escape",
+        "validate_root_boundary"
+      ],
+      "depends_on": [],
+      "consumed_by": [
+        "pre_backup_cleanup_service.py"
+      ]
+    },
+    "pre_backup_cleanup_service.py": {
+      "purpose": "Reusable pre-backup orphan-cleanup template with four policies.",
+      "reason": "Canonical cleanup policy surface consumed by the persistent pre-backup dialog.",
+      "stability": "stable",
+      "exports": [
+        "CleanupPolicy",
+        "PRE_BACKUP_CLEANUP_POLICIES",
+        "clean_pre_backup_policy",
+        "policy_display_path"
+      ],
+      "depends_on": [
+        "pre_backup_cleanup_support.py"
+      ],
+      "consumed_by": [
+        "pre_backup_cleanup_dialog.py"
+      ]
+    },
+    "pre_backup_cleanup_dialog.py": {
+      "purpose": "Persistent pre-backup cleanup questionnaire for Show Project and Both backups.",
+      "reason": "Canonical Qt cleanup dialog consumed by the Show Project backup controller.",
+      "stability": "stable",
+      "exports": [
+        "PreBackupCleanupDialog",
+        "run_pre_backup_cleanup_dialog"
+      ],
+      "depends_on": [
+        "pre_backup_cleanup_service.py"
+      ],
+      "consumed_by": [
+        "show_project_backup_private_impl.py"
+      ]
+    },
     "machine_card_prompt_button_private_impl.py": {
       "purpose": "Helper module owned by this helper folder.",
       "reason": "Helper module owned by this helper folder.",

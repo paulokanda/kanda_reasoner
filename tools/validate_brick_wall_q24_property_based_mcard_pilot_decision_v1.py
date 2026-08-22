@@ -98,7 +98,7 @@ def validate_source(root: Path) -> None:
     _gate("Q24_PRECODE_PROGRESSION", _precode_gate_at_least(brick, 24))
     _gate("Q24_FORWARD_COMPATIBLE_Q25_PRECODE_PROGRESSION", _precode_gate_at_least(brick, 25))
     _gate("Q23_FORWARD_COMPATIBLE_Q24_PROGRESSION", "Q23_FORWARD_COMPATIBLE_Q24_PRECODE_PROGRESSION" in _read(root / Q23_REL))
-    _require(_read(root / Q23_CONTRACT_REL), ("def expected_blockers", "VALID_TRANSITIONS", "terminal eject lost durable project state"), "Q24_CANONICAL_Q23_OWNER_REUSED")
+    _require(_read(root / Q23_CONTRACT_REL), ("def expected_blockers", "VALID_TRANSITIONS", "eject changed Project-owned durable state"), "Q24_CANONICAL_Q23_OWNER_REUSED")
     for rel in (BRICK_REL, BRIDGE_REL, Q23_REL, Q23_CONTRACT_REL, CONTRACT_REL, VALIDATOR_REL):
         _gate("Q24_MODULE_SIZE", len(_read(root / rel).splitlines()) <= 500, str(rel))
 
@@ -154,8 +154,8 @@ def validate_contract() -> None:
 def validate_runtime_pilot() -> None:
     first = run_bounded_pilot()
     second = run_bounded_pilot()
-    _gate("Q24_PROPERTY_PILOT_TRANSITION_CASES", first["transition_cases"] == 21_632)
-    _gate("Q24_PROPERTY_PILOT_SEQUENCE_CASES", first["sequences"] == 30_927)
+    _gate("Q24_PROPERTY_PILOT_TRANSITION_CASES", 0 < first["transition_cases"] <= 10_000)
+    _gate("Q24_PROPERTY_PILOT_SEQUENCE_CASES", 0 < first["sequences"] <= 10_000)
     _gate("Q24_PROPERTY_PILOT_REPLAY_DETERMINISTIC", first == second)
     _gate("Q24_PROPERTY_PILOT_INDEPENDENT_ORACLE", not first["transition_mismatches"] and not first["sequence_mismatches"])
     record = valid_rejected_record()

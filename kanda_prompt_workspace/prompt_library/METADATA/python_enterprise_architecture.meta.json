@@ -12,7 +12,7 @@
   "classification": "enterprise_application_pattern_transaction_specialist",
   "source_stage": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
   "updated_for": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
-  "description": "Selects enterprise application patterns and transaction boundaries without taking DDD, database, performance, or authorization ownership.",
+  "description": "Selects enterprise application patterns and transaction boundaries without taking DDD, database, performance, or authorization ownership. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [

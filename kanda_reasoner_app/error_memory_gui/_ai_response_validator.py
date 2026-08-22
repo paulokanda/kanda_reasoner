@@ -463,11 +463,71 @@ def format_lesson_block(lesson: dict[str, Any]) -> str:
         + END_MARKER
     )
 
+def _source_intends_active(source_defaults: dict[str, Any] | None) -> bool:
+    """Return whether the source lesson is awaiting human approval as active."""
+    source = source_defaults or {}
+    if not isinstance(source, dict):
+        return False
+    status = str(source.get("status", "") or "").strip().lower()
+    intended = str(source.get("intended_status", "") or "").strip().lower()
+    return status == "active" or (status == "pending" and intended == "active")
+
+
+def _enforce_memorize_ready_target(
+    payload: dict[str, Any],
+    source_defaults: dict[str, Any] | None,
+    warnings: list[str],
+) -> dict[str, Any]:
+    """Make Local-AI success use the same active-ready gate as Memorize Error.
+
+    A pending transport candidate whose intended_status is active remains
+    uncommitted until the human presses Memorize Error.  The AI preview may,
+    however, be normalized to status active only after the canonical
+    active_ready_missing_reasons() contract passes.  If it does not pass, raise
+    validation feedback so the Local-AI service performs its existing retry
+    instead of displaying a misleading "corrected" draft that Memorize Error
+    will immediately reject.
+    """
+    candidate = dict(payload)
+    output_status = str(candidate.get("status", "") or "").strip().lower()
+    target_active = output_status == "active" or _source_intends_active(source_defaults)
+    if not target_active:
+        return candidate
+
+    check = dict(candidate)
+    check["status"] = "active"
+    check.pop("intended_status", None)
+    failures = active_ready_missing_reasons(check)
+    if failures:
+        raise AIResponseValidationError(
+            "Correction is not Memorize-ready under canonical Error Memory "
+            "active-ready validation: "
+            + "; ".join(failures[:20])
+        )
+
+    if output_status != "active":
+        warnings.append(
+            "Source is intended for active human approval and the corrected "
+            "payload passed canonical Memorize Error active-ready validation; "
+            "preview status normalized to active. The pending source is still "
+            "not consumed until explicit human Memorize Error."
+        )
+    return check
+
+
 def parse_one_lesson_block(
     response_text: str,
     source_defaults: dict[str, Any] | None = None,
 ) -> ValidatedLessonBlock:
-    """Return one validated lesson from a strict AI response."""
+    """Return one validated lesson from a strict AI response.
+
+    Local-AI correction success and human Memorize Error intentionally share
+    the same canonical active-ready contract for active-intended candidates.
+
+    Pending is a transport state, not a saved canonical status.  Therefore an
+    active-intended pending correction must cross the transport-to-preview
+    boundary before the saved-status validator runs.
+    """
     json_text = _extract_json_text(response_text)
     try:
         payload = json.loads(json_text)
@@ -475,10 +535,22 @@ def parse_one_lesson_block(
         raise AIResponseValidationError("Lesson JSON is invalid: " + str(exc)) from exc
     if not isinstance(payload, dict):
         raise AIResponseValidationError("Lesson payload must be one JSON object.")
+
     payload, warnings = _normalize_lesson_payload(payload, source_defaults)
+
+    # Transport-aware readiness must run before _validate_required_fields().
+    # That validator intentionally accepts saved lesson states only and must
+    # not be broadened to make pending a canonical stored status.
+    payload = _enforce_memorize_ready_target(
+        payload,
+        source_defaults,
+        warnings,
+    )
+
     _validate_required_fields(payload)
     _validate_regression_check_contract(payload)
     _reject_blank_active_ready_text_fields(payload)
+
     lesson, active_warning = _force_draft_when_not_active_ready(payload)
     if active_warning:
         warnings.append(active_warning)

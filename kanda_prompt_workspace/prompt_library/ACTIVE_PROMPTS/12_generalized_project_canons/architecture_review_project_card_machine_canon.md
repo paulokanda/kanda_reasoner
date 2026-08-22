@@ -1,6 +1,6 @@
 # Architecture Review Project Card Machine Canon
 
-Version: 2.0
+Version: 3.0
 Status: Active prompt-library canon
 Prompt ID: architecture_review_project_card_machine_canon
 Prompt code: KPR-12-005
@@ -9,38 +9,43 @@ Load type: routed
 
 ## Purpose
 
-Own the Architecture Review target-card lifecycle and stale-state protection for a source target temporarily loaded into reusable KANDA tooling.
-
-This is a lifecycle specialist. It does not own Tool/Project root resolution, Workbench storage layouts, transaction implementation, refactor architecture, module-size rules, patch delivery, or final coding authorization.
+Define the observer-only lifecycle for an Architecture Review source target. The
+selected Project remains the owner of source, execution, validation, release, and
+rollback. KANDA Reasoner is the reusable card machine that may read, analyze,
+present, and discard observations without becoming a Project implementation
+dependency.
 
 ## Core model
 
 ```text
-KANDA Reasoner Tool = reusable card machine
-Active Project = card owner
-Selected Architecture Review source target = inserted card
+KANDA Reasoner Tool = reusable observer card machine
+Active Project = source owner
+Selected Architecture Review source target = inserted read-only card
 ```
 
 Compatibility mnemonic: `Selected large module = inserted card`.
 
-The Tool may read, analyze, plan, preview, apply through an authorized owner, verify, and produce receipts. It never becomes the owner of Project source or durable Project results.
+The Tool may read, analyze, plan, preview, report, and preserve support evidence.
+It must not apply Project source changes, install Project patches, execute Project
+validation as authority, or roll back Project source.
 
 ## Required companion owners
 
-- `KPR-12-001 project_tool_boundary_canon`: Tool, Project, Support, transient workspace, and self-hosting identity;
-- Brick Wall: final coding and source-write authorization;
-- current Workbench/transaction owners: Preview, Shadow, transaction, receipt, lock, and recovery implementation;
+- `KPR-12-001 project_tool_boundary_canon`: Tool, Project, Support, transient, and observer authority;
+- Brick Wall: KANDA Tool implementation authorization when KANDA itself is being changed;
+- Project-owned IDE/toolchain: external Project editing, testing, validation, release, and rollback;
 - Large Module Refactor Protocol only when the selected target is a large-module refactor.
-
-Do not copy their path or implementation contracts into this canon.
 
 ## MCard applicability
 
-MCard applies when Architecture Review state is bound to a selected Project source target across analysis, Planner, Workbench, apply/rollback, receipt, switching, or eject behavior.
+MCard applies when Architecture Review state is bound to a selected Project source
+target across read, analysis, Planner/Workbench proposal, Preview, report, source
+refresh, root/target switching, stale async results, cancellation, or eject.
 
-One edited file alone does not activate MCard. A prompt-only or documentation-only task may be evidence-backed `NOT_APPLICABLE`.
+One edited file alone does not activate MCard. Prompt-only or documentation-only
+work may be evidence-backed `NOT_APPLICABLE`.
 
-## Card and operation identity
+## Card and observation identity
 
 Every current card binds:
 
@@ -53,21 +58,16 @@ target_freshness_value
 source_snapshot_time
 session_id
 operation_id
-plan_id
-plan_version
-preview_id
+observation_id
 lifecycle_generation
-authorization_identity
-transaction_id, when opened
-apply_attempt_id, when attempted
-rollback_id, when requested
+analysis_id, when present
+report_id, when present
 ```
 
-`target_freshness_mode` must be explicit: exact content hash, immutable source revision, validated repository commit plus dirty-state record, or another current canonical identity. An unspecified `hash or freshness basis` is invalid.
+Every asynchronous result, handoff, Preview, or report must prove the current
+identity fields relevant to its phase before changing Tool-side observation state.
 
-Every asynchronous result, handoff, Preview, apply, rollback, receipt, and callback must prove the current identity fields relevant to its phase before changing authoritative state.
-
-## Lifecycle state machine
+## Observer lifecycle state machine
 
 Canonical path:
 
@@ -75,108 +75,80 @@ Canonical path:
 EMPTY
 -> CARD_INSERTED
 -> CARD_READ
--> PLAN_READY
--> WORKBENCH_READY
--> PREVIEW_VALIDATED
--> AUTHORIZED
--> APPLYING
--> APPLIED_NOT_VERIFIED
--> VERIFIED_TERMINAL
+-> OBSERVED
+-> ANALYSIS_READY
+-> REPORT_READY
 -> CARD_EJECTED
 ```
 
-Rollback path:
+A card may also be ejected from any non-empty observer state. Eject invalidates
+the lifecycle generation, cancels or detaches current workers, clears target-bound
+Tool state, and discards late results. Eject never requires Project rollback.
 
-```text
-APPLYING or APPLIED_NOT_VERIFIED
--> ROLLBACK_REQUESTED
--> ROLLBACK_VERIFIED
--> CARD_EJECTED
-```
+There are no external-Project MCard states for `AUTHORIZED`, `APPLYING`,
+`APPLIED_NOT_VERIFIED`, `ROLLBACK_REQUESTED`, or `ROLLBACK_VERIFIED`. Those
+mutation-oriented states are retired from the observer card lifecycle.
 
-`APPLIED_NOT_VERIFIED` begins after source mutation returns but before post-write verification establishes terminal success.
+## Read, analyze, and proposal rules
 
-## Orthogonal operation locks
+Reading does not transfer ownership. Planner, Workbench, and Preview are read-only
+proposal/evidence surfaces for an external Project. They may describe changes for
+the Project owner to implement independently, but KANDA does not apply them.
 
-The lifecycle state is accompanied by explicit locks for:
+If the IDE or Project toolchain changes the source, the target fingerprint changes.
+All target-bound observations, plans, previews, analyses, and reports derived from
+the previous fingerprint become stale and must be refreshed before reuse.
 
-- AST or architecture audit running;
-- Planner worker running;
-- Preview generation running;
-- apply or rollback running;
-- cancellation requested;
-- cancellation incomplete;
-- unresolved child process or callback;
-- open transaction or unresolved apply outcome.
+Late results from an older generation fail closed and cannot repopulate the UI or
+durable support evidence as current.
 
-A root switch, target switch, snapshot replacement, or eject remains blocked while an incompatible lock is active.
+## Operation locks and cancellation
 
-## Insert rule
+Observer operations may track audit, analysis, report-generation, cancellation,
+or child-process activity. These locks protect Tool state only. They never create
+a Project source transaction.
 
-Insert only when KPR-12-001 proves the selected target belongs to the current Project source scope, no incompatible transaction or worker is authoritative, and previous card-specific state has been invalidated.
-
-Filesystem containment uses the current public path owner and must account for platform path normalization, links or junctions, alternate separators, traversal, UNC or drive semantics, and revalidation immediately before write.
-
-## Read and plan rules
-
-Reading does not transfer ownership. Planner state remains bound to the current card and operation identity.
-
-Root or target changes invalidate target-specific analysis, candidate, plan, handoff, Preview, authorization, apply, rollback, and callback generations before the new identity becomes authoritative.
-
-Late results from an older generation fail closed and cannot repopulate the UI or durable state.
-
-## Cancellation rule
-
-Invalidating a generation is not sufficient cleanup. The operation owner must request cancellation, stop or join workers and child processes within a bounded policy, release resources and callbacks, and record unresolved termination as a blocking lock.
-
-## Apply and verification rules
-
-MCard may confirm lifecycle readiness but cannot authorize implementation.
-
-Source mutation may begin only after Brick Wall and the owning implementation contracts authorize it. The result enters `APPLIED_NOT_VERIFIED` until current-source verification, required validators, and transaction evidence establish `VERIFIED_TERMINAL`.
+Card eject is always available. The Tool must request cancellation when possible,
+invalidate the generation immediately, release callbacks/resources safely, and
+ignore any late result. A worker that cannot stop promptly may finish in the
+background only if it has no Project write authority and its result is discarded.
 
 ## Crash and restart recovery
 
-On restart, the Tool must inspect durable transaction identity before restoring or replacing a card. An open, applying, applied-not-verified, rollback-requested, or conflicting session state blocks normal insert and eject until recovery, verified completion, or verified rollback resolves it.
+On restart, KANDA may restore only read-only observation metadata whose source
+fingerprint is still current. Otherwise it returns to `CARD_INSERTED` or
+`CARD_READ` after re-observation. No Project source rollback or transaction
+recovery is owned by MCard.
 
 ## Concurrent-session rule
 
-Two sessions must not silently operate on the same card identity. The relevant transaction owner must provide a lease, lock, generation check, compare-and-swap contract, or explicit conflict rejection.
+Two KANDA sessions may observe the same Project, but their observation IDs and
+lifecycle generations remain independent. They must not overwrite each other's
+Tool-side support state without the support owner's normal conflict policy.
+Neither session gains Project source-write authority.
 
 ## Switch and eject rules
 
-### Project-root switch
+### Project-root or target switch
 
-Unload target-specific Tool memory only after workers and transactions permit the switch. Do not delete Project-owned durable results.
+Invalidate the previous observation generation before the new root or target
+becomes authoritative. Retain only Project-scoped caches explicitly proven safe.
 
-### Target switch
+### Card eject
 
-Invalidate the previous target's downstream state before the new target becomes authoritative. Retain only Project-scoped caches explicitly proven safe.
+Eject may occur from any non-empty observer state. Clear target-specific analysis,
+selection, Planner/Workbench proposal state, callbacks, worker generations, and
+current Preview/report references.
 
-### Terminal eject
-
-Terminal eject requires verified completion or verified rollback and no active card lock.
-
-Clear:
-
-- target-specific analysis and selection;
-- target-specific Planner and Workbench working state;
-- callbacks and worker generations;
-- current authorization and apply/rollback working references;
-- target-specific GUI selection.
-
-Retain under their canonical Project owners:
-
-- Project source and generated helper files;
-- scrubbed durable Preview and evidence;
-- terminal transaction history and receipt;
-- audit evidence references allowed by retention policy.
-
-Release terminal locks. Do not retain a stale mutation lock merely because historical transaction evidence is retained.
+Retain only independently owned Project source plus durable, scrubbed support
+evidence already written through its canonical support owner. Never delete,
+restore, or reverse Project source because the card was ejected.
 
 ## Evidence safety
 
-Preview, receipts, transactions, and logs may expose proprietary source, local paths, customer or patient data, or secrets. Their implementation owners must apply the Project Support security, redaction, retention, and deletion policy resolved by KPR-12-001.
+Preview, reports, and logs may expose proprietary source, local paths, customer or
+patient data, or secrets. Their owners must apply Project Support security,
+redaction, retention, and deletion policy resolved by KPR-12-001.
 
 ## Router bridge requirements
 
@@ -185,69 +157,68 @@ MCARD APPLICABILITY AND LIFECYCLE RECORD
 Active Project identity proven:
 Inserted card target:
 Card ownership proven:
-Card and operation identity complete:
 Target freshness mode and value:
-Current lifecycle phase:
-Active operation locks:
+Current observer lifecycle phase:
+Observation ID and lifecycle generation:
+Active observer locks:
 Async result identity valid:
-Cancellation terminal:
-Open transaction or unresolved apply outcome:
-Switch/eject blocked when required:
-Recovery status:
-Concurrent-session conflict status:
-Write target owner:
-Terminal eject condition:
-Target-specific Tool state cleared:
-Project durable results retained:
+Cancellation/eject status:
+Source fingerprint changed since observation: YES / NO
+Stale Tool observations invalidated: YES / NO / NOT_APPLICABLE
+Target-specific Tool state cleared on eject:
+Project source left untouched by KANDA:
+Project development remains possible without KANDA: YES / NO
 Self-hosting logical separation preserved:
 Unresolved fields:
 MCard lifecycle gate: COMPLETE / NOT_APPLICABLE / BLOCKED
 May proceed to the next Brick Wall gate: YES / NO
-May begin coding: NO
+May begin coding from MCard: NO
 ```
 
-No MCard field independently grants implementation authority.
+No MCard field grants implementation authority.
 
 ## Routing triggers
 
-Load for Architecture Review or AST target lifecycle, Planner-to-Workbench identity, root or target switching, stale async results, cancellation, Preview identity, transaction locks, apply/rollback recovery, receipt identity, concurrent sessions, or terminal eject.
+Load for Architecture Review or AST target lifecycle, Planner/Workbench proposal
+identity, root or target switching, stale async results, cancellation, source
+fingerprint refresh, report identity, or card eject.
 
 ## When not to use
 
-Do not load for payment-card discussion, generic UI styling, ordinary Tool/Project identity with no Architecture Review target lifecycle, or a Workbench storage-path question that does not involve card lifecycle.
+Do not load for payment-card discussion, generic UI styling, ordinary Tool/Project
+identity with no Architecture Review target lifecycle, or Project implementation
+that does not depend on KANDA observation state.
 
 ## Failure patterns
 
 - target outside the current Project scope;
 - stale worker repopulates a new root or target;
-- same target reused under a different operation or transaction identity;
-- apply succeeds locally but verification state is skipped;
-- cancellation requested but worker or callback remains authoritative;
-- open transaction permits switch or eject;
-- restart ignores unresolved durable transaction state;
-- two sessions mutate the same card without conflict detection;
-- eject deletes Project results or retains target-specific Tool memory;
+- IDE changes source but old observation remains current;
+- card eject waits for or attempts Project rollback;
+- KANDA applies a Project proposal;
+- KANDA validator or source archive becomes a Project implementation prerequisite;
+- eject deletes Project results or retains stale target-specific Tool memory;
 - MCard claims implementation authority.
 
 ## Validation requirements
 
-Focused validation must protect identity and code, lifecycle-state schema, complete operation identity, valid normal and rollback transitions, stale-generation rejection, operation locks, cancellation, recovery, concurrent-session conflict handling, non-destructive terminal eject, unique registration, negative routing, and the machine-readable MCard record.
-
-Runtime lifecycle tests should use a public lifecycle facade or test adapter when available. Direct private-GUI attribute testing may remain only as bounded legacy regression coverage and must not become the canonical contract.
+Focused validation must protect observer identity, lifecycle schema, source-change
+staleness, late-result rejection, cancellation/eject safety, non-destructive eject,
+Project-source immutability, KANDA-independent Project development, unique prompt
+registration, negative routing, and the machine-readable MCard record.
 
 ## Do-not-regress rules
 
-- The Tool is the reusable card machine; the Project owns source and durable results.
-- Card ownership and freshness must be current and explicit.
-- Every async or mutation action is bound to complete operation identity.
-- `APPLIED_NOT_VERIFIED` is a reachable post-write state.
-- Active workers, cancellation, transactions, or unresolved apply outcomes block incompatible switching and eject.
-- Root and target changes invalidate stale generations before new authority.
-- Terminal eject clears target-specific Tool state, releases locks, and preserves Project results.
-- MCard never authorizes coding or source write.
+- The Tool is the reusable observer card machine; the Project owns source and durable results.
+- MCard never applies, installs, validates-as-authority, or rolls back external Project source.
+- Source fingerprint changes invalidate old observation generations.
+- Card eject is always available and never requires Project rollback.
+- Late results from an ejected or stale generation are discarded.
+- Project development remains possible when KANDA is closed, unavailable, or the card is ejected.
 - KPR-12-001 remains the root and ownership identity owner.
 
 ## Version history
 
-- 2.0: narrowed ownership to lifecycle, completed operation identity, made APPLIED_NOT_VERIFIED reachable, added operation locks, cancellation, recovery, concurrency, evidence safety, and non-authorizing gate output.
+- 3.0: replaced mutation/apply/rollback MCard semantics with the observer-only card lifecycle and guaranteed non-blocking eject.
+- 2.0: historical mutation-oriented lifecycle; superseded for external Project observation.
 - 1.0: established the original Architecture Review card-machine model.

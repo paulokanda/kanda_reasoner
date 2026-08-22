@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
 import hashlib
@@ -42,18 +43,40 @@ def _record_identity(record: ProjectSelectionRecord) -> tuple[str, ...]:
     )
 
 
-def _require_current_project_card(
-    tool_root: Path,
-    card: ProjectSelectionRecord,
-) -> object:
-    registry = ProjectSelectionRegistry(tool_source_root=tool_root)
-    current = registry.load_current_record()
-    if current is None or _record_identity(current) != _record_identity(card):
-        raise RuntimeError("ACTIVE_PROJECT_MCARD_CHANGED")
-    boundary = registry.resolve_boundary_for_root(card.project_root)
-    if boundary.active_project_id != card.stable_project_id:
-        raise RuntimeError("ACTIVE_PROJECT_MCARD_ID_MISMATCH")
-    return boundary
+@dataclass(frozen=True)
+class _ProjectObservationGuard:
+    """Observe one expected Project record through one explicit registry handle."""
+
+    registry: ProjectSelectionRegistry
+    expected: ProjectSelectionRecord
+
+    @classmethod
+    def capture(
+        cls,
+        tool_root: Path,
+        expected: ProjectSelectionRecord,
+    ) -> "_ProjectObservationGuard":
+        """Capture one explicit registry observer and verify the initial record."""
+        guard = cls(
+            registry=ProjectSelectionRegistry(tool_source_root=tool_root),
+            expected=expected,
+        )
+        guard.require_current()
+        return guard
+
+    def require_current(self) -> object:
+        """Reject a switch/eject without creating another registry owner."""
+        current = self.registry.load_current_record()
+        if current is None or _record_identity(current) != _record_identity(
+            self.expected
+        ):
+            raise RuntimeError("ACTIVE_PROJECT_OBSERVATION_CHANGED")
+        boundary = self.registry.resolve_boundary_for_root(
+            self.expected.project_root
+        )
+        if boundary.active_project_id != self.expected.stable_project_id:
+            raise RuntimeError("ACTIVE_PROJECT_OBSERVATION_ID_MISMATCH")
+        return boundary
 
 
 def _review_sha256(review: CompleteEngineeringReviewResult) -> str:
@@ -68,15 +91,16 @@ def build_complete_review_ai_correction_handoff(
     *,
     performance_lines: tuple[str, ...] = (),
 ):
-    """Build one AI handoff for the exact active-Project M-card snapshot."""
+    """Build one AI handoff for the exact selected-Project observation record."""
     handoff_started = time.perf_counter()
     timings = list(performance_lines)
     tool = Path(tool_root).expanduser().resolve(strict=True)
     root = Path(project_card.project_root).expanduser().resolve(strict=True)
     if Path(review.project_root).expanduser().resolve(strict=True) != root:
-        raise RuntimeError("COMPLETE_REVIEW_PROJECT_MCARD_MISMATCH")
+        raise RuntimeError("COMPLETE_REVIEW_PROJECT_OBSERVATION_MISMATCH")
 
-    boundary = _require_current_project_card(tool, project_card)
+    observation_guard = _ProjectObservationGuard.capture(tool, project_card)
+    boundary = observation_guard.require_current()
     controller = EngineeringDiagnosticsController(tool_root=tool)
     cancel = cancellation or Event()
     generation = int(time.monotonic_ns())
@@ -106,7 +130,7 @@ def build_complete_review_ai_correction_handoff(
             raise EngineeringDiagnosticsGuiCancelled(
                 "complete review AI handoff cancelled"
             )
-        _require_current_project_card(tool, project_card)
+        observation_guard.require_current()
         if outcome.candidate is None:
             collector_results.append(
                 AiCorrectionCollectorResult(
@@ -160,7 +184,7 @@ def build_complete_review_ai_correction_handoff(
         + f"{time.perf_counter() - commits_started:.3f}s"
     )
     collector_tuple = tuple(collector_results)
-    _require_current_project_card(tool, project_card)
+    observation_guard.require_current()
     coverage_started = time.perf_counter()
     coverage = coverage_from_complete_engineering_review(
         review,
@@ -174,7 +198,7 @@ def build_complete_review_ai_correction_handoff(
     )
 
     def publish_guard() -> None:
-        _require_current_project_card(tool, project_card)
+        observation_guard.require_current()
 
     return build_full_ai_correction_handoff(
         controller,

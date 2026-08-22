@@ -4,21 +4,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
 import hashlib
-import os
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
-
-from kanda_reasoner_app.project_support_boundary import (
-    canonical_transient_garbage_root,
+from kanda_reasoner_app.project_source_proposal_boundary import (
+    PROJECT_REPAIR_PROPOSAL_ONLY_MARKER,
 )
 
 from kanda_reasoner_app.manage_architecture.warning_model_test_generation_contract import (
@@ -45,6 +35,8 @@ class ModelTestProtectionApplyResult:
     mutated_test_count: int
     changed_files: tuple[str, ...]
     backup_root: str
+    proposal_only: bool = False
+    proposed_files: tuple[str, ...] = ()
 
     @property
     def applied_count(self) -> int:
@@ -58,11 +50,6 @@ def _read_utf8(path: Path) -> str:
 def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-
-def _backup_root(project_root: Path) -> Path:
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    daily_work = canonical_transient_garbage_root(project_root)
-    return daily_work / "warning_local_ai_resolver" / "validated_test_changes" / timestamp
 
 
 def _preflight_link(
@@ -120,52 +107,12 @@ def _collect_rendered_changes(
     return original_by_path, rendered_by_path
 
 
-def _write_backups(
-    root: Path,
-    backup_root: Path,
-    original_by_path: dict[Path, str],
-) -> None:
-    for path, original in original_by_path.items():
-        if not path.exists():
-            continue
-        relative = path.relative_to(root)
-        backup_path = backup_root / relative
-        backup_path.parent.mkdir(parents=True, exist_ok=True)
-        backup_path.write_text(original, encoding="utf-8", newline="")
-
-
-def _restore_after_failure(
-    original_by_path: dict[Path, str],
-    root: Path,
-) -> None:
-    fire_shield = build_current_fire_shield_context(
-        project_root=root,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="warning-model-test-rollback",
-    )
-    for path, original in original_by_path.items():
-        try:
-            if original:
-                payload = original.encode("utf-8")
-                assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
-                assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
-                temporary = path.with_name(path.name + ".warning_model_rollback_tmp")
-                temporary.write_bytes(payload)
-                os.replace(temporary, path)
-            elif path.exists():
-                assert_fire_shield_write_allowed(fire_shield, path, operation="DELETE")
-                path.unlink()
-        except OSError:
-            pass
-    verify_tool_snapshot_unchanged(fire_shield)
-
-
 def apply_validated_model_test_changes(
     project_root: str | Path,
     link_decisions: tuple[TestProtectionGapDecision, ...],
     mutations: tuple[ModelTestMutationProposal, ...],
 ) -> ModelTestProtectionApplyResult:
-    """Apply only prevalidated links and sandbox-approved test changes with backups."""
+    """Return proposal evidence for validated test changes without source writes."""
     root = Path(project_root).expanduser().resolve()
     selected_links = tuple(
         item for item in link_decisions if item.action == ACTION_LINK_EXISTING_TEST
@@ -177,45 +124,19 @@ def apply_validated_model_test_changes(
         selected_links,
         mutations,
     )
-    backup_root = _backup_root(root)
-    _write_backups(root, backup_root, original_by_path)
-    changed: list[str] = []
-    link_paths = {
-        (root / Path(item.candidate_test_path)).resolve()
-        for item in selected_links
-    }
-    mutation_paths = {
-        (root / Path(item.target_test_path)).resolve()
-        for item in mutations
-    }
-    changed_paths: set[Path] = set()
-    fire_shield = build_current_fire_shield_context(
-        project_root=root,
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="warning-model-test-apply",
+    proposed = tuple(
+        path.relative_to(root).as_posix()
+        for path, rendered in sorted(
+            rendered_by_path.items(),
+            key=lambda item: str(item[0]),
+        )
+        if rendered != original_by_path[path]
     )
-    try:
-        for path, rendered in sorted(rendered_by_path.items(), key=lambda item: str(item[0])):
-            original = original_by_path[path]
-            if rendered == original:
-                continue
-            payload = rendered.encode("utf-8")
-            assert_fire_shield_write_allowed(fire_shield, path, operation="REPLACE")
-            assert_fire_shield_payload_bytes_allowed(fire_shield, path, payload)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            temporary = path.with_name(path.name + ".warning_model_tmp")
-            temporary.write_bytes(payload)
-            os.replace(temporary, path)
-            resolved_path = path.resolve()
-            changed_paths.add(resolved_path)
-            changed.append(path.relative_to(root).as_posix())
-    except Exception:
-        _restore_after_failure(original_by_path, root)
-        raise
-    verify_tool_snapshot_unchanged(fire_shield)
     return ModelTestProtectionApplyResult(
-        linked_count=len(changed_paths & link_paths),
-        mutated_test_count=len(changed_paths & mutation_paths),
-        changed_files=tuple(changed),
-        backup_root=str(backup_root) if changed else "",
+        linked_count=0,
+        mutated_test_count=0,
+        changed_files=(),
+        backup_root="",
+        proposal_only=True,
+        proposed_files=proposed,
     )

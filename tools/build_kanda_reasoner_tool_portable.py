@@ -22,8 +22,21 @@ __all__ = [
 ]
 
 from tool_portable_functional_smoke import (
-    smoke_external_project,
     smoke_no_project,
+    smoke_project_agnostic_startup_generation,
+)
+
+from tool_portable_error_memory_seed import embed_tool_error_memory_seed
+from tool_portable_output_delivery import (
+    OUTPUT_FOLDER_NAME,
+    cleanup_transient_build_root,
+    delivery_zip_path,
+    finalize_single_zip_delivery,
+)
+from tool_portable_registry_boundary import (
+    assert_build_boundary_unchanged,
+    prepare_build_boundary,
+    validate_build_publication,
 )
 
 FEATURE_ID = "kanda-reasoner-tool-portable-direct-pyinstaller-v1r2"
@@ -55,6 +68,30 @@ FORBIDDEN_OUTPUT_PARTS = {
     "second_prompt_files_building",
 }
 
+def _hydrate_tool_owned_physical_runtime(
+    tool_root: Path,
+    stage: Path,
+) -> None:
+    """Hydrate Tool runtime with an explicit temporary Tool-root import bootstrap."""
+
+    tool_root_text = str(tool_root)
+    tool_root_was_present = tool_root_text in sys.path
+    previous_dont_write_bytecode = sys.dont_write_bytecode
+    if not tool_root_was_present:
+        sys.path.insert(0, tool_root_text)
+    sys.dont_write_bytecode = True
+    try:
+        from portable.physical_runtime import hydrate_physical_runtime
+
+        hydrate_physical_runtime(tool_root, stage)
+    finally:
+        sys.dont_write_bytecode = previous_dont_write_bytecode
+        if not tool_root_was_present:
+            try:
+                sys.path.remove(tool_root_text)
+            except ValueError:
+                pass
+
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -84,34 +121,6 @@ def clean_environment() -> dict[str, str]:
     return environment
 
 
-def require_unselected(tool_root: Path) -> dict[str, Any]:
-    sys.path.insert(0, str(tool_root))
-    try:
-        from kanda_reasoner_app.project_selection_registry import (
-            ProjectSelectionRegistry,
-        )
-        registry = ProjectSelectionRegistry(tool_source_root=tool_root)
-        record = registry.load_current_record()
-        path = registry.registry_path.resolve(strict=False)
-    finally:
-        try:
-            sys.path.remove(str(tool_root))
-        except ValueError:
-            pass
-    if record is not None:
-        raise RuntimeError(
-            "TOOL_PORTABLE_BUILD_REQUIRES_SELECTED_PROJECT_NONE:"
-            + record.project_root
-        )
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    if str(payload.get("current_project_id") or "").strip():
-        raise RuntimeError("TOOL_PORTABLE_BUILD_CURRENT_PROJECT_ID_NOT_EMPTY")
-    return {
-        "registry_path": str(path),
-        "registry_sha256": sha256(path),
-        "current_project_id": "",
-        "selection_mode": "UNSELECTED",
-    }
 
 
 def _run_required_validator(
@@ -154,7 +163,7 @@ def validate_core_builder(tool_root: Path, environment: dict[str, str]) -> None:
             str(tool_root / "portable"),
         ],
         expected_marker=(
-            "VALIDATION OK: kanda-reasoner-portable-builder-install-v1r12"
+            "VALIDATION OK: kanda-reasoner-portable-timestamped-publication-name-v1r32"
         ),
         failure_code="CURRENT_PORTABLE_BUILDER_VALIDATION",
     )
@@ -182,6 +191,42 @@ def validate_core_builder(tool_root: Path, environment: dict[str, str]) -> None:
         failure_code="LOCAL_AI_PROJECT_AUTHORITY_VALIDATION",
     )
     print("LOCAL AI PROJECT AUTHORITY PRE-BUILD GATE: PASS")
+
+    agnostic_validator = (
+        tool_root
+        / "validation"
+        / "test_portable_project_agnostic_build_contract_v3.py"
+    )
+    _run_required_validator(
+        tool_root,
+        environment,
+        [sys.executable, str(agnostic_validator)],
+        expected_marker=(
+            "VALIDATION OK: "
+            "kanda-reasoner-tool-portable-project-agnostic-build-v3"
+        ),
+        failure_code="PORTABLE_PROJECT_AGNOSTIC_BUILD_VALIDATION",
+    )
+    print("PORTABLE PROJECT-AGNOSTIC BUILD GATE: PASS")
+
+    error_memory_seed_validator = (
+        tool_root / "tools" / "validate_portable_tool_error_memory_seed_v2.py"
+    )
+    _run_required_validator(
+        tool_root,
+        environment,
+        [
+            sys.executable,
+            str(error_memory_seed_validator),
+            "--root",
+            str(tool_root),
+        ],
+        expected_marker=(
+            "VALIDATION OK: kanda-reasoner-portable-tool-error-memory-seed-no-project-support-v2"
+        ),
+        failure_code="PORTABLE_TOOL_ERROR_MEMORY_SEED_VALIDATION",
+    )
+    print("PORTABLE TOOL ERROR MEMORY SEED BUILD GATE: PASS")
 
 
 def run_pyinstaller(
@@ -304,11 +349,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tool-root", type=Path, required=True)
     parser.add_argument("--output-directory", type=Path, required=True)
-    parser.add_argument(
-        "--external-project-root",
-        type=Path,
-        default=Path(r"E:\eeg_kanda"),
-    )
     parser.add_argument("--yes", action="store_true")
     parser.add_argument("--replace-existing", action="store_true")
     parser.add_argument("--skip-smoke", action="store_true")
@@ -322,6 +362,9 @@ def main() -> int:
     if tool_root.name.casefold() != "kanda_reasoner":
         raise RuntimeError("TOOL_ROOT_NAME_MISMATCH:" + str(tool_root))
     output = args.output_directory.expanduser().resolve(strict=False)
+    build_time = datetime.now()
+    if output.name != OUTPUT_FOLDER_NAME:
+        raise RuntimeError("PORTABLE_OUTPUT_FOLDER_NAME_MISMATCH:" + str(output))
     try:
         output.relative_to(tool_root)
     except ValueError:
@@ -330,7 +373,11 @@ def main() -> int:
         raise RuntimeError("OUTPUT_DIRECTORY_INSIDE_TOOL_ROOT")
 
     environment = clean_environment()
-    registry = require_unselected(tool_root)
+    boundary, registry = prepare_build_boundary(
+        tool_root,
+        output,
+        delivery_zip_path(output, build_time).name,
+    )
     validate_core_builder(tool_root, environment)
 
     drive = Path(tool_root.anchor).resolve()
@@ -342,25 +389,31 @@ def main() -> int:
     result_path = run_root / "build_result.json"
     final_zip = output / FINAL_ZIP_NAME
     final_folder = output / TOP_LEVEL_NAME
-    if (final_zip.exists() or final_folder.exists()) and not args.replace_existing:
-        raise RuntimeError("PORTABLE_OUTPUT_ALREADY_EXISTS_USE_REPLACE_EXISTING")
+    delivery_zip = delivery_zip_path(output, build_time)
+    if (output.exists() and any(output.iterdir())) or delivery_zip.exists():
+        if not args.replace_existing:
+            raise RuntimeError("PORTABLE_OUTPUT_ALREADY_EXISTS_USE_REPLACE_EXISTING")
 
     app_root = run_pyinstaller(tool_root, run_root, environment)
     stage = stage_application(app_root, run_root / "release_stage")
+    _hydrate_tool_owned_physical_runtime(tool_root, stage)
+    error_memory_seed = embed_tool_error_memory_seed(tool_root, stage)
+    assert_no_project_capture(stage)
+    assert_build_boundary_unchanged(boundary)
+    if output.exists() and args.replace_existing:
+        shutil.rmtree(output)
+    if delivery_zip.exists() and args.replace_existing:
+        delivery_zip.unlink()
     output.mkdir(parents=True, exist_ok=True)
-    if final_folder.exists():
-        shutil.rmtree(final_folder)
     shutil.copytree(stage, final_folder)
     zip_evidence = create_deterministic_zip(stage, final_zip)
     first_smoke: dict[str, Any] | None = None
-    second_smoke: dict[str, Any] | None = None
+    project_agnostic_smoke: dict[str, Any] | None = None
     if not args.skip_smoke:
         first_smoke = smoke_no_project(final_zip, run_root)
-        second_smoke = smoke_external_project(
+        project_agnostic_smoke = smoke_project_agnostic_startup_generation(
             final_folder,
-            args.external_project_root,
             run_root,
-            source_registry_path=Path(registry["registry_path"]),
         )
 
     result = {
@@ -368,38 +421,75 @@ def main() -> int:
         "feature_id": FEATURE_ID,
         "status": (
             "portable_ready"
-            if first_smoke is not None and second_smoke is not None
+            if first_smoke is not None and project_agnostic_smoke is not None
             else "portable_built_unverified"
         ),
         "completed_at_utc": datetime.now(timezone.utc).isoformat(),
         "tool_root": str(tool_root),
-        "selected_project_during_build": None,
-        "self_hosting_during_build": False,
+        "selected_project_during_build": (
+            boundary.current_project_id or None
+        ),
+        "self_hosting_during_build": (
+            boundary.selection_mode == "EXPLICIT_SELF_HOSTING"
+        ),
+        "project_selection_authority_used_for_build": False,
         "registry": registry,
         "pyinstaller_version": importlib.metadata.version("pyinstaller"),
         "spec_path": str(tool_root / "KandaReasonerWindows.spec"),
         "spec_sha256": sha256(tool_root / "KandaReasonerWindows.spec"),
-        "output_folder": str(final_folder),
-        "portable_zip": zip_evidence,
+        "output_folder": f"{OUTPUT_FOLDER_NAME}/{TOP_LEVEL_NAME}",
+        "portable_zip": {
+            **zip_evidence,
+            "path": "TRANSIENT_SMOKE_ARTIFACT_NOT_RETAINED",
+            "retained": False,
+        },
         "first_smoke": first_smoke,
-        "second_smoke": second_smoke,
+        "project_agnostic_smoke": project_agnostic_smoke,
+        "tool_error_memory_seed": error_memory_seed,
+        "second_smoke": project_agnostic_smoke,
+        "second_smoke_kind": "project_agnostic_startup_generation",
         "project_content_packaged": False,
+        "publication_contract": {
+            "final_artifact_name": delivery_zip.name,
+            "output_workspace_retained": False,
+            "inner_portable_zip_retained": False,
+            "transient_build_root_retained": False,
+        },
     }
     write_json(result_path, result)
     write_json(output / "KandaReasoner-Windows-Portable-build-result.json", result)
+    validate_build_publication(
+        boundary,
+        output,
+        delivery_zip.name,
+    )
+    delivery_evidence = finalize_single_zip_delivery(output, build_time)
+    assert_build_boundary_unchanged(boundary)
 
     if result["status"] == "portable_ready":
         print("KANDA REASONER TOOL PORTABLE CREATED: PASS")
     else:
         print("KANDA REASONER TOOL PORTABLE BUILT BUT UNVERIFIED: PASS")
-    print("SELECTED PROJECT DURING BUILD: NONE")
-    print("SELF-HOSTING DURING BUILD: OFF")
+    observed_project = boundary.current_project_id or "NONE"
+    print("SELECTED PROJECT OBSERVED DURING BUILD: " + observed_project)
+    print("SELECTED PROJECT BUILD AUTHORITY: NOT USED")
+    print("PROJECT SELECTION MUTATION DURING BUILD: ABSENT")
+    print("SELF-HOSTING BUILD AUTHORITY: NOT USED")
     print("PYINSTALLER NATIVE WINDOWS BUILD: PASS")
     print("PROJECT CONTENT PACKAGED: NO")
-    print(f"PORTABLE FOLDER: {final_folder}")
-    print(f"PORTABLE ZIP: {final_zip}")
-    print(f"PORTABLE ZIP SHA-256: {zip_evidence['sha256']}")
-    print(f"BUILD RESULT: {result_path}")
+    print("REAL PROJECT INPUT REQUIRED FOR BUILD: NO")
+    print("TOOL ERROR MEMORY SEED PACKAGED: YES")
+    print(
+        "TOOL ERROR MEMORY LESSON COUNT: "
+        + str(error_memory_seed["lesson_count"])
+    )
+    print("PORTABLE APP: INSIDE " + Path(delivery_evidence["path"]).name)
+    print("PORTABLE INNER ZIP RETAINED: NO")
+    print(f"PORTABLE DELIVERY ZIP: {delivery_evidence['path']}")
+    print(f"PORTABLE DELIVERY ZIP SHA-256: {delivery_evidence['sha256']}")
+    print(f"PORTABLE DELIVERY MEMBER COUNT: {delivery_evidence['member_count']}")
+    print("BUILD RESULT: INSIDE " + Path(delivery_evidence["path"]).name)
+    cleanup_transient_build_root(run_root)
     return 0
 
 

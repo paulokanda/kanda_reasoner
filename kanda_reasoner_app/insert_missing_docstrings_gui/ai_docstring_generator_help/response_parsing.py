@@ -7,7 +7,10 @@ __all__ = [
 ]
 
 import json
+from typing import Any
 
+from ..context_builder import SymbolContext
+from ..docstring_policy import DocstringPolicy
 from .heuristics import _prettify
 
 

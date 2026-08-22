@@ -7,10 +7,10 @@
   "status": "active",
   "load_type": "routed",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/project_tool_boundary_canon.md",
-  "source_stage": "fire-shield-ai-policy-enforcement-v1",
-  "description": "Canonical Tool-versus-selected-Project owner, including frozen Fire Shield public-authority requirements for consequential external-Project operations and the separate portable-distribution ownership rule.",
+  "source_stage": "external-project-observer-independence-v1",
+  "description": "Canonical observer-only Tool-versus-selected-Project owner. External Project implementation, validation, release, and rollback remain Project-owned; KANDA source writes and KANDA validator/source-archive fallback are forbidden.",
   "box_logic_required": true,
-  "routing_coverage": "complete_v1_fire_shield_policy_enforced",
+  "routing_coverage": "complete_v2_actor_scoped_fire_shield_spectator_separation",
   "priority": 35,
   "trigger_phrases": [
     "active project identity",
@@ -62,8 +62,8 @@
     "Do not allow undeclared or unauthorized cross-project mutation.",
     "Do not create or refresh <project>-Windows-Portable.zip from Show Project to AI.",
     "Portable builds require a separate explicit user request and productization/release workflow outside Project Support.",
-    "Do not bypass the Tool-owned public Fire Shield authority for consequential external-Project operations or replace it with prompt-only approval."
+    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability."
   ],
-  "version": "2.3",
-  "updated_for": "fire-shield-ai-policy-enforcement-v1"
+  "version": "2.5",
+  "updated_for": "external-project-observer-independence-v1"
 }

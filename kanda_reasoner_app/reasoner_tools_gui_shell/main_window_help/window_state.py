@@ -68,7 +68,22 @@ class _WindowStateMixin:
         """Persist lightweight shell state outside the Tool source tree."""
         path = self._prefs_path()
         boundary = getattr(self, "current_project_boundary", None)
+        shell_width = 0
+        shell_height = 0
+        try:
+            normal_geometry = self.normalGeometry()
+            shell_width = int(normal_geometry.width())
+            shell_height = int(normal_geometry.height())
+        except Exception:
+            try:
+                shell_width = int(self.width())
+                shell_height = int(self.height())
+            except Exception:
+                pass
+
         payload = {
+            "shell_width": shell_width,
+            "shell_height": shell_height,
             "last_project_root": (
                 str(self.current_project_root)
                 if self.current_project_root is not None
@@ -118,8 +133,196 @@ class _WindowStateMixin:
         except Exception:
             pass
 
+    def _configuration_shutdown_controllers(self) -> tuple[object, ...]:
+        """Return application-scoped configuration owners with Qt workers."""
+        controllers = (
+            getattr(self, "_local_ai_configuration", None),
+            getattr(self, "_web_ai_configuration", None),
+        )
+        return tuple(controller for controller in controllers if controller is not None)
+
+    def _configuration_shutdown_ready(self) -> bool:
+        """Return whether every application configuration worker has settled."""
+        for controller in self._configuration_shutdown_controllers():
+            ready = getattr(controller, "shutdown_ready", None)
+            if callable(ready) and not bool(ready()):
+                return False
+        return True
+
+    def _connect_configuration_shutdown_retry(self, controller: object) -> None:
+        """Connect one settlement signal to the deferred close retry once."""
+        connected = getattr(
+            self,
+            "_configuration_shutdown_signal_owners",
+            None,
+        )
+        if not isinstance(connected, set):
+            connected = set()
+            self._configuration_shutdown_signal_owners = connected
+
+        identity = id(controller)
+        if identity in connected:
+            return
+
+        signal = getattr(controller, "catalog_refresh_settled", None)
+        if signal is None:
+            return
+        try:
+            signal.connect(self._retry_close_after_configuration_shutdown)
+        except Exception:
+            return
+        connected.add(identity)
+
+    def _begin_configuration_shutdown(self) -> bool:
+        """Request cooperative settlement and report whether close may proceed."""
+        ready_now = True
+        for controller in self._configuration_shutdown_controllers():
+            self._connect_configuration_shutdown_retry(controller)
+            begin = getattr(controller, "begin_shutdown", None)
+            if callable(begin) and not bool(begin()):
+                ready_now = False
+        return ready_now and self._configuration_shutdown_ready()
+
+    def _retry_close_after_configuration_shutdown(self) -> None:
+        """Retry an ignored close only after every configuration QThread settles."""
+        if not bool(
+            getattr(
+                self,
+                "_close_waiting_for_configuration_shutdown",
+                False,
+            )
+        ):
+            return
+        if not self._configuration_shutdown_ready():
+            return
+        self._close_waiting_for_configuration_shutdown = False
+        try:
+            from PySide6.QtCore import QTimer
+
+            QTimer.singleShot(0, self.close)
+        except Exception:
+            self.close()
+
+    def _loaded_tool_shutdown_targets(self) -> tuple[object, ...]:
+        """Return loaded embedded tools exactly once for shell teardown."""
+        registry = getattr(self, "_loaded_tools_by_tab_id", {})
+        values = registry.values() if isinstance(registry, dict) else ()
+        targets: list[object] = []
+        seen: set[int] = set()
+        for widget in values:
+            identity = id(widget)
+            if identity in seen:
+                continue
+            seen.add(identity)
+            targets.append(widget)
+        return tuple(targets)
+
+    def _embedded_tool_shutdown_ready(self, widget: object) -> bool:
+        """Run an optional worker protocol before child closeEvent."""
+        begin = getattr(widget, "begin_shutdown", None)
+        if callable(begin):
+            try:
+                if not bool(begin()):
+                    return False
+            except RuntimeError:
+                return True
+            except Exception:
+                return False
+
+        ready = getattr(widget, "shutdown_ready", None)
+        if callable(ready):
+            try:
+                return bool(ready())
+            except RuntimeError:
+                return True
+            except Exception:
+                return False
+        return True
+
+    def _close_loaded_tools_for_shell_shutdown(self) -> bool:
+        """Settle embedded workers, then deliver child closeEvent cleanup."""
+        completed = getattr(
+            self,
+            "_embedded_tool_shutdown_completed",
+            None,
+        )
+        if not isinstance(completed, set):
+            completed = set()
+            self._embedded_tool_shutdown_completed = completed
+
+        ready = True
+        for widget in self._loaded_tool_shutdown_targets():
+            identity = id(widget)
+            if identity in completed:
+                continue
+            if not self._embedded_tool_shutdown_ready(widget):
+                ready = False
+                continue
+            close = getattr(widget, "close", None)
+            if not callable(close):
+                completed.add(identity)
+                continue
+            try:
+                accepted = close()
+            except RuntimeError:
+                completed.add(identity)
+                continue
+            except Exception:
+                ready = False
+                continue
+            if accepted is False:
+                ready = False
+                continue
+            completed.add(identity)
+        return ready
+
+    def _schedule_embedded_tool_shutdown_retry(self) -> None:
+        """Retry shell close without blocking while a child rejects close."""
+        if bool(
+            getattr(
+                self,
+                "_embedded_tool_shutdown_retry_scheduled",
+                False,
+            )
+        ):
+            return
+        self._embedded_tool_shutdown_retry_scheduled = True
+
+        def retry() -> None:
+            self._embedded_tool_shutdown_retry_scheduled = False
+            self.close()
+
+        try:
+            from PySide6.QtCore import QTimer
+
+            QTimer.singleShot(25, retry)
+        except Exception:
+            retry()
+
+    def _begin_visual_shutdown(self) -> None:
+        """Dismiss the main GUI immediately while safe teardown continues."""
+        if bool(getattr(self, "_visual_shutdown_started", False)):
+            return
+        self._visual_shutdown_started = True
+        try:
+            self.hide()
+        except Exception:
+            pass
+
+    def _quit_application_after_safe_close(self) -> None:
+        """End the desktop event loop only after all workers have settled."""
+        try:
+            from PySide6.QtWidgets import QApplication
+
+            app = QApplication.instance()
+            if app is not None:
+                app.quit()
+        except Exception:
+            pass
+
     def closeEvent(self, event) -> None:
-        """Persist lightweight state while keeping shutdown non-blocking."""
+        """Dismiss immediately, then settle workers before final destruction."""
+        self._begin_visual_shutdown()
         try:
             self._save_prefs()
         except KeyboardInterrupt:
@@ -128,9 +331,28 @@ class _WindowStateMixin:
         except Exception:
             pass
 
+        if not self._configuration_shutdown_ready():
+            self._close_waiting_for_configuration_shutdown = True
+            if not self._begin_configuration_shutdown():
+                try:
+                    event.ignore()
+                except Exception:
+                    pass
+                return
+            self._close_waiting_for_configuration_shutdown = False
+
+        if not self._close_loaded_tools_for_shell_shutdown():
+            try:
+                event.ignore()
+            except Exception:
+                pass
+            self._schedule_embedded_tool_shutdown_retry()
+            return
+
         try:
             super().closeEvent(event)
         except KeyboardInterrupt:
             self._accept_close_event_safely(event)
         except Exception:
             self._accept_close_event_safely(event)
+        self._quit_application_after_safe_close()

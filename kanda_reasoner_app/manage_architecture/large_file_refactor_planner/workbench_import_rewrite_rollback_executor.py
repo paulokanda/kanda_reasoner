@@ -6,20 +6,14 @@ from dataclasses import asdict, dataclass, field
 import hashlib
 import json
 from pathlib import Path
-import shutil
 from typing import Any
 
 from .workbench_project_support_paths import preview_runs_root
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .models import SCHEMA_VERSION
+from .workbench_spectator_proposal_boundary import proposal_only_blocker
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 
 __all__ = [
     "IMPORT_REWRITE_ROLLBACK_VISIBILITY_FEATURE_ID",
@@ -108,13 +102,17 @@ def execute_import_rewrite_rollback(
         if not entries:
             blockers.append("IMPORT_REWRITE_ROLLBACK_MANIFEST_HAS_NO_ENTRIES")
     restored: list[str] = []
-    retained: list[str] = []
+    retained = sorted(
+        {str(Path(str(item.get("file", ""))).resolve()) for item in entries}
+    )
     if not blockers:
-        restored, retained, blockers = _restore_entries(entries, project_root, preview_path)
-    validation_status = "not_run"
-    if not blockers:
-        validation_status = _write_post_rollback_validation(restored, validation_path)["status"]
-    status = "import_rewrite_rollback_blocked" if blockers else "import_rewrite_rollback_completed"
+        blockers.append(proposal_only_blocker("import_rewrite_rollback"))
+    validation_status = "not_run_proposal_only"
+    status = (
+        "import_rewrite_rollback_proposal_only"
+        if blockers == [proposal_only_blocker("import_rewrite_rollback")]
+        else "import_rewrite_rollback_blocked"
+    )
     result = ImportRewriteRollbackResult(
         schema_version=SCHEMA_VERSION,
         feature_id=IMPORT_REWRITE_ROLLBACK_VISIBILITY_FEATURE_ID,
@@ -130,7 +128,7 @@ def execute_import_rewrite_rollback(
         restored_files=restored,
         retained_files=retained,
         blockers=sorted(set(blockers)),
-        warnings=_warnings(retained),
+        warnings=sorted(set(_warnings(retained) + [proposal_only_warning("import_rewrite_rollback")])),
         validation_status=validation_status,
     )
     _write_json(execution_path, result.to_dict())
@@ -142,52 +140,13 @@ def _restore_entries(
     project_root: Path,
     preview_root: Path,
 ) -> tuple[list[str], list[str], list[str]]:
-    """Restore import rewrite entries from verified backups."""
-    restored: list[str] = []
-    retained: list[str] = []
-    blockers: list[str] = []
-    fire_shield = build_current_fire_shield_context(
-        phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-        operation_id="workbench-import-rewrite-rollback",
+    """Compatibility helper: identify recovery targets without writing source."""
+    _ = project_root
+    _ = preview_root
+    retained = sorted(
+        {str(Path(str(item.get("file", ""))).resolve()) for item in entries}
     )
-    for item in entries:
-        target = Path(str(item.get("file", ""))).resolve()
-        backup = Path(str(item.get("backup_file", ""))).resolve()
-        before_hash = str(item.get("before_hash", ""))
-        after_hash = str(item.get("after_hash", ""))
-        item_blockers = _entry_blockers(target, backup, project_root, preview_root, before_hash)
-        if item_blockers:
-            blockers.extend(item_blockers)
-            retained.append(str(target))
-            continue
-        current_text = target.read_text(encoding="utf-8")
-        current_hash = _sha256_text(current_text)
-        if current_hash != after_hash:
-            retained.append(str(target))
-            blockers.append(f"IMPORT_REWRITE_TARGET_CHANGED_AFTER_APPLY:{target}")
-            continue
-        backup_text = backup.read_text(encoding="utf-8")
-        if _sha256_text(backup_text) != before_hash:
-            retained.append(str(target))
-            blockers.append(f"IMPORT_REWRITE_BACKUP_HASH_MISMATCH:{backup}")
-            continue
-        assert_fire_shield_write_allowed(
-            fire_shield,
-            target,
-            operation="REPLACE",
-        )
-        assert_fire_shield_payload_bytes_allowed(
-            fire_shield,
-            backup_text.encode("utf-8"),
-            target.relative_to(project_root).as_posix(),
-        )
-        temp_file = target.with_suffix(target.suffix + ".kanda_import_rewrite_rollback_tmp")
-        temp_file.write_text(backup_text, encoding="utf-8")
-        shutil.move(str(temp_file), str(target))
-        restored.append(str(target))
-    verify_tool_snapshot_unchanged(fire_shield)
-    return restored, retained, blockers
-
+    return [], retained, [proposal_only_blocker("import_rewrite_rollback")]
 
 def _entry_blockers(
     target: Path,

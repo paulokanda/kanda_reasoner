@@ -9,6 +9,9 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 from kanda_reasoner_app.manage_architecture.architecture_audit_external_ai import (
     copy_audit_results,
 )
+from kanda_reasoner_app.manage_architecture.architecture_finding_dispositions import (
+    active_audit_text,
+)
 from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
 from kanda_reasoner_app.manage_architecture.warning_heuristic_resolver import (
     format_warning_resolution_report,
@@ -80,7 +83,7 @@ class ArchitectureAuditActionsMixin:
 
     def run_warning_heuristic_resolver(self) -> None:
         """Run warning routing and specialist analysis without blocking the GUI."""
-        audit_text = self._output.toPlainText()
+        audit_text = active_audit_text(self)
         report = resolve_warning_audit(audit_text)
         if report.total_findings == 0:
             self.statusBar().showMessage(
@@ -122,6 +125,28 @@ class ArchitectureAuditActionsMixin:
         self.statusBar().showMessage(
             "Warning Heuristic Resolver running in background"
         )
+
+    def project_scope_switch_block_reason(self) -> str:
+        """Return a public Project-switch block for nested resolver work."""
+        controller = self.findChild(
+            WarningHeuristicResolverController,
+            "warningHeuristicResolverController",
+        )
+        if controller is not None and controller.running:
+            return "Warning Resolver is still running"
+        return ""
+
+    def request_project_scope_settlement(self) -> None:
+        """Request cooperative settlement of Architecture Review async work."""
+        controller = self.findChild(
+            WarningHeuristicResolverController,
+            "warningHeuristicResolverController",
+        )
+        if controller is not None and controller.running and controller.cancellable:
+            controller.cancel()
+        if self._worker_thread is not None or self._ai_review_thread is not None:
+            self.cancel_running_operation()
+
     def _warning_resolver_controller(self) -> WarningHeuristicResolverController:
         """Return the window-child controller without caching feature state on host."""
         object_name = "warningHeuristicResolverController"

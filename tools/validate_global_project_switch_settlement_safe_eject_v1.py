@@ -94,7 +94,7 @@ def validate_static(project_root: Path) -> None:
     eject_text = function_text(roots, "_perform_project_eject")
     require(
         "clear_current_selection()" in eject_text
-        and "self._project_switch_epoch += 1" in eject_text
+        and "self._project_switch_ticket += 1" in eject_text
         and "self.current_project_root = None" in eject_text
         and "self._set_loaded_project_scopes_enabled(False)" in eject_text,
         "safe eject does not clear authority and disable Project scope",
@@ -229,7 +229,7 @@ def validate_real_qt(project_root: Path) -> None:
             self._collector_widget = None
             self._daily_refactor_widget = None
             self._is_propagating_project_root = False
-            self._project_switch_epoch = 7
+            self._project_switch_ticket = 7
             self._project_root_field_names = ("project_root_edit",)
             self._prefs: dict[str, object] = {}
             self.active_project_value = QLabel()
@@ -280,12 +280,12 @@ def validate_real_qt(project_root: Path) -> None:
         print("UNSETTLED_EJECT_REJECTED: PASS")
 
         lifecycle_tab.active = False
-        prior_epoch = harness._project_switch_epoch
+        prior_ticket = harness._project_switch_ticket
         completed, reason = harness._perform_project_eject()
         require(completed and not reason, "settled Project eject failed")
         require(registry.resolve_current_boundary() is None, "registry authority survived eject")
         require(harness.current_project_root is None, "shell Project root survived eject")
-        require(harness._project_switch_epoch == prior_epoch + 1, "eject epoch mismatch")
+        require(harness._project_switch_ticket == prior_ticket + 1, "eject selection ticket mismatch")
         require(not lifecycle_tab.isEnabled(), "Project tab remained enabled after eject")
         require(global_tab.isEnabled(), "global configuration tab was disabled")
         require(not lifecycle_tab.project_root_edit.text(), "Project root field survived eject")

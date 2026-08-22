@@ -12,7 +12,7 @@
   "source_stage": "prompt-audit-wave6a-core-architecture-refactor-owners-v1",
   "updated_for": "large-module-refactor-planning-record-v4",
   "aligned_with": "large_module_refactor_protocol_v9.0",
-  "description": "Draft-only record shape for one source-grounded large-module assessment and decomposition proposal.",
+  "description": "Draft-only record shape for one source-grounded large-module assessment and decomposition proposal. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": true,
   "routing_coverage": "wave6a_large_module_refactor_record_template_v4",
   "priority": 53,

@@ -35,16 +35,31 @@ Each section has its own purpose. Start with Architecture Review unless you alre
 
 ## Architecture Review child tabs
 
-Architecture Review contains four child tabs:
+Architecture Review contains five child tabs:
 
 1. Check Update Architecture.
-2. Large Module AST Split Audit.
-3. Large File Refactor Planner.
-4. Large File Refactor WorkBench.
+2. Dismissed Findings.
+3. Large Module AST Split Audit.
+4. Large File Refactor Planner.
+5. Large File Refactor WorkBench.
 
 They are arranged as a progression. The first tab finds problems. The second studies one oversized Python file. The third creates a refactor plan. The fourth prepares and validates a real moved-code preview through controlled stages.
 
 ## Check Update Architecture
+
+Validate output is shown first as grouped findings. Errors are listed before warnings, and findings are grouped by audit code such as `WARNING BOUNDARY_ERROR_CONTRACT`. Each group and finding has a checkbox. Use `Dismiss Selected` only after you have decided a finding is accepted, deferred, or a false positive for the selected Project.
+
+`Raw Audit` preserves the complete validator output, original counts, and exit status. Project dispositions never convert a failing validator into a pass. Copy/AI warning-review routes omit Project-dismissed detail lines and state explicitly that raw validator counts remain authoritative.
+
+## Dismissed Findings
+
+Dismissed Findings is Project-owned durable review state stored under `<drive>/<project>_show_project_to_AI/project_architecture_review/`. It is not Tool Error Memory, Freeze Memory, or Project source.
+
+- `Restore Selected` removes the Project disposition and returns a still-current finding to active review.
+- `Delete Selected Permanently` removes the row from the visible bin but keeps a suppression tombstone so later scans do not resurrect the same finding.
+- A stable finding identity ignores line-number-only movement but changes when the finding code, path, or material message changes.
+- Dismissing an error hides it only from the review list; the validator exit status and raw audit remain unchanged.
+
 
 This is the normal starting point.
 

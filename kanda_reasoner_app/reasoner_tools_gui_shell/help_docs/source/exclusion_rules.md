@@ -111,9 +111,9 @@ Before editing rules:
 
 ### Step 1 - Select the Project Root
 
-Use the **Project Root** field or click **Search**.
+Use **Select Active Project** in the tab header. The path field is a read-only projection of the shell-owned active Project.
 
-Choose the root folder of the actual project.
+Choose the root folder of the actual project. Use **Eject Active Project** when you intentionally want to clear Project authority.
 
 ### Step 2 - Read the Scope message
 

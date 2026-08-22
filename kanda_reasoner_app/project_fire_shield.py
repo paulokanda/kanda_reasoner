@@ -1,9 +1,9 @@
 # project-path: kanda_reasoner_app/project_fire_shield.py
-"""Public fail-closed Fire Shield for governed cross-project operations.
+"""Fail-closed spectator firewall for observed Project operations.
 
-Fire Shield composes existing selected-Project identity, Project Operation
-Authority, archive safety, and deterministic provenance checks. It does not
-replace those canonical owners.
+Fire Shield protects Tool identity and Project/support boundaries. Project
+selection can authorize reads and governed support writes, but it cannot
+authorize Project source mutation.
 """
 
 from __future__ import annotations
@@ -18,9 +18,11 @@ from kanda_reasoner_app.archive_safety import (
     ArchiveSafetyError,
     validate_archive_members,
 )
-from kanda_reasoner_app.project_selection_registry import (
-    ProjectSelectionRegistry,
-    ProjectSelectionRegistryError,
+from kanda_reasoner_app.project_operation_context import (
+    ProjectOperationContext,
+    ProjectOperationContextError,
+    capture_current_project_operation_context,
+    capture_project_operation_context_for_root,
 )
 from kanda_reasoner_app.project_operation_authority import (
     ProjectOperationAuthority,
@@ -28,7 +30,7 @@ from kanda_reasoner_app.project_operation_authority import (
     ProjectOperationKind,
     assert_authorized_project_target,
     assert_project_authority_current,
-    build_project_operation_authority,
+    build_project_operation_authority_from_context,
 )
 from kanda_reasoner_app.project_support_boundary import (
     ProjectSelectionMode,
@@ -55,6 +57,7 @@ verify_tool_snapshot_unchanged = _provenance.verify_tool_snapshot_unchanged
 
 __all__ = [
     "FIRE_SHIELD_FEATURE_ID",
+    "FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED_MARKER",
     "FireShieldArchiveReport",
     "FireShieldContext",
     "FireShieldError",
@@ -69,6 +72,7 @@ __all__ = [
     "build_current_fire_shield_context",
     "build_fire_shield_context",
     "build_fire_shield_context_from_authority",
+    "build_fire_shield_context_from_operation_context",
     "capture_tool_snapshot",
     "preflight_fire_shield_archive",
     "scan_project_python_source",
@@ -77,7 +81,11 @@ __all__ = [
 ]
 
 FIRE_SHIELD_FEATURE_ID = (
-    "kanda-reasoner-fire-shield-cross-project-immutability-v1"
+    "kanda-reasoner-fire-shield-spectator-boundary-v2"
+)
+
+FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED_MARKER = (
+    "FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED:SPECTATOR_ONLY"
 )
 
 _DELIVERY_CONTROL_ROOT_FILES = {
@@ -123,23 +131,18 @@ def build_current_fire_shield_context(
     tool_source_root: str | Path | None = None,
     registry_path: str | Path | None = None,
 ) -> FireShieldContext:
-    """Build Fire Shield for the currently selected Project only."""
-    registry = ProjectSelectionRegistry(
-        tool_source_root=tool_source_root,
-        registry_path=registry_path,
-    )
+    """Capture current Project context once, then build Fire Shield."""
     try:
-        boundary = registry.resolve_current_boundary()
-    except ProjectSelectionRegistryError as exc:
+        context = capture_current_project_operation_context(
+            tool_source_root=tool_source_root,
+            registry_path=registry_path,
+        )
+    except ProjectOperationContextError as exc:
         raise FireShieldError("FIRE_SHIELD_UNAVAILABLE:" + str(exc)) from exc
-    if boundary is None:
-        raise FireShieldError("FIRE_SHIELD_UNAVAILABLE:ACTIVE_PROJECT_SELECTION_REQUIRED")
-    return build_fire_shield_context(
-        boundary.active_project_root,
+    return build_fire_shield_context_from_operation_context(
+        context,
         phase=phase,
         operation_id=operation_id,
-        tool_source_root=boundary.tool_source_root,
-        registry_path=registry.registry_path,
     )
 
 
@@ -151,25 +154,44 @@ def build_fire_shield_context(
     tool_source_root: str | Path | None = None,
     registry_path: str | Path | None = None,
 ) -> FireShieldContext:
-    """Resolve current registry identity and build a fail-closed context."""
+    """Compatibility facade over one explicit captured operation context."""
+    try:
+        context = capture_project_operation_context_for_root(
+            selected_project_root,
+            tool_source_root=tool_source_root,
+            registry_path=registry_path,
+        )
+    except ProjectOperationContextError as exc:
+        raise FireShieldError("FIRE_SHIELD_UNAVAILABLE:" + str(exc)) from exc
+    return build_fire_shield_context_from_operation_context(
+        context,
+        phase=phase,
+        operation_id=operation_id,
+    )
+
+
+def build_fire_shield_context_from_operation_context(
+    context: ProjectOperationContext,
+    *,
+    phase: FireShieldPhase | str,
+    operation_id: str,
+) -> FireShieldContext:
+    """Build Fire Shield without another registry or Project-root lookup."""
     normalized_phase = _normalize_phase(phase)
     kind = _operation_kind_for_phase(normalized_phase)
     try:
-        authority = build_project_operation_authority(
-            selected_project_root,
+        authority = build_project_operation_authority_from_context(
+            context,
             operation_kind=kind,
             operation_id=operation_id,
-            tool_source_root=tool_source_root,
-            registry_path=registry_path,
         )
     except ProjectOperationAuthorityError as exc:
         raise FireShieldError("FIRE_SHIELD_UNAVAILABLE:" + str(exc)) from exc
     return build_fire_shield_context_from_authority(
         authority,
         phase=normalized_phase,
-        registry_path=registry_path,
+        registry_path=context.registry_path,
     )
-
 
 def build_fire_shield_context_from_authority(
     authority: ProjectOperationAuthority,
@@ -230,6 +252,10 @@ def assert_fire_shield_write_allowed(
     operation: str,
 ) -> Path:
     """Return one authorized destination or reject the mutation."""
+    if context.phase is FireShieldPhase.PROJECT_SOURCE_MUTATION:
+        raise FireShieldError(
+            FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED_MARKER
+        )
     if not context.writes_allowed:
         raise FireShieldError("FIRE_SHIELD_READ_ONLY_PHASE")
     assert_fire_shield_context_current(context)
@@ -390,7 +416,9 @@ def _phase_write_root(
     phase: FireShieldPhase,
 ) -> tuple[Path, bool]:
     if phase is FireShieldPhase.PROJECT_SOURCE_MUTATION:
-        return boundary.active_project_root.resolve(strict=False), True
+        raise FireShieldError(
+            FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED_MARKER
+        )
     if phase is FireShieldPhase.PROJECT_TRANSIENT_WRITE:
         return boundary.active_project_daily_work_root.resolve(strict=False), True
     if phase is FireShieldPhase.FREEZE_WRITE:
@@ -407,7 +435,9 @@ def _phase_write_root(
 
 def _operation_kind_for_phase(phase: FireShieldPhase) -> ProjectOperationKind:
     if phase is FireShieldPhase.PROJECT_SOURCE_MUTATION:
-        return ProjectOperationKind.PROJECT_SOURCE_WRITE
+        raise FireShieldError(
+            FIRE_SHIELD_PROJECT_SOURCE_MUTATION_UNSUPPORTED_MARKER
+        )
     if phase is FireShieldPhase.PROJECT_TRANSIENT_WRITE:
         return ProjectOperationKind.PROJECT_TRANSIENT_WRITE
     if phase in {FireShieldPhase.FREEZE_WRITE, FireShieldPhase.ERROR_MEMORY_WRITE}:

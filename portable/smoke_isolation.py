@@ -17,7 +17,9 @@ from portable.models import BuildPaths
 
 __all__ = [
     "PreparedSmokeIsolation",
+    "selected_project_environment",
     "verify_isolated_registry",
+    "verify_no_project_registry",
     "prepared_smoke_isolation",
 ]
 
@@ -26,6 +28,11 @@ ROOT_ENV = "KANDA_PORTABLE_SMOKE_ISOLATION_ROOT"
 TOKEN_ENV = "KANDA_PORTABLE_SMOKE_ISOLATION_TOKEN"
 PROJECT_ENV = "KANDA_REASONER_PROJECT_ROOT"
 MARKER_NAME = "KANDA_PORTABLE_SMOKE_ISOLATION.json"
+SMOKE_REPORT_PATH_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT"
+SMOKE_REPORT_ROOT_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT_ROOT"
+SMOKE_REPORT_TOKEN_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT_TOKEN"
+SMOKE_REPORT_DIR_NAME = "packaged_gui_smoke_runtime_evidence"
+SMOKE_REPORT_FILE_NAME = "runtime_report.json"
 
 _SCRUB_PREFIXES = (
     "KANDA_",
@@ -52,6 +59,9 @@ class PreparedSmokeIsolation:
     project_support_root: Path
     project_transient_root: Path
     marker_path: Path
+    runtime_report_root: Path
+    runtime_report_path: Path
+    runtime_report_token_sha256: str
     environment: dict[str, str]
 
 
@@ -96,7 +106,6 @@ def _isolated_environment(
             ENABLED_ENV: "1",
             ROOT_ENV: str(root),
             TOKEN_ENV: token,
-            PROJECT_ENV: str(project_root),
             "APPDATA": str(appdata),
             "LOCALAPPDATA": str(localappdata),
             "USERPROFILE": str(profile),
@@ -129,6 +138,39 @@ def _assert_paths(isolation: PreparedSmokeIsolation) -> None:
                 "Smoke-isolation path escaped the disposable root: " + str(path)
             )
 
+
+
+def selected_project_environment(
+    isolation: PreparedSmokeIsolation,
+) -> dict[str, str]:
+    """Return one isolated environment with the disposable Project selected."""
+    environment = dict(isolation.environment)
+    environment[PROJECT_ENV] = str(isolation.project_root)
+    return environment
+
+
+def verify_no_project_registry(isolation: PreparedSmokeIsolation) -> None:
+    """Require the first packaged launch to remain explicitly unselected."""
+    registry = (
+        isolation.tool_support_root
+        / "tool_project_registry"
+        / "projects.json"
+    )
+    if not registry.is_file():
+        print("PORTABLE SMOKE FIRST LAUNCH PROJECT NONE: PASS")
+        return
+    try:
+        payload = json.loads(registry.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PortableBuildError(
+            "Isolated Tool registry is unreadable."
+        ) from exc
+    current_id = str(payload.get("current_project_id") or "").strip()
+    if current_id:
+        raise PortableBuildError(
+            "Packaged GUI selected a Project during no-Project smoke."
+        )
+    print("PORTABLE SMOKE FIRST LAUNCH PROJECT NONE: PASS")
 
 def verify_isolated_registry(isolation: PreparedSmokeIsolation) -> None:
     """Require the packaged GUI to persist only the disposable Project selection."""
@@ -188,6 +230,14 @@ def prepared_smoke_isolation(
     project_root.mkdir(parents=True)
 
     token = secrets.token_urlsafe(32)
+    report_root = paths.run_root / SMOKE_REPORT_DIR_NAME
+    if report_root.exists():
+        shutil.rmtree(report_root)
+    report_root.mkdir(parents=True)
+    report_path = report_root / SMOKE_REPORT_FILE_NAME
+    report_token_sha256 = hashlib.sha256(
+        token.encode("utf-8")
+    ).hexdigest()
     tool_support_root = root / "tool_support" / f"{top_level_name}_show_project_to_AI"
     project_support_root = root / "project_support" / "smoke_project_show_project_to_AI"
     project_transient_root = root / "transient" / "smoke_project_delete_after_daily_work"
@@ -211,10 +261,33 @@ def prepared_smoke_isolation(
         project_support_root=project_support_root.resolve(strict=False),
         project_transient_root=project_transient_root.resolve(strict=False),
         marker_path=marker_path.resolve(strict=False),
+        runtime_report_root=report_root.resolve(strict=False),
+        runtime_report_path=report_path.resolve(strict=False),
+        runtime_report_token_sha256=report_token_sha256,
         environment=_isolated_environment(root, project_root, token),
     )
+    isolation.environment.update(
+        {
+            SMOKE_REPORT_PATH_ENV: str(isolation.runtime_report_path),
+            SMOKE_REPORT_ROOT_ENV: str(isolation.runtime_report_root),
+            SMOKE_REPORT_TOKEN_ENV: token,
+        }
+    )
+    if not _inside(isolation.runtime_report_root, paths.run_root):
+        raise PortableBuildError(
+            "Smoke runtime report escaped the retained diagnostic root."
+        )
+    if _inside(isolation.runtime_report_root, isolation.root):
+        raise PortableBuildError(
+            "Smoke runtime report must survive disposable-root cleanup."
+        )
     _assert_paths(isolation)
     print("PORTABLE SMOKE DISPOSABLE ROOT: PASS")
+    print("PORTABLE SMOKE RUNTIME REPORT: ENABLED")
+    print(
+        "PORTABLE SMOKE RUNTIME REPORT PATH: "
+        + str(isolation.runtime_report_path)
+    )
     print("PORTABLE SMOKE CREDENTIAL ENVIRONMENT SCRUB: PASS")
     print("PORTABLE SMOKE PROFILE AND TEMP ISOLATION: PASS")
     try:

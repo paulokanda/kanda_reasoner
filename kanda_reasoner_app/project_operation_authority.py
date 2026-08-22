@@ -1,5 +1,5 @@
 # project-path: kanda_reasoner_app/project_operation_authority.py
-"""Registry-backed authority for Tool operations against one selected Project."""
+"""Spectator authority for observed Project read/support operations."""
 
 from __future__ import annotations
 
@@ -9,9 +9,10 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path, PurePosixPath
 
-from kanda_reasoner_app.project_selection_registry import (
-    ProjectSelectionRegistry,
-    ProjectSelectionRegistryError,
+from kanda_reasoner_app.project_operation_context import (
+    ProjectOperationContext,
+    ProjectOperationContextError,
+    capture_project_operation_context_for_root,
 )
 from kanda_reasoner_app.project_support_boundary import (
     ProjectToolBoundaryIdentity,
@@ -22,9 +23,12 @@ __all__ = [
     "ProjectOperationAuthority",
     "ProjectOperationAuthorityError",
     "ProjectOperationKind",
+    "PROJECT_SOURCE_WRITE_UNSUPPORTED_MARKER",
     "assert_authorized_project_target",
+    "assert_project_authority_context_current",
     "assert_project_authority_current",
     "build_project_operation_authority",
+    "build_project_operation_authority_from_context",
     "resolve_registered_project_boundary",
 ]
 
@@ -34,13 +38,18 @@ class ProjectOperationAuthorityError(RuntimeError):
 
 
 class ProjectOperationKind(str, Enum):
-    """Consequential operation classes owned by the selected Project."""
+    """Observed-Project operation classes and one denied legacy write token."""
 
     PROJECT_SOURCE_READ = "PROJECT_SOURCE_READ"
     PROJECT_SOURCE_WRITE = "PROJECT_SOURCE_WRITE"
     PROJECT_SUPPORT_READ = "PROJECT_SUPPORT_READ"
     PROJECT_SUPPORT_WRITE = "PROJECT_SUPPORT_WRITE"
     PROJECT_TRANSIENT_WRITE = "PROJECT_TRANSIENT_WRITE"
+
+
+PROJECT_SOURCE_WRITE_UNSUPPORTED_MARKER = (
+    "PROJECT_SOURCE_WRITE_UNSUPPORTED:SPECTATOR_ONLY"
+)
 
 
 @dataclass(frozen=True)
@@ -81,16 +90,16 @@ def resolve_registered_project_boundary(
     tool_source_root: str | Path | None = None,
     registry_path: str | Path | None = None,
 ) -> ProjectToolBoundaryIdentity:
-    """Resolve one exact current registry-backed Project boundary."""
-    root = _absolute_resolved_path(selected_project_root, "ACTIVE_PROJECT_ROOT")
-    registry = ProjectSelectionRegistry(
-        tool_source_root=tool_source_root,
-        registry_path=registry_path,
-    )
+    """Compatibility facade over one captured Project operation context."""
     try:
-        return registry.resolve_boundary_for_root(root)
-    except ProjectSelectionRegistryError as exc:
+        context = capture_project_operation_context_for_root(
+            selected_project_root,
+            tool_source_root=tool_source_root,
+            registry_path=registry_path,
+        )
+    except ProjectOperationContextError as exc:
         raise ProjectOperationAuthorityError(str(exc)) from exc
+    return context.boundary
 
 
 def build_project_operation_authority(
@@ -103,25 +112,49 @@ def build_project_operation_authority(
     tool_source_root: str | Path | None = None,
     registry_path: str | Path | None = None,
 ) -> ProjectOperationAuthority:
-    """Build one least-authority value from the current explicit selection."""
-    boundary = resolve_registered_project_boundary(
-        selected_project_root,
-        tool_source_root=tool_source_root,
-        registry_path=registry_path,
+    """Compatibility facade that captures explicit context once."""
+    try:
+        context = capture_project_operation_context_for_root(
+            selected_project_root,
+            selection_ticket=project_epoch,
+            tool_source_root=tool_source_root,
+            registry_path=registry_path,
+        )
+    except ProjectOperationContextError as exc:
+        raise ProjectOperationAuthorityError(str(exc)) from exc
+    return build_project_operation_authority_from_context(
+        context,
+        operation_kind=operation_kind,
+        operation_id=operation_id,
+        source_snapshot_identity=source_snapshot_identity,
     )
+
+
+def build_project_operation_authority_from_context(
+    context: ProjectOperationContext,
+    *,
+    operation_kind: ProjectOperationKind | str,
+    operation_id: str,
+    source_snapshot_identity: str = "",
+) -> ProjectOperationAuthority:
+    """Build least authority from one already-captured operation context."""
     kind = _normalize_operation_kind(operation_kind)
+    if kind is ProjectOperationKind.PROJECT_SOURCE_WRITE:
+        raise ProjectOperationAuthorityError(
+            PROJECT_SOURCE_WRITE_UNSUPPORTED_MARKER
+        )
     normalized_operation_id = str(operation_id or "").strip()
     if not normalized_operation_id:
         raise ProjectOperationAuthorityError("PROJECT_OPERATION_ID_REQUIRED")
     if len(normalized_operation_id) > 160:
         raise ProjectOperationAuthorityError("PROJECT_OPERATION_ID_TOO_LONG")
-    epoch = int(project_epoch)
+    epoch = int(context.observation.selection_ticket)
     if epoch < 0:
         raise ProjectOperationAuthorityError("PROJECT_OPERATION_EPOCH_INVALID")
     snapshot = str(source_snapshot_identity or "").strip()
-    allowed_root, protected = _roots_for_kind(boundary, kind)
+    allowed_root, protected = _roots_for_kind(context.boundary, kind)
     return ProjectOperationAuthority(
-        boundary=boundary,
+        boundary=context.boundary,
         operation_kind=kind,
         operation_id=normalized_operation_id,
         project_epoch=epoch,
@@ -139,12 +172,25 @@ def assert_project_authority_current(
     tool_source_root: str | Path | None = None,
     registry_path: str | Path | None = None,
 ) -> ProjectToolBoundaryIdentity:
-    """Recheck registry identity and epoch immediately before mutation."""
-    current = resolve_registered_project_boundary(
-        selected_project_root,
-        tool_source_root=tool_source_root,
-        registry_path=registry_path,
-    )
+    """Compatibility facade that captures current context once."""
+    try:
+        context = capture_project_operation_context_for_root(
+            selected_project_root,
+            selection_ticket=project_epoch,
+            tool_source_root=tool_source_root,
+            registry_path=registry_path,
+        )
+    except ProjectOperationContextError as exc:
+        raise ProjectOperationAuthorityError(str(exc)) from exc
+    return assert_project_authority_context_current(authority, context)
+
+
+def assert_project_authority_context_current(
+    authority: ProjectOperationAuthority,
+    context: ProjectOperationContext,
+) -> ProjectToolBoundaryIdentity:
+    """Recheck one authority against an explicit captured context."""
+    current = context.boundary
     expected = authority.boundary
     checks = (
         (
@@ -171,10 +217,9 @@ def assert_project_authority_current(
     for actual, wanted, marker in checks:
         if actual != wanted:
             raise ProjectOperationAuthorityError(marker)
-    if int(project_epoch) != authority.project_epoch:
+    if context.observation.selection_ticket != authority.project_epoch:
         raise ProjectOperationAuthorityError("PROJECT_AUTHORITY_EPOCH_STALE")
     return current
-
 
 def assert_authorized_project_target(
     authority: ProjectOperationAuthority,
@@ -191,6 +236,10 @@ def assert_authorized_project_target(
     if kind is not authority.operation_kind:
         raise ProjectOperationAuthorityError(
             "PROJECT_OPERATION_KIND_AUTHORITY_MISMATCH"
+        )
+    if kind is ProjectOperationKind.PROJECT_SOURCE_WRITE:
+        raise ProjectOperationAuthorityError(
+            PROJECT_SOURCE_WRITE_UNSUPPORTED_MARKER
         )
     target = _absolute_resolved_path(target_path, "PROJECT_OPERATION_TARGET")
     allowed = authority.allowed_root.resolve(strict=False)
@@ -232,14 +281,15 @@ def _roots_for_kind(
     transient_root = boundary.active_project_daily_work_root.resolve(strict=False)
     tool_root = boundary.tool_source_root.resolve(strict=False)
     tool_support = canonical_tool_support_root(tool_root).resolve(strict=False)
-    if kind in {
-        ProjectOperationKind.PROJECT_SOURCE_READ,
-        ProjectOperationKind.PROJECT_SOURCE_WRITE,
-    }:
+    if kind is ProjectOperationKind.PROJECT_SOURCE_READ:
         protected = [support_root, transient_root]
         if not boundary.self_hosting_mode:
             protected.extend((tool_root, tool_support))
         return project_root, _unique_paths(protected)
+    if kind is ProjectOperationKind.PROJECT_SOURCE_WRITE:
+        raise ProjectOperationAuthorityError(
+            PROJECT_SOURCE_WRITE_UNSUPPORTED_MARKER
+        )
     if kind in {
         ProjectOperationKind.PROJECT_SUPPORT_READ,
         ProjectOperationKind.PROJECT_SUPPORT_WRITE,

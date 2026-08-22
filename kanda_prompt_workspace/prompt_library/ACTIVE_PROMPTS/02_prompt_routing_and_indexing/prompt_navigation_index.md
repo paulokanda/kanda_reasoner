@@ -2,7 +2,7 @@
 prompt_id: prompt_navigation_index
 prompt_code: KPR-02-004
 title: Prompt Navigation Index
-version: 5.1
+version: 5.2
 status: active
 load_type: always_startup
 owner_box: 02_prompt_routing_and_indexing
@@ -104,7 +104,7 @@ KANDA_FREEZE_HINT.json
 
 ## Project Tool Boundary route
 
-Load KPR-12-001 for root ownership, self-hosting, Project Support, transient workspace, generated-evidence authority, cross-project access, or Fire Shield policy. For a verified external Project, consequential mutation/extraction/package/install/restore/move/rename/delete or Project Python/import-isolation work must use the Tool-owned public Fire Shield authority. Missing, stale, unavailable, ambiguous, or BLOCKED Fire Shield is a hard stop; prompt-only compliance is not a fallback.
+Load KPR-12-001 for root ownership, self-hosting, Project Support, transient workspace, generated-evidence authority, cross-project access, or Fire Shield policy. Require the Tool-owned public Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor performing consequential work against an external Project. Independent Project-owned IDE, terminal, CI, install, test, and validation work remains Project-authorized and must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability.
 
 ## Architecture Review Project Card Machine route
 
@@ -213,7 +213,7 @@ Direct Error Lesson ZIP is not a code patch. Use the Error Memory intake owner a
 
 For default insertion after patch validation, route to the current Error Memory owner and `pending_ai_assisted_error_lesson_intake` under the selected Project Support root.
 
-For one self-contained ZIP that validates and stages multiple lessons for human approval, route to `KPR-05-008 self_contained_error_memory_lesson_intake_zip`. It must discover the selected Project dynamically, write pending intake only, and keep `Memorize Error` human-only.
+For one self-contained ZIP that validates and stages multiple lessons for human approval, route to `KPR-05-008 self_contained_error_memory_lesson_intake_zip`. It must use Tool/MCard authority, stage only unique `pending` lessons into the independent Card, work with Active Project `NONE`, preserve the canonical `card_id`, and keep `Memorize Error` human-only.
 
 ## Terminal cleanup canon route
 

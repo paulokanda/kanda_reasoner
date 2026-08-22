@@ -9,12 +9,16 @@ import subprocess
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import TYPE_CHECKING, Any, Mapping, Sequence
 
 from kanda_reasoner_app.project_fire_shield import (
     FireShieldMode,
     build_fire_shield_context,
 )
+
+
+if TYPE_CHECKING:
+    from .manage_workflows_help.workflow_models import CheckResult
 
 
 __all__: list[str] = []

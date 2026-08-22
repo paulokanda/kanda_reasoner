@@ -77,7 +77,7 @@ def validate_current_owners(root: Path) -> None:
     for marker in (
         "Prompt code: `KPR-06-004`",
         "Version: 2.0.0",
-        "user-facing KANDA safe-refactor refresher",
+        "user-facing safe-refactor refresher",
         "Specialist dispatch",
         "KPR-06-003",
         "KPR-06-005",
@@ -151,8 +151,10 @@ def validate_routing(root: Path) -> None:
     safe_row = next(row for row in rows if row.get("prompt_id") == "safe_refactor_how_to")
     require(
         "KPR-06-004" in str(safe_row.get("aliases"))
-        and "brick_wall_comprehensive_quality_gate" in str(safe_row.get("companions"))
-        and "freeze authority" in str(safe_row.get("when_not_to_load")),
+        and "large_module_refactor_protocol" in str(safe_row.get("companions"))
+        and "box_architecture_canon" in str(safe_row.get("companions"))
+        and "brick_wall_comprehensive_quality_gate" not in str(safe_row.get("companions"))
+        and "snapshot/freeze authority" in str(safe_row.get("when_not_to_load")),
         "WAVE6B_SAFE_ROUTE_NARROWED",
     )
 

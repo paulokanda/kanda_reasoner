@@ -15,6 +15,22 @@ hardening response.
 
 Hardening is not rewriting. Do not turn warning cleanup into broad redesign.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## Owns
 
 This prompt owns only:
@@ -36,8 +52,8 @@ This prompt does not authorize or own:
 - shielding law;
 - patch construction or installation;
 - validation claims;
-- freeze writes;
-- Error Memory writes;
+- snapshot/freeze writes;
+- lesson/error-memory writes;
 - project-specific checker implementation;
 - one hardcoded architecture-owner map.
 
@@ -45,11 +61,11 @@ Use the current owners instead:
 
 - `KPR-03-001 brick_wall_comprehensive_quality_gate` for coding authority;
 - `KPR-04-001 box_architecture_canon` for Box ownership and boundaries;
-- `KPR-04-002 kanda_box_shielding_canon` for justified shielding;
-- `KPR-04-006 boundary_first_repair_protocol` for symptom-owner divergence;
-- `KPR-12-001 project_tool_boundary_canon` for Tool/Project ownership;
+- the current shielding/invariant-protection owner for justified shielding;
+- `KPR-04-006 boundary_first_repair_protocol` when this prompt library is present for symptom-owner divergence;
+- the active Project root/ownership authority for path and owner identity;
 - current project validators for executable protection;
-- Class 05 owners for delivery, validation evidence, and freeze preparation.
+- the active Project delivery owners for delivery, validation evidence, and optional snapshot/freeze preparation.
 
 ## Admission gate
 
@@ -73,7 +89,7 @@ Use this order:
 1. current explicit user requirement;
 2. exact current source and operation identity;
 3. current frozen behavior and do-not-regress rules;
-4. relevant current Error Memory lessons;
+4. relevant current Project error/lesson records, when available;
 5. current Box, Tool/Project, and public-contract owners;
 6. current runtime, test, and architecture evidence;
 7. this triage protocol;
@@ -92,7 +108,7 @@ Record what is available and mark missing evidence explicitly:
 - current architecture findings with source locations;
 - current validators and their coverage;
 - relevant frozen behavior;
-- relevant Error Memory lessons;
+- relevant Project error/lesson records, when available;
 - generated-artifact provenance when involved;
 - evidence that could disconfirm the suspected problem.
 
@@ -148,7 +164,7 @@ Record the disconfirming evidence and route to the correct owner when needed.
    - bounded refactor through the large-module owner;
    - defer as transitional debt.
 9. Select one response and state why broader alternatives are rejected.
-10. Hand the result to Brick Wall for implementation admission.
+10. Hand the result to the active Project's declared implementation authority for implementation admission.
 
 ## Detector coverage record
 
@@ -164,7 +180,7 @@ Coverage: COMPLETE / PARTIAL / NONE / NOT_AUTOMATABLE / NOT_APPLICABLE
 Severity policy:
 False-positive risks:
 Expected success and rejection markers:
-Relevant Error Memory:
+Relevant Project error/lesson records, if available:
 Concrete current gap:
 Smallest justified extension:
 ```
@@ -218,7 +234,7 @@ May begin coding: YES / NO
 Next safe action:
 ```
 
-`May begin coding` is `YES` only when Brick Wall separately authorizes it.
+`May begin coding` is `YES` only when the active Project's declared implementation authority separately authorizes it.
 
 ## Stop conditions
 
@@ -230,7 +246,7 @@ Stop and report `BLOCKED` when:
 - the finding cannot be reproduced or disproved safely;
 - the proposed response crosses a private Box boundary;
 - validation ownership is unknown;
-- a freeze-protected behavior would be changed without explicit admission.
+- a snapshot/freeze-protected behavior would be changed without explicit admission, when such protection exists.
 
 ## Final rule
 

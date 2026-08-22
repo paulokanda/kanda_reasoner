@@ -46,6 +46,7 @@ def write_zip(
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=9,
         allowZip64=True,
+        strict_timestamps=False,
     ) as archive:
         if readme_text is not None:
             archive.writestr(base_folder + "/" + readme_name, readme_text)

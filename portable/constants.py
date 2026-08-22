@@ -31,10 +31,11 @@ __all__ = [
     "NON_RUNTIME_BACKUP_MARKERS",
     "NON_RUNTIME_BACKUP_SUFFIXES",
     "PROJECT_SNAPSHOT_IGNORES",
+    "VENV_PYTHON_RELATIVE",
 ]
 
-FEATURE_ID = "kanda-reasoner-portable-builder-install-v1r12"
-BUILDER_VERSION = "v1r12"
+FEATURE_ID = "kanda-reasoner-portable-timestamped-publication-name-v1r32"
+BUILDER_VERSION = "v1r32"
 PORTABLE_HARDENING_FEATURES = (
     "registry-boundary-gate",
     "packaged-gui-smoke-isolation",
@@ -42,27 +43,50 @@ PORTABLE_HARDENING_FEATURES = (
     "runtime-path-hash-allowlist",
     "exact-builder-member-governance",
     "external-build-control-hash-binding",
+    "self-host-venv-build-interpreter",
+    "production-portable-authorization",
+    "spec-audit-policy-reconciliation",
+    "posix-zip-member-writer",
+    "packaged-gui-runtime-report-preservation",
+    "pyinstaller-submodule-import-preflight",
+    "selected-owner-fire-shield-isolation",
+    "packaged-worker-reentry-dispatch",
+    "clean-start-gui-regression-reset",
+    "tool-project-decoupled-portable-build",
+    "timestamped-publication-name",
 )
 PORTABLE_HARDENING_STAGE = (
     "registry-boundary-plus-smoke-isolation-plus-"
     "governed-root-rollback-plus-runtime-path-hash-allowlist-plus-"
     "exact-builder-member-governance-plus-"
-    "external-build-control-hash-binding"
+    "external-build-control-hash-binding-plus-"
+    "self-host-venv-build-interpreter-plus-"
+    "production-portable-authorization-plus-"
+    "spec-audit-policy-reconciliation-plus-"
+    "posix-zip-member-writer-plus-"
+    "packaged-gui-runtime-report-preservation-plus-"
+    "pyinstaller-submodule-import-preflight-plus-"
+    "selected-owner-fire-shield-isolation-plus-"
+    "packaged-worker-reentry-dispatch-plus-"
+    "clean-start-gui-regression-reset-plus-"
+    "tool-project-decoupled-portable-build-plus-"
+    "timestamped-publication-name"
 )
 BUILDER_MEMBER_FEATURE_ID = (
     "kanda-reasoner-portable-exact-builder-member-governance-v1"
 )
 EXTERNAL_CONTROL_FEATURE_ID = (
-    "kanda-reasoner-portable-external-build-control-hash-binding-v1r1"
+    "kanda-reasoner-portable-external-build-control-hash-binding-v1r2"
 )
 EXTERNAL_CONTROL_MANIFEST_NAME = "PORTABLE_EXTERNAL_BUILD_CONTROLS.json"
-PRODUCTION_PORTABLE_ENABLED = False
+PRODUCTION_PORTABLE_ENABLED = True
 PROJECT_FOLDER_NAME = "kanda_reasoner"
 PRODUCT_NAME = "KandaReasoner"
 SPEC_NAME = "KandaReasonerWindows.spec"
 FINAL_ZIP_NAME = f"{PRODUCT_NAME}-Windows-Portable.zip"
 EXPECTED_PYTHON = (3, 12)
 EXPECTED_PYINSTALLER = "6.21.0"
+VENV_PYTHON_RELATIVE = Path(".venv") / "Scripts" / "python.exe"
 MAX_ARCHIVE_PATH_BYTES = 259
 FIRST_SMOKE_CONFIRMATION = "FIRST PASS CLOSED"
 SMOKE_CONFIRMATION = "PORTABLE TESTS PASS CLOSED"

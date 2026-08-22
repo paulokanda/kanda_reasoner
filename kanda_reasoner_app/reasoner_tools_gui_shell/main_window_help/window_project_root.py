@@ -51,12 +51,20 @@ class _WindowProjectRootMixin:
     """Private implementation mixin for ReasonerToolsWindow."""
 
     def _remember_project_boundary(self, boundary) -> None:
-        """Persist one strict boundary selected through Tool authority."""
+        """Persist compatibility boundary and canonical Project observation."""
+        observation = self._project_selection_registry.load_current_observation(
+            selection_ticket=self._project_switch_ticket
+        )
+        if observation is None:
+            raise ProjectSelectionRegistryError(
+                "CURRENT_PROJECT_OBSERVATION_UNAVAILABLE"
+            )
+        self.current_project_observation = observation
         self.current_project_boundary = boundary
-        self.current_project_root = boundary.active_project_root
+        self.current_project_root = observation.project_root
         if hasattr(self, "ignore_rules_tab"):
             self.ignore_rules_tab.set_project_root(
-                boundary.active_project_root
+                observation.project_root
             )
         self._set_loaded_project_scopes_enabled(True)
         self._refresh_active_project_controls()
@@ -122,13 +130,17 @@ class _WindowProjectRootMixin:
             refresh = getattr(page, "refresh_active_project_controls", None)
             if callable(refresh):
                 refresh(root)
+        ignore_rules = getattr(self, "ignore_rules_tab", None)
+        refresh = getattr(ignore_rules, "refresh_active_project_controls", None)
+        if callable(refresh):
+            refresh(root)
 
     def _select_active_project(self) -> None:
-        """Select one Project through the shell-owned global command."""
+        """Select one Project for shell-wide observation."""
         start = str(self.current_project_root or Path.cwd())
         selected = QFileDialog.getExistingDirectory(
             self,
-            "Select active Project source root",
+            "Select observed Project source root",
             start,
         )
         if not selected:
@@ -138,8 +150,10 @@ class _WindowProjectRootMixin:
             self._propagate_project_root(project_root, explicit_selection=True)
 
     def _set_loaded_project_scopes_enabled(self, enabled: bool) -> None:
-        """Enable or disable loaded Project-scoped tabs as one shell state."""
-        for _tab_id, widget in self._iter_loaded_project_widgets():
+        """Enable or disable Project tool bodies while keeping selection surfaces usable."""
+        for tab_id, widget in self._iter_loaded_project_widgets():
+            if tab_id in {"exclusion_rules", "error_memory"}:
+                continue
             widget.setEnabled(bool(enabled))
 
     def _apply_project_widget_enabled_state(
@@ -147,7 +161,12 @@ class _WindowProjectRootMixin:
         tab_id: str,
         widget: QWidget,
     ) -> None:
-        """Apply current active-Project availability to one loaded widget."""
+        """Apply active-Project availability without disabling selection surfaces."""
+        if tab_id == "exclusion_rules":
+            return
+        if tab_id == "error_memory":
+            widget.setEnabled(True)
+            return
         if tab_id in PROJECT_SCOPED_TAB_IDS:
             widget.setEnabled(self.current_project_root is not None)
 
@@ -167,7 +186,7 @@ class _WindowProjectRootMixin:
                 self._clear_project_root_field(field)
 
     def _perform_project_eject(self) -> tuple[bool, str]:
-        """Clear active authority only after all Project work has settled."""
+        """Clear Project observation only after scoped work has settled."""
         if self.current_project_root is None:
             self._refresh_active_project_controls()
             return True, ""
@@ -184,7 +203,8 @@ class _WindowProjectRootMixin:
         self._is_propagating_project_root = True
         try:
             self._reset_loaded_project_scopes()
-            self._project_switch_epoch += 1
+            self._project_switch_ticket += 1
+            self.current_project_observation = None
             self.current_project_boundary = None
             self.current_project_root = None
             ignore_rules = getattr(self, "ignore_rules_tab", None)
@@ -204,13 +224,13 @@ class _WindowProjectRootMixin:
             QMessageBox.information(
                 self,
                 "No active Project",
-                "KANDA Reasoner currently has no active Project authority.",
+                "KANDA Reasoner currently has no observed Project selection.",
             )
             return
         answer = QMessageBox.question(
             self,
             "Eject active Project",
-            "Eject the active Project from KANDA Reasoner?\n\n"
+            "Eject the observed Project from KANDA Reasoner?\n\n"
             "Project source and durable Project memory will not be deleted.",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
@@ -230,7 +250,7 @@ class _WindowProjectRootMixin:
         QMessageBox.information(
             self,
             "Project ejected",
-            "Active Project authority was cleared. Project source and durable "
+            "Observed Project selection was cleared. Project source and durable "
             "Project memory were preserved.",
         )
 
@@ -323,7 +343,7 @@ class _WindowProjectRootMixin:
 
     @staticmethod
     def _clear_project_root_field(field: QWidget) -> None:
-        """Clear one editor when the Tool has no active Project authority."""
+        """Clear one editor when the Tool has no observed Project."""
         if isinstance(field, QLineEdit):
             field.clear()
             return

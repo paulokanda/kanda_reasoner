@@ -1,4 +1,4 @@
-"""Validate the canonical no-Project direct-PyInstaller Tool build commands."""
+"""Validate the selection-preserving direct PyInstaller Tool build commands."""
 from __future__ import annotations
 
 import argparse
@@ -44,6 +44,7 @@ def main() -> int:
     unload_ps1 = root / "tools" / "UNLOAD_PROJECT_FOR_TOOL_PORTABLE.ps1"
     build_py = root / "tools" / "build_kanda_reasoner_tool_portable.py"
     build_ps1 = root / "tools" / "BUILD_KANDA_REASONER_TOOL_PORTABLE.ps1"
+    boundary_helper = root / "tools" / "tool_portable_registry_boundary.py"
     smoke_helper = root / "tools" / "tool_portable_functional_smoke.py"
     runtime_report = root / "kanda_reasoner_app" / "portable_smoke_runtime_report.py"
     smoke_boundary = root / "kanda_reasoner_app" / "portable_smoke_isolation.py"
@@ -54,6 +55,7 @@ def main() -> int:
         unload_ps1,
         build_py,
         build_ps1,
+        boundary_helper,
         smoke_helper,
         runtime_report,
         smoke_boundary,
@@ -65,6 +67,7 @@ def main() -> int:
     for path in (
         unload_py,
         build_py,
+        boundary_helper,
         smoke_helper,
         runtime_report,
         smoke_boundary,
@@ -78,33 +81,87 @@ def main() -> int:
     unload_text = unload_ps1.read_text(encoding="utf-8")
     build_text = build_ps1.read_text(encoding="utf-8")
     builder_text = build_py.read_text(encoding="utf-8")
+    boundary_text = boundary_helper.read_text(encoding="utf-8")
+
     require(
-        build_text.index("& $Unload") < build_text.index("& $Python @Arguments"),
-        "PROJECT_UNLOAD_NOT_FIRST_IN_BUILD_WRAPPER",
+        "UNLOAD_PROJECT_FOR_TOOL_PORTABLE.ps1" not in build_text,
+        "BUILD_WRAPPER_STILL_DEPENDS_ON_PROJECT_UNLOAD",
     )
+    require("& $Unload" not in build_text, "BUILD_WRAPPER_UNLOAD_EXECUTION_REMAINS")
+    require(
+        ".venv\\Scripts\\python.exe" in build_text,
+        "BUILD_WRAPPER_TOOL_VENV_PYTHON_MISSING",
+    )
+    require(
+        "$env:LOCALAPPDATA" not in build_text,
+        "BUILD_WRAPPER_MACHINE_GLOBAL_PYTHON_REMAINS",
+    )
+    require(
+        "E:\\kanda_reasoner" not in build_text,
+        "BUILD_WRAPPER_HARDCODED_TOOL_ROOT_REMAINS",
+    )
+    require(
+        ".venv\\Scripts\\python.exe" in unload_text,
+        "UNLOAD_COMMAND_TOOL_VENV_PYTHON_MISSING",
+    )
+    require(
+        "$env:LOCALAPPDATA" not in unload_text,
+        "UNLOAD_COMMAND_MACHINE_GLOBAL_PYTHON_REMAINS",
+    )
+    require(
+        "E:\\kanda_reasoner" not in unload_text,
+        "UNLOAD_COMMAND_HARDCODED_TOOL_ROOT_REMAINS",
+    )
+
     for token in (
         "--clean",
         "--noconfirm",
         "KandaReasonerWindows.spec",
-        "require_unselected",
+        "prepare_build_boundary",
+        "assert_build_boundary_unchanged",
+        "validate_build_publication",
+        "project_selection_authority_used_for_build",
         "selected_project_during_build",
         "smoke_no_project",
-        "smoke_external_project",
-        "tool_portable_functional_smoke",
-        "source_registry_path",
+        "smoke_project_agnostic_startup_generation",
         "portable_built_unverified",
         "PROJECT CONTENT PACKAGED: NO",
     ):
         require(token in builder_text, "DIRECT_BUILDER_CONTRACT_MISSING:" + token)
+
+    for retired in (
+        "require_unselected",
+        "TOOL_PORTABLE_BUILD_REQUIRES_SELECTED_PROJECT_NONE",
+        "TOOL_PORTABLE_BUILD_CURRENT_PROJECT_ID_NOT_EMPTY",
+    ):
+        require(retired not in builder_text, "RETIRED_BUILD_SELECTION_GATE:" + retired)
+
+    for token in (
+        "load_registry_boundary",
+        "assert_registry_unchanged",
+        "assert_outside_protected_roots",
+        "validate_publication_directory",
+        "active_project_identity_used_for_build",
+    ):
+        require(token in boundary_text, "BOUNDARY_OWNER_REUSE_MISSING:" + token)
+
     for token in (
         "SELECTED PROJECT: NONE",
         "SELF-HOSTING MODE: OFF",
         "UNLOAD PROJECT FOR TOOL PORTABLE: PASS",
     ):
-        require(token in unload_py.read_text(encoding="utf-8"), "UNLOAD_MARKER_MISSING:" + token)
+        require(
+            token in unload_py.read_text(encoding="utf-8"),
+            "UNLOAD_MARKER_MISSING:" + token,
+        )
+
 
     module = load_module(unload_py, "kanda_tool_portable_unload")
     build_module = load_module(build_py, "kanda_tool_portable_build")
+    boundary_module = load_module(
+        boundary_helper,
+        "kanda_tool_portable_registry_boundary",
+    )
     smoke_module = load_module(smoke_helper, "kanda_tool_portable_functional_smoke")
     report_module = load_module(runtime_report, "kanda_portable_smoke_runtime_report")
     environment = {
@@ -116,6 +173,23 @@ def main() -> int:
     removed = module.scrub_project_environment(environment)
     require(environment == {"PATH": "safe"}, "PROJECT_ENVIRONMENT_SCRUB_FAILED")
     require(len(removed) == 3, "PROJECT_ENVIRONMENT_SCRUB_COUNT_MISMATCH")
+
+    with tempfile.TemporaryDirectory() as boundary_temp:
+        publication = Path(boundary_temp) / "KandaReasoner_Portable_Output"
+        boundary, receipt = boundary_module.prepare_build_boundary(
+            root,
+            publication,
+            "KandaReasoner-20260820_193045-Windows-Portable.zip",
+        )
+        require(
+            receipt["active_project_identity_used_for_build"] is False,
+            "ACTIVE_PROJECT_BUILD_AUTHORITY_REINTRODUCED",
+        )
+        require(
+            receipt["current_project_id"] == boundary.current_project_id,
+            "ACTIVE_PROJECT_OBSERVATION_RECEIPT_MISMATCH",
+        )
+        boundary_module.assert_build_boundary_unchanged(boundary)
 
     with tempfile.TemporaryDirectory() as temporary:
         temp = Path(temporary)
@@ -301,13 +375,15 @@ def main() -> int:
     print(output, end="" if output.endswith("\n") else "\n")
     require(completed.returncode == 0, "CURRENT_STAGE_1_6_VALIDATOR_FAILED")
     require(
-        "VALIDATION OK: kanda-reasoner-portable-builder-install-v1r12" in output,
+        "VALIDATION OK: kanda-reasoner-portable-timestamped-publication-name-v1r32" in output,
         "CURRENT_STAGE_1_6_VALIDATOR_MARKER_MISSING",
     )
 
-    print("TOOL PORTABLE PROJECT UNLOAD COMMAND: PASS")
-    print("TOOL PORTABLE PROJECT HISTORY PRESERVATION: PASS")
-    print("TOOL PORTABLE BUILD REQUIRES SELECTED PROJECT NONE: PASS")
+    print("TOOL PORTABLE STANDALONE PROJECT UNLOAD COMMAND: PASS")
+    print("TOOL PORTABLE STANDALONE UNLOAD HISTORY PRESERVATION: PASS")
+    print("TOOL PORTABLE BUILD PROJECT-SELECTION MUTATION: ABSENT")
+    print("TOOL PORTABLE BUILD PROJECT-SELECTION AUTHORITY: ABSENT")
+    print("TOOL PORTABLE REGISTRY DESTINATION FIREWALL REUSED: PASS")
     print("TOOL PORTABLE DIRECT PYINSTALLER CONTRACT: PASS")
     print("TOOL PORTABLE DETERMINISTIC ZIP FIXTURE: PASS")
     print("TOOL PORTABLE PROJECT CAPTURE REJECTION FIXTURE: PASS")

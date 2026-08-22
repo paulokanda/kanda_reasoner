@@ -13,6 +13,7 @@ import difflib
 import re
 from typing import Any
 
+from kanda_reasoner_app.error_memory.backend import ErrorMemoryBackend
 from kanda_reasoner_app.error_memory.models import active_ready
 from kanda_reasoner_app.error_memory.store import delete_lesson, list_lessons, rebuild_index
 from kanda_reasoner_app.error_memory_gui._duplicate_match_keys import (
@@ -334,7 +335,7 @@ def lesson_matches_candidate_error(
 
 
 def matching_stored_lesson_ids(
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     candidate: dict[str, Any],
 ) -> tuple[str, ...]:
     """Return unique stored Lesson IDs that match the candidate error."""
@@ -354,7 +355,7 @@ def matching_stored_lesson_ids(
 
 
 def find_memorize_duplicate(
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     candidate: dict[str, Any],
 ) -> DuplicateLessonMatch | None:
     """Return a stored duplicate only when duplicate Lessons already exist."""
@@ -384,7 +385,7 @@ def _stored_match_count(matches: list[tuple[dict[str, Any], str]]) -> int:
 
 
 def resolve_duplicate_lesson_copies(
-    selected_project_root: str | Path,
+    selected_project_root: ErrorMemoryBackend | str | Path,
     candidate: dict[str, Any],
     *,
     candidate_has_pending_source: bool = False,
@@ -400,9 +401,9 @@ def resolve_duplicate_lesson_copies(
     """
     if not isinstance(candidate, dict):
         return None
-    root = Path(selected_project_root)
+    target = selected_project_root
     try:
-        stored_lessons = list_lessons(root, include_inactive=True)
+        stored_lessons = list_lessons(target, include_inactive=True)
     except Exception:
         return None
     matches = _unique_matches(candidate, stored_lessons)
@@ -446,13 +447,13 @@ def resolve_duplicate_lesson_copies(
             skipped_ids.append(stored_id)
             continue
         try:
-            delete_lesson(root, stored_id)
+            delete_lesson(target, stored_id)
             deleted_ids.append(stored_id)
         except Exception as exc:
             failures.append(stored_id + " -> " + str(exc))
 
     try:
-        rebuild_index(root)
+        rebuild_index(target)
     except Exception as exc:
         failures.append("index rebuild -> " + str(exc))
 

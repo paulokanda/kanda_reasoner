@@ -15,12 +15,15 @@ from kanda_reasoner_app.project_support_boundary import (
     ProjectSelectionMode,
     ProjectSupportBoundaryError,
     ProjectToolBoundaryIdentity,
+    canonical_project_support_root,
     canonical_tool_support_root,
+    legacy_physical_project_identity,
     normalize_project_selection_mode,
     resolve_explicit_project_tool_boundary_identity,
 )
 
 __all__ = [
+    "ProjectObservation",
     "ProjectSelectionRecord",
     "ProjectSelectionRegistry",
     "ProjectSelectionRegistryError",
@@ -34,6 +37,19 @@ REGISTRY_FILE_NAME = "projects.json"
 class ProjectSelectionRegistryError(RuntimeError):
     """Raised when the Tool-owned selection registry is unreadable or unsafe."""
 
+
+
+
+@dataclass(frozen=True)
+class ProjectObservation:
+    """Describe one selected Project without carrying operation authority."""
+
+    stable_project_id: str
+    project_slug: str
+    project_root: Path
+    project_root_fingerprint: str
+    project_support_root: Path
+    selection_ticket: int
 
 @dataclass(frozen=True)
 class ProjectSelectionRecord:
@@ -96,7 +112,7 @@ class ProjectSelectionRecord:
 
 
 class ProjectSelectionRegistry:
-    """Persist explicit Project authority outside the Tool source tree."""
+    """Persist explicit Project selection outside the Tool source tree."""
 
     def __init__(
         self,
@@ -136,8 +152,36 @@ class ProjectSelectionRegistry:
             )
         return ProjectSelectionRecord.from_json(record_payload)
 
+    def load_current_observation(
+        self,
+        *,
+        selection_ticket: int = 0,
+    ) -> ProjectObservation | None:
+        """Return the current Project as non-authoritative observation state."""
+        record = self.load_current_record()
+        if record is None:
+            return None
+        root = Path(record.project_root).expanduser().resolve(strict=False)
+        if not root.exists() or not root.is_dir():
+            return None
+        expected_support = self._path_key(record.project_support_root)
+        actual_support = self._path_key(canonical_project_support_root(root))
+        if expected_support != actual_support:
+            return None
+        _, root_fingerprint = legacy_physical_project_identity(root)
+        if record.project_root_fingerprint != root_fingerprint:
+            return None
+        return ProjectObservation(
+            stable_project_id=record.stable_project_id,
+            project_slug=record.project_slug,
+            project_root=root,
+            project_root_fingerprint=root_fingerprint,
+            project_support_root=canonical_project_support_root(root),
+            selection_ticket=int(selection_ticket),
+        )
+
     def resolve_current_boundary(self) -> ProjectToolBoundaryIdentity | None:
-        """Return a current strict boundary or fail safely to no selection."""
+        """Return the legacy authority boundary for compatibility callers."""
         record = self.load_current_record()
         if record is None:
             return None
@@ -269,7 +313,7 @@ class ProjectSelectionRegistry:
             return None
 
     def clear_current_selection(self) -> None:
-        """Clear active authority while preserving Project history records."""
+        """Clear current Project observation while preserving history records."""
         payload = self._load_payload()
         payload["current_project_id"] = ""
         payload["schema_version"] = REGISTRY_SCHEMA_VERSION

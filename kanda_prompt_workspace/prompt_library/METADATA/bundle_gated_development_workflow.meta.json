@@ -4,7 +4,7 @@
   "display_name": "Bundle-Gated Development Workflow",
   "filename": "bundle_gated_development_workflow.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "2.0",
+  "version": "2.1",
   "status": "active",
   "load_type": "routed",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,8 +16,8 @@
     "installable release lifecycle",
     "kanda_bundle_gated_development_workflow"
   ],
-  "source_stage": "prompt-audit-wave5a-patch-lifecycle-core-v1",
-  "updated_for": "prompt-audit-wave5a-patch-lifecycle-core-v1",
+  "source_stage": "external-project-observer-independence-v1",
+  "updated_for": "external-project-observer-independence-v1",
   "description": "Classifies installable release applicability, tracks release lifecycle, and dispatches artifact, receiver, installer, validation, terminal, freeze, and Error Memory owners.",
   "priority": 15,
   "trigger_phrases": [

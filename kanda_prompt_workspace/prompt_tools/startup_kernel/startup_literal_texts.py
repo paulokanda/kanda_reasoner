@@ -12,7 +12,7 @@ __all__ = [
     "T9T013_RG015_BOOT_EXACTNESS_RULE_V6",
     "T9T013_RG015_BOOT_EXACTNESS_RULE",
     "FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V1",
-    "PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V1",
+    "PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2",
     "BOOT_COMMAND_TEXT",
 ]
 
@@ -171,17 +171,18 @@ For patch ZIP delivery, include root-level `KANDA_FREEZE_HINT.json` unless the p
 """
 
 
-PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V1 = """## PRE-OUTPUT CONTRACT GATES HOOK
+PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2 = """## PRE-OUTPUT CONTRACT GATES HOOK
 
 Mandatory pre-output contract gate hook loaded.
 
 WHEN THE NEXT ANSWER WILL EMIT POWERSHELL, TERMINAL COMMANDS, PATCH ZIP DELIVERY INSTRUCTIONS, VALIDATION COMMANDS, FREEZE-FORM JSON, VALIDATION EVIDENCE INTENDED FOR FREEZING, OR `KANDA_FREEZE_HINT.json`, REQUEST OR APPLY `pre_output_contract_gates` FROM `03_governance_freeze_and_handoff` BEFORE EMITTING THE ARTIFACT.
 
 Required behavior:
+0. RELEASE OWNER CLASSIFICATION is mandatory before any patch/install/validation/freeze-ready rule: `KANDA_TOOL_RELEASE` or `EXTERNAL_PROJECT_RELEASE`. KANDA patch governance, `scripts/validate_patch_zip.py`, KANDA Tool Error Memory, Tool source, Tool runtime, and KANDA source archives may be required only for `KANDA_TOOL_RELEASE`. For `EXTERNAL_PROJECT_RELEASE`, use Project/release-owned installer and validator contracts. Never request `kanda_reasoner__source_archive_partXX_of_YY.zip` merely to implement, validate, or release another Project.
 1. Terminal output must be classified before footer generation. Successful install uses about 2 seconds then Clear-Host and no Enter prompts. Install errors, validation, freeze, diagnostics, validation errors, freeze errors, and all non-install-success terminal blocks use Enter, Enter, Clear-Host. Never mix patterns and never close the terminal. Freeze-prep and validation-evidence merge commands must not use inline `python -c`; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work`, set `$env:PYTHONPATH = $PROJECT_ROOT`, insert `project_root` into `sys.path` in the helper before importing `kanda_reasoner_app`, and run that file.
-2. Patch delivery must detect `DRIVE_ROOT` from `$PROJECT_ROOT`, look first for the ZIP at the project drive root, stage it into `<project>_delete_after_daily_work`, delete the root-drive ZIP copy after successful staging, and extract only from the staged ZIP. Do not use the old generic Downloads/Desktop-first installer search template. Install blocks must include a fail-safe try/catch or text-equivalent wrapper so install errors use Enter, Enter, Clear-Host instead of bypassing cleanup.
+2. All externally delivered transient work artifacts must begin at the active Project drive root. Derive `DRIVE_ROOT`, Project name, and `<project>_delete_after_daily_work` from `$PROJECT_ROOT`; copy the artifact into that transient root, verify SHA-256 equality, and only then remove the drive-root source. Re-derive after every Project switch. Never ask the user to pre-place a delivered artifact inside `_delete_after_daily_work`. Patch ZIPs are a governed special case: extract only from the verified staged ZIP and never use a Downloads/Desktop-first search fallback. Install blocks must include a fail-safe try/catch or text-equivalent wrapper so install errors use Enter, Enter, Clear-Host instead of bypassing cleanup.
 3. Before emitting patch ZIP delivery, install, validation, or freeze-ready metadata, apply `patch_install_delivery_error_register` and block known PIR regressions, especially Downloads/Desktop fallback installers, daily-work-only installers, and giant single-line validation evidence.
-4. Patch ZIP delivery is `PATCH_DELIVERY_RELEASE`, a governed release event. Do not emit a ZIP link unless the ZIP contract validator has passed or the patch is explicitly declared non-freezeable. If the contract cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED`.
+4. Patch ZIP delivery is a governed release event. For `KANDA_TOOL_RELEASE`, require the KANDA ZIP contract validator. For `EXTERNAL_PROJECT_RELEASE`, require only the Project/release-owned contract; KANDA validation is not a fallback. If the applicable owner contract cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` without escalating to KANDA Tool source.
 4. Patch ZIPs that can be frozen must include root-level `KANDA_FREEZE_HINT.json`. The sidecar must not be duplicated inside the install payload folder.
 5. Root-level `KANDA_FREEZE_HINT.json` and any freeze-form JSON must be generated from the same freeze payload source. Do not hand-type separate divergent copies.
 6. Freeze-form JSON must be exact marker-wrapped valid JSON with no markdown, comments, trailing commas, or prose inside markers.

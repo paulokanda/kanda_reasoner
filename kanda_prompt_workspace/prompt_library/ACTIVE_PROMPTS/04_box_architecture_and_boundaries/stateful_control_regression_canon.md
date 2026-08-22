@@ -19,7 +19,23 @@ stateful GUI option controls. Typical families include combo boxes, dropdowns,
 radio groups, segmented controls, toggles, option panels, and button groups.
 
 This prompt does not own domain truth, persistence implementation, generic GUI
-architecture, visual style, delivery, freeze, or source-write authorization.
+architecture, visual style, delivery, snapshot/freeze, or source-write authorization.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Owner split
 
@@ -32,7 +48,7 @@ architecture, visual style, delivery, freeze, or source-write authorization.
   locale, and accessibility profiles.
 - Boundary-First Repair: diagnosis when the visible control is not the defect
   owner.
-- Brick Wall: implementation authorization.
+- active Project implementation authority: implementation authorization.
 
 ## Stable identity and migration
 
@@ -112,5 +128,5 @@ profiles but do not replace this semantic-state owner.
 
 Load for option-state, selection persistence, hydration, caption, and sizing
 regressions. Do not route generic state, ownership, or non-interactive backend
-work here. A completed review returns evidence to Brick Wall and never authorizes
-source writes or freeze.
+work here. A completed review returns evidence to the active Project's implementation authority and never authorizes
+source writes or snapshot/freeze writes.

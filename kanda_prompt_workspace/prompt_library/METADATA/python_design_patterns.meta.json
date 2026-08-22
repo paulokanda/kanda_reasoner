@@ -10,7 +10,7 @@
   "load_type": "on_request",
   "source_stage": "prompt-audit-wave8b-python-architecture-design-boundaries-v1",
   "classification": "pragmatic_python_pattern_selection_specialist",
-  "description": "Selects or rejects named Python design patterns using applicability evidence, simpler language alternatives, lifecycle analysis, and explicit trade-offs.",
+  "description": "Selects or rejects named Python design patterns using applicability evidence, simpler language alternatives, lifecycle analysis, and explicit trade-offs. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "routing_coverage": "complete_wave8b",
   "priority": 50,

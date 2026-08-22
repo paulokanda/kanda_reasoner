@@ -24,6 +24,7 @@ from .zip_member_contract import (
     ZipMemberContractError,
     validate_zip_member_contract,
 )
+from .error_memory_intake_contract import pending_intake_payload_failures
 
 FORBIDDEN_INSTALL_FRAGMENTS = (
     "downloads",
@@ -172,7 +173,6 @@ ERROR_MEMORY_BASE_REQUIRED_KEYS = (
     "schema_version",
     "lesson_id",
     "status",
-    "project_slug",
     "operation_phase",
     "created_at_utc",
     "updated_at_utc",
@@ -272,8 +272,6 @@ def _validate_error_memory_lesson_payload(payload: Mapping[str, Any], member_nam
 
     if str(payload.get("schema_version", "")).strip() != "1.0":
         _raise("Error Memory lesson block schema_version must be 1.0 in " + member_name)
-    if not str(payload.get("project_slug", "")).strip():
-        _raise("Error Memory lesson block project_slug must be non-empty in " + member_name)
 
     status = str(payload.get("status", "")).strip().lower()
     if status not in {"draft", "active", "deprecated", "superseded"}:
@@ -342,7 +340,7 @@ def _validate_error_memory_lesson_payload(payload: Mapping[str, Any], member_nam
             )
 
 
-def _validate_error_memory_lesson_blocks(archive: zipfile.ZipFile) -> list[str]:
+def _validate_error_memory_lesson_blocks(archive: zipfile.ZipFile, *, intake_mode: bool = False) -> list[str]:
     """Validate every packaged KANDA_ERROR_LESSON_JSON block inside a patch ZIP."""
     checked: list[str] = []
     for info in archive.infolist():
@@ -361,12 +359,17 @@ def _validate_error_memory_lesson_blocks(archive: zipfile.ZipFile) -> list[str]:
             _raise("Error Memory lesson block is not valid JSON in " + member_name + ": " + str(exc))
         if not isinstance(loaded, Mapping):
             _raise("Error Memory lesson block must contain one JSON object in " + member_name)
-        _validate_error_memory_lesson_payload(loaded, member_name)
+        if intake_mode:
+            failures = pending_intake_payload_failures(loaded)
+            if failures:
+                _raise("Pending Error Memory intake lesson invalid in " + member_name + ": " + "; ".join(failures))
+        else:
+            _validate_error_memory_lesson_payload(loaded, member_name)
         checked.append(member_name)
     return checked
 
 
-def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True) -> dict[str, Any]:
+def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True, error_memory_intake: bool = False) -> dict[str, Any]:
     """Validate structural release contract for a patch ZIP.
 
     The validator fails closed when a freeze-ready ZIP lacks root-level
@@ -406,7 +409,7 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True)
                     _raise("KANDA_FREEZE_HINT.json must contain a JSON object.")
                 _validate_hint_data(loaded)
                 hint = dict(loaded)
-            error_memory_lesson_blocks = _validate_error_memory_lesson_blocks(archive)
+            error_memory_lesson_blocks = _validate_error_memory_lesson_blocks(archive, intake_mode=error_memory_intake)
             provenance_required = bool(hint and hint.get("patch_provenance_required"))
             try:
                 provenance_report = validate_delivery_provenance_contract(
@@ -428,6 +431,7 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True)
         "feature_id": hint.get("feature_id") if hint else "",
         "feature_title": hint.get("feature_title") if hint else "",
         "error_memory_lesson_blocks_checked": len(error_memory_lesson_blocks),
+        "error_memory_intake_mode": bool(error_memory_intake),
         "zip_member_contract": True,
         "zip_member_count": len(member_inventory.names),
         "declared_payload_member_count": len(member_inventory.declared_payload_members),
@@ -466,10 +470,15 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Allow a ZIP without KANDA_FREEZE_HINT.json when explicitly non-freezeable.",
     )
+    parser.add_argument("--error-memory-intake", action="store_true")
     args = parser.parse_args(argv)
 
     try:
-        report = validate_patch_zip(args.zip_path, expect_freeze_hint=not args.non_freezeable)
+        report = validate_patch_zip(
+            args.zip_path,
+            expect_freeze_hint=not (args.non_freezeable or args.error_memory_intake),
+            error_memory_intake=args.error_memory_intake,
+        )
     except PatchZipContractError as exc:
         print(f"ZIP CONTRACT: FAIL - {exc}")
         return 1

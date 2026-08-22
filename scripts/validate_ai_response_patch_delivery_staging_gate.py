@@ -1,12 +1,5 @@
 # project-path: scripts/validate_ai_response_patch_delivery_staging_gate.py
-"""Root-drive to daily-work staging gate for patch install blocks.
-
-This module validates the user-facing PowerShell wrapper, not the inner
-INSTALL.ps1 copied inside a patch ZIP. The wrapper must treat the drive-root
-ZIP as a temporary drop-off only, stage the used ZIP under
-<project>_delete_after_daily_work, delete the drive-root copy after staging,
-and extract only from the staged ZIP.
-"""
+"""Root-drive to verified daily-work staging gate for patch install blocks."""
 
 from __future__ import annotations
 
@@ -52,6 +45,65 @@ def _require_order(lowered: str, first: str, second: str, message: str) -> None:
         _fail(message)
 
 
+def _require_dynamic_daily_root(lowered: str) -> None:
+    _require(
+        "$project_name",
+        lowered,
+        "Install block must derive $PROJECT_NAME from $PROJECT_ROOT.",
+    )
+    project_name_ok = (
+        "$project_name = split-path $project_root -leaf" in lowered
+        or "$project_name=split-path $project_root -leaf" in lowered
+    )
+    if not project_name_ok:
+        _fail("$PROJECT_NAME must be derived with Split-Path $PROJECT_ROOT -Leaf.")
+    daily_root_ok = (
+        "$daily_root = join-path $drive_root ($project_name + \"_delete_after_daily_work\")"
+        in lowered
+        or "$daily_root=join-path $drive_root ($project_name + \"_delete_after_daily_work\")"
+        in lowered
+        or "$work_dir = join-path $drive_root ($project_name + \"_delete_after_daily_work\")"
+        in lowered
+        or "$work_dir=join-path $drive_root ($project_name + \"_delete_after_daily_work\")"
+        in lowered
+    )
+    if not daily_root_ok:
+        _fail(
+            "Daily-work root must be derived from $DRIVE_ROOT plus the current "
+            "$PROJECT_NAME; hardcoded Project daily-work roots are forbidden."
+        )
+
+
+def _require_sha256_verification(lowered: str, staged_var: str) -> None:
+    _require(
+        "get-filehash",
+        lowered,
+        "Install block must SHA-256 verify root and staged ZIP copies.",
+    )
+    _require(
+        "-algorithm sha256",
+        lowered,
+        "Install block must use SHA256 for staging integrity verification.",
+    )
+    root_hash_present = "$root_hash" in lowered or "$roothash" in lowered
+    staged_hash_present = "$staged_hash" in lowered or "$stagedhash" in lowered
+    if not root_hash_present or not staged_hash_present:
+        _fail("Install block must retain both root and staged SHA-256 hashes.")
+    if "$root_patch_zip" not in lowered or staged_var not in lowered:
+        _fail("SHA-256 verification must bind the root ZIP and staged ZIP paths.")
+    comparison_present = any(
+        token in lowered
+        for token in (
+            "$root_hash -ne $staged_hash",
+            "$roothash -ne $stagedhash",
+            "$root_hash.hash -ne $staged_hash.hash",
+            "$roothash.hash -ne $stagedhash.hash",
+        )
+    )
+    if not comparison_present:
+        _fail("Install block must compare root and staged SHA-256 values before cleanup.")
+
+
 def validate_root_drive_staging_install_block(block: str) -> None:
     """Validate strict root-drive-to-daily-work staging behavior."""
     lowered = _compact(block)
@@ -66,6 +118,7 @@ def validate_root_drive_staging_install_block(block: str) -> None:
         lowered,
         "Install block must derive DRIVE_ROOT with [System.IO.Path]::GetPathRoot.",
     )
+    _require_dynamic_daily_root(lowered)
     _require(root_var, lowered, "Install block must define $ROOT_PATCH_ZIP at the project drive root.")
     _require(
         DAILY_WORK_TOKEN,
@@ -75,7 +128,7 @@ def validate_root_drive_staging_install_block(block: str) -> None:
     _require(
         "zip is not in root of drive:\\ where project is",
         lowered,
-        "Install block must fail with the exact bridge error when the ZIP is not staged or at drive root.",
+        "Install block must fail with the exact bridge error when the ZIP is not at drive root.",
     )
 
     root_definition_ok = (
@@ -83,7 +136,10 @@ def validate_root_drive_staging_install_block(block: str) -> None:
         or "$root_patch_zip=join-path $drive_root" in lowered
     )
     if not root_definition_ok:
-        _fail("$ROOT_PATCH_ZIP must be built from $DRIVE_ROOT, not from Downloads, Desktop, project root, or a fixed drive.")
+        _fail(
+            "$ROOT_PATCH_ZIP must be built from $DRIVE_ROOT, not from Downloads, "
+            "Desktop, project root, or a fixed drive."
+        )
 
     staged_definition_ok = (
         f"{staged_var} = join-path" in lowered
@@ -92,32 +148,45 @@ def validate_root_drive_staging_install_block(block: str) -> None:
     if not staged_definition_ok:
         _fail("The staged ZIP variable must be built with Join-Path from $DAILY_ROOT or $WORK_DIR.")
 
+    if re.search(r"(?<!re)move-item\b", lowered) and root_var in lowered:
+        _fail("Move-Item is forbidden for root intake; use copy, SHA-256 verify, then delete source.")
+
     copy_root_to_staged = (
-        f"copy-item -path {root_var} -destination {staged_var}" in lowered
+        f"copy-item -literalpath {root_var} -destination {staged_var}" in lowered
+        or f"copy-item -path {root_var} -destination {staged_var}" in lowered
         or f"copy-item {root_var} {staged_var}" in lowered
     )
-    move_root_to_staged = (
-        f"move-item -path {root_var} -destination {staged_var}" in lowered
-        or f"move-item {root_var} {staged_var}" in lowered
+    if not copy_root_to_staged:
+        _fail("Install block must copy the drive-root ZIP into daily work before verification.")
+
+    _require_sha256_verification(lowered, staged_var)
+
+    root_remove_present = (
+        f"remove-item -literalpath {root_var}" in lowered
+        or f"remove-item -path {root_var}" in lowered
+        or f"remove-item {root_var}" in lowered
     )
-    if not (copy_root_to_staged or move_root_to_staged):
-        _fail("Install block must stage the drive-root ZIP into daily work before extraction using Copy-Item or Move-Item.")
+    if not root_remove_present:
+        _fail("Install block must delete the drive-root ZIP only after verified copy-staging.")
 
-    root_remove_present = f"remove-item -path {root_var}" in lowered or f"remove-item {root_var}" in lowered
-    if copy_root_to_staged and not root_remove_present:
-        _fail("Install block must delete the temporary drive-root ZIP copy after successful copy-staging.")
-
-    staged_test_present = f"test-path {staged_var}" in lowered or f"test-path -path {staged_var}" in lowered
+    staged_test_present = (
+        f"test-path {staged_var}" in lowered
+        or f"test-path -literalpath {staged_var}" in lowered
+        or f"test-path -path {staged_var}" in lowered
+    )
     if not staged_test_present:
         _fail("Install block must verify the staged daily-work ZIP exists before extraction.")
 
     if "expand-archive -path $root_patch_zip" in lowered or "expand-archive $root_patch_zip" in lowered:
         _fail("Install block must not extract from the drive-root ZIP; extract only from the staged daily-work ZIP.")
 
-    if f"expand-archive -path {staged_var}" not in lowered and f"expand-archive {staged_var}" not in lowered:
+    if (
+        f"expand-archive -literalpath {staged_var}" not in lowered
+        and f"expand-archive -path {staged_var}" not in lowered
+        and f"expand-archive {staged_var}" not in lowered
+    ):
         _fail("Install block must extract only from the staged daily-work ZIP variable.")
 
-    stage_term = "copy-item" if copy_root_to_staged else "move-item"
-    _require_order(lowered, stage_term, "expand-archive", "Install block must stage the ZIP before Expand-Archive.")
-    if copy_root_to_staged:
-        _require_order(lowered, "remove-item", "expand-archive", "Install block must delete the root-drive copy before extraction.")
+    _require_order(lowered, "copy-item", "get-filehash", "Install block must copy before hashing the staged ZIP.")
+    _require_order(lowered, "get-filehash", "remove-item", "Install block must verify SHA-256 before deleting the root ZIP.")
+    _require_order(lowered, "remove-item", "expand-archive", "Install block must remove the verified root copy before extraction.")

@@ -31,7 +31,6 @@ def build_error_lesson_ai_form_prompt(
     """
     current_form = {
         "schema_version": "1.0",
-        "project_slug": Path(selected_project_root).name,
         "lesson_id": "lesson-<stable-slug>-v1",
         "status": "active",
         "operation_phase": operation_phase or "unknown",
@@ -80,7 +79,7 @@ def build_error_lesson_ai_form_prompt(
     required = ", ".join(_REQUIRED_ACTIVE_AI_KEYS)
     return (
         "You are a specialist in KANDA Reasoner, repeat-error prevention, validation engines, "
-        "safe AI-assisted programming workflows, and project-specific Error Memory governance.\n\n"
+        "safe AI-assisted programming workflows, and Error Memory lesson governance.\n\n"
         "Context:\n"
         "I have an error, validation failure, patch-install failure, freeze-intake failure, GUI crash, or AI implementation mistake that should become "
         "a KANDA Error Memory lesson. The lesson will be pasted or staged into the AI-assisted error lesson intake window and then memorized only after human review.\n\n"
@@ -96,7 +95,7 @@ def build_error_lesson_ai_form_prompt(
         "- Do not use the older minimal lesson form. Active lessons must include the complete active-ready metadata.\n"
         "- Required active-ready keys: " + required + ".\n"
         "- Do not provide owner_scope, owner_id, owner_slug, owner_root_fingerprint, or affected_box as authority. The selected Tool or Project backend assigns canonical ownership and ignores AI-supplied ownership fields.\n"
-        "- project_slug is informational in the form and is normalized by the selected canonical backend before saving.\n"
+        "- Do not emit project_slug or other Project/owner identity fields in lesson JSON. Tool/Project selection is context only.\n"
         "- Include raw_error_text and raw_error_snapshot_scrubbed as scrubbed/export-safe summaries of the actual error or reported failure.\n"
         "- Include redaction.applied=true, redaction.export_safe=true, and redaction.rules explaining why the payload is export-safe.\n"
         "- Include exception.type, exception.phase, exception.relative_file_path, exception.function_or_test_name, exception.message_normalized, and exception.stacktrace_scrubbed. If no traceback exists, say that no traceback was provided rather than inventing one.\n"
@@ -109,7 +108,6 @@ def build_error_lesson_ai_form_prompt(
         f"{ERROR_LESSON_JSON_BEGIN}\n"
         "{\n"
         "  \"schema_version\": \"1.0\",\n"
-        "  \"project_slug\": \"kanda_reasoner\",\n"
         "  \"lesson_id\": \"lesson-<stable-slug>-v1\",\n"
         "  \"status\": \"active\",\n"
         "  \"operation_phase\": \"validation\",\n"

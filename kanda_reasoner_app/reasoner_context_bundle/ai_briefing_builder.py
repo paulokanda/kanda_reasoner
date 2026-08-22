@@ -7,6 +7,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from kanda_reasoner_app.project_artifact_staging import (
+    build_project_artifact_staging_contract,
+)
+
 from .handoff_boundary_contract import build_handoff_trust_envelope
 from .hashing import sha256_file
 from .json_writer import write_json_atomic
@@ -23,7 +27,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "ai_briefing"
 GENERATOR_NAME = "reasoner_context_bundle.ai_briefing_builder"
-GENERATOR_VERSION = "1.4.0"
+GENERATOR_VERSION = "1.5.0"
 
 
 def _utc_now() -> str:
@@ -132,6 +136,7 @@ def build_ai_briefing_payload(project: str | Path | ProjectContext) -> dict[str,
         },
         "generated_at_utc": _utc_now(),
         "handoff_trust": build_handoff_trust_envelope(context),
+        "artifact_staging": build_project_artifact_staging_contract(context.root),
         "project": {
             "project_slug": context.project_slug,
             "active_project_id": context.active_project_id,

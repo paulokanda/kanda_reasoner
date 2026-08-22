@@ -13,6 +13,8 @@ from __future__ import annotations
 
 
 __all__ = [
+    'FORBIDDEN_RUNTIME_APP_HOST_VISIBILITY_CAPABILITIES',
+    'REQUIRED_RUNTIME_APP_HOST_VISIBILITY_CONTRACT_LABELS',
     'build_phase12_read_only_advisory_panel_runtime_app_host_visibility_contract',
     'build_phase12_read_only_panel_runtime_app_host_visibility_contract_probe',
     'evaluate_phase12_read_only_advisory_panel_runtime_app_host_visibility_request',
@@ -30,6 +32,8 @@ from .read_only_advisory_panel_host_binding import (
 )
 
 from ._read_only_advisory_panel_runtime_app_host_visibility_contract_evaluation import (
+    FORBIDDEN_RUNTIME_APP_HOST_VISIBILITY_CAPABILITIES,
+    REQUIRED_RUNTIME_APP_HOST_VISIBILITY_CONTRACT_LABELS,
     contains_any as _contains_any,
     requested_capabilities as _requested_capabilities,
     source_host_binding_descriptor_is_safe as _source_host_binding_descriptor_is_safe,

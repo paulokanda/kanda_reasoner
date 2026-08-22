@@ -184,9 +184,6 @@ def module_summary(project_root: Path | str, relative_path: str) -> dict[str, An
 def run_project_ast_audit(project_root: Path | str, relative_path: str) -> dict[str, Any]:
     """Run the authoritative read-only AST Split Audit for one candidate module."""
     root = Path(project_root).resolve()
-    root_text = str(root)
-    if root_text not in sys.path:
-        sys.path.insert(0, root_text)
     from kanda_reasoner_app.manage_architecture.large_module_split_audit import (
         run_large_module_split_audit,
     )

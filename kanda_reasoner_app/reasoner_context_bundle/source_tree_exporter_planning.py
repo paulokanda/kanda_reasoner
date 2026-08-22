@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import zipfile
 from pathlib import Path
+from typing import Any
 
 from .source_tree_exporter_archive_io import _write_zip
 from .source_tree_exporter_shared import (

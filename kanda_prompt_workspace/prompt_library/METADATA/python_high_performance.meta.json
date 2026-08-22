@@ -12,7 +12,7 @@
   "classification": "evidence_driven_python_performance_specialist",
   "source_stage": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
   "updated_for": "prompt-audit-wave8c-enterprise-performance-legacy-boundaries-v1",
-  "description": "Owns representative performance baselines, bottleneck classification, benchmark interpretation, and evidence-based optimization decisions.",
+  "description": "Owns representative performance baselines, bottleneck classification, benchmark interpretation, and evidence-based optimization decisions. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 50,
   "trigger_phrases": [

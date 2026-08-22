@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any
 
 __all__ = [
@@ -12,7 +11,7 @@ __all__ = [
 ]
 
 _REQUIRED_FIELDS = (
-    "schema_version, project_slug, lesson_id, status, superseded_by, operation_phase, "
+    "schema_version, lesson_id, status, superseded_by, operation_phase, "
     "created_at_utc, updated_at_utc, source_patch_zip, raw_error_text, "
     "raw_error_snapshot_scrubbed, symptom, root_cause, wrong_assumption, "
     "correct_fix, do_not_repeat_rule, long_term_prevention, redaction, exception, "
@@ -22,7 +21,6 @@ _REQUIRED_FIELDS = (
 
 _SKELETON = """{
   "schema_version": "1.0",
-  "project_slug": "<project_slug>",
   "lesson_id": "lesson-<stable-slug>-v1",
   "status": "draft",
   "superseded_by": "",
@@ -70,15 +68,6 @@ _SKELETON = """{
 }"""
 
 
-def _project_slug(project_root: Any) -> str:
-    """Return the project slug used in Error Memory lessons."""
-    try:
-        name = Path(project_root).name.strip()
-    except Exception:
-        name = ""
-    return name or "kanda_reasoner"
-
-
 def _format_evidence_hints(evidence_hints: list[str] | None) -> str:
     """Return prompt text for recovered project evidence hints."""
     items = [str(item).strip() for item in (evidence_hints or []) if str(item).strip()]
@@ -91,7 +80,6 @@ def _base_user_prompt(*, intake_text: str, editor_text: str, project_root: Any, 
     """Build the shared user prompt body for correction and retry."""
     raw_intake = str(intake_text or "").strip()
     current_editor = str(editor_text or "").strip()
-    slug = _project_slug(project_root)
     return (
         "TASK:\n"
         "Create or correct exactly one KANDA Error Memory lesson.\n\n"
@@ -111,7 +99,7 @@ def _base_user_prompt(*, intake_text: str, editor_text: str, project_root: Any, 
         "- Follow the active-ready/model template contract: replace placeholders with concrete values.\n"
         "- source_patch_zip is mandatory and non-empty; use the patch ZIP name or a truthful relevant artifact from the input, such as a validation script, command surface, or generated artifact name.\n"
         "- wrong_assumption, install_command_summary, and notes are mandatory and non-empty.\n"
-        "- Preserve project-specific fields when present.\n"
+        "- Preserve evidence/context fields when present, but do not emit Project/owner identity fields as lesson ownership.\n"
         "- Use forward slashes inside regression_check.command. Write Windows paths like E:/kanda_reasoner. "
         "Any backslash or control character is invalid and will trigger a retry.\n"
         "- validation_evidence must be a non-empty JSON list, never [] and never a string.\n"
@@ -126,8 +114,8 @@ def _base_user_prompt(*, intake_text: str, editor_text: str, project_root: Any, 
         f"{_REQUIRED_FIELDS}\n\n"
         "MANDATORY JSON SKELETON SHAPE:\n"
         f"{_SKELETON}\n\n"
-        "PROJECT SLUG:\n"
-        f"{slug}\n\n"
+        "PROJECT CONTEXT ROOT (context only; do not emit as lesson ownership):\n"
+        f"{project_root}\n\n"
         "PROJECT EVIDENCE HINTS RECOVERED BY THE APP:\n"
         f"{_format_evidence_hints(evidence_hints)}\n\n"
         "AI-ASSISTED ERROR LESSON INTAKE TEXT:\n"

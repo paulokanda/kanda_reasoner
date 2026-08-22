@@ -227,14 +227,22 @@ def validate_source_contract(project_root: Path) -> None:
     ).read_text(encoding="utf-8")
 
     gate(
-        "SHELL_USES_STRICT_SELECTED_PROJECT_RESOLVER",
-        "resolve_selected_project_root" in main_window
-        and "resolve_active_project_root" not in main_window,
+        "SHELL_USES_REGISTRY_OWNED_PROJECT_OBSERVATION",
+        "ProjectSelectionRegistry" in main_window
+        and "load_current_observation" in main_window
+        and "resolve_current_boundary" in main_window
+        and "current_project_observation" in main_window
+        and "current_project_boundary" in main_window,
     )
     gate(
-        "SHELL_USES_TOOL_OWNED_SELECTION_REGISTRY",
-        "ProjectSelectionRegistry" in main_window
-        and "current_project_boundary" in main_window,
+        "SHELL_OBSERVED_ROOT_FALLBACK_IS_REGISTRY_BOUND",
+        "resolve_observed_project_root" in main_window
+        and "register_legacy_external_root" in main_window
+        and "if observation is None:" in main_window,
+    )
+    gate(
+        "SHELL_RETIRED_ACTIVE_PROJECT_RESOLVER_ABSENT",
+        "resolve_active_project_root" not in main_window,
     )
     gate(
         "TOOL_PREFS_EXTERNAL_TO_TOOL_SOURCE",

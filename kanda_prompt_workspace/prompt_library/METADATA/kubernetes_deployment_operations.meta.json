@@ -12,7 +12,7 @@
   "classification": "workload_specific_kubernetes_deployment_operations_specialist",
   "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
   "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Design and review container and Kubernetes deployment contracts for a named workload, cluster profile, rollout strategy, and operational owner. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred.",
+  "description": "Design and review container and Kubernetes deployment contracts for a named workload, cluster profile, rollout strategy, and operational owner. This prompt is a bounded technical contract. It is not a persona, a source-write authority, a release gate, or proof that implementation or validation occurred. Project-agnostic; host-specific governance is optional.",
   "box_logic_required": false,
   "priority": 55,
   "trigger_phrases": [

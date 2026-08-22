@@ -12,7 +12,23 @@ Aligned with: `KPR-06-007 large_module_refactor_protocol v9.0`
 
 Use this draft-only template to record one source-grounded large-module
 assessment and decomposition proposal. It does not define governing doctrine
-and does not authorize source writes, delivery, validation claims, or freeze.
+and does not authorize source writes, delivery, validation claims, or snapshot/freeze writes.
+
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
 
 ## Record identity
 
@@ -42,7 +58,7 @@ Decorators and bases:
 Serialized or CLI contracts:
 GUI signals and lifecycle hooks:
 Relevant frozen behavior:
-Relevant Error Memory lessons:
+Relevant Project error/lesson records, if available:
 ```
 
 ## Verified trigger
@@ -116,11 +132,11 @@ Durable evidence destination:
 ## Authorization
 
 ```text
-Brick Wall implementation authorization: NOT GRANTED / GRANTED SEPARATELY
+Project implementation authorization: NOT GRANTED / GRANTED SEPARATELY
 May write source: NO / YES BY SEPARATE AUTHORITY
 May build a patch: NO / YES BY SEPARATE AUTHORITY
 May claim validation: NO / YES FROM EXECUTED EVIDENCE
-May freeze: NO / YES AFTER HUMAN CONFIRMATION
+May write snapshot/freeze state: NO / YES ONLY THROUGH THE PROJECT OR HOST-SPECIFIC CONFIRMATION CONTRACT
 Current blockers:
 Next safe action:
 ```

@@ -65,6 +65,7 @@ class WebAIConfigurationController(QObject):
     catalog_changed = Signal(object)
     status_changed = Signal(str)
     open_configuration_requested = Signal()
+    catalog_refresh_settled = Signal()
 
     def __init__(self, parent: QObject | None = None) -> None:
         """Initialize safe defaults without resolving any active Project."""
@@ -279,6 +280,20 @@ class WebAIConfigurationController(QObject):
         """Invalidate one catalog result; workers are short-lived reads."""
         self._operation_id = uuid.uuid4().hex
 
+    def shutdown_ready(self) -> bool:
+        """Return whether no Web AI catalog QThread remains owned."""
+        return self._catalog_thread is None
+
+    def begin_shutdown(self) -> bool:
+        """Invalidate catalog work and request non-blocking thread settlement."""
+        self.cancel_catalog_refresh()
+        thread = self._catalog_thread
+        if thread is None:
+            return True
+        thread.requestInterruption()
+        thread.quit()
+        return False
+
     def _catalog_completed(self, operation_id: str, models: object) -> None:
         if operation_id != self._operation_id or not isinstance(models, list):
             return
@@ -316,6 +331,7 @@ class WebAIConfigurationController(QObject):
     def _catalog_finished(self) -> None:
         self._catalog_thread = None
         self._catalog_worker = None
+        self.catalog_refresh_settled.emit()
 
     def snapshot(self) -> WebAIConfigurationSnapshot:
         """Return an immutable request configuration with no Project identity."""

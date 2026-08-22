@@ -7,16 +7,10 @@ import hashlib
 import json
 from pathlib import Path
 
-from kanda_reasoner_app.project_fire_shield import (
-    FireShieldPhase,
-    assert_fire_shield_payload_bytes_allowed,
-    assert_fire_shield_write_allowed,
-    build_current_fire_shield_context,
-    verify_tool_snapshot_unchanged,
-)
 
 from .workbench_project_support_paths import preview_root_blockers as project_preview_root_blockers
 from .models import FEATURE_ID, SCHEMA_VERSION
+from .workbench_spectator_proposal_boundary import proposal_only_warning
 
 __all__ = [
     "SOURCE_APPLY_ROLLBACK_RECOVERY_TOKEN",
@@ -99,7 +93,7 @@ def build_source_apply_rollback_recovery(
         token_valid,
         written,
     )
-    status = "rollback_recovery_ready" if not blockers else "blocked"
+    status = "rollback_recovery_proposal_only" if not blockers else "blocked"
     non_target = _non_target_files(target, written)
     return SourceApplyRollbackRecoveryResult(
         schema_version=SCHEMA_VERSION,
@@ -117,8 +111,8 @@ def build_source_apply_rollback_recovery(
         confirmation_token_required=SOURCE_APPLY_ROLLBACK_RECOVERY_TOKEN,
         rollback_confirmation_present=bool(rollback_confirmation.strip()),
         rollback_confirmation_valid=token_valid,
-        rollback_enabled=status == "rollback_recovery_ready",
-        restore_source_from_backup_enabled=status == "rollback_recovery_ready",
+        rollback_enabled=False,
+        restore_source_from_backup_enabled=False,
         import_rewrite_rollback_enabled=False,
         backup_snapshot_verified="BACKUP_SNAPSHOT_HASH_MISMATCH" not in blockers and "BACKUP_SNAPSHOT_MISSING" not in blockers,
         current_source_hash_verified="CURRENT_SOURCE_HASH_MISMATCH" not in blockers and "TARGET_FILE_MISSING" not in blockers,
@@ -129,7 +123,7 @@ def build_source_apply_rollback_recovery(
         non_target_written_files=sorted(non_target),
         checked_rules=_checked_rules(),
         blockers=sorted(set(blockers)),
-        warnings=_warnings(non_target),
+        warnings=sorted(set(_warnings(non_target) + [proposal_only_warning("source_apply_rollback_recovery")])),
     )
 
 
@@ -143,34 +137,12 @@ def write_source_apply_rollback_recovery_manifest(result: SourceApplyRollbackRec
         raise RuntimeError("Rollback recovery manifest path is outside preview root.")
     _raise_if_protected(manifest, "rollback manifest")
     payload = result.to_dict()
-    if result.status == "rollback_recovery_ready":
-        if _sha256_file(target) != result.source_content_hash_after_apply:
-            raise RuntimeError("Current source hash changed after rollback readiness check.")
-        before_backup_hash = _sha256_file(backup)
-        fire_shield = build_current_fire_shield_context(
-            phase=FireShieldPhase.PROJECT_SOURCE_MUTATION,
-            operation_id="source-apply-rollback-recovery",
-        )
-        backup_raw = backup.read_bytes()
-        assert_fire_shield_write_allowed(fire_shield, target, operation="REPLACE")
-        assert_fire_shield_payload_bytes_allowed(
-            fire_shield,
-            backup_raw,
-            target.name,
-        )
-        target.write_bytes(backup_raw)
-        verify_tool_snapshot_unchanged(fire_shield)
-        after_target_hash = _sha256_file(target)
-        after_backup_hash = _sha256_file(backup)
-        payload["source_content_hash_after_rollback"] = after_target_hash
-        payload["selected_source_restored"] = after_target_hash == result.source_content_hash_before
-        payload["backup_snapshot_unchanged_after_restore"] = before_backup_hash == after_backup_hash
-        payload["status"] = "source_apply_rollback_recovered" if payload["selected_source_restored"] else "blocked"
-        payload["rollback_enabled"] = True
-        payload["restore_source_from_backup_enabled"] = True
-    else:
-        payload["rollback_enabled"] = False
-        payload["restore_source_from_backup_enabled"] = False
+    payload["rollback_enabled"] = False
+    payload["restore_source_from_backup_enabled"] = False
+    payload["selected_source_restored"] = False
+    payload["source_content_hash_after_rollback"] = (
+        result.source_content_hash_current
+    )
     manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     saved = json.loads(manifest.read_text(encoding="utf-8"))

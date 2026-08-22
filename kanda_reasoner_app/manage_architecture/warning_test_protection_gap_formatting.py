@@ -67,7 +67,12 @@ def format_test_protection_apply_result(result: TestProtectionApplyResult) -> st
         f"Changed test files: {len(result.changed_files)}",
         f"Backup root: {result.backup_root or 'none'}",
     ]
-    for path in result.changed_files:
-        lines.append(f"- {path}")
-    lines.append("Next action: rerun Architecture Review before another correction batch.")
+    if result.proposal_only:
+        lines.append("Mode: PROPOSAL_ONLY:SPECTATOR")
+        lines.append("Proposed test files: " + str(len(result.proposed_files)))
+        lines.extend("- " + path for path in result.proposed_files)
+    else:
+        for path in result.changed_files:
+            lines.append(f"- {path}")
+    lines.append("Next action: review proposal evidence; Project source is not mutated.")
     return "\n".join(lines).rstrip() + "\n"

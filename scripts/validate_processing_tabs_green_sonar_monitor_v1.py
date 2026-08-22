@@ -42,8 +42,6 @@ def validate_shared_monitor() -> None:
         "kanda_reasoner_app/templates/green_sonar_monitor.py": (
             "from ._green_sonar_activity_monitor import _GreenSonarActivityMonitor",
             "class GreenSonarActivityMonitor(_GreenSonarActivityMonitor)",
-            "from ._green_sonar_panel import _SonarPanel",
-            "from ._green_sonar_scope import _SonarScope",
             "__all__ = [\"GreenSonarActivityMonitor\"]",
         ),
         "kanda_reasoner_app/templates/_green_sonar_runtime.py": (
@@ -58,11 +56,13 @@ def validate_shared_monitor() -> None:
             "_draw_waves",
         ),
         "kanda_reasoner_app/templates/_green_sonar_panel.py": (
+            "from ._green_sonar_scope import _SonarScope",
             "class _SonarPanel(QFrame)",
             "greenSonarActivityPanel",
             "_SonarScope(self)",
         ),
         "kanda_reasoner_app/templates/_green_sonar_activity_monitor.py": (
+            "from ._green_sonar_panel import _SonarPanel",
             "class _GreenSonarActivityMonitor(QObject)",
             "installEventFilter",
             "_panel.scope.tick(0.025)",
@@ -76,6 +76,13 @@ def validate_shared_monitor() -> None:
             _assert_contains(text, fragment, rel)
         if _line_count(rel) > 400:
             raise AssertionError(rel + " exceeds 400-line practical target")
+
+    facade_rel = "kanda_reasoner_app/templates/green_sonar_monitor.py"
+    facade_text = _read(facade_rel)
+    _assert_absent(facade_text, "from ._green_sonar_panel import _SonarPanel", facade_rel)
+    _assert_absent(facade_text, "from ._green_sonar_scope import _SonarScope", facade_rel)
+    print("GREEN_SONAR_PUBLIC_FACADE_SLIM: PASS")
+    print("GREEN_SONAR_DEPENDENCY_TOPOLOGY_CURRENT: PASS")
 
 
 def validate_workflow_review() -> None:

@@ -6,6 +6,10 @@ from importlib import import_module
 from typing import Callable
 
 from .architecture_review_mode_ui import bind_mode_action_button
+from .architecture_finding_review_gui import (
+    build_dismissed_findings_page,
+    install_architecture_findings_review,
+)
 from .audit_project_sibling_tabs import (
     _build_audit_project_sibling_tabs,
 )
@@ -42,6 +46,7 @@ __all__ = ["build_architecture_review_ui"]
 _AUDIT_PROJECT_ARCHITECTURE_TAB_LABEL = "Architecture Review"
 _ARCHITECTURE_REVIEW_CHILD_TAB_LABELS = (
     "Check Update Architecture",
+    "Dismissed Findings",
     "Large Module AST Split Audit",
     "Large File Refactor Planner",
     "Large File Refactor WorkBench",
@@ -61,6 +66,7 @@ def _contain_subtab_horizontal_size_pressure(window: object) -> None:
         window._architecture_review_page,
         window._architecture_review_subtab_stack,
         window._architecture_review_general_page,
+        window._architecture_review_dismissed_findings_page,
         window._architecture_review_split_page,
         window._architecture_review_refactor_planner_page,
         window._architecture_review_refactor_workbench_page,
@@ -73,8 +79,8 @@ def _contain_subtab_horizontal_size_pressure(window: object) -> None:
         window._workflow_review_page.centralWidget(),
     )
     for container in containers:
-        container.setMinimumWidth(0)
-        container.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Expanding)
+        container.setMinimumSize(0, 0)
+        container.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
 
 
 def build_architecture_review_ui(
@@ -115,6 +121,9 @@ def build_architecture_review_ui(
         window,
         install_ai_controls,
     )
+    window._architecture_review_dismissed_findings_page = (
+        build_dismissed_findings_page(window)
+    )
     window._architecture_review_split_page = _build_split_audit_page(window)
     window._architecture_review_refactor_planner_page = (
         build_large_file_refactor_planner_page(window)
@@ -125,6 +134,7 @@ def build_architecture_review_ui(
 
     child_pages = (
         window._architecture_review_general_page,
+        window._architecture_review_dismissed_findings_page,
         window._architecture_review_split_page,
         window._architecture_review_refactor_planner_page,
         window._architecture_review_refactor_workbench_page,
@@ -306,7 +316,7 @@ def _build_general_audit_page(
     audit_header.addStretch(1)
     page_layout.addLayout(audit_header)
 
-    page_layout.addWidget(window._output, 1)
+    install_architecture_findings_review(window, page_layout, window._output)
     return page
 
 

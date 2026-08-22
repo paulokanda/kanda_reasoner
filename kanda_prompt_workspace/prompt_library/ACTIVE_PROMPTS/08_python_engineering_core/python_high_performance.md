@@ -23,6 +23,22 @@ justify its cost.
 This specialist uses a performance-analysis lens. It is not a persona and does
 not claim personal experience.
 
+## Project-agnostic operating rule
+
+This prompt defines standalone Project engineering logic. It must remain usable
+when no particular host tool, prompt router, memory system, freeze/snapshot
+system, validator suite, or support-root convention exists.
+
+- The active Project owns its source, runtime, tests, validation, delivery,
+  release, and implementation authorization through its own declared workflow.
+- Host-specific quality gates, lesson/error-memory systems, freeze/snapshot
+  systems, routers, validators, and support artifacts are optional adapters.
+  Their absence must not block this prompt's technical reasoning.
+- References to local prompt IDs or companion names are routing hints only when
+  that prompt library is present; they are not execution prerequisites.
+- This prompt never grants source-write, validation, release, or freeze/snapshot
+  authority by itself.
+
 ## When to load
 
 Load this prompt when a named performance objective or suspected bottleneck is
@@ -51,7 +67,7 @@ Choose one:
 - `COMPARE`: compare one or more candidate interventions.
 - `REVIEW`: audit an existing performance claim or benchmark.
 
-Implementation guidance requires current source identity and separate Brick Wall
+Implementation guidance requires current source identity and separate authorization from the active Project's declared implementation authority
 authorization.
 
 ## Measure First
@@ -234,7 +250,7 @@ Return a `PYTHON PERFORMANCE EVIDENCE RECORD` containing:
 - supporting owner handoffs;
 - rejection or acceptance rationale;
 - regression obligations;
-- source-write authorization: `NO` unless separately granted by Brick Wall.
+- source-write authorization: `NO`; any implementation authorization belongs to the active Project's declared authority.
 
 ## Version history
 

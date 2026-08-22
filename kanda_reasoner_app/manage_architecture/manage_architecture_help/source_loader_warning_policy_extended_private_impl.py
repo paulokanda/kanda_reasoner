@@ -67,11 +67,19 @@ def _apply_boundary_error_contract_marker_policy(
         '        "FREEZE_HINT_EVIDENCE_MERGE: FAIL",\n'
         '        "FAIL -",\n'
         '        "FAIL:",\n'
+        '        ": FAIL",\n'
         '        "FAILED",\n'
         '    )\n'
         '    if any(marker in printable for marker in failure_markers):\n'
         '        return getattr(stmt, "lineno", 0)\n'
-        '    if printable.startswith("ERROR:") or printable.startswith("ERROR "):\n'
+        '    if printable.startswith("ERROR:"):\n'
+        '        return getattr(stmt, "lineno", 0)\n'
+        '    if printable.startswith("ERROR "):\n'
+        '        if (\n'
+        '            printable.startswith("ERROR MEMORY ")\n'
+        '            and (": PASS" in printable or ": ABSENT" in printable)\n'
+        '        ):\n'
+        '            return None\n'
         '        return getattr(stmt, "lineno", 0)\n'
         '    return None\n'
     )
@@ -109,7 +117,7 @@ def _apply_stale_variant_active_domain_terms_policy(
         '    "chat_clipboard",\n'
         '    "show_project_backup",\n'
         ')\n'
-        'ACTIVE_DOMAIN_STALE_EXACT_STEMS = {"archive"}\n\n\n'
+        'ACTIVE_DOMAIN_STALE_EXACT_STEMS = {"archive", "legacy_bridge", "_draft_intake_lifecycle", "pre_backup_cleanup_dialog", "pre_backup_cleanup_service", "pre_backup_cleanup_support"}\n\n\n'
         'def _filename_has_stale_marker(filename: str) -> bool:\n'
         '    """Return True when a filename looks like an old/copy/fixed variant."""\n'
         '    stem = Path(filename).stem.lower()\n'
@@ -129,12 +137,11 @@ def _apply_stale_variant_active_domain_terms_policy(
     )
     return replace_once(source, old, new)
 
-
 def _apply_generated_prompt_delivery_duplicate_owner_policy(
     source: str,
     replace_once: ReplaceOnce,
 ) -> str:
-    """Exclude generated prompt delivery folders from public API ownership."""
+    """Exclude generated artifacts and imported facade re-exports from package ownership."""
     old = (
         'def is_excluded_from_duplicate_checks(module: ModuleInfo) -> bool:\n'
         '    normalized_path = module.path.replace("\\\\", "/")\n'
@@ -185,10 +192,57 @@ def _apply_generated_prompt_delivery_duplicate_owner_policy(
         '    for prefix in EXCLUDED_DUPLICATE_DIR_PREFIXES:\n'
         '        if normalized_path.startswith(prefix):\n'
         '            return True\n'
-        '    return False\n'
+        '    return False\n\n\n'
+        'def _locally_owned_public_symbols(module: ModuleInfo) -> list[str]:\n'
+        '    """Return public bindings defined locally rather than imported facades."""\n'
+        '    locally_defined = set(module.all_symbols)\n'
+        '    return [symbol for symbol in module.public_symbols if symbol in locally_defined]\n'
     )
-    return replace_once(source, old, new)
+    source = replace_once(source, old, new)
 
+    old_duplicate_ownership = (
+        '    public_symbol_owners: dict[str, list[ModuleInfo]] = defaultdict(list)\n'
+        '    package_symbol_owners: dict[tuple[str, str], list[str]] = defaultdict(list)\n'
+        '    for module in modules.values():\n'
+        '        if module.is_init:\n'
+        '            continue\n'
+        '        if is_excluded_from_duplicate_checks(module):\n'
+        '            continue\n'
+        '        for sym in module.public_symbols:\n'
+        '            if sym in EXCLUDED_DUPLICATE_SYMBOLS:\n'
+        '                continue\n'
+        '            public_symbol_owners[sym].append(module)\n'
+        '            package_symbol_owners[(module.package, sym)].append(module.module_id)\n'
+    )
+    new_duplicate_ownership = (
+        '    public_symbol_owners: dict[str, list[ModuleInfo]] = defaultdict(list)\n'
+        '    package_symbol_owners: dict[tuple[str, str], list[str]] = defaultdict(list)\n'
+        '    for module in modules.values():\n'
+        '        if module.is_init:\n'
+        '            continue\n'
+        '        if is_excluded_from_duplicate_checks(module):\n'
+        '            continue\n'
+        '        locally_owned = set(_locally_owned_public_symbols(module))\n'
+        '        for sym in module.public_symbols:\n'
+        '            if sym in EXCLUDED_DUPLICATE_SYMBOLS:\n'
+        '                continue\n'
+        '            public_symbol_owners[sym].append(module)\n'
+        '            if sym in locally_owned:\n'
+        '                package_symbol_owners[(module.package, sym)].append(module.module_id)\n'
+    )
+    source = replace_once(source, old_duplicate_ownership, new_duplicate_ownership)
+
+    old_manifest_ownership = (
+        '        if not info.is_init:\n'
+        '            for sym in info.public_symbols:\n'
+        '                package_symbol_owners[(info.package, sym)].append(module_id)\n'
+    )
+    new_manifest_ownership = (
+        '        if not info.is_init:\n'
+        '            for sym in _locally_owned_public_symbols(info):\n'
+        '                package_symbol_owners[(info.package, sym)].append(module_id)\n'
+    )
+    return replace_once(source, old_manifest_ownership, new_manifest_ownership)
 
 def _apply_mixed_responsibility_boundary_policy(
     source: str,

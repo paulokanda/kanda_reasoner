@@ -12,6 +12,11 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .worker_thread import DocstringRunWorker
+
 import tempfile
 from pathlib import Path
 

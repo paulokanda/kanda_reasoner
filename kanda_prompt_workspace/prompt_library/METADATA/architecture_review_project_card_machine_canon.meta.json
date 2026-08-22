@@ -7,8 +7,8 @@
   "status": "active",
   "load_type": "routed",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/12_generalized_project_canons/architecture_review_project_card_machine_canon.md",
-  "source_stage": "prompt-audit-wave1-tool-project-mcard-boundary-v1",
-  "description": "Architecture Review target-card lifecycle and stale-state specialist. Owns MCard applicability, complete operation identity, valid transitions, operation locks, cancellation, recovery, concurrency, and terminal eject while leaving root identity to KPR-12-001 and implementation authorization to Brick Wall.",
+  "source_stage": "external-project-observer-independence-v1",
+  "description": "Observer-only Architecture Review card lifecycle: insert, read, observe, analyze, report, eject; no KANDA apply/rollback authority over Project source.",
   "box_logic_required": true,
   "routing_coverage": "complete_v1",
   "priority": 36,
@@ -22,11 +22,12 @@
     "project root switch during audit",
     "target switch during refactor",
     "stale async audit result",
-    "APPLIED_NOT_VERIFIED",
     "cancellation incomplete",
-    "transaction recovery",
     "concurrent card session",
-    "terminal eject"
+    "terminal eject",
+    "observer card lifecycle",
+    "card eject any time",
+    "stale observation refresh"
   ],
   "user_intent_examples": [
     "Bind this Architecture Review target to one current operation and lifecycle generation.",
@@ -39,20 +40,19 @@
     "card lifecycle canon",
     "architecture_review_project_card_machine_canon"
   ],
-  "when_to_load": "When Architecture Review, AST Split Audit, Planner, Workbench, Completion, project-root switching, target switching, async results, transactions, apply/rollback, receipt, or post-completion state cleanup must preserve project ownership and card lifecycle.",
+  "when_to_load": "When Architecture Review, AST audit, Planner/Workbench proposal, Project-root/target switching, stale async results, source refresh, reports, or card eject must preserve observer identity without Project source authority.",
   "when_not_to_load": "Do not load for payment-card discussion, generic UI styling, or Tool/Project boundary tasks with no Architecture Review lifecycle consequence.",
   "required_companion_prompts": [
     "project_tool_boundary_canon"
   ],
   "do_not_regress": [
-    "The Tool is the reusable card machine; the Project owns source and durable results.",
-    "Every asynchronous and mutation result must match complete current operation identity.",
-    "APPLIED_NOT_VERIFIED must remain a reachable post-write state.",
-    "Workers, cancellation, transactions, and unresolved apply outcomes block incompatible switch and eject.",
-    "Terminal eject clears target-specific Tool state, releases locks, and preserves Project results.",
-    "MCard must never authorize coding or source writing.",
+    "The Tool is the reusable observer card machine; the Project owns source and durable results.",
+    "MCard never applies, installs, validates-as-authority, or rolls back external Project source.",
+    "Source fingerprint changes invalidate old observation generations.",
+    "Card eject remains available and never requires Project rollback.",
+    "Project development remains possible without KANDA Reasoner.",
     "KPR-12-001 remains the root and ownership identity owner."
   ],
-  "version": "2.0",
-  "updated_for": "prompt-audit-wave1-tool-project-mcard-boundary-v1"
+  "version": "3.0",
+  "updated_for": "external-project-observer-independence-v1"
 }

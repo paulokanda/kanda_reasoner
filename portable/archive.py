@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import subprocess
 import sys
 import time
@@ -22,15 +23,130 @@ from portable.constants import (
 )
 from portable.errors import PortableBuildError
 from portable.models import BuildPaths, ZipEvidence
+from portable.packaged_worker_runtime import validate_packaged_worker_runtime
 from portable.smoke_isolation import (
     prepared_smoke_isolation,
+    selected_project_environment,
     verify_isolated_registry,
+    verify_no_project_registry,
 )
 from portable.policy import (
     is_generated_handoff_or_release_path,
     is_forbidden_tool_capture_path,
     is_non_runtime_debris_path,
 )
+
+
+_SMOKE_REPORT_PATH_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT"
+_SMOKE_REPORT_TOKEN_ENV = "KANDA_PORTABLE_SMOKE_RUNTIME_REPORT_TOKEN"
+_FIRST_SMOKE_REQUIRED_SOURCES = (
+    "manage_architecture/manage_architecture_gui.py",
+    "reasoner_context_collector/runner.py",
+    "project_structure_visualizer/project_structure_3d_tab.py",
+    "reasoner_engine/config_ai_tab.py",
+)
+
+
+def _runtime_report_payload(
+    environment: dict[str, str],
+) -> tuple[Path, dict[str, object]]:
+    path_text = str(environment.get(_SMOKE_REPORT_PATH_ENV, "") or "").strip()
+    token = str(environment.get(_SMOKE_REPORT_TOKEN_ENV, "") or "").strip()
+    if not path_text or not token:
+        raise PortableBuildError("PORTABLE_SMOKE_RUNTIME_REPORT_ENV_MISSING")
+    path = Path(path_text).expanduser().resolve(strict=False)
+    if not path.is_file():
+        raise PortableBuildError(
+            "PORTABLE_SMOKE_RUNTIME_REPORT_MISSING:" + str(path)
+        )
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PortableBuildError(
+            "PORTABLE_SMOKE_RUNTIME_REPORT_UNREADABLE:" + str(path)
+        ) from exc
+    if not isinstance(payload, dict):
+        raise PortableBuildError("PORTABLE_SMOKE_RUNTIME_REPORT_NOT_OBJECT")
+    if payload.get("schema_version") != "1.0":
+        raise PortableBuildError("PORTABLE_SMOKE_RUNTIME_REPORT_SCHEMA_MISMATCH")
+    expected_token = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    if payload.get("token_sha256") != expected_token:
+        raise PortableBuildError("PORTABLE_SMOKE_RUNTIME_REPORT_TOKEN_MISMATCH")
+    events = payload.get("events")
+    if not isinstance(events, list):
+        raise PortableBuildError("PORTABLE_SMOKE_RUNTIME_EVENTS_INVALID")
+    return path, payload
+
+
+def _runtime_report_summary(environment: dict[str, str]) -> str:
+    try:
+        path, payload = _runtime_report_payload(environment)
+    except PortableBuildError as exc:
+        return "runtime_report_error=" + str(exc)
+    events = payload["events"]
+    if not events:
+        return "runtime_report=" + str(path) + ";events=0"
+    last = events[-1] if isinstance(events[-1], dict) else {}
+    return (
+        "runtime_report="
+        + str(path)
+        + ";events="
+        + str(len(events))
+        + ";last_status="
+        + str(last.get("status") or "")
+        + ";last_kind="
+        + str(last.get("kind") or "")
+        + ";last_source="
+        + str(last.get("source") or "")
+        + ";last_message="
+        + str(last.get("message") or "")[:500]
+    )
+
+
+def _validate_runtime_report(
+    environment: dict[str, str],
+    *,
+    required_source_fragments: tuple[str, ...] = (),
+) -> None:
+    path, payload = _runtime_report_payload(environment)
+    events = payload["events"]
+    failures = [
+        event
+        for event in events
+        if isinstance(event, dict)
+        and str(event.get("status") or "").strip().upper() == "FAIL"
+    ]
+    if failures:
+        first = failures[0]
+        raise PortableBuildError(
+            "PORTABLE_SMOKE_RUNTIME_REPORTED_FAILURE:"
+            + str(first.get("kind") or "")
+            + ":"
+            + str(first.get("source") or "")
+            + ":"
+            + str(first.get("message") or "")[:1000]
+        )
+    loaded_sources = {
+        str(event.get("source") or "").replace("\\", "/").casefold()
+        for event in events
+        if isinstance(event, dict)
+        and str(event.get("status") or "").strip().upper() == "PASS"
+        and str(event.get("kind") or "").strip() == "lazy_tab"
+    }
+    missing = [
+        fragment
+        for fragment in required_source_fragments
+        if not any(fragment.casefold() in source for source in loaded_sources)
+    ]
+    if missing:
+        raise PortableBuildError(
+            "PORTABLE_SMOKE_REQUIRED_LAZY_TABS_NOT_LOADED:"
+            + ",".join(missing)
+        )
+    print("PORTABLE SMOKE RUNTIME REPORT: PASS")
+    if required_source_fragments:
+        print("PORTABLE SMOKE REQUIRED LAZY TABS: PASS")
+    print("PORTABLE SMOKE RUNTIME REPORT RETAINED AT: " + str(path))
 
 
 def create_windows_zip(
@@ -67,6 +183,11 @@ def create_windows_zip(
         raise PortableBuildError(
             "Windows ZIP helper failed."
         )
+    if "ZIP_MEMBER_SEPARATOR_CONTRACT=PASS" not in result.stdout:
+        raise PortableBuildError(
+            "Windows ZIP helper did not prove POSIX member separators."
+        )
+    print("PORTABLE ZIP POSIX MEMBER WRITER: PASS")
     if (
         "WINDOWS_EXPLORER_ZIP_CHECK=PASS"
         not in result.stdout
@@ -197,8 +318,10 @@ def _launch_and_require_natural_close(
     prompt: str,
     expected: str,
     environment: dict[str, str],
+    *,
+    required_source_fragments: tuple[str, ...] = (),
 ) -> None:
-    """Require a responsive launch followed by a normal human close."""
+    """Require responsive packaged GUI behavior and a natural close."""
 
     process = subprocess.Popen(
         [str(executable)],
@@ -208,34 +331,60 @@ def _launch_and_require_natural_close(
     succeeded = False
     try:
         time.sleep(10)
-        if process.poll() is not None:
+        initial_code = process.poll()
+        if initial_code is not None:
             raise PortableBuildError(
-                "Packaged application exited with code "
-                f"{process.returncode} before human validation."
+                "PORTABLE PACKAGED PROCESS EXIT BEFORE HUMAN VALIDATION: "
+                + str(initial_code)
+                + ";"
+                + _runtime_report_summary(environment)
             )
 
         answer = input(prompt).strip()
+        observed_code = process.poll()
+        if observed_code is not None and observed_code != 0:
+            raise PortableBuildError(
+                "PORTABLE PACKAGED PROCESS EXIT DURING TAB SMOKE: "
+                + str(observed_code)
+                + ";"
+                + _runtime_report_summary(environment)
+            )
         if answer.casefold() != expected.casefold():
             raise PortableBuildError(
-                "Manual packaged-GUI validation was denied."
+                "Manual packaged-GUI validation was denied; "
+                + _runtime_report_summary(environment)
             )
 
-        try:
-            return_code = process.wait(timeout=30)
-        except subprocess.TimeoutExpired as exc:
-            raise PortableBuildError(
-                "The application was still open after confirmation. "
-                "Close it normally before typing the confirmation phrase."
-            ) from exc
+        if observed_code is None:
+            try:
+                return_code = process.wait(timeout=30)
+            except subprocess.TimeoutExpired as exc:
+                raise PortableBuildError(
+                    "The application was still open after confirmation. "
+                    "Close it normally before typing the confirmation phrase."
+                ) from exc
+        else:
+            return_code = observed_code
 
         if return_code != 0:
             raise PortableBuildError(
-                "Packaged application did not close cleanly; "
-                f"exit code {return_code}."
+                "PORTABLE PACKAGED PROCESS EXIT AFTER CONFIRMATION: "
+                + str(return_code)
+                + ";"
+                + _runtime_report_summary(environment)
             )
+
+        _validate_runtime_report(
+            environment,
+            required_source_fragments=required_source_fragments,
+        )
         succeeded = True
     finally:
         if not succeeded:
+            print(
+                "PORTABLE SMOKE FAILURE EVIDENCE: "
+                + _runtime_report_summary(environment)
+            )
             _stop_process(process)
 
 
@@ -272,17 +421,21 @@ def extract_and_smoke(
                 "Clean extraction did not contain exactly one direct executable."
             )
         executable = direct_executables[0]
+        validate_packaged_worker_runtime(app_root, executable)
 
         print("PORTABLE CLEAN ZIP EXTRACTION: PASS")
         print("PORTABLE SMOKE LIVE TOOL REGISTRY BYPASSED: PASS")
-        print("Launching the clean extracted Portable in disposable state...")
+        print("Launching the clean extracted Portable with no active Project...")
         print("Check:")
+        print("- Active Project is empty")
         print("- main window is responsive")
         print("- Project Structure 3D loads")
         print("- Show Project to AI loads")
-        print("- Audit Project loads")
+        print("- Audit Project renders once")
+        print("- header controls do not overlap")
+        print("- tab switches do not resize the main window")
+        print("- default font colors are preserved")
         print("- Config Web AI starts with no automatic credential display")
-        print("- changed or important visible tabs open")
         _launch_and_require_natural_close(
             executable,
             app_root,
@@ -292,12 +445,14 @@ def extract_and_smoke(
             ),
             FIRST_SMOKE_CONFIRMATION,
             isolation.environment,
+            required_source_fragments=_FIRST_SMOKE_REQUIRED_SOURCES,
         )
-        verify_isolated_registry(isolation)
+        verify_no_project_registry(isolation)
         print("PORTABLE APPLICATION FIRST LAUNCH: PASS")
         print("PORTABLE APPLICATION FIRST NATURAL CLOSE: PASS")
 
-        print("Relaunching the exact clean extracted Portable...")
+        print("Relaunching with the disposable external Project selected...")
+        selected_environment = selected_project_environment(isolation)
         _launch_and_require_natural_close(
             executable,
             app_root,
@@ -306,7 +461,7 @@ def extract_and_smoke(
                 f"{SMOKE_CONFIRMATION}: "
             ),
             SMOKE_CONFIRMATION,
-            isolation.environment,
+            selected_environment,
         )
         verify_isolated_registry(isolation)
         print("PORTABLE APPLICATION RELAUNCH: PASS")

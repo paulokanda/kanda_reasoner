@@ -19,7 +19,7 @@ class ProtectedRoot:
 
 @dataclass(frozen=True)
 class RegistryBoundary:
-    """Tool-owned registry authority and all protected owner roots."""
+    """Tool-owned build authority plus optional registry destination firewall."""
 
     registry_path: Path
     registry_sha256: str
@@ -29,6 +29,13 @@ class RegistryBoundary:
     tool_support_root: Path
     tool_transient_root: Path
     protected_roots: tuple[ProtectedRoot, ...]
+    tool_owner_roots: tuple[ProtectedRoot, ...]
+
+    @property
+    def selected_owner_roots(self) -> tuple[ProtectedRoot, ...]:
+        """Compatibility alias; Portable mutation scope is always Tool-owned."""
+
+        return self.tool_owner_roots
 
 
 @dataclass(frozen=True)

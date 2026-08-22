@@ -7,6 +7,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from kanda_reasoner_app.project_artifact_staging import (
+    build_project_artifact_staging_contract,
+)
+
 from .json_writer import write_json_atomic
 from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
@@ -21,7 +25,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "patch_safety_routes"
 GENERATOR_NAME = "reasoner_context_bundle.patch_safety_routes_builder"
-GENERATOR_VERSION = "1.1.0"
+GENERATOR_VERSION = "1.2.0"
 
 
 def _utc_now() -> str:
@@ -117,6 +121,7 @@ def build_patch_safety_routes_payload(project: str | Path | ProjectContext) -> d
             "version": GENERATOR_VERSION,
         },
         "generated_at_utc": _utc_now(),
+        "artifact_staging": build_project_artifact_staging_contract(context.root),
         "project": {
             "project_slug": context.project_slug,
             "project_root_marker": "<PROJECT_ROOT>",

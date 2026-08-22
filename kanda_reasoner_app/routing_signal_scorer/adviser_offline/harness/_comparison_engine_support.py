@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 __all__ = ()
 

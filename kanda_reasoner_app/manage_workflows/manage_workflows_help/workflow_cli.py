@@ -65,10 +65,6 @@ def run_workflow_detector_results(
     registry: Any | None = None,
 ) -> list[CheckResult]:
     """Run additive workflow detectors and convert issues to check results."""
-    root_text = str(root)
-    if root_text not in sys.path:
-        sys.path.insert(0, root_text)
-
     try:
         from kanda_reasoner_app.manage_workflows.manage_workflows_help.workflow_detector_context import (  # noqa: E501
             WorkflowDetectorContext,

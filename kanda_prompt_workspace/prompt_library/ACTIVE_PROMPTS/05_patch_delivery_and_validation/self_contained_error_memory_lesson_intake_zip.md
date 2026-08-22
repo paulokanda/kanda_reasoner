@@ -2,240 +2,208 @@
 prompt_code: KPR-05-008
 prompt_id: self_contained_error_memory_lesson_intake_zip
 title: Self-Contained Error Memory Lesson Intake ZIP
-version: 1.2
+version: 3.1
 status: active
 load_type: on_request
 owner_box: 05_patch_delivery_and_validation
-source_stage: freeze-error-intake-bridge-v1
+source_stage: error-memory-library-intake-v3
 ---
 
-# MASTER PROMPT - CREATE A SELF-CONTAINED ERROR MEMORY LESSON INTAKE ZIP FOR THE CURRENT PROJECT
+# MASTER PROMPT - CREATE A SELF-CONTAINED ERROR MEMORY LESSON INTAKE ZIP
+
+## Purpose
+
+Create one self-contained ZIP that stages one or more validated Error Memory
+lessons as `pending` entries for human review in a source/IDE Tool environment
+where an independent external Tool Python executable has been explicitly
+verified.
+
+This is an Error Memory lesson-library workflow. It is not the Architecture
+Review Machine-Card/MCard lifecycle.
+
+Never use `architecture_review_project_card_machine_canon` as the Error Memory
+storage or lesson-lifecycle owner.
+
+## Hard Portable/PyInstaller gate
+
+This executable intake-ZIP workflow is not a Portable/FROZEN runtime contract.
+
+A PyInstaller package may embed CPython and the KANDA modules without exposing a
+standalone interpreter executable. Never infer Tool Python from `_internal` and
+never search for or assume these paths:
+
+```text
+_internal/python.exe
+_internal/.venv/Scripts/python.exe
+_internal/venv/Scripts/python.exe
+```
+
+Before packaging or executing this workflow, determine the Tool runtime mode and
+verify a real external Tool Python executable independently of the frozen app.
+
+If the Tool is frozen/PyInstaller, or no independent external Tool Python can be
+verified, stop this ZIP workflow and return:
+
+```text
+ERROR MEMORY EXECUTABLE ZIP INTAKE NOT AVAILABLE
+Runtime mode: PORTABLE/FROZEN or external Tool Python unavailable
+TOOL_PYTHON verified: NO
+May create executable intake ZIP: NO
+Corrected intake method:
+marker-wrapped Error Memory lesson
+-> existing Error Memory GUI intake
+-> normalized to draft
+-> human Memorize Error gate
+Python required: NO
+Direct Error Memory filesystem write: NO
+Memorize Error automatically executed: NO
+Next required phase: ERROR MEMORY GUI INTAKE
+```
+
+In that state, return the marker-wrapped lesson text needed by the native GUI
+instead of a self-contained execution ZIP.
+
+A passive lesson ZIP imported by the already-running Error Memory GUI is a
+different in-app file-import path and does not authorize this executable loader
+workflow.
+
+## Semantic boundary
+
+```text
+Error Memory
+= reusable library of failure-prevention lessons
+
+MCard / Machine Card
+= separate Tool/Project or Architecture Review lifecycle concern
+```
+
+KANDA self-hosting may make Tool and selected-Project roots physically equal,
+but logical Tool/Project roles remain separate. That fact does not make an Error
+Memory lesson into an MCard.
+
+Historical source may expose names such as `error_memory_card` or `_mcard_*`.
+Treat those as compatibility implementation names only. Do not require a
+`card_id`, Project-card identity, CARD_INSERTED/CARD_EJECTED lifecycle, or KPR-12-005
+to package Error Memory lessons.
+
+## Exact objective
+
+After the hard runtime gate passes, the final self-contained ZIP must:
+
+1. contain every justified new lesson from the current work;
+2. stage new candidates as `status: pending`;
+3. use `intended_status: active` only when active-ready evidence exists;
+4. use `intended_status: draft` when review is still needed;
+5. validate lesson IDs, fingerprints, evidence, redaction, and current runtime
+   compatibility;
+6. preflight the current Error Memory lesson library before any staging write;
+7. add only unique lessons;
+8. skip exact or semantic duplicates;
+9. fail closed on same-ID or incompatible fingerprint conflicts;
+10. never overwrite existing active, pending, draft, or retired lessons;
+11. never call, imitate, or press `Memorize Error`;
+12. never create a new active lesson automatically;
+13. never modify Active Project selection or Project registry state merely to
+    stage Error Memory lessons;
+14. never modify Project source;
+15. never modify Freeze Memory;
+16. support safe idempotent re-execution;
+17. include one packaged execution entry point named `RUN_INSTALL.ps1`;
+18. require only one externally supplied ZIP and one external PowerShell block.
 
-You are working with the currently selected active Project in KANDA Reasoner.
+## Runtime discovery
 
-Your task is to identify the real lessons from the current work, create complete Error Memory lesson records, and package them into one self-contained ZIP that stages the lessons inside the Error Memory pending-intake tab for human review.
+Before creating the ZIP, determine from current source or runtime evidence:
 
-Do not create separate lesson ZIPs.
+```text
+TOOL_ROOT
+TOOL_DRIVE_ROOT
+TOOL_RUNTIME_MODE
+TOOL_PYTHON
+ERROR_MEMORY_LIBRARY_RUNTIME
+ERROR_MEMORY_LIBRARY_LOCATION_OR_RESOLVER
+PACKAGE_STAGING_ROOT
+```
 
-Do not provide only lesson JSON.
+`TOOL_PYTHON` must be a real, independently executable interpreter owned by the
+source/IDE Tool environment. It must not be synthesized from a frozen executable
+layout, `sys._MEIPASS`, `_internal`, or guessed virtual-environment paths.
 
-Do not create a separate external runner file.
+Do not invent a storage path or an interpreter path.
 
-Create one ZIP containing:
+Use the current installed Error Memory public behavior as authority. If the
+current implementation still exposes compatibility modules under
+`kanda_reasoner_app.error_memory_card`, they may be used only as the installed
+lesson-storage implementation. Their historical name does not authorize MCard
+semantics and does not create a `card_id` admission requirement.
 
-- all lesson records;
-- all Python code;
-- all PowerShell code;
-- package validation;
-- intake validation;
-- the packaged installation entry point.
+If current runtime compatibility or external Tool Python ownership cannot be
+established, fail closed before packaging or staging and use the native
+marker-wrapped GUI intake path instead.
 
-After creating the ZIP, provide one complete PowerShell installation block that verifies, stages, extracts, and executes the packaged `RUN_INSTALL.ps1`.
+## Lesson admission
 
-The loader must make the lessons available in Error Memory for approval.
+Create one lesson for each distinct demonstrated reusable failure class.
 
-It must never press or imitate `Memorize Error`.
+Before packaging:
 
-It must never write directly into canonical Error Memory lessons.
+1. inspect the real failure output;
+2. inspect exact affected current source or runtime evidence;
+3. inspect relevant current Error Memory lessons when duplicate checking needs
+   them;
+4. compare stable lesson ID, fingerprint, symptom, root cause, correct fix, and
+   prevention rule;
+5. decide:
+   - `NEW_PENDING_LESSON`;
+   - `DUPLICATE_DO_NOT_CREATE`;
+   - `CONFLICT_REQUIRES_HUMAN_REVIEW`;
+   - `TRANSIENT_DO_NOT_MEMORIZE`;
+   - explicitly authorized draft edit outside automatic new-lesson staging.
 
-## CURRENT-PROJECT DISCOVERY
+Do not package an automatic replacement for an existing lesson.
 
-Before creating anything, determine the actual selected Project identity from the current handoff, registry state, source archive, owner manifests, or user-provided paths.
+## Lesson lifecycle
 
-Resolve:
+Canonical lesson lifecycle states are:
 
-PROJECT_ROOT
-PROJECT_NAME
-PROJECT_SLUG
-PROJECT_DISPLAY_NAME
-PROJECT_PARENT_ROOT
-PROJECT_DRIVE_ROOT
-PROJECT_SUPPORT_ROOT
-PROJECT_DAILY_WORK_ROOT
-PROJECT_ERROR_MEMORY_ROOT
-PROJECT_ERROR_MEMORY_OWNER_MANIFEST
-PENDING_INTAKE_ROOT
-CANONICAL_LESSONS_ROOT
+```text
+pending
+active
+draft
+retired
+```
 
-Expected relationships commonly follow:
+A new active-ready candidate is transported as:
 
-PROJECT_ROOT:
-<parent>\<project_name>
+```json
+{
+  "status": "pending",
+  "intended_status": "active"
+}
+```
 
-PROJECT_SUPPORT_ROOT:
-<parent>\<project_name>_show_project_to_AI
+An incomplete candidate is transported as:
 
-PROJECT_DAILY_WORK_ROOT:
-<parent>\<project_name>_delete_after_daily_work
+```json
+{
+  "status": "pending",
+  "intended_status": "draft"
+}
+```
 
-PROJECT_ERROR_MEMORY_ROOT:
-<PROJECT_SUPPORT_ROOT>\project_error_memory
+Only explicit human `Memorize Error` may promote a pending lesson.
 
-PROJECT_ERROR_MEMORY_OWNER_MANIFEST:
-<PROJECT_ERROR_MEMORY_ROOT>\owner_manifest.json
+## Lesson transport format
 
-PENDING_INTAKE_ROOT:
-<PROJECT_ERROR_MEMORY_ROOT>\pending_ai_assisted_error_lesson_intake
+Create one file per packaged lesson:
 
-CANONICAL_LESSONS_ROOT:
-<PROJECT_ERROR_MEMORY_ROOT>\lessons
-
-Do not assume the Project is `kanda_reasoner`.
-
-Do not assume the drive is `E:`.
-
-These are expected naming patterns only. Validate actual paths and ownership before using them. Prefer canonical selected-Project registry and owner-manifest evidence over paths constructed only from naming conventions.
-
-Do not use paths, identities, owner manifests, lesson IDs, or evidence from another Project except when another Project was genuinely used as an external validation fixture.
-
-External fixtures may be mentioned in validation evidence, but they must never become the owner of the lesson.
-
-## CURRENT PROJECT OWNERSHIP
-
-The currently selected active Project is the only owner of the new Error Memory lessons.
-
-All lesson records must use:
-
-project_slug:
-the actual selected Project slug
-
-owner identity:
-the selected Project Error Memory owner
-
-pending intake:
-the selected Project pending-intake directory
-
-canonical lesson checks:
-the selected Project canonical Error Memory lessons directory
-
-Another Project may appear in validation evidence only when it was genuinely used as an external fixture, integration target, or ownership-reuse test.
-
-An external fixture must never become:
-
-- the lesson owner;
-- the Project slug;
-- the Error Memory root;
-- the pending-intake root;
-- the canonical lessons root;
-- the owner manifest;
-- the Project source owner;
-- the primary Box owner.
-
-## ANTI-CROSS-PROJECT RULE
-
-Before staging anything, verify that:
-
-1. PROJECT_ROOT belongs to the selected Project.
-2. PROJECT_SUPPORT_ROOT belongs to the selected Project.
-3. PROJECT_ERROR_MEMORY_ROOT belongs to the selected Project.
-4. owner_manifest.json identifies the selected Project.
-5. every lesson project_slug matches the selected Project.
-6. no pending lesson is written under another Project support root.
-7. no canonical lesson from another Project is inspected as the selected Project canonical lesson.
-
-Fail closed when Project ownership is ambiguous or inconsistent.
-
-## EXACT OBJECTIVE
-
-The final self-contained ZIP must:
-
-1. Contain every new lesson identified from the current work.
-2. Contain complete active-ready Error Memory lesson records.
-3. Validate the exact archive-member set.
-4. Validate every lesson schema and identity.
-5. Validate the selected Project Error Memory owner manifest.
-6. Stage lessons only under the current Project's pending-intake folder.
-7. Make the lessons appear in Error Memory for human review.
-8. Avoid writing directly into canonical `project_error_memory\lessons`.
-9. Avoid executing `Memorize Error`.
-10. Avoid modifying Project source code.
-11. Avoid modifying Freeze Memory.
-12. Avoid modifying Project selection or Project registry state.
-13. Avoid overwriting an already memorized lesson.
-14. Support safe idempotent re-execution.
-15. Produce a durable intake receipt under the Project daily-work root.
-16. Include one packaged execution entry point named `RUN_INSTALL.ps1`.
-17. Require only one externally supplied ZIP and one external terminal installation block.
-
-## LESSON SELECTION
-
-Create one lesson for each distinct demonstrated failure class.
-
-Do not combine unrelated root causes into one broad lesson.
-
-Create separate lessons when failures differ in any of these ways:
-
-- different root cause;
-- different wrong assumption;
-- different affected Box;
-- different prevention rule;
-- different validator or regression obligation;
-- different operational phase.
-
-Do not create duplicate lessons for multiple symptoms caused by the same root defect.
-
-Before creating a lesson:
-
-1. Inspect the real failure output.
-2. Inspect the exact affected source.
-3. Inspect relevant Compact Error Memory.
-4. Open Full Error Memory when repeated-error debugging or conflict checking requires it.
-5. Search for an existing lesson with the same fingerprint or prevention rule.
-6. Decide whether to:
-   - create a new lesson;
-   - update an existing draft;
-   - treat the issue as already covered;
-   - create no lesson.
-
-Do not create a lesson merely because a command failed.
-
-Create a lesson only when the failure provides a reusable prevention rule.
-
-## REAL EVIDENCE ONLY
-
-Every lesson must be grounded in actual evidence from the current work.
-
-Valid evidence may include:
-
-- traceback text;
-- validator output;
-- transactional rollback output;
-- source inspection;
-- package-member inspection;
-- manifest inspection;
-- successful correction markers;
-- successful production validation;
-- successful GUI smoke results;
-- exact file paths;
-- exact function or symbol names;
-- exact feature IDs;
-- exact validator names;
-- final artifact hashes.
-
-Do not invent:
-
-- validation markers;
-- root causes;
-- affected files;
-- function names;
-- regression commands;
-- successful corrections;
-- freeze IDs;
-- Project identities;
-- timestamps.
-
-If a fact cannot be established, mark it clearly as unresolved or omit it when the schema permits.
-
-## LESSON FILE TRANSPORT FORMAT
-
-Create one lesson file for each lesson.
-
-Filename format:
-
+```text
 KANDA_ERROR_LESSON_JSON_<lesson_slug>.txt
+```
 
-Each lesson file must use this exact marker-wrapped transport:
+Each file contains exactly:
 
+```text
 KANDA_ERROR_LESSON_JSON_BEGIN
 
 {
@@ -243,30 +211,30 @@ KANDA_ERROR_LESSON_JSON_BEGIN
 }
 
 KANDA_ERROR_LESSON_JSON_END
+```
 
 Rules:
 
-- The beginning marker must appear exactly once.
-- The ending marker must appear exactly once.
-- The beginning marker must be the first non-whitespace content.
-- The ending marker must be the last non-whitespace content.
-- The content between the markers must be valid JSON.
-- Do not include Markdown fences.
-- Do not place prose outside the markers.
-- Use double quotes.
-- Do not use comments.
-- Do not use trailing commas.
-- Save as UTF-8 without BOM.
-- Prefer JSON generated with ASCII escaping enabled.
+- markers each appear exactly once;
+- begin marker is first non-whitespace content;
+- end marker is last non-whitespace content;
+- JSON between markers is valid;
+- no Markdown fence or prose outside markers;
+- UTF-8 without BOM;
+- newline `\n`;
+- no comments or trailing commas.
 
-## REQUIRED LESSON TOP-LEVEL FIELDS
+## Required lesson fields
 
-Each completed active-ready lesson must contain all of these fields:
+Every packaged lesson contains:
 
+```text
 schema_version
 lesson_id
 status
-project_slug
+intended_status
+origin
+applicability
 operation_phase
 created_at_utc
 updated_at_utc
@@ -288,122 +256,27 @@ validation_evidence
 redaction
 install_command_summary
 notes
-
-Required values:
-
-schema_version:
-"1.0"
-
-status:
-"active"
-
-project_slug:
-the real current Project slug
-
-`prevention_triggers` must be a non-empty JSON array of strings.
-
-`validation_evidence` must be a non-empty JSON array of strings.
-
-Do not serialize arrays as strings that merely look like lists.
-
-## LESSON ID
-
-Use a stable, descriptive lesson ID:
-
-lesson-<specific-failure-class>-v1
-
-Examples of acceptable structure:
-
-lesson-validator-project-package-import-bootstrap-v1
-lesson-portable-source-manifest-membership-assumption-v1
-lesson-tool-portable-private-settings-project-authority-v1
-
-The lesson ID must describe the reusable failure class, not merely the patch filename.
-
-All lesson IDs inside the package must be unique.
-
-## EXCEPTION OBJECT
-
-The `exception` object must contain:
-
-type
-phase
-relative_file_path
-function_or_test_name
-message_normalized
-stacktrace_scrubbed
-
-Use Project-relative file paths where possible.
-
-Do not include secrets, personal profile paths, tokens, credentials, or unrelated absolute user paths.
-
-## FINGERPRINT OBJECT
-
-The `fingerprint` object must contain:
-
-strategy
-components
-fingerprint_hash
-
-Requirements:
-
-strategy:
-"v1_structural_conservative"
-
-components:
-a non-empty JSON array of stable structural characteristics
-
-fingerprint_hash:
-a deterministic SHA-256 derived from the normalized fingerprint components
-
-The fingerprint should capture the reusable failure pattern, not a transient timestamp.
-
-## REGRESSION_CHECK OBJECT
-
-The `regression_check` object must contain:
-
-type
-command
-expected_marker
-required_before_freeze
-
-Use the actual focused validator or regression command when one exists.
-
-Do not claim a regression command exists when none was created.
-
-When no command exists, use an explicit non-available representation rather than inventing one.
-
-## REDACTION OBJECT
-
-The `redaction` object must contain:
-
-applied
-export_safe
-rules
+```
 
 Required:
 
-applied:
-true
+```text
+schema_version = "1.0"
+status = "pending"
+intended_status = "active" or "draft"
+```
 
-export_safe:
-true
+Do not invent lesson ownership fields solely from Tool/Project selection.
 
-rules:
-a JSON array explaining any applied redaction or an empty array when no redaction was needed
+## Package structure
 
-Do not include credentials, API keys, personal tokens, private user profile details, or unrelated secrets.
+The ZIP has no enclosing parent directory.
 
-## PACKAGE STRUCTURE
+Mandatory root members:
 
-The ZIP must contain files directly at the archive root.
-
-Do not include an enclosing parent directory.
-
-Mandatory fixed members:
-
+```text
 CAPTURED_ERROR_MEMORY_EVIDENCE.txt
-ERROR_MEMORY_LOADER.py
+ERROR_MEMORY_LESSON_LIBRARY_LOADER.py
 INSTALL.ps1
 PACKAGE_MANIFEST.json
 PREPARE_ERROR_MEMORY.ps1
@@ -411,634 +284,330 @@ README.txt
 RUN_INSTALL.ps1
 VALIDATE.ps1
 VALIDATE_PACKAGE.py
+```
 
-Also include one lesson file for every lesson:
+Plus one lesson file per lesson:
 
+```text
 KANDA_ERROR_LESSON_JSON_<lesson_slug>.txt
-
-Therefore, the exact archive-member set is dynamic only with respect to the lesson files.
+```
 
 No other members are permitted.
 
-Do not include:
+Do not include Tool/Project source payloads, backups, cache files, nested ZIPs,
+Freeze hints, canonical Error Memory library data, owner manifests, or external
+runner scripts.
 
-- source-code payloads;
-- backups;
-- cache files;
-- `__pycache__`;
-- `.pyc` files;
-- temporary files;
-- extracted folders;
-- nested ZIPs;
-- Freeze hints;
-- canonical Error Memory files;
-- owner manifests copied from the Project;
-- external runner scripts.
-
-## PACKAGE NAMING
+## Package naming
 
 Use:
 
-<project_slug>_<feature_or_workflow_slug>_error_memory_intake_loader_v1.zip
+```text
+kanda_reasoner_<feature_or_workflow_slug>_error_memory_lesson_intake_v1.zip
+```
 
-For a corrected loader, increment only the loader version:
+For a corrected loader, increment only the loader revision.
 
-v1r1
-v2
-v3
+## PACKAGE_MANIFEST.json
 
-Do not overwrite an older package while continuing to advertise its previous SHA-256.
+Required fields:
 
-Calculate the final SHA-256 only after the last archive rebuild.
-
-## PACKAGE_MANIFEST.JSON
-
-`PACKAGE_MANIFEST.json` must contain at least:
-
+```text
 schema_version
 kind
 feature_id
 package_name
-project_slug
 lesson_ids
 exact_members
 member_sha256
-pending_intake_contract
+tool_authority
+active_project_authority
+lesson_write_mode
 self_contained_runner
 source_files_modified
-canonical_lessons_written
+project_source_files_modified
+active_lessons_created
 human_memorize_required
+```
 
 Required values:
 
-schema_version:
-"1.0"
+```text
+schema_version = "1.0"
+kind = "kanda_error_memory_lesson_intake_loader"
+tool_authority = true
+active_project_authority = false
+lesson_write_mode = "pending_unique_only"
+self_contained_runner = "RUN_INSTALL.ps1"
+source_files_modified = false
+project_source_files_modified = false
+active_lessons_created = false
+human_memorize_required = true
+```
 
-kind:
-"kanda_error_memory_intake_loader"
+## VALIDATE_PACKAGE.py
 
-pending_intake_contract:
-"project_error_memory/pending_ai_assisted_error_lesson_intake"
+Validate the final ZIP itself. Require:
 
-self_contained_runner:
-"RUN_INSTALL.ps1"
+1. exact ZIP filename;
+2. exact safe member set;
+3. no duplicate, absolute, drive, UNC, traversal, directory, or nested ZIP member;
+4. manifest kind and fields;
+5. lesson IDs exactly match lesson files;
+6. declared member hashes match;
+7. exact marker contract and valid lesson JSON;
+8. every new lesson is pending;
+9. every intended status is active or draft;
+10. unique lesson IDs;
+11. non-empty prevention triggers and validation evidence;
+12. redaction applied and export-safe;
+13. active-ready core fields when intended active;
+14. no Tool/Project source payload;
+15. no canonical Error Memory library payload;
+16. root `RUN_INSTALL.ps1`;
+17. no script calls `Memorize Error` or `memorize_card_lesson`.
 
-source_files_modified:
-false
+Success markers:
 
-canonical_lessons_written:
-false
-
-human_memorize_required:
-true
-
-`lesson_ids` must contain every packaged lesson ID exactly once.
-
-`exact_members` must match the complete ZIP member set exactly.
-
-`member_sha256` must contain SHA-256 values for every archive member except `PACKAGE_MANIFEST.json` itself, avoiding recursive self-hashing.
-
-## VALIDATE_PACKAGE.PY
-
-Create an internal package validator that validates the final ZIP itself.
-
-It must check:
-
-1. The ZIP filename matches `package_name`.
-2. The archive contains the exact expected member set.
-3. No member is duplicated.
-4. No member uses an absolute path.
-5. No member uses a drive path.
-6. No member uses a UNC path.
-7. No member begins with `/` or `\`.
-8. No member contains a `..` traversal component.
-9. No member is a directory.
-10. No unexpected nested path exists.
-11. `PACKAGE_MANIFEST.json` parses as valid JSON.
-12. Manifest kind is correct.
-13. Manifest Project slug is correct.
-14. Manifest lesson IDs exactly match the lesson files.
-15. Manifest exact-members list matches the ZIP.
-16. Every declared member hash matches.
-17. Every lesson file uses the exact marker contract.
-18. Every lesson payload parses as valid JSON.
-19. Every lesson contains all required top-level keys.
-20. Every lesson status is `active`.
-21. Every lesson Project slug matches the current package Project slug.
-22. Every lesson ID is unique.
-23. `prevention_triggers` is a non-empty array.
-24. `validation_evidence` is a non-empty array.
-25. Redaction is applied and export-safe.
-26. No source payload exists.
-27. No canonical Error Memory lesson file is included.
-28. `RUN_INSTALL.ps1` exists at the archive root.
-
-On success, print markers including:
-
-ERROR MEMORY LOADER EXACT MEMBER SET: PASS
-ERROR MEMORY LESSON ACTIVE-READY SCHEMA: PASS
+```text
+ERROR MEMORY LESSON INTAKE EXACT MEMBER SET: PASS
+ERROR MEMORY PENDING LESSON SCHEMA: PASS
+ERROR MEMORY MACHINE-CARD SEMANTICS: ABSENT
 ERROR MEMORY HUMAN MEMORIZE GATE: PASS
-ERROR MEMORY CANONICAL WRITE PATH: ABSENT
-ERROR MEMORY LOADER VALIDATION: PASS
+ERROR MEMORY CANONICAL LIBRARY PAYLOAD IN ZIP: ABSENT
+ERROR MEMORY LESSON INTAKE PACKAGE VALIDATION: PASS
+```
 
-## ERROR_MEMORY_LOADER.PY
+## ERROR_MEMORY_LESSON_LIBRARY_LOADER.py
 
-Create the actual pending-intake loader.
+Support validation-only mode and `--stage`.
 
-It must support two modes:
+Required arguments:
 
-1. Validation-only mode.
-2. `--stage` mode.
-
-Required command-line arguments:
-
---project-root
+```text
+--tool-root
 --package-root
 --package-zip
+```
 
-Optional flag:
+Optional:
 
+```text
 --stage
+```
 
-### PROJECT PATH RESOLUTION
+Use current installed Error Memory lesson interfaces. The loader must discover
+and validate the runtime instead of assuming one historical module layout.
 
-Resolve the real Project root.
+Compatibility rule:
 
-Derive or verify:
+- a current public API under `kanda_reasoner_app.error_memory` is preferred;
+- if the installed version still exposes required lesson operations only through
+  `kanda_reasoner_app.error_memory_card`, that backend may be used as a legacy
+  compatibility implementation;
+- regardless of module name, do not require `card_id` and do not treat Error
+  Memory as MCard.
 
-project_support_root
-project_daily_work_root
-project_error_memory_root
-pending_intake_root
-canonical_lessons_root
+Required operations are the semantic equivalents of:
 
-Use the actual selected Project identity.
+```text
+read current lessons
+normalize candidate lesson
+find duplicate/conflict
+save one pending lesson
+re-read and verify lesson status
+```
 
-Validate:
+Validation-only mode must not modify canonical lesson data.
 
-<project_error_memory_root>\owner_manifest.json
+## Preflight before staging
 
-Require the owner manifest to belong to the current Project.
+For every candidate:
 
-Fail closed on:
+- same lesson ID with different material content -> conflict, fail closed;
+- identical existing pending lesson -> `already_staged`;
+- equivalent active lesson -> `already_memorized`;
+- retired same-ID lesson -> conflict; never reactivate automatically;
+- same prevention fingerprint and semantic contract -> duplicate, do not add;
+- incompatible fingerprint reuse -> conflict;
+- otherwise -> unique candidate.
 
-- missing owner manifest;
-- malformed owner manifest;
-- Project slug mismatch;
-- owner root mismatch;
-- ownership conflict;
-- another Project's Error Memory root.
+If any true conflict exists, stage nothing in that execution.
 
-### VALIDATION-ONLY MODE
+## Staging mode
 
-Validation-only mode must:
+On `--stage`:
 
-1. Verify the owner manifest.
-2. Validate every packaged lesson file.
-3. Confirm all lesson IDs and Project identity.
-4. Confirm the pending-intake owner path.
-5. Confirm no canonical write will occur.
-6. Confirm `Memorize Error` will not execute.
+1. perform complete duplicate/conflict preflight;
+2. add only unique candidates as `pending`;
+3. never alter an existing lesson;
+4. re-read current Error Memory lessons;
+5. require every newly added lesson still pending;
+6. require zero newly created active lessons;
+7. never call `Memorize Error`.
 
-Print:
+Do not create or mutate Project source, Freeze Memory, or Active Project
+selection.
 
-ERROR MEMORY OWNER IDENTITY: PASS
-ERROR MEMORY PROJECT SUPPORT ROOT: <actual path>
-ERROR MEMORY DAILY WORK ROOT: <actual path>
-ERROR MEMORY ACTIVE-READY LESSON COUNT: <count>
-ERROR MEMORY CANONICAL LESSON WRITE: NO
-MEMORIZE ERROR EXECUTED: NO
-PROJECT SOURCE FILES MODIFIED: 0
-ERROR MEMORY LOADER PROJECT PREFLIGHT: PASS
+## Intake receipt
 
-### STAGING MODE
+Write under package-local receipts:
 
-Staging mode must use:
+```text
+<package_root>/receipts/<UTC timestamp>/intake_receipt.json
+```
 
-<PROJECT_ERROR_MEMORY_ROOT>\pending_ai_assisted_error_lesson_intake
+Include:
 
-For each lesson:
-
-1. Determine the canonical target:
-   <CANONICAL_LESSONS_ROOT>\<lesson_id>.json
-
-2. If the canonical lesson already exists:
-   - validate that its internal lesson ID matches;
-   - do not overwrite it;
-   - do not restage it;
-   - print:
-
-LESSON ALREADY MEMORIZED - NOT RESTAGED: <lesson_id>
-
-3. If the pending lesson already exists and is byte-identical:
-   - leave it unchanged;
-   - print:
-
-LESSON ALREADY STAGED FOR APPROVAL: <lesson_id>
-
-4. If a pending file with the same filename exists but differs:
-   - rename it to:
-
-<filename>.replaced_<UTC timestamp>.invalid_do_not_scan
-
-   - do not delete it silently;
-   - atomically write the corrected pending lesson.
-
-5. For a new lesson:
-   - write first to a temporary file;
-   - use UTF-8 without BOM;
-   - use newline `\n`;
-   - atomically replace the final pending file;
-   - print:
-
-LESSON STAGED FOR APPROVAL: <lesson_id>
-
-Do not write into:
-
-<PROJECT_ERROR_MEMORY_ROOT>\lessons
-
-Do not invoke any canonical lesson writer.
-
-Do not call or simulate `Memorize Error`.
-
-Do not alter the GUI.
-
-Do not edit Project source.
-
-### INTAKE RECEIPT
-
-Create a durable execution receipt under:
-
-<PROJECT_DAILY_WORK_ROOT>\error_memory_intake_loader\<UTC timestamp>\intake_receipt.json
-
-The receipt must include:
-
+```text
 artifact_type
 schema_version
-project_slug
-project_root
-project_support_root
-error_memory_root
-pending_intake_root
+tool_root
+library_runtime
 package_zip
-owner_id
 created_at_utc
+active_project_authority_used
 lessons
-canonical_lessons_written
+pending_lessons_staged
+existing_lessons_modified
+active_lessons_created
 memorize_error_executed
 project_source_files_modified
+```
 
-Each lesson receipt entry must include:
+Required:
 
-lesson_id
-action
-pending_path
-canonical_path
+```text
+active_project_authority_used = false
+existing_lessons_modified = 0
+active_lessons_created = 0
+memorize_error_executed = false
+project_source_files_modified = 0
+```
 
-Possible actions:
-
-staged
-already_staged
-replaced_stale_pending
-already_memorized
-
-Required receipt values:
-
-canonical_lessons_written:
-0
-
-memorize_error_executed:
-false
-
-project_source_files_modified:
-0
-
-### FINAL STAGING MARKERS
+## Final staging markers
 
 Print:
 
-ERROR MEMORY OWNER IDENTITY: PASS
-ERROR MEMORY PENDING INTAKE ROOT: <actual path>
-ERROR MEMORY LESSONS AVAILABLE FOR APPROVAL: <count>
-CANONICAL LESSONS WRITTEN: 0
+```text
+ERROR MEMORY LESSON LIBRARY RUNTIME: PASS
+ERROR MEMORY MACHINE-CARD AUTHORITY: ABSENT
+ERROR MEMORY PENDING LESSONS STAGED: <count>
+ERROR MEMORY EXISTING LESSONS MODIFIED: 0
+ERROR MEMORY ACTIVE LESSONS CREATED: 0
 MEMORIZE ERROR EXECUTED: NO
 PROJECT SOURCE FILES MODIFIED: 0
-ERROR MEMORY INTAKE RECEIPT: <actual receipt path>
+ERROR MEMORY INTAKE RECEIPT: <path>
 ERROR MEMORY TAB APPROVAL READY: PASS
+```
 
-## VALIDATE.PS1
+## VALIDATE.ps1
 
-`VALIDATE.ps1` must accept:
+Accept `-ToolRoot` and `-PackageZip`.
 
--ProjectRoot
--PackageZip
+Resolve Python through the Tool environment, keeping executable and prefix
+arguments separate.
 
-It must:
+Run:
 
-1. Confirm ProjectRoot exists.
-2. Confirm PackageZip exists.
-3. Resolve a Python interpreter in this order:
-   - `<PROJECT_ROOT>\.venv\Scripts\python.exe`
-   - `<PROJECT_ROOT>\venv\Scripts\python.exe`
-   - `python.exe`
-   - `py.exe -3`
-4. Treat the Python executable and optional prefix arguments separately.
-5. Run `VALIDATE_PACKAGE.py`.
-6. Locate the official Project ZIP validator:
+1. `VALIDATE_PACKAGE.py`;
+2. official Tool ZIP validator `<TOOL_ROOT>/scripts/validate_patch_zip.py`;
+3. require `ZIP CONTRACT: PASS`;
+4. `ERROR_MEMORY_LESSON_LIBRARY_LOADER.py` in validation-only mode.
 
-<PROJECT_ROOT>\scripts\validate_patch_zip.py
+Fail on any nonzero command.
 
-7. Run the official validator using the loader's non-freezeable classification.
-8. Require:
+Do not use inline `python -c`.
 
-ZIP CONTRACT: PASS
+## PREPARE_ERROR_MEMORY.ps1
 
-9. Run `ERROR_MEMORY_LOADER.py` in validation-only mode.
-10. Fail immediately when any command returns nonzero.
-11. Print:
+Run `VALIDATE.ps1`, require all validation markers, then run the lesson-library
+loader with `--stage`.
 
-ZIP CONTRACT: PASS
-ERROR MEMORY INTAKE VALIDATION: PASS
+On success print:
 
-Do not use an improvised inline `python -c`.
-
-## PREPARE_ERROR_MEMORY.PS1
-
-`PREPARE_ERROR_MEMORY.ps1` must accept:
-
--ProjectRoot
--PackageZip
-
-It must:
-
-1. Run `VALIDATE.ps1`.
-2. Capture and display its complete output.
-3. Stop when validation fails.
-4. Require these exact markers:
-
-ZIP CONTRACT: PASS
-ERROR MEMORY LOADER VALIDATION: PASS
-ERROR MEMORY INTAKE VALIDATION: PASS
-
-5. Resolve Python using the same interpreter logic.
-6. Run:
-
-ERROR_MEMORY_LOADER.py --project-root <root> --package-root <package root> --package-zip <staged ZIP> --stage
-
-7. Stop when staging fails.
-8. Print:
-
-ERROR MEMORY LOADER SOURCE FILES MODIFIED: 0
+```text
 PROJECT SOURCE FILES MODIFIED: 0
-CANONICAL LESSONS WRITTEN: 0
+ERROR MEMORY EXISTING LESSONS MODIFIED: 0
+ERROR MEMORY ACTIVE LESSONS CREATED: 0
 MEMORIZE ERROR EXECUTED: NO
 ERROR MEMORY LESSON INTAKE PREPARATION COMPLETE
+```
 
-## INSTALL.PS1
+## INSTALL.ps1 and RUN_INSTALL.ps1
 
-`INSTALL.ps1` must:
+The package entry point is `RUN_INSTALL.ps1`.
 
-1. Accept ProjectRoot and PackageZip.
-2. Invoke `PREPARE_ERROR_MEMORY.ps1`.
-3. Stop on failure.
-4. Print:
+It invokes the packaged preparation workflow only. It must not install
+Tool/Project source, change Active Project, change Freeze Memory, or execute
+`Memorize Error`.
 
-ERROR MEMORY LOADER INSTALLATION OK: <feature_id>
+Success markers:
 
-It must not install source code.
-
-It must not copy files into canonical Error Memory Lessons.
-
-It must not execute a Project build.
-
-It must not execute Freeze preparation.
-
-## RUN_INSTALL.PS1
-
-`RUN_INSTALL.ps1` is the only packaged execution entry point.
-
-It must accept:
-
--ProjectRoot
--PackageZip
-
-It must:
-
-1. Confirm ProjectRoot exists.
-2. Confirm the staged PackageZip exists.
-3. Invoke packaged `INSTALL.ps1`.
-4. Stop on nonzero exit.
-5. Print:
-
-ERROR MEMORY LESSON LOADER: PASS
+```text
+ERROR MEMORY LESSON INTAKE LOADER: PASS
 PROJECT SOURCE FILES MODIFIED: 0
-CANONICAL LESSONS WRITTEN: 0
+ERROR MEMORY EXISTING LESSONS MODIFIED: 0
+ERROR MEMORY ACTIVE LESSONS CREATED: 0
 MEMORIZE ERROR EXECUTED: NO
 OPEN ERROR MEMORY FOR HUMAN APPROVAL
+```
 
-## README.TXT
+## Idempotence
 
-Explain:
+Re-running is safe:
 
-- what lessons are contained;
-- why each lesson exists;
-- that the ZIP stages lessons only for approval;
-- that no source code is modified;
-- that no canonical lesson is written;
-- that `Memorize Error` remains human-only;
-- how to review the lessons in Error Memory;
-- where the pending intake is located.
+- identical pending lesson is not rewritten;
+- equivalent active lesson is not restaged;
+- retired same-ID lesson is not automatically reactivated;
+- fingerprint duplicate is not added;
+- conflicts fail before writes;
+- no existing lesson is replaced;
+- each execution may write a new receipt;
+- zero active lessons are created automatically.
 
-## CAPTURED_ERROR_MEMORY_EVIDENCE.TXT
+## Freeze separation
 
-Include a concise evidence record containing:
+Error Memory intake and Freeze intake are separate workflows and separate human
+approval actions.
 
-- the relevant actual failures;
-- the corrected behavior;
-- validator success markers;
-- rollback evidence when applicable;
-- final successful feature or production evidence;
-- source of each lesson;
-- Project identity.
+This prompt never creates Freeze files, writes Freeze intake, executes Freeze
+Preview, or executes Confirm and Write.
 
-Do not paste unnecessary full logs.
+## Required final response
 
-Do not include secrets.
+If the hard Portable/PyInstaller gate blocks executable ZIP intake, do not return
+a ZIP or PowerShell runner. Return the marker-wrapped Error Memory lesson and the
+native GUI approval route:
 
-## SELF-CONTAINED ZIP RULE
-
-The final user receives only:
-
-1. One self-contained ZIP.
-2. One installation PowerShell block in the response.
-
-Do not require the user to download a second runner file.
-
-Do not depend on files outside the ZIP except:
-
-- the real Project root;
-- its Python environment;
-- its official ZIP validator;
-- its Error Memory owner manifest and folders.
-
-## EXTERNAL INSTALLATION BLOCK
-
-After building the ZIP, provide one complete PowerShell block.
-
-The block must:
-
-1. Use the real ProjectRoot.
-2. Derive the drive root from ProjectRoot.
-3. Expect the downloaded ZIP at the drive root.
-4. Verify the final SHA-256.
-5. Create a UTC-stamped staging folder under the Project daily-work root.
-6. Copy the ZIP into that folder.
-7. Verify the staged copy's SHA-256.
-8. Delete the root-drive ZIP copy only after successful staging and hash verification.
-9. Extract only from the staged ZIP.
-10. Locate the packaged `RUN_INSTALL.ps1`.
-11. Execute it with:
-    -ProjectRoot
-    -PackageZip
-12. Stop on any nonzero exit.
-13. On success, print:
-
-ERROR MEMORY INTAKE INSTALLATION: PASS
-PROJECT SOURCE FILES MODIFIED: 0
-CANONICAL LESSONS WRITTEN: 0
-MEMORIZE ERROR EXECUTED: NO
-
-14. On successful installation:
-    - wait approximately two seconds;
-    - run `Clear-Host`;
-    - do not prompt for Enter.
-
-15. On error:
-    - show the error;
-    - request Enter;
-    - request Enter again;
-    - run one final `Clear-Host`;
-    - keep the terminal open.
-
-Avoid fragile multiline escaping and excessive PowerShell backticks.
-
-The block must be safe to copy and paste without leaving PowerShell in continuation mode.
-
-## IDEMPOTENCE
-
-Re-running the loader must be safe.
-
-Required behavior:
-
-- already memorized lessons are not overwritten;
-- identical pending lessons are not rewritten;
-- stale differing pending lessons are preserved with `.invalid_do_not_scan`;
-- no duplicate canonical lesson is created;
-- no duplicate lesson ID is admitted;
-- the loader always writes a new execution receipt;
-- canonical lesson write count remains zero.
-
-## FREEZE COMPANION BRIDGE
-
-The canonical lifecycle bridge is `KPR-05-005 patch_validate_freeze_error_memory_routine_blueprint`.
-The companion Freeze loader owner is `KPR-03-007 self_contained_freeze_entry_intake_zip`.
-
-This prompt owns only the Error Memory lesson intake ZIP. It must never add Freeze files, write Freeze intake, execute Preview, or execute Confirm and Write.
-
-After Error Memory disposition is resolved, report exactly one:
-
-- `ERROR MEMORY DISPOSITION: STAGED_FOR_HUMAN_APPROVAL`
-- `ERROR MEMORY DISPOSITION: ALREADY_COMPLETE`
-- `ERROR MEMORY DISPOSITION: NOT_REQUIRED`
-- `ERROR MEMORY DISPOSITION: BLOCKED`
-
-Also report exactly one companion state:
-
-- `FREEZE COMPANION DISPOSITION: REQUIRED`
-- `FREEZE COMPANION DISPOSITION: ALREADY_COMPLETE`
-- `FREEZE COMPANION DISPOSITION: NOT_ELIGIBLE`
-- `FREEZE COMPANION DISPOSITION: BLOCKED`
-
-When the current feature is locally validated, synchronized, and eligible for Freeze but Freeze intake is not complete, the next exact owner is `KPR-03-007`. Pass the same selected-Project identity, Tool root, feature identity, exact patch identity, focused validator, and current validation evidence. Do not make the user re-enter those values.
-
-Do not merge the Error Memory ZIP and Freeze ZIP. They remain separate artifacts, separate pending intakes, separate owner Boxes, and separate human approval actions.
-
-## FINAL PACKAGE VALIDATION
-
-Before delivering:
-
-1. Rebuild the final ZIP.
-2. Reopen it.
-3. Verify the exact archive-member set.
-4. Verify no duplicate members.
-5. Verify no parent directory.
-6. Verify no traversal or absolute members.
-7. Parse `PACKAGE_MANIFEST.json`.
-8. Validate every declared member hash.
-9. Parse every lesson file.
-10. Confirm exact markers.
-11. Confirm every lesson is active-ready.
-12. Confirm every lesson belongs to the current Project.
-13. Confirm every lesson ID is unique.
-14. Confirm prevention triggers and validation evidence are non-empty arrays.
-15. Confirm redaction is applied and export-safe.
-16. Confirm no source payload exists.
-17. Confirm no canonical Error Memory path is written by any script.
-18. Confirm no script calls `Memorize Error`.
-19. Confirm `RUN_INSTALL.ps1` is present at the archive root.
-20. Confirm the package is accepted by the official ZIP validator.
-21. Perform a safe fixture or sandbox staging test.
-22. Confirm the fixture produces pending lessons and zero canonical lessons.
-23. Perform an idempotent second run.
-24. Confirm identical lessons are reported as already staged.
-25. Calculate SHA-256 only after the final ZIP is complete.
-
-## REQUIRED SUCCESS MARKERS
-
-The validated package should produce markers including:
-
-ZIP CONTRACT: PASS
-SELF-CONTAINED RUNNER MEMBER: PASS
-ERROR MEMORY LOADER EXACT MEMBER SET: PASS
-ERROR MEMORY LESSON ACTIVE-READY SCHEMA: PASS
-ERROR MEMORY CANONICAL WRITE PATH: ABSENT
-ERROR MEMORY HUMAN MEMORIZE GATE: PASS
-ERROR MEMORY LOADER VALIDATION: PASS
-ERROR MEMORY INTAKE VALIDATION: PASS
-ERROR MEMORY OWNER IDENTITY: PASS
-ERROR MEMORY TAB APPROVAL READY: PASS
-PROJECT SOURCE FILES MODIFIED: 0
-CANONICAL LESSONS WRITTEN: 0
-MEMORIZE ERROR EXECUTED: NO
-ERROR MEMORY LESSON LOADER: PASS
-
-## REQUIRED FINAL RESPONSE
-
-Return:
-
-1. A download link to the single ZIP.
-2. The exact ZIP filename.
-3. The final SHA-256.
-4. A concise explanation of the included lessons.
-5. Confirmation that Project source files are not modified.
-6. Confirmation that canonical Error Memory Lessons are not written.
-7. Confirmation that Memorize Error remains human-only.
-8. One complete PowerShell installation block.
-9. The expected final markers.
-10. The Error Memory disposition and Freeze companion disposition.
-11. The human approval workflow:
-
+```text
 KANDA Reasoner
--> select the correct Project
 -> Error Memory
--> review the automatically loaded pending lesson
+-> Paste error formatted from AI
+-> review Draft
 -> click Memorize Error only after approval
--> repeat for the remaining pending lessons
+```
 
-Do not provide separate lesson ZIPs.
+If the hard runtime gate passes in source/IDE mode, return:
 
-Do not provide a separate runner download.
+1. one ZIP download link;
+2. exact ZIP filename and SHA-256;
+3. concise lesson summary;
+4. confirmation Project source is not modified;
+5. confirmation existing lessons are not overwritten;
+6. confirmation staged lessons remain pending;
+7. confirmation Machine-Card/MCard semantics are not used;
+8. confirmation `Memorize Error` remains human-only;
+9. one complete PowerShell installation block;
+10. expected final markers;
+11. Error Memory disposition;
+12. Freeze companion disposition;
+13. human approval workflow:
 
-Do not provide only JSON.
-
-Create the functional, self-contained ZIP in the current response.
+```text
+KANDA Reasoner
+-> Error Memory
+-> To memorize
+-> review one pending lesson
+-> click Memorize Error only after approval
+```
