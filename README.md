@@ -732,8 +732,79 @@ The current focus is stability, boundary correctness, reliable workflows, and ev
 ---
 
 ## License
+KANDA Reasoner License (Individual Use, Contribution-Based)
 
-License: KANDA Reasoner is free to use but proprietary. Modification, redistribution, reverse engineering, and reuse of its source code or assets are prohibited. See LICENSE.md.
+Copyright (c) [2026], [Paulo Afonso Medeiros Kanda]
+All rights reserved.
+
+Use, and redistribution in unmodified form, are permitted provided
+that the following conditions are met:
+
+1. Redistributions must retain the above copyright notice, this list
+   of conditions, and the following disclaimer.
+
+2. Use of this software, in whole or in part, is permitted for
+   personal use by an individual, including personal use from which
+   that individual profits directly (for example, as an independent
+   individual using the software in their own work). Use by, within,
+   or on behalf of a business, company, organization, team, or other
+   entity — including use by an individual acting as an employee,
+   contractor, or agent of such an entity, or use that provides a
+   product or service on behalf of such an entity — is not permitted
+   without a separate commercial license from the copyright holder.
+
+3. Redistribution is permitted only in unmodified, complete form, as
+   obtained directly from the official repository listed below, and
+   only to the extent the recipient's use complies with Condition 2
+   above. Redistributing a modified copy, a partial copy, a copy
+   obtained from any unofficial source, or a copy for use by or
+   within a business, company, organization, or other entity is not
+   permitted.
+
+4. No modification, translation, reverse engineering, decompilation,
+   disassembly, or creation of derivative works based on this
+   software or its assets is permitted, except by direct contributors
+   to the official project acting through its official contribution
+   process. Contributions accepted through that process become part
+   of the official project and are distributed under this same
+   license; this does not grant contributors, or anyone else, the
+   right to distribute independently modified copies outside the
+   official project.
+
+5. No part of the source code or assets of this software may be
+   extracted, reused, or incorporated into any other software project,
+   except as permitted under Condition 4.
+
+6. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+7. The official repository is the sole authorized and verified
+   source for this software:
+
+      [ [OFFICIAL REPOSITORY URL]](https://github.com/paulokanda/kanda_reasoner/)
+
+   Copies obtained from any other source are unverified and may have
+   been altered; the copyright holder assumes no responsibility for
+   software obtained elsewhere.
+
+8. Any violation of these conditions automatically terminates the
+   rights granted under this license.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Questions about commercial licensing or contributing to the project:
+[pkanda@alumni.usp.br]
 
 ---
 
