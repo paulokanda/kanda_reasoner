@@ -6,9 +6,9 @@ from typing import Iterable
 
 from startup_kernel.constants import (
     FIRST_UPLOAD_PROJECT_FILES_WAIT_ACTION,
-    FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V1,
+    FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V4,
     MANIFEST_FILENAME,
-    PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2,
+    PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V3,
     README_FILENAME,
     RG028_FREEZE_WORKFLOW_FIRST_POSITION_OVERRIDE_RULE_V3,
     RG029_STARTUP_STALE_FILENAME_FIRST_POSITION_OVERRIDE_RULE_V1,
@@ -41,12 +41,12 @@ def _prepend_startup_first_position_overrides(content: str) -> str:
             RG029_STARTUP_STALE_FILENAME_FIRST_POSITION_OVERRIDE_RULE_V1.strip(),
         ),
         (
-            "Mandatory freeze-code intake hook loaded.",
-            FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V1.strip(),
+            "Mandatory freeze-code intake and candidate-audit hook loaded.",
+            FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V4.strip(),
         ),
         (
             "Mandatory pre-output contract gate hook loaded.",
-            PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2.strip(),
+            PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V3.strip(),
         ),
     ]
     blocks_to_prepend = [

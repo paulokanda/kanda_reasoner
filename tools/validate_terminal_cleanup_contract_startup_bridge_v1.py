@@ -68,11 +68,10 @@ def _assert_prompt_contract(project_root: Path) -> None:
         "VALIDATION",
         "FREEZE",
         "RECOVERY",
-        "INSTALL OK. Terminal will clear in 2 seconds...",
-        "Start-Sleep -Seconds 2",
+        "INSTALL OK. Press Enter twice to clear terminal.",
         "Read-Host \"Press Enter to clear terminal\"",
         "Read-Host \"Press Enter again to clear\"",
-        "Do not mix the timed success footer and Enter, Enter footer.",
+        "Do not use automatic timed terminal clearing for interactive install success.",
         "Do not use `exit`, `Stop-Process`, `Restart-Computer`",
         "Do not use inline `python -c`",
         "Paste-unit contract",
@@ -80,8 +79,9 @@ def _assert_prompt_contract(project_root: Path) -> None:
         "Windows PowerShell 5.1-compatible APIs",
     ]:
         _assert_contains(contract, needle, contract_rel)
-    if "wait 5 seconds" in contract or "5 second" in contract:
-        raise AssertionError("terminal_cleanup_contract contains stale 5-second wording")
+    for stale in ("wait 5 seconds", "5 second", "Start-Sleep -Seconds 2", "Terminal will clear in 2 seconds"):
+        if stale in contract:
+            raise AssertionError("terminal_cleanup_contract contains stale timed-clear wording: " + stale)
 
 
 def _assert_startup_bridge(project_root: Path) -> None:
@@ -91,15 +91,16 @@ def _assert_startup_bridge(project_root: Path) -> None:
         "BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_START",
         "TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE",
         "KPR-05-007 terminal_cleanup_contract",
-        "wait about 2 seconds",
-        "ask for Enter, ask for Enter again",
+        "Install success asks for Enter, asks for Enter again",
+        "same Enter, Enter",
         "Never close the terminal",
         "one independent paste unit",
         "do not use user-facing `else`, `elseif`, or `finally`",
     ]:
         _assert_contains(text, needle, rel)
-    if "wait 5 seconds" in text or "5 second pause" in text:
-        raise AssertionError("start_of_day_master_stack contains stale 5-second wording")
+    for stale in ("wait 5 seconds", "5 second pause", "wait about 2 seconds", "2-second Clear-Host"):
+        if stale in text:
+            raise AssertionError("start_of_day_master_stack contains stale timed-clear wording: " + stale)
 
 
 def _assert_references(project_root: Path) -> None:

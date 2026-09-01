@@ -4,14 +4,18 @@
 This module provides the error-message variant imported by
 ``kanda_reasoner_app.templates.floating_windows``. It delegates UI mechanics
 to the generic copy message template so callers get one safe action:
-Copy and Close.
+Copy Close.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from .clipboard_message_window import CopyMessageFloatingWindow, show_copy_message_window
+from .clipboard_message_window import (
+    CopyMessageFloatingWindow,
+    show_copy_message_window,
+)
+from .error_popup_copy_close_filter import install_error_popup_copy_close_filter
 
 __all__ = [
     "ErrorCopyCloseFloatingWindow",
@@ -29,15 +33,16 @@ def show_error_copy_close_window(
     message: str,
     detail_text: str = "",
     clipboard_text: str | None = None,
-    button_text: str = "Copy and Close",
+    button_text: str = "Copy Close",
     modal: bool = True,
 ) -> ErrorCopyCloseFloatingWindow:
-    """Show an error window with one Copy and Close action.
+    """Show an error window with one Copy Close action.
 
     The copied text defaults to the visible message and detail text. Callers
     may provide a richer ``clipboard_text`` when the user should copy a full
     correction request instead of only the visible summary.
     """
+    install_error_popup_copy_close_filter()
     return show_copy_message_window(
         parent,
         title=title,

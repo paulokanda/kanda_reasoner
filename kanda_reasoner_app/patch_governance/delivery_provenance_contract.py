@@ -226,6 +226,36 @@ def _validate_receiver_contract(
     return dict(contract)
 
 
+def _validate_freeze_intake_contract(
+    value: Any,
+    *,
+    archive_names: set[str],
+    hint_present: bool,
+) -> None:
+    if not isinstance(value, Mapping):
+        _fail("PATCH_FREEZE_INTAKE_CONTRACT_INVALID", "freeze_intake")
+    status = str(value.get("status") or "").strip()
+    if not hint_present:
+        if status != "NOT_APPLICABLE":
+            _fail(
+                "PATCH_FREEZE_INTAKE_STATUS_INVALID",
+                "Freeze Hint absent; freeze_intake.status must be NOT_APPLICABLE",
+            )
+        _nonempty_text(value.get("reason"), field="freeze_intake.reason")
+        return
+    if status and status != "ACTIVE_READY":
+        _fail("PATCH_FREEZE_INTAKE_STATUS_INVALID", status)
+    _validate_receiver_contract(
+        value,
+        owner="freeze_intake",
+        expected_classification="FREEZE_HINT_INTAKE",
+        expected_installer_stages=False,
+        expected_manual_paste=False,
+        expected_storage_only=False,
+        archive_names=archive_names,
+    )
+
+
 def _validate_error_memory_contract(value: Any, *, archive_names: set[str]) -> None:
     if not isinstance(value, Mapping):
         _fail("PATCH_ERROR_MEMORY_CONTRACT_INVALID", "error_memory_intake")
@@ -328,11 +358,10 @@ def validate_delivery_provenance_contract(
     delivery, delivery_raw = _load_root_json(archive, DELIVERY_MANIFEST_FILENAME, required=True)
     trace, trace_raw = _load_root_json(archive, PATCH_TRACE_FILENAME, required=True)
     install, install_raw = _load_root_json(archive, INSTALL_MANIFEST_FILENAME, required=True)
-    hint, hint_raw = _load_root_json(archive, FREEZE_HINT_FILENAME, required=True)
+    hint, hint_raw = _load_root_json(archive, FREEZE_HINT_FILENAME, required=False)
     assert delivery is not None and delivery_raw is not None
     assert trace is not None and trace_raw is not None
     assert install is not None and install_raw is not None
-    assert hint is not None and hint_raw is not None
 
     _require_fields(delivery, DELIVERY_REQUIRED_FIELDS, owner=DELIVERY_MANIFEST_FILENAME)
     _require_fields(trace, TRACE_REQUIRED_FIELDS, owner=PATCH_TRACE_FILENAME)
@@ -350,24 +379,28 @@ def validate_delivery_provenance_contract(
         "delivery.patch_name": patch_name,
         "trace.patch_name": trace.get("patch_name"),
         "install.patch_name": install.get("patch_name"),
-        "hint.patch_name": hint.get("patch_name"),
         "delivery.feature_id": feature_id,
         "trace.feature_id": trace.get("feature_id"),
         "install.feature_id": install.get("feature_id"),
-        "hint.feature_id": hint.get("feature_id"),
     }
+    if hint is not None:
+        identities["hint.patch_name"] = hint.get("patch_name")
+        identities["hint.feature_id"] = hint.get("feature_id")
     _require_equal(zip_name, actual_zip_name, code="PATCH_ZIP_IDENTITY_MISMATCH", detail=str(identities))
     _require_equal(patch_name, PurePosixPath(actual_zip_name).stem, code="PATCH_NAME_IDENTITY_MISMATCH", detail=str(identities))
-    for owner in (trace, install, hint):
+    for owner in (trace, install):
         _require_equal(owner.get("feature_id"), feature_id, code="PATCH_FEATURE_ID_MISMATCH", detail=str(identities))
         _require_equal(owner.get("patch_name"), patch_name, code="PATCH_NAME_IDENTITY_MISMATCH", detail=str(identities))
-    if freeze_hint is not None:
-        _require_equal(dict(freeze_hint), hint, code="PATCH_FREEZE_HINT_OBJECT_MISMATCH", detail="validator hint differs from archive")
-    _require_equal(hint.get("source_patch_zip"), actual_zip_name, code="PATCH_SOURCE_ZIP_MISMATCH", detail="freeze hint")
-    if hint.get("patch_provenance_required") is not True:
-        _fail("PATCH_PROVENANCE_FLAG_MISSING", "KANDA_FREEZE_HINT.json")
-    _require_equal(hint.get("delivery_manifest_name"), DELIVERY_MANIFEST_FILENAME, code="PATCH_PROVENANCE_FILENAME_MISMATCH", detail="delivery manifest")
-    _require_equal(hint.get("patch_trace_name"), PATCH_TRACE_FILENAME, code="PATCH_PROVENANCE_FILENAME_MISMATCH", detail="patch trace")
+    if hint is not None:
+        _require_equal(hint.get("feature_id"), feature_id, code="PATCH_FEATURE_ID_MISMATCH", detail=str(identities))
+        _require_equal(hint.get("patch_name"), patch_name, code="PATCH_NAME_IDENTITY_MISMATCH", detail=str(identities))
+        if freeze_hint is not None:
+            _require_equal(dict(freeze_hint), hint, code="PATCH_FREEZE_HINT_OBJECT_MISMATCH", detail="validator hint differs from archive")
+        _require_equal(hint.get("source_patch_zip"), actual_zip_name, code="PATCH_SOURCE_ZIP_MISMATCH", detail="freeze hint")
+        if hint.get("patch_provenance_required") is not True:
+            _fail("PATCH_PROVENANCE_FLAG_MISSING", "KANDA_FREEZE_HINT.json")
+        _require_equal(hint.get("delivery_manifest_name"), DELIVERY_MANIFEST_FILENAME, code="PATCH_PROVENANCE_FILENAME_MISMATCH", detail="delivery manifest")
+        _require_equal(hint.get("patch_trace_name"), PATCH_TRACE_FILENAME, code="PATCH_PROVENANCE_FILENAME_MISMATCH", detail="patch trace")
 
     install_records = _install_file_records(install)
     install_paths = [item["path"] for item in install_records]
@@ -423,14 +456,10 @@ def validate_delivery_provenance_contract(
         expected_storage_only=False,
         archive_names=archive_names,
     )
-    _validate_receiver_contract(
+    _validate_freeze_intake_contract(
         delivery.get("freeze_intake"),
-        owner="freeze_intake",
-        expected_classification="FREEZE_HINT_INTAKE",
-        expected_installer_stages=False,
-        expected_manual_paste=False,
-        expected_storage_only=False,
         archive_names=archive_names,
+        hint_present=hint is not None,
     )
     _validate_error_memory_contract(delivery.get("error_memory_intake"), archive_names=archive_names)
 
@@ -446,12 +475,19 @@ def validate_delivery_provenance_contract(
     expected_hashes = {
         "delivery_manifest_sha256": _sha256_bytes(delivery_raw),
         "install_manifest_sha256": _sha256_bytes(install_raw),
-        "freeze_hint_sha256": _sha256_bytes(hint_raw),
     }
     for field, expected in expected_hashes.items():
         actual = str(trace.get(field) or "").strip().lower()
         if not HEX_64.fullmatch(actual) or actual != expected:
             _fail("PATCH_TRACE_HASH_MISMATCH", field)
+    freeze_hash = str(trace.get("freeze_hint_sha256") or "").strip().lower()
+    if hint_raw is None:
+        if freeze_hash not in {"", "not_applicable"}:
+            _fail("PATCH_TRACE_HASH_MISMATCH", "freeze_hint_sha256")
+    else:
+        expected_freeze_hash = _sha256_bytes(hint_raw)
+        if not HEX_64.fullmatch(freeze_hash) or freeze_hash != expected_freeze_hash:
+            _fail("PATCH_TRACE_HASH_MISMATCH", "freeze_hint_sha256")
 
     return DeliveryProvenanceReport(
         feature_id=feature_id,

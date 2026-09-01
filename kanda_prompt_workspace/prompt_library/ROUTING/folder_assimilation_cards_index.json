@@ -124,13 +124,14 @@
       "folder_id": "03_governance_freeze_and_handoff",
       "folder_name": "Governance, Freeze, and Handoff",
       "card_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md",
-      "responsibility": "Own Brick Wall status, cooperative decisions, freeze intake, final artifact contract dispatch, and draft-only governance or handoff templates.",
-      "use_when": "Use for live Brick Wall status, freeze intake, pre-output artifact review, consequential option comparison, or explicit generic profile drafting.",
+      "responsibility": "Own Brick Wall status, cooperative decisions, freeze intake, strict AI freeze-candidate audit, self-contained freeze intake, final artifact dispatch, and draft-only governance/handoff templates.",
+      "use_when": "Use for Brick Wall status, freeze intake, AI freeze-candidate audit, pre-output artifact review, self-contained freeze intake, consequential option comparison, or explicit generic profile drafting.",
       "do_not_use_when": "Do not use as specialist implementation, delivery, validation, Box, Tool/Project, Error Memory, or normal session-handoff authority.",
       "required_for": [
         "BRICK_WALL_STATUS_CHECK",
         "FREEZE_INTAKE",
-        "PRE_OUTPUT_ARTIFACT_GATE"
+        "PRE_OUTPUT_ARTIFACT_GATE",
+        "FREEZE_CANDIDATE_PRE_OUTPUT_AUDIT"
       ],
       "optional_for": [
         "cooperative decision review",
@@ -152,16 +153,19 @@
       ],
       "minimum_viable_context": [
         "brick_wall_comprehensive_quality_gate",
-        "pre_output_contract_gates"
+        "pre_output_contract_gates",
+        "freeze_candidate_pre_output_audit"
       ],
-      "prompt_count": 6,
+      "prompt_count": 8,
       "main_prompt_ids": [
         "brick_wall_comprehensive_quality_gate",
         "cooperative_implementation_methodology",
         "freeze_code_intake_and_form_protocol",
         "pre_output_contract_gates",
         "professional_engineering_governance_template",
-        "workflow_handoff_template"
+        "workflow_handoff_template",
+        "self_contained_freeze_entry_intake_zip",
+        "freeze_candidate_pre_output_audit"
       ]
     },
     {
@@ -211,7 +215,7 @@
       "folder_id": "05_patch_delivery_and_validation",
       "folder_name": "Patch Delivery and Validation",
       "card_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation/_FOLDER_ASSIMILATION.md",
-      "responsibility": "Governed release lifecycle, surgical delivery, active PIR routing, correction incident dispatch, terminal behavior, and recovery routing.",
+      "responsibility": "Governed release lifecycle, surgical delivery, active PIR routing, correction incident dispatch, terminal behavior, recovery routing, and self-contained Error Memory intake.",
       "use_when": "Use when a ZIP, installer, validation package, recovery routine, or delivery classification is needed.",
       "do_not_use_when": "Do not use to decide ownership boundaries without the Box Architecture group.",
       "required_for": [
@@ -243,7 +247,7 @@
         "patch_install_delivery_error_register",
         "bundle_gated_development_workflow"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompt_ids": [
         "bundle_gated_development_workflow",
         "implementation_and_delivery_protocol",
@@ -251,7 +255,8 @@
         "patch_install_delivery_error_register",
         "patch_validate_freeze_error_memory_routine_blueprint",
         "router_bridge_user_detected_correction",
-        "terminal_cleanup_contract"
+        "terminal_cleanup_contract",
+        "self_contained_error_memory_lesson_intake_zip"
       ]
     },
     {

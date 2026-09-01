@@ -12,7 +12,12 @@ from typing import Any
 
 from .json_writer import write_json_atomic
 from .schema_models import ProjectContext
-from .source_tree_exporter_archive_io import _reuse_previous_png_asset_parts, _write_archive_groups
+from .source_state_identity import build_source_state_identity
+from .source_tree_exporter_archive_io import (
+    _reuse_previous_png_asset_parts,
+    _verify_archive_parts_content,
+    _write_archive_groups,
+)
 from .source_tree_exporter_inventory import (
     _can_reuse_previous_png_assets,
     _load_previous_source_archive_manifest,
@@ -47,6 +52,7 @@ def _write_manifest(
     excluded_paths: list[dict[str, Any]],
     part_records: list[dict[str, Any]],
     png_asset_part_records: list[dict[str, Any]],
+    source_state: dict[str, Any],
 ) -> Path:
     manifest_path = build_source_archive_manifest_path(destination, context)
     included_manifest = []
@@ -69,10 +75,19 @@ def _write_manifest(
         "generated_at_utc": datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
         "project": {
             "project_slug": context.project_slug,
+            "active_project_id": context.active_project_id,
+            "active_project_root_fingerprint": context.active_project_root_fingerprint,
             "project_root_marker": "<PROJECT_ROOT>",
             "evidence_root_relative": "show_project_to_AI",
             "json_complete_relative": "show_project_to_AI/second_prompt_files",
             "dynamic_output_contract": "<project_drive>:\\<project_slug>_show_project_to_AI\\second_prompt_files",
+        },
+        "source_state": source_state,
+        "source_state_contract": {
+            "canonical_owner": "source_archive_inventory",
+            "this_manifest_owns_archive_projection_identity": True,
+            "archive_members_verified_against_inventory": True,
+            "publication_requires_projection_binding_to_file_manifest": True,
         },
         "archive_contract": {
             "selected_size_cap_mb": part_size_mb,
@@ -168,6 +183,12 @@ def write_source_archive_parts(
     inventory = gather_source_archive_inventory(context, destination_path, previous_manifest)
     included_files: list[dict[str, Any]] = list(inventory["included_files"])
     excluded_paths: list[dict[str, Any]] = list(inventory["excluded_paths"])
+    source_state = build_source_state_identity(
+        included_files,
+        hash_field="sha256",
+    )
+    if source_state.get("identity_status") != "VERIFIED":
+        raise RuntimeError("SOURCE_ARCHIVE_STATE_UNVERIFIABLE")
 
     source_files, png_asset_files = _split_png_asset_records(included_files)
 
@@ -272,6 +293,12 @@ def write_source_archive_parts(
         png_assets_reuse_method = "created"
     created_paths.extend(png_created_paths)
 
+    _verify_archive_parts_content(
+        destination_path,
+        part_records + png_asset_part_records,
+        included_files,
+    )
+
     manifest_path = _write_manifest(
         context,
         destination_path,
@@ -282,6 +309,7 @@ def write_source_archive_parts(
         excluded_paths,
         part_records,
         png_asset_part_records,
+        source_state,
     )
     created_paths.append(manifest_path)
 
@@ -323,5 +351,6 @@ def write_source_archive_parts(
         "png_asset_part_records": png_asset_part_records,
         "png_assets_reused": png_assets_reused,
         "png_assets_reuse_method": png_assets_reuse_method,
+        "source_state": source_state,
         "warnings": [],
     }

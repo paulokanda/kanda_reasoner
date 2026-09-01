@@ -6,17 +6,20 @@ from __future__ import annotations
 from pathlib import Path
 
 from kanda_reasoner_app.project_root_resolver import resolve_app_runtime_root
+from kanda_reasoner_app.release_identity import PRODUCT_VERSION
 
 __all__ = [
     "APP_DISPLAY_NAME",
     "APP_ICON_PATH",
     "APP_TITLE_DETAIL",
+    "APP_VERSION",
 ]
 
 _PROJECT_ROOT = resolve_app_runtime_root()
 _PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 
 APP_DISPLAY_NAME = "KANDA Reasoner"
+APP_VERSION = PRODUCT_VERSION
 APP_TITLE_DETAIL = "Knowledge and Architecture Navigator for Developer Assistance"
 APP_ICON_PATH = (
     _PACKAGE_ROOT

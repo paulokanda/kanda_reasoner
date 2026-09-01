@@ -258,7 +258,7 @@ def _validate_identity_json(root: Path) -> None:
     if len(lines) != 1:
         raise RuntimeError(f'Identity JSON must be one line; found {len(lines)}.')
     identity = json.loads(lines[0])
-    if identity != {'schema_version': '1.0', 'builder_member_feature_id': 'kanda-reasoner-portable-exact-builder-member-governance-v1', 'builder_version': EXPECTED_VERSION, 'external_control_feature_id': 'kanda-reasoner-portable-external-build-control-hash-binding-v1r2', 'feature_id': EXPECTED_FEATURE_ID, 'hardening_features': list(EXPECTED_HARDENING_FEATURES), 'hardening_stage': EXPECTED_HARDENING_STAGE, 'production_portable_enabled': True}:
+    if identity != {'schema_version': '1.0', 'builder_member_feature_id': 'kanda-reasoner-portable-exact-builder-member-governance-v1', 'builder_version': EXPECTED_VERSION, 'external_control_feature_id': 'kanda-reasoner-portable-external-build-control-hash-binding-v1r3', 'feature_id': EXPECTED_FEATURE_ID, 'hardening_features': list(EXPECTED_HARDENING_FEATURES), 'hardening_stage': EXPECTED_HARDENING_STAGE, 'production_portable_enabled': True}:
         raise RuntimeError(f'Identity JSON mismatch: {identity}')
 
 def _validate_worker_validator_non_mutation_contract(root: Path) -> None:
@@ -366,7 +366,7 @@ def main() -> int:
     _validate_zip_member_writer(root, args.package_only)
     _validate_identity_json(root)
     from portable.constants import BUILDER_MEMBER_FEATURE_ID, BUILDER_VERSION, EXTERNAL_CONTROL_FEATURE_ID, FEATURE_ID, FIRST_SMOKE_CONFIRMATION, PORTABLE_HARDENING_FEATURES, PORTABLE_HARDENING_STAGE, PRODUCTION_PORTABLE_ENABLED, SMOKE_CONFIRMATION
-    if BUILDER_MEMBER_FEATURE_ID != 'kanda-reasoner-portable-exact-builder-member-governance-v1' or EXTERNAL_CONTROL_FEATURE_ID != 'kanda-reasoner-portable-external-build-control-hash-binding-v1r2' or BUILDER_VERSION != EXPECTED_VERSION or (FEATURE_ID != EXPECTED_FEATURE_ID) or (tuple(PORTABLE_HARDENING_FEATURES) != EXPECTED_HARDENING_FEATURES) or (PORTABLE_HARDENING_STAGE != EXPECTED_HARDENING_STAGE):
+    if BUILDER_MEMBER_FEATURE_ID != 'kanda-reasoner-portable-exact-builder-member-governance-v1' or EXTERNAL_CONTROL_FEATURE_ID != 'kanda-reasoner-portable-external-build-control-hash-binding-v1r3' or BUILDER_VERSION != EXPECTED_VERSION or (FEATURE_ID != EXPECTED_FEATURE_ID) or (tuple(PORTABLE_HARDENING_FEATURES) != EXPECTED_HARDENING_FEATURES) or (PORTABLE_HARDENING_STAGE != EXPECTED_HARDENING_STAGE):
         raise RuntimeError('Runtime builder identity contract mismatch.')
     if PRODUCTION_PORTABLE_ENABLED is not True:
         raise RuntimeError('Production Portable authorization gate must be open.')

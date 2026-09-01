@@ -9,7 +9,7 @@
   ],
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md",
   "category": "05_patch_delivery_and_validation",
-  "description": "Source/IDE-only self-contained Error Memory lesson intake ZIP. It requires a verified independent external Tool Python and must fall back to native marker-wrapped GUI intake in Portable/FROZEN runtime.",
+  "description": "Source/IDE-only self-contained Error Memory lesson intake ZIP. Pending is transport-only; GUI admission normalizes candidates to draft and only explicit human Memorize Error may promote an active-ready draft to active. Portable/FROZEN runtime falls back to native marker-wrapped GUI intake.",
   "display_name": "Self-Contained Error Memory Lesson Intake ZIP",
   "filename": "self_contained_error_memory_lesson_intake_zip.md",
   "load_type": "on_request",
@@ -29,7 +29,7 @@
     "implementation_and_delivery_protocol",
     "pre_output_contract_gates"
   ],
-  "source_stage": "error-memory-portable-native-intake-fallback-v1",
+  "source_stage": "prompt-freeze-error-memory-lifecycle-alignment-v1",
   "source_write_authorization": "NO",
   "status": "active",
   "trigger_phrases": [
@@ -39,8 +39,8 @@
     "stage Error Memory lessons for approval",
     "pending error lesson intake"
   ],
-  "updated_for": "error-memory-portable-native-intake-fallback-v1",
-  "version": "3.1",
+  "updated_for": "prompt-freeze-error-memory-lifecycle-alignment-v1",
+  "version": "3.2",
   "when_not_to_load": "Do not load for Portable/FROZEN PyInstaller runtime, when external Tool Python is unavailable, for Architecture Review MCard lifecycle, direct active memorization, ordinary patch delivery, or when no reusable lesson candidate exists.",
   "when_to_load": "When the user requests one self-contained ZIP that stages Error Memory lessons and the Tool is running from source/IDE with an independently verified external Tool Python executable."
 }

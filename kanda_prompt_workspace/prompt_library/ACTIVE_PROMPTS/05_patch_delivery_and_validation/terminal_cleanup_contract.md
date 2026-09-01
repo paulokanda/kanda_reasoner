@@ -2,11 +2,11 @@
 prompt_id: terminal_cleanup_contract
 prompt_code: KPR-05-007
 title: Terminal Cleanup Contract
-version: 2.3
+version: 2.5
 status: active
 load_type: always_startup
 owner_box: 05_patch_delivery_and_validation
-source_stage: project-garbage-root-semantics-v1
+source_stage: chained-install-validate-terminal-continuation-v1
 ---
 
 # Terminal Cleanup Contract
@@ -95,23 +95,59 @@ If successful installation is not proven, use the non-install-success path.
 ## Install-success cleanup
 
 Use only after the installer returned success and all receiver-level installed
-hash checks passed. Show success, wait about two seconds, call `Clear-Host`, keep
-the terminal open, and do not ask for Enter.
+hash checks passed. Preserve the complete success output, show the install success
+marker, ask for Enter twice, run one final `Clear-Host`, and keep the terminal open.
+Do not use an automatic timed clear.
 
 ```powershell
 if (-not $InstallFailed) {
     Write-Host ""
-    Write-Host "INSTALL OK. Terminal will clear in 2 seconds..."
-    Start-Sleep -Seconds 2
+    Write-Host "INSTALL OK. Press Enter twice to clear terminal."
+    Write-Host ""
+    Read-Host "Press Enter to clear terminal"
+    Read-Host "Press Enter again to clear"
     Clear-Host
 }
 ```
 
-## Non-install-success cleanup
+
+## Chained INSTALL -> VALIDATE continuation
+
+For the canonical KPR-05-005 feature-delivery flow, one outer PowerShell paste
+unit may invoke the separately owned `INSTALL.ps1` and `VALIDATE.ps1` scripts in
+sequence.
+
+The install script remains install-only. After successful installed-hash checks,
+it must preserve the success output, ask for Enter twice, run one final
+`Clear-Host`, and return normally to the caller. The same already-pasted outer
+PowerShell block may then invoke `VALIDATE.ps1`.
+
+This is the required interactive sequence:
+
+```text
+INSTALL success
+-> preserve output
+-> Enter
+-> Enter
+-> Clear-Host
+-> return to outer paste unit
+-> VALIDATE
+```
+
+If INSTALL fails or throws, control must not continue to VALIDATE. If VALIDATE
+fails, no later Freeze phase may run. A failure is never cleared or converted to
+success merely so the chain can continue.
+
+Do not put validation logic inside `INSTALL.ps1`, and do not put installation
+logic inside `VALIDATE.ps1`. The orchestration is combined; the phase owners are
+not.
+
+## Other interactive cleanup
 
 For interactive validation, snapshot/freeze, diagnostics, recovery, and every error path,
 preserve all relevant output, ask for Enter twice, run one final `Clear-Host`, and
-keep the terminal open.
+keep the terminal open. Install success now uses this same cleanup sequence after
+printing its success marker.
 
 ```powershell
 Write-Host ""
@@ -133,14 +169,15 @@ LAST SUCCESSFUL MARKER, when available
 ```
 
 Install errors use the interactive Enter, Enter cleanup and must never fall
-through to the timed success footer. Do not print PASS after a preceding command
-failed.
+through to a success marker. Do not print PASS after a preceding command failed.
 
 ## PowerShell safety
 
 - Do not use `exit`, `Stop-Process`, `Restart-Computer`, or terminal-closing
   commands.
-- Do not mix the timed success footer and Enter, Enter footer.
+- Do not use automatic timed terminal clearing for interactive install success.
+- In the KPR-05-005 chained delivery flow, successful install cleanup returns to the same outer paste unit so validation can start; failed install must stop the chain.
+- Do not use `Start-Sleep` as a terminal-cleanup mechanism.
 - Do not use `finally` for terminal clearing.
 - User-facing and packaged PowerShell must not use `else` or `elseif`.
 - Validate every critical path before passing it to `-LiteralPath`.

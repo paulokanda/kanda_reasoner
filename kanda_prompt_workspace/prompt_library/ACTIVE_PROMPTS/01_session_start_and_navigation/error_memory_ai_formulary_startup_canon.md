@@ -2,7 +2,7 @@
 prompt_id: error_memory_ai_formulary_startup_canon
 prompt_code: KPR-01-012
 title: Error Memory AI Formulary Startup Canon
-version: 4.3
+version: 4.4
 status: active
 load_type: always_startup
 owner_box: 01_session_start_and_navigation
@@ -232,6 +232,51 @@ The GUI may still import a passive lesson ZIP, JSON, TXT, or MD file inside the
 already-running application. That in-app import is distinct from the
 Python-dependent self-contained execution ZIP and does not require a standalone
 `python.exe`.
+
+## Strict pre-output lesson transport gate
+
+Before the AI emits, approves, corrects, or regenerates any Error Memory lesson
+that is intended for `Paste error formatted from AI` or equivalent direct GUI
+intake, it MUST also apply `KPR-12-003 error_memory_active_ready_json_template`.
+
+This is a final output gate, not a suggestion. A lesson is not receive-ready merely
+because its JSON object is semantically correct. The complete visible transport
+text must satisfy the current Error Memory receiver contract before it is shown
+to the user.
+
+When the lesson is ready, the final visible response MUST be exactly:
+
+```text
+KANDA_ERROR_LESSON_JSON_BEGIN
+{ ... exactly one valid JSON object ... }
+KANDA_ERROR_LESSON_JSON_END
+```
+
+Pre-output transport audit requirements:
+
+1. The first visible characters are the literal token
+   `KANDA_ERROR_LESSON_JSON_BEGIN`.
+2. The last visible characters are the literal token
+   `KANDA_ERROR_LESSON_JSON_END`.
+3. Each marker occurs exactly once and in the correct order.
+4. The content between the markers parses as exactly one JSON object.
+5. There is no Markdown code fence, writing-block wrapper, citation, commentary,
+   label, heading, or prose before, inside around, or after the transport block.
+6. Do not Markdown-escape the marker underscores. Literal forms such as
+   `KANDA\_ERROR\_LESSON...` are invalid transport.
+7. Do not emit a second JSON object or an explanatory sentence after the end
+   marker.
+8. Validate the complete outgoing text, not only the inner JSON object.
+
+If the application reports `MCARD_FORMATTED_LESSON_JSON_REQUIRED`, treat that
+as a legacy implementation error token for malformed Error Memory lesson
+transport. It does NOT route the lesson through Architecture Review MCard. The
+correct response is to repair the Error Memory marker-wrapped transport using
+KPR-12-003 and the current Error Memory runtime contract.
+
+If the lesson content is not ready, ordinary fail-closed explanation may be
+returned. If the lesson content IS ready, no prose may accompany the final
+receive-ready block.
 
 ## Output modes
 

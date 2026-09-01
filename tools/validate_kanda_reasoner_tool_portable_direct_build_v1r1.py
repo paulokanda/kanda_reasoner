@@ -9,6 +9,9 @@ import os
 import subprocess
 import sys
 import tempfile
+
+# Validation must not create undeclared Portable builder members.
+sys.dont_write_bytecode = True
 from pathlib import Path
 
 FEATURE_ID = "kanda-reasoner-tool-portable-direct-pyinstaller-v1r2"
@@ -361,6 +364,7 @@ def main() -> int:
     completed = subprocess.run(
         [
             sys.executable,
+            "-B",
             str(current_validator),
             "--portable-root",
             str(root / "portable"),
@@ -394,6 +398,7 @@ def main() -> int:
     print("TOOL PORTABLE RUNTIME DESCENDANT SMOKE OWNER: PASS")
     print("TOOL PORTABLE LEGACY SELF-HOSTING GATE UNCHANGED: PASS")
     print("TOOL PORTABLE PORTABLE BUILDER MANIFEST UNCHANGED: PASS")
+    print("TOOL PORTABLE VALIDATOR BYTECODE WRITE DISABLED: PASS")
     print(f"VALIDATION OK: {FEATURE_ID}")
     return 0
 

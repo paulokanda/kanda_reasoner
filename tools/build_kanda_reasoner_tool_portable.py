@@ -81,9 +81,13 @@ def _hydrate_tool_owned_physical_runtime(
         sys.path.insert(0, tool_root_text)
     sys.dont_write_bytecode = True
     try:
+        from kanda_reasoner_app.release_identity import (
+            write_portable_release_manifest,
+        )
         from portable.physical_runtime import hydrate_physical_runtime
 
         hydrate_physical_runtime(tool_root, stage)
+        write_portable_release_manifest(tool_root, stage)
     finally:
         sys.dont_write_bytecode = previous_dont_write_bytecode
         if not tool_root_was_present:
@@ -119,8 +123,6 @@ def clean_environment() -> dict[str, str]:
     }
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     return environment
-
-
 
 
 def _run_required_validator(

@@ -8,17 +8,23 @@ re-exported here so existing imports keep working.
 
 from __future__ import annotations
 
+import ctypes
+import os
 import shutil
+import uuid
 from pathlib import Path
 from typing import Any
 
 from startup_kernel.constants import (
+    DEFAULT_ZIP_NAME,
     FIRST_PROMPT_FILES_DIR_NAME,
     LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME,
     LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME,
     MODIFY_STARTUP_DELIVERY_FILENAME,
     OLD_PASTE_AFTER_UPLOAD_FILENAME,
     PASTE_AFTER_UPLOAD_FILENAME,
+    PROMPT_LIBRARY_ZIP_NAME,
+    STARTUP_ARTIFACT_READ_ORDER_MARKER,
     SourceEntry,
 )
 from startup_kernel.generic_helpers import (
@@ -39,12 +45,17 @@ __all__ = [
     "default_first_prompt_output_dir",
     "detect_workspace_root",
     "generated_header",
+    "fault_checkpoint",
     "load_source_map",
+    "make_stage_dir",
     "now_utc",
     "read_text_utf8",
+    "publish_complete_delivery",
+    "remove_completed_backup",
     "resolve_source",
     "sha256_bytes",
     "sha256_file",
+    "validate_complete_delivery",
 ]
 
 
@@ -140,6 +151,8 @@ def clean_delivery_folder(output_dir: Path) -> None:
         "send" + "_this_first__CERT_" + "*.md",  # obsolete pre-rename boot command files
         "send_ai" + "_just_if_modify" + "_startup_delivery.md",  # obsolete pre-rename maintenance file
         PASTE_AFTER_UPLOAD_FILENAME,
+    PROMPT_LIBRARY_ZIP_NAME,
+    STARTUP_ARTIFACT_READ_ORDER_MARKER,
         OLD_PASTE_AFTER_UPLOAD_FILENAME,
         LEGACY_PASTE_AFTER_FIRST_PROMPTS_FILENAME,
         LEGACY_MODIFY_STARTUP_DELIVERY_FILENAME,
@@ -149,3 +162,232 @@ def clean_delivery_folder(output_dir: Path) -> None:
         for path in output_dir.glob(pattern):
             if path.is_file():
                 path.unlink()
+
+_FAULT_ENV = "KANDA_STARTUP_TX_TEST_HARD_EXIT"
+_MOVEFILE_WRITE_THROUGH = 0x00000008
+_RENAME_EXCHANGE = 0x00000002
+_AT_FDCWD = -100
+
+
+def fault_checkpoint(name: str) -> None:
+    """Terminate only when the focused C2 fault test requests it."""
+    if os.environ.get(_FAULT_ENV) == name:
+        os._exit(82)
+
+
+def _expected_delivery_names() -> set[str]:
+    return {
+        DEFAULT_ZIP_NAME,
+        PROMPT_LIBRARY_ZIP_NAME,
+        PASTE_AFTER_UPLOAD_FILENAME,
+        MODIFY_STARTUP_DELIVERY_FILENAME,
+    }
+
+
+def validate_complete_delivery(
+    delivery_dir: Path,
+    workspace_root: Path,
+    source_files: list[str],
+    *,
+    flush: bool = False,
+) -> dict[str, str]:
+    """Validate a complete startup projection and return exact hashes."""
+    from startup_kernel.prompt_library_zip import (
+        validate_prompt_library_zip_contract,
+    )
+    from startup_kernel.zip_contract import validate_generated_zip_contract
+
+    expected = _expected_delivery_names()
+    if not delivery_dir.is_dir():
+        raise ValueError("Startup delivery is missing: " + str(delivery_dir))
+    actual = {path.name for path in delivery_dir.iterdir()}
+    if actual != expected:
+        raise ValueError(
+            "Startup delivery member set mismatch. Expected "
+            + str(sorted(expected))
+            + "; found "
+            + str(sorted(actual))
+        )
+    validate_generated_zip_contract(
+        delivery_dir / DEFAULT_ZIP_NAME,
+        source_files,
+    )
+    validate_prompt_library_zip_contract(
+        delivery_dir / PROMPT_LIBRARY_ZIP_NAME,
+        workspace_root,
+    )
+    for filename in (
+        PASTE_AFTER_UPLOAD_FILENAME,
+        MODIFY_STARTUP_DELIVERY_FILENAME,
+    ):
+        text = (delivery_dir / filename).read_text(encoding="utf-8-sig")
+        if STARTUP_ARTIFACT_READ_ORDER_MARKER not in text:
+            raise ValueError(filename + " is missing the read-order marker.")
+    if flush:
+        for name in sorted(expected):
+            with (delivery_dir / name).open("r+b") as handle:
+                handle.flush()
+                os.fsync(handle.fileno())
+        if os.name != "nt":
+            descriptor = os.open(delivery_dir, os.O_RDONLY)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
+    return {
+        name: sha256_file(delivery_dir / name)
+        for name in sorted(expected)
+    }
+
+
+def _transaction_path(output_dir: Path, kind: str) -> Path:
+    token = uuid.uuid4().hex
+    return output_dir.parent / f".{output_dir.name}.c2-{kind}-{token}"
+
+
+def make_stage_dir(output_dir: Path) -> Path:
+    """Create an off-side complete-replacement staging directory."""
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    stage_dir = _transaction_path(output_dir, "stage")
+    stage_dir.mkdir(parents=False, exist_ok=False)
+    return stage_dir
+
+
+def _windows_filesystem_name(path: Path) -> str:
+    if str(path).startswith("\\\\"):
+        raise ValueError("Startup transaction requires a local NTFS volume.")
+    root = path.resolve(strict=False).anchor
+    if not root:
+        raise ValueError("Could not resolve startup delivery volume root.")
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    function = kernel32.GetVolumeInformationW
+    function.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_void_p,
+        ctypes.c_void_p,
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+    ]
+    function.restype = ctypes.c_int
+    filesystem = ctypes.create_unicode_buffer(64)
+    if not function(root, None, 0, None, None, None, filesystem, 64):
+        raise OSError(ctypes.get_last_error(), "GetVolumeInformationW failed.")
+    return filesystem.value.upper()
+
+
+def _windows_transactional_swap(
+    stage_dir: Path,
+    output_dir: Path,
+) -> Path:
+    if _windows_filesystem_name(output_dir.parent) != "NTFS":
+        raise ValueError("Startup transaction requires a local NTFS volume.")
+    backup_dir = _transaction_path(output_dir, "backup")
+    ktm = ctypes.WinDLL("KtmW32", use_last_error=True)
+    kernel32 = ctypes.WinDLL("Kernel32", use_last_error=True)
+    create = ktm.CreateTransaction
+    create.argtypes = [
+        ctypes.c_void_p, ctypes.c_void_p, ctypes.c_uint32,
+        ctypes.c_uint32, ctypes.c_uint32, ctypes.c_uint32,
+        ctypes.c_wchar_p,
+    ]
+    create.restype = ctypes.c_void_p
+    commit = ktm.CommitTransaction
+    commit.argtypes = [ctypes.c_void_p]
+    commit.restype = ctypes.c_int
+    rollback = ktm.RollbackTransaction
+    rollback.argtypes = [ctypes.c_void_p]
+    rollback.restype = ctypes.c_int
+    move = kernel32.MoveFileTransactedW
+    move.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_wchar_p,
+        ctypes.c_void_p,
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+    ]
+    move.restype = ctypes.c_int
+    close = kernel32.CloseHandle
+    close.argtypes = [ctypes.c_void_p]
+    close.restype = ctypes.c_int
+    transaction = create(
+        None, None, 0, 0, 0, 0,
+        "KANDA startup delivery transactional cutover",
+    )
+    invalid = ctypes.c_void_p(-1).value
+    if transaction in (None, 0, invalid):
+        raise OSError(ctypes.get_last_error(), "CreateTransaction failed.")
+    committed = False
+    try:
+        for source, destination, checkpoint in (
+            (output_dir, backup_dir, "after_old_move_enlisted"),
+            (stage_dir, output_dir, "after_new_move_enlisted"),
+        ):
+            if not move(
+                str(source), str(destination), None, None,
+                _MOVEFILE_WRITE_THROUGH, transaction,
+            ):
+                raise OSError(
+                    ctypes.get_last_error(),
+                    "MoveFileTransactedW failed: " + str(source),
+                )
+            fault_checkpoint(checkpoint)
+        fault_checkpoint("before_commit")
+        if not commit(transaction):
+            raise OSError(ctypes.get_last_error(), "CommitTransaction failed.")
+        committed = True
+        fault_checkpoint("after_commit")
+        return backup_dir
+    finally:
+        if not committed:
+            rollback(transaction)
+        close(transaction)
+
+
+def _posix_exchange(stage_dir: Path, output_dir: Path) -> Path:
+    libc = ctypes.CDLL(None, use_errno=True)
+    renameat2 = getattr(libc, "renameat2", None)
+    if renameat2 is None:
+        raise ValueError("Atomic directory exchange is unavailable.")
+    renameat2.argtypes = [
+        ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+        ctypes.c_uint,
+    ]
+    renameat2.restype = ctypes.c_int
+    fault_checkpoint("before_commit")
+    if renameat2(
+        _AT_FDCWD, os.fsencode(stage_dir),
+        _AT_FDCWD, os.fsencode(output_dir),
+        _RENAME_EXCHANGE,
+    ) != 0:
+        code = ctypes.get_errno()
+        raise OSError(code, os.strerror(code))
+    fault_checkpoint("after_commit")
+    return stage_dir
+
+
+def publish_complete_delivery(
+    stage_dir: Path,
+    output_dir: Path,
+) -> Path | None:
+    """Expose complete-new atomically or preserve complete-old."""
+    if not output_dir.exists():
+        fault_checkpoint("before_commit")
+        os.replace(stage_dir, output_dir)
+        fault_checkpoint("after_commit")
+        return None
+    if os.name == "nt":
+        return _windows_transactional_swap(stage_dir, output_dir)
+    if os.name == "posix":
+        return _posix_exchange(stage_dir, output_dir)
+    raise ValueError("Transactional startup publication is unsupported.")
+
+
+def remove_completed_backup(path: Path | None) -> None:
+    """Delete old non-authoritative delivery only after live validation."""
+    if path is not None and path.exists():
+        shutil.rmtree(path)
+

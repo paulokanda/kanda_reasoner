@@ -57,7 +57,7 @@ PyInstaller 6.21.0. The active Project may be external, self-hosted, or none; it
 does not authorize or block Tool packaging.
 
 The exact `portable/` builder contract is 31 files and 0 directories.
-The runtime allowlist remains exactly 358 path/size/SHA-256-bound sources.
+The runtime allowlist remains exactly 360 path/size/SHA-256-bound sources.
 The seven external build-control authorities remain exact
 path/role/size/SHA-256 bound.
 

@@ -5,7 +5,7 @@
   "category": "ROUTING",
   "status": "active_candidate",
   "load_type": "tier_1_group_routing",
-  "source_stage": "kanda_context_routing_layer_phase1",
+  "source_stage": "freeze-candidate-pre-output-audit-bridge-v1",
   "description": "Group-level routing map for the 12 use-based prompt folders; selects prompt neighborhoods before individual specialist prompts.",
   "priority": 15,
   "required_companion_prompts": [

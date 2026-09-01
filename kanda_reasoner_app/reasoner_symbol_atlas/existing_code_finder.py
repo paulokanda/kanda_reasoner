@@ -44,6 +44,8 @@ from .shadow_report import (
     ProjectSymbolAtlasShadowReportOptions,
 )
 
+from .review_session import reasoner_symbol_atlas_options_reuse
+
 from .existing_code_finder_matching_private import (
     _choose_query_type,
     _inactive_owner_paths,
@@ -293,6 +295,8 @@ class ProjectSymbolAtlasExistingCodeFinderResult:
             "reasons": list(self.reasons),
         }
 
+
+@reasoner_symbol_atlas_options_reuse("existing-code-finder")
 def find_reasoner_symbol_atlas_existing_code(
     options: ProjectSymbolAtlasExistingCodeFinderOptions,
 ) -> ProjectSymbolAtlasExistingCodeFinderResult:

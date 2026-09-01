@@ -10,7 +10,7 @@
   ],
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md",
   "category": "03_governance_freeze_and_handoff",
-  "description": "Creates one self-contained selected-Project Freeze intake ZIP, bridged to the separate Error Memory intake owner through KPR-05-005 while preserving independent ownership and human confirmation.",
+  "description": "Creates one self-contained selected-Project Freeze intake ZIP using the canonical raw 11-field Freeze JSON payload after KPR-03-008 current-store, provenance, path-owner, complete-transaction, and second-audit gates, while preserving independent Error Memory ownership and explicit human confirmation.",
   "display_name": "Self-Contained Freeze Entry Intake ZIP",
   "filename": "self_contained_freeze_entry_intake_zip.md",
   "load_type": "on_request",
@@ -26,10 +26,11 @@
   ],
   "required_companion_prompts": [
     "freeze_code_intake_and_form_protocol",
+    "freeze_candidate_pre_output_audit",
     "pre_output_contract_gates",
     "implementation_and_delivery_protocol"
   ],
-  "source_stage": "freeze-error-intake-bridge-v1",
+  "source_stage": "prompt-freeze-error-memory-lifecycle-alignment-v1",
   "status": "active",
   "trigger_phrases": [
     "Send zip freeze",
@@ -38,6 +39,6 @@
     "self-contained freeze intake ZIP",
     "prepare freeze entry ZIP"
   ],
-  "updated_for": "self-contained-freeze-error-intake-bridge-v1",
-  "version": "1.1"
+  "updated_for": "prompt-freeze-error-memory-lifecycle-alignment-v1",
+  "version": "1.3"
 }

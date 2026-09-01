@@ -63,8 +63,42 @@ def create_engineering_diagnostics_workspace(
     def select_pontual() -> None:
         tabs.setCurrentWidget(pontual_page)
 
+    def project_scope_switch_block_reason() -> str:
+        for page in (full_page, pontual_page):
+            blocker = getattr(page, "project_scope_switch_block_reason", None)
+            if callable(blocker):
+                reason = str(blocker() or "").strip()
+                if reason:
+                    return reason
+        return ""
+
+    def request_project_scope_settlement() -> None:
+        for page in (full_page, pontual_page):
+            requester = getattr(page, "request_project_scope_settlement", None)
+            if callable(requester):
+                requester()
+
+    def shutdown_ready() -> bool:
+        for page in (full_page, pontual_page):
+            ready = getattr(page, "shutdown_ready", None)
+            if callable(ready) and not bool(ready()):
+                return False
+        return True
+
+    def begin_shutdown() -> bool:
+        ready = True
+        for page in (full_page, pontual_page):
+            begin = getattr(page, "begin_shutdown", None)
+            if callable(begin):
+                ready = bool(begin()) and ready
+        return ready and shutdown_ready()
+
     workspace.set_project_root = set_project_root
     workspace.select_pontual_engineering_diagnostics = select_pontual
+    workspace.project_scope_switch_block_reason = project_scope_switch_block_reason
+    workspace.request_project_scope_settlement = request_project_scope_settlement
+    workspace.begin_shutdown = begin_shutdown
+    workspace.shutdown_ready = shutdown_ready
     workspace.engineering_diagnostics_mode_tabs = tabs
     workspace.full_engineering_diagnostics_page = full_page
     workspace.pontual_engineering_diagnostics_page = pontual_page

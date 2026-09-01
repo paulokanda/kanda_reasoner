@@ -163,12 +163,20 @@ def _build_context_text(members: Mapping[str, bytes]) -> tuple[str, str, tuple[s
     bundle = json_member(members, "__bundle_manifest.json")
     safety = json_member(members, "__patch_safety_routes.json")
     validation = json_member(members, "__validation_state.json")
-    lessons = _compact_lessons(json_member(members, "__error_lessons_compact.json"))
-    error_manifest = json_member(members, "__error_memory_manifest.json")
-    error_prompt = members["__error_memory_ai_prompt.md"].decode(
-        "utf-8",
-        errors="replace",
-    )
+    lessons = None
+    if "__error_lessons_compact.json" in members:
+        lessons = _compact_lessons(
+            json_member(members, "__error_lessons_compact.json")
+        )
+    error_manifest = None
+    if "__error_memory_manifest.json" in members:
+        error_manifest = json_member(members, "__error_memory_manifest.json")
+    error_prompt = ""
+    if "__error_memory_ai_prompt.md" in members:
+        error_prompt = members["__error_memory_ai_prompt.md"].decode(
+            "utf-8",
+            errors="replace",
+        )
     omitted = [
         "exact source files",
         "full Error Memory",
@@ -184,10 +192,17 @@ def _build_context_text(members: Mapping[str, bytes]) -> tuple[str, str, tuple[s
         _section("BUNDLE MANIFEST", bundle),
         _section("PATCH SAFETY ROUTES", safety),
         _section("VALIDATION STATE", validation),
-        _section("ERROR MEMORY PREFLIGHT", error_prompt),
-        _section("COMPACT ERROR MEMORY", lessons),
-        _section("ERROR MEMORY MANIFEST", error_manifest),
     ]
+    if error_prompt:
+        sections.append(_section("ERROR MEMORY PREFLIGHT", error_prompt))
+    if lessons is not None:
+        sections.append(_section("COMPACT ERROR MEMORY", lessons))
+    if error_manifest is not None:
+        sections.append(_section("ERROR MEMORY MANIFEST", error_manifest))
+    if not error_prompt and lessons is None and error_manifest is None:
+        omitted.append(
+            "Tool-owned Error Memory context; supply it separately when needed"
+        )
     if "__file_manifest.json" in members:
         sections.append(
             _section(

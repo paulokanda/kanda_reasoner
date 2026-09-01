@@ -160,6 +160,36 @@ class _FakeController:
         return _run_view(run_id, producer)
 
 
+def _fixture_capability_coverage(models_module, thread_ids: list[int]):
+    thread_ids.append(threading.get_ident())
+    result = models_module.EngineeringCapabilityResult(
+        surface="PONTUAL_GUI",
+        section="Fixture Coverage",
+        label="Deterministic Capability Fixture",
+        command_name="fixture-capability",
+        scope_mode="VALIDATOR_FIXTURE",
+        status="CLEAN",
+        severity="INFO",
+        assessment_reason=(
+            "Real Qt handoff lifecycle validation isolates capability latency "
+            "from the live selected Project."
+        ),
+        execution="VALIDATOR_FIXTURE",
+        status_code=0,
+        elapsed_seconds=0.0,
+        finding_count=0,
+        evidence="deterministic real-Qt validator coverage fixture",
+        correction_guidance="No correction required for validator fixture.",
+    )
+    return models_module.EngineeringCapabilityCoverage(
+        results=(result,),
+        gui_catalog_count=23,
+        cli_catalog_count=24,
+        unique_safety_surface_count=47,
+        architecture_surface_count=1,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True)
@@ -172,6 +202,10 @@ def main() -> int:
 
     from PySide6.QtCore import QTimer
     from PySide6.QtWidgets import QApplication
+    from kanda_reasoner_app.engineering_diagnostics_gui import (
+        _engineering_capability_models as capability_models,
+    )
+    from kanda_reasoner_app.engineering_diagnostics_gui import ai_correction_handoff
     from kanda_reasoner_app.engineering_diagnostics_gui.full_engineering_diagnostics_tab import (
         create_full_engineering_diagnostics_panel,
     )
@@ -180,6 +214,7 @@ def main() -> int:
     controller = _FakeController()
     main_thread = threading.get_ident()
     heartbeat = {"count": 0}
+    coverage_threads: list[int] = []
     timer = QTimer()
     timer.setInterval(20)
     timer.timeout.connect(
@@ -187,77 +222,115 @@ def main() -> int:
     )
     timer.start()
 
-    panel = create_full_engineering_diagnostics_panel(
-        project_root_provider=lambda: str(project_root),
-        controller=controller,
-    )
-    panel.show()
-    app.processEvents()
-    copy_button = panel.full_engineering_diagnostics_copy_ai_handoff_button
-    _require(copy_button.isEnabled() is False, "REAL_QT_GROUPED_AI_HANDOFF_IDLE_DISABLED")
-    panel.start_full_engineering_diagnostics()
+    original_coverage = ai_correction_handoff.collect_engineering_capability_coverage
 
-    building_seen = False
-    deadline = time.monotonic() + 12.0
-    while time.monotonic() < deadline and not copy_button.isEnabled():
-        app.processEvents()
-        text = panel.full_engineering_diagnostics_output.toPlainText()
-        if "AI correction handoff: BUILDING" in text:
-            building_seen = True
-        time.sleep(0.01)
+    def isolated_coverage(_project_root, _collector_results, _cancellation=None):
+        return _fixture_capability_coverage(capability_models, coverage_threads)
 
-    _require(building_seen, "REAL_QT_GROUPED_AI_HANDOFF_BUILDING_VISIBLE")
-    _require(copy_button.isEnabled(), "REAL_QT_GROUPED_AI_HANDOFF_READY")
-    _require(heartbeat["count"] >= 10, "REAL_QT_GROUPED_AI_HANDOFF_EVENT_LOOP_RESPONSIVE")
-    _require(bool(controller.load_threads), "REAL_QT_GROUPED_AI_HANDOFF_RUN_VIEWS_LOADED")
-    _require(
-        all(thread_id != main_thread for thread_id in controller.load_threads),
-        "REAL_QT_GROUPED_AI_HANDOFF_ENRICHMENT_OFF_GUI_THREAD",
-    )
-
-    output_text = panel.full_engineering_diagnostics_output.toPlainText()
-    _require("AI correction handoff: READY" in output_text, "REAL_QT_GROUPED_AI_HANDOFF_STATUS")
-    _require("AI CORRECTION SUMMARY" in output_text, "REAL_QT_GROUPED_AI_HANDOFF_CONSOLE_SUMMARY")
-    _require("Correction groups:" in output_text, "REAL_QT_GROUPED_AI_HANDOFF_GROUP_COUNT")
-    path_line = next(line for line in output_text.splitlines() if line.startswith("Path: "))
-    report_path = Path(path_line[6:].strip())
-    _require(report_path.is_file(), "REAL_QT_GROUPED_AI_HANDOFF_FILE_WRITTEN")
-    report_text = report_path.read_text(encoding="utf-8", errors="replace")
-    _require(
-        "Raw finding duplication into this handoff: NO" in report_text,
-        "REAL_QT_GROUPED_AI_HANDOFF_COMPRESSION_CONTRACT",
-    )
-    _require(
-        "Affected paths:" in report_text
-        and "Representative finding 1:" in report_text
-        and "Likely correction: Move behavior to the canonical owner." in report_text,
-        "REAL_QT_GROUPED_AI_HANDOFF_CORRECTION_CONTEXT",
-    )
-
-    copy_button.click()
-    app.processEvents()
-    clipboard_text = QApplication.clipboard().text()
-    _require(
-        "FULL ENGINEERING DIAGNOSTICS AI CORRECTION HANDOFF" in clipboard_text,
-        "REAL_QT_GROUPED_AI_HANDOFF_CLIPBOARD",
-    )
-
-    timer.stop()
-    panel.close()
-    panel.deleteLater()
-    app.processEvents()
+    ai_correction_handoff.collect_engineering_capability_coverage = isolated_coverage
+    panel = None
+    report_path = None
     try:
-        report_path.unlink()
-        if not any(report_path.parent.iterdir()):
-            report_path.parent.rmdir()
-    except OSError:
-        pass
+        panel = create_full_engineering_diagnostics_panel(
+            project_root_provider=lambda: str(project_root),
+            controller=controller,
+        )
+        panel.show()
+        app.processEvents()
+        copy_button = panel.full_engineering_diagnostics_copy_ai_handoff_button
+        _require(
+            copy_button.isEnabled() is False,
+            "REAL_QT_GROUPED_AI_HANDOFF_IDLE_DISABLED",
+        )
+        panel.start_full_engineering_diagnostics()
 
-    print("PROJECT SOURCE MUTATED BY REAL QT VALIDATOR: NO")
-    print("FREEZE MEMORY MUTATED BY REAL QT VALIDATOR: NO")
-    print("PROJECT SELECTION REGISTRY MUTATED BY REAL QT VALIDATOR: NO")
-    print("VALIDATION OK: " + FEATURE_ID)
-    return 0
+        building_seen = False
+        deadline = time.monotonic() + 12.0
+        while time.monotonic() < deadline and not copy_button.isEnabled():
+            app.processEvents()
+            text = panel.full_engineering_diagnostics_output.toPlainText()
+            if "AI correction handoff: BUILDING" in text:
+                building_seen = True
+            time.sleep(0.01)
+
+        _require(building_seen, "REAL_QT_GROUPED_AI_HANDOFF_BUILDING_VISIBLE")
+        _require(copy_button.isEnabled(), "REAL_QT_GROUPED_AI_HANDOFF_READY")
+        _require(
+            heartbeat["count"] >= 10,
+            "REAL_QT_GROUPED_AI_HANDOFF_EVENT_LOOP_RESPONSIVE",
+        )
+        _require(bool(controller.load_threads), "REAL_QT_GROUPED_AI_HANDOFF_RUN_VIEWS_LOADED")
+        _require(
+            all(thread_id != main_thread for thread_id in controller.load_threads),
+            "REAL_QT_GROUPED_AI_HANDOFF_ENRICHMENT_OFF_GUI_THREAD",
+        )
+        _require(
+            bool(coverage_threads),
+            "REAL_QT_GROUPED_AI_HANDOFF_CAPABILITY_FIXTURE_USED",
+        )
+        _require(
+            all(thread_id != main_thread for thread_id in coverage_threads),
+            "REAL_QT_GROUPED_AI_HANDOFF_CAPABILITY_FIXTURE_OFF_GUI_THREAD",
+        )
+
+        output_text = panel.full_engineering_diagnostics_output.toPlainText()
+        _require(
+            "AI correction handoff: READY" in output_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_STATUS",
+        )
+        _require(
+            "AI CORRECTION SUMMARY" in output_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_CONSOLE_SUMMARY",
+        )
+        _require(
+            "Correction groups:" in output_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_GROUP_COUNT",
+        )
+        path_line = next(
+            line for line in output_text.splitlines() if line.startswith("Path: ")
+        )
+        report_path = Path(path_line[6:].strip())
+        _require(report_path.is_file(), "REAL_QT_GROUPED_AI_HANDOFF_FILE_WRITTEN")
+        report_text = report_path.read_text(encoding="utf-8", errors="replace")
+        _require(
+            "Raw finding duplication into this handoff: NO" in report_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_COMPRESSION_CONTRACT",
+        )
+        _require(
+            "Affected paths:" in report_text
+            and "Representative finding 1:" in report_text
+            and "Likely correction: Move behavior to the canonical owner." in report_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_CORRECTION_CONTEXT",
+        )
+
+        copy_button.click()
+        app.processEvents()
+        clipboard_text = QApplication.clipboard().text()
+        _require(
+            "FULL ENGINEERING DIAGNOSTICS AI CORRECTION HANDOFF" in clipboard_text,
+            "REAL_QT_GROUPED_AI_HANDOFF_CLIPBOARD",
+        )
+
+        print("REAL_QT_GROUPED_AI_HANDOFF_LIVE_CAPABILITY_CATALOG_IN_FIXTURE: ABSENT")
+        print("PROJECT SOURCE MUTATED BY REAL QT VALIDATOR: NO")
+        print("FREEZE MEMORY MUTATED BY REAL QT VALIDATOR: NO")
+        print("PROJECT SELECTION REGISTRY MUTATED BY REAL QT VALIDATOR: NO")
+        print("VALIDATION OK: " + FEATURE_ID)
+        return 0
+    finally:
+        ai_correction_handoff.collect_engineering_capability_coverage = original_coverage
+        timer.stop()
+        if panel is not None:
+            panel.close()
+            panel.deleteLater()
+            app.processEvents()
+        if report_path is not None:
+            try:
+                report_path.unlink()
+                if report_path.parent.is_dir() and not any(report_path.parent.iterdir()):
+                    report_path.parent.rmdir()
+            except OSError:
+                pass
 
 
 if __name__ == "__main__":

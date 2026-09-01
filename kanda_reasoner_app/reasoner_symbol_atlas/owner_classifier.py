@@ -6,15 +6,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from .import_analyzer import (
-    ProjectSymbolAtlasImportAnalysisOptions,
-    analyze_reasoner_symbol_atlas_imports,
-)
+from .import_analyzer import ProjectSymbolAtlasImportAnalysisOptions
+from ._owner_analysis_pipeline import collect_reasoner_symbol_atlas_owner_inputs
 from .schemas import ProjectModuleRecord, ProjectSymbol, ProjectSymbolAtlasReport
-from .symbol_indexer import (
-    ProjectSymbolAtlasSymbolIndexOptions,
-    index_reasoner_symbol_atlas_modules,
-)
+from .review_session import _review_cache_get, _review_cache_put
+from .symbol_indexer import ProjectSymbolAtlasSymbolIndexOptions
 
 __all__ = [
     "ProjectSymbolAtlasOwnerClassifyOptions",
@@ -424,18 +420,21 @@ def classify_reasoner_symbol_atlas_owners(
     """Classify likely module and symbol owners without importing project code."""
     root = _coerce_project_root(project_root)
     classify_options = options or ProjectSymbolAtlasOwnerClassifyOptions()
-    indexed_records = index_reasoner_symbol_atlas_modules(
+    cache_key = ("owner_classification", str(root), classify_options)
+    cached = _review_cache_get(root, cache_key)
+    if isinstance(cached, tuple):
+        return cached
+    indexed_records, import_records = collect_reasoner_symbol_atlas_owner_inputs(
         root,
-        options=classify_options.to_symbol_index_options(),
-    )
-    import_records = analyze_reasoner_symbol_atlas_imports(
-        root,
-        options=classify_options.to_import_analysis_options(),
+        classify_options.to_symbol_index_options(),
+        classify_options.to_import_analysis_options(),
     )
     merged_records = _merge_index_and_import_records(indexed_records, import_records)
     classified = [_copy_record_with_role(record, _module_role(record)) for record in merged_records]
     classified.sort(key=lambda record: (record.path, record.module))
-    return tuple(classified)
+    result = tuple(classified)
+    _review_cache_put(root, cache_key, result)
+    return result
 
 
 def build_reasoner_symbol_atlas_owner_report(

@@ -128,10 +128,10 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Prompt code:** `KPR-03-003`
 - **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md`
 - **Priority:** `30`
-- **Trigger phrases:** `freeze hint intake`; `freeze form`; `new local freeze entry`
+- **Trigger phrases:** `freeze hint intake`; `freeze form`; `new local freeze entry`; `freeze blueprint`; `Get Blueprint Freeze`
 - **User intent examples:** `Carry one validated feature identity into project-owned freeze intake.`
 - **Aliases:** `KPR-03-003`; `freeze_code_intake_and_form_protocol`; `freeze_code_intake_and_form_protocol.md`; `freeze hint and form intake protocol`
-- **When to load:** Carry one validated feature identity into project-owned freeze intake.
+- **When to load:** When the current validated feature needs project-owned freeze intake, a manual Freeze GUI form, or the canonical generic receive-ready blueprint; preserve Preview read-only and explicit human Confirm and Write.
 - **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
 - **Required companion prompts:** `brick_wall_comprehensive_quality_gate`; `pre_output_contract_gates`
 
@@ -171,6 +171,27 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **When not to load:** Do not use as implementation authorization or as a substitute for the exact specialist owner.
 - **Required companion prompts:** none; dispatch supporting concerns only when current Project evidence requires them.
 
+### `self_contained_freeze_entry_intake_zip` - Self-Contained Freeze Entry Intake ZIP
+
+- **Prompt code:** `KPR-03-007`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md`
+- **Priority:** `27`
+- **When to load:** When the user requests one self-contained ZIP that loads the currently validated feature into Freeze Feature After Update -> New Local Freeze Entry for the currently selected Project.
+- **When not to load:** Do not load for ordinary source patch installation, direct frozen-memory writes, unvalidated features, or freeze-form text only.
+- **Required companion prompts:** `freeze_code_intake_and_form_protocol`; `freeze_candidate_pre_output_audit`; `pre_output_contract_gates`; `implementation_and_delivery_protocol`
+
+### `freeze_candidate_pre_output_audit` - Freeze Candidate Pre-Output Audit Protocol
+
+- **Prompt code:** `KPR-03-008`
+- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_candidate_pre_output_audit.md`
+- **Priority:** `36`
+- **Trigger phrases:** `freeze candidate`; `freeze form correction`; `review freeze candidate`; `before freeze JSON`; `freeze blueprint`; `Get Blueprint Freeze`
+- **User intent examples:** `Audit an AI-authored local freeze candidate from evidence before emitting it to the Freeze GUI receiver.`
+- **Aliases:** `KPR-03-008`; `freeze_candidate_pre_output_audit`; `freeze candidate pre-output audit`
+- **When to load:** Immediately before an AI emits, approves, corrects, regenerates, or supplies the generic blueprint for a local Freeze GUI candidate/form; audit receiver schema, path owner roots, evidence, complete post-write planned-next-step semantics, and KPR-03-003/button blueprint parity.
+- **When not to load:** Do not use as patch-sidecar schema owner, local freeze writer authority, or substitute for freeze intake and human confirmation.
+- **Required companion prompts:** `freeze_code_intake_and_form_protocol`; `pre_output_contract_gates`; `brick_wall_comprehensive_quality_gate`
+
 ## Class 04 - Box Architecture and Boundaries
 
 ### KPR-04-001 - Box Architecture Canon
@@ -207,18 +228,6 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - `KPR-04-007 governed_architecture_companion_handoff` -> current canonical
   owner dispatch. The compact file is a deprecated redirect with no route.
 ## Patch Delivery And Validation (`05_patch_delivery_and_validation`)
-
-### `self_contained_freeze_entry_intake_zip` - Self-Contained Freeze Entry Intake ZIP
-
-- **Code:** `KPR-03-007`
-- **File:** `ACTIVE_PROMPTS/03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md`
-- **Status / load:** `active` / `on_request`
-- **When to load:** When the user requests one self-contained ZIP that loads the currently validated feature into Freeze Feature After Update -> New Local Freeze Entry for the currently selected Project.
-- **When not to load:** Do not load for ordinary source patch installation, direct frozen-memory writes, unvalidated features, or freeze-form text only.
-- **Triggers:** `Send zip freeze`; `create freeze loader ZIP`; `load current feature into New Local Freeze Entry`; `self-contained freeze intake ZIP`; `prepare freeze entry ZIP`
-- **Aliases:** `KPR-03-007`; `self_contained_freeze_entry_intake_zip`; `Send zip freeze`; `send zip freeze`; `self-contained freeze loader ZIP`; `New Local Freeze Entry ZIP`
-- **Required companion prompts:** `freeze_code_intake_and_form_protocol`; `pre_output_contract_gates`; `implementation_and_delivery_protocol`
-- **Optional companion prompts:** `terminal_cleanup_contract`; `patch_install_delivery_error_register`
 
 ### `bundle_gated_development_workflow` - Bundle-Gated Development Workflow
 
@@ -261,9 +270,9 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Code:** `KPR-05-005`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_validate_freeze_error_memory_routine_blueprint.md`
 - **Status / load:** `active` / `on_request`
-- **When to load:** When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.
+- **When to load:** When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP, one fail-closed Install -> Enter x2 -> Validate paste unit, human-gated Freeze, and final Error Memory disposition.
 - **When not to load:** Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.
-- **Triggers:** `Answer, Validate, Freeze, Memorize Error`; `one zip separate install validate freeze error memory commands`; `compact update release`; `finish release phases`; `copy recovery routine`
+- **Triggers:** `Answer, Validate, Freeze, Memorize Error`; `one zip install enter enter validate freeze error memory`; `compact update release`; `finish release phases`; `copy recovery routine`
 - **Aliases:** `KPR-05-005`; `patch_validate_freeze_error_memory_routine_blueprint`; `Show Project to AI recovery blueprint`; `Answer Validate Freeze Memorize Error`; `recovery routine owner dispatch`
 - **Required companion prompts:** `project_tool_boundary_canon`; `brick_wall_comprehensive_quality_gate`; `durable_document_artifact_routing_canon`
 - **Optional companion prompts:** `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`; `patch_install_delivery_error_register`; `terminal_cleanup_contract`; `freeze_code_intake_and_form_protocol`; `self_contained_freeze_entry_intake_zip`; `error_memory_ai_formulary_startup_canon`; `self_contained_error_memory_lesson_intake_zip`
@@ -298,12 +307,12 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Code:** `KPR-05-008`
 - **File:** `ACTIVE_PROMPTS/05_patch_delivery_and_validation/self_contained_error_memory_lesson_intake_zip.md`
 - **Status / load:** `active` / `on_request`
-- **When to load:** When the user requests one self-contained ZIP that stages one or more validated lessons as pending entries in the Error Memory lesson library.
+- **When to load:** When the user requests one self-contained ZIP that stages one or more validated lessons as `pending` transport in the Error Memory lesson library; GUI admission normalizes the working lesson to `draft`.
 - **When not to load:** Do not load for direct active memorization, ordinary patch delivery, or when no reusable lesson candidate exists.
 - **Triggers:** `Send Zip Errors`; `create error lesson loader ZIP`; `self-contained Error Memory ZIP`; `stage Error Memory lessons for approval`; `pending error lesson intake`
 - **Aliases:** `KPR-05-008`; `self_contained_error_memory_lesson_intake_zip`; `Send Zip Errors`; `send zip errors`; `self-contained Error Memory ZIP`; `Error Memory lesson intake loader`
 - **Required companion prompts:** `error_memory_ai_formulary_startup_canon`; `bundle_gated_development_workflow`; `implementation_and_delivery_protocol`; `pre_output_contract_gates`
-- **Optional companion prompts:** `terminal_cleanup_contract`; `patch_install_delivery_error_register`
+- **Optional companion prompts:** `terminal_cleanup_contract`; `patch_install_delivery_error_register`; `patch_validate_freeze_error_memory_routine_blueprint`; `self_contained_freeze_entry_intake_zip`
 
 ### `router_bridge_user_detected_correction` - User-Detected Correction Incident Dispatcher
 
@@ -989,9 +998,10 @@ Deprecated compatibility records are not active routes: `daily_reasoner_startup_
 - **Category:** `12_generalized_project_canons`
 - **Status:** `active`
 - **Load type:** `routed`
-- **When to load:** When the exact marker-wrapped final Error Memory output envelope is required.
+- **When to load:** Before emitting, approving, correcting, or regenerating the exact marker-wrapped final Error Memory lesson output envelope, or when Error Memory reports `MCARD_FORMATTED_LESSON_JSON_REQUIRED`.
 - **When not to load:** Do not use as field-schema authority or before readiness evidence exists.
 - **Aliases:** `KPR-12-003`; `Error Memory JSON envelope`; `error_memory_active_ready_json_template`
+- **Exact output gate:** literal `KANDA_ERROR_LESSON_JSON_BEGIN` -> exactly one raw JSON object -> literal `KANDA_ERROR_LESSON_JSON_END`; no Markdown fence, escaped markers, writing block, citations, or prose.
 - **Required companions:** none; dispatch supporting concerns to current owners.
 
 ### `error_memory_model_template` - Error Memory Human-Readable Lesson Model

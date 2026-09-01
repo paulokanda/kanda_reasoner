@@ -11,10 +11,13 @@ from __future__ import annotations
 from .models import (
     FREEZE_HINT_FILENAME,
     FreezePayloadError,
+    build_bound_freeze_payload,
     build_freeze_payload,
+    derive_freeze_ownership_binding,
     dump_freeze_payload_json,
     freeze_form_json_text,
     mandatory_freeze_fields,
+    validate_freeze_ownership_binding,
 )
 from .validator import (
     PatchZipContractError,
@@ -26,10 +29,13 @@ __all__ = [
     "FREEZE_HINT_FILENAME",
     "FreezePayloadError",
     "PatchZipContractError",
+    "build_bound_freeze_payload",
     "build_freeze_payload",
+    "derive_freeze_ownership_binding",
     "dump_freeze_payload_json",
     "freeze_form_json_text",
     "mandatory_freeze_fields",
+    "validate_freeze_ownership_binding",
     "validate_install_script_text",
     "validate_patch_zip",
 ]

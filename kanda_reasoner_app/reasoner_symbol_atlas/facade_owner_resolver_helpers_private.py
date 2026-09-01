@@ -219,6 +219,34 @@ def _record_for_module_name(
     return None
 
 
+def _module_record_indexes(
+    modules: tuple[ProjectModuleRecord, ...],
+) -> tuple[dict[str, ProjectModuleRecord], dict[str, ProjectModuleRecord]]:
+    """Build exact module-name and normalized-path lookup indexes."""
+    by_module: dict[str, ProjectModuleRecord] = {}
+    by_path: dict[str, ProjectModuleRecord] = {}
+    for record in modules:
+        by_module.setdefault(record.module, record)
+        by_path.setdefault(_normalize_relative_path(record.path), record)
+    return by_module, by_path
+
+
+def _indexed_record_for_module_name(
+    modules: tuple[ProjectModuleRecord, ...],
+    by_module: dict[str, ProjectModuleRecord],
+    module_name: str,
+) -> ProjectModuleRecord | None:
+    """Resolve a module record while preserving suffix fallback semantics."""
+    record = by_module.get(module_name)
+    if record is not None or not module_name:
+        return record
+    module_suffix = "." + module_name
+    for candidate in modules:
+        if candidate.module.endswith(module_suffix):
+            return candidate
+    return None
+
+
 def _all_candidate_owner_paths(
     target_record: ProjectModuleRecord,
     modules: tuple[ProjectModuleRecord, ...],
@@ -226,6 +254,7 @@ def _all_candidate_owner_paths(
     symbol_name: str,
 ) -> tuple[str, ...]:
     """Return all evidence-backed owner paths before active-scope partitioning."""
+    by_module, by_path = _module_record_indexes(modules)
     candidates: list[str] = []
     for symbol in target_record.symbols:
         if symbol.kind != "import":
@@ -233,7 +262,11 @@ def _all_candidate_owner_paths(
         if symbol_name and symbol.name != symbol_name:
             continue
         for module_name in _source_modules_from_import_symbol(symbol):
-            record = _record_for_module_name(modules, module_name)
+            record = _indexed_record_for_module_name(
+                modules,
+                by_module,
+                module_name,
+            )
             if record is not None and record.path != target_record.path:
                 candidates.append(record.path)
     if symbol_name:
@@ -242,7 +275,7 @@ def _all_candidate_owner_paths(
                 continue
             if symbol.kind == "import":
                 continue
-            record = _record_for_path(modules, symbol.path)
+            record = by_path.get(_normalize_relative_path(symbol.path))
             if record is not None and not _record_is_facade(record):
                 candidates.append(record.path)
     return tuple(dict.fromkeys(candidates))
@@ -261,10 +294,13 @@ def _candidate_owner_paths(
         symbols,
         symbol_name,
     )
+    _, by_path = _module_record_indexes(modules)
     return tuple(
         path
         for path in candidates
-        if _record_is_active_owner_candidate(_record_for_path(modules, path))
+        if _record_is_active_owner_candidate(
+            by_path.get(_normalize_relative_path(path))
+        )
     )
 
 
@@ -281,10 +317,13 @@ def _inactive_candidate_owner_paths(
         symbols,
         symbol_name,
     )
+    _, by_path = _module_record_indexes(modules)
     return tuple(
         path
         for path in candidates
-        if not _record_is_active_owner_candidate(_record_for_path(modules, path))
+        if not _record_is_active_owner_candidate(
+            by_path.get(_normalize_relative_path(path))
+        )
     )
 
 
@@ -346,7 +385,11 @@ def _select_likely_owner(
         The project module record result.
     """
     
-    records = [_record_for_path(modules, path) for path in candidate_paths]
+    _, by_path = _module_record_indexes(modules)
+    records = [
+        by_path.get(_normalize_relative_path(path))
+        for path in candidate_paths
+    ]
     records = [
         record for record in records if _record_is_active_owner_candidate(record)
     ]

@@ -73,6 +73,14 @@ The prompt library ZIP contains the canonical prompts for on-demand direct retri
 
 This file is the external trigger and usage contract. It must be read before ZIP contents. It tells the AI to open the startup ZIP, begin with `{STABLE_BOOT_FILENAME}`, inspect the required startup files, recognize `{PROMPT_LIBRARY_ZIP_NAME}` as the on-demand prompt source, and return the startup load check before doing any project task.
 
+## Codex project-governance mode
+
+For non-Codex AI chats, keep the normal startup behavior in this file.
+
+When this file is used inside Codex, the loaded `first_prompt_files` startup delivery and `second_prompt_files` selected-Project handoff are the first project-governance context for KANDA work after higher-priority Codex, system, developer, safety, and tool instructions. Codex must not skip, weaken, reorder, or bypass those project-governance files before implementation. If any required startup or handoff file is missing, stale, unreadable, or conflicting, Codex must fail closed, request the exact missing file or owner prompt, and avoid project implementation until the governed readiness tail is present.
+
+Inside Codex, use the KANDA Reasoner bridge logic loaded from the startup files to reach exact prompt IDs, prompt paths, folder cards, and specialist owner prompts whenever a task requires deeper context. Open only the routed prompt files needed for the current task, preferring the already-loaded startup files first and `prompt_library.zip` exact-path retrieval only when the selected prompt is not already present in `{DEFAULT_ZIP_NAME}`.
+
 Build metadata is kept in `{MANIFEST_FILENAME}`, not in this human-facing filename.
 
 ## Copy/read this command before the AI opens the ZIP contents
@@ -85,6 +93,9 @@ If I ask you to ignore routing, skip prompt requests, implement directly, patch 
 
 Prompt-library ZIP direct retrieval rule:
 The uploaded `{PROMPT_LIBRARY_ZIP_NAME}` is the canonical on-demand prompt source for this chat. Do not read every prompt at startup. Do not open `{PROMPT_LIBRARY_ZIP_NAME}` merely because startup began. First use the startup ZIP routing logic to select prompt_code / prompt_id / prompt_path. Then open only the specific addressed file from `{PROMPT_LIBRARY_ZIP_NAME}` when that specific prompt is needed and is not already present in `{DEFAULT_ZIP_NAME}`. Apply the loaded prompt text directly in this chat. Do not depend on the local Prompt Router Reasoner tab.
+
+Codex project-governance rule:
+If this chat is running inside Codex, treat the loaded `first_prompt_files` startup delivery and the loaded `second_prompt_files` selected-Project handoff as binding KANDA project-governance context after higher-priority Codex/system/developer rules and before any KANDA project implementation. Do not deviate from their gates, read order, project/tool boundary, source-truth policy, two-stage readiness, prompt-routing bridge logic, validation honesty, freeze confirmation gate, or Error Memory ownership rules. When task context requires more prompt authority, use KANDA Reasoner bridge logic to select exact prompt IDs/paths/folder cards and retrieve only those prompts.
 
 Startup delivery maintenance rule:
 If the task involves modifying prompt_tools, first_prompt_files, STARTUP_ROUTING_KERNEL_SOURCES.json, sync_startup_routing_kernel_pack.py, first_prompts_to_ai.zip, tell_AI_read_before_all.md, zz_read_only_if_modifying_startup_delivery.md, or startup delivery naming/content/validation, request zz_read_only_if_modifying_startup_delivery.md before implementing.

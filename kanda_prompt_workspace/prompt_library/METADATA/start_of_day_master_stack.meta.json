@@ -5,8 +5,8 @@
   "category": "01_session_start_and_navigation",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "prompt-audit-wave3a-session-startup-kernel-v1",
-  "description": "Compact always-startup governance bridge that blocks task intake before Project readiness, routes detailed rules to canonical owners, and escalates runtime-only conclusions to scenario-specific evidence.",
+  "source_stage": "codex-project-governance-bridge-v1",
+  "description": "Compact always-startup governance bridge that blocks task intake before Project readiness, makes Codex honor first_prompt_files and second_prompt_files as KANDA project-governance context, routes detailed rules to canonical owners, and escalates runtime-only conclusions to scenario-specific evidence.",
   "priority": 2,
   "required_companion_prompts": [
     "session_start_upload_checklist",
@@ -23,9 +23,12 @@
     "The startup prompt carries bridges only; detailed rules remain with specialist owners.",
     "The real Project task remains blocked until the two-stage readiness workflow ends with WAIT_FOR_TASK.",
     "Runtime Evidence Escalation Bridge v1 requires scenario-specific execution evidence when source and current tests cannot prove runtime behavior.",
-    "The bridge prefers existing tests, traces, logs, and validators and does not create a new runtime collector owner."
+    "The bridge prefers existing tests, traces, logs, and validators and does not create a new runtime collector owner.",
+    "In Codex, first_prompt_files and second_prompt_files are binding KANDA project-governance context after higher-priority Codex/system/developer instructions; KANDA Reasoner bridge logic selects exact prompts when deeper authority is needed."
   ],
   "startup_markers": [
+    "BEGINNING_OF_DAY_CODEX_PROJECT_GOVERNANCE_BRIDGE_V1_START",
+    "CODEX_PROJECT_GOVERNANCE_CANON_V1",
     "BEGINNING_OF_DAY_CODE_MODULE_SIZE_HARD_GATE_V1_START",
     "CODE_MODULE_HARD_MAX_500_LINES",
     "CODE_MODULE_QUALITY_CANON_V1",
@@ -45,9 +48,9 @@
   "folder": "ACTIVE_PROMPTS/01_session_start_and_navigation",
   "path": "ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/start_of_day_master_stack.md",
-  "version": "2.1",
+  "version": "2.3",
   "owner_box": "01_session_start_and_navigation",
-  "updated_for": "prompt-audit-wave3a-session-startup-kernel-v1",
+  "updated_for": "codex-project-governance-bridge-v1",
   "active_route": true,
   "may_be_selected_for_new_work": true,
   "aliases": [

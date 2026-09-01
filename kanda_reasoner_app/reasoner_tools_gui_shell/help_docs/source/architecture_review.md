@@ -49,13 +49,13 @@ They are arranged as a progression. The first tab finds problems. The second stu
 
 Validate output is shown first as grouped findings. Errors are listed before warnings, and findings are grouped by audit code such as `WARNING BOUNDARY_ERROR_CONTRACT`. Each group and finding has a checkbox. Use `Dismiss Selected` only after you have decided a finding is accepted, deferred, or a false positive for the selected Project.
 
-`Raw Audit` preserves the complete validator output, original counts, and exit status. Project dispositions never convert a failing validator into a pass. Copy/AI warning-review routes omit Project-dismissed detail lines and state explicitly that raw validator counts remain authoritative.
+`Raw Audit` is a Project-filtered projection of the canonical validator buffer. Clicking `Dismiss Selected` immediately removes those detail lines from both Grouped Findings and Raw Audit. `Restore Selected` immediately repopulates both views from Project-owned restored-pending evidence even when no current audit buffer is loaded. The next fresh Validate Project run merges that restored evidence with current scan data by stable finding identity, removes duplicates, and then retires the restored-pending copy. Permanent suppression keeps findings hidden on future scans. The original validator counts and exit status remain authoritative underneath, so Project dispositions never convert a failing validator into a pass. Copy/AI warning-review routes use the same Project-filtered evidence.
 
 ## Dismissed Findings
 
 Dismissed Findings is Project-owned durable review state stored under `<drive>/<project>_show_project_to_AI/project_architecture_review/`. It is not Tool Error Memory, Freeze Memory, or Project source.
 
-- `Restore Selected` removes the Project disposition and returns a still-current finding to active review.
+- `Restore Selected` moves the stored finding into Project-owned restored-pending state so Grouped Findings and Raw Audit repopulate immediately. The next fresh Validate Project run merges it with current audit data and removes the temporary restored-pending copy.
 - `Delete Selected Permanently` removes the row from the visible bin but keeps a suppression tombstone so later scans do not resurrect the same finding.
 - A stable finding identity ignores line-number-only movement but changes when the finding code, path, or material message changes.
 - Dismissing an error hides it only from the review list; the validator exit status and raw audit remain unchanged.

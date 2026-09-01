@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-22T22:24:47.918051+00:00",
+  "generated_at_utc": "2026-08-23T04:25:31.815717+00:00",
   "project_root": "E:\\kanda_reasoner",
   "packages": {
     "": {
@@ -645,7 +645,6 @@
           "used_by": [
             "tools.engineering_diagnostics_wave2t_gui_validation",
             "tools.engineering_diagnostics_wave2v_gui_validation",
-            "tools.validate_architecture_review_host_width_stability_v2",
             "tools.validate_complete_engineering_review_ai_handoff_real_qt_v5",
             "tools.validate_complete_engineering_review_ai_handoff_v5",
             "tools.validate_engineering_safety_ruff_correction_gui_v3b",
@@ -5476,6 +5475,93 @@
             "kanda_reasoner_app.manage_workflows.manage_workflows_gui_help.workflow_gui_presentation"
           ]
         },
+        "kanda_reasoner_app.release_identity": {
+          "module_id": "kanda_reasoner_app.release_identity",
+          "package": "kanda_reasoner_app",
+          "path": "kanda_reasoner_app/release_identity.py",
+          "filename": "release_identity.py",
+          "is_init": false,
+          "is_helper": false,
+          "helper_group": null,
+          "line_count": 373,
+          "doc_meta": {},
+          "imports": [
+            "__future__",
+            "hashlib",
+            "importlib",
+            "importlib.metadata",
+            "json",
+            "os",
+            "pathlib",
+            "re",
+            "struct",
+            "subprocess",
+            "sys",
+            "typing",
+            "uuid"
+          ],
+          "public_symbols": [
+            "PRODUCT_NAME",
+            "PRODUCT_VERSION",
+            "PRODUCT_VERSION_BASIS",
+            "RELEASE_ENVIRONMENT_FILENAME",
+            "RELEASE_MANIFEST_FILENAME",
+            "RELEASE_PIP_INSPECT_FILENAME",
+            "RELEASE_RECONSTRUCTION_LOCK_FILENAME",
+            "build_release_manifest_payload",
+            "load_reconstruction_lock",
+            "load_release_environment",
+            "release_identity_summary",
+            "validate_governed_release_environment",
+            "write_portable_release_manifest"
+          ],
+          "has_explicit_all": true,
+          "all_symbols": [
+            "PRODUCT_NAME",
+            "PRODUCT_VERSION",
+            "PRODUCT_VERSION_BASIS",
+            "RELEASE_ENVIRONMENT_FILENAME",
+            "RELEASE_MANIFEST_FILENAME",
+            "RELEASE_PIP_INSPECT_FILENAME",
+            "RELEASE_RECONSTRUCTION_LOCK_FILENAME",
+            "ReleaseIdentityError",
+            "_EXPECTED_MACHINE",
+            "_EXPECTED_POINTER_BITS",
+            "_EXPECTED_PYTHON_FULL",
+            "_LOCK_RE",
+            "__all__",
+            "_git_identity",
+            "_installed_versions",
+            "_normalized_name",
+            "_read_json",
+            "_sha256",
+            "build_release_manifest_payload",
+            "load_reconstruction_lock",
+            "load_release_environment",
+            "release_identity_summary",
+            "validate_governed_release_environment",
+            "write_portable_release_manifest"
+          ],
+          "top_level_imported_symbols": [
+            "Any",
+            "Path",
+            "annotations",
+            "hashlib",
+            "importlib",
+            "json",
+            "os",
+            "re",
+            "struct",
+            "subprocess",
+            "sys",
+            "uuid"
+          ],
+          "direct_internal_imports": [],
+          "used_by": [
+            "kanda_reasoner_app.reasoner_tools_gui_shell.app_constants",
+            "tools.build_kanda_reasoner_tool_portable"
+          ]
+        },
         "kanda_reasoner_app.run_real_project_static_context_smoke": {
           "module_id": "kanda_reasoner_app.run_real_project_static_context_smoke",
           "package": "kanda_reasoner_app",
@@ -6305,6 +6391,9 @@
         "PORTABLE_SMOKE_REPORT_TOKEN_ENV": "kanda_reasoner_app.portable_smoke_runtime_report",
         "PORTABLE_SMOKE_ROOT_ENV": "kanda_reasoner_app.portable_smoke_isolation",
         "PORTABLE_SMOKE_TOKEN_ENV": "kanda_reasoner_app.portable_smoke_isolation",
+        "PRODUCT_NAME": "kanda_reasoner_app.release_identity",
+        "PRODUCT_VERSION": "kanda_reasoner_app.release_identity",
+        "PRODUCT_VERSION_BASIS": "kanda_reasoner_app.release_identity",
         "PROJECT_ANALYSIS_EVIDENCE_DIR": "kanda_reasoner_app.project_analysis_evidence_paths",
         "PROJECT_ERROR_MEMORY_DIR": "kanda_reasoner_app.project_analysis_evidence_paths",
         "PROJECT_FREEZE_AFTER_UPDATE_DIR": "kanda_reasoner_app.project_analysis_evidence_paths",
@@ -6348,6 +6437,10 @@
         "ProviderTimeoutError": "kanda_reasoner_app.web_ai_provider_contracts",
         "PythonCodingAIReadiness": "kanda_reasoner_app.python_coding_ai_readiness",
         "PythonCodingAIReadinessError": "kanda_reasoner_app.python_coding_ai_readiness",
+        "RELEASE_ENVIRONMENT_FILENAME": "kanda_reasoner_app.release_identity",
+        "RELEASE_MANIFEST_FILENAME": "kanda_reasoner_app.release_identity",
+        "RELEASE_PIP_INSPECT_FILENAME": "kanda_reasoner_app.release_identity",
+        "RELEASE_RECONSTRUCTION_LOCK_FILENAME": "kanda_reasoner_app.release_identity",
         "RefactorReportEvidence": "kanda_reasoner_app.refactor_report_evidence",
         "SECOND_PROMPT_FILES_BUILDING_DIR": "kanda_reasoner_app.project_analysis_evidence_paths",
         "SECOND_PROMPT_FILES_DIR": "kanda_reasoner_app.project_analysis_evidence_paths",
@@ -6395,6 +6488,7 @@
         "build_project_operation_authority": "kanda_reasoner_app.project_operation_authority",
         "build_project_operation_authority_from_context": "kanda_reasoner_app.project_operation_authority",
         "build_refactor_report_evidence_text": "kanda_reasoner_app.refactor_report_evidence",
+        "build_release_manifest_payload": "kanda_reasoner_app.release_identity",
         "build_tool_child_environment": "kanda_reasoner_app.tool_process_environment",
         "canonical_project_support_root": "kanda_reasoner_app.project_support_boundary",
         "canonical_tool_support_root": "kanda_reasoner_app.project_support_boundary",
@@ -6441,6 +6535,8 @@
         "legacy_physical_project_identity": "kanda_reasoner_app.project_support_boundary",
         "legacy_project_freeze_after_update_dir": "kanda_reasoner_app.project_analysis_evidence_paths",
         "load_reasoner_project_exclusion_rules": "kanda_reasoner_app.project_exclusion_policy",
+        "load_reconstruction_lock": "kanda_reasoner_app.release_identity",
+        "load_release_environment": "kanda_reasoner_app.release_identity",
         "load_show_project_lifecycle_manifest": "kanda_reasoner_app.project_analysis_evidence_paths",
         "normalize_evidence_artifact_path": "kanda_reasoner_app.project_analysis_evidence_paths",
         "normalize_local_ai_base_url": "kanda_reasoner_app.local_ai_configuration",
@@ -6471,6 +6567,7 @@
         "relative_secondary_evidence_json_path": "kanda_reasoner_app.project_analysis_evidence_paths",
         "relative_working_copy_json_path": "kanda_reasoner_app.project_analysis_evidence_paths",
         "relative_working_copy_metadata_path": "kanda_reasoner_app.project_analysis_evidence_paths",
+        "release_identity_summary": "kanda_reasoner_app.release_identity",
         "request_chat_completion": "kanda_reasoner_app.web_ai_provider_runtime",
         "request_json_payload": "kanda_reasoner_app.web_ai_provider_runtime",
         "resolve_active_project_root": "kanda_reasoner_app.project_root_resolver",
@@ -6499,13 +6596,15 @@
         "stream_chat_completion": "kanda_reasoner_app.web_ai_provider_runtime",
         "tool_import_root": "kanda_reasoner_app.tool_process_environment",
         "validate_archive_members": "kanda_reasoner_app.archive_safety",
+        "validate_governed_release_environment": "kanda_reasoner_app.release_identity",
         "validate_manifest": "kanda_reasoner_app.reasoner_tools_gui_validate_manifests",
         "validate_official_assistant_url": "kanda_reasoner_app.python_coding_ai_catalog",
         "validate_staging_plan": "kanda_reasoner_app.project_artifact_staging",
         "verify_project_import_isolation": "kanda_reasoner_app.project_fire_shield",
         "verify_tool_snapshot_unchanged": "kanda_reasoner_app.project_fire_shield",
         "working_copy_json_path": "kanda_reasoner_app.project_analysis_evidence_paths",
-        "working_copy_metadata_path": "kanda_reasoner_app.project_analysis_evidence_paths"
+        "working_copy_metadata_path": "kanda_reasoner_app.project_analysis_evidence_paths",
+        "write_portable_release_manifest": "kanda_reasoner_app.release_identity"
       },
       "helper_groups": {}
     },
@@ -26995,7 +27094,7 @@
           "is_init": false,
           "is_helper": false,
           "helper_group": null,
-          "line_count": 273,
+          "line_count": 356,
           "doc_meta": {},
           "imports": [
             "__future__",
@@ -27023,6 +27122,7 @@
             "__all__",
             "_empty_state",
             "_finding_key",
+            "_findings_from_records",
             "_normalized_message",
             "_utc_now",
             "_write_state",
@@ -27034,7 +27134,10 @@
             "finding_disposition_path",
             "load_finding_dispositions",
             "parse_architecture_findings",
-            "restore_findings"
+            "reconcile_restored_findings",
+            "restore_findings",
+            "restored_findings",
+            "review_findings"
           ],
           "top_level_imported_symbols": [
             "Path",
@@ -27066,7 +27169,7 @@
           "is_init": false,
           "is_helper": false,
           "helper_group": null,
-          "line_count": 363,
+          "line_count": 397,
           "doc_meta": {},
           "imports": [
             "__future__",
@@ -27078,6 +27181,8 @@
           "public_symbols": [],
           "has_explicit_all": true,
           "all_symbols": [
+            "_SELECT_COLUMN_BASE_WIDTH",
+            "_SELECT_COLUMN_TEXT_GAP",
             "_SEVERITY_ORDER",
             "__all__",
             "_checked_keys",
@@ -27098,6 +27203,7 @@
           "top_level_imported_symbols": [
             "ArchitectureFinding",
             "Path",
+            "active_audit_text",
             "active_findings",
             "annotations",
             "defaultdict",
@@ -27107,7 +27213,9 @@
             "import_module",
             "load_finding_dispositions",
             "parse_architecture_findings",
-            "restore_findings"
+            "reconcile_restored_findings",
+            "restore_findings",
+            "review_findings"
           ],
           "direct_internal_imports": [
             "kanda_reasoner_app.manage_architecture.architecture_finding_dispositions"
@@ -27293,6 +27401,7 @@
           "used_by": [
             "kanda_reasoner_app.manage_architecture.manage_architecture_gui",
             "tools.validate_architecture_review_ast_split_target_overlap_v1",
+            "tools.validate_architecture_review_host_width_stability_v2",
             "tools.validate_architecture_review_run_mode_visual_group_v1"
           ]
         },
@@ -75888,23 +75997,26 @@
           "is_init": false,
           "is_helper": false,
           "helper_group": null,
-          "line_count": 38,
+          "line_count": 41,
           "doc_meta": {},
           "imports": [
             "__future__",
             "kanda_reasoner_app.project_root_resolver",
+            "kanda_reasoner_app.release_identity",
             "pathlib"
           ],
           "public_symbols": [
             "APP_DISPLAY_NAME",
             "APP_ICON_PATH",
-            "APP_TITLE_DETAIL"
+            "APP_TITLE_DETAIL",
+            "APP_VERSION"
           ],
           "has_explicit_all": true,
           "all_symbols": [
             "APP_DISPLAY_NAME",
             "APP_ICON_PATH",
             "APP_TITLE_DETAIL",
+            "APP_VERSION",
             "_COLLECTOR_SUBTABS_TO_REMOVE",
             "_HELP_FILENAME",
             "_PACKAGE_ROOT",
@@ -75913,12 +76025,14 @@
             "__all__"
           ],
           "top_level_imported_symbols": [
+            "PRODUCT_VERSION",
             "Path",
             "annotations",
             "resolve_app_runtime_root"
           ],
           "direct_internal_imports": [
-            "kanda_reasoner_app.project_root_resolver"
+            "kanda_reasoner_app.project_root_resolver",
+            "kanda_reasoner_app.release_identity"
           ],
           "used_by": [
             "kanda_reasoner_app.reasoner_tools_gui_shell.gui_support",
@@ -76450,8 +76564,7 @@
             "kanda_reasoner_app.web_ai_configuration"
           ],
           "used_by": [
-            "kanda_reasoner_app.reasoner_tools_gui_shell.launch",
-            "tools.validate_architecture_review_host_width_stability_v2"
+            "kanda_reasoner_app.reasoner_tools_gui_shell.launch"
           ]
         },
         "kanda_reasoner_app.reasoner_tools_gui_shell.main_window_validate_manifests": {
@@ -76791,6 +76904,7 @@
         "APP_DISPLAY_NAME": "kanda_reasoner_app.reasoner_tools_gui_shell.app_constants",
         "APP_ICON_PATH": "kanda_reasoner_app.reasoner_tools_gui_shell.app_constants",
         "APP_TITLE_DETAIL": "kanda_reasoner_app.reasoner_tools_gui_shell.app_constants",
+        "APP_VERSION": "kanda_reasoner_app.reasoner_tools_gui_shell.app_constants",
         "IgnoreRulesTab": "kanda_reasoner_app.reasoner_tools_gui_shell.ignore_rules_tab",
         "LazyTabLayoutRelocationMixin": "kanda_reasoner_app.reasoner_tools_gui_shell._lazy_tab_layout_relocation",
         "LazyTabShellChromeMixin": "kanda_reasoner_app.reasoner_tools_gui_shell._lazy_tab_shell_chrome",
@@ -108734,7 +108848,7 @@
           "is_init": false,
           "is_helper": false,
           "helper_group": null,
-          "line_count": 497,
+          "line_count": 499,
           "doc_meta": {},
           "imports": [
             "__future__",
@@ -108743,6 +108857,7 @@
             "hashlib",
             "importlib.metadata",
             "json",
+            "kanda_reasoner_app.release_identity",
             "os",
             "pathlib",
             "portable.physical_runtime",
@@ -108813,6 +108928,7 @@
             "zipfile"
           ],
           "direct_internal_imports": [
+            "kanda_reasoner_app.release_identity",
             "portable.physical_runtime"
           ],
           "used_by": []
@@ -115657,19 +115773,17 @@
           "is_init": false,
           "is_helper": false,
           "helper_group": null,
-          "line_count": 493,
+          "line_count": 304,
           "doc_meta": {},
           "imports": [
             "PySide6.QtWidgets",
             "__future__",
             "argparse",
             "ast",
-            "kanda_reasoner_app.reasoner_tools_gui_shell.main_window",
+            "kanda_reasoner_app.manage_architecture.architecture_review_subtabs",
             "os",
             "pathlib",
-            "reasoner_tools_gui_engineering_safety_panel",
             "sys",
-            "threading",
             "time"
           ],
           "public_symbols": [
@@ -115677,22 +115791,22 @@
           ],
           "has_explicit_all": true,
           "all_symbols": [
-            "ENGINEERING_FULL_AUDIT_RELATIVE",
-            "ENGINEERING_SONAR_RELATIVE",
             "FEATURE_ID",
             "MAX_PHYSICAL_LINES",
+            "SIBLINGS_RELATIVE",
             "SUBTABS_RELATIVE",
-            "WORKBENCH_LAYOUT_RELATIVE",
+            "WORKBENCH_RELATIVE",
             "__all__",
             "_configure_qt_runtime_environment",
+            "_read_python",
             "_require",
+            "_require_fragments",
             "_validate_qt_runtime",
             "_validate_static_contract",
             "main",
             "validate"
           ],
           "top_level_imported_symbols": [
-            "Event",
             "Path",
             "annotations",
             "argparse",
@@ -115702,8 +115816,7 @@
             "time"
           ],
           "direct_internal_imports": [
-            "kanda_reasoner_app.reasoner_tools_gui_shell.main_window",
-            "reasoner_tools_gui_engineering_safety_panel"
+            "kanda_reasoner_app.manage_architecture.architecture_review_subtabs"
           ],
           "used_by": []
         },
@@ -142967,6 +143080,55 @@
             "json",
             "subprocess",
             "sys"
+          ],
+          "direct_internal_imports": [],
+          "used_by": []
+        },
+        "tools.validate_pro1_release_identity_environment_reconstruction_v1": {
+          "module_id": "tools.validate_pro1_release_identity_environment_reconstruction_v1",
+          "package": "tools",
+          "path": "tools/validate_pro1_release_identity_environment_reconstruction_v1.py",
+          "filename": "validate_pro1_release_identity_environment_reconstruction_v1.py",
+          "is_init": false,
+          "is_helper": false,
+          "helper_group": null,
+          "line_count": 269,
+          "doc_meta": {},
+          "imports": [
+            "__future__",
+            "argparse",
+            "ast",
+            "hashlib",
+            "importlib.util",
+            "json",
+            "pathlib",
+            "re",
+            "sys",
+            "tempfile"
+          ],
+          "public_symbols": [],
+          "has_explicit_all": true,
+          "all_symbols": [
+            "EXPECTED_BASELINE_HASHES",
+            "FEATURE_ID",
+            "__all__",
+            "gate",
+            "load_leaf_module",
+            "main",
+            "parse_lock",
+            "sha256"
+          ],
+          "top_level_imported_symbols": [
+            "Path",
+            "annotations",
+            "argparse",
+            "ast",
+            "hashlib",
+            "importlib",
+            "json",
+            "re",
+            "sys",
+            "tempfile"
           ],
           "direct_internal_imports": [],
           "used_by": []

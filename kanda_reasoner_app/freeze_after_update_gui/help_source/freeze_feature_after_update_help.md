@@ -42,8 +42,11 @@ Copies the newest frozen feature as an AI-ready reminder. Use it when an AI begi
 ### Get All Frozen
 Copies all frozen entries as an AI-ready reminder. Use it when a new or long-running AI session needs the broader frozen project context.
 
-### Get blueprint Freeze
-Copies the strict KANDA freeze-form blueprint. This orange-labeled control is a recovery aid when an AI-generated freeze form is missing fields or has the wrong JSON structure.
+### Get Blueprint Freeze
+Copies the audited generic receive-ready KANDA freeze blueprint mirrored from KPR-03-003. Use it when AI needs the exact current form contract; KPR-03-008 still audits the completed candidate before output.
+
+### How to Freeze
+Appears immediately after Import Merge Frozen. Its orange text matches the other orange AI-copy controls. It reads the current canonical `KPR-03-003 freeze_code_intake_and_form_protocol.md` directly from Prompt Library and copies that complete prompt to the clipboard. The GUI does not keep a second embedded copy of this prompt.
 
 ### Open Box Folder
 Opens the project-specific freeze support folder so you can inspect intake, memory, and support files.
@@ -114,11 +117,11 @@ A brief explanation that helps future users and AI understand why the feature wa
 
 ### Copy Entry to AI
 
-Copies the strict draft-only Freeze formulary prompt to the clipboard. It does not open a browser or external assistant. Paste the prompt manually into the AI of your choice. The returned marker-wrapped form remains untrusted until **Receive Formulary from AI** parses it, the form is reviewed, and **Preview Freeze Entry** passes. This action never writes Freeze memory.
+Copies the strict draft-only Freeze formulary prompt to the clipboard. It does not open a browser or external assistant. Paste the prompt manually into the AI of your choice. The returned JSON form remains untrusted until **Receive Formulary from AI** parses it, the form is reviewed, and **Preview Freeze Entry** passes. This action never writes Freeze memory.
 
 ### Receive Formulary from AI
 
-Imports a marker-wrapped external draft into the form. It does not write files, does not confirm the feature, and does not bypass Preview or Confirm and Write.
+Imports an AI response containing exactly one valid 11-field Freeze JSON object into the form. Raw JSON is canonical; legacy marker/fence wrappers are accepted only as compatibility input. It does not write files, does not confirm the feature, and does not bypass Preview or Confirm and Write.
 
 ### Preview Freeze Entry
 Read-only. It shows exactly what would be written, including identity, validated files, protected paths, rules, evidence, warnings, and notes. It never writes a file.
@@ -148,7 +151,8 @@ Use the orange context and copy controls as reminders:
 
 - Get Last Freeze for the newest protected feature.
 - Get All Frozen for the complete frozen context.
-- Get blueprint Freeze when the AI needs the exact form contract.
+- Get Blueprint Freeze when the AI needs the exact audited form contract.
+- How to Freeze when the AI needs the complete current KPR-03-003 freeze workflow prompt from Prompt Library.
 
 Paste the copied text into the AI conversation and tell the AI to treat it as read-only frozen feature memory. These reminders explain what the feature is, why it was frozen, what paths are protected, what is safe to change, and what must not regress.
 

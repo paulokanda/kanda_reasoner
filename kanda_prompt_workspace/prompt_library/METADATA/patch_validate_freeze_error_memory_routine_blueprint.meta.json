@@ -4,7 +4,7 @@
   "display_name": "Answer Validate Freeze Memorize Error Routine Blueprint",
   "filename": "patch_validate_freeze_error_memory_routine_blueprint.md",
   "category": "05_patch_delivery_and_validation",
-  "version": "3.5",
+  "version": "4.2",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "05_patch_delivery_and_validation",
@@ -16,13 +16,14 @@
     "Answer Validate Freeze Memorize Error",
     "recovery routine owner dispatch"
   ],
-  "source_stage": "external-project-observer-independence-v1",
-  "updated_for": "external-project-observer-independence-v1",
-  "description": "Cross-project continuation wrapper with one primary update ZIP, separate install/validation/Freeze/Error Memory phases, actor-scoped Fire Shield gating for KANDA-managed external-Project work, and explicit KANDA-independent Project-owned development.",
+  "source_stage": "error-memory-pre-output-prevention-hard-gate-v1",
+  "updated_for": "error-memory-pre-output-prevention-hard-gate-v1",
+  "description": "Canonical cross-project continuation wrapper for answer, package, install, validate, Freeze, Error Memory review, and machine-enforced pre-output prevention of known operational regressions.",
   "priority": 17,
   "trigger_phrases": [
     "Answer, Validate, Freeze, Memorize Error",
-    "one zip separate install validate freeze error memory commands",
+    "one zip install then validate same terminal block",
+    "install enter enter validate",
     "compact update release",
     "continue after patch creation",
     "AI stopped after coding",
@@ -49,7 +50,7 @@
     "self_contained_freeze_entry_intake_zip",
     "self_contained_error_memory_lesson_intake_zip"
   ],
-  "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases.",
+  "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source/compact evidence through one update ZIP, chained install->validate execution, human-gated Freeze, and final Error Memory disposition.",
   "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
   "source_write_authorization": "NO",
   "do_not_regress": [
@@ -57,6 +58,12 @@
     "Keep all selected-Project source, staging, validation, Freeze, and Error Memory paths derived from the selected Project.",
     "Keep canonical prompt source owned by the KANDA Reasoner Tool root.",
     "Never deliver an isolated ZIP or claim installation as validation.",
+    "Before selecting the next action, derive the current lifecycle pointer for the exact current release identity.",
+    "For the same current release identity, never repeat a completed phase unless newer explicit evidence invalidates that phase or an earlier dependency.",
+    "Bind the last reliable marker to the current Project, feature, artifact or revision, and current source fingerprint when available.",
+    "Answer and emit work only for the first incomplete phase.",
+    "If identity or evidence conflicts, fail closed at the first unresolved phase without restarting the full lifecycle.",
+    "A new artifact, revision, fingerprint, or correction invalidates only downstream evidence that depends on the superseded identity.",
     "Continue from the last reliable marker without requiring the user to retrain the AI.",
     "Keep Preview read-only and Confirm and Write and Memorize Error explicitly human governed.",
     "Never reintroduce deprecated router_bridge_patch_delivery_contract.",
@@ -68,11 +75,13 @@
     "Create one self-contained feature ZIP containing packaged installation and validation scripts.",
     "Do not create standalone validation-report downloads or external runners without a named future consumer and retention owner.",
     "Keep the Show Project to AI button linked to the canonical prompt path instead of copying prompt text into GUI source.",
-    "Use one primary feature/update ZIP and do not create separate installer, validator, runner, or disposable validation-report downloads.",
-    "Present installation, validation, Freeze preparation, and Error Memory as separate independently pasteable terminal blocks in that order.",
-    "Never let one terminal block execute more than one lifecycle phase.",
     "Create Error Memory lessons only after actual reusable failure evidence and duplicate checks; otherwise report NOT_REQUIRED.",
     "Keep the Show Project to AI button dynamically linked to the canonical prompt path.",
-    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability."
+    "Require Fire Shield only when KANDA Reasoner or a KANDA-managed workflow is the actor touching an external Project; independent Project-owned IDE, terminal, CI, install, test, and validation work must not depend on KANDA selection, registry, portable runtime, Fire Shield, or Tool availability.",
+    "Deliver one paste-safe terminal block that invokes packaged INSTALL.ps1 and, only after successful Enter-Enter cleanup return, packaged VALIDATE.ps1.",
+    "Keep INSTALL.ps1 install-only and VALIDATE.ps1 validation-only even when one outer paste unit orchestrates both phases.",
+    "If installation fails, stop before validation; if validation fails, stop before Freeze.",
+    "After current VALIDATION OK and STATUS: IN_SYNC, prepare Freeze directly without asking for another validation command.",
+    "Evaluate Error Memory only after the validated Freeze is confirmed correct, and only for verified reusable non-duplicate failures."
   ]
 }

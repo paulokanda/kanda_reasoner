@@ -16,7 +16,7 @@ from .schema_models import ExclusionRules, ProjectContext
 
 SOURCE_ARCHIVE_MANIFEST_SUFFIX = "__source_archive_manifest.json"
 GENERATOR_NAME = "reasoner_context_bundle.source_tree_exporter"
-GENERATOR_VERSION = "1.5.0"
+GENERATOR_VERSION = "1.6.0"
 SCHEMA_VERSION = "1.0"
 PLANNING_TARGET_RATIO = 0.90
 _BYTES_PER_MB = 1024 * 1024

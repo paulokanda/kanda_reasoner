@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -109,6 +111,35 @@ def _index_record(lesson: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _atomic_write_text(path: Path, text: str) -> None:
+    "Stage a complete payload and atomically replace its canonical path."
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, staged_name = tempfile.mkstemp(
+        prefix=path.name + ".",
+        suffix=".tmp",
+        dir=str(path.parent),
+    )
+    staged = Path(staged_name)
+    descriptor_open = True
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+            descriptor_open = False
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(staged, path)
+    finally:
+        if descriptor_open:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+        try:
+            staged.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
 def _write_index(
     backend: ErrorMemoryBackend,
     lessons: list[dict[str, Any]],
@@ -120,10 +151,9 @@ def _write_index(
         **backend.canonical_owner_fields(),
         "lessons": lessons,
     }
-    backend.index_path.write_text(
+    _atomic_write_text(
+        backend.index_path,
         json.dumps(index, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-        newline="\n",
     )
     return index
 
@@ -167,10 +197,9 @@ def save_lesson(
     if not ok:
         raise ValueError("Invalid Error Memory lesson: " + "; ".join(failures))
     path = _lesson_path(backend, str(canonical.get("lesson_id", "")))
-    path.write_text(
+    _atomic_write_text(
+        path,
         json.dumps(canonical, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-        newline="\n",
     )
     rebuild_index(backend)
     lesson.clear()

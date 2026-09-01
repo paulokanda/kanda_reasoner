@@ -6,8 +6,8 @@
   "status": "audited_candidate",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
-  "description": "Control validated freeze decisions, governance updates, end-of-chat state transfer, and handoff creation.",
+  "source_stage": "freeze-candidate-pre-output-audit-bridge-v1",
+  "description": "Route Brick Wall, cooperative decisions, freeze intake, strict AI freeze-candidate pre-output audit, final artifact dispatch, self-contained freeze intake, and draft governance/handoff profiles.",
   "routing_metadata_only": true,
   "priority": 20,
   "required_companion_prompts": [
@@ -19,7 +19,8 @@
     "handoff",
     "end of chat",
     "update governance",
-    "validated output"
+    "validated output",
+    "freeze candidate audit"
   ],
   "card_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/_FOLDER_ASSIMILATION.md"
 }

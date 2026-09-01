@@ -73,22 +73,24 @@
     {
       "group_id": "03_governance_freeze_and_handoff",
       "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff",
-      "responsibility": "Own Brick Wall status, cooperative decision discussion, feature freeze intake, outgoing artifact contract dispatch, and draft-only governance or handoff profiles.",
-      "use_when": "Use for governed implementation status, consequential option discussion, freeze-intake review, final operational artifact checks, or explicit generic profile drafting.",
+      "responsibility": "Own Brick Wall status, cooperative decisions, feature freeze intake, strict AI freeze-candidate pre-output audit, self-contained freeze intake, outgoing artifact dispatch, and draft-only governance/handoff profiles.",
+      "use_when": "Use for governed implementation status, freeze intake, AI freeze-candidate audit, final operational artifact checks, self-contained freeze intake, consequential option discussion, or explicit generic profile drafting.",
       "do_not_use_when": "Do not use as a substitute for specialist implementation, delivery, validation, Box, Tool/Project, Error Memory, or normal KANDA handoff owners.",
       "required_for": [
         "Brick Wall status",
         "freeze intake",
         "operational artifact emission"
       ],
-      "prompt_count": 6,
+      "prompt_count": 8,
       "main_prompts": [
         "brick_wall_comprehensive_quality_gate.md",
         "cooperative_implementation_methodology.md",
         "freeze_code_intake_and_form_protocol.md",
         "pre_output_contract_gates.md",
         "professional_engineering_governance_template.md",
-        "workflow_handoff_template.md"
+        "workflow_handoff_template.md",
+        "self_contained_freeze_entry_intake_zip.md",
+        "freeze_candidate_pre_output_audit.md"
       ],
       "phase_1_folder_card_status": "available"
     },
@@ -116,7 +118,7 @@
     {
       "group_id": "05_patch_delivery_and_validation",
       "relative_path": "ACTIVE_PROMPTS/05_patch_delivery_and_validation",
-      "responsibility": "Coordinate release lifecycle, surgical delivery, active PIR routing, correction incidents, terminal behavior, and recovery dispatch.",
+      "responsibility": "Coordinate release lifecycle, surgical delivery, active PIR routing, correction incidents, terminal behavior, recovery dispatch, and self-contained Error Memory intake.",
       "use_when": "When code, files, ZIP, install, validation, recovery, or freeze preparation is involved.",
       "do_not_use_when": "Do not use as a reason to touch unrelated boxes.",
       "required_for": [
@@ -125,7 +127,7 @@
         "validation",
         "freeze evidence"
       ],
-      "prompt_count": 7,
+      "prompt_count": 8,
       "main_prompts": [
         "bundle_gated_development_workflow.md",
         "implementation_and_delivery_protocol.md",
@@ -133,7 +135,8 @@
         "patch_install_delivery_error_register.md",
         "patch_validate_freeze_error_memory_routine_blueprint.md",
         "router_bridge_user_detected_correction.md",
-        "terminal_cleanup_contract.md"
+        "terminal_cleanup_contract.md",
+        "self_contained_error_memory_lesson_intake_zip.md"
       ],
       "phase_1_folder_card_status": "not_created_by_design"
     },

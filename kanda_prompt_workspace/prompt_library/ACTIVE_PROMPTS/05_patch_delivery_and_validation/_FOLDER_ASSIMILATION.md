@@ -1,8 +1,8 @@
 ---
 folder_id: 05_patch_delivery_and_validation
-version: 3.1
+version: 3.2
 status: current
-source_stage: prompt-audit-wave5b-router-terminal-compatibility-v1
+source_stage: prompt-freeze-error-memory-lifecycle-alignment-v1
 ---
 
 # Folder Assimilation Card - Patch Delivery and Validation
@@ -31,10 +31,12 @@ Pre-Output, validation specialists, or human confirmation.
 - `KPR-05-007 terminal_cleanup_contract`: interactive PowerShell entry,
   classification, provenance, and cleanup behavior.
 - `KPR-05-008 self_contained_error_memory_lesson_intake_zip`: one-ZIP
-  independent MCard lesson intake delivery, bridged through KPR-05-005 to the
-  separate KPR-03-007 Freeze intake owner. It stages only unique pending lessons,
-  uses no Active Project authority, preserves Card identity, and keeps Memorize
-  Error human-only.
+  Error Memory lesson-library intake delivery, bridged through KPR-05-005 to the
+  separate KPR-03-007 Freeze intake owner. It stages only unique `pending`
+  transport lessons, treats the selected Active Project as context/evidence only,
+  normalizes admitted GUI lessons to `draft`, and keeps `Memorize Error` as the
+  sole human `draft` -> `active` promotion gate. Architecture Review MCard/Card
+  identity and `card_id` are not Error Memory authority.
 
 ## Historical compatibility tombstones
 
@@ -55,8 +57,10 @@ be classified as tombstones.
 - interactive terminal output: compact startup bridge and KPR-05-007 when full
   detail is needed;
 - Show Project recovery: KPR-05-005.
-- self-contained Error Memory MCard intake ZIP: KPR-05-008, using the installed
-  MCard runtime as schema/storage authority and Active Project as context only.
+- self-contained Error Memory lesson intake ZIP: KPR-05-008, using the current
+  Tool-owned Error Memory runtime/schema as authority, `pending` only as transport,
+  GUI-admitted `draft` as the review state, and Active Project as context/evidence
+  only.
 
 ## Hard boundaries
 

@@ -19,6 +19,7 @@ from .output_paths import bundle_artifact_paths
 from .path_normalization import relative_posix_path, safe_resolve
 from .project_context import resolve_project_context
 from .schema_models import ExclusionRules, ProjectContext
+from .source_state_identity import build_source_state_identity
 
 __all__ = [
     "TEXT_FILE_EXTENSIONS",
@@ -32,7 +33,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "file_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.file_manifest_builder"
-GENERATOR_VERSION = "1.0.5"
+GENERATOR_VERSION = "1.1.0"
 
 GENERATED_EVIDENCE_PREFIXES = (
     "show_project_to_AI/",
@@ -340,6 +341,10 @@ def build_file_manifest_payload(project: str | Path | ProjectContext) -> dict[st
     rules = load_bundle_exclusion_rules(context)
     files, excluded_samples, generated_artifact_samples = _iter_manifest_rows(context, rules)
     files.sort(key=lambda item: str(item.get("path", "")).lower())
+    source_state = build_source_state_identity(
+        files,
+        hash_field="sha256_raw",
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "bundle_kind": BUNDLE_KIND,
@@ -358,6 +363,7 @@ def build_file_manifest_payload(project: str | Path | ProjectContext) -> dict[st
             "exclusion_rules": rules.as_dict(),
             "contract": "project_specific_dynamic_rules",
         },
+        "source_state": source_state,
         "counts": _counts(files, excluded_samples, generated_artifact_samples),
         "files": files,
         "excluded_path_samples": excluded_samples,

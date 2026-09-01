@@ -53,21 +53,12 @@ def _build_ui(self) -> None:
     project_root_row.addWidget(self.project_root_edit)
     self.browse_project_button = QPushButton("Browse...")
     project_root_row.addWidget(self.browse_project_button)
-    self.backup_show_project_button = QPushButton("Backup Show Project")
-    self.backup_show_project_button.setToolTip(
-        "Create a verified ZIP backup of the selected Project Support folder."
+    self.backup_every_day_button = QPushButton("Backup Every Day")
+    self.backup_every_day_button.setToolTip(
+        "Create one verified daily ZIP from the selected Project, Show Project, "
+        "and any additional selected folders."
     )
-    project_root_row.addWidget(self.backup_show_project_button)
-    self.backup_project_button = QPushButton("Backup Project")
-    self.backup_project_button.setToolTip(
-        "Create a verified ZIP backup of everything inside the Active Project folder."
-    )
-    project_root_row.addWidget(self.backup_project_button)
-    self.backup_both_button = QPushButton("Backup both")
-    self.backup_both_button.setToolTip(
-        "Create one verified ZIP containing the Project and Show Project folders as separate top-level folders."
-    )
-    project_root_row.addWidget(self.backup_both_button)
+    project_root_row.addWidget(self.backup_every_day_button)
     self.cancel_backup_button = QPushButton("Cancel Backup")
     self.cancel_backup_button.setToolTip(
         "Cancel the active Show Project or Project backup and remove its partial ZIP."
@@ -93,11 +84,12 @@ def _build_ui(self) -> None:
     self.copy_patch_validate_freeze_routine_button.setFont(answer_routine_button_font)
     self.copy_patch_validate_freeze_routine_button.setToolTip(
         "Copies the canonical routine for the resolved selected Project: one "
-        "update ZIP followed by separate Install, Validate, Freeze, and Error "
-        "Memory terminal phases."
+        "update ZIP, then one fail-closed Install -> Enter x2 -> Validate paste "
+        "unit, followed by human-gated Freeze and final Error Memory review."
     )
     project_root_row.addWidget(self.copy_patch_validate_freeze_routine_button)
-    self.copy_terminal_cleanup_contract_button = QPushButton("Clean 2sec 2xEnter")
+    self.copy_terminal_cleanup_contract_button = QPushButton("Install + Validate Flow")
+    self.copy_terminal_cleanup_contract_button.setToolTip("Copies Install -> Enter x2 -> Clear-Host -> Validate flow; failure stops the chain.")
     terminal_cleanup_button_palette = (
         self.copy_terminal_cleanup_contract_button.palette()
     )
@@ -186,9 +178,7 @@ def _build_ui(self) -> None:
             self.project_root_label,
             self.project_root_edit,
             self.browse_project_button,
-            self.backup_show_project_button,
-            self.backup_project_button,
-            self.backup_both_button,
+            self.backup_every_day_button,
             self.cancel_backup_button,
         )
         for widget in widgets:
@@ -202,9 +192,7 @@ def _build_ui(self) -> None:
             destination_layout.addWidget(self.project_root_label, 0)
             destination_layout.addWidget(self.project_root_edit, 0)
             destination_layout.addWidget(self.browse_project_button, 0)
-            destination_layout.addWidget(self.backup_show_project_button, 0)
-            destination_layout.addWidget(self.backup_project_button, 0)
-            destination_layout.addWidget(self.backup_both_button, 0)
+            destination_layout.addWidget(self.backup_every_day_button, 0)
             destination_layout.addWidget(self.cancel_backup_button, 0)
         else:
             destination_layout.insertSpacing(insert_index, 12)
@@ -212,19 +200,17 @@ def _build_ui(self) -> None:
             destination_layout.insertWidget(insert_index + 2, self.project_root_edit, 0)
             destination_layout.insertWidget(insert_index + 3, self.browse_project_button, 0)
             destination_layout.insertWidget(
-                insert_index + 4, self.backup_show_project_button, 0
+                insert_index + 4, self.backup_every_day_button, 0
             )
-            destination_layout.insertWidget(insert_index + 5, self.backup_project_button, 0)
-            destination_layout.insertWidget(insert_index + 6, self.backup_both_button, 0)
-            destination_layout.insertWidget(insert_index + 7, self.cancel_backup_button, 0)
+            destination_layout.insertWidget(insert_index + 5, self.cancel_backup_button, 0)
         self._project_root_controls_moved_to_host = True
 
     self.move_project_root_controls_to_layout = _move_project_root_controls_to_layout
 
     from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
-        show_project_backup_private_impl as _show_project_backup,
+        daily_backup_private_impl as _daily_backup,
     )
-    _show_project_backup.install_show_project_backup_button(self)
+    _daily_backup.install_daily_backup_button(self)
 
     from kanda_reasoner_app.reasoner_tools_shell.runner_help import (
         answer_validate_freeze_memorize_button_private_impl as _answer_routine,
@@ -256,7 +242,7 @@ def _build_ui(self) -> None:
             if not prompt_path.is_file():
                 raise FileNotFoundError("Prompt not found: " + str(prompt_rel))
             QApplication.clipboard().setText(prompt_path.read_text(encoding="utf-8"))
-            message = "Copied Clean 2sec 2xEnter prompt"
+            message = "Copied Install + Validate Flow prompt"
             try:
                 self.first_prompt_status_label.setText(message)
             except Exception:
@@ -266,7 +252,7 @@ def _build_ui(self) -> None:
             except Exception:
                 pass
         except Exception as exc:
-            message = "[ERROR] Could not copy Clean 2sec 2xEnter prompt: " + str(exc)
+            message = "[ERROR] Could not copy Install + Validate Flow prompt: " + str(exc)
             try:
                 self.first_prompt_status_label.setText(message)
             except Exception:

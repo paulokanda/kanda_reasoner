@@ -15,6 +15,10 @@ from kanda_reasoner_app.engineering_safety.capability_bridge import (
     run_engineering_safety_capability,
 )
 
+from kanda_reasoner_app.reasoner_symbol_atlas.review_session import (
+    reasoner_symbol_atlas_project_root_reuse,
+)
+
 from ._engineering_capability_assessment import (
     bounded_evidence,
     classify_output,
@@ -374,6 +378,7 @@ def _architecture_result(
     )
 
 
+@reasoner_symbol_atlas_project_root_reuse("engineering-capability-coverage")
 def collect_engineering_capability_coverage(
     project_root: str,
     collector_results: tuple[AiCorrectionCollectorResult, ...],

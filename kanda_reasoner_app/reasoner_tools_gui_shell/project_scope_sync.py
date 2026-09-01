@@ -39,6 +39,7 @@ PROJECT_SCOPED_TAB_IDS = frozenset(
         "refactor_report",
         "project_qa",
         "freeze_feature_after_update",
+        "kanda_memo_prompts",
         "exclusion_rules",
     }
 )
@@ -209,6 +210,12 @@ def reset_project_scoped_widget(tab_id: str, widget: QWidget) -> None:
         _reset_architecture(widget)
     elif tab_id == "docstring_assistant":
         _reset_docstrings(widget)
+    elif tab_id == "kanda_memo_prompts":
+        setter = getattr(widget, "set_project_root", None)
+        if callable(setter):
+            with contextlib.suppress(Exception):
+                setter(None)
+        return
 
     _clear_project_text_surfaces(widget)
     _clear_project_collection_surfaces(widget)

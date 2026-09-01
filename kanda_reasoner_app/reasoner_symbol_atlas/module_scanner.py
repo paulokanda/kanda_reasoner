@@ -331,25 +331,25 @@ def reasoner_symbol_atlas_module_name_for_path(
     return ".".join(parts) if parts else "__init__"
 
 
-def _module_record_for_file(project_root: Path, file_path: Path) -> ProjectModuleRecord:
-    """Support module record for file behavior.
-    
-    Parameters
-    ----------
-    project_root : Path
-        The project root path.
-    file_path : Path
-        The file path.
-    
-    Returns
-    -------
-    ProjectModuleRecord
-        The project module record result.
-    """
-    
+def _module_record_and_source(
+    project_root: Path,
+    file_path: Path,
+) -> tuple[ProjectModuleRecord, str, tuple[str, ...]]:
+    """Build one module record while retaining its already-read source text."""
     relative_path = _safe_relative_path(project_root, file_path)
-    module_name = reasoner_symbol_atlas_module_name_for_path(project_root, file_path)
-    line_count, read_evidence = _read_line_count(file_path)
+    module_parts = list(relative_path.with_suffix("").parts)
+    if module_parts and module_parts[-1] == "__init__":
+        module_parts = module_parts[:-1]
+    module_name = ".".join(module_parts) if module_parts else "__init__"
+    read_evidence: list[str] = []
+    try:
+        source_text = file_path.read_text(encoding="utf-8-sig", errors="replace")
+    except OSError as exc:
+        source_text = ""
+        read_evidence.append("read_error: " + exc.__class__.__name__)
+    line_count = source_text.count("\n")
+    if source_text and not source_text.endswith("\n"):
+        line_count += 1
     is_test_file = _is_test_path(relative_path)
     is_generated_or_stale = _is_generated_or_stale_candidate(relative_path)
     is_package_init = relative_path.name == "__init__.py"
@@ -368,7 +368,7 @@ def _module_record_for_file(project_root: Path, file_path: Path) -> ProjectModul
         owner_role = "test_only"
     elif is_generated_or_stale:
         owner_role = "generated_or_stale"
-    return ProjectModuleRecord(
+    record = ProjectModuleRecord(
         module=module_name,
         path=str(relative_path),
         line_count=line_count,
@@ -377,6 +377,31 @@ def _module_record_for_file(project_root: Path, file_path: Path) -> ProjectModul
         owner_role=owner_role,
         evidence=tuple(evidence),
     )
+    return record, source_text, tuple(read_evidence)
+
+
+def _module_record_for_file(
+    project_root: Path,
+    file_path: Path,
+) -> ProjectModuleRecord:
+    """Build one module record without importing project code."""
+    record, _source_text, _read_evidence = _module_record_and_source(
+        project_root, file_path
+    )
+    return record
+
+
+def _collect_reasoner_symbol_atlas_modules_with_sources(
+    project_root: Path,
+    options: ProjectSymbolAtlasModuleScanOptions,
+) -> tuple[tuple[ProjectModuleRecord, str, tuple[str, ...]], ...]:
+    """Collect module records plus source text for an internal single-pass analysis."""
+    rows = [
+        _module_record_and_source(project_root, path)
+        for path in _iter_python_files(project_root, options)
+    ]
+    rows.sort(key=lambda item: (item[0].path, item[0].module))
+    return tuple(rows)
 
 
 def collect_reasoner_symbol_atlas_modules(

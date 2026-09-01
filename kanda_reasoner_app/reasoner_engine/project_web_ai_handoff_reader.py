@@ -37,14 +37,14 @@ REQUIRED_SUFFIXES = (
     "__bundle_manifest.json",
     "__patch_safety_routes.json",
     "__validation_state.json",
-    "__error_lessons_compact.json",
-    "__error_memory_ai_prompt.md",
-    "__error_memory_manifest.json",
 )
 OPTIONAL_SUFFIXES = (
     "__file_manifest.json",
     "__exclusion_rules.json",
     "__source_archive_manifest.json",
+    "__error_lessons_compact.json",
+    "__error_memory_ai_prompt.md",
+    "__error_memory_manifest.json",
 )
 ALLOWED_SUFFIXES = REQUIRED_SUFFIXES + OPTIONAL_SUFFIXES + ("UPLOAD_README.txt",)
 _IDENTITY_SUFFIXES = (
@@ -267,12 +267,14 @@ def _validate_handoff_identity(
                     "Project Support is stale or belongs to a moved Project. "
                     "Run Show Project to AI again before cloud transmission."
                 )
-    error_manifest = json_member(members, "__error_memory_manifest.json")
-    error_slug = str(error_manifest.get("project_slug") or "").strip()
-    if error_slug and error_slug.casefold() != expected_slug.casefold():
-        raise SupportIdentityMismatchError(
-            "Compact Error Memory belongs to a different Project: " + error_slug
-        )
+    if "__error_memory_manifest.json" in members:
+        error_manifest = json_member(members, "__error_memory_manifest.json")
+        error_slug = str(error_manifest.get("project_slug") or "").strip()
+        if error_slug and error_slug.casefold() != expected_slug.casefold():
+            raise SupportIdentityMismatchError(
+                "Compact Error Memory belongs to a different Project: "
+                + error_slug
+            )
 
 
 def load_selected_project_handoff_members(

@@ -3,8 +3,8 @@
   "builder_feature_id": "kanda-reasoner-portable-timestamped-publication-name-v1r32",
   "builder_version": "v1r32",
   "contract_version": "exact_external_build_controls_v1",
-  "control_set_sha256": "a50a1bf0ab40ec8df250d0fef944492f79e9f381a8fb9dfd5962980b98688cdc",
-  "feature_id": "kanda-reasoner-portable-external-build-control-hash-binding-v1r2",
+  "control_set_sha256": "4edf0aec299c3f0ff260c99fbbe235c2da8e29df624a49a8bc3aa5c075c2fe71",
+  "feature_id": "kanda-reasoner-portable-external-build-control-hash-binding-v1r3",
   "hardening_features": [
     "registry-boundary-gate",
     "packaged-gui-smoke-isolation",
@@ -46,8 +46,8 @@
     },
     {
       "role": "archive_policy_owner",
-      "sha256": "59f49995eb32d4d2b2fec574679cb9f4851bb25e97b49ddfc8de05468e769cef",
-      "size_bytes": 16249,
+      "sha256": "dea645783e0977989c8cb298d1e93c34ca4b230230e3144eaca1fd6d4d59003a",
+      "size_bytes": 17612,
       "source_relative": "kanda_reasoner_app/source_hygiene/tool_archive_policy.py"
     },
     {
@@ -58,8 +58,8 @@
     },
     {
       "role": "source_classification_manifest",
-      "sha256": "2a6609b8eac0ab5e67130f98e987684b484984fc67a9cab96427110a7aba80ef",
-      "size_bytes": 12002,
+      "sha256": "c88c5fafec7b912836f739217a6d502553712d7c354961c5cea40179be6ad0d4",
+      "size_bytes": 13091,
       "source_relative": "kanda_reasoner_app/source_hygiene/TOOL_SOURCE_CLASSIFICATION.json"
     },
     {

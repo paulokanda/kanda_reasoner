@@ -194,7 +194,8 @@ def _validate_real_qt(root: Path) -> None:
         )
         clipboard_text = app.clipboard().text()
         _require(clipboard_text == prompt, "Clipboard does not contain the generated prompt")
-        _require("KANDA_FREEZE_FORM_JSON_BEGIN" in clipboard_text, "Transport marker missing")
+        _require("Return exactly one valid JSON object" in clipboard_text, "Raw JSON transport instruction missing")
+        _require("KANDA_FREEZE_FORM_JSON_BEGIN" not in clipboard_text, "Retired transport marker leaked")
         _require("VALIDATION OK: current-feature" in clipboard_text, "Validation line lost")
     finally:
         widgets.dialog.close()

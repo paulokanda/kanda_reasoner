@@ -20,3 +20,4 @@ of it) for any commercial purpose. This includes incorporating ads or paid featu
 The original copyright notice must be kept intact in all copies of the code.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+

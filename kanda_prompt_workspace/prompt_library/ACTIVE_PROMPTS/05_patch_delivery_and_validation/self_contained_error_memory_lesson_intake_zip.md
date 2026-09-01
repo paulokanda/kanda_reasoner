@@ -2,11 +2,11 @@
 prompt_code: KPR-05-008
 prompt_id: self_contained_error_memory_lesson_intake_zip
 title: Self-Contained Error Memory Lesson Intake ZIP
-version: 3.1
+version: 3.2
 status: active
 load_type: on_request
 owner_box: 05_patch_delivery_and_validation
-source_stage: error-memory-library-intake-v3
+source_stage: prompt-freeze-error-memory-lifecycle-alignment-v1
 ---
 
 # MASTER PROMPT - CREATE A SELF-CONTAINED ERROR MEMORY LESSON INTAKE ZIP
@@ -164,16 +164,19 @@ Do not package an automatic replacement for an existing lesson.
 
 ## Lesson lifecycle
 
-Canonical lesson lifecycle states are:
+Canonical stored lesson lifecycle states are:
 
 ```text
-pending
 active
 draft
 retired
 ```
 
-A new active-ready candidate is transported as:
+`pending` is transport/staging state only. It is valid for a lesson waiting in
+`To memorize` intake, but it is not the in-tab review state and must not be
+treated as a fourth canonical stored lesson lifecycle state.
+
+A new active-ready candidate may be transported as:
 
 ```json
 {
@@ -182,7 +185,7 @@ A new active-ready candidate is transported as:
 }
 ```
 
-An incomplete candidate is transported as:
+An incomplete candidate may be transported as:
 
 ```json
 {
@@ -191,7 +194,11 @@ An incomplete candidate is transported as:
 }
 ```
 
-Only explicit human `Memorize Error` may promote a pending lesson.
+When any candidate is admitted into the Error Memory tab work surface, normalize
+the in-tab working lesson to `draft`, regardless of whether transport said
+`pending` or `active`. Remove transport-only intended status from the in-tab
+review copy. Only explicit human `Memorize Error` may promote an active-ready
+in-tab `draft` to `active`. An incomplete or invalid draft remains `draft`.
 
 ## Lesson transport format
 
@@ -595,7 +602,7 @@ If the hard runtime gate passes in source/IDE mode, return:
 3. concise lesson summary;
 4. confirmation Project source is not modified;
 5. confirmation existing lessons are not overwritten;
-6. confirmation staged lessons remain pending;
+6. confirmation staged lessons remain pending only in transport and normalize to draft on GUI admission;
 7. confirmation Machine-Card/MCard semantics are not used;
 8. confirmation `Memorize Error` remains human-only;
 9. one complete PowerShell installation block;
@@ -608,6 +615,7 @@ If the hard runtime gate passes in source/IDE mode, return:
 KANDA Reasoner
 -> Error Memory
 -> To memorize
--> review one pending lesson
+-> admit pending transport into the Error Memory tab
+-> review the normalized draft
 -> click Memorize Error only after approval
 ```

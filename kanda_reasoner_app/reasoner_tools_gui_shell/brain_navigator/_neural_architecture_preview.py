@@ -92,6 +92,23 @@ def _qt_web_engine_widgets_attr(name: str) -> Any:
     return getattr(import_module("PySide6.QtWebEngineWidgets"), name)
 
 
+def _qt_web_engine_core_attr(name: str) -> Any:
+    """Return a PySide6.QtWebEngineCore attribute through a lazy import."""
+
+    return getattr(import_module("PySide6.QtWebEngineCore"), name)
+
+
+def _enable_remote_renderer_dependency(web_view: object) -> None:
+    """Allow the declared Three.js CDN resource for this local HTML view."""
+
+    settings = web_view.settings()
+    QWebEngineSettings = _qt_web_engine_core_attr("QWebEngineSettings")
+    remote_attribute = (
+        QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls
+    )
+    settings.setAttribute(remote_attribute, True)
+
+
 _CLOSE_FLOATING_WINDOW_JS = (
     "if (typeof hideFloatingRememberWindow === 'function') { "
     "hideFloatingRememberWindow(); }"
@@ -185,6 +202,7 @@ def create_neural_architecture_preview(
 
     web_view = QWebEngineView()
     web_view.setObjectName("neuralArchitecturePreviewView")
+    _enable_remote_renderer_dependency(web_view)
     setattr(widget, "_brain_navigator_web_view", web_view)
     layout.addWidget(web_view)
 

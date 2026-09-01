@@ -15,39 +15,25 @@ from .delivery_provenance_contract import (
     DeliveryProvenanceContractError,
     validate_delivery_provenance_contract,
 )
+from .portable_release_coupling_guard import portable_release_coupling_error
 from .models import (
     FREEZE_HINT_FILENAME,
     MANDATORY_FREEZE_FIELDS,
     PLACEHOLDER_FRAGMENTS,
+)
+from .freeze_ownership_binding import (
+    FreezeOwnershipBindingError,
+    validate_freeze_ownership_binding,
 )
 from .zip_member_contract import (
     ZipMemberContractError,
     validate_zip_member_contract,
 )
 from .error_memory_intake_contract import pending_intake_payload_failures
-
-FORBIDDEN_INSTALL_FRAGMENTS = (
-    "downloads",
-    "desktop",
-    "getfolderpath",
-    "specialfolder",
-)
-
-REQUIRED_INSTALL_FRAGMENTS = (
-    "_delete_after_daily_work",
-    "[system.io.path]::getpathroot",
-    "clear-host",
-    "expand-archive",
-    "install ok. terminal will clear in 2 seconds",
-    "start-sleep -seconds 2",
-    "press enter to clear terminal",
-    "press enter again to clear",
-)
-FORBIDDEN_TERMINAL_FRAGMENTS = (
-    "start-sleep -seconds 5",
-    "press enter again to finish",
-    "exit 1",
-    "stop-process",
+from .installer_contract import (
+    InstallerContractError,
+    validate_install_script_text as _validate_install_script_text,
+    validate_source_patch_installer_text as _validate_source_patch_installer_text,
 )
 
 
@@ -161,6 +147,10 @@ def _validate_hint_data(hint: Mapping[str, Any]) -> None:
     if not isinstance(hint.get("do_not_regress_rules"), list) or not hint.get("do_not_regress_rules"):
         _raise("KANDA_FREEZE_HINT.json do_not_regress_rules must be a non-empty JSON list.")
 
+    try:
+        validate_freeze_ownership_binding(hint)
+    except FreezeOwnershipBindingError as exc:
+        _raise(str(exc))
 
 
 ERROR_LESSON_JSON_BEGIN = "KANDA_ERROR_LESSON_JSON_BEGIN"
@@ -369,13 +359,13 @@ def _validate_error_memory_lesson_blocks(archive: zipfile.ZipFile, *, intake_mod
     return checked
 
 
-def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True, error_memory_intake: bool = False) -> dict[str, Any]:
+def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = False, error_memory_intake: bool = False) -> dict[str, Any]:
     """Validate structural release contract for a patch ZIP.
 
-    The validator fails closed when a freeze-ready ZIP lacks root-level
-    KANDA_FREEZE_HINT.json, when mandatory hint fields are empty, or when the
-    sidecar is duplicated inside the payload folder where it could be installed
-    as source.
+    Source-patch validity is independent from Freeze intake. A root-level
+    KANDA_FREEZE_HINT.json is optional unless the caller explicitly requires it.
+    When present, the hint remains strictly validated and must never be duplicated
+    inside the payload folder where it could be installed as source.
     """
     path = Path(zip_path).expanduser().resolve()
     if not path.is_file():
@@ -383,6 +373,7 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True,
     if path.suffix.lower() != ".zip":
         _raise(f"Patch file is not a .zip archive: {path}")
 
+    source_patch_installer_contract = False
     try:
         with zipfile.ZipFile(path, "r") as archive:
             try:
@@ -420,14 +411,33 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True,
                 )
             except DeliveryProvenanceContractError as exc:
                 _raise(str(exc))
+            source_patch_installer_contract = False
+            if provenance_report and provenance_report.receiver_classification == "SOURCE_PATCH":
+                if "INSTALL.ps1" not in root_names:
+                    _raise("SOURCE_PATCH_INSTALLER_MISSING: INSTALL.ps1")
+                install_text = archive.read("INSTALL.ps1").decode(
+                    "utf-8-sig", errors="replace"
+                )
+                try:
+                    _validate_source_patch_installer_text(install_text)
+                except InstallerContractError as exc:
+                    _raise(str(exc))
+                source_patch_installer_contract = True
     except zipfile.BadZipFile as exc:
         raise PatchZipContractError(f"Invalid ZIP archive: {path}") from exc
 
+    if source_patch_installer_contract:
+        error = portable_release_coupling_error(path, Path(__file__).resolve().parents[2])
+        if error:
+            _raise(error)
     return {
         "ok": True,
         "zip_path": str(path),
         "zip_name": path.name,
         "root_freeze_hint": bool(hint),
+        "freeze_ownership_binding": bool(
+            hint and str(hint.get("schema_version") or "").strip() == "1.1"
+        ),
         "feature_id": hint.get("feature_id") if hint else "",
         "feature_title": hint.get("feature_title") if hint else "",
         "error_memory_lesson_blocks_checked": len(error_memory_lesson_blocks),
@@ -436,29 +446,22 @@ def validate_patch_zip(zip_path: str | Path, *, expect_freeze_hint: bool = True,
         "zip_member_count": len(member_inventory.names),
         "declared_payload_member_count": len(member_inventory.declared_payload_members),
         "patch_provenance_contract": bool(provenance_report),
+        "source_patch_installer_contract": source_patch_installer_contract,
         "receiver_classification": (
             provenance_report.receiver_classification if provenance_report else ""
         ),
     }
 
 
+
 def validate_install_script_text(script_text: str) -> dict[str, Any]:
-    """Validate the canonical installer does not drift into generic paths."""
-    lowered = script_text.lower()
-    forbidden = [item for item in FORBIDDEN_INSTALL_FRAGMENTS if item in lowered]
-    if forbidden:
-        _raise("Installer contains forbidden generic path fragments: " + ", ".join(forbidden))
-    terminal_forbidden = [item for item in FORBIDDEN_TERMINAL_FRAGMENTS if item in lowered]
-    if terminal_forbidden:
-        _raise("Installer contains forbidden terminal cleanup fragments: " + ", ".join(terminal_forbidden))
-    missing = [item for item in REQUIRED_INSTALL_FRAGMENTS if item not in lowered]
-    if missing:
-        _raise("Installer is missing required staging fragments: " + ", ".join(missing))
-    if "move-item" not in lowered and "copy-item" not in lowered:
-        _raise("Installer must stage the root-drive ZIP into the work folder.")
-    if "remove-item" not in lowered:
-        _raise("Installer must remove stale extraction or root-drive ZIP copies.")
-    return {"ok": True, "forbidden_fragments": [], "missing_fragments": []}
+    """Validate installer text while preserving PatchZipContractError API."""
+    try:
+        return _validate_install_script_text(script_text)
+    except InstallerContractError as exc:
+        _raise(str(exc))
+    raise AssertionError("unreachable")
+
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -466,9 +469,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Validate a KANDA patch ZIP contract.")
     parser.add_argument("zip_path", help="Path to the patch ZIP to validate.")
     parser.add_argument(
+        "--require-freeze-hint",
+        action="store_true",
+        help="Require KANDA_FREEZE_HINT.json only for artifacts whose receiver contract is Freeze intake.",
+    )
+    parser.add_argument(
         "--non-freezeable",
         action="store_true",
-        help="Allow a ZIP without KANDA_FREEZE_HINT.json when explicitly non-freezeable.",
+        help="Deprecated compatibility alias; ordinary source patches already allow no Freeze Hint.",
     )
     parser.add_argument("--error-memory-intake", action="store_true")
     args = parser.parse_args(argv)
@@ -476,7 +484,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         report = validate_patch_zip(
             args.zip_path,
-            expect_freeze_hint=not (args.non_freezeable or args.error_memory_intake),
+            expect_freeze_hint=bool(args.require_freeze_hint and not args.error_memory_intake),
             error_memory_intake=args.error_memory_intake,
         )
     except PatchZipContractError as exc:

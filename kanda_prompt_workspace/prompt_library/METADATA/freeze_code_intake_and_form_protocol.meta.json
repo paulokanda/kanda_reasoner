@@ -4,7 +4,7 @@
   "display_name": "Freeze Hint and Form Intake Protocol",
   "filename": "freeze_code_intake_and_form_protocol.md",
   "category": "03_governance_freeze_and_handoff",
-  "version": "2.0",
+  "version": "2.3",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "03_governance_freeze_and_handoff",
@@ -15,20 +15,24 @@
     "freeze_code_intake_and_form_protocol.md",
     "freeze hint and form intake protocol"
   ],
-  "source_stage": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "updated_for": "prompt-audit-wave4a-governance-freeze-handoff-v1",
-  "description": "Carries one current validated feature identity into project-owned freeze intake while preserving read-only Preview and explicit human Confirm and Write.",
+  "source_stage": "freeze-formulary-unified-json-transport-v1",
+  "updated_for": "freeze-generic-receive-ready-blueprint-v3",
+  "description": "Owns validated-feature Freeze intake, the human Preview/Confirm boundary, and the canonical generic receive-ready manual Freeze GUI blueprint mirrored by Get Blueprint Freeze.",
   "trigger_phrases": [
     "freeze hint intake",
     "freeze form",
     "new local freeze entry",
-    "preview freeze entry"
+    "preview freeze entry",
+    "freeze blueprint",
+    "Get Blueprint Freeze",
+    "generic receive-ready freeze template"
   ],
   "required_companion_prompts": [
     "brick_wall_comprehensive_quality_gate",
     "pre_output_contract_gates"
   ],
   "recommended_companion_prompts": [
+    "freeze_candidate_pre_output_audit",
     "durable_document_artifact_routing_canon",
     "error_memory_ai_formulary_startup_canon"
   ]

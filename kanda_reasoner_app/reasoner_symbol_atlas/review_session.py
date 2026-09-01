@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from functools import wraps
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 import hashlib
@@ -13,7 +14,10 @@ from typing import Iterator
 
 __all__ = [
     "ProjectSymbolAtlasReviewSessionIdentity",
+    "reasoner_symbol_atlas_options_reuse",
+    "reasoner_symbol_atlas_project_root_reuse",
     "reasoner_symbol_atlas_review_session",
+    "reasoner_symbol_atlas_reuse_scope",
 ]
 
 _EXCLUDED_DIR_NAMES = frozenset(
@@ -49,7 +53,7 @@ class ProjectSymbolAtlasReviewSessionIdentity:
 @dataclass
 class _ProjectSymbolAtlasReviewSessionState:
     identity: ProjectSymbolAtlasReviewSessionIdentity
-    freshness_stamp: str = ""
+    freshness_stamps: dict[tuple[str, ...], str] = field(default_factory=dict)
     cache: dict[tuple[object, ...], object] = field(default_factory=dict)
 
 
@@ -135,6 +139,16 @@ def _matching_state(
     return state
 
 
+def _review_cache_scope_key(
+    project_root: Path,
+    evidence_paths: tuple[str, ...],
+) -> tuple[str, ...]:
+    return tuple(
+        str(path)
+        for path in _normalize_extra_paths(project_root, evidence_paths)
+    )
+
+
 def _review_cache_get(
     project_root: str | Path,
     cache_key: tuple[object, ...],
@@ -145,11 +159,15 @@ def _review_cache_get(
     if state is None:
         return None
     root = _resolved_root(project_root)
+    scope_key = _review_cache_scope_key(root, evidence_paths)
     stamp = _build_freshness_stamp(root, evidence_paths)
-    if state.freshness_stamp and state.freshness_stamp != stamp:
-        state.cache.clear()
-    state.freshness_stamp = stamp
-    return state.cache.get(cache_key)
+    previous = state.freshness_stamps.get(scope_key)
+    if previous and previous != stamp:
+        stale_keys = [key for key in state.cache if key[0] == scope_key]
+        for key in stale_keys:
+            state.cache.pop(key, None)
+    state.freshness_stamps[scope_key] = stamp
+    return state.cache.get((scope_key,) + cache_key)
 
 
 def _review_cache_put(
@@ -163,11 +181,15 @@ def _review_cache_put(
     if state is None:
         return
     root = _resolved_root(project_root)
+    scope_key = _review_cache_scope_key(root, evidence_paths)
     stamp = _build_freshness_stamp(root, evidence_paths)
-    if state.freshness_stamp and state.freshness_stamp != stamp:
-        state.cache.clear()
-    state.freshness_stamp = stamp
-    state.cache[cache_key] = value
+    previous = state.freshness_stamps.get(scope_key)
+    if previous and previous != stamp:
+        stale_keys = [key for key in state.cache if key[0] == scope_key]
+        for key in stale_keys:
+            state.cache.pop(key, None)
+    state.freshness_stamps[scope_key] = stamp
+    state.cache[(scope_key,) + cache_key] = value
 
 
 @contextmanager
@@ -207,5 +229,68 @@ def reasoner_symbol_atlas_review_session(
         yield identity
     finally:
         state.cache.clear()
-        state.freshness_stamp = ""
+        state.freshness_stamps.clear()
         _ACTIVE_SESSION.reset(token)
+
+
+def _reuse_identity_values(project_root: Path) -> tuple[str, str]:
+    root_text = str(project_root).casefold().encode(
+        "utf-8",
+        errors="surrogatepass",
+    )
+    stable_id = "operation-local-" + hashlib.sha256(root_text).hexdigest()[:24]
+    root_fingerprint = _build_freshness_stamp(project_root)
+    return stable_id, root_fingerprint
+
+
+@contextmanager
+def reasoner_symbol_atlas_reuse_scope(
+    *,
+    project_root: str | Path,
+    operation_id: str,
+) -> Iterator[ProjectSymbolAtlasReviewSessionIdentity]:
+    """Reuse immutable evidence within one read-only operation and nested calls."""
+    root = _resolved_root(project_root)
+    active = _ACTIVE_SESSION.get()
+    if active is not None:
+        state = _matching_state(root)
+        if state is None:
+            raise RuntimeError("SYMBOL_ATLAS_REUSE_SESSION_UNAVAILABLE")
+        yield state.identity
+        return
+    stable_id, root_fingerprint = _reuse_identity_values(root)
+    with reasoner_symbol_atlas_review_session(
+        project_root=root,
+        stable_project_id=stable_id,
+        project_root_fingerprint=root_fingerprint,
+        operation_id=operation_id,
+    ) as identity:
+        yield identity
+
+
+def reasoner_symbol_atlas_options_reuse(operation_id: str):
+    """Decorate a function whose first argument exposes project_root."""
+    def decorate(function):
+        @wraps(function)
+        def wrapped(options, *args, **kwargs):
+            with reasoner_symbol_atlas_reuse_scope(
+                project_root=options.project_root,
+                operation_id=operation_id,
+            ):
+                return function(options, *args, **kwargs)
+        return wrapped
+    return decorate
+
+
+def reasoner_symbol_atlas_project_root_reuse(operation_id: str):
+    """Decorate a function whose first argument is a Project root."""
+    def decorate(function):
+        @wraps(function)
+        def wrapped(project_root, *args, **kwargs):
+            with reasoner_symbol_atlas_reuse_scope(
+                project_root=project_root,
+                operation_id=operation_id,
+            ):
+                return function(project_root, *args, **kwargs)
+        return wrapped
+    return decorate

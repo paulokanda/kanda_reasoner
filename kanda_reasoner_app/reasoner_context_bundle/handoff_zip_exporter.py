@@ -15,6 +15,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from .file_manifest_builder import build_file_manifest_payload
 from .handoff_zip_exporter_paths_private import (
     _assert_no_forbidden_outputs,
     _cleanup_created_paths,
@@ -43,6 +44,13 @@ from .handoff_zip_exporter_support import (
 from .handoff_zip_exporter_writer import write_external_readme, write_package_parts
 from .source_tree_exporter import write_source_archive_parts
 from .schema_models import ProjectContext
+from .output_paths import bundle_artifact_paths
+from .source_state_identity import (
+    load_source_state_identity,
+    require_archive_projection_matches_file_manifest,
+    require_matching_source_states,
+    source_state_from_payload,
+)
 
 DEFAULT_PART_SIZE_MB = 500
 EXTENDED_PART_SIZE_MB_OPTIONS = (100, 200, 300, 400, 500)
@@ -110,9 +118,14 @@ def export_json_handoff_zip_parts(
         zip_records: list[dict[str, Any]] = []
         packages: list[dict[str, Any]] = []
         error_memory_export_result: dict[str, Any] = {
-            "ok": False,
-            "status": "not_attempted",
-            "reason": "Error Memory export has not run yet.",
+            "ok": True,
+            "status": "tool_owned_separate_workflow",
+            "reason": (
+                "Reusable Error Memory is Tool-owned and is supplied "
+                "separately from the Project handoff workflow."
+            ),
+            "compact_files_in_upload_package": [],
+            "full_zip_policy": "tool_owned_separate_workflow",
         }
 
         previous_reuse_folder = _previous_second_prompt_files_for_reuse(destination)
@@ -159,43 +172,49 @@ def export_json_handoff_zip_parts(
             )
 
         _finalize_ai_context_artifacts_for_handoff(context, destination)
+        archive_state = dict(source_archive.get("source_state", {}))
+        file_manifest_state: dict[str, Any] = {}
+        if archive_state:
+            bundle_paths = bundle_artifact_paths(context)
+            file_manifest_state = load_source_state_identity(
+                bundle_paths.file_manifest_json
+            )
+            source_manifest_state = load_source_state_identity(source_manifest_path)
+            bundle_manifest_state = load_source_state_identity(
+                bundle_paths.bundle_manifest_json
+            )
+            require_matching_source_states(
+                archive_state,
+                source_manifest_state,
+                expected_label="source_archive_inventory",
+                observed_label="source_archive_manifest",
+            )
+            require_matching_source_states(
+                file_manifest_state,
+                bundle_manifest_state,
+                expected_label="file_manifest",
+                observed_label="bundle_manifest",
+            )
+            file_manifest_payload = json.loads(
+                bundle_paths.file_manifest_json.read_text(encoding="utf-8-sig")
+            )
+            source_manifest_payload = json.loads(
+                source_manifest_path.read_text(encoding="utf-8-sig")
+            )
+            require_archive_projection_matches_file_manifest(
+                list(file_manifest_payload.get("files", [])),
+                list(source_manifest_payload.get("included_files", [])),
+            )
+        elif check_bundle:
+            raise RuntimeError("SOURCE_ARCHIVE_STATE_MISSING")
+
         artifacts = ordered_export_paths(context, include_runtime_trace)
         if source_manifest_path.exists():
             artifacts.append(source_manifest_path)
 
-        # Error Memory canon: compact files are always included in the main
-        # AI-readable upload package, while the full Error Memory ZIP is
-        # generated as a separate sibling in second_prompt_files and opened
-        # only when needed.
-        try:
-            from kanda_reasoner_app.error_memory.exporter import (
-                write_error_memory_ai_send_files,
-            )
-
-            error_memory_export_result = write_error_memory_ai_send_files(context.root, destination)
-            error_memory_export_result["status"] = "included"
-            error_memory_export_result["compact_files_in_upload_package"] = []
-            error_memory_export_result["full_zip_policy"] = "sibling_file_open_only_when_needed"
-            for key in ("compact_json", "prompt_md", "manifest_json"):
-                value = str(error_memory_export_result.get(key, "") or "")
-                if value:
-                    candidate = Path(value)
-                    if candidate.exists() and candidate.is_file():
-                        artifacts.append(candidate)
-                        error_memory_export_result["compact_files_in_upload_package"].append(candidate.name)
-            full_zip = str(error_memory_export_result.get("full_zip", "") or "")
-            if full_zip:
-                full_zip_path = Path(full_zip)
-                error_memory_export_result["full_zip_name"] = full_zip_path.name
-                error_memory_export_result["full_zip_in_upload_package"] = False
-                created_paths.append(full_zip_path)
-        except Exception as exc:
-            error_memory_export_result = {
-                "ok": False,
-                "status": "skipped",
-                "reason": str(exc),
-            }
-            warnings.append("Error Memory export skipped: " + str(exc))
+        # Reusable Error Memory is Tool-owned. Show Project exports only
+        # Project handoff/source artifacts; Tool Error Memory is supplied by
+        # the separate Error Memory workflow when an AI session needs it.
 
         specs = package_specs(context, artifacts)
 
@@ -224,6 +243,17 @@ def export_json_handoff_zip_parts(
 
         readme_file = write_external_readme(output_stage, context, part_size_mb)
         _assert_no_forbidden_outputs(output_stage)
+
+        if archive_state:
+            live_payload = build_file_manifest_payload(context)
+            live_state = source_state_from_payload(live_payload)
+            require_matching_source_states(
+                file_manifest_state,
+                live_state,
+                expected_label="handoff_snapshot",
+                observed_label="live_source_before_publish",
+            )
+
         removed_obsolete_outputs = _remove_obsolete_all_in_one_outputs(
             destination,
             context.project_slug,
@@ -247,6 +277,14 @@ def export_json_handoff_zip_parts(
             "png_assets_reused": bool(source_archive.get("png_assets_reused", False)),
             "png_assets_reuse_method": str(
                 source_archive.get("png_assets_reuse_method", "")
+            ),
+            "source_state": file_manifest_state,
+            "source_archive_state": archive_state,
+            "source_archive_projection_status": (
+                "VERIFIED_SUBSET" if archive_state else "NOT_AVAILABLE"
+            ),
+            "source_state_status": (
+                "FRESH_AT_PUBLICATION" if archive_state else "NOT_AVAILABLE"
             ),
             "packages": retargeted_packages,
             "zip_parts": retargeted_zip_records,

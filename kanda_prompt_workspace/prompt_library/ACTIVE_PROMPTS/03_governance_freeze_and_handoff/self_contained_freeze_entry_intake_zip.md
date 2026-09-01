@@ -2,12 +2,27 @@
 prompt_code: KPR-03-007
 prompt_id: self_contained_freeze_entry_intake_zip
 title: Self-Contained Freeze Entry Intake ZIP
-version: 1.1
+version: 1.3
 status: active
 load_type: on_request
 owner_box: 03_governance_freeze_and_handoff
-source_stage: freeze-error-intake-bridge-v1
+source_stage: prompt-freeze-error-memory-lifecycle-alignment-v1
 ---
+
+## Freeze-loader semantic boundary
+
+This ZIP is a transport/intake artifact for one exact already validated feature
+state. It must never turn Freeze into implementation, validation, patch execution,
+or cumulative state synthesis.
+
+`KANDA_FREEZE_HINT.json` is mandatory inside this Freeze-loader because this
+artifact's purpose is Freeze intake. That requirement does not make Freeze Hint
+mandatory for unrelated ordinary source-patch validity.
+
+A loader must represent one exact effective feature/revision. Do not combine
+multiple source patches or historical revisions into one cumulative Freeze loader
+unless the human explicitly requested and approved a distinct cumulative/baseline
+Freeze operation before package construction.
 
 MASTER PROMPT — CREATE A ZIP THAT LOADS THE CURRENT FEATURE INTO “NEW LOCAL FREEZE ENTRY”
 
@@ -220,7 +235,7 @@ KANDA_FREEZE_HINT.json must exist at the archive root and contain, at minimum:
   "do_not_regress_rules": [],
   "validation_evidence_summary": [],
   "known_warnings": "<real warnings or n/a>",
-  "planned_next_step": "<Preview and Confirm and Write>",
+  "planned_next_step": "<ONLY ACTION THAT REMAINS PENDING AFTER THE COMPLETE CURRENT CONFIRM AND WRITE TRANSACTION RETURNS>",
   "notes": "<current-project provenance and relevant notes>",
   "freeze_readiness": "locally_validated",
   "requires_user_validation": false,
@@ -250,9 +265,21 @@ Do not include placeholders in the finished package.
 
 KANDA_FREEZE_FORM.TXT
 
-Also include one receive-ready freeze form using this exact transport shape:
+Before emitting or packaging the AI-authored local Freeze candidate/form, load and
+apply `KPR-03-008 freeze_candidate_pre_output_audit`. The exact candidate must
+pass its current-store duplicate/predecessor/supersession audit, exact feature and
+revision evidence audit, release-owner provenance audit, path-owner/root audit,
+strict 11-field JSON audit, complete Confirm and Write transaction simulation, and
+second independent audit. If any mandatory gate is unresolved, fail closed with
+`FREEZE CANDIDATE NOT READY`; do not package a partial candidate.
 
-KANDA_FREEZE_FORM_JSON_BEGIN
+`planned_next_step` must remain genuinely pending after the complete current
+Confirm and Write transaction has returned. It must not repeat Preview, Confirm
+and Write, automatic hint consumption, startup/compliance refresh, indexing, or
+another writer/GUI-owned action already completed by that transaction. If no
+immediate human action remains, use a future durable trigger.
+
+Also include one receive-ready Freeze form as exactly one canonical raw JSON object:
 
 ```json
 {
@@ -270,11 +297,9 @@ KANDA_FREEZE_FORM_JSON_BEGIN
 }
 ```
 
-KANDA_FREEZE_FORM_JSON_END
-
-The form must match KANDA_FREEZE_HINT.json.
-
-Do not place prose outside the transport markers inside KANDA_FREEZE_FORM.txt.
+The form must match KANDA_FREEZE_HINT.json. The JSON object is the transport;
+BEGIN/END markers and Markdown fences are not part of the receiver contract.
+KANDA_FREEZE_FORM.txt must contain only the raw JSON object, with no prose.
 
 VALIDATION_EVIDENCE_SUMMARY
 

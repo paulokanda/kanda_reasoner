@@ -2,11 +2,11 @@
 prompt_id: patch_install_delivery_error_register
 prompt_code: KPR-05-001
 title: Patch Install Delivery Active Regression Index
-version: 2.2
+version: 2.4
 status: active
 load_type: conditional_required
 owner_box: 05_patch_delivery_and_validation
-source_stage: prompt-audit-wave3b-specialist-startup-bridges-v1
+source_stage: portable-cross-feature-coupling-pre-output-gate-v1
 ---
 
 # Patch Install Delivery Active Regression Index
@@ -194,6 +194,48 @@ index.
 - Expected rejection marker: `ARTIFACT_STAGING_COMMAND_POLICY: FAIL`
 - Expected success marker: `ARTIFACT_STAGING_COMMAND_POLICY: PASS`
 
+
+### PIR-013 - Machine-enforced Error Memory PowerShell prevention
+
+- Status: active
+- Regression category: ERROR_MEMORY_POWERSHELL_PRE_OUTPUT_GUARD
+- Blocking predicate: A user-facing interactive PowerShell artifact matches a
+  current machine-detectable Error Memory prevention trigger but the exact final
+  candidate contains detached or continuation-dependent `elseif`, `else`,
+  `catch`, or `finally`, split interactive control flow, an unsupported runtime
+  API, or otherwise bypasses the current paste-safety guard.
+- Current owner prompt: `pre_output_contract_gates`
+- Focused validator: `tools/validate_powershell_paste_safe_operational_output_v1.py`
+- Expected rejection marker: `ERROR_MEMORY_POWERSHELL_PRE_OUTPUT_BLOCKED`
+- Expected success marker: `ERROR_MEMORY_POWERSHELL_PRE_OUTPUT_GUARD: PASS`
+- Relevant Error Memory lesson IDs:
+  `lesson-powershell-detached-else-interactive-paste-footer-v1`;
+  `lesson-powershell-validation-wrapper-marker-and-finally-v1`
+- Supersedes: none
+- Superseded by: none
+- Last verified source fingerprint: set by current governed validation evidence
+- Last verified date: set by current governed validation evidence
+
+### PIR-014 - Portable cross-feature runtime allowlist coupling
+
+- Status: active
+- Regression category: PORTABLE_CROSS_FEATURE_ALLOWLIST_RENEWAL
+- Blocking predicate: A governed `SOURCE_PATCH` changes one or more paths already
+  present in `portable/PORTABLE_RUNTIME_ALLOWLIST.json`, but the exact final ZIP
+  omits the same-patch bounded allowlist renewal, changes unrelated bindings, or
+  leaves `portable/PORTABLE_BUILDER_MANIFEST.json` bound to a stale allowlist
+  hash.
+- Current owner prompt: `pre_output_contract_gates`
+- Focused validator: `tools/validate_portable_release_coupling_pre_output_gate_v1.py`
+- Exact final ZIP validator: `scripts/validate_patch_zip.py`
+- Expected rejection marker: `PORTABLE_RELEASE_COUPLING_PRE_OUTPUT_BLOCKED`
+- Expected success marker: `PORTABLE_RELEASE_COUPLING_PRE_OUTPUT_GUARD: PASS`
+- Relevant Error Memory lesson ID:
+  `lesson-portable-cross-feature-runtime-allowlist-renewal-gate-v1`
+- Supersedes: none
+- Superseded by: none
+- Last verified source fingerprint: set by current governed validation evidence
+- Last verified date: set by current governed validation evidence
 
 ## Update rule
 

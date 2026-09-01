@@ -18,6 +18,9 @@ from kanda_reasoner_app.freeze_after_update_gui._freeze_memory_exports import (
 from kanda_reasoner_app.freeze_after_update_gui._frozen_list_dialog import (
     FreezeFrozenListMixin,
 )
+from kanda_reasoner_app.freeze_after_update_gui._frozen_library_transfer import (
+    FreezeFrozenLibraryTransferMixin,
+)
 from kanda_reasoner_app.freeze_after_update_gui._local_freeze_dialog_runtime import (
     FreezeLocalEntryRuntimeMixin,
 )
@@ -33,6 +36,7 @@ __all__ = ["FreezeAfterUpdateTab"]
 
 
 class FreezeAfterUpdateTab(
+    FreezeFrozenLibraryTransferMixin,
     FreezeUiBuilderMixin,
     FreezePathControlsMixin,
     FreezeBoxActionsMixin,

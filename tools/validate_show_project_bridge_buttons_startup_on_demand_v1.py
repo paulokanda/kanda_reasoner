@@ -38,7 +38,7 @@ def reject(text: str, needle: str, label: str) -> None:
 
 def validate_ui(root: Path) -> None:
     text = read(root, UI_REL)
-    require(text, 'self.copy_terminal_cleanup_contract_button = QPushButton("Clean 2sec 2xEnter")', 'existing Clean button')
+    require(text, 'self.copy_terminal_cleanup_contract_button = QPushButton("Install + Validate Flow")', 'existing terminal-flow button')
     require(text, 'self.bridges_label = QLabel("Bridges:")', 'Bridges label')
     require(text, 'QPalette.WindowText', 'orange label palette role')
     require(text, 'self.copy_startup_bridge_list_button = QPushButton("Startup")', 'Startup button')

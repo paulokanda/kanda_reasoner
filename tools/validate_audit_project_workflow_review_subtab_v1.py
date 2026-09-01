@@ -99,8 +99,8 @@ def validate_static(root: Path) -> None:
         "def _contain_subtab_horizontal_size_pressure(window: object) -> None:",
         "window._workflow_review_page,",
         "window._workflow_review_page.centralWidget(),",
-        "container.setMinimumWidth(0)",
-        "container.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Expanding)",
+        "container.setMinimumSize(0, 0)",
+        "container.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)",
     ):
         _require(
             fragment in subtabs,

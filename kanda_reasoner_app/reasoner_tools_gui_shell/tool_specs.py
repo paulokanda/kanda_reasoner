@@ -177,4 +177,10 @@ TOOLS: tuple[ToolSpec, ...] = (
         tab_id="prompt_library",
         tab_kind="builtin_prompt_library",
     ),
+    ToolSpec(
+        step_title="Kanda Memo Prompts",
+        source_hint=_source_path("reasoner_tools_gui_shell", "kanda_memo_prompts", "contract.py"),
+        tab_id="kanda_memo_prompts",
+        tab_kind="builtin_kanda_memo_prompts",
+    ),
 )

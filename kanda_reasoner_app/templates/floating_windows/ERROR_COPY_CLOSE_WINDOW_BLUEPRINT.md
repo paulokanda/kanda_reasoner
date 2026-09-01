@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Use this template for error floating windows that show a problem and need a simple OK or Close button.
+Use this template for error floating windows that show a problem and need a simple Copy Close button.
 
-The OK button must do two things in this exact order:
+The Copy Close button must do two things in this exact order:
 
 1. Copy the complete error text from the window to the clipboard.
 2. Close the window silently.
@@ -38,9 +38,9 @@ Do not use this template to write Error Memory automatically. It only copies tex
 ## Behavior contract
 
 1. The window is not auto-closing.
-2. The OK button copies the complete diagnostic text to the clipboard.
-3. After the copy attempt, the OK button closes the window.
-4. The OK button is not a default native dialog button.
+2. The Copy Close button copies the complete diagnostic text to the clipboard.
+3. After the copy attempt, the Copy Close button closes the window.
+4. The Copy Close button is not a default native dialog button.
 5. The template must not trigger Windows message-box sounds.
 6. The full clipboard text must include the title, message, details, context, traceback, and visible note when those fields are provided.
 7. Window-manager close and Escape close may close without copying, because the user did not click OK.
@@ -65,11 +65,11 @@ show_error_copy_close_window(
     detail_text="Expected marker was not found.",
     traceback_text=traceback_text,
     context_text="Feature: freeze-local-entry-action-buttons-v1",
-    button_text="OK",
+    button_text="Copy Close",
 )
 ```
 
-When the user clicks OK, the complete text is copied to the clipboard and the window closes.
+When the user clicks Copy Close, the complete text is copied to the clipboard and the window closes.
 
 ## Implementation file
 

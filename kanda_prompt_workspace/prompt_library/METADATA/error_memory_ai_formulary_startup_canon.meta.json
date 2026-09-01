@@ -6,12 +6,12 @@
   "category": "01_session_start_and_navigation",
   "status": "active",
   "load_type": "always_startup",
-  "version": "4.3",
+  "version": "4.4",
   "owner_box": "01_session_start_and_navigation",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/01_session_start_and_navigation/error_memory_ai_formulary_startup_canon.md",
-  "source_stage": "error-memory-portable-native-intake-fallback-v1",
-  "updated_for": "error-memory-portable-native-intake-fallback-v1",
-  "description": "Single Tool-owned Error Memory admission/workflow canon; native marker-wrapped application intake is the Portable/FROZEN default, while executable intake ZIP automation is source/IDE-only after external Tool Python verification.",
+  "source_stage": "error-memory-lesson-pre-output-envelope-guard-v1",
+  "updated_for": "error-memory-lesson-pre-output-envelope-guard-v1",
+  "description": "Single Tool-owned Error Memory admission/workflow canon with a mandatory KPR-12-003 pre-output transport gate for direct AI-assisted lesson intake; native marker-wrapped application intake remains the Portable/FROZEN default.",
   "priority": 12,
   "trigger_phrases": [
     "error memory",
@@ -23,6 +23,7 @@
   ],
   "required_companion_prompts": [],
   "recommended_companion_prompts": [
+    "error_memory_active_ready_json_template",
     "self_contained_error_memory_lesson_intake_zip",
     "pre_output_contract_gates",
     "patch_install_delivery_error_register"

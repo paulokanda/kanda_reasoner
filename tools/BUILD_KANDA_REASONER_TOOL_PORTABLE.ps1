@@ -32,6 +32,12 @@ if (-not [string]::IsNullOrWhiteSpace($ToolRoot)) {
 $ToolRoot = $CanonicalToolRoot
 $Python = Join-Path $ToolRoot ".venv\Scripts\python.exe"
 $Builder = Join-Path $ToolRoot "tools\build_kanda_reasoner_tool_portable.py"
+$EntrypointGate = Join-Path $ToolRoot (
+    "tools\portable_entrypoint_shell_open_release_gate.py"
+)
+$BytecodeCleanup = Join-Path $ToolRoot (
+    "tools\portable_source_bytecode_cleanup.ps1"
+)
 
 if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
     throw "Tool-owned Python was not found: $Python"
@@ -39,6 +45,14 @@ if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
 
 if (-not (Test-Path -LiteralPath $Builder -PathType Leaf)) {
     throw "Canonical Tool Portable builder was not found: $Builder"
+}
+
+if (-not (Test-Path -LiteralPath $EntrypointGate -PathType Leaf)) {
+    throw "Portable entrypoint release gate was not found: $EntrypointGate"
+}
+
+if (-not (Test-Path -LiteralPath $BytecodeCleanup -PathType Leaf)) {
+    throw "Portable source bytecode cleanup helper was not found: $BytecodeCleanup"
 }
 
 if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
@@ -68,12 +82,31 @@ if ((Split-Path -Leaf $OutputDirectory) -ne "KandaReasoner_Portable_Output") {
     )
 }
 
+$DeliveryRoot = Split-Path -Parent $OutputDirectory
+$DeliveryNamePattern = (
+    "^KandaReasoner-\d{8}_\d{6}-Windows-Portable\.zip$"
+)
+$ExistingDeliveryPaths = @()
+
+if (Test-Path -LiteralPath $DeliveryRoot -PathType Container) {
+    $ExistingDeliveryPaths = @(
+        Get-ChildItem -LiteralPath $DeliveryRoot -File |
+            Where-Object {
+                $_.Name -match $DeliveryNamePattern
+            } |
+            ForEach-Object {
+                $_.FullName
+            }
+    )
+}
+
 Write-Host "PORTABLE TOOL ROOT FROM BUILDER LOCATION: PASS"
 Write-Host "PORTABLE TOOL VENV PYTHON: PASS"
 Write-Host "PORTABLE PROJECT SELECTION MUTATION: ABSENT"
 Write-Host "PORTABLE DESTINATION USER SELECTED: PASS"
 Write-Host "PORTABLE OUTPUT FOLDER: $OutputDirectory"
 Write-Host "PORTABLE DELIVERY ZIP NAMING: TIMESTAMPED BY CANONICAL BUILDER"
+Write-Host "PORTABLE ENTRYPOINT SHELL OPEN RELEASE GATE: REQUIRED"
 
 $Arguments = @(
     $Builder,
@@ -103,6 +136,10 @@ $PreviousPycachePrefix = [Environment]::GetEnvironmentVariable(
     "Process"
 )
 
+Write-Host "PORTABLE CANONICAL BUILDER PREEXISTING BYTECODE CLEANUP: REQUIRED"
+& $BytecodeCleanup -PortableRoot (Join-Path $ToolRoot "portable")
+Write-Host "PORTABLE CANONICAL BUILDER PREEXISTING BYTECODE CLEANUP: PASS"
+
 New-Item -ItemType Directory -Path $PycacheRoot -Force | Out-Null
 $env:PYTHONPYCACHEPREFIX = $PycacheRoot
 
@@ -129,3 +166,56 @@ if ($BuildExitCode -ne 0) {
         $BuildExitCode
     )
 }
+
+$CurrentDeliveryZips = @(
+    Get-ChildItem -LiteralPath $DeliveryRoot -File |
+        Where-Object {
+            $_.Name -match $DeliveryNamePattern
+        }
+)
+
+$NewDeliveryZips = @(
+    $CurrentDeliveryZips |
+        Where-Object {
+            $ExistingDeliveryPaths -notcontains $_.FullName
+        }
+)
+
+if ($NewDeliveryZips.Count -ne 1) {
+    throw (
+        "PORTABLE ENTRYPOINT RELEASE GATE NEW ZIP DISCOVERY FAILED: " +
+        "expected=1;observed=" + $NewDeliveryZips.Count
+    )
+}
+
+$PublishedZip = $NewDeliveryZips[0].FullName
+Write-Host "PORTABLE ENTRYPOINT RELEASE GATE NEW ZIP DISCOVERY: PASS"
+Write-Host ("PORTABLE ENTRYPOINT RELEASE GATE ZIP: " + $PublishedZip)
+
+& $Python -B $EntrypointGate @(
+    "--zip-path", $PublishedZip,
+    "--work-root", $TransientRoot
+)
+$EntrypointGateExitCode = $LASTEXITCODE
+
+if ($EntrypointGateExitCode -ne 0) {
+    if (Test-Path -LiteralPath $PublishedZip -PathType Leaf) {
+        Remove-Item -LiteralPath $PublishedZip -Force
+    }
+
+    if (Test-Path -LiteralPath $PublishedZip -PathType Leaf) {
+        throw (
+            "PORTABLE ENTRYPOINT RELEASE GATE FAILED AND REJECTED ZIP " +
+            "COULD NOT BE REMOVED: $PublishedZip"
+        )
+    }
+
+    Write-Host "PORTABLE ENTRYPOINT REJECTED PUBLIC ZIP REMOVAL: PASS"
+    throw (
+        "PORTABLE ENTRYPOINT SHELL OPEN RELEASE GATE FAILED WITH EXIT CODE " +
+        $EntrypointGateExitCode
+    )
+}
+
+Write-Host "PORTABLE ENTRYPOINT SHELL OPEN RELEASE GATE: PASS"
+Write-Host "PORTABLE ENTRYPOINT PUBLIC ZIP RETAINED: PASS"

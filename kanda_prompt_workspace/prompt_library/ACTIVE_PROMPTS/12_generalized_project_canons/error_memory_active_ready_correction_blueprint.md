@@ -2,13 +2,13 @@
 prompt_id: error_memory_active_ready_correction_blueprint
 prompt_code: KPR-12-002
 title: Error Memory Active-Ready Correction Blueprint
-version: 2.0.0
+version: 2.1.0
 status: active
 load_type: routed
 owner_box: 12_generalized_project_canons
 classification: error_memory_draft_readiness_promotion_workflow
-source_stage: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
-updated_for: prompt-audit-wave10a-final-productization-generalized-canons-closure-v1
+source_stage: prompt-freeze-error-memory-lifecycle-alignment-v1
+updated_for: prompt-freeze-error-memory-lifecycle-alignment-v1
 ---
 
 # Error Memory Active-Ready Correction Blueprint
@@ -71,6 +71,13 @@ current-schema validation, correction, and explicit human memorization readiness
 
 Return either:
 
-- `DRAFT_ONLY` with exact missing/contradictory/stale fields; or
-- `ACTIVE_READY_CANDIDATE` followed by the exact KPR-12-003/KPR-12-004 output,
-  current-schema validation result, and human-action reminder.
+- ordinary chat beginning with `DRAFT_ONLY`, followed by the exact
+  missing/contradictory/stale fields; or
+- one receive-ready Error Memory transport block rendered exactly through
+  `KPR-12-003` and consistent with the current `KPR-12-004` model. The final
+  visible receive-ready output must contain exactly one JSON object between
+  `KANDA_ERROR_LESSON_JSON_BEGIN` and `KANDA_ERROR_LESSON_JSON_END`, with no
+  prose, validation result, reminder, Markdown fence, or second machine object
+  before or after the markers. Current-schema validation and the human-action
+  reminder must be completed before the final transport block is emitted, not
+  appended to it.

@@ -93,12 +93,61 @@ def create_visible_neural_architecture_brain_tab(
             )
         )
         bundle.widget.setObjectName("visibleNeuralArchitectureBrainTab")
-        # Keep the preview bundle alive for the lifetime of the visible tab.
+        from ._fallback_index_widget import create_brain_navigator_fallback_widget
+
+        fallback_widget = create_brain_navigator_fallback_widget(
+            open_tab_by_id=open_tab_by_id,
+            can_open_tab_id=can_open_tab_id,
+        )
+        fallback_widget.hide()
+        layout = bundle.widget.layout()
+        if layout is None:
+            raise RuntimeError("Brain Navigator preview layout is unavailable")
+        layout.addWidget(fallback_widget)
+
+        def _show_fallback(*_args: object) -> None:
+            try:
+                bundle.web_view.hide()
+                fallback_widget.show()
+            except RuntimeError:
+                return
+
+        def _show_preview_if_healthy(load_ok: bool) -> None:
+            if not load_ok:
+                _show_fallback()
+                return
+
+            def _renderer_ready(value: object) -> None:
+                if bool(value):
+                    try:
+                        fallback_widget.hide()
+                        bundle.web_view.show()
+                    except RuntimeError:
+                        return
+                else:
+                    _show_fallback()
+
+            try:
+                bundle.web_view.page().runJavaScript(
+                    "typeof THREE !== 'undefined'",
+                    _renderer_ready,
+                )
+            except (AttributeError, RuntimeError):
+                _show_fallback()
+
+        load_finished = getattr(bundle.web_view, "loadFinished", None)
+        if load_finished is not None and hasattr(load_finished, "connect"):
+            load_finished.connect(_show_preview_if_healthy)
+        page = bundle.web_view.page()
+        render_terminated = getattr(page, "renderProcessTerminated", None)
+        if render_terminated is not None and hasattr(render_terminated, "connect"):
+            render_terminated.connect(_show_fallback)
+
+        # Keep the preview bundle and fallback alive for the lifetime of the tab.
         # QWebChannel does not reliably preserve the Python QObject bridge if
-        # the only strong reference is the local factory variable. Without this
-        # reference, JavaScript can still render the floating index, but the
-        # Open module call may never reach the Python navigation adapter.
+        # the only strong reference is the local factory variable.
         setattr(bundle.widget, "_brain_navigator_preview_bundle", bundle)
+        setattr(bundle.widget, "_brain_navigator_fallback_widget", fallback_widget)
         setattr(bundle.widget, "_brain_navigator_open_tab_by_id", open_tab_by_id)
         setattr(bundle.widget, "_brain_navigator_can_open_tab_id", can_open_tab_id)
         return bundle.widget

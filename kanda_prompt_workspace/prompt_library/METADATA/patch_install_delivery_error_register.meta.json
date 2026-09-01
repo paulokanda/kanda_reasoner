@@ -6,11 +6,11 @@
   "category": "05_patch_delivery_and_validation",
   "status": "active",
   "load_type": "conditional_required",
-  "version": "2.2",
+  "version": "2.4",
   "owner_box": "05_patch_delivery_and_validation",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/05_patch_delivery_and_validation/patch_install_delivery_error_register.md",
-  "source_stage": "external-project-observer-independence-v1",
-  "updated_for": "dynamic-active-project-artifact-staging-enforcement-v1",
+  "source_stage": "portable-cross-feature-coupling-pre-output-gate-v1",
+  "updated_for": "portable-cross-feature-coupling-pre-output-gate-v1",
   "description": "Compact structured index of active patch-install and delivery regression classes, owners, validators, and Error Memory links.",
   "priority": 11,
   "trigger_phrases": [
@@ -18,7 +18,8 @@
     "delivery regression",
     "root-drive staging",
     "isolated ZIP",
-    "validation evidence failure"
+    "validation evidence failure",
+    "portable allowlist renewal"
   ],
   "required_companion_prompts": [
     "daily_patch_delivery_guardrails",

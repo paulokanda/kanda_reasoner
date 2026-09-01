@@ -11,6 +11,10 @@ from .clipboard_message_window import (
     CopyMessageFloatingWindow,
     show_copy_message_window,
 )
+from .error_popup_copy_close_filter import (
+    ErrorPopupCopyCloseFilter,
+    install_error_popup_copy_close_filter,
+)
 from .error_copy_close_window import (
     ErrorCopyCloseFloatingWindow,
     show_error_copy_close_window,
@@ -21,8 +25,10 @@ __all__ = [
     "AutoCloseActionFloatingWindow",
     "CopyMessageFloatingWindow",
     "ErrorCopyCloseFloatingWindow",
+    "ErrorPopupCopyCloseFilter",
     "HoverFloatingWindowController",
     "attach_floating_window",
+    "install_error_popup_copy_close_filter",
     "show_auto_close_action_window",
     "show_copy_message_window",
     "show_error_copy_close_window",

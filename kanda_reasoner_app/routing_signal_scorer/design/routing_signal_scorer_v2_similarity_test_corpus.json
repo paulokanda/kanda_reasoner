@@ -83,8 +83,8 @@
         "pre_output_contract_gate_required": 0.7
       },
       "id": "STC-004",
-      "notes": "Strict freeze JSON and local freeze language should be high-risk.",
-      "text": "Return KANDA_FREEZE_FORM_JSON_BEGIN and KANDA_FREEZE_FORM_JSON_END for the freeze form JSON. Include validation_evidence_summary and local freeze entry details."
+      "notes": "Strict raw Freeze JSON and local freeze language should be high-risk.",
+      "text": "Return exactly one raw 11-field Freeze form JSON object. Keep validation_evidence_summary as an array and include local freeze entry details without marker wrappers."
     },
     {
       "category": "freeze_hint_sidecar",

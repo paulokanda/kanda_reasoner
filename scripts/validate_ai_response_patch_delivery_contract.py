@@ -65,6 +65,9 @@ FORBIDDEN_TERMINAL_CLOSING_TERMS = (
     "restart-computer",
 )
 OLD_TERMINAL_FOOTER_TERMS = (
+    "start-sleep -seconds 2",
+    "terminal will clear in 2 seconds",
+    "wait about 2 seconds",
     "start-sleep -seconds 5",
     "press enter again to finish",
 )
@@ -73,16 +76,13 @@ FORBIDDEN_INLINE_PYTHON_TERMS = (
     "python.exe -c",
     "py -c",
 )
-INSTALL_SUCCESS_TERMINAL_TERMS = (
-    "install ok. terminal will clear in 2 seconds",
-    "start-sleep -seconds 2",
-    "clear-host",
-)
-NON_INSTALL_TERMINAL_TERMS = (
+INTERACTIVE_TERMINAL_TERMS = (
     'read-host "press enter to clear terminal"',
     'read-host "press enter again to clear"',
     "clear-host",
 )
+INSTALL_SUCCESS_TERMINAL_TERMS = INTERACTIVE_TERMINAL_TERMS
+NON_INSTALL_TERMINAL_TERMS = INTERACTIVE_TERMINAL_TERMS
 
 RECEIVER_CLASSIFICATION_VALUES = (
     "SOURCE_PATCH",
@@ -103,8 +103,6 @@ RECEIVER_GATE_FIELDS = (
 )
 ERROR_MEMORY_INTAKE_TOKEN = "pending_ai_assisted_error_lesson_intake"
 FREEZE_HINT_INTAKE_TOKEN = "freeze_hint_intake"
-FREEZE_FORM_BEGIN = "KANDA_FREEZE_FORM_JSON_BEGIN"
-FREEZE_FORM_END = "KANDA_FREEZE_FORM_JSON_END"
 ERROR_LESSON_BEGIN = "KANDA_ERROR_LESSON_JSON_BEGIN"
 ERROR_LESSON_END = "KANDA_ERROR_LESSON_JSON_END"
 

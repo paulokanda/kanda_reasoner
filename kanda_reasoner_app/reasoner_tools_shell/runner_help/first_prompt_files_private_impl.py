@@ -259,6 +259,7 @@ def run_create_first_prompt_files(window: Any) -> None:
             text=True,
             capture_output=True,
             env=env,
+            timeout=300,
         )
 
         if completed.stdout.strip():

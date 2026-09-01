@@ -41,8 +41,6 @@ try:
         RECEIVER_GATE_FIELDS,
         ERROR_MEMORY_INTAKE_TOKEN,
         FREEZE_HINT_INTAKE_TOKEN,
-        FREEZE_FORM_BEGIN,
-        FREEZE_FORM_END,
         ERROR_LESSON_BEGIN,
         ERROR_LESSON_END,
         ERROR_MEMORY_REQUIRED_ACTIVE_FIELDS,
@@ -82,7 +80,7 @@ try:
         _validate_error_memory_object,
         _validate_freeze_form_object,
         _validate_marker_wrapped_error_memory,
-        _validate_manual_freeze_form_markers,
+        _validate_manual_freeze_form_json,
         _validate_receiver_delivery_gate,
         validate_response_text,
     )

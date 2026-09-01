@@ -2,11 +2,11 @@
 prompt_id: start_of_day_master_stack
 prompt_code: KPR-01-001
 title: Start-of-Day Governance Bridge
-version: 2.1
+version: 2.3
 status: active
 load_type: always_startup
 owner_box: 01_session_start_and_navigation
-source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+source_stage: codex-project-governance-bridge-v1
 ---
 
 # Start-of-Day Governance Bridge
@@ -27,6 +27,34 @@ This prompt does not replace the startup upload checklist, current route data, s
 6. Activate Brick Wall before consequential implementation, mutation, delivery, validation, or freeze work.
 
 ## Hard startup bridges
+
+### Codex Project Governance
+
+BEGINNING_OF_DAY_CODEX_PROJECT_GOVERNANCE_BRIDGE_V1_START
+CODEX_PROJECT_GOVERNANCE_CANON_V1
+
+For non-Codex AI chats, keep the normal startup and routing behavior.
+
+When the session is running inside Codex, `first_prompt_files` and
+`second_prompt_files` are the first KANDA project-governance context after
+higher-priority Codex, system, developer, safety, and tool instructions.
+Codex must not skip, weaken, reorder, or bypass their read order, readiness
+gates, source-truth rules, selected-Project identity, Tool-versus-Project
+boundary, validation honesty, freeze confirmation gate, durable-evidence
+routing, or Error Memory ownership rules before implementation.
+
+If the startup delivery or selected-Project handoff is missing, stale,
+unreadable, or internally conflicting, fail closed and request the exact
+missing file, owner prompt, source, or evidence before consequential KANDA
+project work.
+
+Use KANDA Reasoner bridge logic to reach exact prompt IDs, prompt paths,
+folder cards, and specialist owner prompts whenever deeper task authority is
+needed. Prefer already-loaded startup files first. Use `prompt_library.zip`
+only for exact-path retrieval of routed prompts that are not already present in
+`first_prompts_to_ai.zip`.
+
+BEGINNING_OF_DAY_CODEX_PROJECT_GOVERNANCE_BRIDGE_V1_END
 
 ### Code Module Size and Quality
 
@@ -80,8 +108,8 @@ BEGINNING_OF_DAY_TERMINAL_CLEANUP_CONTRACT_BRIDGE_V1_START
 TERMINAL_CLEANUP_CONTRACT_STARTUP_BRIDGE
 
 Route every user-facing terminal block through `KPR-05-007 terminal_cleanup_contract` and `pre_output_contract_gates`. Begin long interactive blocks at a clean `PS ...>` prompt; if `>>` is visible, require Ctrl+C first.
-Install success may wait about 2 seconds and then use one final `Clear-Host`.
-All non-install-success terminal flows ask for Enter, ask for Enter again, then use one final `Clear-Host`.
+Install success asks for Enter, asks for Enter again, then uses one final `Clear-Host`; automatic timed clearing is not allowed.
+Validation, freeze, errors, diagnostics, recovery, and other interactive terminal flows use the same Enter, Enter, one-final-`Clear-Host` sequence.
 Never close the terminal. Noninteractive automation uses exit codes and captured output instead of Read-Host or Clear-Host.
 Every user-facing PowerShell code fence must be one independent paste unit. Prefer direct packaged-script invocation; do not use user-facing `else`, `elseif`, or `finally`, do not detach `catch`, and keep APIs compatible with the declared PowerShell runtime.
 

@@ -37,6 +37,12 @@ __all__ = [
 _CLASSIFICATION_FILE = "TOOL_SOURCE_CLASSIFICATION.json"
 _FIXTURE_MANIFEST_FILE = "SYNTHETIC_FIXTURE_MANIFEST.json"
 _SOURCE_HYGIENE_RELATIVE = Path("kanda_reasoner_app") / "source_hygiene"
+_PROTECTED_MLRT_RESOURCE_RELATIVE = (
+    Path("kanda_reasoner_app")
+    / "routing_signal_scorer"
+    / "mlrt_non_runtime_candidate_reliability"
+)
+_PROTECTED_MLRT_PACKAGED_DESTINATION = "mlrt"
 _COMPILED_SUFFIXES = {".py", ".pyi", ".pyc", ".pyo"}
 _WINDOWS_ABSOLUTE_RE = re.compile(
     rb"(?i)(?:[a-z]:[\\/](?:[^\x00\r\n\"']{1,240}))"
@@ -45,6 +51,19 @@ _PROJECT_SUPPORT_MARKERS = (
     b"_show_project_to_AI",
     b"project_error_memory",
     b"project_freeze_after_update",
+)
+
+_PACKAGING_CACHE_FOLDER_NAMES = frozenset(
+    {
+        "__pycache__",
+        ".mypy_cache",
+        ".pytest_cache",
+        ".ruff_cache",
+    }
+)
+
+_PACKAGING_BACKUP_NAME_RE = re.compile(
+    r"(?i)(?:\.bak|\.backup|\.orig|\.old)(?:$|[._-])"
 )
 
 
@@ -415,6 +434,26 @@ def is_project_capture_forbidden_relative(relative_path: str | Path) -> bool:
     )
 
 
+def _is_packaging_cache_path(root: Path, path: Path) -> bool:
+    """Return whether *path* is inside a non-runtime packaging cache."""
+
+    relative = path.relative_to(root)
+    return any(
+        part.casefold() in _PACKAGING_CACHE_FOLDER_NAMES
+        for part in relative.parts
+    )
+
+
+def _is_packaging_backup_path(path: Path) -> bool:
+    """Return whether *path* uses a known non-runtime backup filename."""
+
+    name = path.name
+    return bool(
+        name.endswith("~")
+        or _PACKAGING_BACKUP_NAME_RE.search(name)
+    )
+
+
 def iter_packaged_resource_files(
     tool_root: str | Path,
 ) -> list[tuple[str, str]]:
@@ -428,10 +467,21 @@ def iter_packaged_resource_files(
     for path in sorted(package_root.rglob("*"), key=lambda item: item.as_posix().casefold()):
         if not path.is_file() or path.suffix.casefold() in _COMPILED_SUFFIXES:
             continue
+        if _is_packaging_cache_path(root, path):
+            continue
+        if _is_packaging_backup_path(path):
+            continue
         decision = inspect_tool_archive_candidate(root, path)
         if not decision.include_in_tool_archive:
             continue
-        destination = path.relative_to(root).parent.as_posix()
+        relative = path.relative_to(root)
+        if (
+            relative.parent == _PROTECTED_MLRT_RESOURCE_RELATIVE
+            and path.suffix.casefold() == ".md"
+        ):
+            destination = _PROTECTED_MLRT_PACKAGED_DESTINATION
+        else:
+            destination = relative.parent.as_posix()
         resources.append((str(path), destination))
     if not resources:
         raise ToolArchivePolicyError("PYINSTALLER_DATA_ALLOWLIST_EMPTY")

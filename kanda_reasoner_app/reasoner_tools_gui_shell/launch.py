@@ -8,6 +8,10 @@ import sys
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
+from kanda_reasoner_app.templates.floating_windows import (
+    install_error_popup_copy_close_filter,
+)
+
 from kanda_reasoner_app.templates.press_depth_button_theme import (
     apply_color_preserving_press_depth_theme,
 )
@@ -55,6 +59,7 @@ def main() -> int:
     """
     _set_windows_app_user_model_id()
     app = QApplication.instance() or QApplication(sys.argv)
+    install_error_popup_copy_close_filter(app)
     _configure_application_identity(app)
     apply_color_preserving_press_depth_theme(app)
     install_top_level_geometry_guard(app)

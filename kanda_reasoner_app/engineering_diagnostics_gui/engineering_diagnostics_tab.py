@@ -26,6 +26,11 @@ from .grouping_ui import (
 from .lifecycle_ui import bind_lifecycle_actions, create_lifecycle_controls
 from ._navigation_ui import _bind_engineering_diagnostics_navigation
 from .history_async import bind_async_history
+from .engineering_diagnostics_lifecycle import (
+    EngineeringDiagnosticsPanelLifecycle,
+    future_is_active,
+    mark_future_settled,
+)
 from .models import EngineeringDiagnosticsGuiCancelled
 from .owner_ui import build_finding_detail_lines
 from .patch_preview_ui import bind_patch_preview_action, create_patch_preview_button
@@ -170,6 +175,8 @@ def create_engineering_diagnostics_panel(
         "future": None,
         "cancel": None,
         "project_root": "",
+        "closing": False,
+        "discard_reason": "",
     }
     def current_project_root() -> str:
         if project_root_provider is not None:
@@ -227,9 +234,23 @@ def create_engineering_diagnostics_panel(
     render_run = history_actions.render_run
     refresh_history = history_actions.refresh_history
     def finish_scan(generation: int, future: Future) -> None:
-        if generation != state["generation"]:
+        owns_slot = state.get("future") is future
+        if bool(state.get("closing", False)):
+            mark_future_settled(state, "future", future)
             return
-        state["future"] = None
+        if generation != state["generation"]:
+            mark_future_settled(state, "future", future)
+            if owns_slot:
+                state["cancel"] = None
+                sonar.stop()
+                set_busy(False)
+                status_label.setText(
+                    "Diagnostic run cancelled after settlement."
+                    if state.get("discard_reason") == "user_cancel"
+                    else "Previous Project diagnostic result discarded after settlement."
+                )
+            return
+        mark_future_settled(state, "future", future)
         state["cancel"] = None
         sonar.stop()
         set_busy(False)
@@ -249,14 +270,14 @@ def create_engineering_diagnostics_panel(
         status_label.setText("Diagnostic run stored: " + run.run_id[:12])
         refresh_history(run.run_id)
     def poll_scan(generation: int, future: Future) -> None:
-        if generation != state["generation"]:
+        if bool(state.get("closing", False)):
             return
         if future.done():
             finish_scan(generation, future)
             return
         QTimer.singleShot(100, lambda: poll_scan(generation, future))
     def start_scan() -> None:
-        if state["future"] is not None:
+        if future_is_active(state, "future"):
             return
         root = current_project_root()
         state["generation"] += 1
@@ -264,6 +285,7 @@ def create_engineering_diagnostics_panel(
         cancellation = Event()
         state["cancel"] = cancellation
         state["project_root"] = root
+        state["discard_reason"] = ""
         set_busy(True)
         producer_id = selected_producer_id()
         status_label.setText(
@@ -292,11 +314,11 @@ def create_engineering_diagnostics_panel(
             return
         if cancellation.is_set():
             return
-        cancellation.set()
+        lifecycle.request_user_cancellation()
         sonar.stop()
         cancel_button.setEnabled(False)
         status_label.setText(
-            "Cancellation requested; the active collector will settle safely."
+            "Cancellation requested; late results will be discarded after settlement."
         )
     def activate_baseline() -> None:
         run_id = str(run_combo.currentData() or "")
@@ -389,9 +411,15 @@ def create_engineering_diagnostics_panel(
         severity_combo, lifecycle_combo, search_edit, refresh_history,
         update_run_button, apply_filters, status_label,
     )
+    lifecycle = EngineeringDiagnosticsPanelLifecycle(
+        state=state,
+        executors=(executor,),
+        future_keys=("future",),
+        active_reason="Engineering Diagnostics scan is still running",
+        auxiliary=history_actions,
+    )
     def set_project_root(_value: object = None) -> None:
-        cancel_scan()
-        history_actions.cancel()
+        lifecycle.request_project_scope_settlement()
         model.set_rows(())
         run_combo.clear()
         detail.setPlainText("Project selection changed. Refreshing diagnostics...")
@@ -432,12 +460,15 @@ def create_engineering_diagnostics_panel(
     table.selectionModel().selectionChanged.connect(
         lambda _selected, _deselected: show_selected_detail()
     )
-    panel.destroyed.connect(lambda _obj=None: executor.shutdown(wait=False))
-    panel.destroyed.connect(lambda _obj=None: history_actions.close())
+    panel.destroyed.connect(lambda _obj=None: lifecycle.begin_shutdown())
     panel.set_project_root = set_project_root
     panel.refresh_engineering_diagnostics = refresh_history
     panel.start_engineering_diagnostics = start_scan
     panel.cancel_engineering_diagnostics = cancel_scan
+    panel.project_scope_switch_block_reason = lifecycle.project_scope_switch_block_reason
+    panel.request_project_scope_settlement = lifecycle.request_project_scope_settlement
+    panel.begin_shutdown = lifecycle.begin_shutdown
+    panel.shutdown_ready = lifecycle.shutdown_ready
     panel.engineering_diagnostics_controller = active_controller
     panel.engineering_diagnostics_history_actions = history_actions
     panel.engineering_diagnostics_table = table

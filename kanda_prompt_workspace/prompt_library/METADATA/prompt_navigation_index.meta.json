@@ -5,8 +5,8 @@
   "category": "02_prompt_routing_and_indexing",
   "status": "active",
   "load_type": "always_startup",
-  "source_stage": "external-project-spectator-scope-v1",
-  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, route owner relationships, and actor-scoped Fire Shield policy: KANDA-managed external-Project actions are gated while independent Project-owned development is KANDA-independent.",
+  "source_stage": "prompt-freeze-error-memory-lifecycle-alignment-v1",
+  "description": "Authoritative human-readable locator for current prompt groups, exact prompts, route owner relationships, Freeze candidate pre-output audit, and Error Memory transport/draft/human-promotion semantics without MCard authority leakage.",
   "priority": 7,
   "required_companion_prompts": [
     "ai_prompt_request_canon",
@@ -17,12 +17,13 @@
     "route this request",
     "prompt map",
     "exact prompt path",
-    "fire shield"
+    "fire shield",
+    "freeze candidate audit"
   ],
-  "version": "5.2",
+  "version": "5.5",
   "owner_box": "02_prompt_routing_and_indexing",
   "canonical_path": "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/02_prompt_routing_and_indexing/prompt_navigation_index.md",
-  "updated_for": "external-project-spectator-scope-v1",
+  "updated_for": "prompt-freeze-error-memory-lifecycle-alignment-v1",
   "prompt_code": "KPR-02-004",
   "title": "Prompt Navigation Index",
   "authority_boundary": {

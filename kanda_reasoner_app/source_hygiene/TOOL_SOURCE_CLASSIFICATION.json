@@ -280,6 +280,16 @@
       "reason": "Tool license."
     },
     {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "LICENSE.MD",
+      "reason": "Canonical root license/documentation file used by KANDA release source control and Tool distribution workflows."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "README.md",
+      "reason": "Canonical root README/documentation file used by KANDA release source control and Tool distribution workflows."
+    },
+    {
       "classification": "CANONICAL_TOOL_SOURCE",
       "exact": "KandaReasonerWindows.spec",
       "reason": "Governed Tool release specification."
@@ -288,6 +298,21 @@
       "classification": "CANONICAL_TOOL_SOURCE",
       "exact": "ruff.toml",
       "reason": "Tool lint configuration."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "KANDA_RELEASE_ENVIRONMENT.json",
+      "reason": "Frozen PRO-1 governed release-environment identity required for Tool release reconstruction."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "KANDA_RELEASE_PIP_INSPECT.json",
+      "reason": "Frozen PRO-1 governed pip-inspect evidence required for Tool release reconstruction."
+    },
+    {
+      "classification": "PACKAGED_TOOL_RESOURCE",
+      "exact": "requirements-release-lock.txt",
+      "reason": "Frozen PRO-1 governed dependency lock required for Tool release reconstruction."
     },
     {
       "classification": "PACKAGED_TOOL_RESOURCE",

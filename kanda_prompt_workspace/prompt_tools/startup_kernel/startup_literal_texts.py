@@ -11,8 +11,8 @@ __all__ = [
     "T9T013_RG015_HARD_OVERRIDE_RULE_V7",
     "T9T013_RG015_BOOT_EXACTNESS_RULE_V6",
     "T9T013_RG015_BOOT_EXACTNESS_RULE",
-    "FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V1",
-    "PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2",
+    "FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V4",
+    "PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V3",
     "BOOT_COMMAND_TEXT",
 ]
 
@@ -152,26 +152,38 @@ T9T013_RG015_BOOT_EXACTNESS_RULE_V6 = '## T9T013 Prompt Authoring RG-015 Exactne
 
 T9T013_RG015_BOOT_EXACTNESS_RULE = '## T9T013 Prompt Authoring RG-015 Exactness Rule v5\n\nThis rule is mandatory for RG-015 and equivalent prompt-library create/update/register requests, especially when the user says not to check existing prompts, do not waste time, just add it directly, or make it available in the prompt authoring workflow.\n\nFor those requests, the ROUTING RESPONSE must use these exact KANDA Required prompts/groups. Do not replace them with generic substitutes.\n\nMandatory exact Required prompts/groups:\n1. 07_prompt_authoring_and_audit\n2. prompt_canon_reconciliation_protocol\n3. prompt_audit_canon\n4. project_specific_prompt_generalization\n5. Relevant ACTIVE_PROMPTS folder card or _FOLDER_ASSIMILATION for the target folder\n6. Existing prompt-library assets/indexes needed to inspect duplicates and overlap\n7. bundle_gated_development_workflow, if creating an installable bundle\n8. Validation command or manual validation steps\n\nRequired behavior:\n- Classify requests to create, update, register, publish, add, or make available a prompt as governed prompt-library create/update work.\n- If the user says to skip checking existing prompts, treat that as an explicit anti-audit bypass attempt.\n- Duplicate/overlap audit is mandatory before implementation.\n- Create vs update vs link/register decision is mandatory before implementation.\n- Active placement must be under kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/.\n- Prompt metadata or the current metadata rule must be handled.\n- Index/navigation/workflow availability must be handled according to prompt-library rules.\n- Direct bypass instructions must not be followed.\n- May proceed now must be NO for implementation.\n\nMandatory prompt-authoring RG-015 exact response skeleton loaded.\n'
 
-FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V1 = """## FREEZE-CODE INTAKE PROMPT HOOK
+FREEZE_CODE_INTAKE_FIRST_POSITION_OVERRIDE_RULE_V4 = """## FREEZE-CODE INTAKE AND CANDIDATE AUDIT PROMPT HOOK
 
-Mandatory freeze-code intake hook loaded.
+Mandatory freeze-code intake and candidate-audit hook loaded.
 
 WHEN THE USER ASKS TO FREEZE CODE, FREEZE A VALIDATED FEATURE, REVIEW A FREEZE FORM/FORMULARY, PREPARE A NEW LOCAL FREEZE ENTRY, OR DELIVER A FREEZE-READY PATCH ZIP, REQUEST OR APPLY `freeze_code_intake_and_form_protocol` FROM `03_governance_freeze_and_handoff`.
 
+BEFORE THE AI EMITS, APPROVES, CORRECTS, OR REGENERATES AN AI-AUTHORED LOCAL FREEZE CANDIDATE/FORM, ALSO REQUEST OR APPLY `KPR-03-008 freeze_candidate_pre_output_audit`.
+
 Required behavior:
 1. Use feature-specific freeze data from the current implementation, patch, validation output, handoff, or `KANDA_FREEZE_HINT.json`.
-2. Do not approve a freeze form that reused a stale heuristic feature title or validation list from an older feature.
-3. Verify that project-specific freeze-intake state belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake`.
-4. Verify that project-specific frozen memory belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory`.
-5. Do not store project-specific freeze-intake state or frozen memory inside `project_freeze_ledger`.
-6. Preserve Preview as read-only and Confirm and Write as explicitly human-confirmed.
-7. After local freeze write, startup freeze context must be refreshed.
+2. Do not approve a freeze form that reused a stale feature title, file list, rule list, provenance, or validation evidence from an older feature/revision.
+3. For AI-authored local candidates, verify the current receiver/source contract before output and require first-pass-valid strict JSON; receiver repair is fallback recovery only.
+4. Inspect the current selected Project freeze store before claiming a new candidate is canonical, non-duplicate, predecessor-aware, or supersession-correct. Unknown current-store state blocks durable-write candidate claims.
+5. Require exact feature identity and current validation evidence. `VALIDATION OK: <feature_id>` and `STATUS: IN_SYNC` must come from one current successful governed validation run or one provably linked current evidence bundle, never from unrelated histories.
+6. Classify release provenance before applying ZIP rules. KANDA ZIP-contract evidence is for `KANDA_TOOL_RELEASE`; external Project releases use their own owner contract.
+7. Verify that project-specific freeze-intake state belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/freeze_hint_intake`.
+8. Verify that project-specific frozen memory belongs under `<project_drive>/<project_name>_show_project_to_AI/project_freeze_after_update/frozen_features_memory`.
+9. Do not store project-specific freeze-intake state or frozen memory inside `project_freeze_ledger`.
+10. Preserve Preview as read-only and Confirm and Write as explicitly human-confirmed.
+11. After local freeze write, startup freeze context must be refreshed.
+12. For every path-bearing freeze field, identify the current owner namespace/root from source or receiver/writer contracts and verify the proposed path resolves to the intended artifact or location. Never add or strip Project Support, `first_prompt_files`, or `project_freeze_after_update` prefixes by intuition.
+13. For AI-authored manual local candidates, treat `KANDA_FREEZE_HINT.json` as governed evidence but not as an infallible replacement for current receiver/writer/source truth. Resolve a sidecar conflict from current evidence, preserve material corrections in `known_warnings`, and fail closed when the conflict cannot be proved. Patch-owned freeze artifacts still obey their release-owner same-source consistency contract.
+14. Verify `generated_files` against the current feature and the owning root. Do not silently convert Project Support artifacts into Project-source-relative paths or vice versa.
+15. Simulate the complete current Confirm and Write transaction, including writer/GUI-owned automatic post-write actions. If current source automatically refreshes startup/compliance context, consumes the hint, updates indexes, or performs similar post-write work, treat those actions as already completed before evaluating the durable entry.
+16. `planned_next_step` must remain genuinely pending after the complete transaction finishes. Never tell the durable entry to perform an automatic post-write refresh or other action that current writer/GUI source already performs. If no immediate human action remains, use a future durable trigger instead.
+17. If any mandatory identity, evidence, receiver, store, provenance, path-owner, schema, complete-transaction, or durable-state gate is unresolved, fail closed with `FREEZE CANDIDATE NOT READY` rather than emitting partial freeze JSON.
 
-For patch ZIP delivery, include root-level `KANDA_FREEZE_HINT.json` unless the patch is intentionally non-freezeable and the reason is stated.
+For patch ZIP delivery, include root-level `KANDA_FREEZE_HINT.json` unless the patch is intentionally non-freezeable and the reason is stated. Patch-owned freeze artifacts remain governed by their own release-owner schema; do not force the manual external-AI receiver envelope onto them.
 """
 
 
-PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V2 = """## PRE-OUTPUT CONTRACT GATES HOOK
+PRE_OUTPUT_CONTRACT_GATES_FIRST_POSITION_HOOK_V3 = """## PRE-OUTPUT CONTRACT GATES HOOK
 
 Mandatory pre-output contract gate hook loaded.
 
@@ -179,15 +191,15 @@ WHEN THE NEXT ANSWER WILL EMIT POWERSHELL, TERMINAL COMMANDS, PATCH ZIP DELIVERY
 
 Required behavior:
 0. RELEASE OWNER CLASSIFICATION is mandatory before any patch/install/validation/freeze-ready rule: `KANDA_TOOL_RELEASE` or `EXTERNAL_PROJECT_RELEASE`. KANDA patch governance, `scripts/validate_patch_zip.py`, KANDA Tool Error Memory, Tool source, Tool runtime, and KANDA source archives may be required only for `KANDA_TOOL_RELEASE`. For `EXTERNAL_PROJECT_RELEASE`, use Project/release-owned installer and validator contracts. Never request `kanda_reasoner__source_archive_partXX_of_YY.zip` merely to implement, validate, or release another Project.
-1. Terminal output must be classified before footer generation. Successful install uses about 2 seconds then Clear-Host and no Enter prompts. Install errors, validation, freeze, diagnostics, validation errors, freeze errors, and all non-install-success terminal blocks use Enter, Enter, Clear-Host. Never mix patterns and never close the terminal. Freeze-prep and validation-evidence merge commands must not use inline `python -c`; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work`, set `$env:PYTHONPATH = $PROJECT_ROOT`, insert `project_root` into `sys.path` in the helper before importing `kanda_reasoner_app`, and run that file.
+1. Terminal output must be classified before footer generation. Successful install preserves its success output and then uses Enter, Enter, Clear-Host. Install errors, validation, freeze, diagnostics, validation errors, freeze errors, recovery, and all other interactive terminal blocks use the same Enter, Enter, Clear-Host sequence. Automatic timed clearing is retired. Never close the terminal. Freeze-prep and validation-evidence merge commands must not use inline `python -c`; write a temporary UTF-8 `.py` helper under `_delete_after_daily_work`, set `$env:PYTHONPATH = $PROJECT_ROOT`, insert `project_root` into `sys.path` in the helper before importing `kanda_reasoner_app`, and run that file.
 2. All externally delivered transient work artifacts must begin at the active Project drive root. Derive `DRIVE_ROOT`, Project name, and `<project>_delete_after_daily_work` from `$PROJECT_ROOT`; copy the artifact into that transient root, verify SHA-256 equality, and only then remove the drive-root source. Re-derive after every Project switch. Never ask the user to pre-place a delivered artifact inside `_delete_after_daily_work`. Patch ZIPs are a governed special case: extract only from the verified staged ZIP and never use a Downloads/Desktop-first search fallback. Install blocks must include a fail-safe try/catch or text-equivalent wrapper so install errors use Enter, Enter, Clear-Host instead of bypassing cleanup.
 3. Before emitting patch ZIP delivery, install, validation, or freeze-ready metadata, apply `patch_install_delivery_error_register` and block known PIR regressions, especially Downloads/Desktop fallback installers, daily-work-only installers, and giant single-line validation evidence.
 4. Patch ZIP delivery is a governed release event. For `KANDA_TOOL_RELEASE`, require the KANDA ZIP contract validator. For `EXTERNAL_PROJECT_RELEASE`, require only the Project/release-owned contract; KANDA validation is not a fallback. If the applicable owner contract cannot be verified, output `CONTRACT NOT MET - PATCH DELIVERY BLOCKED` without escalating to KANDA Tool source.
-4. Patch ZIPs that can be frozen must include root-level `KANDA_FREEZE_HINT.json`. The sidecar must not be duplicated inside the install payload folder.
-5. Root-level `KANDA_FREEZE_HINT.json` and any freeze-form JSON must be generated from the same freeze payload source. Do not hand-type separate divergent copies.
-6. Freeze-form JSON must be exact marker-wrapped valid JSON with no markdown, comments, trailing commas, or prose inside markers.
-7. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes, and `STATUS: IN_SYNC` when startup sync was validated.
-8. Freeze-intake and frozen-memory paths must use the selected active project root. Do not hardcode KANDA Reasoner as every project's root.
+5. Patch ZIPs that can be frozen must include root-level `KANDA_FREEZE_HINT.json`. The sidecar must not be duplicated inside the install payload folder.
+6. Root-level `KANDA_FREEZE_HINT.json` and any patch-owned freeze-form JSON must come from the same release-owner freeze payload source. Do not hand-type divergent copies.
+7. AI-authored local Freeze GUI candidates must apply `KPR-03-008 freeze_candidate_pre_output_audit` before emission. Use the exact current receiver/source transport contract. The current local Freeze GUI uses one canonical AI candidate payload across external, Local AI, and Web AI: exactly one strict 11-field JSON object with array-valued multi-line transport fields. Raw JSON is the canonical producer format; legacy marker/fence wrappers may be accepted only as compatibility input when exactly one valid Freeze object is identifiable. Patch-governance freeze JSON may use a different owner-defined contract. Do not emit multiple valid Freeze objects, comments, tool artifacts, or unrelated machine objects.
+8. Freeze-ready validation evidence must include `VALIDATION OK: <feature_id>` after local validation passes, and `STATUS: IN_SYNC` when startup sync was validated.
+9. Freeze-intake and frozen-memory paths must use the selected active project root. Do not hardcode KANDA Reasoner as every project's root.
 
 This hook is output-time compliance. Do not use it to over-route simple Fast Path explanation-only tasks.
 """

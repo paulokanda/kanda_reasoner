@@ -189,14 +189,17 @@ Do not paste every orange reminder by default.
 
 ### Answer, Validate, Freeze, Memorize Error
 
-Use when the AI forgets the complete work cycle. It reminds the AI that writing an answer or patch is not the same as validating it, and that freeze and Error Memory have separate governed steps.
+Use when the AI forgets the complete work cycle. The copied routine requires one update ZIP and one fail-closed terminal paste unit that runs packaged INSTALL, waits for Enter twice and clears after successful install, then runs packaged VALIDATE. Only current validation success can unlock Freeze. Error Memory is evaluated last and only for verified reusable non-duplicate failures.
 
-### Clean 2sec 2xEnter
+### Install + Validate Flow
 
-Use when PowerShell or terminal instructions end incorrectly. It restores the terminal-cleanup rule:
+Use when the AI needs the canonical terminal behavior for the chained delivery block:
 
-- successful installation: wait about two seconds and clear the terminal;
-- validation, freeze, diagnostics, and errors: wait for two Enter presses and then clear the terminal;
+- packaged `INSTALL.ps1` remains install-only;
+- successful installation preserves output, waits for two Enter presses, clears once, and returns to the same pasted outer block;
+- the outer block then starts packaged `VALIDATE.ps1`;
+- an install failure stops before validation;
+- a validation failure stops before Freeze;
 - keep the terminal window open.
 
 ### Bridges: Startup
@@ -277,7 +280,7 @@ You want an AI to add a button to `E:\kanda_reasoner`.
 | Find upload group one | Path to First Prompt Files |
 | Find upload group two | Path to Second Prompt Files |
 | Restore the full work cycle | Answer, Validate, Freeze, Memorize Error |
-| Fix terminal ending behavior | Clean 2sec 2xEnter |
+| Restore Install -> Enter x2 -> Validate terminal flow | Install + Validate Flow |
 | Restore daily rules | Bridges: Startup |
 | Request specialist routing | Bridges: On Demand |
 | Stop AI guessing | Anti-hallucination short or full |

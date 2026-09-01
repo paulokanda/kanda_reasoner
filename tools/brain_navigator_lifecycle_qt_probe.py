@@ -80,6 +80,26 @@ class FakeLayout:
         self.widgets.append(widget)
 
 
+class FakeSettings:
+    """Minimal QWebEngineSettings stand-in."""
+
+    def __init__(self) -> None:
+        self.attributes: dict[object, bool] = {}
+
+    def setAttribute(self, attribute: object, enabled: bool) -> None:
+        self.attributes[attribute] = bool(enabled)
+
+    def testAttribute(self, attribute: object) -> bool:
+        return bool(self.attributes.get(attribute, False))
+
+
+class FakeQWebEngineSettings:
+    """Expose the one WebAttribute used by Brain Navigator."""
+
+    class WebAttribute:
+        LocalContentCanAccessRemoteUrls = object()
+
+
 class FakeWebView:
     """Minimal QWebEngineView stand-in."""
 
@@ -87,12 +107,16 @@ class FakeWebView:
         self.object_name = ""
         self.html = ""
         self._page = FakePage()
+        self._settings = FakeSettings()
 
     def setObjectName(self, value: str) -> None:
         self.object_name = value
 
     def page(self) -> FakePage:
         return self._page
+
+    def settings(self) -> FakeSettings:
+        return self._settings
 
     def setHtml(self, html: str) -> None:
         self.html = html
@@ -124,6 +148,7 @@ def validate_simulated_tab_hide(root: Path) -> None:
     module = _load_preview_module(root)
     original_widget_factory = module._qt_widgets_attr
     original_web_factory = module._qt_web_engine_widgets_attr
+    original_core_factory = module._qt_web_engine_core_attr
     original_bridge_factory = module.create_brain_web_bridge
     original_html_builder = module.build_neural_architecture_preview_html
     widget_types: dict[str, Any] = {
@@ -133,6 +158,7 @@ def validate_simulated_tab_hide(root: Path) -> None:
     try:
         module._qt_widgets_attr = lambda name: widget_types[name]
         module._qt_web_engine_widgets_attr = lambda _name: FakeWebView
+        module._qt_web_engine_core_attr = lambda _name: FakeQWebEngineSettings
         module.create_brain_web_bridge = lambda _config: FakeBridgeBundle()
         module.build_neural_architecture_preview_html = lambda **_kwargs: "<html></html>"
 
@@ -158,6 +184,7 @@ def validate_simulated_tab_hide(root: Path) -> None:
     finally:
         module._qt_widgets_attr = original_widget_factory
         module._qt_web_engine_widgets_attr = original_web_factory
+        module._qt_web_engine_core_attr = original_core_factory
         module.create_brain_web_bridge = original_bridge_factory
         module.build_neural_architecture_preview_html = original_html_builder
         sys.modules.pop(PREVIEW_MODULE_NAME, None)
@@ -203,6 +230,11 @@ def validate_real_qt_tab_hide(root: Path) -> bool:
         def page(self) -> NativeProbePage:
             return self._page
 
+        def settings(self) -> FakeSettings:
+            if not hasattr(self, "_settings"):
+                self._settings = FakeSettings()
+            return self._settings
+
         def setHtml(self, html: str) -> None:
             self.html = html
 
@@ -214,6 +246,7 @@ def validate_real_qt_tab_hide(root: Path) -> bool:
 
     original_widget_factory = module._qt_widgets_attr
     original_web_factory = module._qt_web_engine_widgets_attr
+    original_core_factory = module._qt_web_engine_core_attr
     original_bridge_builder = module.create_brain_web_bridge
     original_html_builder = module.build_neural_architecture_preview_html
     module._qt_widgets_attr = lambda name: {
@@ -221,6 +254,7 @@ def validate_real_qt_tab_hide(root: Path) -> bool:
         "QVBoxLayout": QVBoxLayout,
     }[name]
     module._qt_web_engine_widgets_attr = lambda _name: NativeProbeWebView
+    module._qt_web_engine_core_attr = lambda _name: FakeQWebEngineSettings
     module.create_brain_web_bridge = lambda _config: NativeBridgeBundle()
     module.build_neural_architecture_preview_html = lambda **_kwargs: controlled_html
 
@@ -276,6 +310,7 @@ def validate_real_qt_tab_hide(root: Path) -> bool:
     finally:
         module._qt_widgets_attr = original_widget_factory
         module._qt_web_engine_widgets_attr = original_web_factory
+        module._qt_web_engine_core_attr = original_core_factory
         module.create_brain_web_bridge = original_bridge_builder
         module.build_neural_architecture_preview_html = original_html_builder
         if bundle is not None:

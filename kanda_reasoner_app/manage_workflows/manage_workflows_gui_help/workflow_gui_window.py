@@ -6,7 +6,9 @@ encoded backend payload is deprecated and must not be used as the main
 editable source for this tab.
 """
 from __future__ import annotations
-from kanda_reasoner_app.templates.floating_windows import show_error_copy_close_window
+from kanda_reasoner_app.templates.floating_windows import (
+    install_error_popup_copy_close_filter, show_error_copy_close_window,
+)
 import sys
 from importlib import import_module
 from pathlib import Path
@@ -476,6 +478,7 @@ def main() -> int:
     """
     
     app = QApplication(sys.argv)
+    install_error_popup_copy_close_filter(app)
     window = WorkflowManagerWindow()
     window.show()
     return app.exec()

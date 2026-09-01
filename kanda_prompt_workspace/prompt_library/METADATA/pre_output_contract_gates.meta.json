@@ -4,7 +4,7 @@
   "display_name": "Pre-Output Artifact Contract Gate",
   "filename": "pre_output_contract_gates.md",
   "category": "03_governance_freeze_and_handoff",
-  "version": "2.2",
+  "version": "2.6",
   "status": "active",
   "load_type": "on_request",
   "owner_box": "03_governance_freeze_and_handoff",
@@ -15,19 +15,21 @@
     "pre_output_contract_gates.md",
     "pre-output artifact contract gate"
   ],
-  "source_stage": "external-project-observer-independence-v1",
-  "updated_for": "external-project-observer-independence-v1",
-  "description": "Dispatches operational artifacts to their exact owners and blocks malformed, unsupported, or non-paste-safe PowerShell output before emission.",
+  "source_stage": "portable-cross-feature-coupling-pre-output-gate-v1",
+  "updated_for": "portable-cross-feature-coupling-pre-output-gate-v1",
+  "description": "Dispatches operational artifacts to exact owners and blocks malformed, unsupported, non-paste-safe, machine-detectably known-error-regressing, or stale Portable-coupled output before emission.",
   "trigger_phrases": [
     "pre-output contract",
     "before terminal code",
     "before zip delivery",
-    "before machine json"
+    "before machine json",
+    "portable allowlist coupling"
   ],
   "required_companion_prompts": [
     "brick_wall_comprehensive_quality_gate"
   ],
   "recommended_companion_prompts": [
+    "freeze_candidate_pre_output_audit",
     "terminal_cleanup_contract",
     "durable_document_artifact_routing_canon"
   ]

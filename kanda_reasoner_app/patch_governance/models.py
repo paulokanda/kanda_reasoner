@@ -16,10 +16,20 @@ __all__ = [
     'FreezePayload',
     'FreezePayloadError',
     'mandatory_freeze_fields',
+    'build_bound_freeze_payload',
+    'derive_freeze_ownership_binding',
+    'validate_freeze_ownership_binding',
 ]
 from dataclasses import dataclass
 import json
 from typing import Any, Iterable, Mapping
+
+from .freeze_ownership_binding import (
+    FREEZE_HINT_SCHEMA_WITH_BINDING,
+    FreezeOwnershipBindingError,
+    derive_freeze_ownership_binding,
+    validate_freeze_ownership_binding,
+)
 
 FREEZE_HINT_FILENAME = "KANDA_FREEZE_HINT.json"
 SCHEMA_VERSION = "1.0"
@@ -206,7 +216,7 @@ def build_freeze_payload(
     """Build and validate the single source freeze payload.
 
     Use this function for both the root-level KANDA_FREEZE_HINT.json and the
-    marker-wrapped freeze-form JSON shown to the user. The function refuses
+    canonical raw 11-field freeze-form JSON shown to the user. The function refuses
     missing mandatory fields and obvious placeholder strings.
     """
     payload: dict[str, Any] = {
@@ -253,17 +263,85 @@ def build_freeze_payload(
     return payload
 
 
+def build_bound_freeze_payload(
+    *,
+    patch_name: str,
+    feature_id: str,
+    feature_title: str,
+    validated_files: Iterable[str] | str,
+    generated_files: Iterable[str] | str | None,
+    protected_paths: Iterable[str] | str,
+    do_not_regress_rules: Iterable[str] | str,
+    validation_evidence_summary: str | Iterable[str],
+    known_warnings: str | Iterable[str],
+    planned_next_step: str,
+    notes: str | Iterable[str],
+    freeze_readiness: str = "pre_validation_hint",
+    requires_user_validation: bool = True,
+    source_patch_zip: str | None = None,
+    patch_provenance_required: bool = False,
+    delivery_manifest_name: str = "KANDA_PATCH_DELIVERY_MANIFEST.json",
+    patch_trace_name: str = "KANDA_PATCH_TRACE.json",
+) -> dict[str, Any]:
+    """Build a schema-v1.1 Freeze payload with machine-derived ownership.
+
+    This is the canonical builder for new KANDA Tool patch releases. The legacy
+    build_freeze_payload API remains available for historical compatibility.
+    """
+
+    normalized_validated_files = _as_list(
+        validated_files,
+        field_name="validated_files",
+    )
+    try:
+        binding = derive_freeze_ownership_binding(normalized_validated_files)
+    except FreezeOwnershipBindingError as exc:
+        raise FreezePayloadError(str(exc)) from exc
+
+    payload = build_freeze_payload(
+        patch_name=patch_name,
+        feature_id=feature_id,
+        feature_title=feature_title,
+        primary_box=str(binding["primary_box"]),
+        box_type=str(binding["box_type"]),
+        validated_files=normalized_validated_files,
+        generated_files=generated_files,
+        protected_paths=protected_paths,
+        do_not_regress_rules=do_not_regress_rules,
+        validation_evidence_summary=validation_evidence_summary,
+        known_warnings=known_warnings,
+        planned_next_step=planned_next_step,
+        notes=notes,
+        freeze_readiness=freeze_readiness,
+        requires_user_validation=requires_user_validation,
+        source_patch_zip=source_patch_zip,
+        patch_provenance_required=patch_provenance_required,
+        delivery_manifest_name=delivery_manifest_name,
+        patch_trace_name=patch_trace_name,
+        schema_version=FREEZE_HINT_SCHEMA_WITH_BINDING,
+    )
+    payload["ownership_binding"] = binding
+    try:
+        validate_freeze_ownership_binding(payload)
+    except FreezeOwnershipBindingError as exc:
+        raise FreezePayloadError(str(exc)) from exc
+    return payload
+
+
 def dump_freeze_payload_json(payload: Mapping[str, Any], *, indent: int | None = 2) -> str:
     """Serialize a freeze payload as stable UTF-8 JSON text."""
     for field_name in MANDATORY_FREEZE_FIELDS:
         if field_name not in payload:
             raise FreezePayloadError(f"Mandatory field is missing: {field_name}")
         _require_non_placeholder(payload, field_name)
+    try:
+        validate_freeze_ownership_binding(payload)
+    except FreezeOwnershipBindingError as exc:
+        raise FreezePayloadError(str(exc)) from exc
     return json.dumps(dict(payload), ensure_ascii=False, indent=indent) + "\n"
 
 
 def freeze_form_json_text(payload: Mapping[str, Any]) -> str:
-    """Return marker-wrapped freeze-form JSON from the same payload."""
+    """Return canonical raw 11-field Freeze-form JSON from the same payload."""
     form = {key: payload[key] for key in FREEZE_FORM_FIELDS}
-    text = json.dumps(form, ensure_ascii=False, separators=(",", ":"))
-    return "KANDA_FREEZE_FORM_JSON_BEGIN\n" + text + "\nKANDA_FREEZE_FORM_JSON_END"
+    return json.dumps(form, ensure_ascii=False, indent=2) + "\n"

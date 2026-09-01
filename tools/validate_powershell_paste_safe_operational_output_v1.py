@@ -44,6 +44,7 @@ def interactive_block_is_safe(text: str) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", required=True)
+    parser.add_argument("--artifact-file")
     args = parser.parse_args()
     root = Path(args.project_root).resolve()
 
@@ -75,22 +76,24 @@ def main() -> int:
     )
 
     for marker in (
-        "version: 3.2",
-        "Paste-safe PowerShell hard gate",
+        "version: 4.2",
+        "Paste-safe PowerShell and Error Memory prevention hard gate",
         "Windows PowerShell 5.1-compatible APIs",
         "lesson-powershell-detached-else-interactive-paste-footer-v1",
         "lesson-powershell-validation-wrapper-marker-and-finally-v1",
     ):
         require(marker in routine, "PASTE_SAFE_ROUTINE_MARKER")
     for marker in (
-        "version: 2.1",
+        "prompt_id: pre_output_contract_gates",
+        "Error Memory prevention hard gate",
+        "ERROR MEMORY PREVENTION POINTER",
         "PowerShell paste-safety gate",
         "DIRECT_PACKAGED_SCRIPT_INVOCATION",
         "any visible line begins with `elseif`, `else`, `catch`, or `finally`",
     ):
         require(marker in pre_output, "PASTE_SAFE_PRE_OUTPUT_MARKER")
     for marker in (
-        "version: 2.1",
+        "version: 2.5",
         "Paste-unit contract",
         "one complete paste unit",
         "Windows PowerShell 5.1-compatible APIs",
@@ -115,6 +118,15 @@ def main() -> int:
         "PASTE_SAFE_INVALID_ARTIFACTS_REJECTED",
     )
 
+    if args.artifact_file:
+        artifact = Path(args.artifact_file).expanduser().resolve()
+        require(artifact.is_file(), "ERROR_MEMORY_POWERSHELL_ARTIFACT_EXISTS")
+        candidate = artifact.read_text(encoding="utf-8-sig")
+        require(
+            interactive_block_is_safe(candidate),
+            "ERROR_MEMORY_POWERSHELL_PRE_OUTPUT_GUARD",
+        )
+
     meta_paths = (
         "kanda_prompt_workspace/prompt_library/METADATA/"
         "patch_validate_freeze_error_memory_routine_blueprint.meta.json",
@@ -123,10 +135,29 @@ def main() -> int:
         "kanda_prompt_workspace/prompt_library/METADATA/"
         "terminal_cleanup_contract.meta.json",
     )
+    pre_output_version_match = re.search(
+        r"(?m)^version:\s*([^\s]+)\s*$",
+        pre_output,
+    )
+    pre_output_stage_match = re.search(
+        r"(?m)^source_stage:\s*([^\s]+)\s*$",
+        pre_output,
+    )
+    require(
+        pre_output_version_match is not None,
+        "PASTE_SAFE_PRE_OUTPUT_METADATA_VERSION_PRESENT",
+    )
+    require(
+        pre_output_stage_match is not None,
+        "PASTE_SAFE_PRE_OUTPUT_METADATA_STAGE_PRESENT",
+    )
     expected = (
-        ("3.2", "separated-terminal-release-phases-v1"),
-        ("2.1", FEATURE_ID),
-        ("2.1", FEATURE_ID),
+        ("4.2", "error-memory-pre-output-prevention-hard-gate-v1"),
+        (
+            pre_output_version_match.group(1),
+            pre_output_stage_match.group(1),
+        ),
+        ("2.5", "chained-install-validate-terminal-continuation-v1"),
     )
     for relative, (version, source_stage) in zip(meta_paths, expected):
         data = json.loads(read(root, relative))
@@ -139,6 +170,7 @@ def main() -> int:
     print("POWERSHELL INTERACTIVE PASTE SAFETY: PASS")
     print("POWERSHELL WINDOWS 5.1 API COMPATIBILITY GATE: PASS")
     print("ERROR MEMORY DUPLICATE OWNERS ENFORCED: PASS")
+    print("ERROR_MEMORY_POWERSHELL_PRE_OUTPUT_GUARD: PASS")
     print("VALIDATION OK: " + FEATURE_ID)
     print("STATUS: IN_SYNC")
     return 0

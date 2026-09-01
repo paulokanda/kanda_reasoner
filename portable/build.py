@@ -10,7 +10,6 @@ from typing import Sequence
 
 from portable.constants import (
     MAX_ARCHIVE_PATH_BYTES,
-    NON_RUNTIME_LONG_PATH_DOCS,
 )
 from portable.errors import PortableBuildError
 from portable.external_controls import (
@@ -288,13 +287,6 @@ def stage_application(
     stage_app = paths.stage_parent / application.app_root.name
     shutil.copytree(application.app_root, stage_app)
     hydrate_physical_runtime(paths.project_root, stage_app)
-
-    long_path_docs = stage_app / NON_RUNTIME_LONG_PATH_DOCS
-    if long_path_docs.exists():
-        shutil.rmtree(long_path_docs)
-        print("PORTABLE NON-RUNTIME LONG-PATH DOCS REMOVED: PASS")
-    else:
-        print("PORTABLE NON-RUNTIME LONG-PATH DOCS: NOT PRESENT")
 
     removed_debris = _remove_non_runtime_debris(stage_app)
     print(

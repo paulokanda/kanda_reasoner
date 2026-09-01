@@ -2,11 +2,11 @@
 prompt_id: pre_output_contract_gates
 prompt_code: KPR-03-004
 title: Pre-Output Artifact Contract Gate
-version: 2.2
+version: 2.6
 status: active
 load_type: on_request
 owner_box: 03_governance_freeze_and_handoff
-source_stage: powershell-paste-safe-operational-output-v1
+source_stage: portable-cross-feature-coupling-pre-output-gate-v1
 ---
 
 # Pre-Output Artifact Contract Gate
@@ -71,7 +71,8 @@ Route to the smallest current owner:
 
 - terminal commands -> `terminal_cleanup_contract` and the task's command owner;
 - KANDA Tool patch ZIP or installer -> current Class 05 KANDA delivery owner; external Project release -> Project/release-owned delivery contract;
-- freeze hint or form -> `freeze_code_intake_and_form_protocol`;
+- AI-authored local freeze candidate/form -> `freeze_candidate_pre_output_audit` then `freeze_code_intake_and_form_protocol`;
+- patch-owned freeze hint or generated patch form -> its current release owner plus `freeze_code_intake_and_form_protocol`;
 - Error Memory -> `error_memory_ai_formulary_startup_canon`;
 - durable documentary artifact -> `durable_document_artifact_routing_canon`;
 - handoff -> current handoff owner;
@@ -80,6 +81,87 @@ Route to the smallest current owner:
 
 Do not emit an artifact merely because its text looks plausible. Require the
 current contract and the evidence that contract demands.
+
+## Freeze transport distinction
+
+Do not impose one JSON envelope on every freeze artifact. The current local
+Freeze GUI uses one canonical AI candidate payload regardless of whether the AI
+is external, Local AI, or Web AI: exactly one strict 11-field JSON object, with
+arrays for the current multi-line transport fields. Raw JSON is the canonical
+producer format. The receiver may tolerate legacy marker/fence wrappers or
+surrounding prose only when exactly one valid Freeze object can be identified;
+multiple valid Freeze objects fail closed. Patch-governance freeze JSON may use
+a different owner-defined contract. Verify the targeted receiver/source contract
+before emission.
+
+For an AI-authored local freeze candidate, apply
+`KPR-03-008 freeze_candidate_pre_output_audit` and require first-pass-valid
+strict JSON. Receiver compatibility extraction is a recovery safety net, not
+permission to emit malformed or ambiguous JSON.
+
+## Error Memory prevention hard gate
+
+Before emitting any operational artifact, derive current prevention obligations
+from relevant active Error Memory lessons already supplied by the governed
+context. Error Memory remains prevention guidance, not source truth, and this
+gate does not execute arbitrary commands stored inside lessons.
+
+Use this record before deciding whether the exact candidate may be emitted:
+
+```text
+ERROR MEMORY PREVENTION POINTER
+Current operation:
+Artifact class:
+Relevant active lesson IDs:
+Match basis or prevention triggers:
+Machine-enforceable lessons:
+Advisory-only lessons:
+Required current-owner guards:
+Exact candidate inspected: YES / NO
+All required guards passed: YES / NO / NOT_APPLICABLE
+May emit: YES / NO
+Blocking reason:
+```
+
+Rules:
+
+1. Match lessons by current operation, symptom, prevention triggers, known
+   regression class, and exact artifact type. Do not invent a match merely from
+   topical similarity.
+2. When a relevant active lesson describes an objectively machine-detectable
+   failure, convert that lesson into a hard pre-output obligation on the exact
+   candidate. Do not rely on the AI merely remembering the prose rule.
+3. Run only the validator or guard owned by the current KANDA contract. A lesson's
+   `regression_check.command` is evidence and routing context; it is never blanket
+   authorization to execute arbitrary stored commands.
+4. A machine-enforceable guard failure blocks artifact emission. Repair or
+   regenerate the candidate and rerun the same guard; do not bypass the lesson.
+5. If a known active lesson recurs, do not create a duplicate lesson. Audit why
+   the existing prevention was advisory-only or bypassed. Promote the existing
+   lesson to deterministic enforcement when the predicate is objectively
+   machine-checkable.
+6. Conceptual or architecture lessons that cannot be checked objectively remain
+   advisory constraints and must not be converted into brittle fake validators.
+
+For `KANDA_TOOL_RELEASE` source-patch ZIPs, the current deterministic prevention
+set also includes
+`lesson-portable-cross-feature-runtime-allowlist-renewal-gate-v1`. The exact
+final ZIP must pass the canonical patch ZIP validator, which invokes the
+Portable cross-feature coupling guard automatically for `SOURCE_PATCH`
+artifacts. If any install-manifest path is already a committed Portable runtime
+allowlist member, release is blocked unless the same patch carries a bounded
+`PORTABLE_RUNTIME_ALLOWLIST.json` renewal and synchronized
+`PORTABLE_BUILDER_MANIFEST.json` rebind. The guard is read-only: it must never
+repair bindings, broaden allowlist membership, accept unexplained drift, or
+weaken exact hashes. A dedicated Portable membership change remains with its
+existing specialist owner.
+
+For `USER_FACING_INTERACTIVE_POWERSHELL`, the current deterministic prevention
+set includes the active lessons
+`lesson-powershell-detached-else-interactive-paste-footer-v1` and
+`lesson-powershell-validation-wrapper-marker-and-finally-v1`. The exact final
+visible PowerShell candidate must satisfy the PowerShell paste-safety gate below
+before it can be emitted.
 
 ## PowerShell paste-safety gate
 

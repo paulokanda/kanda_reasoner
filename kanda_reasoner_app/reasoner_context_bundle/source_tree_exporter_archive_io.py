@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import os
 import shutil
 import zipfile
@@ -45,6 +46,64 @@ def _write_zip(
     with zipfile.ZipFile(zip_path, **kwargs) as archive:
         for record in records:
             archive.write(Path(str(record["absolute_path"])), arcname=str(record["path"]))
+
+def _hash_zip_member(archive: zipfile.ZipFile, member: str) -> tuple[int, str]:
+    digest = hashlib.sha256()
+    total = 0
+    with archive.open(member, "r") as source:
+        while True:
+            chunk = source.read(1024 * 1024)
+            if not chunk:
+                break
+            total += len(chunk)
+            digest.update(chunk)
+    return total, digest.hexdigest()
+
+
+def _verify_archive_parts_content(
+    destination_path: Path,
+    part_records: list[dict[str, Any]],
+    included_files: list[dict[str, Any]],
+) -> None:
+    """Prove each archive member matches the captured source inventory."""
+    expected_by_part: dict[str, list[dict[str, Any]]] = {}
+    for record in included_files:
+        filename = str(record.get("part_filename", ""))
+        if not filename:
+            raise RuntimeError(
+                "SOURCE_ARCHIVE_MEMBER_PART_MISSING:"
+                + str(record.get("path", ""))
+            )
+        expected_by_part.setdefault(filename, []).append(record)
+
+    for part in part_records:
+        filename = str(part.get("filename", ""))
+        zip_path = destination_path / filename
+        expected = expected_by_part.get(filename, [])
+        expected_paths = {str(item.get("path", "")) for item in expected}
+        try:
+            with zipfile.ZipFile(zip_path, "r") as archive:
+                actual_paths = set(archive.namelist())
+                if actual_paths != expected_paths:
+                    raise RuntimeError(
+                        "SOURCE_ARCHIVE_MEMBER_SET_MISMATCH:" + filename
+                    )
+                for record in expected:
+                    member = str(record.get("path", ""))
+                    size_bytes, digest = _hash_zip_member(archive, member)
+                    if size_bytes != int(record.get("size_bytes", -1)):
+                        raise RuntimeError(
+                            "SOURCE_ARCHIVE_MEMBER_SIZE_MISMATCH:" + member
+                        )
+                    if digest != str(record.get("sha256", "")).lower():
+                        raise RuntimeError(
+                            "SOURCE_ARCHIVE_MEMBER_HASH_MISMATCH:" + member
+                        )
+        except (OSError, zipfile.BadZipFile, KeyError) as exc:
+            raise RuntimeError(
+                "SOURCE_ARCHIVE_CONTENT_VERIFICATION_FAILED:" + filename
+            ) from exc
+
 
 def _reuse_previous_png_asset_parts(
     *,

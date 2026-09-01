@@ -202,9 +202,11 @@ def _finalize_ai_context_artifacts_for_handoff(context: ProjectContext, destinat
     """
     from .ai_briefing_builder import write_ai_briefing_json
     from .bundle_manifest_builder import write_bundle_manifest_json
+    from .file_manifest_builder import write_file_manifest_json
 
     delivery_folder = _delivery_folder_for_metadata(destination)
     _rewrite_text_references(destination, delivery_folder)
+    write_file_manifest_json(context)
     write_ai_briefing_json(context)
     _rewrite_text_references(destination, delivery_folder)
     write_bundle_manifest_json(context)

@@ -16,6 +16,10 @@ SEND_ZIP_FREEZE_PROMPT_RELATIVE_PATH = Path(
     "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
     "03_governance_freeze_and_handoff/self_contained_freeze_entry_intake_zip.md"
 )
+HOW_TO_FREEZE_PROMPT_RELATIVE_PATH = Path(
+    "kanda_prompt_workspace/prompt_library/ACTIVE_PROMPTS/"
+    "03_governance_freeze_and_handoff/freeze_code_intake_and_form_protocol.md"
+)
 
 
 class FreezeMemoryExportMixin:
@@ -54,6 +58,44 @@ class FreezeMemoryExportMixin:
             title="Send zip freeze",
             message="Self-contained freeze-entry ZIP prompt copied to clipboard.",
             detail_text="Source: self_contained_freeze_entry_intake_zip.md",
+        )
+
+    def _how_to_freeze_prompt_path(self) -> Path:
+        """Return the Tool-owned canonical How to Freeze prompt path."""
+        return (
+            Path(__file__).resolve(strict=False).parents[2]
+            / HOW_TO_FREEZE_PROMPT_RELATIVE_PATH
+        )
+
+    def _copy_how_to_freeze_prompt(self) -> None:
+        """Copy the current canonical KPR-03-003 freeze workflow prompt."""
+        prompt_path = self._how_to_freeze_prompt_path()
+        if not prompt_path.exists() or not prompt_path.is_file():
+            show_error_copy_close_window(
+                self,
+                title="How to Freeze prompt copy failed",
+                message="Canonical freeze prompt not found: " + str(prompt_path),
+            )
+            return
+        try:
+            prompt_text = prompt_path.read_text(encoding="utf-8")
+            QApplication.clipboard().setText(prompt_text)
+        except Exception as exc:
+            show_error_copy_close_window(
+                self,
+                title="How to Freeze prompt copy failed",
+                message=str(exc),
+            )
+            return
+        self._append_log(
+            "Copied canonical How to Freeze prompt to clipboard: "
+            + str(prompt_path)
+        )
+        show_auto_close_action_window(
+            self,
+            title="How to Freeze",
+            message="Canonical KPR-03-003 freeze workflow prompt copied to clipboard.",
+            detail_text="Source: freeze_code_intake_and_form_protocol.md",
         )
 
     def _freeze_entry_sort_key(self, entry_path: Path) -> tuple[str, int, str]:
@@ -143,52 +185,76 @@ class FreezeMemoryExportMixin:
         )
 
     def _build_freeze_form_blueprint_text(self) -> str:
-        """Return the transport-safe AI prompt for local freeze-form output."""
-        return """KANDA FREEZE FORM BLUEPRINT FOR AI
+        """Return the canonical audited generic Freeze blueprint for AI."""
+        return """KANDA FREEZE FORM - GENERIC RECEIVE-READY TEMPLATE v4
 
-Task for AI:
-Create or correct one KANDA Reasoner local freeze-entry formulary for the current validated feature only.
-Return exactly one receive-ready block. Do not write prose before or after the block.
-Do not invent validation evidence. If local validation evidence is missing, say that the freeze form cannot be completed yet instead of fabricating markers.
+Use this structure only after the strict pre-output governance audit has passed.
 
-Strict output contract:
-- The first visible characters of your answer must be KANDA_FREEZE_FORM_JSON_BEGIN.
-- The last visible characters of your answer must be KANDA_FREEZE_FORM_JSON_END.
-- Between the markers, put one valid JSON object inside one fenced json code block.
-- Use double quotes for every JSON key and string value.
-- Use JSON arrays for validated_files, generated_files, protected_paths, do_not_regress_rules, and validation_evidence_summary.
-- Preserve every existing array item exactly and in order.
-- Encode Windows backslashes as doubled backslashes or \\u005C.
-- Do not place JSON in ordinary Markdown prose.
-- Do not use comments or trailing commas.
-- Use project-relative paths where possible.
-- Keep project-specific frozen memory under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.
-- Do not store project-specific frozen memory inside project_freeze_ledger.
-
-Required validation evidence:
-validation_evidence_summary must contain real local markers when validation completed, preferably:
-VALIDATION OK: <feature_id>
-STATUS: IN_SYNC
-ZIP CONTRACT: PASS
-
-Copy/paste-ready answer shape:
-KANDA_FREEZE_FORM_JSON_BEGIN
 ```json
 {
-  "feature_title": "<exact current feature title>",
-  "primary_box": "<project-relative owning box/path>",
-  "box_type": "<module/gui/tool/prompt/etc>",
-  "validated_files": ["<validated path 1>", "<validated path 2>"],
-  "generated_files": ["<generated artifact or n/a>"],
-  "protected_paths": ["<protected path 1>"],
-  "do_not_regress_rules": ["<rule 1>"],
-  "validation_evidence_summary": ["VALIDATION OK: <feature_id>", "STATUS: IN_SYNC"],
-  "known_warnings": "<known warnings or n/a>",
-  "planned_next_step": "<next human action, usually Preview then Confirm and Write>",
-  "notes": "<short freeze notes for future AI>"
+  "feature_title": "<EXACT EFFECTIVE NON-SUPERSEDED FEATURE TITLE>",
+  "primary_box": "<EXACT PROJECT-RELATIVE OWNING BOX OR PATH>",
+  "box_type": "<EXACT SUPPORTED TYPE>",
+
+  "validated_files": [
+    "<ONLY FILES ACTUALLY COVERED BY CURRENT VALIDATION>"
+  ],
+
+  "generated_files": [],
+
+  "protected_paths": [
+    "<EVIDENCE-BACKED PROTECTED PATH>",
+    "project_freeze_after_update/frozen_features_memory/"
+  ],
+
+  "do_not_regress_rules": [
+    "<VALIDATED BEHAVIORAL OR ARCHITECTURAL CONTRACT>",
+    "<SECOND VALIDATED CONTRACT>",
+    "Project-specific frozen memory must remain under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory.",
+    "Do not store project-specific frozen memory inside project_freeze_ledger.",
+    "Preview Freeze Entry must remain read-only and must not write files.",
+    "Confirm and Write must require explicit human confirmation before writing governed freeze memory.",
+    "After a local freeze write, the AI startup freeze context must be refreshed."
+  ],
+
+  "validation_evidence_summary": [
+    "<EXACT CURRENT FEATURE-SPECIFIC PASS MARKER>",
+    "<OTHER EXACT CURRENT VALIDATION MARKER IF GENUINELY PRODUCED>",
+    "VALIDATION OK: <EXACT_CURRENT_FEATURE_ID>",
+    "STATUS: IN_SYNC"
+  ],
+
+  "known_warnings": "<STATE ONLY REAL WARNINGS. DISTINGUISH CURRENT VALIDATION FROM HISTORICAL EVIDENCE. IF AN ORIGINAL PATCH ZIP IS UNAVAILABLE, SAY SO. IF ZIP CONTRACT: PASS WAS NOT GENUINELY PRODUCED FOR THIS EXACT RELEASE, DO NOT CLAIM IT. USE n/a ONLY IF THERE ARE GENUINELY NO MATERIAL WARNINGS.>",
+
+  "planned_next_step": "<ONLY ACTION THAT REMAINS GENUINELY PENDING AFTER THE COMPLETE CURRENT CONFIRM AND WRITE TRANSACTION HAS FINISHED. DO NOT REPEAT PREVIEW, CONFIRM AND WRITE, HINT CONSUMPTION, STARTUP/COMPLIANCE REFRESH, INDEXING, OR ANY WRITER/GUI-OWNED ACTION ALREADY COMPLETED. IF NO IMMEDIATE ACTION REMAINS, STATE A FUTURE DURABLE TRIGGER SUCH AS VERIFYING THIS FROZEN CONTRACT IN A LATER SESSION OR CREATING ANOTHER FREEZE ONLY FOR A SEPARATELY VALIDATED LATER REVISION/CORRECTION.>",
+
+  "notes": "Release owner: <KANDA_TOOL_RELEASE | EXTERNAL_PROJECT_RELEASE | NOT_APPLICABLE>. Effective non-superseded feature: <EXACT_FEATURE_ID>. Governing source patch ZIP: <EXACT_PATCH_ZIP_IF_GENUINELY_KNOWN_OR_n/a>. Governing patch SHA-256: <EXACT_SHA256_IF_GENUINELY_KNOWN_OR_n/a>. <SHORT DURABLE SUMMARY OF WHAT THIS FEATURE FREEZES>. <STATE SUPERSESSION RELATIONSHIP ONLY IF VERIFIED>. Project-specific durable frozen memory belongs under <project>_show_project_to_AI/project_freeze_after_update/frozen_features_memory and not project_freeze_ledger."
 }
 ```
-KANDA_FREEZE_FORM_JSON_END
+
+MANDATORY TEMPLATE RULES
+
+1. Never replace unknown information with guessed information.
+2. `validated_files` means validated files, not merely related files.
+3. For the unified Freeze receiver, `generated_files` must be `[]` when there are no generated files. Never create a synthetic `"n/a"` path entry.
+4. `protected_paths` must be evidence-backed and use the verified owner namespace/root convention.
+5. `validation_evidence_summary` contains evidence, not rewritten interpretations. Prefer literal validator output when possible.
+6. The exact current feature must have `VALIDATION OK: <exact_feature_id>` and `STATUS: IN_SYNC` before the candidate may be emitted.
+7. A subordinate checker marker may support the evidence but never substitutes for the exact current-feature marker.
+8. Include `ZIP CONTRACT: PASS` only when that exact marker was genuinely produced for the exact release and is applicable to the classified release owner.
+9. Historical evidence must be explicitly identifiable as historical when material.
+10. Never insert writer-owned fields: `freeze_id`, writer status, writer timestamp/date, owner metadata, durable entry path, `freeze_store_kind`, or `superseded_by`.
+11. Before output, inspect the actual current freeze store for an existing same-feature freeze, duplicates, predecessors, superseded entries, conflicting active revisions, and legitimate correction/replacement state.
+12. If the required current-state check cannot be performed, stop with `FREEZE CANDIDATE NOT READY`. Do not guess.
+13. Classify release provenance as `KANDA_TOOL_RELEASE`, `EXTERNAL_PROJECT_RELEASE`, or `NOT_APPLICABLE` before applying ZIP-specific rules. Never hardcode one release-owner class into a generic template.
+14. Resolve every path-bearing field against its actual owner root. Never add or strip `_show_project_to_AI`, `first_prompt_files`, `project_freeze_after_update`, or another prefix by intuition.
+15. Treat `KANDA_FREEZE_HINT.json` according to the artifact class: it is governed evidence for a manual candidate, while patch-owned freeze artifacts may have a stricter same-source contract.
+16. Before output, strictly parse exactly one JSON object, reject duplicate object keys, reject non-standard `NaN`/`Infinity` constants, verify the exact 11-field schema and field types, and ensure no writer-owned field or chat/tool artifact leaked into the object.
+17. Never send a schema-invalid failure object to the Freeze receiver. If a mandatory gate fails, return ordinary chat beginning exactly with `FREEZE CANDIDATE NOT READY` and emit no Freeze JSON candidate.
+18. Never send a candidate first and audit it afterward. The candidate shown to the user must already have passed JSON/schema validation, exact feature identity, current freeze-store and supersession audit, validation-evidence and provenance audit, ownership/path audit, complete durable post-write transaction simulation, and a second independent audit.
+19. `planned_next_step` must remain true after the full current Confirm and Write transaction returns. It must not repeat Preview, Confirm and Write, automatic hint consumption, startup/compliance refresh, indexing, or another writer/GUI-owned action already completed by that transaction.
+20. The canonical AI-produced Freeze candidate is one raw 11-field JSON object with array-valued multiline fields and no mandatory marker or Markdown envelope. Legacy marker/fence input may be accepted by the receiver only as compatibility input.
+21. If current receiver/source behavior differs from this template, fail closed and reconcile this prompt plus `Get Blueprint Freeze` before emitting a candidate.
 """
 
     def _copy_freeze_form_blueprint(self) -> None:
@@ -197,11 +263,11 @@ KANDA_FREEZE_FORM_JSON_END
         self._append_log("Copied KANDA freeze-form blueprint to clipboard.")
         show_auto_close_action_window(
             self,
-            title="Get blueprint Freeze",
+            title="Get Blueprint Freeze",
             message="KANDA freeze-form blueprint copied to clipboard.",
             detail_text=(
-                "Paste it to AI when the local freeze entry formulary needs a "
-                "strict KANDA_FREEZE_FORM_JSON_BEGIN / END structure."
+                "Paste it to AI when the local freeze entry formulary needs the "
+                "canonical strict 11-field raw JSON structure."
             ),
         )
 

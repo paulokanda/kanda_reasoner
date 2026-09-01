@@ -10,6 +10,6 @@
     "Project root must be a real project folder; broad drive-root scans are blocked.",
     "Output JSON is evidence for review and AI context, not a source-code edit.",
     "Create Second Prompt Files runs JSON ZIP export automatically into the external Show Project to AI delivery folder.",
-    "Backup Show Project asks for a destination folder and creates a verified <project_name>_show_project_to_AI_backup_<date-time>.zip outside Project source and support roots."
+    "Backup Every Day blinks red/yellow until one verified daily backup succeeds, then stays green for that day. It preselects the Project and Show Project folders, allows additional folders and a destination drive/folder, and writes <project_name>_<date>_<time>.zip."
   ]
 }

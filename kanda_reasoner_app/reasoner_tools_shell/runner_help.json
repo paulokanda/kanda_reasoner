@@ -140,7 +140,8 @@
       ],
       "depends_on": [
         "show_project_backup_service.py"
-      ]
+      ],
+      "reason": "Legacy compatibility controller retained for non-UI callers; no longer wired to the Show Project toolbar."
     },
     "show_project_backup_service.py": {
       "purpose": "Framework-neutral atomic ZIP backup service for the selected Project Support folder.",
@@ -208,7 +209,7 @@
       ]
     },
     "pre_backup_cleanup_dialog.py": {
-      "purpose": "Persistent pre-backup cleanup questionnaire for Show Project and Both backups.",
+      "purpose": "Persistent pre-backup cleanup questionnaire for backups that include Show Project.",
       "reason": "Canonical Qt cleanup dialog consumed by the Show Project backup controller.",
       "stability": "stable",
       "exports": [
@@ -219,6 +220,7 @@
         "pre_backup_cleanup_service.py"
       ],
       "consumed_by": [
+        "daily_backup_private_impl.py",
         "show_project_backup_private_impl.py"
       ]
     },
@@ -291,6 +293,69 @@
       "depends_on": [],
       "consumed_by": [
         "__init__.py"
+      ]
+    },
+    "daily_backup_state.py": {
+      "purpose": "Tool-owned per-Project daily backup completion state.",
+      "reason": "Keeps the Backup Every Day color state durable without writing Project source.",
+      "stability": "stable",
+      "exports": [
+        "is_daily_backup_complete",
+        "mark_daily_backup_complete"
+      ],
+      "depends_on": [
+        "project_root_resolver.py",
+        "project_support_boundary.py"
+      ],
+      "consumed_by": [
+        "daily_backup_private_impl.py"
+      ]
+    },
+    "daily_backup_service.py": {
+      "purpose": "Framework-neutral verified multi-folder ZIP service for Backup Every Day.",
+      "reason": "Adds daily multi-folder selection while reusing the established atomic ZIP primitives.",
+      "stability": "stable",
+      "exports": [
+        "create_daily_backup",
+        "validate_daily_backup_destination"
+      ],
+      "depends_on": [
+        "show_project_backup_service.py"
+      ],
+      "consumed_by": [
+        "daily_backup_private_impl.py"
+      ]
+    },
+    "daily_backup_dialog.py": {
+      "purpose": "Qt source-folder and destination selector for Backup Every Day.",
+      "reason": "Presents the project drive with Project and Show Project preselected and allows extra folders.",
+      "stability": "stable",
+      "exports": [
+        "DailyBackupDialog"
+      ],
+      "depends_on": [
+        "project_analysis_evidence_paths.py"
+      ],
+      "consumed_by": [
+        "daily_backup_private_impl.py"
+      ]
+    },
+    "daily_backup_private_impl.py": {
+      "purpose": "Qt background controller and daily color-state owner for Backup Every Day.",
+      "reason": "Replaces the three deprecated backup buttons with one daily workflow.",
+      "stability": "stable",
+      "exports": [
+        "DailyBackupWorker",
+        "install_daily_backup_button"
+      ],
+      "depends_on": [
+        "daily_backup_dialog.py",
+        "daily_backup_service.py",
+        "daily_backup_state.py",
+        "pre_backup_cleanup_dialog.py"
+      ],
+      "consumed_by": [
+        "window_methods_private_impl.py"
       ]
     }
   }

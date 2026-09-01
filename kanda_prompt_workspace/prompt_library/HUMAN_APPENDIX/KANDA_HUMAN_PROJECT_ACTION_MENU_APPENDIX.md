@@ -320,8 +320,8 @@ Current terminal behavior canon:
 
 ```text
 The exact terminal cleanup contract is owned by terminal_cleanup_contract.md.
-Install success uses the 2-second Clear-Host footer and keeps the terminal open.
-Validation, freeze, diagnostics, recovery, errors, and all other non-install-success blocks use Enter, Enter, one final Clear-Host, and keep the terminal open.
+Install success preserves the success output, waits for Enter twice, then uses one final Clear-Host and keeps the terminal open.
+Validation, freeze, diagnostics, recovery, errors, and all other interactive blocks use the same Enter, Enter, one-final-Clear-Host sequence. Automatic timed clearing is retired.
 ```
 
 Important distinction:

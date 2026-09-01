@@ -2,7 +2,7 @@
 folder_id: 03_governance_freeze_and_handoff
 folder_name: Governance, Freeze, and Handoff
 artifact_type: folder_assimilation_card
-version: 2.0
+version: 2.1
 status: current
 scope: routing_metadata_only
 load_mode: selected_when_needed
@@ -29,6 +29,7 @@ draft governance and handoff profile authoring.
 | `professional_engineering_governance_template` | `KPR-03-005` | draft_template | Draft-only Project governance profile authoring. |
 | `workflow_handoff_template` | `KPR-03-006` | draft_template | Draft-only generic handoff profile authoring. |
 | `self_contained_freeze_entry_intake_zip` | `KPR-03-007` | active | One-ZIP selected-Project Freeze intake, bridged through KPR-05-005 to the separate KPR-05-008 Error Memory intake owner. |
+| `freeze_candidate_pre_output_audit` | `KPR-03-008` | active | Zero-trust audit of AI-authored local freeze candidates before emission. |
 
 ## Retired identities
 

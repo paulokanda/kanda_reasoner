@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from kanda_reasoner_app.templates.floating_windows import (
+    install_error_popup_copy_close_filter,
     show_auto_close_action_window,
     show_error_copy_close_window,
 )
@@ -489,6 +490,7 @@ def main() -> int:
     """
     
     app = QApplication(sys.argv)
+    install_error_popup_copy_close_filter(app)
     window = ArchitectureManagerWindow()
     window.show()
     return app.exec()

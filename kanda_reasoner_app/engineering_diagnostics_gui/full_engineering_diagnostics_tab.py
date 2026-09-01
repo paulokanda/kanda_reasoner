@@ -17,7 +17,12 @@ from .ai_correction_handoff import (
 )
 from .ai_correction_report import AiCorrectionCollectorResult
 from .controller import EngineeringDiagnosticsController
-from .engineering_diagnostics_sonar import create_engineering_diagnostics_sonar
+from .engineering_diagnostics_lifecycle import (
+    EngineeringDiagnosticsPanelLifecycle,
+    future_is_active,
+    mark_future_settled,
+)
+from .full_diagnostics_panel_ui import create_full_diagnostics_panel_ui
 from .models import DiagnosticScanCandidate, EngineeringDiagnosticsGuiCancelled
 
 __all__ = [
@@ -91,53 +96,19 @@ def create_full_engineering_diagnostics_panel(
 ):
     """Create the all-collector run console without duplicating the backend."""
     from PySide6.QtCore import QTimer
-    from PySide6.QtWidgets import (
-        QApplication,
-        QHBoxLayout,
-        QLabel,
-        QPlainTextEdit,
-        QPushButton,
-        QVBoxLayout,
-        QWidget,
-    )
+    from PySide6.QtWidgets import QApplication
 
     active_controller = controller or EngineeringDiagnosticsController(
         tool_root=_tool_root()
     )
-    panel = QWidget()
-    panel.setObjectName("full_engineering_diagnostics_page")
-    layout = QVBoxLayout(panel)
-    layout.setContentsMargins(0, 0, 0, 0)
-    layout.setSpacing(8)
-
-    toolbar = QHBoxLayout()
-    run_button = QPushButton("Run All Engineering Diagnostics")
-    run_button.setObjectName("full_engineering_diagnostics_run_button")
-    cancel_button = QPushButton("Cancel Diagnostics")
-    cancel_button.setObjectName("full_engineering_diagnostics_cancel_button")
-    cancel_button.setEnabled(False)
-    copy_ai_button = QPushButton("Copy AI Correction Handoff")
-    copy_ai_button.setObjectName(
-        "full_engineering_diagnostics_copy_ai_handoff_button"
-    )
-    copy_ai_button.setEnabled(False)
-    toolbar.addWidget(run_button)
-    toolbar.addWidget(cancel_button)
-    toolbar.addWidget(copy_ai_button)
-    toolbar.addStretch(1)
-    layout.addLayout(toolbar)
-
-    status_label = QLabel("Ready")
-    status_label.setObjectName("full_engineering_diagnostics_status_label")
-    output = QPlainTextEdit()
-    output.setReadOnly(True)
-    output.setPlainText(
-        "Run all supported diagnostics. Detailed stored runs remain available "
-        "under Pontual Engineering Diagnostics."
-    )
-    sonar = create_engineering_diagnostics_sonar(panel)
-    layout.addWidget(status_label)
-    layout.addWidget(output, 1)
+    ui = create_full_diagnostics_panel_ui()
+    panel = ui.panel
+    run_button = ui.run_button
+    cancel_button = ui.cancel_button
+    copy_ai_button = ui.copy_ai_button
+    status_label = ui.status_label
+    output = ui.output
+    sonar = ui.sonar
 
     run_executor = ThreadPoolExecutor(max_workers=1)
     report_executor = ThreadPoolExecutor(max_workers=1)
@@ -148,6 +119,8 @@ def create_full_engineering_diagnostics_panel(
         "project_root": "",
         "report_future": None,
         "report_artifact": None,
+        "closing": False,
+        "discard_reason": "",
     }
 
     def current_project_root() -> str:
@@ -171,11 +144,13 @@ def create_full_engineering_diagnostics_panel(
         project_root: str,
         future: Future,
     ) -> None:
+        mark_future_settled(state, "report_future", future)
+        if bool(state.get("closing", False)):
+            return
         if generation != state["generation"]:
             return
         if project_root != current_project_root():
             return
-        state["report_future"] = None
         try:
             artifact = future.result()
         except Exception:  # noqa: BLE001
@@ -225,6 +200,8 @@ def create_full_engineering_diagnostics_panel(
         project_root: str,
         future: Future,
     ) -> None:
+        if bool(state.get("closing", False)):
+            return
         if generation != state["generation"]:
             return
         if project_root != current_project_root():
@@ -242,7 +219,7 @@ def create_full_engineering_diagnostics_panel(
         project_root: str,
         collector_results: tuple[AiCorrectionCollectorResult, ...],
     ) -> None:
-        if generation != state["generation"]:
+        if bool(state.get("closing", False)) or generation != state["generation"]:
             return
         state["report_artifact"] = None
         copy_ai_button.setEnabled(False)
@@ -391,9 +368,23 @@ def create_full_engineering_diagnostics_panel(
         )
 
     def finish_run(generation: int, future: Future) -> None:
-        if generation != state["generation"]:
+        owns_slot = state.get("future") is future
+        if bool(state.get("closing", False)):
+            mark_future_settled(state, "future", future)
             return
-        state["future"] = None
+        if generation != state["generation"]:
+            mark_future_settled(state, "future", future)
+            if owns_slot:
+                state["cancel"] = None
+                sonar.stop()
+                set_busy(False)
+                status_label.setText(
+                    "Full Engineering Diagnostics cancelled after settlement."
+                    if state.get("discard_reason") == "user_cancel"
+                    else "Previous Project Full Diagnostics discarded after settlement."
+                )
+            return
+        mark_future_settled(state, "future", future)
         state["cancel"] = None
         sonar.stop()
         set_busy(False)
@@ -409,7 +400,7 @@ def create_full_engineering_diagnostics_panel(
         render_outcomes(generation, outcomes)
 
     def poll_run(generation: int, future: Future) -> None:
-        if generation != state["generation"]:
+        if bool(state.get("closing", False)):
             return
         if future.done():
             finish_run(generation, future)
@@ -417,7 +408,7 @@ def create_full_engineering_diagnostics_panel(
         QTimer.singleShot(100, lambda: poll_run(generation, future))
 
     def start_run() -> None:
-        if state["future"] is not None:
+        if future_is_active(state, "future"):
             return
         root = current_project_root()
         state["generation"] = int(state["generation"]) + 1
@@ -425,6 +416,7 @@ def create_full_engineering_diagnostics_panel(
         cancellation = Event()
         state["cancel"] = cancellation
         state["project_root"] = root
+        state["discard_reason"] = ""
         state["report_artifact"] = None
         copy_ai_button.setEnabled(False)
         set_busy(True)
@@ -444,6 +436,13 @@ def create_full_engineering_diagnostics_panel(
         state["future"] = future
         QTimer.singleShot(100, lambda: poll_run(generation, future))
 
+    lifecycle = EngineeringDiagnosticsPanelLifecycle(
+        state=state,
+        executors=(run_executor, report_executor),
+        future_keys=("future", "report_future"),
+        active_reason="Full Engineering Diagnostics work is still running",
+    )
+
     def cancel_run() -> None:
         cancellation = state.get("cancel")
         if cancellation is None or state.get("future") is None:
@@ -451,15 +450,15 @@ def create_full_engineering_diagnostics_panel(
             return
         if cancellation.is_set():
             return
-        cancellation.set()
+        lifecycle.request_user_cancellation()
         sonar.stop()
         cancel_button.setEnabled(False)
         status_label.setText(
-            "Cancellation requested; the active collector will settle safely."
+            "Cancellation requested; late results will be discarded after settlement."
         )
 
     def set_project_root(_value: object = None) -> None:
-        cancel_run()
+        lifecycle.request_project_scope_settlement()
         state["report_artifact"] = None
         copy_ai_button.setEnabled(False)
         output.setPlainText(
@@ -470,12 +469,15 @@ def create_full_engineering_diagnostics_panel(
     run_button.clicked.connect(start_run)
     cancel_button.clicked.connect(cancel_run)
     copy_ai_button.clicked.connect(copy_ai_handoff)
-    panel.destroyed.connect(lambda _obj=None: run_executor.shutdown(wait=False))
-    panel.destroyed.connect(lambda _obj=None: report_executor.shutdown(wait=False))
+    panel.destroyed.connect(lambda _obj=None: lifecycle.begin_shutdown())
 
     panel.set_project_root = set_project_root
     panel.start_full_engineering_diagnostics = start_run
     panel.cancel_full_engineering_diagnostics = cancel_run
+    panel.project_scope_switch_block_reason = lifecycle.project_scope_switch_block_reason
+    panel.request_project_scope_settlement = lifecycle.request_project_scope_settlement
+    panel.begin_shutdown = lifecycle.begin_shutdown
+    panel.shutdown_ready = lifecycle.shutdown_ready
     panel.full_engineering_diagnostics_controller = active_controller
     panel.full_engineering_diagnostics_run_button = run_button
     panel.full_engineering_diagnostics_cancel_button = cancel_button

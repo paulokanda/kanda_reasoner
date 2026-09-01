@@ -4,20 +4,22 @@
   "display_name": "Error Memory Marker-Wrapped JSON Output Envelope",
   "filename": "error_memory_active_ready_json_template.md",
   "category": "12_generalized_project_canons",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "status": "active",
   "load_type": "routed",
   "owner_box": "12_generalized_project_canons",
   "canonical_path": "ACTIVE_PROMPTS/12_generalized_project_canons/error_memory_active_ready_json_template.md",
   "classification": "error_memory_marker_output_envelope",
-  "source_stage": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "updated_for": "prompt-audit-wave10a-final-productization-generalized-canons-closure-v1",
-  "description": "Define only the marker-wrapped output envelope for text pasted into the Error Memory AI-assisted intake surface. Current application schema/models remain field authority. KPR-12-004 supplies the synchronized human-readable model.",
+  "source_stage": "error-memory-lesson-pre-output-envelope-guard-v1",
+  "updated_for": "error-memory-lesson-pre-output-envelope-guard-v1",
+  "description": "Define and preflight the exact raw marker-wrapped Error Memory output envelope for AI-assisted intake, including literal markers, one JSON object, and no Markdown or prose.",
   "box_logic_required": false,
   "priority": 33,
   "trigger_phrases": [
     "Error Memory JSON envelope",
-    "KANDA_ERROR_LESSON_JSON_BEGIN"
+    "KANDA_ERROR_LESSON_JSON_BEGIN",
+    "MCARD_FORMATTED_LESSON_JSON_REQUIRED",
+    "formatted AI lesson could not be parsed"
   ],
   "aliases": [
     "KPR-12-003",
@@ -27,13 +29,15 @@
   "user_intent_examples": [
     "When the exact marker-wrapped final Error Memory output envelope is required."
   ],
-  "when_to_load": "When the exact marker-wrapped final Error Memory output envelope is required.",
+  "when_to_load": "Before emitting, approving, correcting, or regenerating the exact marker-wrapped final Error Memory lesson output envelope, or when Error Memory reports MCARD_FORMATTED_LESSON_JSON_REQUIRED.",
   "when_not_to_load": "Do not use as field-schema authority or before readiness evidence exists.",
   "required_companion_prompts": [],
   "related_prompt_ids": [],
   "do_not_regress": [
     "Preserve the narrow owner and its explicit non-authorization boundary.",
     "Do not force companions or direct startup loading.",
-    "Do not claim current source, execution or validation without evidence."
+    "Do not claim current source, execution or validation without evidence.",
+    "Final receive-ready Error Memory lesson output uses raw literal markers with exactly one JSON object and no Markdown fence or prose.",
+    "MCARD_FORMATTED_LESSON_JSON_REQUIRED is treated as an Error Memory transport failure signature, not as Architecture Review MCard ownership."
   ]
 }

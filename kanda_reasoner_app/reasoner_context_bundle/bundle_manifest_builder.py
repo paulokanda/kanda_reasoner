@@ -14,6 +14,7 @@ from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
 from .project_context import resolve_project_context
 from .schema_models import BundleArtifactPaths, ProjectContext
+from .source_state_identity import load_source_state_identity
 
 __all__ = [
     "BUNDLE_ARTIFACT_ORDER",
@@ -24,7 +25,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "bundle_manifest"
 GENERATOR_NAME = "reasoner_context_bundle.bundle_manifest_builder"
-GENERATOR_VERSION = "1.5.0"
+GENERATOR_VERSION = "1.6.0"
 
 BUNDLE_ARTIFACT_ORDER = (
     "ai_briefing_json",
@@ -227,6 +228,7 @@ def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[
     context = _context(project)
     paths = bundle_artifact_paths(context)
     artifacts = _artifact_records(context, paths)
+    source_state = load_source_state_identity(paths.file_manifest_json)
     return {
         "schema_version": SCHEMA_VERSION,
         "bundle_kind": BUNDLE_KIND,
@@ -262,6 +264,14 @@ def build_bundle_manifest_payload(project: str | Path | ProjectContext) -> dict[
             "source_files_are_truth": True,
             "json_is_evidence_not_truth": True,
             "inspect_exact_source_before_editing": True,
+        },
+        "source_state": source_state,
+        "source_state_contract": {
+            "canonical_owner": "file_manifest_json",
+            "source_archive_must_be_verified_projection": True,
+            "source_archive_state_is_distinct_projection_identity": True,
+            "publication_requires_live_recheck": True,
+            "external_ai_cannot_observe_post_export_source_changes": True,
         },
         "section_loading_policy": {
             "ai_briefing_json": "always_read",

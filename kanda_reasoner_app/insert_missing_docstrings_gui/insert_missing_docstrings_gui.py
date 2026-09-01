@@ -16,6 +16,10 @@ import sys
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 
+from kanda_reasoner_app.templates.floating_windows import (
+    install_error_popup_copy_close_filter,
+)
+
 from .insert_missing_docstrings_gui_help.ai_settings import (
     build_ai_config,
     load_config_from_file as _ai_settings_load_config_from_file,
@@ -268,6 +272,7 @@ class MissingDocstringsWindow(QMainWindow):
 def main() -> int:
     """Run the standalone missing-docstrings GUI application."""
     app = QApplication(sys.argv)
+    install_error_popup_copy_close_filter(app)
     window = MissingDocstringsWindow()
     window.show()
     return app.exec()

@@ -141,9 +141,7 @@ class _WindowToolPatchesMixin:
         for control_name in (
             'project_root_label',
             'project_root_edit',
-            'backup_show_project_button',
-            'backup_project_button',
-            'backup_both_button',
+            'backup_every_day_button',
             'cancel_backup_button',
         ):
             control = getattr(widget, control_name, None)

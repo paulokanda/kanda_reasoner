@@ -255,14 +255,13 @@ class FreezeLocalEntryRuntimeMixin:
                     "Receive Formulary from AI. No external site was opened."
                 ),
             )
-
         def receive_formulary_from_ai() -> None:
             receive_dialog = QDialog(dialog)
             receive_dialog.setWindowTitle("Receive Formulary from AI")
             receive_dialog.resize(820, 620)
             layout = QVBoxLayout(receive_dialog)
             help_label = QLabel(
-                "Paste one AI JSON answer. Applying it updates the form and rebuilds a read-only preview; it does not write files."
+                "Paste an AI response containing exactly one valid 11-field Freeze JSON object. Raw JSON is canonical; legacy markers/fences are tolerated. Applying it updates the form and rebuilds a read-only preview; it does not write files."
             )
             help_label.setWordWrap(True)
             layout.addWidget(help_label)
@@ -275,11 +274,11 @@ class FreezeLocalEntryRuntimeMixin:
             row.addWidget(apply_button)
             row.addWidget(close_button)
             layout.addLayout(row)
-
             def apply_external_form() -> None:
                 try:
                     parsed = parse_ai_formulary_response(
-                        response_edit.toPlainText(), collect_inputs()
+                        response_edit.toPlainText(),
+                        collect_inputs(),
                     )
                 except Exception as exc:
                     show_error_copy_close_window(

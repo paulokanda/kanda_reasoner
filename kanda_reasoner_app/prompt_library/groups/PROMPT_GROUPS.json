@@ -45,17 +45,19 @@
     {
       "group_id": "03_governance_freeze_and_handoff",
       "display_name": "Governance, Freeze, and Handoff",
-      "description": "Brick Wall governance, cooperative implementation decisions, freeze intake, pre-output artifact gates, and draft governance or handoff templates.",
+      "description": "Brick Wall governance, cooperative implementation decisions, freeze intake, strict AI freeze-candidate pre-output audit, pre-output artifact gates, self-contained freeze intake, and draft governance/handoff templates.",
       "prompt_ids": [
         "brick_wall_comprehensive_quality_gate",
         "cooperative_implementation_methodology",
         "freeze_code_intake_and_form_protocol",
         "pre_output_contract_gates",
         "professional_engineering_governance_template",
-        "workflow_handoff_template"
+        "workflow_handoff_template",
+        "self_contained_freeze_entry_intake_zip",
+        "freeze_candidate_pre_output_audit"
       ],
       "color_role": "gold",
-      "prompt_count": 6,
+      "prompt_count": 8,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },
@@ -78,7 +80,7 @@
     {
       "group_id": "05_patch_delivery_and_validation",
       "display_name": "Patch Delivery and Validation",
-      "description": "Bundle-gated implementation, delivery, validation, active delivery regressions, user-detected corrections, terminal cleanup, and routine lifecycle blueprints.",
+      "description": "Bundle-gated implementation, delivery, validation, active delivery regressions, user-detected corrections, terminal cleanup, routine lifecycle blueprints, and self-contained Error Memory lesson intake.",
       "prompt_ids": [
         "bundle_gated_development_workflow",
         "implementation_and_delivery_protocol",
@@ -86,10 +88,11 @@
         "patch_install_delivery_error_register",
         "patch_validate_freeze_error_memory_routine_blueprint",
         "router_bridge_user_detected_correction",
-        "terminal_cleanup_contract"
+        "terminal_cleanup_contract",
+        "self_contained_error_memory_lesson_intake_zip"
       ],
       "color_role": "purple",
-      "prompt_count": 7,
+      "prompt_count": 8,
       "copy_stack_enabled": true,
       "open_as_floating_window": true
     },

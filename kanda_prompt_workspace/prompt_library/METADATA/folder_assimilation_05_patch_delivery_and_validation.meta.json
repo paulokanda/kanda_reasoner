@@ -6,8 +6,8 @@
   "status": "audited_candidate",
   "load_type": "selected_when_needed",
   "artifact_type": "folder_assimilation_card",
-  "source_stage": "context_routing_layer_phase2",
-  "description": "Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, and freeze readiness gates.",
+  "source_stage": "prompt-freeze-error-memory-lifecycle-alignment-v1",
+  "description": "Define surgical patch delivery, install and validation scripts, evidence freshness, local validation, freeze readiness gates, and the separate self-contained Error Memory lesson intake route without MCard/Card ownership leakage.",
   "routing_metadata_only": true,
   "priority": 20,
   "required_companion_prompts": [

@@ -18,6 +18,7 @@ from .output_paths import bundle_artifact_paths
 from .path_normalization import artifact_logical_posix_path
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
+from .source_state_identity import load_source_state_identity
 
 __all__ = [
     "build_ai_briefing_payload",
@@ -27,7 +28,7 @@ __all__ = [
 SCHEMA_VERSION = 1
 BUNDLE_KIND = "ai_briefing"
 GENERATOR_NAME = "reasoner_context_bundle.ai_briefing_builder"
-GENERATOR_VERSION = "1.5.0"
+GENERATOR_VERSION = "1.6.0"
 
 
 def _utc_now() -> str:
@@ -127,6 +128,7 @@ def build_ai_briefing_payload(project: str | Path | ProjectContext) -> dict[str,
     """Build a compact first-read briefing for AI project handoff."""
     context = _context(project)
     paths = bundle_artifact_paths(context)
+    source_state = load_source_state_identity(paths.file_manifest_json)
     return {
         "schema_version": SCHEMA_VERSION,
         "bundle_kind": BUNDLE_KIND,
@@ -180,6 +182,15 @@ def build_ai_briefing_payload(project: str | Path | ProjectContext) -> dict[str,
             "do_not_edit_generated_evidence_as_source": True,
             "evidence_folder_logical_prefix": "show_project_to_AI",
         },
+        "source_state": source_state,
+        "source_state_policy": {
+            "canonical_owner": "file_manifest_json",
+            "source_archive_is_verified_subset_projection": True,
+            "source_archive_has_distinct_projection_identity": True,
+            "handoff_is_a_verified_source_snapshot": True,
+            "handoff_is_not_live_source_authority_after_export": True,
+            "post_export_source_changes_require_new_handoff_or_local_baseline_check": True,
+        },
         "evidence_files": {
             "ai_briefing_json": _path_record(
                 paths.ai_briefing_json,
@@ -197,6 +208,7 @@ def build_ai_briefing_payload(project: str | Path | ProjectContext) -> dict[str,
                 "Use generated JSON for orientation only, then inspect exact source files."
             ),
             "after_meaningful_source_change": "Run Project Structure Map again.",
+            "source_state_sha256_is_snapshot_identity_not_live_memory": True,
         },
         "fallback_policy": {
             "if_route_is_missing": (

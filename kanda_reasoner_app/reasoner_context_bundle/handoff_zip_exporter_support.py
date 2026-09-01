@@ -16,7 +16,7 @@ from .schema_models import ProjectContext
 
 _EXPORT_KIND = "json_handoff_zip_parts"
 _EXPORT_GENERATOR = "reasoner_context_bundle.handoff_zip_exporter"
-_EXPORT_GENERATOR_VERSION = "2.3.0"
+_EXPORT_GENERATOR_VERSION = "2.4.0"
 _DEFAULT_PART_SIZE_MB = 500
 _BYTES_PER_MB = 1024 * 1024
 _RECONSTRUCTION_SUFFIX = "__reconstruction_payload.json"

@@ -15,6 +15,7 @@ from .output_paths import bundle_artifact_paths
 from .path_normalization import resolve_logical_artifact_path
 from .project_context import resolve_project_context
 from .schema_models import ProjectContext
+from .source_state_identity import source_state_from_payload, source_states_match
 
 __all__ = [
     "check_ai_context_bundle",
@@ -333,6 +334,47 @@ def _check_manifest_snapshot_alignment(context: ProjectContext, failures: list[s
         )
 
 
+def _check_source_state_contract(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+    failures: list[str],
+) -> None:
+    """Verify one file-manifest-owned source identity across handoff maps."""
+    paths = bundle_artifact_paths(context)
+    if not paths.file_manifest_json.exists():
+        failures.append("source_state file_manifest artifact is missing")
+        return
+
+    file_manifest = _load_json(paths.file_manifest_json)
+    file_state = source_state_from_payload(file_manifest)
+    if file_state.get("identity_status") != "VERIFIED":
+        failures.append("file_manifest source_state is not VERIFIED")
+        return
+
+    bundle_state = source_state_from_payload(manifest)
+    if not source_states_match(file_state, bundle_state):
+        failures.append("bundle_manifest source_state does not match file_manifest")
+
+    if paths.ai_briefing_json.exists():
+        briefing = _load_json(paths.ai_briefing_json)
+        briefing_state = source_state_from_payload(briefing)
+        if not source_states_match(file_state, briefing_state):
+            failures.append("ai_briefing source_state does not match file_manifest")
+
+    contract = manifest.get("source_state_contract")
+    if not isinstance(contract, dict):
+        failures.append("bundle_manifest.source_state_contract must be an object")
+        return
+    if contract.get("canonical_owner") != "file_manifest_json":
+        failures.append("bundle_manifest source_state canonical owner is invalid")
+    if contract.get("source_archive_must_be_verified_projection") is not True:
+        failures.append("bundle_manifest must require source archive projection binding")
+    if contract.get("source_archive_state_is_distinct_projection_identity") is not True:
+        failures.append("bundle_manifest must preserve distinct archive projection identity")
+    if contract.get("publication_requires_live_recheck") is not True:
+        failures.append("bundle_manifest must require live source recheck")
+
+
 def _check_validation_state(context: ProjectContext, failures: list[str]) -> None:
     """Support check validation state behavior.
     
@@ -381,6 +423,7 @@ def check_ai_context_bundle(project: str | Path | ProjectContext) -> dict[str, A
     _check_first_read_handoff_contracts(context, manifest, failures)
     _check_manifest_artifacts(context, manifest, failures)
     _check_manifest_paths(context, failures)
+    _check_source_state_contract(context, manifest, failures)
     # Hybrid Source Archive mode deliberately does not require the old heavy
     # active_snapshot artifact. Exact source reconstruction is handled by the
     # source_archive_manifest and source_archive_part ZIPs written after this

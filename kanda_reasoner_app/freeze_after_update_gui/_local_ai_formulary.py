@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+from kanda_reasoner_app.freeze_after_update_gui._ai_formulary_response_parser import (
+    canonical_formulary_payload,
+)
 from kanda_reasoner_app.reasoner_engine.local_ai_chat_service import (
     chat_with_local_model,
     list_local_ai_models as _shared_list_local_ai_models,
@@ -58,7 +61,11 @@ def _choose_local_ai_model(requested_model: str = "") -> str:
 
 def _build_local_ai_freeze_form_messages(inputs: dict, project_root: Path) -> list[dict[str, str]]:
     """Build a compact local-AI prompt that improves, but never weakens, the freeze form."""
-    current_json = json.dumps(inputs, ensure_ascii=False, indent=2)
+    current_json = json.dumps(
+        canonical_formulary_payload(inputs),
+        ensure_ascii=False,
+        indent=2,
+    )
     keys = ", ".join(
         [
             "feature_title",
@@ -86,8 +93,10 @@ def _build_local_ai_freeze_form_messages(inputs: dict, project_root: Path) -> li
             "role": "user",
             "content": (
                 "Instruction: Improve the KANDA freeze form JSON only if needed.\n"
-                "Required output: one JSON object only, starting with { and ending with }.\n"
+                "Required output: one canonical JSON object only, starting with { and ending with }.\n"
                 "NO prose. NO markdown. NO marker block. NO comments.\n"
+                "Keep validated_files, generated_files, protected_paths, do_not_regress_rules, "
+                "and validation_evidence_summary as JSON arrays of strings.\n"
                 f"Allowed keys only: {keys}.\n"
                 "Hard rules:\n"
                 "- Preserve every existing validation line exactly.\n"

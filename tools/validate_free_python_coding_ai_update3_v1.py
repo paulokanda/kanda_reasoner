@@ -133,8 +133,6 @@ def _validate_freeze_contract(tool_root: Path) -> None:
         "kanda_reasoner_app/freeze_after_update_gui/_local_freeze_dialog_widgets.py",
     )
     for token in (
-        "KANDA_FREEZE_FORM_JSON_BEGIN",
-        "KANDA_FREEZE_FORM_JSON_END",
         "draft only",
         "Preview",
         "Confirm and Write",
@@ -320,7 +318,8 @@ def _validate_qt_runtime() -> None:
         }
         prompt = build_freeze_external_ai_prompt(form)
         _require(
-            "KANDA_FREEZE_FORM_JSON_BEGIN" in prompt
+            "Return exactly one valid JSON object" in prompt
+            and "KANDA_FREEZE_FORM_JSON_BEGIN" not in prompt
             and '"validated_files": [' in prompt
             and "VALIDATION OK: fixture" in prompt,
             "FREEZE STRICT EXTERNAL PROMPT RUNTIME",
@@ -328,7 +327,8 @@ def _validate_qt_runtime() -> None:
         freeze_result = handoff_freeze_formulary_to_external_ai(form)
         _require(freeze_result.ok, "FREEZE EXTERNAL HANDOFF RUNTIME")
         _require(
-            "KANDA_FREEZE_FORM_JSON_END" in QApplication.clipboard().text(),
+            "Return exactly one valid JSON object" in QApplication.clipboard().text()
+            and "KANDA_FREEZE_FORM_JSON_END" not in QApplication.clipboard().text(),
             "FREEZE EXTERNAL CLIPBOARD RUNTIME",
         )
 

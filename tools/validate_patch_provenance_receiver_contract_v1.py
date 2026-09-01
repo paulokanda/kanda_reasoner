@@ -14,6 +14,9 @@ from kanda_reasoner_app.patch_governance.validator import (
     PatchZipContractError,
     validate_patch_zip,
 )
+from kanda_reasoner_app.patch_governance.installer_template import (
+    render_installer_template,
+)
 
 FEATURE_ID = "patch-provenance-receiver-contract-v1"
 PATCH_NAME = "kanda_patch_provenance_receiver_contract_v1"
@@ -209,7 +212,11 @@ def _fixture_payload() -> dict[str, bytes]:
         HINT_NAME: hint_raw,
         DELIVERY_NAME: delivery_raw,
         TRACE_NAME: _json_bytes(trace),
-        "INSTALL.ps1": b"# fixture installer\n",
+        "INSTALL.ps1": render_installer_template(
+            project_root_placeholder="<PROJECT_ROOT>",
+            patch_name=PATCH_NAME,
+            payload_folder="payload",
+        ).encode("utf-8"),
         "VALIDATE.ps1": b"# fixture validator\n",
         "PREPARE_FREEZE.ps1": b"# fixture freeze preparation\n",
         "CHECK_PACKAGE.ps1": b"# fixture package check\n",

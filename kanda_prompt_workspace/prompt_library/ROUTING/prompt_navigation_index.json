@@ -4,7 +4,7 @@
   "generated_at": "2026-08-02",
   "purpose": "Map natural human requests to clean prompt IDs and companion stacks.",
   "routing_rule": "Use active current metadata and exact owners. Retired identities resolve through KPR-02-005 and never appear as active route entries.",
-  "prompt_count": 104,
+  "prompt_count": 105,
   "entries": [
     {
       "prompt_id": "ai_human_partnership_session_start",
@@ -178,7 +178,9 @@
         "repeat error prevention",
         "retire lesson",
         "pending error lesson",
-        "error lesson library"
+        "error lesson library",
+        "formatted AI lesson could not be parsed",
+        "MCARD_FORMATTED_LESSON_JSON_REQUIRED"
       ],
       "user_intent_examples": [
         "Decide whether a corrected failure should become a pending, draft, active, retired, duplicate, or blocked Error Memory lesson without invoking Machine-Card/MCard semantics."
@@ -188,11 +190,11 @@
         "error_memory_ai_formulary_startup_canon",
         "Error Memory admission canon"
       ],
-      "when_to_load": "Always at startup and whenever an error may have durable prevention value in the Error Memory lesson library.",
+      "when_to_load": "Always at startup and whenever an error may have durable prevention value; before any receive-ready Error Memory lesson output, dispatch the exact envelope to KPR-12-003.",
       "when_not_to_load": "Do not use as Architecture Review Machine-Card/MCard lifecycle authority or as a direct automatic active-lesson writer.",
       "required_companion_prompts": [],
       "status": "active",
-      "version": "4.0",
+      "version": "4.4",
       "owner_box": "01_session_start_and_navigation"
     },
     {
@@ -463,7 +465,7 @@
         "exact prompt path"
       ],
       "user_intent_examples": [
-        "I say \u201cmodule too big\u201d; which prompt should that trigger?"
+        "I say “module too big”; which prompt should that trigger?"
       ],
       "aliases": [
         "prompt_navigation_index",
@@ -478,7 +480,7 @@
       ],
       "prompt_code": "KPR-02-004",
       "status": "active",
-      "version": "2.7",
+      "version": "5.5",
       "owner_box": "02_prompt_routing_and_indexing"
     },
     {
@@ -660,7 +662,10 @@
       "trigger_phrases": [
         "freeze hint intake",
         "freeze form",
-        "new local freeze entry"
+        "new local freeze entry",
+        "freeze blueprint",
+        "Get Blueprint Freeze",
+        "generic receive-ready freeze template"
       ],
       "user_intent_examples": [
         "Carry one validated feature identity into project-owned freeze intake."
@@ -671,7 +676,7 @@
         "freeze_code_intake_and_form_protocol.md",
         "freeze hint and form intake protocol"
       ],
-      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "when_to_load": "When the current validated feature needs freeze intake, a manual Freeze GUI form, or the canonical generic receive-ready blueprint; preserve Preview read-only and explicit human Confirm and Write.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
       "required_companion_prompts": [
         "brick_wall_comprehensive_quality_gate",
@@ -679,7 +684,7 @@
       ],
       "prompt_code": "KPR-03-003",
       "status": "active",
-      "version": "2.0",
+      "version": "2.3",
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
@@ -692,7 +697,10 @@
       "trigger_phrases": [
         "freeze hint intake",
         "freeze form",
-        "new local freeze entry"
+        "new local freeze entry",
+        "freeze blueprint",
+        "Get Blueprint Freeze",
+        "generic receive-ready freeze template"
       ],
       "user_intent_examples": [
         "Carry one validated feature identity into project-owned freeze intake."
@@ -703,7 +711,7 @@
         "freeze_code_intake_and_form_protocol.md",
         "freeze hint and form intake protocol"
       ],
-      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "when_to_load": "When the current validated feature needs freeze intake, a manual Freeze GUI form, or the canonical generic receive-ready blueprint; preserve Preview read-only and explicit human Confirm and Write.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
       "required_companion_prompts": [
         "brick_wall_comprehensive_quality_gate",
@@ -711,7 +719,7 @@
       ],
       "prompt_code": "KPR-03-003",
       "status": "active",
-      "version": "2.0",
+      "version": "2.3",
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
@@ -724,7 +732,10 @@
       "trigger_phrases": [
         "freeze hint intake",
         "freeze form",
-        "new local freeze entry"
+        "new local freeze entry",
+        "freeze blueprint",
+        "Get Blueprint Freeze",
+        "generic receive-ready freeze template"
       ],
       "user_intent_examples": [
         "Carry one validated feature identity into project-owned freeze intake."
@@ -747,14 +758,14 @@
         "freeze_code_intake_and_form_protocol.md",
         "freeze hint and form intake protocol"
       ],
-      "when_to_load": "Carry one validated feature identity into project-owned freeze intake.",
+      "when_to_load": "When the current validated feature needs freeze intake, a manual Freeze GUI form, or the canonical generic receive-ready blueprint; preserve Preview read-only and explicit human Confirm and Write.",
       "when_not_to_load": "Do not use as implementation authorization or as a substitute for the exact specialist owner.",
       "required_companion_prompts": [
         "brick_wall_comprehensive_quality_gate",
         "pre_output_contract_gates"
       ],
       "status": "active",
-      "version": "2.0",
+      "version": "2.3",
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
@@ -795,7 +806,7 @@
         "brick_wall_comprehensive_quality_gate"
       ],
       "status": "active",
-      "version": "2.0",
+      "version": "2.4",
       "owner_box": "03_governance_freeze_and_handoff"
     },
     {
@@ -913,6 +924,7 @@
       "when_not_to_load": "Do not load for ordinary source patch installation, direct frozen-memory writes, unvalidated features, or freeze-form text only.",
       "required_companion_prompts": [
         "freeze_code_intake_and_form_protocol",
+        "freeze_candidate_pre_output_audit",
         "pre_output_contract_gates",
         "implementation_and_delivery_protocol"
       ],
@@ -925,7 +937,7 @@
       ],
       "status": "active",
       "load_type": "on_request",
-      "version": "1.1"
+      "version": "1.3"
     },
     {
       "prompt_id": "boundary_first_repair_protocol",
@@ -1262,14 +1274,14 @@
       "priority": 17,
       "trigger_phrases": [
         "Answer, Validate, Freeze, Memorize Error",
-        "one zip separate install validate freeze error memory commands",
+        "one zip install enter enter validate freeze error memory",
         "compact update release",
         "finish release phases",
         "copy recovery routine",
         "fire shield"
       ],
       "user_intent_examples": [
-        "When the user presses the Show Project to AI routine button or asks for one update ZIP followed by separate install, validation, Freeze, and Error Memory terminal commands."
+        "When the user presses the Show Project to AI routine button or asks for one update ZIP followed by one fail-closed Install -> Enter x2 -> Validate paste unit, then human-gated Freeze and final Error Memory disposition."
       ],
       "aliases": [
         "KPR-05-005",
@@ -1278,7 +1290,7 @@
         "Answer Validate Freeze Memorize Error",
         "recovery routine owner dispatch"
       ],
-      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP and separate install, validation, Freeze, and Error Memory phases, with Fire Shield gating only for KANDA-managed external-Project actions.",
+      "when_to_load": "When the user presses the Show Project to AI routine button or asks to continue current source or compact evidence through one update ZIP, chained install->validate execution, human-gated Freeze, and final Error Memory disposition, with Fire Shield gating only for KANDA-managed external-Project actions.",
       "when_not_to_load": "Do not load for explanation-only work with no release, validation, Freeze, or Error Memory continuation.",
       "required_companion_prompts": [
         "project_tool_boundary_canon",
@@ -1409,8 +1421,8 @@
         "self-contained Error Memory ZIP",
         "Error Memory lesson intake loader"
       ],
-      "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons for human review.",
-      "when_not_to_load": "Do not load for Architecture Review Machine-Card/MCard lifecycle or direct automatic active memorization.",
+      "when_to_load": "When the user requests one self-contained ZIP that stages one or more validated Error Memory lessons as pending transport for human review; GUI admission normalizes each working lesson to draft.",
+      "when_not_to_load": "Do not load for Architecture Review Machine-Card/MCard lifecycle, direct automatic active memorization, or when no reusable lesson candidate exists.",
       "required_companion_prompts": [
         "error_memory_ai_formulary_startup_canon",
         "bundle_gated_development_workflow",
@@ -1425,7 +1437,7 @@
       ],
       "status": "active",
       "load_type": "on_request",
-      "version": "3.0"
+      "version": "3.2"
     },
     {
       "prompt_id": "architecture_hardening_triage_protocol",
@@ -3007,7 +3019,7 @@
       "required_companion_prompts": [],
       "status": "active",
       "load_type": "routed",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "owner_box": "12_generalized_project_canons"
     },
     {
@@ -3020,7 +3032,9 @@
       "priority": 33,
       "trigger_phrases": [
         "Error Memory JSON envelope",
-        "KANDA_ERROR_LESSON_JSON_BEGIN"
+        "KANDA_ERROR_LESSON_JSON_BEGIN",
+        "MCARD_FORMATTED_LESSON_JSON_REQUIRED",
+        "formatted AI lesson could not be parsed"
       ],
       "user_intent_examples": [
         "When the exact marker-wrapped final Error Memory output envelope is required."
@@ -3030,12 +3044,12 @@
         "Error Memory JSON envelope",
         "error_memory_active_ready_json_template"
       ],
-      "when_to_load": "When the exact marker-wrapped final Error Memory output envelope is required.",
+      "when_to_load": "Before emitting, approving, correcting, or regenerating the exact marker-wrapped final Error Memory lesson output envelope, or when Error Memory reports MCARD_FORMATTED_LESSON_JSON_REQUIRED.",
       "when_not_to_load": "Do not use as field-schema authority or before readiness evidence exists.",
       "required_companion_prompts": [],
       "status": "active",
       "load_type": "routed",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "owner_box": "12_generalized_project_canons"
     },
     {
@@ -3322,6 +3336,46 @@
       "load_type": "on_request",
       "version": "2.0.0",
       "owner_box": "12_generalized_project_canons"
+    },
+    {
+      "prompt_id": "freeze_candidate_pre_output_audit",
+      "display_name": "Freeze Candidate Pre-Output Audit Protocol",
+      "filename": "freeze_candidate_pre_output_audit.md",
+      "relative_path": "ACTIVE_PROMPTS/03_governance_freeze_and_handoff/freeze_candidate_pre_output_audit.md",
+      "category": "03_governance_freeze_and_handoff",
+      "priority": 36,
+      "trigger_phrases": [
+        "freeze candidate",
+        "freeze form correction",
+        "review freeze candidate",
+        "before freeze JSON",
+        "freeze blueprint",
+        "Get Blueprint Freeze"
+      ],
+      "user_intent_examples": [
+        "Audit an AI-authored local freeze candidate from evidence before emitting it to the Freeze GUI receiver."
+      ],
+      "aliases": [
+        "KPR-03-008",
+        "freeze_candidate_pre_output_audit",
+        "freeze_candidate_pre_output_audit.md",
+        "freeze candidate pre-output audit"
+      ],
+      "when_to_load": "Immediately before an AI emits, approves, corrects, regenerates, or supplies the generic blueprint for a local Freeze GUI candidate/form; audit receiver schema, path owner roots, evidence, complete post-write planned-next-step semantics, and KPR-03-003/button blueprint parity.",
+      "when_not_to_load": "Do not use as patch-sidecar schema owner, local freeze writer authority, or substitute for freeze intake and human confirmation.",
+      "required_companion_prompts": [
+        "freeze_code_intake_and_form_protocol",
+        "pre_output_contract_gates",
+        "brick_wall_comprehensive_quality_gate"
+      ],
+      "recommended_companion_prompts": [
+        "project_tool_boundary_canon",
+        "durable_document_artifact_routing_canon"
+      ],
+      "prompt_code": "KPR-03-008",
+      "status": "active",
+      "version": "1.5",
+      "owner_box": "03_governance_freeze_and_handoff"
     }
   ]
 }

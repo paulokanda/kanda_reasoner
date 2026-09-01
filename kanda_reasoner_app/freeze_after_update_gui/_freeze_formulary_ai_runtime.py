@@ -452,7 +452,10 @@ class FreezeFormularyAIController:
             self.preview_callback()
             return
         try:
-            candidate = parse_ai_formulary_response(response_text, baseline).inputs
+            candidate = parse_ai_formulary_response(
+                response_text,
+                baseline,
+            ).inputs
         except Exception as exc:
             self.owner._append_log(_mode_label(mode) + " parse error: " + str(exc))
             self.widgets.mode_status_label.setText(

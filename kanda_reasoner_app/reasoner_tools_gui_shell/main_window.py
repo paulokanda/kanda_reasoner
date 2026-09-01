@@ -36,6 +36,9 @@ from .lazy_tabs import LazyToolTab
 from .brain_navigator.contract import create_brain_navigator_tab
 from .tab_navigation_controller import create_tab_navigation_controller
 from kanda_reasoner_app.prompt_library_gui.prompt_library_tab import PromptLibraryTab
+from kanda_reasoner_app.reasoner_tools_gui_shell.kanda_memo_prompts.contract import (
+    create_kanda_memo_prompts_tab,
+)
 from .tool_specs import TOOLS, ToolSpec
 from kanda_reasoner_app.project_root_resolver import resolve_observed_project_root
 from kanda_reasoner_app.project_selection_registry import (
@@ -69,6 +72,11 @@ _PORTABLE_SMOKE_REQUIRED_TAB_IDS = (
     "project_structure_map",
     "project_qa",
     "error_memory",
+)
+_PORTABLE_FINAL_ACCEPTANCE_REQUIRED_TAB_IDS = (
+    "architecture_review",
+    "project_structure_3d",
+    "config_web_ai",
 )
 from .main_window_help.window_help import _WindowHelpMixin
 from .main_window_help.window_output_paths import _WindowOutputPathsMixin
@@ -273,7 +281,10 @@ class ReasonerToolsWindow(
 
     def _preload_portable_smoke_tabs(self) -> None:
         """Activate required lazy tabs automatically during Portable smoke only."""
-        for tab_id in _PORTABLE_SMOKE_REQUIRED_TAB_IDS:
+        for tab_id in (
+            _PORTABLE_SMOKE_REQUIRED_TAB_IDS
+            + _PORTABLE_FINAL_ACCEPTANCE_REQUIRED_TAB_IDS
+        ):
             result = self._tab_navigation_controller.open_tab_by_id(tab_id)
             if result.success:
                 continue
@@ -416,6 +427,23 @@ class ReasonerToolsWindow(
         if spec.tab_kind == "builtin_prompt_library":
             self.prompt_library_tab = PromptLibraryTab()
             index = self.tabs.addTab(self.prompt_library_tab, spec.step_title)
+            self._register_tab_index(spec, index)
+            return
+
+        if spec.tab_kind == "builtin_kanda_memo_prompts":
+            self.kanda_memo_prompts_tab = create_kanda_memo_prompts_tab(
+                project_root=self.current_project_root,
+            )
+            self._loaded_tools_by_tab_id[spec.tab_id] = (
+                self.kanda_memo_prompts_tab
+            )
+            self._apply_project_widget_enabled_state(
+                spec.tab_id, self.kanda_memo_prompts_tab
+            )
+            index = self.tabs.addTab(
+                self.kanda_memo_prompts_tab,
+                spec.step_title,
+            )
             self._register_tab_index(spec, index)
             return
 

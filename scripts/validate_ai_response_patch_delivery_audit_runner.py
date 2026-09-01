@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import json
+
 __all__ = []  # Implementation-only module; public facade owns exported validator symbols.
 
 try:
@@ -15,8 +17,6 @@ try:
         FORBIDDEN_INLINE_PYTHON_TERMS,
         FORBIDDEN_INSTALL_BLOCK_TERMS,
         FORBIDDEN_TERMINAL_CLOSING_TERMS,
-        FREEZE_FORM_BEGIN,
-        FREEZE_FORM_END,
         FREEZE_FORM_REQUIRED_FIELDS,
         FREEZE_HINT_INTAKE_TOKEN,
         INSTALL_SUCCESS_TERMINAL_TERMS,
@@ -60,8 +60,6 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
         FORBIDDEN_INLINE_PYTHON_TERMS,
         FORBIDDEN_INSTALL_BLOCK_TERMS,
         FORBIDDEN_TERMINAL_CLOSING_TERMS,
-        FREEZE_FORM_BEGIN,
-        FREEZE_FORM_END,
         FREEZE_FORM_REQUIRED_FIELDS,
         FREEZE_HINT_INTAKE_TOKEN,
         INSTALL_SUCCESS_TERMINAL_TERMS,
@@ -162,13 +160,13 @@ def _validate_install_terminal_footer(block: str) -> None:
     """
     
     lowered = block.lower()
-    missing = [term for term in INSTALL_SUCCESS_TERMINAL_TERMS if term not in lowered]
+    success_index = lowered.find("install ok")
+    if success_index < 0:
+        _fail("Install block is missing an INSTALL OK success marker.")
+    success_region = lowered[success_index:].split("catch", 1)[0]
+    missing = [term for term in INSTALL_SUCCESS_TERMINAL_TERMS if term not in success_region]
     if missing:
-        _fail("Install block is missing required 2-second success footer fragments: " + ", ".join(missing))
-    after_success = lowered.split("install ok. terminal will clear in 2 seconds", 1)[-1]
-    success_region = after_success.split("catch", 1)[0]
-    if 'read-host "press enter to clear terminal"' in success_region:
-        _fail("Install success path must not ask for Enter after INSTALL OK.")
+        _fail("Install success path is missing Enter Enter final-clear fragments: " + ", ".join(missing))
     error_required = (
         "install error",
         'read-host "press enter to clear terminal"',
@@ -193,8 +191,6 @@ def _validate_non_install_terminal_footer(block: str) -> None:
     missing = [term for term in NON_INSTALL_TERMINAL_TERMS if term not in lowered]
     if missing:
         _fail("Non-install terminal block is missing Enter Enter final-clear footer fragments: " + ", ".join(missing))
-    if "start-sleep -seconds 2" in lowered:
-        _fail("Non-install terminal block must not auto-clear after 2 seconds.")
 
 
 def _validate_terminal_footer_contract(blocks: list[str]) -> None:
@@ -340,17 +336,41 @@ def _validate_marker_wrapped_error_memory(text: str) -> None:
     _validate_error_memory_object(obj)
 
 
-def _validate_manual_freeze_form_markers(text: str) -> None:
-    """Support validate manual freeze form markers behavior.
-    
-    Parameters
-    ----------
-    text : str
-        The text value.
-    """
-    
-    obj = _extract_marker_json(text, FREEZE_FORM_BEGIN, FREEZE_FORM_END, "Freeze form")
-    _validate_freeze_form_object(obj)
+def _freeze_object_pairs(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    """Build a Freeze JSON object while rejecting duplicate keys."""
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            _fail("Freeze form JSON contains duplicate key: " + key)
+        result[key] = value
+    return result
+
+
+def _reject_freeze_constant(value: str) -> None:
+    _fail("Freeze form JSON contains non-standard constant: " + value)
+
+
+def _validate_manual_freeze_form_json(text: str) -> None:
+    """Validate exactly one canonical Freeze object when one is present."""
+    decoder = json.JSONDecoder(
+        object_pairs_hook=_freeze_object_pairs,
+        parse_constant=_reject_freeze_constant,
+    )
+    expected = set(FREEZE_FORM_REQUIRED_FIELDS)
+    candidates: list[dict[str, object]] = []
+    for index, char in enumerate(text):
+        if char != "{":
+            continue
+        try:
+            obj, _ = decoder.raw_decode(text, index)
+        except (json.JSONDecodeError, ResponseValidationError):
+            continue
+        if isinstance(obj, dict) and set(obj) == expected:
+            candidates.append(obj)
+    if len(candidates) > 1:
+        _fail("Freeze response contains more than one valid 11-field JSON object.")
+    if candidates:
+        _validate_freeze_form_object(candidates[0])
 
 
 def _validate_receiver_delivery_gate(text: str, blocks: list[str]) -> None:
@@ -365,7 +385,7 @@ def _validate_receiver_delivery_gate(text: str, blocks: list[str]) -> None:
     """
     
     _validate_marker_wrapped_error_memory(text)
-    _validate_manual_freeze_form_markers(text)
+    _validate_manual_freeze_form_json(text)
     if not _needs_receiver_gate(text):
         return
 
@@ -413,8 +433,6 @@ def _validate_receiver_delivery_gate(text: str, blocks: list[str]) -> None:
             _fail("FREEZE_HINT_INTAKE must be proven by Copy-Item of KANDA_FREEZE_HINT.json into freeze_hint_intake or by merge validation evidence command.")
 
     if classification == "MANUAL_FREEZE_FORM_RECEIVER":
-        if FREEZE_FORM_BEGIN not in text:
-            _fail("MANUAL_FREEZE_FORM_RECEIVER must include KANDA_FREEZE_FORM_JSON_BEGIN text.")
         if "yes" not in manual_required or "no" not in installer_stages:
             _fail("MANUAL_FREEZE_FORM_RECEIVER must set manual paste YES and installer stages NO.")
         if "manual" not in receiver_lower and "paste" not in receiver_lower:

@@ -37,6 +37,9 @@ from PySide6.QtWidgets import (
     QRadioButton,
 )
 
+from kanda_reasoner_app.templates.floating_windows import (
+    install_error_popup_copy_close_filter,
+)
 from kanda_reasoner_app.reasoner_engine.ai_reasoner_main_window_help.analysis_controller import (
     AnalysisController,
 )
@@ -448,6 +451,7 @@ def main() -> None:
     """
     
     app = QApplication(sys.argv)
+    install_error_popup_copy_close_filter(app)
     window = JsonProjectReasonerV10()
     window.show()
     sys.exit(app.exec())

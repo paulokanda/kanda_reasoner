@@ -76,7 +76,7 @@ BUILDER_MEMBER_FEATURE_ID = (
     "kanda-reasoner-portable-exact-builder-member-governance-v1"
 )
 EXTERNAL_CONTROL_FEATURE_ID = (
-    "kanda-reasoner-portable-external-build-control-hash-binding-v1r2"
+    "kanda-reasoner-portable-external-build-control-hash-binding-v1r3"
 )
 EXTERNAL_CONTROL_MANIFEST_NAME = "PORTABLE_EXTERNAL_BUILD_CONTROLS.json"
 PRODUCTION_PORTABLE_ENABLED = True

@@ -2,11 +2,11 @@
 prompt_id: prompt_navigation_index
 prompt_code: KPR-02-004
 title: Prompt Navigation Index
-version: 5.2
+version: 5.5
 status: active
 load_type: always_startup
 owner_box: 02_prompt_routing_and_indexing
-source_stage: prompt-audit-wave3a-session-startup-kernel-v1
+source_stage: prompt-freeze-error-memory-lifecycle-alignment-v1
 ---
 
 # Prompt Navigation Index
@@ -31,6 +31,7 @@ This index selects context. It does not replace specialist prompts, authorize co
 - KPR-02-005 = prompt_substitution_map
 - KPR-02-006 = routing_signal_scorer_v3_semantic_readiness_canon
 - KPR-03-001 = brick_wall_comprehensive_quality_gate
+- KPR-03-008 = freeze_candidate_pre_output_audit
 - KPR-04-001 = box_architecture_canon
 - KPR-04-002 = kanda_box_shielding_canon
 - KPR-04-003 = project_folder_organization_canon
@@ -203,6 +204,10 @@ Route to `patch_validate_freeze_error_memory_routine_blueprint` when the Show Pr
 
 For self-contained post-update intake artifacts, this bridge dispatches `KPR-03-007 self_contained_freeze_entry_intake_zip` and `KPR-05-008 self_contained_error_memory_lesson_intake_zip` as separate specialist ZIP owners. Preserve one shared selected-Project/feature/evidence context, never combine the ZIPs, and require an explicit disposition for both before declaring the routine complete.
 
+## Freeze candidate pre-output audit route
+
+Before an AI emits, approves, corrects, or regenerates a local Freeze GUI candidate/form, route to `KPR-03-008 freeze_candidate_pre_output_audit` after current feature intake context is available. The specialist must verify the current receiver contract, current Project freeze-store state, exact feature/revision evidence, release-owner provenance, strict JSON, path-owner semantics, and the complete writer/GUI post-write transaction so `planned_next_step` remains pending after automatic post-write actions finish. It is a child of the freeze intake and pre-output owners and never bypasses Preview or explicit human Confirm and Write.
+
 ## Self-contained freeze loader route
 
 For one self-contained ZIP that validates the current feature and prepares the selected Project for Freeze Feature After Update -> New Local Freeze Entry, route to `KPR-03-007 self_contained_freeze_entry_intake_zip`. It must resolve governance helpers Project-first and use canonical KANDA Reasoner Tool-owned fallbacks only when the Project does not own them. Preview stays read-only and Confirm and Write stays human-only.
@@ -213,13 +218,13 @@ Direct Error Lesson ZIP is not a code patch. Use the Error Memory intake owner a
 
 For default insertion after patch validation, route to the current Error Memory owner and `pending_ai_assisted_error_lesson_intake` under the selected Project Support root.
 
-For one self-contained ZIP that validates and stages multiple lessons for human approval, route to `KPR-05-008 self_contained_error_memory_lesson_intake_zip`. It must use Tool/MCard authority, stage only unique `pending` lessons into the independent Card, work with Active Project `NONE`, preserve the canonical `card_id`, and keep `Memorize Error` human-only.
+For one self-contained ZIP that validates and stages multiple lessons for human approval, route to `KPR-05-008 self_contained_error_memory_lesson_intake_zip`. It must use the current Tool-owned Error Memory runtime/schema as authority, keep the selected Active Project as context/evidence only, stage only unique `pending` transport lessons, normalize admitted GUI lessons to `draft`, and keep `Memorize Error` as the sole human `draft` -> `active` promotion gate. Architecture Review MCard/Card identity and `card_id` are not Error Memory authority.
 
 ## Terminal cleanup canon route
 
-Install success: `INSTALL OK. Terminal will clear in 2 seconds...`, wait about 2 seconds, then `Clear-Host` and keep terminal open.
+Install success: show `INSTALL OK`, preserve the output, then use `Enter`, `Enter`, one final `Clear-Host` and keep the terminal open. Automatic timed clearing is retired.
 
-Validation, freeze, errors, diagnostics, and all non-install-success terminal blocks use `Enter`, `Enter`, one final `Clear-Host` and keep the terminal open.
+Validation, freeze, errors, diagnostics, recovery, and other interactive terminal blocks use the same `Enter`, `Enter`, one-final-`Clear-Host` sequence.
 
 Freeze-prep and evidence merge must use a temporary UTF-8 `.py` helper under `_delete_after_daily_work`, set `$env:PYTHONPATH = $PROJECT_ROOT`, insert `project_root` into `sys.path`, and must not use inline `python -c`.
 

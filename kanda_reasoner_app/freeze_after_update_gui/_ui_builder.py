@@ -52,9 +52,9 @@ class FreezeUiBuilderMixin:
         self.get_all_frozen_button = QPushButton("Get All Frozen")
         self.get_all_frozen_button.setToolTip("Copy all frozen feature entry snippets for pasting to AI")
         self.get_all_frozen_button.setStyleSheet("color: #003366; font-weight: bold;")
-        self.get_blueprint_freeze_button = QPushButton("Get blueprint Freeze")
+        self.get_blueprint_freeze_button = QPushButton("Get Blueprint Freeze")
         self.get_blueprint_freeze_button.setToolTip(
-            "Copy the strict KANDA freeze-form blueprint for pasting to AI"
+            "Copy the audited generic receive-ready KANDA freeze blueprint for AI"
         )
         self.get_blueprint_freeze_button.setStyleSheet("color: #FF8C00; font-weight: bold;")
         self.list_frozen_button = QPushButton("List Frozen")

@@ -265,10 +265,14 @@ def ensure_project_analysis_evidence_dirs(project_root: str | Path) -> Path:
     analysis_project_freeze_after_update_dir(project_root).mkdir(parents=True, exist_ok=True)
     analysis_json_complete_dir(project_root).mkdir(parents=True, exist_ok=True)
     ensure_show_project_lifecycle_manifest(project_root)
-    # Normal Show Project to AI root must only contain first_prompt_files and
-    # second_prompt_files after a successful run. The temporary building folder
-    # is created only by the runner while work is active, and legacy
-    # json_splitted is not created by normal directory preparation.
+    # The Show Project to AI root intentionally mixes replaceable delivery
+    # folders with durable Project Support state. first_prompt_files and
+    # second_prompt_files are regenerated outputs, while project_error_memory,
+    # project_freeze_after_update, and Project Structure state are persistent
+    # siblings governed by the lifecycle manifest and must survive regeneration.
+    # Temporary building/legacy generated folders are cleaned only by their
+    # narrow owners; never treat the parent *_show_project_to_AI root as a
+    # disposable two-folder container.
     return evidence_root
 
 
